@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Kaiboard Android</string>
+    <string name="subtype_name">速成・倉頡・English</string>
+    <style name="AppTheme" parent="android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:fontFamily">sans</item>
+        <item name="android:colorAccent">#5964E8</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:navigationBarColor">#F3F4F8</item>
+        <item name="android:statusBarColor">#F3F4F8</item>
+        <item name="android:windowActionModeOverlay">true</item>
+    </style>
+</resources>
