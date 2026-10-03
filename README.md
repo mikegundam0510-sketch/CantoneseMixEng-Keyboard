@@ -20,7 +20,7 @@
 - 參考上文排序候選（例如「開」後輸入 `oa` 優先提供「會」），上文不保存。
 - 本機學習英文詞；設定支援新增自訂英文詞或中文詞字碼、刪除英文學習詞、管理及清除自訂詞／置頂候選。長按候選可置頂或取消置頂。
 - 長按逗號／句號選常用標點。
-- 速成一個相鄰按鍵錯碼的修正候選另列顯示，不取代正確配碼候選，不自動改字，可在設定停用。
+- 速成一個相鄰按鍵錯碼的修正候選融合到同一列，長按可查看修正字碼，不取代正確配碼候選，不自動改字，可在設定停用。
 - 在字根按鍵區左右掃動游標，保留空白鍵游標手勢；候選列仍用於橫向瀏覽。Shift／刪除保留自身長按操作。未選字碼會先保留為原字再移動游標。
 
 中英文仍有字碼歧義，有限離線字詞模型不保證每句首選正確。分段改選限當前候選或最近一次可重選的輸入，不是任意舊文字的重新轉換。Samsung/Fold 真機及語音效果仍需試用確認。
@@ -28,7 +28,7 @@
 ## 0.4.0 更新
 
 - 常用字預設排序使用 20,461 個單字頻率資料，並補充香港常用字優先次序；保留本機選字學習及全部冷門字。
-- 連續速成按相鄰字搭配及詞組排序，兼顧香港口語和書面中文；`ofonaovrmrq` 首選「你今日食咗咩」。這是有限離線字詞模型，不保證每句首選正確。
+- 連續速成按最多四字上文的離線五元字模型及詞組排序，兼顧香港口語和書面中文；`ofonaovrmrq` 首選「你今日食咗咩」。這是統計離線語言模型，不保證每句首選正確。
 - 收起候選列可左右滑動瀏覽全部候選，保留空格翻頁及展開選字。
 - 空白鍵使用置中線條圖示，保留無障礙說明及滑動游標。
 - 咪掣直接呼叫手機的預設語音辨識服務，不需切換 Samsung Keyboard。首次需允許咪高峰，再返回輸入框按咪。中文模式請求廣東話 `yue-HK`，英文模式請求 `en-HK`；實際語言、離線與混合辨識能力取決於手機服務，未完成 Samsung/Fold 真機測試。
@@ -36,7 +36,7 @@
 
 ## 0.2.0 更新
 
-- **連續速成**：輸入 `ofvdrf` 可選「你好嗎」。80,000 個離線詞組配合字頻組句，支援一碼字及不同長度字碼拆分。
+- **連續速成**：輸入 `ofvdrf` 可選「你好嗎」。原有 80,000 個詞組加上約 111,000 個粵語詞／片段，配合五元字模型組句，支援一碼字及不同長度字碼拆分。
 - **逐字改選**：按「逐字」先選首字，餘下字碼保留。適合人名、口語或未收錄句子。
 - **3,773 款 Emoji**：Unicode 15.1 fully-qualified 清單，包括膚色及組合款式；9 個分類、可捲動列表、最多 40 個最近使用記錄。可關閉或清除最近記錄。
 - **灰底白鍵**：字根左上、英文字母下方，功能鍵較深；另有高對比深色模式。預設顯示數字列，空白鍵只有符號，沒有品牌字樣。
@@ -89,7 +89,7 @@ Windows 使用 `gradlew.bat`，或用 Android Studio 開啟根目錄。設定 `A
 
 ## 限制與驗證
 
-連續速成是有限搜尋的離線字詞引擎，並非 AI 語言模型，不保證每句首選正確。英文使用內置常用詞及本機自訂／學習詞，支援補全及由使用者確認的單次拼字修正，未有完整字典或自動替換；未加入筆畫、拼音或倉頡擴展字庫。
+連續速成使用有限搜尋及統計五元字語言模型，未包含大型神經網絡模型，不保證每句首選正確。英文使用內置常用詞及本機自訂／學習詞，支援補全及由使用者確認的單次拼字修正，未有完整字典或自動替換；未加入筆畫、拼音或倉頡擴展字庫。
 
 Emoji 由系統字型顯示，舊 Android 可能缺少部分圖案。清單內複合 Emoji（膚色、國旗、家庭等）可整個刪除；Emoji 15.1 未收錄的新組合可能需多次刪除。
 
@@ -105,3 +105,11 @@ Emoji 由系統字型顯示，舊 Android 可能缺少部分圖案。清單內�
 
 `tools/prepare_language_data.py` 可由上述版本的 `essay.txt` 與 `emoji-test.txt` 重建可閱讀的 TSV 資料，不需在 App 執行時下載。
 
+
+### 0.6.0 source preview (no APK yet)
+
+One candidate strip, with no separate code preview or repair strip. Candidates share plain text styling and broad tap areas; swipe horizontally or expand for more. The per-character selector is inside the expanded panel. Exact candidates retain their metadata when a repair produces the same text. Only repairs scoring substantially above the best exact sentence are promoted; the first exact choices stay ahead and repairs never silently change text.
+
+The mode button can switch URI/browser fields from English to Chinese; editor restarts preserve the user's selection. Password and numeric fields retain their input policy.
+
+The bundled model uses up to four preceding Han characters, stops at punctuation/English boundaries, and does not save context. Training sources, pinned revisions, source hashes and held-out probability evaluation are in `app/src/main/assets/MODEL_REPORT.json`; see `docs/OFFLINE_MODEL.md` for reproduction and limits.

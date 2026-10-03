@@ -8,6 +8,7 @@ import java.util.function.ToIntBiFunction;
 public final class QuickDecoder {
     private static final int BEAM = 48;
     private final DictionaryEngine dictionary;
+    private final OfflineLanguageModel model;
     private final Map<String, Double> pairCounts = new HashMap<>();
     private final Map<String, Double> outgoing = new HashMap<>();
     private final Map<String, List<Token>> vocabulary = new HashMap<>();
@@ -23,10 +24,15 @@ public final class QuickDecoder {
         this(dictionary, input, null);
     }
     public QuickDecoder(DictionaryEngine dictionary, Reader input, Reader hkInput) throws IOException {
-        this.dictionary = dictionary;
+        this(dictionary, input, hkInput, null, null);
+    }
+    public QuickDecoder(DictionaryEngine dictionary, Reader input, Reader hkInput, Reader cantoneseInput,
+                        OfflineLanguageModel model) throws IOException {
+        this.dictionary = dictionary; this.model = model;
         Map<String, Double> wordCounts = new HashMap<>();
         readVocabulary(input, wordCounts);
         if (hkInput != null) readVocabulary(hkInput, wordCounts);
+        if (cantoneseInput != null) readVocabulary(cantoneseInput, wordCounts);
         for (Map.Entry<String, Double> entry : wordCounts.entrySet()) {
             String previous = null;
             for (int cp : entry.getKey().codePoints().toArray()) {
@@ -98,10 +104,11 @@ public final class QuickDecoder {
                         bonus += Math.min(2.5, Math.log1p(learned.applyAsInt(c, character)) * .65);
                     }
                     String word = choice.getKey();
-                    String first = new String(Character.toChars(word.codePointAt(0)));
+                    int boundaryLength = Math.min(model == null ? 1 : 4, word.codePointCount(0, word.length()));
+                    String first = word.substring(0, word.offsetByCodePoints(0, boundaryLength));
                     double internalScore = languageScore("", word) - languageScore("", first);
                     for (Path prefix : paths) {
-                        double score = languageScore(prefix.text.isEmpty() ? context : prefix.text, first) + internalScore;
+                        double score = languageScore(context + prefix.text, first) + internalScore;
                         int characters = choice.getKey().codePointCount(0, choice.getKey().length());
                         // A modest word bonus, with character likelihood applied across token boundaries.
                         double wordBonus = characters > 1 ? Math.min(1.5, Math.log1p(choice.getValue()) / 10) * (characters - 1) : 0;
@@ -113,7 +120,10 @@ public final class QuickDecoder {
         }
         List<String> result = new ArrayList<>();
         // An attested complete word/phrase is safer than a sentence invented from pair statistics.
-        for (Token token : vocabulary.getOrDefault(code, Collections.emptyList())) {
+        List<Token> wholeWords = new ArrayList<>(vocabulary.getOrDefault(code, Collections.emptyList()));
+        if (model != null) wholeWords.sort(Comparator.comparingDouble((Token t) ->
+            languageScore(context, t.text) + Math.min(8, Math.log1p(t.score) * .7)).reversed());
+        for (Token token : wholeWords) {
             if (!dictionary.matchQuickCodes(code, token.text).isEmpty() && !result.contains(token.text)) result.add(token.text);
             if (result.size() == 5) break;
         }
@@ -125,6 +135,7 @@ public final class QuickDecoder {
     }
 
     public double languageScore(String prefix, String text) {
+        if (model != null) return model.score(prefix, text);
         String previous = prefix.isEmpty() ? null : new String(Character.toChars(prefix.codePointBefore(prefix.length())));
         double score = 0;
         for (int cp : text.codePoints().toArray()) {

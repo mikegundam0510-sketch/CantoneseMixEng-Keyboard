@@ -1,0 +1,65 @@
+{
+  "algorithm": "character 5-gram, count interpolation with validation-selected prior mass and pruning-aware backoff",
+  "context_characters": 4,
+  "source_revisions": {
+    "hkcancor": "39aeadf920e0b5ca93d0ad7792c59e740e7bdd65",
+    "rime_cantonese": "259f0e48bba840c3a2e0d117539e96937f3d89bc",
+    "rime_essay": "054920de4f54c9e5994276a96a4fc2a35cb51aa3"
+  },
+  "source_sha256": {
+    "hkcancor_zip": "09223963b8756254e15353cad843f8a4b0cbc4b9223dc8a8fa27fb1cf846057e",
+    "cantonese_words": "54d174ad2bb997e4a678b7b076b84e4dc5914481b32467cdea3b43e88b7d5474"
+  },
+  "training_conversation_files": 46,
+  "validation_conversation_files": [
+    "utf8/FC-046_v2",
+    "utf8/FC-053_v2",
+    "utf8/FC-R013b_v"
+  ],
+  "validation_scores_nats": {
+    "2": 5.160261896325739,
+    "4": 4.972943939640223,
+    "8": 4.813128263155842,
+    "16": 4.679422589876384,
+    "32": 4.575084392636041,
+    "64": 4.502406532819848,
+    "128": 4.462311967122666
+  },
+  "prior_strength": 128,
+  "heldout_conversation_files": [
+    "utf8/FC-005b_v2",
+    "utf8/FC-009b_v",
+    "utf8/FC-013_v",
+    "utf8/FC-028_v2",
+    "utf8/FC-045_v2",
+    "utf8/FC-056_v2",
+    "utf8/FC-103_v2",
+    "utf8/FC-R009_v",
+    "utf8/FC-R010a_v"
+  ],
+  "training_utterance_chunks": 25136,
+  "heldout_utterance_chunks": 4084,
+  "grams_by_order": [
+    20488,
+    170386,
+    169973,
+    79395,
+    58705
+  ],
+  "entries": 498947,
+  "model_primitive_array_bytes": 7983152,
+  "compressed_model_bytes": 4728029,
+  "additional_quick_entries": 122796,
+  "additional_unique_words": 111376,
+  "heldout_bigram": {
+    "characters": 21826,
+    "cross_entropy_nats": 4.786913595608052,
+    "perplexity": 119.9306423905056
+  },
+  "heldout_fivegram": {
+    "characters": 21826,
+    "cross_entropy_nats": 4.734478847977334,
+    "perplexity": 113.80413400633086
+  },
+  "note": "Held-out conversations are excluded from both n-gram training and learned corpus phrase additions; base external dictionaries can naturally contain their words. Perplexity measures next-character probability, not keyboard sentence accuracy."
+}

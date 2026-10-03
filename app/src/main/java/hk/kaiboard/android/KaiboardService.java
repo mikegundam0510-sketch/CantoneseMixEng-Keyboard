@@ -32,8 +32,7 @@ public final class KaiboardService extends InputMethodService {
     private final Map<String, InputCandidate> candidateDetails = new HashMap<>();
     private List<InputCandidate> corrections = Collections.emptyList();
     private boolean forceEnglish, forceChinese, reselectionLearned;
-    private LinearLayout correctionRow;
-    private TextView undoKey;
+        private TextView undoKey;
     private PopupWindow selectionPopup;
     private ReselectionRecord reselection;
     private InputCandidate restoredCandidate;
@@ -49,7 +48,7 @@ public final class KaiboardService extends InputMethodService {
     private LinearLayout root, panel, candidateRow;
     private HorizontalScrollView candidateScroll;
     private ScrollView expandedScroll;
-    private TextView raw, nextPage, firstToggle, codePreview, selectKey;
+    private TextView raw, nextPage, selectKey;
     private boolean chooseFirst, expanded, emojiSearch;
     private String emojiQuery = "";
     private LinearLayout toolbar, candidateBar;
@@ -83,7 +82,9 @@ public final class KaiboardService extends InputMethodService {
                     new InputStreamReader(getAssets().open("english.txt"), StandardCharsets.UTF_8),
                     new InputStreamReader(getAssets().open("character_frequencies.tsv"), StandardCharsets.UTF_8));
                 QuickDecoder phrases = new QuickDecoder(loaded, new InputStreamReader(getAssets().open("quick_phrases.tsv"), StandardCharsets.UTF_8),
-                    new InputStreamReader(getAssets().open("hk_phrases.tsv"), StandardCharsets.UTF_8));
+                    new InputStreamReader(getAssets().open("hk_phrases.tsv"), StandardCharsets.UTF_8),
+                    new InputStreamReader(getAssets().open("cantonese_phrases.tsv"), StandardCharsets.UTF_8),
+                    OfflineLanguageModel.load(getAssets().open("language_model.b64")));
                 EmojiCatalog emojis = new EmojiCatalog(new InputStreamReader(getAssets().open("emoji.tsv"), StandardCharsets.UTF_8));
                 EnglishEngine englishWords = new EnglishEngine(new InputStreamReader(getAssets().open("english.txt"), StandardCharsets.UTF_8));
                 CandidateEngine mixed = new CandidateEngine(loaded, phrases, englishWords);
@@ -114,7 +115,7 @@ public final class KaiboardService extends InputMethodService {
         directField = secure || numeric || type == InputType.TYPE_NULL || type == InputType.TYPE_CLASS_TEXT &&
             (variation == InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS || variation == InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS
             || variation == InputType.TYPE_TEXT_VARIATION_URI);
-        ascii = directField; shift = false; caps = false; symbols = false; extraSymbols = false; emoji = false; aiHelp = false; chooseFirst = false;
+        if (!restarting || secure || numeric) ascii = directField; shift = false; caps = false; symbols = false; extraSymbols = false; emoji = false; aiHelp = false; chooseFirst = false;
     }
 
     @Override public void onStartInputView(EditorInfo info, boolean restarting) {
@@ -164,7 +165,7 @@ public final class KaiboardService extends InputMethodService {
         if (root == null) return;
         if (tonePopup != null) { tonePopup.dismiss(); tonePopup = null; }
         dismissSelectionPopup();
-        stopRepeat(); colors(); expandedScroll = null; candidateRow = null; raw = null; nextPage = null; firstToggle = null; codePreview = null;
+        stopRepeat(); colors(); expandedScroll = null; candidateRow = null; raw = null; nextPage = null;
         quick = prefs.getBoolean("quick", true); cangjie = prefs.getBoolean("cangjie", true); english = prefs.getBoolean("english", true);
         root.removeAllViews(); root.setBackgroundColor(bg); root.setPadding(dp(splitLayout() ? 14 : 4), dp(5), dp(splitLayout() ? 14 : 4), dp(6));
         LinearLayout dock = row(root);
@@ -204,22 +205,24 @@ public final class KaiboardService extends InputMethodService {
             return;
         }
 
-        codePreview = new TextView(this); codePreview.setTextColor(muted); codePreview.setTextSize(12);
-        codePreview.setPadding(dp(8),0,dp(8),0); codePreview.setSingleLine(true); codePreview.setEllipsize(TextUtils.TruncateAt.START);
-        panel.addView(codePreview, new LinearLayout.LayoutParams(-1,dp(22)));
         LinearLayout bar = row(panel); candidateBar = bar;
-        raw = key(bar, "英文", 1.35f, true, () -> { boolean wasEnglish = englishIntent(); forceEnglish = !wasEnglish; forceChinese = wasEnglish;
-            chooseFirst = false; updateCandidates(); }, 42);
+        raw = key(bar, "英文", 1.35f, true, () -> {
+            if (secure || numeric) return;
+            if (ascii || composing.length() == 0) {
+                finishLiteral(); ascii = !ascii; forceEnglish = forceChinese = false; render();
+            } else {
+                boolean wasEnglish = englishIntent(); forceEnglish = !wasEnglish; forceChinese = wasEnglish;
+                chooseFirst = false; updateCandidates();
+            }
+        }, 42);
         raw.setContentDescription("指定英文段或返回自動判斷");
         raw.setTextSize(13);
         candidateScroll = new HorizontalScrollView(this); candidateScroll.setHorizontalScrollBarEnabled(false); candidateScroll.setFillViewport(false);
         candidateScroll.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
         candidateRow = new LinearLayout(this); candidateRow.setOrientation(LinearLayout.HORIZONTAL);
         candidateScroll.addView(candidateRow, new HorizontalScrollView.LayoutParams(-2, -1)); bar.addView(candidateScroll, new LinearLayout.LayoutParams(0, dp(48), 6));
-        firstToggle = key(bar, "逐字", 1.15f, true, () -> { chooseFirst = !chooseFirst; updateCandidates(); }, 42);
         nextPage = key(bar, "⌄", .65f, true, () -> { expanded = !expanded; render(); }, 43);
         nextPage.setContentDescription("展開或收起候選字");
-        correctionRow = row(panel); correctionRow.setMinimumHeight(dp(36));
         updateCandidates();
 
         if (expanded && !candidates.isEmpty()) {
@@ -338,7 +341,7 @@ public final class KaiboardService extends InputMethodService {
         CharSequence preceding = ic.getTextBeforeCursor(128, 0); if (preceding == null) return "";
         String text = preceding.toString(), code = composing.toString();
         if (!code.isEmpty() && text.endsWith(code)) text = text.substring(0, text.length() - code.length());
-        return text.isEmpty() ? "" : new String(Character.toChars(text.codePointBefore(text.length())));
+        return OfflineLanguageModel.contextTail(text);
     }
 
     private List<String> personalEnglish() {
@@ -535,6 +538,27 @@ public final class KaiboardService extends InputMethodService {
         if (!noLearning) request.values.sort(Comparator.comparingInt((String value) ->
             request.personal.containsKey(request.pinPrefix(request.details.get(value).effectiveCode()) + value) ? 2 :
             request.personal.containsKey("c:" + input.toLowerCase(Locale.ROOT) + ":" + value) ? 1 : 0).reversed());
+        if (!request.corrections.isEmpty()) {
+            LinkedHashSet<String> combined = new LinkedHashSet<>();
+            for (int i=0;i<Math.min(3,request.values.size());i++) combined.add(request.values.get(i));
+            double baselineScore = Double.NEGATIVE_INFINITY;
+            for (String value : request.values) {
+                InputCandidate detail = request.details.get(value);
+                if (detail != null && detail.source.length() == input.length() && !detail.englishOnly())
+                    baselineScore = Math.max(baselineScore, decoder.languageScore(preceding, value));
+            }
+            int promoted = 0;
+            for (InputCandidate candidate : request.corrections) {
+                if (promoted < 2 && !results.contains(candidate.text)
+                    && decoder.languageScore(preceding, candidate.text) > baselineScore + Math.log(4)) {
+                    request.add(combined, candidate); promoted++;
+                }
+            }
+            combined.addAll(request.values);
+            for (InputCandidate candidate : request.corrections)
+                if (!results.contains(candidate.text)) request.add(combined,candidate);
+            request.values = new ArrayList<>(combined);
+        }
         for (String word : request.values) request.consumed.putIfAbsent(word, input.length());
     }
 
@@ -545,27 +569,29 @@ public final class KaiboardService extends InputMethodService {
     private void displayCandidates() {
         if (candidateRow == null || raw == null) return;
         candidateRow.removeAllViews();
-        raw.setText(englishIntent() ? "中文" : "英文");
+        raw.setText(ascii || englishIntent() ? "中文" : "英文");
         if (undoKey != null) { undoKey.setEnabled(canReselect()); undoKey.setAlpha(canReselect() ? 1f : .35f); }
         if(selectKey!=null) selectKey.setText(composing.length()>0?"選字":"速成");
-        raw.setEnabled(composing.length() > 0);
-        raw.setAlpha(composing.length() > 0 ? 1f : .45f);
+        raw.setEnabled(!secure && !numeric);
+        raw.setAlpha(!secure && !numeric ? 1f : .45f);
         if (toolbar != null) toolbar.setVisibility(View.VISIBLE);
-        if (candidateBar != null) candidateBar.setVisibility(composing.length() == 0 ? View.INVISIBLE : View.VISIBLE);
-        if (codePreview != null) codePreview.setVisibility(View.VISIBLE);
-        if (codePreview != null) codePreview.setText(composing.length() == 0 ? secure ? "密碼輸入" : loadFailed ? "字庫載入失敗" : dictionary == null ? "載入字庫…" : ascii ? "English" : "速成  ·  倉頡  ·  English" :
-            (forceEnglish || englishIntent() ? "English   " : chooseFirst ? "逐字選取   " : "") + composing.toString());
-        if (firstToggle != null) { firstToggle.setText(chooseFirst ? "整句" : "逐字"); firstToggle.setVisibility(quick && prefs.getBoolean("continuous",true) && composing.length() > 2 ? View.VISIBLE : View.INVISIBLE); }
-        displayCorrections();
+        if (candidateBar != null) candidateBar.setVisibility(secure || numeric ? View.GONE : View.VISIBLE);
+        if (restoredCandidate != null) {
+            TextView edit = new TextView(this); edit.setText("分段改選"); edit.setTextColor(accent); edit.setTextSize(15);
+            edit.setGravity(Gravity.CENTER); edit.setPadding(dp(8),0,dp(8),0); edit.setContentDescription("分段改選");
+            edit.setOnClickListener(v -> segmentMenu(edit, restoredCandidate));
+            candidateRow.addView(edit, new LinearLayout.LayoutParams(-2, dp(48)));
+        }
         if (candidates.isEmpty()) { nextPage.setVisibility(View.INVISIBLE); return; }
         int pages = (candidates.size() + PAGE_SIZE - 1) / PAGE_SIZE;
         candidatePage %= pages;
         for (int i = 0; i < candidates.size(); i++) {
             String value = candidates.get(i);
             boolean partial = consumedCodes.getOrDefault(value, composing.length()) < composing.length();
-            TextView item = new TextView(this); item.setText(partial ? value + " ›" : value); item.setTextSize(23); item.setTextColor(fg);
-            item.setGravity(Gravity.CENTER); item.setPadding(dp(8), 0, dp(8), 0); item.setMinWidth(dp(32)); item.setSingleLine(true);
-            item.setContentDescription(value + (partial || chooseFirst ? "，先輸入此字並保留後續字碼" : ""));
+            boolean corrected = candidateDetails.get(value) != null && candidateDetails.get(value).corrected;
+            TextView item = new TextView(this); item.setText(value); item.setTextSize(23); item.setTextColor(fg);
+            item.setGravity(Gravity.CENTER); item.setPadding(dp(12), 0, dp(12), 0); item.setMinWidth(dp(48)); item.setSingleLine(true);
+            item.setContentDescription((corrected ? "修正候選：" : "") + value + (partial || chooseFirst ? "，先輸入此字並保留後續字碼" : ""));
             if (i == candidatePage * PAGE_SIZE) { item.setTextColor(accent); item.setTypeface(null, Typeface.BOLD); }
             item.setBackgroundColor(Color.TRANSPARENT); item.setOnClickListener(v -> commit(value));
             item.setOnLongClickListener(v -> { candidateMenu(item, candidateDetails.get(value)); return true; });
@@ -573,7 +599,7 @@ public final class KaiboardService extends InputMethodService {
             candidateRow.addView(item, params);
         }
         nextPage.setVisibility(View.VISIBLE);
-        nextPage.setText((candidatePage + 1) + "/" + pages + (expanded ? "⌃" : "⌄")); nextPage.setTextSize(11);
+        nextPage.setText(expanded ? "⌃" : "⌄"); nextPage.setTextSize(23);
         final int first = candidatePage * PAGE_SIZE;
         candidateScroll.post(() -> {
             if (first < candidateRow.getChildCount()) candidateScroll.scrollTo(candidateRow.getChildAt(first).getLeft(), 0);
@@ -903,6 +929,7 @@ public final class KaiboardService extends InputMethodService {
         String key = pinPrefix(candidate.effectiveCode()) + candidate.text;
         boolean pinned = !noLearning && personal.contains(key);
         List<String> labels = new ArrayList<>(); labels.add("分段改選");
+        if (candidate.corrected) labels.set(0, "修正字碼「" + candidate.effectiveCode() + "」・分段改選");
         if (!noLearning) labels.add(pinned ? "取消置頂" : "置頂此候選");
         popupChoices(anchor, labels, which -> {
             if (which == 0) segmentMenu(anchor, candidate);
@@ -942,29 +969,6 @@ public final class KaiboardService extends InputMethodService {
         });
     }
 
-    private void displayCorrections() {
-        if (correctionRow == null) return;
-        correctionRow.removeAllViews();
-        if (restoredCandidate != null) {
-            TextView edit = new TextView(this); edit.setText("分段改選"); edit.setTextColor(accent); edit.setTextSize(15);
-            edit.setPadding(dp(8),dp(6),dp(8),dp(6)); edit.setContentDescription("分段改選");
-            edit.setOnClickListener(v -> segmentMenu(edit, restoredCandidate)); correctionRow.addView(edit);
-        }
-        if (!corrections.isEmpty()) {
-            HorizontalScrollView strip = new HorizontalScrollView(this); strip.setHorizontalScrollBarEnabled(false);
-            LinearLayout list = new LinearLayout(this);
-            for (InputCandidate repair : corrections) {
-                TextView item = new TextView(this); item.setText("↳ " + repair.text); item.setTextColor(muted); item.setTextSize(16);
-                item.setSingleLine(true); item.setPadding(dp(8),dp(6),dp(8),dp(6));
-                item.setContentDescription("修正候選：" + repair.text);
-                item.setOnClickListener(v -> commitDetail(repair, true)); list.addView(item);
-            }
-            strip.addView(list, new HorizontalScrollView.LayoutParams(-2,-1));
-            correctionRow.addView(strip, new LinearLayout.LayoutParams(0,dp(36),1));
-        }
-        correctionRow.setVisibility(restoredCandidate == null && corrections.isEmpty() ? View.INVISIBLE : View.VISIBLE);
-    }
-
     private void punctuation(View anchor) {
         List<String> values = Arrays.asList("？", "！", "、", "：", "；", "「", "」", "『", "』", "（", "）", "…", "?", "!", "\"", "'", "(", ")");
         popupChoices(anchor, values, which -> insert(values.get(which)));
@@ -990,6 +994,13 @@ public final class KaiboardService extends InputMethodService {
             panel.addView(expandedScroll,new LinearLayout.LayoutParams(-1,dp(210)));
         }
         expandedScroll.removeAllViews();
+        LinearLayout content = new LinearLayout(this); content.setOrientation(LinearLayout.VERTICAL);
+        if (quick && prefs.getBoolean("continuous", true) && composing.length() > 2) {
+            LinearLayout actions = new LinearLayout(this);
+            key(actions, chooseFirst ? "返回整句候選" : "逐字選擇", 1, true,
+                () -> { chooseFirst = !chooseFirst; updateCandidates(); }, 44);
+            content.addView(actions);
+        }
         android.widget.GridLayout grid = new android.widget.GridLayout(this); grid.setColumnCount(5);
         for (String value : candidates) {
             TextView item = new TextView(this); item.setText(value); item.setTextSize(21); item.setTextColor(fg);
@@ -999,7 +1010,7 @@ public final class KaiboardService extends InputMethodService {
             grid.addView(item,lp); item.setOnClickListener(v -> commit(value));
             item.setOnLongClickListener(v -> { candidateMenu(item, candidateDetails.get(value)); return true; });
         }
-        expandedScroll.addView(grid);
+        content.addView(grid); expandedScroll.addView(content);
     }
 
     private String recentEmoji() {
