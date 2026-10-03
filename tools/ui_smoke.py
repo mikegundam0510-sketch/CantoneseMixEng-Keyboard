@@ -74,4 +74,26 @@ for _ in range(3):
     adb("shell","input","swipe",x,str(bounds[1]+25),x,str(bounds[3]-25),"350");time.sleep(.4)
 assert find("表情").get("selected")=="true","Scroll did not update current category"
 shot("05-scroll-category")
-(out/"result.txt").write_text("PASS: keyboard launch, continuous category jump, scroll-driven selection, skin-tone popup and emoji commit.\n",encoding="utf-8")
+# Exercise real key touches, whole-sentence ranking and the horizontal candidate strip.
+tap("Emoji")
+radicals=dict(zip("abcdefghijklmnopqrstuvwxyz", "日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜重"))
+for char in "ofonaovrmrq": tap(char+"，"+radicals[char])
+first=find("你今日食咗咩")
+assert first is not None, "HK sentence must lead the candidate strip"
+shot("06-hk-candidates")
+strip=next(n for n in tree().iter("node") if n.get("class")=="android.widget.HorizontalScrollView")
+bounds=list(map(int,re.findall(r"\d+",strip.get("bounds"))))
+y=str((bounds[1]+bounds[3])//2)
+before=first.get("bounds")
+adb("shell","input","swipe",str(bounds[2]-10),y,str(bounds[0]+10),y,"450");time.sleep(.5)
+after=find("你今日食咗咩")
+assert after is None or after.get("bounds") != before, "Candidate strip did not scroll"
+assert any(n.get("text")=="OFONAOVRMRQ" for n in tree().iter("node")), "Swiping accidentally committed a candidate"
+shot("07-candidate-scroll")
+adb("shell","input","swipe",str(bounds[0]+10),y,str(bounds[2]-10),y,"450");time.sleep(.5)
+tap("你今日食咗咩")
+assert any("你今日食咗咩" in n.get("text","") for n in tree().iter("node") if n.get("class")=="android.widget.EditText"), "Sentence not committed"
+assert find("空白鍵，左右滑動移動游標") is not None, "Space icon lost accessibility description"
+assert not any(n.get("text") in ("空格","空白") for n in tree().iter("node")), "Space key still has a word label"
+shot("08-sentence-commit")
+(out/"result.txt").write_text("PASS: emoji browsing/tone insertion, HK sentence ranking/commit, candidate swipe without commit and icon space key. Voice and Samsung/Fold hardware remain device checks.\n",encoding="utf-8")

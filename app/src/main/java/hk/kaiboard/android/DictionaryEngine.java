@@ -10,10 +10,24 @@ public final class DictionaryEngine {
     private final List<String> english = new ArrayList<>();
     private final Map<String, Set<String>> reverseQuick = new HashMap<>();
     private int entries;
+    private final Map<String, Integer> frequencies = new HashMap<>();
+    private static final String HK_COMMON = "係唔嘅咗喺佢哋嘢咁啲冇嚟啦喎睇返畀攞噉咩食飲";
     // A small, explicit preference list, not a claimed statistical language model.
     private static final String COMMON = "的一是不了在人有我他這中大來上國個到說們為子和你地出道也時年得就那要下以生會自著去之過家學對可她裡後小麼心多天而能好都然沒日於起還發成事只作當想看文無開手十用主行方又如前所本見經頭面公同三已老從動兩長知民樣現分將外但身些與高意進把法此實回二理美點月明其種聲全工己話兒者向情部正名定女問力機給等幾很業最間新什打便位因重被走電四第門相次東海口使西再平真聽世氣信北南請香港謝唔嘅咗喺佢哋嘢咁啲冇嚟啦喎睇返畀攞嘥噉";
 
     public DictionaryEngine(Reader chinese, Reader words) throws IOException {
+        this(chinese, words, null);
+    }
+
+    public DictionaryEngine(Reader chinese, Reader words, Reader counts) throws IOException {
+        if (counts != null) try (BufferedReader reader = new BufferedReader(counts)) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] fields = line.split("\\t");
+                if (fields.length == 2 && !line.startsWith("#"))
+                    frequencies.put(fields[0], Integer.parseInt(fields[1]));
+            }
+        }
         try (BufferedReader reader = new BufferedReader(chinese)) {
             String line; boolean body = false;
             while ((line = reader.readLine()) != null) {
@@ -28,10 +42,7 @@ public final class DictionaryEngine {
                 entries++;
             }
         }
-        Comparator<String> priority = Comparator.comparingInt(s -> {
-            int pos = COMMON.indexOf(s);
-            return pos < 0 ? Integer.MAX_VALUE : pos;
-        });
+        Comparator<String> priority = Comparator.comparingInt(this::frequency).reversed();
         cangjie.values().forEach(list -> list.sort(priority));
         quick.values().forEach(list -> list.sort(priority));
         try (BufferedReader reader = new BufferedReader(words)) {
@@ -42,6 +53,14 @@ public final class DictionaryEngine {
             }
         }
         if (entries < 1000) throw new IOException("Chinese dictionary is incomplete");
+    }
+
+    public int frequency(String word) {
+        int count = frequencies.getOrDefault(word, 0);
+        if (HK_COMMON.contains(word)) count = Math.max(count, 25000);
+        int position = COMMON.indexOf(word);
+        if (count == 0 && position >= 0) count = Math.max(1, 5000 - position * 10);
+        return Math.max(1, count);
     }
 
     private static void add(Map<String, List<String>> index, String code, String word) {
@@ -103,3 +122,4 @@ public final class DictionaryEngine {
         return new ArrayList<>(result);
     }
 }
+

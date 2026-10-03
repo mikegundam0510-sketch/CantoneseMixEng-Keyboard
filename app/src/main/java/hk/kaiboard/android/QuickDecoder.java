@@ -6,8 +6,10 @@ import java.util.function.ToIntBiFunction;
 
 /** Bounded offline word-lattice decoder, including one-code Quick characters. */
 public final class QuickDecoder {
-    private static final int BEAM = 32;
+    private static final int BEAM = 48;
     private final DictionaryEngine dictionary;
+    private final Map<String, Double> pairCounts = new HashMap<>();
+    private final Map<String, Double> outgoing = new HashMap<>();
     private final Map<String, List<Token>> vocabulary = new HashMap<>();
     private static final class Token {
         final String text; final double score;
@@ -18,17 +20,44 @@ public final class QuickDecoder {
         Path(String text, double score) { this.text = text; this.score = score; }
     }
     public QuickDecoder(DictionaryEngine dictionary, Reader input) throws IOException {
+        this(dictionary, input, null);
+    }
+    public QuickDecoder(DictionaryEngine dictionary, Reader input, Reader hkInput) throws IOException {
         this.dictionary = dictionary;
+        Map<String, Double> wordCounts = new HashMap<>();
+        readVocabulary(input, wordCounts);
+        if (hkInput != null) readVocabulary(hkInput, wordCounts);
+        for (Map.Entry<String, Double> entry : wordCounts.entrySet()) {
+            String previous = null;
+            for (int cp : entry.getKey().codePoints().toArray()) {
+                String current = new String(Character.toChars(cp));
+                if (previous != null) {
+                    pairCounts.merge(previous + current, entry.getValue(), Double::sum);
+                    outgoing.merge(previous, entry.getValue(), Double::sum);
+                }
+                previous = current;
+            }
+        }
+        for (List<Token> tokens : vocabulary.values()) tokens.sort(Comparator.comparingDouble((Token t) -> t.score).reversed());
+    }
+
+    private void readVocabulary(Reader input, Map<String, Double> wordCounts) throws IOException {
         try (BufferedReader reader = new BufferedReader(input)) {
             String line;
             while ((line = reader.readLine()) != null) {
                 if (line.startsWith("#")) continue;
-                String[] f = line.split("\t");
-                if (f.length == 3) vocabulary.computeIfAbsent(f[0], k -> new ArrayList<>())
-                    .add(new Token(f[1], Math.log((Double.parseDouble(f[2]) + 1) / 10000000.0)));
+                String[] f = line.split("\\t");
+                if (f.length != 3) continue;
+                double count = Double.parseDouble(f[2]);
+                wordCounts.merge(f[1], count, Math::max);
+                List<Token> tokens = vocabulary.computeIfAbsent(f[0], k -> new ArrayList<>());
+                Token existing = null;
+                for (Token token : tokens) if (token.text.equals(f[1])) { existing = token; break; }
+                if (existing != null && existing.score >= count) continue;
+                if (existing != null) tokens.remove(existing);
+                tokens.add(new Token(f[1], count));
             }
         }
-        for (List<Token> tokens : vocabulary.values()) tokens.sort(Comparator.comparingDouble((Token t) -> t.score).reversed());
     }
 
     public List<String> decode(String input, ToIntBiFunction<String, String> learned) {
@@ -44,13 +73,13 @@ public final class QuickDecoder {
                 String part = code.substring(pos, pos + length);
                 LinkedHashMap<String, Double> options = new LinkedHashMap<>();
                 List<Token> known = vocabulary.getOrDefault(part, Collections.emptyList());
-                for (int j = 0; j < Math.min(16, known.size()); j++) options.put(known.get(j).text, known.get(j).score);
+                for (int j = 0; j < Math.min(24, known.size()); j++) options.put(known.get(j).text, known.get(j).score);
                 if (length <= 2) {
                     List<String> letters = new ArrayList<>(dictionary.quickCandidates(part));
                     letters.sort(Comparator.comparingInt((String w) -> learned.applyAsInt(part, w)).reversed());
                     for (int j = 0; j < Math.min(24, letters.size()); j++) {
                         String word = letters.get(j);
-                        options.putIfAbsent(word, -13.0 - j * .1);
+                        options.putIfAbsent(word, (double) dictionary.frequency(word));
                     }
                 }
                 if (options.isEmpty()) continue;
@@ -64,7 +93,13 @@ public final class QuickDecoder {
                         String character = new String(Character.toChars(cp)); offset += Character.charCount(cp);
                         bonus += Math.min(2.5, Math.log1p(learned.applyAsInt(c, character)) * .65);
                     }
-                    for (Path prefix : paths) target.add(new Path(prefix.text + choice.getKey(), prefix.score + choice.getValue() + bonus));
+                    for (Path prefix : paths) {
+                        double score = languageScore(prefix.text, choice.getKey());
+                        int characters = choice.getKey().codePointCount(0, choice.getKey().length());
+                        // A modest word bonus, with character likelihood applied across token boundaries.
+                        double wordBonus = characters > 1 ? Math.min(1.5, Math.log1p(choice.getValue()) / 10) * (characters - 1) : 0;
+                        target.add(new Path(prefix.text + choice.getKey(), prefix.score + score + wordBonus + bonus));
+                    }
                 }
                 if (target.size() > 1024) lattice.set(pos + length, prune(target));
             }
@@ -77,6 +112,24 @@ public final class QuickDecoder {
         return result;
     }
 
+    private double languageScore(String prefix, String text) {
+        String previous = prefix.isEmpty() ? null : new String(Character.toChars(prefix.codePointBefore(prefix.length())));
+        double score = 0;
+        for (int cp : text.codePoints().toArray()) {
+            String current = new String(Character.toChars(cp));
+            double unigram = Math.min(.2, dictionary.frequency(current) / 10000000.0);
+            double probability = unigram;
+            if (previous != null) {
+                double total = outgoing.getOrDefault(previous, 0.0);
+                double conditional = total == 0 ? unigram : pairCounts.getOrDefault(previous + current, 0.0) / total;
+                probability = .98 * conditional + .02 * unigram;
+            }
+            score += Math.log(Math.max(1e-9, probability));
+            previous = current;
+        }
+        return score;
+    }
+
     private static List<Path> prune(List<Path> input) {
         input.sort(Comparator.comparingDouble((Path p) -> p.score).reversed());
         List<Path> result = new ArrayList<>(); Set<String> seen = new HashSet<>();
@@ -84,3 +137,4 @@ public final class QuickDecoder {
         return result;
     }
 }
+

@@ -10,7 +10,16 @@ public class DictionaryEngineTest {
     private static DictionaryEngine engine;
     @BeforeClass public static void loadBundledDictionary() throws Exception {
         engine = new DictionaryEngine(new InputStreamReader(new FileInputStream("src/main/assets/cangjie5.base.dict.yaml"), StandardCharsets.UTF_8),
-            new InputStreamReader(new FileInputStream("src/main/assets/english.txt"), StandardCharsets.UTF_8));
+            new InputStreamReader(new FileInputStream("src/main/assets/english.txt"), StandardCharsets.UTF_8),
+            new InputStreamReader(new FileInputStream("src/main/assets/character_frequencies.tsv"), StandardCharsets.UTF_8));
+    }
+    @Test public void writtenAndColloquialCommonCharactersLeadColdStartCandidates() {
+        assertEquals("你", engine.quickCandidates("of").get(0));
+        assertEquals("食", engine.quickCandidates("ov").get(0));
+        assertEquals("咗", engine.quickCandidates("rm").get(0));
+        assertEquals("咩", engine.quickCandidates("rq").get(0));
+        assertTrue(engine.frequency("你") > engine.frequency("鷦"));
+        assertTrue(engine.frequency("食") > engine.frequency("餲"));
     }
     @Test public void dictionaryHasRealCoverage() { assertTrue(engine.entryCount() > 15000); }
     @Test public void quickUsesFirstAndLastCode() {
@@ -65,3 +74,4 @@ public class DictionaryEngineTest {
         assertNotEquals(LearningRanker.key("of", true, false, "你"), LearningRanker.key("of", true, true, "你"));
     }
 }
+

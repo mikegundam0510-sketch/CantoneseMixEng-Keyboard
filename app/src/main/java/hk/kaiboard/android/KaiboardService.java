@@ -1,6 +1,9 @@
 package hk.kaiboard.android;
 
 import android.content.*;
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.speech.*;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -23,6 +26,9 @@ public final class KaiboardService extends InputMethodService {
     private QuickDecoder decoder;
     private EmojiCatalog emojiCatalog;
     private boolean loadFailed, destroyed;
+    private SpeechRecognizer voiceRecognizer;
+    private boolean voiceListening;
+    private int voiceSession;
     private SharedPreferences prefs;
     private SharedPreferences learned;
     private boolean noLearning;
@@ -57,8 +63,10 @@ public final class KaiboardService extends InputMethodService {
             try {
                 DictionaryEngine loaded = new DictionaryEngine(
                     new InputStreamReader(getAssets().open("cangjie5.base.dict.yaml"), StandardCharsets.UTF_8),
-                    new InputStreamReader(getAssets().open("english.txt"), StandardCharsets.UTF_8));
-                QuickDecoder phrases = new QuickDecoder(loaded, new InputStreamReader(getAssets().open("quick_phrases.tsv"), StandardCharsets.UTF_8));
+                    new InputStreamReader(getAssets().open("english.txt"), StandardCharsets.UTF_8),
+                    new InputStreamReader(getAssets().open("character_frequencies.tsv"), StandardCharsets.UTF_8));
+                QuickDecoder phrases = new QuickDecoder(loaded, new InputStreamReader(getAssets().open("quick_phrases.tsv"), StandardCharsets.UTF_8),
+                    new InputStreamReader(getAssets().open("hk_phrases.tsv"), StandardCharsets.UTF_8));
                 EmojiCatalog emojis = new EmojiCatalog(new InputStreamReader(getAssets().open("emoji.tsv"), StandardCharsets.UTF_8));
                 handler.post(() -> { if (!destroyed) { dictionary = loaded; decoder = phrases; emojiCatalog = emojis; if (emoji) render(); else updateCandidates(); } });
             } catch (IOException e) {
@@ -74,7 +82,7 @@ public final class KaiboardService extends InputMethodService {
 
     @Override public void onStartInput(EditorInfo info, boolean restarting) {
         super.onStartInput(info, restarting);
-        resetComposition(); stopRepeat();
+        cancelVoice(); resetComposition(); stopRepeat();
         int type = info.inputType & InputType.TYPE_MASK_CLASS;
         int variation = info.inputType & InputType.TYPE_MASK_VARIATION;
         secure = InputPolicy.isSecure(info.inputType);
@@ -102,16 +110,17 @@ public final class KaiboardService extends InputMethodService {
     }
 
     @Override public void onFinishInputView(boolean finishingInput) {
+        cancelVoice();
         if (tonePopup != null) tonePopup.dismiss();
         stopRepeat(); finishLiteral(); super.onFinishInputView(finishingInput);
     }
 
     @Override public void onFinishInput() {
-        stopRepeat(); resetComposition(); updateCandidates(); super.onFinishInput();
+        cancelVoice(); stopRepeat(); resetComposition(); updateCandidates(); super.onFinishInput();
     }
 
     @Override public void onDestroy() {
-        destroyed = true; stopRepeat(); handler.removeCallbacksAndMessages(null); loader.shutdownNow(); super.onDestroy();
+        destroyed = true; cancelVoice(); stopRepeat(); handler.removeCallbacksAndMessages(null); loader.shutdownNow(); super.onDestroy();
     }
 
     private void colors() {
@@ -152,7 +161,7 @@ public final class KaiboardService extends InputMethodService {
         }, false);
         tool(toolbar, "keyboard", "選擇鍵盤", this::picker, false);
         tool(toolbar, "pen", "切換系統鍵盤使用手寫", () -> systemTool("手寫"), false);
-        tool(toolbar, "mic", "切換系統鍵盤使用語音", () -> systemTool("語音"), false);
+        tool(toolbar, "mic", voiceListening ? "停止語音輸入" : "語音輸入", this::voice, voiceListening);
         tool(toolbar, "more", "鍵盤設定", () -> {
             finishLiteral(); startActivity(new Intent(this, SettingsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         }, false);
@@ -174,9 +183,10 @@ public final class KaiboardService extends InputMethodService {
         LinearLayout bar = row(panel); candidateBar = bar;
         raw = key(bar, "英文", 1.35f, true, this::finishLiteral, 42);
         raw.setTextSize(13);
-        candidateScroll = new HorizontalScrollView(this); candidateScroll.setHorizontalScrollBarEnabled(false);
+        candidateScroll = new HorizontalScrollView(this); candidateScroll.setHorizontalScrollBarEnabled(false); candidateScroll.setFillViewport(false);
+        candidateScroll.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
         candidateRow = new LinearLayout(this); candidateRow.setOrientation(LinearLayout.HORIZONTAL);
-        candidateScroll.addView(candidateRow); bar.addView(candidateScroll, new LinearLayout.LayoutParams(0, dp(48), 6));
+        candidateScroll.addView(candidateRow, new HorizontalScrollView.LayoutParams(-2, -1)); bar.addView(candidateScroll, new LinearLayout.LayoutParams(0, dp(48), 6));
         firstToggle = key(bar, "逐字", 1.15f, true, () -> { chooseFirst = !chooseFirst; updateCandidates(); }, 42);
         nextPage = key(bar, "⌄", .65f, true, () -> { expanded = !expanded; render(); }, 43);
         nextPage.setContentDescription("展開或收起候選字"); updateCandidates();
@@ -221,7 +231,8 @@ public final class KaiboardService extends InputMethodService {
         selectKey = select; select.setTextSize(14); select.setSingleLine(true);
         select.setContentDescription("選取本頁第一個候選字；沒有字碼時切換鍵盤");
         if (!numeric) {
-            TextView space = key(bottom, "空格", splitLayout() ? 6.4f : 3.6f, false, this::space, keyHeight());
+            TextView space = key(bottom, "", splitLayout() ? 6.4f : 3.6f, false, this::space, keyHeight());
+            ((KeyboardKey) space).icon("space");
             space.setContentDescription("空白鍵，左右滑動移動游標"); attachSpaceGesture(space);
             key(bottom, ascii ? "," : "，", .9f, false, () -> insert(ascii ? "," : "，"), keyHeight());
             key(bottom, ascii ? "." : "。", .9f, false, () -> insert(ascii ? "." : "。"), keyHeight());
@@ -269,6 +280,7 @@ public final class KaiboardService extends InputMethodService {
     }
 
     private void typeLetter(char lower) {
+        if (voiceListening) { cancelVoice(); render(); }
         if (emojiSearch) { emojiQuery += lower; refreshEmoji(); return; }
         String value = String.valueOf(shift || caps ? Character.toUpperCase(lower) : lower);
         if (secure || ascii) insert(value);
@@ -325,7 +337,7 @@ public final class KaiboardService extends InputMethodService {
         if (candidates.isEmpty()) { nextPage.setVisibility(View.GONE); return; }
         int pages = (candidates.size() + PAGE_SIZE - 1) / PAGE_SIZE;
         candidatePage %= pages;
-        for (int i = candidatePage * PAGE_SIZE; i < Math.min(candidates.size(), (candidatePage + 1) * PAGE_SIZE); i++) {
+        for (int i = 0; i < candidates.size(); i++) {
             String value = candidates.get(i);
             TextView item = new TextView(this); item.setText(value); item.setTextSize(23); item.setTextColor(fg);
             item.setGravity(Gravity.CENTER); item.setPadding(dp(8), 0, dp(8), 0); item.setMinWidth(dp(32)); item.setSingleLine(true);
@@ -337,7 +349,10 @@ public final class KaiboardService extends InputMethodService {
         }
         nextPage.setVisibility(View.VISIBLE);
         nextPage.setText((candidatePage + 1) + "/" + pages + (expanded ? "⌃" : "⌄")); nextPage.setTextSize(11);
-        candidateScroll.scrollTo(0, 0);
+        final int first = candidatePage * PAGE_SIZE;
+        candidateScroll.post(() -> {
+            if (first < candidateRow.getChildCount()) candidateScroll.scrollTo(candidateRow.getChildAt(first).getLeft(), 0);
+        });
     }
 
     private void space() {
@@ -400,10 +415,12 @@ public final class KaiboardService extends InputMethodService {
     }
 
     private void insert(String text) {
+        cancelVoice();
         finishLiteral(); InputConnection ic = getCurrentInputConnection(); if (ic != null) ic.commitText(text, 1);
     }
 
     private void delete() {
+        if (voiceListening) { cancelVoice(); render(); }
         if (emojiSearch) { if (!emojiQuery.isEmpty()) emojiQuery = emojiQuery.substring(0, emojiQuery.length()-1); refreshEmoji(); return; }
         InputConnection ic = getCurrentInputConnection(); if (ic == null) return;
         if (composing.length() > 0) {
@@ -443,7 +460,7 @@ public final class KaiboardService extends InputMethodService {
         if (!sendDefaultEditorAction(true)) ic.commitText("\n", 1);
     }
 
-    private void picker() { finishLiteral(); ((InputMethodManager)getSystemService(INPUT_METHOD_SERVICE)).showInputMethodPicker(); }
+    private void picker() { cancelVoice(); finishLiteral(); ((InputMethodManager)getSystemService(INPUT_METHOD_SERVICE)).showInputMethodPicker(); }
     private void resetComposition() { expanded = false; emojiSearch = false; emojiQuery = ""; composing.setLength(0); candidates = Collections.emptyList(); consumedCodes.clear(); candidatePage = 0; chooseFirst = false; }
     private void sendKey(int keyCode) { InputConnection ic = getCurrentInputConnection(); if (ic != null) {
         ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, keyCode)); ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, keyCode));
@@ -487,6 +504,67 @@ public final class KaiboardService extends InputMethodService {
         });
     }
 
+    private void cancelVoice() {
+        voiceSession++;
+        voiceListening = false;
+        if (voiceRecognizer != null) {
+            voiceRecognizer.cancel(); voiceRecognizer.destroy(); voiceRecognizer = null;
+        }
+    }
+
+    private void voice() {
+        if (voiceListening) { cancelVoice(); render(); return; }
+        if (secure || numeric || getCurrentInputConnection() == null) return;
+        if (checkSelfPermission(Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            startActivity(new Intent(this, VoicePermissionActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+            return;
+        }
+        if (!SpeechRecognizer.isRecognitionAvailable(this)) {
+            Toast.makeText(this, "手機未有可用嘅語音辨識服務", Toast.LENGTH_LONG).show(); return;
+        }
+        finishLiteral();
+        final int session = ++voiceSession;
+        final InputConnection editor = getCurrentInputConnection();
+        voiceRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
+        voiceListening = true;
+        voiceRecognizer.setRecognitionListener(new RecognitionListener() {
+            @Override public void onReadyForSpeech(Bundle params) {
+                if (session == voiceSession) Toast.makeText(KaiboardService.this, "請講嘢；再撳咪可取消", Toast.LENGTH_SHORT).show();
+            }
+            @Override public void onBeginningOfSpeech() {}
+            @Override public void onRmsChanged(float rms) {}
+            @Override public void onBufferReceived(byte[] buffer) {}
+            @Override public void onEndOfSpeech() {}
+            @Override public void onPartialResults(Bundle results) {}
+            @Override public void onEvent(int type, Bundle params) {}
+            @Override public void onError(int error) {
+                if (session != voiceSession) return;
+                cancelVoice(); render();
+                String message = error == SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS ? "請允許咪高峰權限" :
+                    error == SpeechRecognizer.ERROR_NO_MATCH || error == SpeechRecognizer.ERROR_SPEECH_TIMEOUT ? "未聽清楚，請再試" :
+                    "語音辨識暫時未能使用，請檢查辨識服務、語言及網絡";
+                Toast.makeText(KaiboardService.this, message, Toast.LENGTH_LONG).show();
+            }
+            @Override public void onResults(Bundle results) {
+                if (session != voiceSession) return;
+                ArrayList<String> texts = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+                boolean sameEditor = editor == getCurrentInputConnection() && isInputViewShown() && !secure;
+                cancelVoice();
+                if (sameEditor && texts != null && !texts.isEmpty()) insert(texts.get(0));
+                render();
+            }
+        });
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, ascii ? "en-HK" : "yue-HK");
+        intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
+        try { voiceRecognizer.startListening(intent); render(); }
+        catch (RuntimeException exception) {
+            cancelVoice(); render();
+            Toast.makeText(this, "未能啟動語音辨識服務", Toast.LENGTH_LONG).show();
+        }
+    }
+
     private void systemTool(String name) {
         Toast.makeText(this, "請選擇 Samsung Keyboard，再使用" + name + "功能", Toast.LENGTH_LONG).show();
         picker();
@@ -496,7 +574,7 @@ public final class KaiboardService extends InputMethodService {
         KeyboardKey button = new KeyboardKey(this); button.icon(icon);
         button.setTextColor(selected ? accent : muted); button.setContentDescription(label);
         button.setBackground(selected ? background(dark ? 0xFF344760 : 0xFFB8CBE0) : background(bg));
-        button.setOnClickListener(v -> action.run());
+        button.setOnClickListener(v -> { if (voiceListening && !icon.equals("mic")) cancelVoice(); action.run(); });
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0,dp(44),1);
         lp.setMargins(dp(3),dp(3),dp(3),dp(3)); parent.addView(button,lp);
     }
@@ -663,7 +741,7 @@ public final class KaiboardService extends InputMethodService {
             case "␣": button.icon("space"); break;
         }
         button.setElevation(dp(1));
-        button.setOnClickListener(v -> { if (prefs.getBoolean("haptic", true)) v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP); action.run(); });
+        button.setOnClickListener(v -> { if (voiceListening) cancelVoice(); if (prefs.getBoolean("haptic", true)) v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP); action.run(); });
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, dp(height), weight); params.setMargins(dp(2), dp(3), dp(2), dp(3));
         parent.addView(button, params); return button;
     }
@@ -685,5 +763,6 @@ public final class KaiboardService extends InputMethodService {
     }
     private int dp(float value) { return Math.round(value * getResources().getDisplayMetrics().density); }
 }
+
 
 
