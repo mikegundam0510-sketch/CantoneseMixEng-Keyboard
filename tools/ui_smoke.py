@@ -169,6 +169,12 @@ code="ofonaovrmrq"
 for char in code: adb("shell","input","tap",*positions[char.upper()+"，"+radicals[char]])
 time.sleep(.8)
 assert editor_text()==code, "Rapid real-key taps lost or reordered code"
+for _ in range(3):
+    if find("你，先輸入此字並保留後續字碼") is not None: break
+    nodes=tree(); bar=next(n for n in nodes.iter("node") if n.get("class")=="android.widget.HorizontalScrollView")
+    bounds=list(map(int,re.findall(r"\d+",bar.get("bounds"))))
+    y=str((bounds[1]+bounds[3])//2)
+    adb("shell","input","swipe",str(bounds[2]-10),y,str(bounds[0]+10),y,"250");time.sleep(.2)
 assert find("你，先輸入此字並保留後續字碼") is not None, "Exact prefix fallback is missing"
 tap("你，先輸入此字並保留後續字碼")
 assert editor_text()=="你onaovrmrq", "Prefix choice discarded remaining codes"

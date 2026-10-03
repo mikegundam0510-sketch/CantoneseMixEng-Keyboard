@@ -527,7 +527,7 @@ public final class KaiboardService extends InputMethodService {
         if (continuous && !chooseFirst && !request.isEnglish && !forceEnglish) {
             LinkedHashSet<String> ordered = new LinkedHashSet<>();
             int count = 0;
-            for (String value : results) { ordered.add(value); if (++count == 2) break; }
+            for (String value : results) { ordered.add(value); if (++count == 1) break; }
             addPrefixChoices(request, ordered, 5);
             ordered.addAll(results); results = ordered;
         }
