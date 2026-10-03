@@ -48,4 +48,16 @@ public class QuickDecoderTest {
         for(int i=0;i<10;i++) decoder.decode("ofvdrfofvdrfofvdrf",(c,w)->0);
         assertTrue("Unexpectedly expensive sentence search",(System.nanoTime()-start)/1000000 < 5000);
     }
+    @Test public void associationsReturnOnlyMissingSuffixesWithNoDuplicates() {
+        List<String> afterYou = decoder.nextCandidates("你");
+        assertTrue(afterYou.contains("好嗎"));
+        assertTrue(decoder.nextCandidates("你好").contains("嗎"));
+        assertEquals(afterYou.size(), new HashSet<>(afterYou).size());
+        assertTrue(afterYou.size() <= 12);
+    }
+    @Test public void emptyUnknownAndOversizedContextDoesNotProduceSuggestions() {
+        assertTrue(decoder.nextCandidates("").isEmpty());
+        assertTrue(decoder.nextCandidates("xyz").isEmpty());
+        assertTrue(decoder.nextCandidates("你".repeat(9)).isEmpty());
+    }
 }

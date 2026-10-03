@@ -9,6 +9,7 @@ public final class QuickDecoder {
     private static final int BEAM = 32;
     private final DictionaryEngine dictionary;
     private final Map<String, List<Token>> vocabulary = new HashMap<>();
+    private final Map<String, List<Token>> associations = new HashMap<>();
     private static final class Token {
         final String text; final double score;
         Token(String text, double score) { this.text = text; this.score = score; }
@@ -19,16 +20,45 @@ public final class QuickDecoder {
     }
     public QuickDecoder(DictionaryEngine dictionary, Reader input) throws IOException {
         this.dictionary = dictionary;
+        Map<String, Token> uniquePhrases = new HashMap<>();
         try (BufferedReader reader = new BufferedReader(input)) {
             String line;
             while ((line = reader.readLine()) != null) {
                 if (line.startsWith("#")) continue;
                 String[] f = line.split("\t");
-                if (f.length == 3) vocabulary.computeIfAbsent(f[0], k -> new ArrayList<>())
-                    .add(new Token(f[1], Math.log((Double.parseDouble(f[2]) + 1) / 10000000.0)));
+                if (f.length == 3) {
+                    Token token = new Token(f[1], Math.log((Double.parseDouble(f[2]) + 1) / 10000000.0));
+                    vocabulary.computeIfAbsent(f[0], k -> new ArrayList<>()).add(token);
+                    Token previous = uniquePhrases.get(token.text);
+                    if (previous == null || token.score > previous.score) uniquePhrases.put(token.text, token);
+                }
             }
         }
         for (List<Token> tokens : vocabulary.values()) tokens.sort(Comparator.comparingDouble((Token t) -> t.score).reversed());
+        for (Token token : uniquePhrases.values()) {
+            if (token.text.codePointCount(0, token.text.length()) < 2) continue;
+            String first = token.text.substring(0, Character.charCount(token.text.codePointAt(0)));
+            associations.computeIfAbsent(first, k -> new ArrayList<>()).add(token);
+        }
+        for (List<Token> tokens : associations.values()) {
+            tokens.sort(Comparator.comparingDouble((Token t) -> t.score).reversed().thenComparing(t -> t.text));
+            if (tokens.size() > 64) tokens.subList(64, tokens.size()).clear();
+        }
+    }
+
+    /** Returns only the missing suffix of a known phrase; context stays in memory. */
+    public List<String> nextCandidates(String context) {
+        if (context.isEmpty() || context.codePointCount(0, context.length()) > 8) return Collections.emptyList();
+        LinkedHashSet<String> result = new LinkedHashSet<>();
+        for (int at = 0; at < context.length(); at += Character.charCount(context.codePointAt(at))) {
+            String prefix = context.substring(at);
+            String first = prefix.substring(0, Character.charCount(prefix.codePointAt(0)));
+            for (Token token : associations.getOrDefault(first, Collections.emptyList())) {
+                if (token.text.startsWith(prefix) && token.text.length() > prefix.length()) result.add(token.text.substring(prefix.length()));
+                if (result.size() >= 12) return new ArrayList<>(result);
+            }
+        }
+        return new ArrayList<>(result);
     }
 
     public List<String> decode(String input, ToIntBiFunction<String, String> learned) {

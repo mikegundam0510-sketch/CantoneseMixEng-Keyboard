@@ -35,7 +35,7 @@ public final class SettingsActivity extends Activity {
         setContentView(scroll);
         text(page, "粵", 38, accent, true);
         text(page, "粵語中英混合keyboard", 28, ink, true);
-        text(page, "速成・倉頡・English\n一個鍵盤，自然混合輸入。", 16, Color.DKGRAY, false);
+        text(page, "連續速成・English\n一個鍵盤，自然混合輸入。", 16, Color.DKGRAY, false);
 
         LinearLayout start = card("開始使用");
         status = text(start, "", 14, accent, true);
@@ -46,8 +46,10 @@ public final class SettingsActivity extends Activity {
         LinearLayout methods = card("混合輸入");
         toggle(methods, "速成（首尾碼）", "quick", true);
         toggle(methods, "連續速成組詞", "continuous", true);
-        toggle(methods, "倉頡五代（完整字碼）", "cangjie", true);
-        toggle(methods, "基本英文補全", "english", true);
+        toggle(methods, "選字後顯示聯想詞（不儲存前文）", "association", true);
+        toggle(methods, "倉頡五代（可選，預設關閉）", "cangjie", false);
+        toggle(methods, "離線英文補全", "english", true);
+        toggle(methods, "英文拼字建議（點選先替換）", "spelling", true);
         toggle(methods, "學習選字排序（只儲存於手機）", "learning", true);
         button(methods, "清除學習記錄", () -> new AlertDialog.Builder(this).setTitle("清除學習記錄？")
             .setMessage("將恢復預設選字次序。鍵盤設定不受影響。")
@@ -56,6 +58,12 @@ public final class SettingsActivity extends Activity {
                 Toast.makeText(this, "已清除學習記錄", Toast.LENGTH_SHORT).show();
             }).show());
         text(methods, "連續輸入 ofvdrf 可選「你好嗎」。點「逐字」可先選第一個字，餘下字碼會保留。點「英文」保留原字；空白鍵選第一個候選。", 13, Color.DKGRAY, false);
+        text(methods, "點「展開」查看全部候選，長按候選查速成碼。EN 模式亦有英文補全，空白鍵保留你打的英文再加空格。", 13, Color.DKGRAY, false);
+
+        LinearLayout shortcuts = card("自訂短語");
+        toggle(shortcuts, "啟用短語快捷碼", "shortcuts", true);
+        text(shortcuts, "自己新增字母快捷碼，例如 hk → 香港。完整輸入快捷碼後，短語會出現在候選列。最多 100 組，只儲存於手機；敏感欄位不顯示。", 14, Color.DKGRAY, false);
+        button(shortcuts, "新增／管理短語", this::managePhrases);
 
         LinearLayout look = card("外觀與手感");
         choice(look, "主題", "theme", new String[]{"跟隨系統", "淺色", "深色"}, new String[]{"system", "light", "dark"}, "system");
@@ -83,7 +91,7 @@ public final class SettingsActivity extends Activity {
         button(ai, "開啟鍵盤選擇器", () -> ((InputMethodManager)getSystemService(INPUT_METHOD_SERVICE)).showInputMethodPicker());
 
         LinearLayout about = card("離線與私隱");
-        text(about, "鍵盤無網絡權限，不記錄整段文字，亦不讀取剪貼簿。開啟學習後，只在手機儲存你選取的單一中文字、字碼及次數；選取整句時會拆成單字學習，不儲存整句。最近使用 Emoji 可另外關閉或清除。密碼欄停用建議與學習；App 要求不學習時亦不使用或更新學習記錄。記錄不會備份到雲端。Samsung AI 的資料處理由 Samsung 功能本身管理。", 14, Color.DKGRAY, false);
+        text(about, "鍵盤無網絡權限，不記錄整段文字，亦不監控剪貼簿。工具列的貼上／複製／剪下由你手動執行。開啟學習後，只在手機儲存你選取的單一中文字、字碼及次數；選取整句時會拆成單字學習，不儲存整句。自訂短語只保存你手動新增的內容。最近使用 Emoji 可另外關閉或清除。密碼欄停用建議與學習；App 要求不學習時亦不使用或更新學習／Emoji 記錄及自訂短語。記錄不會備份到雲端。Samsung AI 的資料處理由 Samsung 功能本身管理。", 14, Color.DKGRAY, false);
         text(about, "獨立開發的 Android 鍵盤，並非 Kaiboard 或 Samsung 官方產品。採用 Rime 倉頡五代碼表與詞庫，以及 Unicode Emoji 資料；速成由首尾碼生成，選字次序可能與其他速成鍵盤不同。", 13, Color.DKGRAY, false);
         button(about, "開源資料與授權", this::showLicenses);
     }
@@ -137,7 +145,7 @@ public final class SettingsActivity extends Activity {
 
     private void showLicenses() {
         StringBuilder content = new StringBuilder("Rime Cangjie dictionary\nhttps://github.com/rime/rime-cangjie\nCommit: 52d90a1b1312e74042b38c1cbc8142defbc53171\n\n");
-        for (String name : new String[]{"AUTHORS", "GPL-3.0.txt", "LGPL-3.0.txt", "ESSAY-AUTHORS.txt", "UNICODE-LICENSE.txt"}) {
+        for (String name : new String[]{"AUTHORS", "GPL-3.0.txt", "LGPL-3.0.txt", "ESSAY-AUTHORS.txt", "UNICODE-LICENSE.txt", "WORDNIK-LICENSE.txt"}) {
             try (InputStream stream = getAssets().open("licenses/" + name)) {
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream(); byte[] buf = new byte[4096]; int n;
                 while ((n = stream.read(buf)) != -1) bytes.write(buf, 0, n);
@@ -147,6 +155,51 @@ public final class SettingsActivity extends Activity {
         ScrollView scroll = new ScrollView(this); TextView body = new TextView(this); body.setText(content); body.setTextIsSelectable(true);
         body.setPadding(dp(20), dp(16), dp(20), dp(16)); scroll.addView(body);
         new AlertDialog.Builder(this).setTitle("開源授權").setView(scroll).setPositiveButton("關閉", null).show();
+    }
+
+    private void managePhrases() {
+        java.util.LinkedHashMap<String, String> phrases = CustomPhrases.parse(prefs.getString("custom_phrases", ""));
+        String[] codes = phrases.keySet().toArray(new String[0]);
+        String[] labels = new String[codes.length];
+        for (int i = 0; i < codes.length; i++) labels[i] = codes[i] + " → " + phrases.get(codes[i]);
+        new AlertDialog.Builder(this).setTitle("自訂短語（" + codes.length + "/100）")
+            .setItems(labels, (dialog, which) -> editPhrase(codes[which], phrases.get(codes[which])))
+            .setPositiveButton("新增", (dialog, which) -> editPhrase("", ""))
+            .setNegativeButton("關閉", null).show();
+    }
+
+    private void editPhrase(String originalCode, String originalPhrase) {
+        LinearLayout form = new LinearLayout(this); form.setOrientation(LinearLayout.VERTICAL);
+        form.setPadding(dp(20), dp(8), dp(20), dp(8));
+        EditText code = new EditText(this); code.setSingleLine(true); code.setHint("快捷碼（1–24 個英文字母）"); code.setText(originalCode);
+        code.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        EditText phrase = new EditText(this); phrase.setSingleLine(true); phrase.setHint("短語（最多 100 個字元）"); phrase.setText(originalPhrase);
+        phrase.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+        phrase.setImeOptions(android.view.inputmethod.EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING);
+        form.addView(code); form.addView(phrase);
+        AlertDialog dialog = new AlertDialog.Builder(this).setTitle(originalCode.isEmpty() ? "新增短語" : "修改短語")
+            .setView(form).setPositiveButton("儲存", null).setNegativeButton("取消", null)
+            .setNeutralButton(originalCode.isEmpty() ? "" : "刪除", null).create();
+        dialog.setOnShowListener(d -> {
+            if (originalCode.isEmpty()) dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setVisibility(View.GONE);
+            else dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener(v ->
+                new AlertDialog.Builder(this).setTitle("刪除這組短語？").setMessage(originalCode + " → " + originalPhrase)
+                    .setNegativeButton("取消", null).setPositiveButton("刪除", (confirm, which) -> {
+                        java.util.LinkedHashMap<String, String> all = CustomPhrases.parse(prefs.getString("custom_phrases", ""));
+                        all.remove(originalCode); prefs.edit().putString("custom_phrases", CustomPhrases.save(all)).apply(); dialog.dismiss(); managePhrases();
+                    }).show());
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
+                String key = code.getText().toString().trim().toLowerCase(java.util.Locale.ROOT);
+                String value = phrase.getText().toString().trim();
+                if (!CustomPhrases.valid(key, value)) { code.setError("請用 1–24 個英文字母"); phrase.setError("請輸入 1–100 字元，不能包含換行或 Tab"); return; }
+                java.util.LinkedHashMap<String, String> all = CustomPhrases.parse(prefs.getString("custom_phrases", ""));
+                if (!key.equals(originalCode) && all.containsKey(key)) { code.setError("此快捷碼已存在，請先修改該項"); return; }
+                if (originalCode.isEmpty() && all.size() >= CustomPhrases.LIMIT) { code.setError("最多 100 組，請先刪除一組"); return; }
+                all.remove(originalCode); all.put(key, value);
+                prefs.edit().putString("custom_phrases", CustomPhrases.save(all)).apply(); dialog.dismiss(); managePhrases();
+            });
+        });
+        dialog.show();
     }
 
     private int dp(float v) { return Math.round(v * getResources().getDisplayMetrics().density); }

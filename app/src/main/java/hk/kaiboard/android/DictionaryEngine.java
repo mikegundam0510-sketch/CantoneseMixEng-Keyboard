@@ -7,7 +7,8 @@ import java.util.*;
 public final class DictionaryEngine {
     private final Map<String, List<String>> cangjie = new HashMap<>();
     private final Map<String, List<String>> quick = new HashMap<>();
-    private final List<String> english = new ArrayList<>();
+    private final EnglishEngine english;
+    private final Map<String, LinkedHashSet<String>> reverseCangjie = new HashMap<>();
     private final Map<String, Set<String>> reverseQuick = new HashMap<>();
     private int entries;
     // A small, explicit preference list, not a claimed statistical language model.
@@ -23,6 +24,7 @@ public final class DictionaryEngine {
                 if (fields.length < 2 || !fields[1].matches("[a-z]{1,5}")) continue;
                 String word = fields[0], code = fields[1];
                 add(cangjie, code, word);
+                reverseCangjie.computeIfAbsent(word, key -> new LinkedHashSet<>()).add(code);
                 add(quick, quickCode(code), word);
                 reverseQuick.computeIfAbsent(word, key -> new HashSet<>()).add(quickCode(code));
                 entries++;
@@ -34,13 +36,7 @@ public final class DictionaryEngine {
         });
         cangjie.values().forEach(list -> list.sort(priority));
         quick.values().forEach(list -> list.sort(priority));
-        try (BufferedReader reader = new BufferedReader(words)) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                line = line.trim();
-                if (!line.isEmpty() && !line.startsWith("#")) english.add(line);
-            }
-        }
+        english = new EnglishEngine(words);
         if (entries < 1000) throw new IOException("Chinese dictionary is incomplete");
     }
 
@@ -55,6 +51,16 @@ public final class DictionaryEngine {
     }
 
     public int entryCount() { return entries; }
+
+    public List<String> cangjieCodes(String character) {
+        return new ArrayList<>(reverseCangjie.getOrDefault(character, new LinkedHashSet<>()));
+    }
+
+    public List<String> englishSuggestions(String input, boolean spelling) {
+        return english.suggest(input, spelling);
+    }
+
+    public int englishCount() { return english.size(); }
 
     public List<String> quickCandidates(String code) {
         return Collections.unmodifiableList(quick.getOrDefault(code.toLowerCase(Locale.ROOT), Collections.emptyList()));
@@ -87,18 +93,7 @@ public final class DictionaryEngine {
         LinkedHashSet<String> result = new LinkedHashSet<>();
         if (useQuick && code.length() <= 2) result.addAll(quick.getOrDefault(code, Collections.emptyList()));
         if (useCangjie && code.length() <= 5) result.addAll(cangjie.getOrDefault(code, Collections.emptyList()));
-        if (useEnglish) {
-            int added = 0;
-            for (String word : english) {
-                if (word.startsWith(code) && !word.equals(code)) {
-                    String suggestion = word;
-                    if (input.equals(input.toUpperCase(Locale.ROOT))) suggestion = word.toUpperCase(Locale.ROOT);
-                    else if (Character.isUpperCase(input.charAt(0))) suggestion = Character.toUpperCase(word.charAt(0)) + word.substring(1);
-                    result.add(suggestion);
-                    if (++added == 8) break;
-                }
-            }
-        }
+        if (useEnglish) result.addAll(english.suggest(input, false));
         result.add(input); // Literal input is always available, including unknown English words.
         return new ArrayList<>(result);
     }
