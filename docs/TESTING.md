@@ -28,3 +28,14 @@ Automated checks do not replace these device tests. Samsung-specific behaviour i
 - Cover width: gray background, white letter keys, readable radicals above capitals, no branding on space. Inner width >= 600dp: balanced split rows and center gap. Test dark mode and long candidate phrases in both widths.
 - Verify launcher, settings and system IME list all show 粵語中英混合keyboard.
 - The debug-only KeyboardPreviewActivity provides a local editor for UI smoke tests; it has no launcher shortcut and is omitted from release builds.
+
+## 0.3.0 acceptance additions
+
+- Fresh install defaults to Quick + English, with Cangjie off. Existing preferences remain intact when the signature permits updating.
+- Type `mm`, expand candidates, scroll past the first 30 choices and select one. It should commit once and return to the letter keyboard. Long-press a candidate and check its per-character Quick codes, including supplementary characters. Dismiss the dialog, change editors and hide the keyboard: no orphaned window should remain.
+- Type `of`, choose 你, then choose the association 好嗎. Text should be 你好嗎, with no repeated 你. Space after a selected word must insert a space instead of choosing an association. Disable associations; move the cursor; hide/reopen the keyboard; enter punctuation: old associations must disappear when context no longer matches. Private editors never show associations.
+- Add `hk` → 香港 🇭🇰 from settings. Type `hk` in normal text and choose the shortcut. Edit it, try a duplicate shortcut, cancel a deletion, then confirm deletion. Reject invalid or oversized codes/phrases without changing other entries. Disabled shortcuts and private editors must suppress them.
+- In EN mode type `teh`: a suggested `the` must require a tap; Space must leave `teh ` unchanged. Type `hel` and select hello. Check mixed case, unknown names, raw-English selection and correction disabled. Email/URL/password fields continue direct literal input.
+- From Tools manually test Paste, Select all, Copy and Cut, including selected text and editors that reject context-menu actions. Confirm no clipboard history is created. Password fields disable Tools.
+- Check the Tools menu and long-code dialogs on cover/inner screens, landscape and one-hand modes. Check keyboard row labels at increased font size. These window, rendering and accessibility checks are not covered by JVM tests.
+- Test startup and suggestion response on the target phone with the larger English wordlist. Wordlist suggestions can include uncommon words; no claim of AI-quality ranking or grammar correction is made.

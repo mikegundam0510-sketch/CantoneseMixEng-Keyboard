@@ -64,4 +64,11 @@ public class DictionaryEngineTest {
         assertEquals(LearningRanker.key("OF", true, false, "你"), LearningRanker.key("of", true, false, "你"));
         assertNotEquals(LearningRanker.key("of", true, false, "你"), LearningRanker.key("of", true, true, "你"));
     }
+    @Test public void reverseLookupReportsRealCangjieAndQuickCodes() {
+        assertTrue(engine.cangjieCodes("你").contains("onf"));
+        assertTrue(engine.cangjieCodes("好").stream().anyMatch(c -> DictionaryEngine.quickCode(c).equals("vd")));
+        assertTrue(engine.cangjieCodes("not-a-character").isEmpty());
+        List<String> copy = engine.cangjieCodes("你"); copy.clear();
+        assertTrue(engine.cangjieCodes("你").contains("onf"));
+    }
 }

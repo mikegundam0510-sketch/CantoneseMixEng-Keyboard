@@ -1,0 +1,9 @@
+{
+  "source": "https://github.com/wordnik/wordlist",
+  "revision": "46e6215d0f90356afe9c8ba4be347e7e98cb425c",
+  "source_file": "wordlist-20210729.txt",
+  "source_sha256": "bfd1b4eb4ade1ba81e84c7e24248b9a1aecec9d9baa427453b367a83e30e0451",
+  "license": "MIT",
+  "entries": 198308,
+  "filter": "Lowercase ASCII alphabetic words, length <=20; hand-authored priorities first."
+}
