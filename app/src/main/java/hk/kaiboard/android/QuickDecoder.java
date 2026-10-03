@@ -61,6 +61,10 @@ public final class QuickDecoder {
     }
 
     public List<String> decode(String input, ToIntBiFunction<String, String> learned) {
+        return decode(input, learned, "");
+    }
+
+    public List<String> decode(String input, ToIntBiFunction<String, String> learned, String context) {
         String code = input.toLowerCase(Locale.ROOT);
         if (code.length() < 3 || code.length() > 48 || !code.matches("[a-z]+")) return Collections.emptyList();
         List<List<Path>> lattice = new ArrayList<>();
@@ -94,7 +98,7 @@ public final class QuickDecoder {
                         bonus += Math.min(2.5, Math.log1p(learned.applyAsInt(c, character)) * .65);
                     }
                     for (Path prefix : paths) {
-                        double score = languageScore(prefix.text, choice.getKey());
+                        double score = languageScore(prefix.text.isEmpty() ? context : prefix.text, choice.getKey());
                         int characters = choice.getKey().codePointCount(0, choice.getKey().length());
                         // A modest word bonus, with character likelihood applied across token boundaries.
                         double wordBonus = characters > 1 ? Math.min(1.5, Math.log1p(choice.getValue()) / 10) * (characters - 1) : 0;
@@ -112,7 +116,7 @@ public final class QuickDecoder {
         return result;
     }
 
-    private double languageScore(String prefix, String text) {
+    public double languageScore(String prefix, String text) {
         String previous = prefix.isEmpty() ? null : new String(Character.toChars(prefix.codePointBefore(prefix.length())));
         double score = 0;
         for (int cp : text.codePoints().toArray()) {

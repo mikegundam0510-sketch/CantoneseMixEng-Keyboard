@@ -88,7 +88,7 @@ before=first.get("bounds")
 adb("shell","input","swipe",str(bounds[2]-10),y,str(bounds[0]+10),y,"450");time.sleep(.5)
 after=find("你今日食咗咩")
 assert after is None or after.get("bounds") != before, "Candidate strip did not scroll"
-assert any(n.get("text")=="OFONAOVRMRQ" for n in tree().iter("node")), "Swiping accidentally committed a candidate"
+assert any(n.get("text", "").upper()=="OFONAOVRMRQ" for n in tree().iter("node")), "Swiping accidentally committed a candidate"
 shot("07-candidate-scroll")
 adb("shell","input","swipe",str(bounds[0]+10),y,str(bounds[2]-10),y,"450");time.sleep(.5)
 tap("你今日食咗咩")
@@ -96,4 +96,64 @@ assert any("你今日食咗咩" in n.get("text","") for n in tree().iter("node")
 assert find("空白鍵，左右滑動移動游標") is not None, "Space icon lost accessibility description"
 assert not any(n.get("text") in ("空格","空白") for n in tree().iter("node")), "Space key still has a word label"
 shot("08-sentence-commit")
-(out/"result.txt").write_text("PASS: emoji browsing/tone insertion, HK sentence ranking/commit, candidate swipe without commit and icon space key. Voice and Samsung/Fold hardware remain device checks.\n",encoding="utf-8")
+def reset_field(value="__EMPTY__"):
+    adb("shell","am","start","--activity-single-top","-n","hk.kaiboard.android/.KeyboardPreviewActivity","--es","test_text",value)
+    time.sleep(1)
+def type_code(code):
+    for char in code: tap(char.upper()+"，"+radicals[char.lower()])
+def editor_text():
+    return next(n.get("text","") for n in tree().iter("node") if n.get("class")=="android.widget.EditText")
+def long_tap(desc):
+    x,y=center(find(desc));adb("shell","input","swipe",x,y,x,y,"800");time.sleep(.4)
+def tap_text(value):
+    node=next((n for n in tree().iter("node") if n.get("text")==value),None)
+    adb("shell","input","tap",*center(node));time.sleep(.4)
+# Reopen the exact original codes, then change one segment without losing the rest.
+tap("重新選字")
+assert "ofonaovrmrq" in editor_text(), "Reselection did not restore the original code"
+tap("分段改選")
+tap("1 · 你")
+tap("係")
+assert "係今日食咗咩" in editor_text(), "Segment replacement changed other parts"
+shot("09-segment-reselection")
+# English space confirms literal input; repairs remain explicit choices.
+reset_field();type_code("hello");tap("空白鍵，左右滑動移動游標")
+assert editor_text()=="hello ", "English space did not confirm word and add exactly one space"
+tap("重新選字")
+assert editor_text()=="hello", "English reselection did not remove the confirmation space"
+reset_field();type_code("hellp");tap("hello")
+assert editor_text()=="hello", "English spelling suggestion was not committed"
+# Explicit English fallback learns an unknown word for a later session.
+reset_field();type_code("nebulon");tap("指定英文段或返回自動判斷");tap("空白鍵，左右滑動移動游標")
+assert editor_text()=="nebulon ", "Forced English confirmation failed"
+reset_field();type_code("nebulon");tap("空白鍵，左右滑動移動游標")
+assert editor_text()=="nebulon ", "Learned English word was not recognized"
+shot("10-english-space-learning")
+# One buffer containing Chinese codes, a case-preserved brand, and more Chinese codes.
+reset_field();type_code("onaovrrov")
+tap("大寫，長按鎖定大寫");type_code("m");type_code("cdonaldrh")
+tap("今日食唔食Mcdonald呀")
+assert editor_text()=="今日食唔食Mcdonald呀", "Mixed sentence was not preserved"
+shot("11-mixed-sentence")
+# Pin persists across editor resets, and can be removed.
+reset_field();type_code("of");long_tap("係");tap("置頂此候選")
+strip=next(n for n in tree().iter("node") if n.get("class")=="android.widget.HorizontalScrollView")
+assert next(n.get("text") for n in strip.iter("node") if n.get("class")=="android.widget.TextView")=="係", "Pinned candidate did not lead"
+reset_field();type_code("of");long_tap("係");tap("取消置頂")
+# Adjacent-key repair is shown separately and committed only after selection.
+reset_field();type_code("od");tap("修正候選：你")
+assert editor_text()=="你", "Quick typo suggestion failed"
+# Long-press punctuation is usable without changing input method.
+reset_field();long_tap("逗號，長按快捷標點");tap("？")
+assert editor_text()=="？", "Quick punctuation failed"
+# Drag over character keys moves the editor cursor, without inserting those keys.
+reset_field("abcdefghij")
+x1,y=center(find("O，人"));x2,_=center(find("W，田"))
+adb("shell","input","swipe",x1,y,x2,y,"550");time.sleep(.5);tap_text("1")
+assert editor_text()=="1abcdefghij", "Left key-area swipe did not move cursor or inserted an unwanted key"
+x1,y=center(find("W，田"));x2,_=center(find("O，人"))
+adb("shell","input","swipe",x1,y,x2,y,"550");time.sleep(.5);tap_text("2")
+assert editor_text()=="1abcdefghij2", "Right key-area swipe did not move cursor"
+assert find("重新選字").get("enabled")=="false", "Cursor movement did not disable stale reselection"
+shot("12-cursor-swipes")
+(out/"result.txt").write_text("PASS: emoji, candidate swipe, HK ranking, reselection/segment edit, English space/repair/learning, mixed sentence, pin/unpin, Quick typo repair, punctuation and key-area cursor swipes. Voice and Samsung/Fold hardware remain device checks.\n",encoding="utf-8")

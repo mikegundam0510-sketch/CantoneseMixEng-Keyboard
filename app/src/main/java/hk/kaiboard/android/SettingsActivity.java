@@ -47,15 +47,23 @@ public final class SettingsActivity extends Activity {
         toggle(methods, "速成（首尾碼）", "quick", true);
         toggle(methods, "連續速成組詞", "continuous", true);
         toggle(methods, "倉頡五代（完整字碼）", "cangjie", true);
-        toggle(methods, "基本英文補全", "english", true);
+        toggle(methods, "英文補全", "english", true);
+        toggle(methods, "中英混合分段候選", "mixed", true);
+        toggle(methods, "參考上文排序候選", "context_candidates", true);
+        toggle(methods, "英文拼字修正候選", "english_repair", true);
+        toggle(methods, "速成相鄰按鍵修正候選", "quick_repair", true);
         toggle(methods, "學習選字排序（只儲存於手機）", "learning", true);
         button(methods, "清除學習記錄", () -> new AlertDialog.Builder(this).setTitle("清除學習記錄？")
             .setMessage("將恢復預設選字次序。鍵盤設定不受影響。")
             .setNegativeButton("取消", null).setPositiveButton("清除", (d, which) -> {
                 getSharedPreferences("learned", MODE_PRIVATE).edit().clear().apply();
+                getSharedPreferences("english_learned", MODE_PRIVATE).edit().clear().apply();
                 Toast.makeText(this, "已清除學習記錄", Toast.LENGTH_SHORT).show();
             }).show());
-        text(methods, "連續輸入 ofvdrf 可選「你好嗎」。點「逐字」可先選第一個字，餘下字碼會保留。點「英文」保留原字；空白鍵選第一個候選。", 13, Color.DKGRAY, false);
+        button(methods, "管理英文學習記錄", this::manageEnglishLearning);
+        button(methods, "新增自訂詞", this::addCustomWord);
+        button(methods, "管理自訂詞及置頂候選", this::managePersonal);
+        text(methods, "英文段按空白鍵確認詞語及加入空格。有歧義時點「英文」指定。長按候選可置頂或分段改選；↶ 重選最近一次已完成的選字。修正候選由你選取才採用。", 13, Color.DKGRAY, false);
 
         LinearLayout look = card("外觀與手感");
         choice(look, "主題", "theme", new String[]{"跟隨系統", "淺色", "深色"}, new String[]{"system", "light", "dark"}, "system");
@@ -64,6 +72,7 @@ public final class SettingsActivity extends Activity {
         toggle(look, "顯示數字列", "numbers", true);
         toggle(look, "展開大螢幕時分體排列（Fold）", "split", true);
         toggle(look, "按鍵震動", "haptic", true);
+        toggle(look, "在字根按鍵區左右掃動游標", "swipe_cursor", true);
 
         toggle(look, "保留最近使用 Emoji（只儲存於手機）", "emoji_recent", true);
         button(look, "清除最近使用 Emoji", () -> { prefs.edit().remove("recent_emoji").apply(); Toast.makeText(this, "已清除 Emoji 記錄", Toast.LENGTH_SHORT).show(); });
@@ -75,7 +84,7 @@ public final class SettingsActivity extends Activity {
         field.setMinLines(3); field.setGravity(Gravity.TOP);
         field.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_FLAG_MULTI_LINE);
         practice.addView(field, new LinearLayout.LayoutParams(-1, -2));
-        text(practice, "左右滑動空白鍵移動游標；長按刪除鍵連續刪字；長按 ⇧ 鎖定大寫。", 13, Color.DKGRAY, false);
+        text(practice, "在字根按鍵區或空白鍵左右掃動游標；長按刪除鍵連續刪字；長按 ⇧ 鎖定大寫。", 13, Color.DKGRAY, false);
 
         LinearLayout ai = card("Samsung AI 寫作輔助");
         text(ai, "在支援 Galaxy AI 的 One UI 7 或以上裝置，輸入後長按並選取文字，再查看選單有否 Galaxy AI／寫作輔助。功能由 Samsung 提供，視手機、地區及應用程式而定。", 14, Color.DKGRAY, false);
@@ -83,7 +92,7 @@ public final class SettingsActivity extends Activity {
         button(ai, "開啟鍵盤選擇器", () -> ((InputMethodManager)getSystemService(INPUT_METHOD_SERVICE)).showInputMethodPicker());
 
         LinearLayout about = card("離線與私隱");
-        text(about, "鍵盤無網絡權限，不記錄整段文字，亦不讀取剪貼簿。開啟學習後，只在手機儲存你選取的單一中文字、字碼及次數；選取整句時會拆成單字學習，不儲存整句。最近使用 Emoji 可另外關閉或清除。密碼欄停用建議與學習；App 要求不學習時亦不使用或更新學習記錄。記錄不會備份到雲端。Samsung AI 的資料處理由 Samsung 功能本身管理。", 14, Color.DKGRAY, false);
+        text(about, "字碼及候選可離線使用，App 無網絡權限。上文只用於當次候選排序，不保存整段文字。學習的中文字及英文詞、自訂詞、置頂候選和最近 Emoji 只儲存於手機，可分別管理及清除；不備份到雲端。密碼欄停用候選和學習；要求不學習的輸入框不使用或更新個人詞庫。剪貼簿只在你按貼上時讀取。語音由手機辨識服務處理，可能使用網絡；本 App 不保存錄音。", 14, Color.DKGRAY, false);
         text(about, "獨立開發的 Android 鍵盤，並非 Kaiboard 或 Samsung 官方產品。採用 Rime 倉頡五代碼表與詞庫，以及 Unicode Emoji 資料；速成由首尾碼生成，選字次序可能與其他速成鍵盤不同。", 13, Color.DKGRAY, false);
         button(about, "開源資料與授權", this::showLicenses);
     }
@@ -135,6 +144,62 @@ public final class SettingsActivity extends Activity {
         parent.addView(b, new LinearLayout.LayoutParams(-1, -2));
     }
 
+    private void addCustomWord() {
+        LinearLayout inputs = new LinearLayout(this); inputs.setOrientation(LinearLayout.VERTICAL);
+        inputs.setPadding(dp(20),dp(10),dp(20),dp(10));
+        EditText word = new EditText(this); word.setHint("詞語，例如 AQHI 或常用中文詞");
+        word.setSingleLine(true); inputs.addView(word);
+        EditText code = new EditText(this); code.setHint("中文輸入字碼；英文詞可留空");
+        code.setSingleLine(true); code.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        inputs.addView(code);
+        AlertDialog dialog = new AlertDialog.Builder(this).setTitle("新增自訂詞").setView(inputs)
+            .setNegativeButton("取消",null).setPositiveButton("儲存",null).create();
+        dialog.setOnShowListener(d -> dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
+            String value = word.getText().toString().trim(), input = code.getText().toString().trim().toLowerCase(java.util.Locale.ROOT);
+            if (value.isEmpty() || value.codePointCount(0,value.length()) > 32 || value.contains("\n")) {
+                word.setError("請輸入 1–32 個字的詞語"); return;
+            }
+            if (input.isEmpty() && !EnglishEngine.validWord(value)) { code.setError("中文詞請填字碼"); return; }
+            if (!input.isEmpty() && !input.matches("[a-z]{1,48}")) { code.setError("請填 1–48 個英文字母"); return; }
+            SharedPreferences data = getSharedPreferences("personal", MODE_PRIVATE);
+            String key = input.isEmpty() ? "e:" + value.toLowerCase(java.util.Locale.ROOT) : "c:" + input + ":" + value;
+            if (!data.contains(key) && data.getAll().size() >= 500) { word.setError("請先刪除部分自訂詞或置頂記錄"); return; }
+            data.edit().putString(key,value).apply(); dialog.dismiss();
+            Toast.makeText(this,"已儲存自訂詞",Toast.LENGTH_SHORT).show();
+        }));
+        dialog.show();
+    }
+
+    private void manageEnglishLearning() {
+        SharedPreferences data = getSharedPreferences("english_learned",MODE_PRIVATE);
+        java.util.List<String> words = new java.util.ArrayList<>(data.getAll().keySet());
+        java.util.Collections.sort(words,String.CASE_INSENSITIVE_ORDER);
+        if (words.isEmpty()) { Toast.makeText(this,"未有英文學習記錄",Toast.LENGTH_SHORT).show(); return; }
+        new AlertDialog.Builder(this).setTitle("點選英文詞可刪除").setItems(words.toArray(new String[0]),(d,index)->{
+            data.edit().remove(words.get(index)).apply(); manageEnglishLearning();
+        }).setNegativeButton("關閉",null).show();
+    }
+
+    private void managePersonal() {
+        SharedPreferences data = getSharedPreferences("personal", MODE_PRIVATE);
+        java.util.List<String> keys = new java.util.ArrayList<>(data.getAll().keySet());
+        java.util.Collections.sort(keys);
+        if (keys.isEmpty()) { Toast.makeText(this,"未有自訂詞或置頂候選",Toast.LENGTH_SHORT).show(); return; }
+        String[] labels = new String[keys.size()];
+        for (int i=0;i<keys.size();i++) {
+            String key=keys.get(i), value=data.getString(key,"");
+            String[] parts = key.split(":",4);
+            labels[i]=(key.startsWith("p:")?"置頂 · "+parts[2]+" · ":key.startsWith("e:")?"英文 · ":"自訂 · "+parts[1]+" · ")+value;
+        }
+        new AlertDialog.Builder(this).setTitle("點選記錄可刪除").setItems(labels,(d,index)->
+            new AlertDialog.Builder(this).setTitle("刪除「"+data.getString(keys.get(index),"")+"」？")
+                .setNegativeButton("取消",null).setPositiveButton("刪除",(confirm,which)->{
+                    data.edit().remove(keys.get(index)).apply(); managePersonal();
+                }).show()).setNegativeButton("關閉",null)
+            .setNeutralButton("清除全部",(d,which)->new AlertDialog.Builder(this).setTitle("清除全部自訂詞及置頂候選？")
+                .setNegativeButton("取消",null).setPositiveButton("清除",(confirm,index)->data.edit().clear().apply()).show()).show();
+    }
+
     private void showLicenses() {
         StringBuilder content = new StringBuilder("Rime Cangjie dictionary\nhttps://github.com/rime/rime-cangjie\nCommit: 52d90a1b1312e74042b38c1cbc8142defbc53171\n\n");
         for (String name : new String[]{"AUTHORS", "GPL-3.0.txt", "LGPL-3.0.txt", "ESSAY-AUTHORS.txt", "UNICODE-LICENSE.txt"}) {
@@ -151,3 +216,4 @@ public final class SettingsActivity extends Activity {
 
     private int dp(float v) { return Math.round(v * getResources().getDisplayMetrics().density); }
 }
+

@@ -30,6 +30,9 @@ final class KeyboardKey extends TextView {
         paint.setColor(getCurrentTextColor());
         Path path = new Path();
         switch (icon) {
+            case "undo":
+                path.moveTo(8,5); path.lineTo(3,10); path.lineTo(8,15); canvas.drawPath(path,paint);
+                path.reset(); path.moveTo(3,10); path.lineTo(14,10); path.cubicTo(24,10,23,21,14,21); canvas.drawPath(path,paint); break;
             case "recent":
                 canvas.drawCircle(12,12,9,paint);canvas.drawLine(12,5,12,12,paint);canvas.drawLine(12,12,17,15,paint);break;
             case "person":
@@ -95,3 +98,4 @@ final class KeyboardKey extends TextView {
     }
     private float dp(float value) { return value * getResources().getDisplayMetrics().density; }
 }
+

@@ -19,6 +19,7 @@ asmk	昨天	12000
 atb	日期	12000
 bhju	睇完	12000
 bhrm	睇咗	12000
+bhrrbh	睇唔睇	30000
 bhsf	睇緊	12000
 brjn	同事	12000
 butn	目前	12000
@@ -30,6 +31,7 @@ evie	濃度	12000
 gdgm	地址	12000
 gehr	報告	12000
 girm	去咗	12000
+girrgi	去唔去	30000
 giyr	去過	12000
 giys	去邊	12000
 haeu	香港	12000
@@ -50,6 +52,7 @@ hirdsia	我哋尋日	30000
 hirdspa	我哋聽日	30000
 hirdsuvm	我哋已經	30000
 hirdxuvm	我哋已經	30000
+hirrhi	得唔得	30000
 hisia	我尋日	30000
 hispa	我聽日	30000
 hisuvm	我已經	30000
@@ -68,8 +71,10 @@ jmod	空氣	12000
 juis	完成	12000
 jvqy	安排	12000
 kbarac	冇問題	30000
+kbkb	有冇	12000
 kbrq	冇咩	12000
 kbrq	有咩	12000
+kbxb	有冇	12000
 lkjd	數字	12000
 lkqo	數據	12000
 llyb	申請	12000
@@ -104,6 +109,7 @@ mripvkmn	可能收到	30000
 mripwc	可能買	30000
 mripye	可能返	30000
 mripynmg	可能處理	30000
+mrrrmrvo	可唔可以	30000
 mrvo	可以	12000
 muhl	電郵	12000
 mukg	現在	12000
@@ -130,6 +136,7 @@ ofrdsia	你哋尋日	30000
 ofrdspa	你哋聽日	30000
 ofrdsuvm	你哋已經	30000
 ofrdxuvm	你哋已經	30000
+ofrrof	係唔係	30000
 ofsia	你尋日	30000
 ofspa	你聽日	30000
 ofsuvm	你已經	30000
@@ -139,6 +146,7 @@ oib	每月	12000
 oioq	每年	12000
 okju	做完	12000
 okrm	做咗	12000
+okrrok	做唔做	30000
 oksf	做緊	12000
 omao	但是	12000
 ona	今日	12000
@@ -172,6 +180,7 @@ onjb	今朝	12000
 onmk	今天	12000
 onmo	今次	12000
 oorm	飲咗	12000
+oorroo	飲唔飲	30000
 oqie	健康	12000
 orrror	知唔知	30000
 osaeyl	佢最近	30000
@@ -194,9 +203,11 @@ osspa	佢聽日	30000
 ossuvm	佢已經	30000
 osxuvm	佢已經	30000
 ovju	食完	12000
+ovjujd	食完未	30000
 ovrmjd	食咗未	30000
 ovrmrq	食咗咩	30000
 ovrq	食咩	12000
+ovrrov	食唔食	30000
 ovsf	食緊	12000
 pbeu	情況	12000
 ppjk	比較	12000
@@ -257,6 +268,7 @@ suvmye	已經返	30000
 suvmynmg	已經處理	30000
 tkyk	英文	12000
 vdrh	好呀	12000
+vdrrvd	好唔好	30000
 vdrt	好啦	12000
 vdru	好嘅	12000
 viai	幾時	12000
@@ -265,6 +277,7 @@ vrwd	如果	12000
 vrwd	結果	12000
 wcrm	買咗	12000
 wcrn	買嘢	12000
+wcrrwc	買唔買	30000
 wkif	因為	12000
 wrde	點樣	12000
 wrnq	點解	12000
@@ -294,6 +307,7 @@ ybqooc	請提供	30000
 yegi	返去	12000
 yemm	返工	12000
 yere	返嚟	12000
+yerrye	返唔返	30000
 yiyi	謝謝	12000
 ykau	夜晚	12000
 ykmm	放工	12000
