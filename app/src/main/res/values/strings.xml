@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Kaiboard Android</string>
+    <string name="app_name">粵語中英混合keyboard</string>
     <string name="subtype_name">速成・倉頡・English</string>
     <style name="AppTheme" parent="android:style/Theme.Material.Light.NoActionBar">
         <item name="android:fontFamily">sans</item>

@@ -33,18 +33,19 @@ public final class SettingsActivity extends Activity {
             return insets;
         });
         setContentView(scroll);
-        text(page, "K.", 38, accent, true);
-        text(page, "Kaiboard Android", 28, ink, true);
+        text(page, "粵", 38, accent, true);
+        text(page, "粵語中英混合keyboard", 28, ink, true);
         text(page, "速成・倉頡・English\n一個鍵盤，自然混合輸入。", 16, Color.DKGRAY, false);
 
         LinearLayout start = card("開始使用");
         status = text(start, "", 14, accent, true);
-        button(start, "1   啟用 Kaiboard", () -> startActivity(new Intent(Settings.ACTION_INPUT_METHOD_SETTINGS)));
+        button(start, "1   啟用鍵盤", () -> startActivity(new Intent(Settings.ACTION_INPUT_METHOD_SETTINGS)));
         button(start, "2   選擇預設鍵盤", () -> ((InputMethodManager)getSystemService(INPUT_METHOD_SERVICE)).showInputMethodPicker());
         text(start, "Samsung：設定 → 一般管理 → 鍵盤清單及預設。", 13, Color.DKGRAY, false);
 
         LinearLayout methods = card("混合輸入");
         toggle(methods, "速成（首尾碼）", "quick", true);
+        toggle(methods, "連續速成組詞", "continuous", true);
         toggle(methods, "倉頡五代（完整字碼）", "cangjie", true);
         toggle(methods, "基本英文補全", "english", true);
         toggle(methods, "學習選字排序（只儲存於手機）", "learning", true);
@@ -54,18 +55,21 @@ public final class SettingsActivity extends Activity {
                 getSharedPreferences("learned", MODE_PRIVATE).edit().clear().apply();
                 Toast.makeText(this, "已清除學習記錄", Toast.LENGTH_SHORT).show();
             }).show());
-        text(methods, "速成優先；候選列可左右滑動。點選「英文」保留原字，空白鍵選第一個候選字。", 13, Color.DKGRAY, false);
+        text(methods, "連續輸入 ofvdrf 可選「你好嗎」。點「逐字」可先選第一個字，餘下字碼會保留。點「英文」保留原字；空白鍵選第一個候選。", 13, Color.DKGRAY, false);
 
         LinearLayout look = card("外觀與手感");
         choice(look, "主題", "theme", new String[]{"跟隨系統", "淺色", "深色"}, new String[]{"system", "light", "dark"}, "system");
         choice(look, "單手模式", "hand", new String[]{"全寬", "左手", "右手"}, new String[]{"full", "left", "right"}, "full");
-        choice(look, "按鍵高度", "height", new String[]{"標準", "較高", "特高"}, new String[]{"48", "54", "60"}, "48");
-        toggle(look, "顯示數字列", "numbers", false);
+        choice(look, "按鍵高度", "height", new String[]{"標準", "較高", "特高"}, new String[]{"50", "56", "62"}, "50");
+        toggle(look, "顯示數字列", "numbers", true);
         toggle(look, "展開大螢幕時分體排列（Fold）", "split", true);
         toggle(look, "按鍵震動", "haptic", true);
 
+        toggle(look, "保留最近使用 Emoji（只儲存於手機）", "emoji_recent", true);
+        button(look, "清除最近使用 Emoji", () -> { prefs.edit().remove("recent_emoji").apply(); Toast.makeText(this, "已清除 Emoji 記錄", Toast.LENGTH_SHORT).show(); });
+
         LinearLayout practice = card("試打一下");
-        text(practice, "你：人火 OF　好：女木 VD\n香港：竹日 HA ／ 水山 EU", 14, Color.DKGRAY, false);
+        text(practice, "你好嗎：OF VD RF（可連續輸入）\n香港：HA EU", 14, Color.DKGRAY, false);
         EditText field = new EditText(this);
         field.setHint("試打中文、English 或 Emoji…"); field.setTextSize(17);
         field.setMinLines(3); field.setGravity(Gravity.TOP);
@@ -79,8 +83,8 @@ public final class SettingsActivity extends Activity {
         button(ai, "開啟鍵盤選擇器", () -> ((InputMethodManager)getSystemService(INPUT_METHOD_SERVICE)).showInputMethodPicker());
 
         LinearLayout about = card("離線與私隱");
-        text(about, "鍵盤無網絡權限，不記錄整段文字，亦不讀取剪貼簿。開啟學習後，只在手機儲存你選取的單一中文字、字碼及次數。密碼欄停用建議與學習；App 要求不學習時亦不使用或更新學習記錄。記錄不會備份到雲端。Samsung AI 的資料處理由 Samsung 功能本身管理。", 14, Color.DKGRAY, false);
-        text(about, "獨立開發的 Android 鍵盤，並非 Kaiboard 或 Samsung 官方產品。採用 Rime 倉頡五代基礎碼表；速成由首尾碼生成，選字次序可能與其他速成鍵盤不同。", 13, Color.DKGRAY, false);
+        text(about, "鍵盤無網絡權限，不記錄整段文字，亦不讀取剪貼簿。開啟學習後，只在手機儲存你選取的單一中文字、字碼及次數；選取整句時會拆成單字學習，不儲存整句。最近使用 Emoji 可另外關閉或清除。密碼欄停用建議與學習；App 要求不學習時亦不使用或更新學習記錄。記錄不會備份到雲端。Samsung AI 的資料處理由 Samsung 功能本身管理。", 14, Color.DKGRAY, false);
+        text(about, "獨立開發的 Android 鍵盤，並非 Kaiboard 或 Samsung 官方產品。採用 Rime 倉頡五代碼表與詞庫，以及 Unicode Emoji 資料；速成由首尾碼生成，選字次序可能與其他速成鍵盤不同。", 13, Color.DKGRAY, false);
         button(about, "開源資料與授權", this::showLicenses);
     }
 
@@ -133,7 +137,7 @@ public final class SettingsActivity extends Activity {
 
     private void showLicenses() {
         StringBuilder content = new StringBuilder("Rime Cangjie dictionary\nhttps://github.com/rime/rime-cangjie\nCommit: 52d90a1b1312e74042b38c1cbc8142defbc53171\n\n");
-        for (String name : new String[]{"AUTHORS", "GPL-3.0.txt", "LGPL-3.0.txt"}) {
+        for (String name : new String[]{"AUTHORS", "GPL-3.0.txt", "LGPL-3.0.txt", "ESSAY-AUTHORS.txt", "UNICODE-LICENSE.txt"}) {
             try (InputStream stream = getAssets().open("licenses/" + name)) {
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream(); byte[] buf = new byte[4096]; int n;
                 while ((n = stream.read(buf)) != -1) bytes.write(buf, 0, n);

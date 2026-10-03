@@ -1,0 +1,56 @@
+package hk.kaiboard.android;
+
+import android.content.Context;
+import android.graphics.*;
+import android.widget.TextView;
+
+/** Native key face with consistent line icons and top-left Cangjie legends. */
+final class KeyboardKey extends TextView {
+    private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private String latin, radical, icon;
+    private int legendColor;
+    KeyboardKey(Context context) { super(context); }
+    void legend(String latin, String radical, int legendColor) {
+        this.latin = latin; this.radical = radical; this.legendColor = legendColor;
+        setContentDescription(latin + "，" + radical); invalidate();
+    }
+    void icon(String icon) { this.icon = icon; invalidate(); }
+    @Override public boolean performClick() { return super.performClick(); }
+    @Override protected void onDraw(Canvas canvas) {
+        if (latin != null) {
+            paint.setStyle(Paint.Style.FILL); paint.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
+            paint.setColor(legendColor); paint.setTextSize(dp(10)); paint.setTextAlign(Paint.Align.LEFT);
+            canvas.drawText(radical, dp(5), dp(13), paint);
+            paint.setColor(getCurrentTextColor()); paint.setTextSize(dp(22)); paint.setTextAlign(Paint.Align.CENTER);
+            float y = getHeight() - dp(8); canvas.drawText(latin, getWidth()/2f, y, paint); return;
+        }
+        if (icon == null) { super.onDraw(canvas); return; }
+        canvas.save(); float size = dp(22); canvas.translate((getWidth()-size)/2, (getHeight()-size)/2); canvas.scale(size/24, size/24);
+        paint.setStyle(Paint.Style.STROKE); paint.setStrokeWidth(1.7f); paint.setStrokeCap(Paint.Cap.ROUND); paint.setStrokeJoin(Paint.Join.ROUND);
+        paint.setColor(getCurrentTextColor());
+        Path path = new Path();
+        switch (icon) {
+            case "emoji":
+                canvas.drawCircle(12,12,9,paint); canvas.drawCircle(8.5f,9,.5f,paint); canvas.drawCircle(15.5f,9,.5f,paint);
+                canvas.drawArc(7,8,17,17,20,140,false,paint); break;
+            case "delete":
+                path.moveTo(2,12); path.lineTo(8,5); path.lineTo(22,5); path.lineTo(22,19); path.lineTo(8,19); path.close(); canvas.drawPath(path,paint);
+                canvas.drawLine(12,9,18,15,paint); canvas.drawLine(18,9,12,15,paint); break;
+            case "shift":
+                path.moveTo(3,12); path.lineTo(12,3); path.lineTo(21,12); path.lineTo(16,12); path.lineTo(16,21); path.lineTo(8,21); path.lineTo(8,12); path.close(); canvas.drawPath(path,paint); break;
+            case "globe":
+                canvas.drawCircle(12,12,9,paint); canvas.drawOval(8,3,16,21,paint); canvas.drawLine(3,12,21,12,paint); break;
+            case "hide":
+                path.moveTo(5,9); path.lineTo(12,16); path.lineTo(19,9); canvas.drawPath(path,paint); break;
+            case "enter":
+                path.moveTo(20,5); path.lineTo(20,14); path.lineTo(4,14); path.moveTo(9,9); path.lineTo(4,14); path.lineTo(9,19); canvas.drawPath(path,paint); break;
+            case "settings":
+                for(int i=0;i<8;i++) { double a=i*Math.PI/4; canvas.drawLine(12+(float)Math.cos(a)*7,12+(float)Math.sin(a)*7,12+(float)Math.cos(a)*10,12+(float)Math.sin(a)*10,paint); }
+                canvas.drawCircle(12,12,7,paint); canvas.drawCircle(12,12,2.5f,paint); break;
+            case "space":
+                path.moveTo(4,10); path.lineTo(4,15); path.lineTo(20,15); path.lineTo(20,10); canvas.drawPath(path,paint); break;
+        }
+        canvas.restore();
+    }
+    private float dp(float value) { return value * getResources().getDisplayMetrics().density; }
+}

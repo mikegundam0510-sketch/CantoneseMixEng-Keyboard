@@ -17,3 +17,14 @@ Automated checks do not replace these device tests. Samsung-specific behaviour i
 - TalkBack: keys have spoken labels; candidate selection, Space and Delete have click actions.
 - AI instructions: keyboard picker works. On compatible Samsung device, manually select text and check for Galaxy AI; no claim that the keyboard directly invokes Samsung AI.
 - Airplane mode: Chinese and English lookup still work. Check app permissions: no network / audio / accessibility permission. Verify no personal text is printed in logs.
+
+## 0.2.0 acceptance additions
+
+- Type `ofvdrf` by tapping the IME (ADB `input text` bypasses the IME). First sentence candidate should be 你好嗎; Space or candidate tap commits it once.
+- Repeat; tap 逐字, select 你. Editor should contain 你 plus composing `vdrf`; remaining codes must still be selectable. Also try one-code characters, unknown phrases, raw English and backspace.
+- Check 嗰 (`rr`), 嘅 (`ru`), 喺 (`rf`) through candidate scrolling/paging. Select an alternative repeatedly and verify learned ordering after reopening.
+- Open all 9 Emoji categories; scroll each grid and category strip. Select and delete skin-tone, family, flag, heart and keycap sequences. Backspace should remove one complete bundled Emoji and preserve adjacent text.
+- Verify recent Emoji order, limit 40, persistence, disabling and clearing. Sensitive editors must neither read nor update recents.
+- Cover width: gray background, white letter keys, readable radicals above capitals, no branding on space. Inner width >= 600dp: balanced split rows and center gap. Test dark mode and long candidate phrases in both widths.
+- Verify launcher, settings and system IME list all show 粵語中英混合keyboard.
+- The debug-only KeyboardPreviewActivity provides a local editor for UI smoke tests; it has no launcher shortcut and is omitted from release builds.

@@ -8,6 +8,7 @@ public final class DictionaryEngine {
     private final Map<String, List<String>> cangjie = new HashMap<>();
     private final Map<String, List<String>> quick = new HashMap<>();
     private final List<String> english = new ArrayList<>();
+    private final Map<String, Set<String>> reverseQuick = new HashMap<>();
     private int entries;
     // A small, explicit preference list, not a claimed statistical language model.
     private static final String COMMON = "的一是不了在人有我他這中大來上國個到說們為子和你地出道也時年得就那要下以生會自著去之過家學對可她裡後小麼心多天而能好都然沒日於起還發成事只作當想看文無開手十用主行方又如前所本見經頭面公同三已老從動兩長知民樣現分將外但身些與高意進把法此實回二理美點月明其種聲全工己話兒者向情部正名定女問力機給等幾很業最間新什打便位因重被走電四第門相次東海口使西再平真聽世氣信北南請香港謝唔嘅咗喺佢哋嘢咁啲冇嚟啦喎睇返畀攞嘥噉";
@@ -23,6 +24,7 @@ public final class DictionaryEngine {
                 String word = fields[0], code = fields[1];
                 add(cangjie, code, word);
                 add(quick, quickCode(code), word);
+                reverseQuick.computeIfAbsent(word, key -> new HashSet<>()).add(quickCode(code));
                 entries++;
             }
         }
@@ -53,6 +55,31 @@ public final class DictionaryEngine {
     }
 
     public int entryCount() { return entries; }
+
+    public List<String> quickCandidates(String code) {
+        return Collections.unmodifiableList(quick.getOrDefault(code.toLowerCase(Locale.ROOT), Collections.emptyList()));
+    }
+
+    public List<String> matchQuickCodes(String input, String text) {
+        List<String> result = new ArrayList<>();
+        return match(input.toLowerCase(Locale.ROOT), 0, text, 0, result) ? result : Collections.emptyList();
+    }
+
+    private boolean match(String code, int pos, String text, int at, List<String> result) {
+        if (at == text.length()) return pos == code.length();
+        String character = new String(Character.toChars(text.codePointAt(at)));
+        Set<String> choices = reverseQuick.getOrDefault(character, Collections.emptySet());
+        for (int size = 2; size >= 1; size--) {
+            if (pos + size > code.length()) continue;
+            String part = code.substring(pos, pos + size);
+            if (choices.contains(part)) {
+                result.add(part);
+                if (match(code, pos + size, text, at + character.length(), result)) return true;
+                result.remove(result.size() - 1);
+            }
+        }
+        return false;
+    }
 
     public List<String> lookup(String input, boolean useQuick, boolean useCangjie, boolean useEnglish) {
         if (input.isEmpty()) return Collections.emptyList();
