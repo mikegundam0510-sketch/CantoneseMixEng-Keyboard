@@ -218,7 +218,7 @@ public final class KaiboardService extends InputMethodService {
         TextView select = key(bottom, composing.length() > 0 ? "選字" : "速成", 1, true, () -> {
             if (composing.length() > 0) selectCandidate(); else picker();
         }, keyHeight());
-        selectKey = select;
+        selectKey = select; select.setTextSize(14); select.setSingleLine(true);
         select.setContentDescription("選取本頁第一個候選字；沒有字碼時切換鍵盤");
         if (!numeric) {
             key(bottom, ascii ? "," : "，", .9f, false, () -> insert(ascii ? "," : "，"), keyHeight());
@@ -328,7 +328,7 @@ public final class KaiboardService extends InputMethodService {
         for (int i = candidatePage * PAGE_SIZE; i < Math.min(candidates.size(), (candidatePage + 1) * PAGE_SIZE); i++) {
             String value = candidates.get(i);
             TextView item = new TextView(this); item.setText(value); item.setTextSize(23); item.setTextColor(fg);
-            item.setGravity(Gravity.CENTER); item.setPadding(dp(14), 0, dp(14), 0); item.setMinWidth(dp(48)); item.setSingleLine(true);
+            item.setGravity(Gravity.CENTER); item.setPadding(dp(8), 0, dp(8), 0); item.setMinWidth(dp(32)); item.setSingleLine(true);
             item.setContentDescription(value + (chooseFirst ? "，先輸入此字並保留後續字碼" : ""));
             if (i == candidatePage * PAGE_SIZE) { item.setTextColor(accent); item.setTypeface(null, Typeface.BOLD); }
             item.setBackgroundColor(Color.TRANSPARENT); item.setOnClickListener(v -> commit(value));
