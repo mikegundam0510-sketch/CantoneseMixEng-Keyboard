@@ -22,8 +22,15 @@ def shot(name):
     with (out/(name+".png")).open("wb") as f:subprocess.run(["adb","exec-out","screencap","-p"],stdout=f,check=True)
 adb("shell","settings","put","secure","show_ime_with_hard_keyboard","1")
 adb("install","-r","apk/app-debug.apk")
-adb("shell","ime","enable","hk.kaiboard.android/.KaiboardService")
-adb("shell","ime","set","hk.kaiboard.android/.KaiboardService")
+ime=None
+for _ in range(20):
+    ime=next((line.strip() for line in adb("shell","ime","list","-s").splitlines() if "hk.kaiboard.android" in line),None)
+    if ime: break
+    time.sleep(1)
+assert ime,"Installed input method was not registered"
+print(adb("shell","ime","enable",ime),flush=True)
+print(adb("shell","ime","set",ime),flush=True)
+assert adb("shell","settings","get","secure","default_input_method").strip()==ime,"IME switch failed"
 adb("shell","am","start","-n","hk.kaiboard.android/.KeyboardPreviewActivity")
 time.sleep(3)
 for _ in range(10):
