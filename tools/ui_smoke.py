@@ -77,7 +77,7 @@ shot("05-scroll-category")
 # Exercise real key touches, whole-sentence ranking and the horizontal candidate strip.
 tap("Emoji")
 radicals=dict(zip("abcdefghijklmnopqrstuvwxyz", "日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜重"))
-for char in "ofonaovrmrq": tap(char+"，"+radicals[char])
+for char in "ofonaovrmrq": tap(char.upper()+"，"+radicals[char])
 first=find("你今日食咗咩")
 assert first is not None, "HK sentence must lead the candidate strip"
 shot("06-hk-candidates")
