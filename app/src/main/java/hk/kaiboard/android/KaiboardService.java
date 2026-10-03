@@ -559,7 +559,9 @@ public final class KaiboardService extends InputMethodService {
             choice.setOnClickListener(v->{commitEmoji(variant.symbol);if(tonePopup!=null)tonePopup.dismiss();});
         }
         ScrollView scroll=new ScrollView(this);scroll.addView(choices);
-        tonePopup=new PopupWindow(scroll,dp(272),dp(Math.min(200,8+48*((variants.size()+5)/6))),true);
+        // Keep the editor's input connection active while choosing a tone.
+        tonePopup=new PopupWindow(scroll,dp(272),dp(Math.min(200,8+48*((variants.size()+5)/6))),false);
+        tonePopup.setInputMethodMode(PopupWindow.INPUT_METHOD_NOT_NEEDED);
         tonePopup.setBackgroundDrawable(background(keyColor));tonePopup.setOutsideTouchable(true);tonePopup.setElevation(dp(8));
         tonePopup.showAsDropDown(anchor,0,-anchor.getHeight()-tonePopup.getHeight());
         anchor.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
@@ -683,3 +685,5 @@ public final class KaiboardService extends InputMethodService {
     }
     private int dp(float value) { return Math.round(value * getResources().getDisplayMetrics().density); }
 }
+
+
