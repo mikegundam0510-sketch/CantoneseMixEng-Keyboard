@@ -20,11 +20,21 @@ def tap(desc):
     adb("shell","input","tap",*center(find(desc)));time.sleep(.5)
 def shot(name):
     with (out/(name+".png")).open("wb") as f:subprocess.run(["adb","exec-out","screencap","-p"],stdout=f,check=True)
+adb("shell","settings","put","secure","show_ime_with_hard_keyboard","1")
 adb("install","-r","apk/app-debug.apk")
 adb("shell","ime","enable","hk.kaiboard.android/.KaiboardService")
 adb("shell","ime","set","hk.kaiboard.android/.KaiboardService")
 adb("shell","am","start","-n","hk.kaiboard.android/.KeyboardPreviewActivity")
 time.sleep(3)
+for _ in range(10):
+    if find("Emoji") is not None: break
+    nodes=tree()
+    editor=next((n for n in nodes.iter("node") if n.get("class")=="android.widget.EditText"),None)
+    if editor is not None:
+        x,y=center(editor);adb("shell","input","tap",x,y)
+    time.sleep(1)
+(out/"startup.xml").write_text(ET.tostring(tree(),encoding="unicode"),encoding="utf-8")
+(out/"logcat.txt").write_text(adb("logcat","-d","-t","500"),encoding="utf-8")
 shot("01-keyboard")
 tap("Emoji")
 shot("02-emoji")
