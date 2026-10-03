@@ -28,8 +28,18 @@ public final class KaiboardService extends InputMethodService {
     private boolean noLearning;
     private LinearLayout root, panel, candidateRow;
     private HorizontalScrollView candidateScroll;
-    private TextView raw, nextPage, firstToggle, codePreview;
-    private boolean chooseFirst;
+    private TextView raw, nextPage, firstToggle, codePreview, selectKey;
+    private boolean chooseFirst, expanded, emojiSearch;
+    private String emojiQuery = "";
+    private LinearLayout toolbar, candidateBar;
+    private TextView emojiSearchLabel;
+    private BaseAdapter emojiAdapter;
+    private EmojiBrowserModel emojiModel;
+    private ListView emojiList;
+    private final android.util.SparseArray<TextView> emojiTabs = new android.util.SparseArray<>();
+    private HorizontalScrollView emojiCategories;
+    private PopupWindow tonePopup;
+    private int emojiColumns;
     private int emojiGroup;
     private final Map<String, Integer> consumedCodes = new HashMap<>();
     private final StringBuilder composing = new StringBuilder();
@@ -38,7 +48,7 @@ public final class KaiboardService extends InputMethodService {
     private boolean secure, numeric, directField, ascii, shift, caps, symbols, emoji, aiHelp;
     private boolean extraSymbols;
     private boolean quick, cangjie, english, dark;
-    private static final int PAGE_SIZE = 30;
+    private static final int PAGE_SIZE = 7;
     private static final String RADICALS = "日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜重";
 
     @Override public void onCreate() {
@@ -92,6 +102,7 @@ public final class KaiboardService extends InputMethodService {
     }
 
     @Override public void onFinishInputView(boolean finishingInput) {
+        if (tonePopup != null) tonePopup.dismiss();
         stopRepeat(); finishLiteral(); super.onFinishInputView(finishingInput);
     }
 
@@ -107,16 +118,17 @@ public final class KaiboardService extends InputMethodService {
         String theme = prefs.getString("theme", "system");
         dark = theme.equals("dark") || theme.equals("system") &&
             (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
-        bg = Color.parseColor(dark ? "#181A1F" : "#DDE0E5");
+        bg = Color.parseColor(dark ? "#181A1F" : "#D1D2D7");
         keyColor = Color.parseColor(dark ? "#34373D" : "#FFFFFF");
         functionColor = Color.parseColor(dark ? "#494D55" : "#BFC5CE");
         fg = Color.parseColor(dark ? "#F5F6F8" : "#272D36");
         muted = Color.parseColor(dark ? "#C5CAD3" : "#535D6D");
-        accent = Color.parseColor(dark ? "#AFC8FC" : "#315991");
+        accent = Color.parseColor(dark ? "#AFC8FC" : "#087CF0");
     }
 
     private void render() {
         if (root == null) return;
+        if (tonePopup != null) { tonePopup.dismiss(); tonePopup = null; }
         stopRepeat(); colors(); candidateRow = null; raw = null; nextPage = null; firstToggle = null; codePreview = null;
         quick = prefs.getBoolean("quick", true); cangjie = prefs.getBoolean("cangjie", true); english = prefs.getBoolean("english", true);
         root.removeAllViews(); root.setBackgroundColor(bg); root.setPadding(dp(splitLayout() ? 14 : 4), dp(5), dp(splitLayout() ? 14 : 4), dp(6));
@@ -127,20 +139,24 @@ public final class KaiboardService extends InputMethodService {
         dock.addView(panel, new LinearLayout.LayoutParams(0, -2, hand.equals("full") ? 1 : .82f));
         if (hand.equals("left")) dock.addView(new View(this), new LinearLayout.LayoutParams(0, 1, .18f));
 
-        LinearLayout tools = row(panel);
-        key(tools, secure ? "密碼" : ascii ? "EN" : "中 · EN", 1.6f, true, () -> {
-            if (!secure && !numeric) { finishLiteral(); ascii = !ascii; render(); }
-        }, 36);
-        key(tools, "☺", 1, true, () -> { if (!secure && !numeric) { finishLiteral(); emoji = !emoji; aiHelp = false; render(); } }, 36).setContentDescription("Emoji 鍵盤");
-        key(tools, "AI 說明", 1.7f, true, () -> { finishLiteral(); aiHelp = !aiHelp; emoji = false; render(); }, 36);
-        key(tools, "單手", 1.2f, true, () -> {
-            String value = prefs.getString("hand", "full");
-            prefs.edit().putString("hand", value.equals("full") ? "right" : value.equals("right") ? "left" : "full").apply(); render();
-        }, 36);
-        key(tools, "⚙", 1, true, () -> {
+        toolbar = row(panel);
+        tool(toolbar, "emoji", "Emoji", () -> { if (!secure && !numeric) { finishLiteral(); emoji = !emoji; emojiSearch = false; emojiQuery = ""; render(); } }, emoji);
+        tool(toolbar, "language", "中英輸入模式", () -> { if (!secure && !numeric) { finishLiteral(); ascii = !ascii; render(); } }, ascii);
+        tool(toolbar, "clipboard", "貼上剪貼簿", () -> {
+            if (secure) return;
+            android.content.ClipboardManager cb = (android.content.ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
+            if (cb.hasPrimaryClip() && cb.getPrimaryClip() != null && cb.getPrimaryClip().getItemCount() > 0) {
+                CharSequence text = cb.getPrimaryClip().getItemAt(0).coerceToText(this);
+                if (text != null) insert(text.toString());
+            }
+        }, false);
+        tool(toolbar, "keyboard", "選擇鍵盤", this::picker, false);
+        tool(toolbar, "pen", "切換系統鍵盤使用手寫", () -> systemTool("手寫"), false);
+        tool(toolbar, "mic", "切換系統鍵盤使用語音", () -> systemTool("語音"), false);
+        tool(toolbar, "more", "鍵盤設定", () -> {
             finishLiteral(); startActivity(new Intent(this, SettingsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-        }, 36).setContentDescription("鍵盤設定");
-        key(tools, "⌄", 1, true, () -> requestHideSelf(0), 36).setContentDescription("收起鍵盤");
+        }, false);
+        if (emoji) { renderEmoji(); return; }
 
         if (aiHelp) {
             TextView help = new TextView(this); help.setTextColor(fg); help.setTextSize(15); help.setPadding(dp(14), dp(12), dp(14), dp(12));
@@ -155,18 +171,18 @@ public final class KaiboardService extends InputMethodService {
         codePreview = new TextView(this); codePreview.setTextColor(muted); codePreview.setTextSize(12);
         codePreview.setPadding(dp(8),0,dp(8),0); codePreview.setSingleLine(true); codePreview.setEllipsize(TextUtils.TruncateAt.START);
         panel.addView(codePreview, new LinearLayout.LayoutParams(-1,dp(22)));
-        LinearLayout bar = row(panel);
+        LinearLayout bar = row(panel); candidateBar = bar;
         raw = key(bar, "英文", 1.35f, true, this::finishLiteral, 42);
         raw.setTextSize(13);
         candidateScroll = new HorizontalScrollView(this); candidateScroll.setHorizontalScrollBarEnabled(false);
         candidateRow = new LinearLayout(this); candidateRow.setOrientation(LinearLayout.HORIZONTAL);
         candidateScroll.addView(candidateRow); bar.addView(candidateScroll, new LinearLayout.LayoutParams(0, dp(48), 6));
         firstToggle = key(bar, "逐字", 1.15f, true, () -> { chooseFirst = !chooseFirst; updateCandidates(); }, 42);
-        nextPage = key(bar, "›", .65f, true, () -> { candidatePage++; displayCandidates(); }, 43);
-        nextPage.setContentDescription("下一頁候選字"); updateCandidates();
+        nextPage = key(bar, "⌄", .65f, true, () -> { expanded = !expanded; render(); }, 43);
+        nextPage.setContentDescription("展開或收起候選字"); updateCandidates();
 
-        if (emoji) {
-            renderEmoji();
+        if (expanded && !candidates.isEmpty()) {
+            renderExpandedCandidates();
         } else if (numeric) {
             for (String group : new String[]{"123", "456", "789", ".0-"}) {
                 LinearLayout line = row(panel);
@@ -199,17 +215,21 @@ public final class KaiboardService extends InputMethodService {
             finishLiteral(); if (emoji) emoji = false; else symbols = !symbols; render();
         }, keyHeight());
         if (symbols && !emoji && !numeric) key(bottom, extraSymbols ? "123" : "#+=", 1, true, () -> { extraSymbols = !extraSymbols; render(); }, keyHeight());
-        key(bottom, "🌐", 1, true, this::picker, keyHeight()).setContentDescription("切換鍵盤");
+        TextView select = key(bottom, composing.length() > 0 ? "選字" : "速成", 1, true, () -> {
+            if (composing.length() > 0) selectCandidate(); else picker();
+        }, keyHeight());
+        selectKey = select;
+        select.setContentDescription("選取本頁第一個候選字；沒有字碼時切換鍵盤");
         if (!numeric) {
             key(bottom, ascii ? "," : "，", .9f, false, () -> insert(ascii ? "," : "，"), keyHeight());
-            TextView space = key(bottom, "␣", splitLayout() ? 6.4f : 3.6f, false, this::space, keyHeight());
+            TextView space = key(bottom, "空格", splitLayout() ? 6.4f : 3.6f, false, this::space, keyHeight());
             space.setContentDescription("空白鍵，左右滑動移動游標"); attachSpaceGesture(space);
             key(bottom, ascii ? "." : "。", .9f, false, () -> insert(ascii ? "." : "。"), keyHeight());
         }
         if (symbols || emoji || numeric) deleteKey(bottom, 1.2f);
         TextView enterKey = key(bottom, enterLabel(), 1.45f, true, this::enter, keyHeight());
-        enterKey.setBackground(background(dark ? Color.parseColor("#486795") : Color.parseColor("#45658D")));
-        enterKey.setTextColor(Color.WHITE);
+        enterKey.setBackground(background(functionColor));
+        enterKey.setTextColor(fg);
         if (getWindow() != null) {
             getWindow().getWindow().setNavigationBarColor(bg);
             getWindow().getWindow().getDecorView().setSystemUiVisibility(dark ? 0 : View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
@@ -245,14 +265,15 @@ public final class KaiboardService extends InputMethodService {
     private void addLetterKey(LinearLayout parent,char letter) {
         String latin=String.valueOf(Character.toUpperCase(letter));
         TextView button=key(parent,latin,1,false,()->typeLetter(letter),keyHeight());
-        if(!ascii && (quick||cangjie)) ((KeyboardKey)button).legend(latin,String.valueOf(RADICALS.charAt(letter-'a')),muted);
+        if(!ascii && !emojiSearch && (quick||cangjie)) ((KeyboardKey)button).legend(latin,String.valueOf(RADICALS.charAt(letter-'a')),muted);
     }
 
     private void typeLetter(char lower) {
+        if (emojiSearch) { emojiQuery += lower; refreshEmoji(); return; }
         String value = String.valueOf(shift || caps ? Character.toUpperCase(lower) : lower);
         if (secure || ascii) insert(value);
         else {
-            if (composing.length() >= 48) space();
+            if (composing.length() >= 48) selectCandidate();
             composing.append(value); InputConnection ic = getCurrentInputConnection();
             if (ic != null) ic.setComposingText(composing, 1);
             updateCandidates();
@@ -292,8 +313,12 @@ public final class KaiboardService extends InputMethodService {
         if (candidateRow == null || raw == null) return;
         candidateRow.removeAllViews();
         raw.setText("英文");
+        if(selectKey!=null) selectKey.setText(composing.length()>0?"選字":"速成");
         raw.setEnabled(composing.length() > 0);
         raw.setAlpha(composing.length() > 0 ? 1f : .45f);
+        if (toolbar != null) toolbar.setVisibility(composing.length() == 0 ? View.VISIBLE : View.GONE);
+        if (candidateBar != null) candidateBar.setVisibility(composing.length() == 0 ? View.GONE : View.VISIBLE);
+        if (codePreview != null) codePreview.setVisibility(composing.length() == 0 ? View.GONE : View.VISIBLE);
         if (codePreview != null) codePreview.setText(composing.length() == 0 ? secure ? "密碼輸入" : loadFailed ? "字庫載入失敗" : dictionary == null ? "載入字庫…" : ascii ? "English" : "速成  ·  倉頡  ·  English" :
             (chooseFirst ? "逐字選取   " : "") + composing.toString().toUpperCase(Locale.ROOT));
         if (firstToggle != null) { firstToggle.setText(chooseFirst ? "整句" : "逐字"); firstToggle.setVisibility(quick && prefs.getBoolean("continuous",true) && composing.length() > 2 ? View.VISIBLE : View.GONE); }
@@ -305,19 +330,26 @@ public final class KaiboardService extends InputMethodService {
             TextView item = new TextView(this); item.setText(value); item.setTextSize(23); item.setTextColor(fg);
             item.setGravity(Gravity.CENTER); item.setPadding(dp(14), 0, dp(14), 0); item.setMinWidth(dp(48)); item.setSingleLine(true);
             item.setContentDescription(value + (chooseFirst ? "，先輸入此字並保留後續字碼" : ""));
-            if (i == 0) { item.setTextColor(accent); item.setTypeface(null, Typeface.BOLD); }
-            item.setBackground(background(keyColor)); item.setOnClickListener(v -> commit(value));
+            if (i == candidatePage * PAGE_SIZE) { item.setTextColor(accent); item.setTypeface(null, Typeface.BOLD); }
+            item.setBackgroundColor(Color.TRANSPARENT); item.setOnClickListener(v -> commit(value));
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-2, dp(42)); params.setMargins(dp(3), dp(3), dp(3), dp(3));
             candidateRow.addView(item, params);
         }
-        nextPage.setVisibility(pages > 1 ? View.VISIBLE : View.GONE);
-        nextPage.setText((candidatePage + 1) + "›"); nextPage.setTextSize(13);
+        nextPage.setVisibility(View.VISIBLE);
+        nextPage.setText((candidatePage + 1) + "/" + pages + (expanded ? "⌃" : "⌄")); nextPage.setTextSize(11);
         candidateScroll.scrollTo(0, 0);
     }
 
     private void space() {
-        if (composing.length() > 0) commit(candidates.isEmpty() ? composing.toString() : candidates.get(0));
+        if (emojiSearch) { emojiQuery += " "; refreshEmoji(); return; }
+        if (composing.length() > 0 && !candidates.isEmpty()) { candidatePage++; displayCandidates(); }
+        else if (composing.length() > 0) finishLiteral();
         else insert(" ");
+    }
+
+    private void selectCandidate() {
+        if (!candidates.isEmpty()) commit(candidates.get(Math.min(candidatePage * PAGE_SIZE, candidates.size() - 1)));
+        else finishLiteral();
     }
 
     private void commit(String value) {
@@ -347,7 +379,8 @@ public final class KaiboardService extends InputMethodService {
             }
             ic.endBatchEdit();
         }
-        updateCandidates();
+        expanded = false;
+        render();
     }
 
     private void learnCharacter(String code, String character) {
@@ -371,12 +404,13 @@ public final class KaiboardService extends InputMethodService {
     }
 
     private void delete() {
+        if (emojiSearch) { if (!emojiQuery.isEmpty()) emojiQuery = emojiQuery.substring(0, emojiQuery.length()-1); refreshEmoji(); return; }
         InputConnection ic = getCurrentInputConnection(); if (ic == null) return;
         if (composing.length() > 0) {
             composing.deleteCharAt(composing.length() - 1);
             if (composing.length() == 0) { ic.commitText("", 1); ic.finishComposingText(); }
             else ic.setComposingText(composing, 1);
-            updateCandidates();
+            if(expanded){expanded=false;render();}else updateCandidates();
         } else {
             CharSequence selected = ic.getSelectedText(0);
             if (selected != null && selected.length() > 0) ic.commitText("", 1);
@@ -403,13 +437,14 @@ public final class KaiboardService extends InputMethodService {
     }
 
     private void enter() {
+        if (emojiSearch) { emojiSearch = false; render(); return; }
         if (composing.length() > 0) { finishLiteral(); return; }
         InputConnection ic = getCurrentInputConnection(); if (ic == null) return;
         if (!sendDefaultEditorAction(true)) ic.commitText("\n", 1);
     }
 
     private void picker() { finishLiteral(); ((InputMethodManager)getSystemService(INPUT_METHOD_SERVICE)).showInputMethodPicker(); }
-    private void resetComposition() { composing.setLength(0); candidates = Collections.emptyList(); consumedCodes.clear(); candidatePage = 0; chooseFirst = false; }
+    private void resetComposition() { expanded = false; emojiSearch = false; emojiQuery = ""; composing.setLength(0); candidates = Collections.emptyList(); consumedCodes.clear(); candidatePage = 0; chooseFirst = false; }
     private void sendKey(int keyCode) { InputConnection ic = getCurrentInputConnection(); if (ic != null) {
         ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, keyCode)); ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, keyCode));
     } }
@@ -452,46 +487,158 @@ public final class KaiboardService extends InputMethodService {
         });
     }
 
+    private void systemTool(String name) {
+        Toast.makeText(this, "請選擇 Samsung Keyboard，再使用" + name + "功能", Toast.LENGTH_LONG).show();
+        picker();
+    }
+
+    private void tool(LinearLayout parent, String icon, String label, Runnable action, boolean selected) {
+        KeyboardKey button = new KeyboardKey(this); button.icon(icon);
+        button.setTextColor(selected ? accent : muted); button.setContentDescription(label);
+        button.setBackground(selected ? background(dark ? 0xFF344760 : 0xFFB8CBE0) : background(bg));
+        button.setOnClickListener(v -> action.run());
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0,dp(44),1);
+        lp.setMargins(dp(3),dp(3),dp(3),dp(3)); parent.addView(button,lp);
+    }
+
+    private void renderExpandedCandidates() {
+        ScrollView scroll = new ScrollView(this);
+        android.widget.GridLayout grid = new android.widget.GridLayout(this); grid.setColumnCount(5);
+        for (String value : candidates) {
+            TextView item = new TextView(this); item.setText(value); item.setTextSize(21); item.setTextColor(fg);
+            item.setGravity(Gravity.CENTER); item.setPadding(dp(5),dp(10),dp(5),dp(10));
+            android.widget.GridLayout.LayoutParams lp = new android.widget.GridLayout.LayoutParams();
+            lp.width = 0; lp.columnSpec = android.widget.GridLayout.spec(android.widget.GridLayout.UNDEFINED,1f);
+            grid.addView(item,lp); item.setOnClickListener(v -> commit(value));
+        }
+        scroll.addView(grid); panel.addView(scroll,new LinearLayout.LayoutParams(-1,dp(210)));
+    }
+
+    private String recentEmoji() {
+        return noLearning || !prefs.getBoolean("emoji_recent",true) ? "" : prefs.getString("recent_emoji","");
+    }
+
+    private void refreshEmoji() {
+        if (emojiCatalog == null) return;
+        emojiModel = new EmojiBrowserModel(emojiCatalog,emojiColumns,recentEmoji(),emojiQuery);
+        if (emojiSearchLabel != null) emojiSearchLabel.setText("⌕  " + (emojiQuery.isEmpty() ? "搜尋 Emoji（英文名稱）" : emojiQuery));
+        if (emojiAdapter != null) emojiAdapter.notifyDataSetChanged();
+        if (emojiList != null) emojiList.setSelection(0);
+    }
+
+    private void highlightEmojiGroup(int group) {
+        emojiGroup=group;
+        for(int i=0;i<emojiTabs.size();i++) {
+            TextView tab=emojiTabs.valueAt(i); boolean selected=emojiTabs.keyAt(i)==group;
+            tab.setTextColor(selected?accent:muted); tab.setSelected(selected);
+        }
+        TextView tab=emojiTabs.get(group);
+        if(tab!=null && emojiCategories!=null) {
+            int left=tab.getLeft(),right=tab.getRight(),offset=emojiCategories.getScrollX();
+            if(left<offset || right>offset+emojiCategories.getWidth())
+                emojiCategories.smoothScrollTo(Math.max(0,left-emojiCategories.getWidth()/2+tab.getWidth()/2),0);
+        }
+    }
+
+    private void commitEmoji(String symbol) {
+        InputConnection ic=getCurrentInputConnection(); if(ic==null || !ic.commitText(symbol,1)) return;
+        if(!noLearning && prefs.getBoolean("emoji_recent",true))
+            prefs.edit().putString("recent_emoji",emojiCatalog.remember(recentEmoji(),symbol)).apply();
+    }
+
+    private boolean showSkinTones(View anchor, EmojiCatalog.Entry entry) {
+        List<EmojiCatalog.Entry> variants=emojiCatalog.skinVariants(entry.symbol);
+        if(variants.size()<2) return false;
+        if(tonePopup!=null) tonePopup.dismiss();
+        android.widget.GridLayout choices=new android.widget.GridLayout(this);choices.setColumnCount(6);
+        choices.setPadding(dp(4),dp(4),dp(4),dp(4)); choices.setBackground(background(keyColor));
+        for(EmojiCatalog.Entry variant:variants) {
+            TextView choice=new TextView(this); choice.setText(variant.symbol);choice.setTextSize(27);
+            choice.setGravity(Gravity.CENTER);choice.setTextColor(fg);choice.setContentDescription(variant.name);
+            choices.addView(choice,new android.view.ViewGroup.LayoutParams(dp(44),dp(48)));
+            choice.setOnClickListener(v->{commitEmoji(variant.symbol);if(tonePopup!=null)tonePopup.dismiss();});
+        }
+        ScrollView scroll=new ScrollView(this);scroll.addView(choices);
+        tonePopup=new PopupWindow(scroll,dp(272),dp(Math.min(200,8+48*((variants.size()+5)/6))),true);
+        tonePopup.setBackgroundDrawable(background(keyColor));tonePopup.setOutsideTouchable(true);tonePopup.setElevation(dp(8));
+        tonePopup.showAsDropDown(anchor,0,-anchor.getHeight()-tonePopup.getHeight());
+        anchor.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+        return true;
+    }
+
     private void renderEmoji() {
         if (emojiCatalog == null) {
             TextView loading = new TextView(this); loading.setText("載入 Emoji…"); loading.setTextColor(fg); panel.addView(loading); return;
         }
-        HorizontalScrollView tabs = new HorizontalScrollView(this); tabs.setHorizontalScrollBarEnabled(false);
-        LinearLayout tabRow = new LinearLayout(this); tabs.addView(tabRow);
-        panel.addView(tabs, new LinearLayout.LayoutParams(-1, dp(42)));
-        for (int index = -1; index < emojiCatalog.groupCount(); index++) {
-            final int group = index;
-            TextView tab = new TextView(this); tab.setText(index == -1 ? "最近" : EmojiCatalog.LABELS[index]);
-            tab.setTextSize(14); tab.setTextColor(index == emojiGroup ? accent : muted); tab.setGravity(Gravity.CENTER);
-            if (index == emojiGroup) { tab.setTypeface(null, Typeface.BOLD); tab.setBackground(background(keyColor)); }
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(dp(62), dp(36)); params.setMargins(dp(2),dp(3),dp(2),dp(3));
-            tabRow.addView(tab,params); tab.setOnClickListener(v -> { emojiGroup = group; render(); });
+        int width=getResources().getConfiguration().screenWidthDp;
+        if(!prefs.getString("hand","full").equals("full")) width=(int)(width*.82f);
+        emojiColumns=Math.max(5,(width-16)/38); emojiTabs.clear();
+        emojiSearchLabel = new TextView(this); emojiSearchLabel.setTextSize(17); emojiSearchLabel.setTextColor(muted);
+        emojiSearchLabel.setGravity(Gravity.CENTER_VERTICAL); emojiSearchLabel.setPadding(dp(12),0,dp(12),0);
+        GradientDrawable searchBg = new GradientDrawable(); searchBg.setColor(dark ? 0xFF34373D : 0xFFB9BBC2); searchBg.setCornerRadius(dp(22));
+        emojiSearchLabel.setBackground(searchBg);
+        LinearLayout.LayoutParams searchLp = new LinearLayout.LayoutParams(-1,dp(38)); searchLp.setMargins(dp(8),dp(8),dp(8),dp(12));
+        panel.addView(emojiSearchLabel, searchLp);
+        emojiSearchLabel.setOnClickListener(v -> { emojiSearch = !emojiSearch; render(); });
+        emojiList=new ListView(this);emojiList.setDivider(null);emojiList.setDividerHeight(0);
+        emojiList.setVerticalScrollBarEnabled(true);emojiList.setPadding(dp(3),0,dp(3),0);
+        emojiModel=new EmojiBrowserModel(emojiCatalog,emojiColumns,recentEmoji(),emojiQuery);
+        emojiAdapter=new BaseAdapter() {
+            @Override public int getCount(){return emojiModel.rows.size();}
+            @Override public Object getItem(int p){return emojiModel.rows.get(p);}
+            @Override public long getItemId(int p){return p;}
+            @Override public boolean areAllItemsEnabled(){return false;}
+            @Override public boolean isEnabled(int p){return false;}
+            @Override public View getView(int position,View recycled,android.view.ViewGroup parent) {
+                EmojiBrowserModel.Row model=emojiModel.rows.get(position);
+                if(model.heading) {
+                    TextView title=new TextView(KaiboardService.this);title.setText(model.group<0?"最近使用":EmojiCatalog.LABELS[model.group]);
+                    title.setTextColor(muted);title.setTextSize(12);title.setPadding(dp(8),dp(6),0,dp(3));
+                    if(android.os.Build.VERSION.SDK_INT>=28)title.setAccessibilityHeading(true);return title;
+                }
+                LinearLayout line=new LinearLayout(KaiboardService.this);
+                for(int col=0;col<emojiColumns;col++) {
+                    TextView cell=new TextView(KaiboardService.this);cell.setTextSize(27);cell.setTextColor(fg);cell.setGravity(Gravity.CENTER);
+                    line.addView(cell,new LinearLayout.LayoutParams(0,dp(48),1));
+                    if(col>=model.entries.size()) continue;
+                    EmojiCatalog.Entry entry=model.entries.get(col);cell.setText(entry.symbol);cell.setContentDescription(entry.name);
+                    cell.setOnClickListener(v->{commitEmoji(entry.symbol);if(prefs.getBoolean("haptic",true))v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);});
+                    cell.setOnLongClickListener(v->showSkinTones(v,entry));
+                }
+                return line;
+            }
+        };
+        emojiList.setAdapter(emojiAdapter);
+        TextView empty=new TextView(this);empty.setText("沒有符合的 Emoji");empty.setTextColor(muted);empty.setGravity(Gravity.CENTER);
+        panel.addView(empty,new LinearLayout.LayoutParams(-1,dp(40)));emojiList.setEmptyView(empty);
+        panel.addView(emojiList,new LinearLayout.LayoutParams(-1,dp(emojiSearch?92:206)));
+        if(emojiSearch){letters("qwertyuiop",false);letters("asdfghjkl",false);letters("zxcvbnm",true);}
+        LinearLayout bottom=row(panel);
+        TextView abc=key(bottom,"ABC",1.3f,false,()->{emoji=false;emojiSearch=false;emojiQuery="";render();},42);
+        abc.setBackgroundColor(Color.TRANSPARENT);abc.setElevation(0);abc.setTextSize(16);
+        emojiCategories=new HorizontalScrollView(this);emojiCategories.setHorizontalScrollBarEnabled(false);
+        LinearLayout tabs=new LinearLayout(this);emojiCategories.addView(tabs);
+        bottom.addView(emojiCategories,new LinearLayout.LayoutParams(0,dp(44),7));
+        String[] marks={"◷","☺","♙","♧","☕","✈","⚽","♢","&%","⚑"};
+        for(int i=-1;i<emojiCatalog.groupCount();i++) {
+            final int group=i;TextView category=new TextView(this);category.setText(marks[i+1]);category.setTextSize(23);
+            category.setTextColor(muted);category.setGravity(Gravity.CENTER);category.setContentDescription(i<0?"最近使用":EmojiCatalog.LABELS[i]);
+            tabs.addView(category,new LinearLayout.LayoutParams(dp(32),dp(44)));emojiTabs.put(group,category);
+            category.setOnClickListener(v->{
+                if(!emojiQuery.isEmpty()){emojiQuery="";refreshEmoji();}
+                Integer position=emojiModel.starts.get(group);
+                if(position!=null){emojiList.setSelection(position);highlightEmojiGroup(group);}
+            });
         }
-        tabs.post(() -> tabs.scrollTo(Math.max(0, dp((emojiGroup + 1) * 66 - 120)), 0));
-        List<EmojiCatalog.Entry> items = emojiGroup < 0 ? emojiCatalog.recent(noLearning || !prefs.getBoolean("emoji_recent",true) ? "" : prefs.getString("recent_emoji","")) : emojiCatalog.group(emojiGroup);
-        GridView grid = new GridView(this); grid.setNumColumns(GridView.AUTO_FIT); grid.setColumnWidth(dp(43)); grid.setStretchMode(GridView.STRETCH_COLUMN_WIDTH);
-        grid.setHorizontalSpacing(dp(3)); grid.setVerticalSpacing(dp(4)); grid.setPadding(dp(4),dp(5),dp(4),dp(5));
-        grid.setClipToPadding(false); grid.setVerticalScrollBarEnabled(true);
-        grid.setAdapter(new BaseAdapter() {
-            @Override public int getCount() { return items.size(); }
-            @Override public Object getItem(int position) { return items.get(position); }
-            @Override public long getItemId(int position) { return position; }
-            @Override public View getView(int position, View convertView, android.view.ViewGroup parent) {
-                TextView cell = convertView instanceof TextView ? (TextView)convertView : new TextView(KaiboardService.this);
-                EmojiCatalog.Entry entry = items.get(position); cell.setText(entry.symbol); cell.setTextSize(27); cell.setTextColor(fg);
-                cell.setGravity(Gravity.CENTER); cell.setContentDescription(entry.name); cell.setBackground(background(keyColor));
-                cell.setLayoutParams(new android.widget.AbsListView.LayoutParams(-1,dp(44))); return cell;
+        deleteKey(bottom,1.2f);
+        emojiList.setOnScrollListener(new AbsListView.OnScrollListener(){
+            @Override public void onScrollStateChanged(AbsListView view,int state){}
+            @Override public void onScroll(AbsListView view,int first,int count,int total){
+                if(total>0)highlightEmojiGroup(emojiModel.groupAt(first));
             }
         });
-        grid.setOnItemClickListener((parent, view, position, id) -> {
-            String symbol = items.get(position).symbol; insert(symbol);
-            if (!noLearning && prefs.getBoolean("emoji_recent",true)) prefs.edit().putString("recent_emoji",emojiCatalog.remember(prefs.getString("recent_emoji",""),symbol)).apply();
-            if (prefs.getBoolean("haptic",true)) view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
-        });
-        if (items.isEmpty()) {
-            TextView empty = new TextView(this); empty.setText("未有最近使用的 Emoji"); empty.setTextColor(muted); empty.setGravity(Gravity.CENTER);
-            panel.addView(empty, new LinearLayout.LayoutParams(-1,dp(200)));
-        } else panel.addView(grid, new LinearLayout.LayoutParams(-1,dp(200)));
+        emojiSearchLabel.setText("⌕  "+(emojiQuery.isEmpty()?"搜尋 Emoji（英文名稱）":emojiQuery));
+        Integer initial=emojiModel.starts.get(emojiGroup);if(initial!=null)emojiList.setSelection(initial);
     }
 
     private LinearLayout row(LinearLayout parent) {

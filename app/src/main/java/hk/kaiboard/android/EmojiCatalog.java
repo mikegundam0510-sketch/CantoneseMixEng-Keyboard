@@ -13,6 +13,7 @@ public final class EmojiCatalog {
     private static final class Node { final Map<Character, Node> children = new HashMap<>(); boolean end; }
     private final Node reverse = new Node();
     private final List<List<Entry>> groups = new ArrayList<>();
+    private final Map<String, List<Entry>> tones = new LinkedHashMap<>();
     private final Map<String, Entry> entries = new LinkedHashMap<>();
     public EmojiCatalog(Reader source) throws IOException {
         Map<String, Integer> ids = new LinkedHashMap<>();
@@ -23,11 +24,34 @@ public final class EmojiCatalog {
                 String[] f = line.split("\t"); if (f.length != 3) continue;
                 if (!ids.containsKey(f[0])) { ids.put(f[0], groups.size()); groups.add(new ArrayList<>()); }
                 Entry entry = new Entry(f[1], f[2]); groups.get(ids.get(f[0])).add(entry); entries.put(entry.symbol, entry);
+                tones.computeIfAbsent(toneKey(entry.symbol), key -> new ArrayList<>()).add(entry);
                 Node n = reverse;
                 for (int i = entry.symbol.length() - 1; i >= 0; i--) n = n.children.computeIfAbsent(entry.symbol.charAt(i), key -> new Node());
                 n.end = true;
             }
         }
+    }
+    private static String toneKey(String symbol) {
+        StringBuilder key = new StringBuilder();
+        symbol.codePoints().filter(cp -> (cp < 0x1F3FB || cp > 0x1F3FF) && cp != 0xFE0F).forEach(key::appendCodePoint);
+        return key.toString();
+    }
+    public List<Entry> skinVariants(String symbol) {
+        return Collections.unmodifiableList(tones.getOrDefault(toneKey(symbol),Collections.emptyList()));
+    }
+    /** Keep one representative per tone family; every variant remains accessible by long press. */
+    public List<Entry> browseGroup(int index) {
+        Map<String, Entry> unique = new LinkedHashMap<>();
+        for (Entry entry : groups.get(index)) unique.putIfAbsent(toneKey(entry.symbol), entry);
+        return new ArrayList<>(unique.values());
+    }
+    public List<Entry> search(String query) {
+        String q = query.trim().toLowerCase(Locale.ROOT);
+        if (q.isEmpty()) return Collections.emptyList();
+        List<Entry> result = new ArrayList<>();
+        for (Entry entry : entries.values())
+            if (entry.name.toLowerCase(Locale.ROOT).contains(q) || entry.symbol.equals(q)) result.add(entry);
+        return result;
     }
     public int size() { return entries.size(); }
     public int groupCount() { return groups.size(); }

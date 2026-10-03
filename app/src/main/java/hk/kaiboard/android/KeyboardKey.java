@@ -20,9 +20,9 @@ final class KeyboardKey extends TextView {
         if (latin != null) {
             paint.setStyle(Paint.Style.FILL); paint.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
             paint.setColor(legendColor); paint.setTextSize(dp(10)); paint.setTextAlign(Paint.Align.LEFT);
-            canvas.drawText(radical, dp(5), dp(13), paint);
+            canvas.drawText(latin, dp(5), dp(12), paint);
             paint.setColor(getCurrentTextColor()); paint.setTextSize(dp(22)); paint.setTextAlign(Paint.Align.CENTER);
-            float y = getHeight() - dp(8); canvas.drawText(latin, getWidth()/2f, y, paint); return;
+            float y = getHeight() - dp(8); canvas.drawText(radical, getWidth()/2f, y, paint); return;
         }
         if (icon == null) { super.onDraw(canvas); return; }
         canvas.save(); float size = dp(22); canvas.translate((getWidth()-size)/2, (getHeight()-size)/2); canvas.scale(size/24, size/24);
@@ -30,6 +30,24 @@ final class KeyboardKey extends TextView {
         paint.setColor(getCurrentTextColor());
         Path path = new Path();
         switch (icon) {
+            case "clipboard":
+                canvas.drawRoundRect(5,5,19,22,2,2,paint); canvas.drawRoundRect(8,2,16,7,2,2,paint); break;
+            case "keyboard":
+                canvas.drawRoundRect(2,5,22,19,2,2,paint);
+                for(int row=0;row<2;row++) for(int col=0;col<5;col++) canvas.drawPoint(5+col*3.5f,9+row*3,paint);
+                canvas.drawLine(7,16,17,16,paint); break;
+            case "more":
+                for(int i=0;i<3;i++) canvas.drawCircle(5+i*7,12,1,paint); break;
+            case "mic":
+                canvas.drawRoundRect(9,2,15,15,3,3,paint); canvas.drawArc(5,6,19,19,0,180,false,paint);
+                canvas.drawLine(12,19,12,23,paint); break;
+            case "pen":
+                path.moveTo(7,16); path.lineTo(16,3); path.lineTo(21,7); path.lineTo(11,19); path.close(); canvas.drawPath(path,paint);
+                path.reset();path.moveTo(2,22);path.lineTo(5,18);path.lineTo(7,22);path.lineTo(12,21);canvas.drawPath(path,paint);break;
+            case "language":
+                canvas.drawRoundRect(1,2,13,14,2,2,paint);canvas.drawRoundRect(11,10,23,23,2,2,paint);
+                paint.setStyle(Paint.Style.FILL);paint.setTextSize(10);paint.setTextAlign(Paint.Align.CENTER);
+                canvas.drawText("文",7,12,paint);canvas.drawText("A",17,21,paint);break;
             case "emoji":
                 canvas.drawCircle(12,12,9,paint); canvas.drawCircle(8.5f,9,.5f,paint); canvas.drawCircle(15.5f,9,.5f,paint);
                 canvas.drawArc(7,8,17,17,20,140,false,paint); break;
