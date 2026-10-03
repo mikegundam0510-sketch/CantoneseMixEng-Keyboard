@@ -22,6 +22,7 @@ import java.util.concurrent.*;
 public final class KaiboardService extends InputMethodService {
     private final Handler handler = new Handler(Looper.getMainLooper());
     private final ExecutorService loader = Executors.newSingleThreadExecutor();
+    private final java.util.concurrent.atomic.AtomicInteger candidateGeneration = new java.util.concurrent.atomic.AtomicInteger();
     private DictionaryEngine dictionary;
     private QuickDecoder decoder;
     private EnglishEngine englishEngine;
@@ -47,6 +48,7 @@ public final class KaiboardService extends InputMethodService {
     private boolean noLearning;
     private LinearLayout root, panel, candidateRow;
     private HorizontalScrollView candidateScroll;
+    private ScrollView expandedScroll;
     private TextView raw, nextPage, firstToggle, codePreview, selectKey;
     private boolean chooseFirst, expanded, emojiSearch;
     private String emojiQuery = "";
@@ -143,7 +145,7 @@ public final class KaiboardService extends InputMethodService {
     }
 
     @Override public void onDestroy() {
-        destroyed = true; cancelVoice(); dismissSelectionPopup(); invalidateReselection(); stopRepeat(); handler.removeCallbacksAndMessages(null); loader.shutdownNow(); super.onDestroy();
+        destroyed = true; candidateGeneration.incrementAndGet(); cancelVoice(); dismissSelectionPopup(); invalidateReselection(); stopRepeat(); handler.removeCallbacksAndMessages(null); loader.shutdownNow(); super.onDestroy();
     }
 
     private void colors() {
@@ -162,7 +164,7 @@ public final class KaiboardService extends InputMethodService {
         if (root == null) return;
         if (tonePopup != null) { tonePopup.dismiss(); tonePopup = null; }
         dismissSelectionPopup();
-        stopRepeat(); colors(); candidateRow = null; raw = null; nextPage = null; firstToggle = null; codePreview = null;
+        stopRepeat(); colors(); expandedScroll = null; candidateRow = null; raw = null; nextPage = null; firstToggle = null; codePreview = null;
         quick = prefs.getBoolean("quick", true); cangjie = prefs.getBoolean("cangjie", true); english = prefs.getBoolean("english", true);
         root.removeAllViews(); root.setBackgroundColor(bg); root.setPadding(dp(splitLayout() ? 14 : 4), dp(5), dp(splitLayout() ? 14 : 4), dp(6));
         LinearLayout dock = row(root);
@@ -217,7 +219,7 @@ public final class KaiboardService extends InputMethodService {
         firstToggle = key(bar, "逐字", 1.15f, true, () -> { chooseFirst = !chooseFirst; updateCandidates(); }, 42);
         nextPage = key(bar, "⌄", .65f, true, () -> { expanded = !expanded; render(); }, 43);
         nextPage.setContentDescription("展開或收起候選字");
-        correctionRow = row(panel);
+        correctionRow = row(panel); correctionRow.setMinimumHeight(dp(36));
         updateCandidates();
 
         if (expanded && !candidates.isEmpty()) {
@@ -373,69 +375,167 @@ public final class KaiboardService extends InputMethodService {
         consumedCodes.putIfAbsent(candidate.text, candidate.source.length());
     }
 
+    /** All mutable editor/personal state is copied on the UI thread before searching. */
+    private final class CandidateRequest {
+        final String input, preceding;
+        final boolean quick, cangjie, continuous, chooseFirst, forceEnglish, forceChinese, noLearning, secure, isEnglish;
+        final InputCandidate restoredCandidate;
+        final Map<String, ?> personal, counts, englishCounts, settings;
+        final List<String> englishWords;
+        final Map<String, InputCandidate> details = new HashMap<>();
+        final Map<String, Integer> consumed = new HashMap<>();
+        List<String> values = Collections.emptyList();
+        List<InputCandidate> corrections = Collections.emptyList();
+        CandidateRequest() {
+            input = composing.toString(); preceding = context();
+            quick = KaiboardService.this.quick; cangjie = KaiboardService.this.cangjie;
+            chooseFirst = KaiboardService.this.chooseFirst; forceEnglish = KaiboardService.this.forceEnglish;
+            forceChinese = KaiboardService.this.forceChinese; noLearning = KaiboardService.this.noLearning;
+            secure = KaiboardService.this.secure; restoredCandidate = KaiboardService.this.restoredCandidate;
+            settings = new HashMap<>(prefs.getAll());
+            personal = noLearning ? Collections.emptyMap() : new HashMap<>(KaiboardService.this.personal.getAll());
+            counts = noLearning ? Collections.emptyMap() : new HashMap<>(learned.getAll());
+            englishCounts = noLearning ? Collections.emptyMap() : new HashMap<>(englishLearned.getAll());
+            englishWords = new ArrayList<>(personalEnglish());
+            continuous = quick && enabled("continuous", true) && input.length() > 2 && !secure;
+            isEnglish = forceEnglish || !forceChinese && enabled("english", true) && englishEngine != null
+                && englishEngine.likelyEnglish(input, englishWords);
+        }
+        boolean enabled(String name, boolean fallback) { Object value = settings.get(name); return value instanceof Boolean ? (Boolean)value : fallback; }
+        int learnedCount(String code, String word) {
+            if (noLearning || !enabled("learning", true)) return 0;
+            Object value = counts.get(LearningRanker.key(code, quick, cangjie, word));
+            return value instanceof Integer ? (Integer)value : 0;
+        }
+        String pinPrefix(String code) { return "p:" + (quick ? "Q" : "-") + (cangjie ? "C" : "-") + ":" + code.toLowerCase(Locale.ROOT) + ":"; }
+        List<String> englishSuggestions() {
+            List<String> result = new ArrayList<>(englishEngine.suggest(input, englishWords, enabled("english_repair", true)));
+            if (!noLearning && enabled("learning", true) && result.size() > 1)
+                result.subList(1, result.size()).sort(Comparator.comparingInt((String word) -> {
+                    Object count = englishCounts.get(word); return count instanceof Integer ? (Integer)count : 0;
+                }).reversed());
+            return result;
+        }
+        void add(LinkedHashSet<String> result, InputCandidate candidate) {
+            if (candidate.text.isEmpty()) return;
+            if (result.add(candidate.text)) details.put(candidate.text, candidate);
+            consumed.putIfAbsent(candidate.text, candidate.source.length());
+        }
+    }
+
     private void updateCandidates() {
-        candidatePage = 0; consumedCodes.clear(); candidateDetails.clear(); corrections = Collections.emptyList();
-        String input = composing.toString(), preceding = context();
-        boolean continuous = quick && prefs.getBoolean("continuous", true) && input.length() > 2 && !secure;
+        final int generation = candidateGeneration.incrementAndGet();
+        final CandidateRequest request = new CandidateRequest();
+        if (!request.continuous || request.chooseFirst || candidateEngine == null) {
+            computeCandidates(request); applyCandidates(request); return;
+        }
+        // Immediately usable exact first-character choices; never show stale choices from an older code.
+        LinkedHashSet<String> immediate = new LinkedHashSet<>();
+        if (request.isEnglish) for (String word : request.englishSuggestions()) request.add(immediate, InputCandidate.english(request.input, word));
+        else addPrefixChoices(request, immediate, 7);
+        request.values = new ArrayList<>(immediate);
+        applyCandidates(request);
+        if (destroyed) return;
+        loader.execute(() -> {
+            if (candidateGeneration.get() != generation) return;
+            CandidateRequest finished = request;
+            finished.details.clear(); finished.consumed.clear();
+            computeCandidates(finished);
+            handler.post(() -> {
+                if (!destroyed && candidateGeneration.get() == generation && composing.toString().equals(finished.input))
+                    applyCandidates(finished);
+            });
+        });
+    }
+
+    private void addPrefixChoices(CandidateRequest request, LinkedHashSet<String> result, int limit) {
+        if (dictionary == null || !request.quick || request.forceEnglish) return;
+        for (int size = Math.min(2, request.input.length()); size >= 1; size--) {
+            String part = request.input.substring(0, size);
+            List<String> words = LearningRanker.rank(dictionary.quickCandidates(part), word -> request.learnedCount(part, word));
+            for (int i = 0; i < Math.min(limit, words.size()); i++) request.add(result, InputCandidate.chinese(dictionary, part, words.get(i)));
+        }
+    }
+
+    private void applyCandidates(CandidateRequest request) {
+        candidatePage = 0; consumedCodes.clear(); candidateDetails.clear();
+        consumedCodes.putAll(request.consumed); candidateDetails.putAll(request.details);
+        candidates = new ArrayList<>(request.values); corrections = request.corrections;
+        displayCandidates();
+        if (expanded && expandedScroll != null) renderExpandedCandidates();
+    }
+
+    private void computeCandidates(CandidateRequest request) {
+        String input = request.input, preceding = request.preceding;
+        boolean quick = request.quick, cangjie = request.cangjie, continuous = request.continuous,
+            chooseFirst = request.chooseFirst, forceEnglish = request.forceEnglish, forceChinese = request.forceChinese,
+            noLearning = request.noLearning, secure = request.secure;
+        InputCandidate restoredCandidate = request.restoredCandidate;
         LinkedHashSet<String> results = new LinkedHashSet<>();
         if (!secure && !input.isEmpty()) {
             if (continuous && chooseFirst && dictionary != null) {
                 for (int size = 2; size >= 1; size--) {
                     String part = input.substring(0, size);
-                    for (String word : LearningRanker.rank(dictionary.quickCandidates(part), w -> learnedCount(part, w)))
-                        addCandidate(results, InputCandidate.chinese(dictionary, part, word));
+                    for (String word : LearningRanker.rank(dictionary.quickCandidates(part), w -> request.learnedCount(part, w)))
+                        request.add(results, InputCandidate.chinese(dictionary, part, word));
                 }
             } else {
-                boolean isEnglish = englishIntent();
-                if (englishEngine != null && prefs.getBoolean("english", true) && isEnglish)
-                    for (String word : englishSuggestions(input))
-                        addCandidate(results, InputCandidate.english(input, word));
+                boolean isEnglish = request.isEnglish;
+                if (englishEngine != null && request.enabled("english", true) && isEnglish)
+                    for (String word : request.englishSuggestions())
+                        request.add(results, InputCandidate.english(input, word));
                 if (candidateEngine != null && !forceEnglish) {
-                    if (continuous && !forceChinese && prefs.getBoolean("mixed", true) && prefs.getBoolean("english", true))
-                        for (InputCandidate candidate : candidateEngine.mixed(input, preceding, personalEnglish(), this::learnedCount)) addCandidate(results, candidate);
-                    for (InputCandidate candidate : candidateEngine.chinese(input, preceding, continuous, quick, cangjie, this::learnedCount)) addCandidate(results, candidate);
+                    if (continuous && !forceChinese && request.enabled("mixed", true) && request.enabled("english", true))
+                        for (InputCandidate candidate : candidateEngine.mixed(input, preceding, request.englishWords, request::learnedCount)) request.add(results, candidate);
+                    for (InputCandidate candidate : candidateEngine.chinese(input, preceding, continuous, quick, cangjie, request::learnedCount)) request.add(results, candidate);
                 }
-                if (!noLearning) {
+                if (!noLearning && dictionary != null) {
                     String prefix = "c:" + input.toLowerCase(Locale.ROOT) + ":";
-                    for (Map.Entry<String, ?> entry : personal.getAll().entrySet())
+                    for (Map.Entry<String, ?> entry : request.personal.entrySet())
                         if (entry.getKey().startsWith(prefix) && entry.getValue() instanceof String)
-                            addCandidate(results, InputCandidate.chinese(dictionary, input, (String) entry.getValue()));
+                            request.add(results, InputCandidate.chinese(dictionary, input, (String) entry.getValue()));
                 }
-                if (englishEngine != null && prefs.getBoolean("english", true) && !isEnglish)
-                    for (String word : englishSuggestions(input))
-                        addCandidate(results, InputCandidate.english(input, word));
+                if (englishEngine != null && request.enabled("english", true) && !isEnglish)
+                    for (String word : request.englishSuggestions())
+                        request.add(results, InputCandidate.english(input, word));
             }
             if (!noLearning) {
-                String prefix = pinPrefix(input);
-                for (Map.Entry<String, ?> entry : personal.getAll().entrySet()) if (entry.getKey().startsWith(prefix) && entry.getValue() instanceof String) {
+                String prefix = request.pinPrefix(input);
+                for (Map.Entry<String, ?> entry : request.personal.entrySet()) if (entry.getKey().startsWith(prefix) && entry.getValue() instanceof String) {
                     String text = (String) entry.getValue();
                     if (EnglishEngine.validWord(text)) {
-                        if (!forceChinese) addCandidate(results, InputCandidate.english(input,text));
-                    } else if (!forceEnglish) addCandidate(results, InputCandidate.chinese(dictionary,input,text));
+                        if (!forceChinese) request.add(results, InputCandidate.english(input,text));
+                    } else if (!forceEnglish && dictionary != null) request.add(results, InputCandidate.chinese(dictionary,input,text));
                 }
             }
             if (restoredCandidate != null && restoredCandidate.source.equals(input)) {
-                addCandidate(results, restoredCandidate);
+                request.add(results, restoredCandidate);
             }
-            if (quick && !chooseFirst && !englishIntent() && quickTypos != null && prefs.getBoolean("quick_repair", true)) {
+            if (quick && !chooseFirst && !request.isEnglish && quickTypos != null && request.enabled("quick_repair", true)) {
                 List<InputCandidate> baselines = new ArrayList<>();
                 for (String word : results) {
-                    InputCandidate detail = candidateDetails.get(word);
+                    InputCandidate detail = request.details.get(word);
                     if (!detail.englishOnly() && dictionary.matchQuickCodes(input, detail.text).size() > 0) { baselines.add(detail); if (baselines.size() == 3) break; }
                 }
                 List<InputCandidate> repaired = quickTypos.suggest(input, baselines, preceding);
                 List<InputCandidate> distinct = new ArrayList<>();
                 for (InputCandidate candidate : repaired) if (!results.contains(candidate.text)) distinct.add(candidate);
-                corrections = distinct;
+                request.corrections = distinct;
             }
-            if (results.isEmpty()) addCandidate(results, InputCandidate.english(input, input));
+            if (results.isEmpty()) request.add(results, InputCandidate.english(input, input));
         }
-        candidates = new ArrayList<>(results);
-        if (!noLearning) candidates.sort(Comparator.comparingInt((String value) ->
-            personal.contains(pinPrefix(candidateDetails.get(value).effectiveCode()) + value) ? 2 :
-            personal.contains("c:" + input.toLowerCase(Locale.ROOT) + ":" + value) ? 1 : 0).reversed());
-        for (String word : candidates) consumedCodes.putIfAbsent(word, input.length());
-        displayCandidates();
+        if (continuous && !chooseFirst && !request.isEnglish && !forceEnglish) {
+            LinkedHashSet<String> ordered = new LinkedHashSet<>();
+            int count = 0;
+            for (String value : results) { ordered.add(value); if (++count == 2) break; }
+            addPrefixChoices(request, ordered, 5);
+            ordered.addAll(results); results = ordered;
+        }
+        request.values = new ArrayList<>(results);
+        if (!noLearning) request.values.sort(Comparator.comparingInt((String value) ->
+            request.personal.containsKey(request.pinPrefix(request.details.get(value).effectiveCode()) + value) ? 2 :
+            request.personal.containsKey("c:" + input.toLowerCase(Locale.ROOT) + ":" + value) ? 1 : 0).reversed());
+        for (String word : request.values) request.consumed.putIfAbsent(word, input.length());
     }
 
     private int learnedCount(String code, String word) {
@@ -451,20 +551,21 @@ public final class KaiboardService extends InputMethodService {
         raw.setEnabled(composing.length() > 0);
         raw.setAlpha(composing.length() > 0 ? 1f : .45f);
         if (toolbar != null) toolbar.setVisibility(View.VISIBLE);
-        if (candidateBar != null) candidateBar.setVisibility(composing.length() == 0 ? View.GONE : View.VISIBLE);
-        if (codePreview != null) codePreview.setVisibility(composing.length() == 0 ? View.GONE : View.VISIBLE);
+        if (candidateBar != null) candidateBar.setVisibility(composing.length() == 0 ? View.INVISIBLE : View.VISIBLE);
+        if (codePreview != null) codePreview.setVisibility(View.VISIBLE);
         if (codePreview != null) codePreview.setText(composing.length() == 0 ? secure ? "密碼輸入" : loadFailed ? "字庫載入失敗" : dictionary == null ? "載入字庫…" : ascii ? "English" : "速成  ·  倉頡  ·  English" :
             (forceEnglish || englishIntent() ? "English   " : chooseFirst ? "逐字選取   " : "") + composing.toString());
-        if (firstToggle != null) { firstToggle.setText(chooseFirst ? "整句" : "逐字"); firstToggle.setVisibility(quick && prefs.getBoolean("continuous",true) && composing.length() > 2 ? View.VISIBLE : View.GONE); }
+        if (firstToggle != null) { firstToggle.setText(chooseFirst ? "整句" : "逐字"); firstToggle.setVisibility(quick && prefs.getBoolean("continuous",true) && composing.length() > 2 ? View.VISIBLE : View.INVISIBLE); }
         displayCorrections();
-        if (candidates.isEmpty()) { nextPage.setVisibility(View.GONE); return; }
+        if (candidates.isEmpty()) { nextPage.setVisibility(View.INVISIBLE); return; }
         int pages = (candidates.size() + PAGE_SIZE - 1) / PAGE_SIZE;
         candidatePage %= pages;
         for (int i = 0; i < candidates.size(); i++) {
             String value = candidates.get(i);
-            TextView item = new TextView(this); item.setText(value); item.setTextSize(23); item.setTextColor(fg);
+            boolean partial = consumedCodes.getOrDefault(value, composing.length()) < composing.length();
+            TextView item = new TextView(this); item.setText(partial ? value + " ›" : value); item.setTextSize(23); item.setTextColor(fg);
             item.setGravity(Gravity.CENTER); item.setPadding(dp(8), 0, dp(8), 0); item.setMinWidth(dp(32)); item.setSingleLine(true);
-            item.setContentDescription(value + (chooseFirst ? "，先輸入此字並保留後續字碼" : ""));
+            item.setContentDescription(value + (partial || chooseFirst ? "，先輸入此字並保留後續字碼" : ""));
             if (i == candidatePage * PAGE_SIZE) { item.setTextColor(accent); item.setTypeface(null, Typeface.BOLD); }
             item.setBackgroundColor(Color.TRANSPARENT); item.setOnClickListener(v -> commit(value));
             item.setOnLongClickListener(v -> { candidateMenu(item, candidateDetails.get(value)); return true; });
@@ -614,7 +715,7 @@ public final class KaiboardService extends InputMethodService {
     }
 
     private void picker() { cancelVoice(); invalidateReselection(); finishLiteral(); ((InputMethodManager)getSystemService(INPUT_METHOD_SERVICE)).showInputMethodPicker(); }
-    private void resetComposition() { forceEnglish = forceChinese = false; restoredCandidate = null; expanded = false; emojiSearch = false; emojiQuery = ""; composing.setLength(0); candidates = Collections.emptyList(); consumedCodes.clear(); candidatePage = 0; chooseFirst = false; }
+    private void resetComposition() { candidateGeneration.incrementAndGet(); forceEnglish = forceChinese = false; restoredCandidate = null; expanded = false; emojiSearch = false; emojiQuery = ""; composing.setLength(0); candidates = Collections.emptyList(); consumedCodes.clear(); candidatePage = 0; chooseFirst = false; }
     private void sendKey(int keyCode) { InputConnection ic = getCurrentInputConnection(); if (ic != null) {
         ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, keyCode)); ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, keyCode));
     } }
@@ -861,7 +962,7 @@ public final class KaiboardService extends InputMethodService {
             strip.addView(list, new HorizontalScrollView.LayoutParams(-2,-1));
             correctionRow.addView(strip, new LinearLayout.LayoutParams(0,dp(36),1));
         }
-        correctionRow.setVisibility(restoredCandidate == null && corrections.isEmpty() ? View.GONE : View.VISIBLE);
+        correctionRow.setVisibility(restoredCandidate == null && corrections.isEmpty() ? View.INVISIBLE : View.VISIBLE);
     }
 
     private void punctuation(View anchor) {
@@ -884,7 +985,11 @@ public final class KaiboardService extends InputMethodService {
     }
 
     private void renderExpandedCandidates() {
-        ScrollView scroll = new ScrollView(this);
+        if (expandedScroll == null) {
+            expandedScroll = new ScrollView(this);
+            panel.addView(expandedScroll,new LinearLayout.LayoutParams(-1,dp(210)));
+        }
+        expandedScroll.removeAllViews();
         android.widget.GridLayout grid = new android.widget.GridLayout(this); grid.setColumnCount(5);
         for (String value : candidates) {
             TextView item = new TextView(this); item.setText(value); item.setTextSize(21); item.setTextColor(fg);
@@ -894,7 +999,7 @@ public final class KaiboardService extends InputMethodService {
             grid.addView(item,lp); item.setOnClickListener(v -> commit(value));
             item.setOnLongClickListener(v -> { candidateMenu(item, candidateDetails.get(value)); return true; });
         }
-        scroll.addView(grid); panel.addView(scroll,new LinearLayout.LayoutParams(-1,dp(210)));
+        expandedScroll.addView(grid);
     }
 
     private String recentEmoji() {
@@ -1034,7 +1139,7 @@ public final class KaiboardService extends InputMethodService {
     private TextView key(LinearLayout parent, String label, float weight, boolean special, Runnable action, int height) {
         KeyboardKey button = new KeyboardKey(this); button.setText(label); button.setTextColor(fg); button.setTextSize(label.length() > 2 && !label.contains("\n") ? 13 : 22);
         button.setGravity(Gravity.CENTER); button.setIncludeFontPadding(false); button.setMaxLines(2); button.setSingleLine(false);
-        button.setBackground(background(special ? functionColor : keyColor)); button.setFocusable(true);
+        button.setBackground(new android.graphics.drawable.InsetDrawable(background(special ? functionColor : keyColor), dp(2), dp(3), dp(2), dp(3))); button.setFocusable(true);
         switch (label) {
             case "☺": button.icon("emoji"); break;
             case "⌫": button.icon("delete"); break;
@@ -1047,7 +1152,7 @@ public final class KaiboardService extends InputMethodService {
         }
         button.setElevation(dp(1));
         button.setOnClickListener(v -> { if (voiceListening) cancelVoice(); if (prefs.getBoolean("haptic", true)) v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP); action.run(); });
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, dp(height), weight); params.setMargins(dp(2), dp(3), dp(2), dp(3));
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, dp(height) + dp(6), weight);
         parent.addView(button, params); return button;
     }
 
@@ -1068,6 +1173,3 @@ public final class KaiboardService extends InputMethodService {
     }
     private int dp(float value) { return Math.round(value * getResources().getDisplayMetrics().density); }
 }
-
-
-

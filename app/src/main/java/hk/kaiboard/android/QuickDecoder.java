@@ -97,8 +97,11 @@ public final class QuickDecoder {
                         String character = new String(Character.toChars(cp)); offset += Character.charCount(cp);
                         bonus += Math.min(2.5, Math.log1p(learned.applyAsInt(c, character)) * .65);
                     }
+                    String word = choice.getKey();
+                    String first = new String(Character.toChars(word.codePointAt(0)));
+                    double internalScore = languageScore("", word) - languageScore("", first);
                     for (Path prefix : paths) {
-                        double score = languageScore(prefix.text.isEmpty() ? context : prefix.text, choice.getKey());
+                        double score = languageScore(prefix.text.isEmpty() ? context : prefix.text, first) + internalScore;
                         int characters = choice.getKey().codePointCount(0, choice.getKey().length());
                         // A modest word bonus, with character likelihood applied across token boundaries.
                         double wordBonus = characters > 1 ? Math.min(1.5, Math.log1p(choice.getValue()) / 10) * (characters - 1) : 0;
@@ -109,8 +112,13 @@ public final class QuickDecoder {
             }
         }
         List<String> result = new ArrayList<>();
+        // An attested complete word/phrase is safer than a sentence invented from pair statistics.
+        for (Token token : vocabulary.getOrDefault(code, Collections.emptyList())) {
+            if (!dictionary.matchQuickCodes(code, token.text).isEmpty() && !result.contains(token.text)) result.add(token.text);
+            if (result.size() == 5) break;
+        }
         for (Path path : prune(lattice.get(code.length()))) {
-            if (path.text.codePointCount(0, path.text.length()) > 1) result.add(path.text);
+            if (path.text.codePointCount(0, path.text.length()) > 1 && !result.contains(path.text)) result.add(path.text);
             if (result.size() == 20) break;
         }
         return result;
@@ -141,4 +149,3 @@ public final class QuickDecoder {
         return result;
     }
 }
-

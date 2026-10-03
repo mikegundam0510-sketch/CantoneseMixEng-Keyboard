@@ -156,4 +156,24 @@ adb("shell","input","swipe",x1,y,x2,y,"550");time.sleep(.5);tap_text("2")
 assert editor_text()=="1abcdefghij2", "Right key-area swipe did not move cursor"
 assert find("重新選字").get("enabled")=="false", "Cursor movement did not disable stale reselection"
 shot("12-cursor-swipes")
-(out/"result.txt").write_text("PASS: emoji, candidate swipe, HK ranking, reselection/segment edit, English space/repair/learning, mixed sentence, pin/unpin, Quick typo repair, punctuation and key-area cursor swipes. Voice and Samsung/Fold hardware remain device checks.\n",encoding="utf-8")
+# The visual key gap belongs to the key touch target, including its outer edge.
+reset_field()
+key=find("O，人"); bounds=list(map(int,re.findall(r"\d+",key.get("bounds"))))
+adb("shell","input","tap",str(bounds[0]+1),str((bounds[1]+bounds[3])//2))
+time.sleep(.2)
+assert editor_text()=="o", "Tap at key edge was dropped"
+# Type without the half-second delay used by the rest of the acceptance checks.
+reset_field()
+nodes=tree(); positions={n.get("content-desc"):center(n) for n in nodes.iter("node") if n.get("content-desc") and n.get("bounds")}
+code="ofonaovrmrq"
+for char in code: adb("shell","input","tap",*positions[char.upper()+"，"+radicals[char]])
+time.sleep(.8)
+assert editor_text()==code, "Rapid real-key taps lost or reordered code"
+assert find("你，先輸入此字並保留後續字碼") is not None, "Exact prefix fallback is missing"
+tap("你，先輸入此字並保留後續字碼")
+assert editor_text()=="你onaovrmrq", "Prefix choice discarded remaining codes"
+# Outstanding searches must not restore candidates after moving to a fresh editor state.
+reset_field()
+assert find("你今日食咗咩") is None, "Stale async candidate survived editor reset"
+shot("13-key-edges-rapid-input")
+(out/"result.txt").write_text("PASS: emoji, candidate swipe, HK ranking, reselection/segment edit, English space/repair/learning, mixed sentence, pin/unpin, Quick typo repair, punctuation, key-area cursor swipes, key-edge taps, rapid key input, prefix selection and stale-search cancellation. Voice and Samsung/Fold hardware remain device checks.\n",encoding="utf-8")
