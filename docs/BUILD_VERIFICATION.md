@@ -1,4 +1,17 @@
-# Build verification — 0.5.0
+# Build verification — 0.5.1
+
+Verified code commit: `686827a88c400b1909d684b59d66fe8643a4f419`, 2026-10-03 UTC.
+
+- GitHub Actions push run: https://github.com/mikegundam0510-sketch/kaiboard-samsung/actions/runs/37134145242 (successful retry after an incomplete Google SDK repository download).
+- `testDebugUnitTest lintDebug assembleDebug` passed; 39 JVM tests, zero failures/ignored tests. Lint: 15 warnings, no errors.
+- API 31 emulator acceptance passed: prior Emoji/candidate scrolling/HK examples/reselection/English/mixed/pinning/repair/punctuation/cursor checks plus edge taps, rapid physical-key event injection, exact-prefix selection preserving remaining codes and stale-result rejection after editor reset.
+- APK ZIP artifact: https://github.com/mikegundam0510-sketch/kaiboard-samsung/actions/runs/37134145242/artifacts/11277891685
+- UI evidence artifact: 11277822363. Test/lint reports: 11277951512.
+- APK SHA256: `f68560d23eabce9b3a20cb5cd815bb28ca6894d471cf7eb8ed855270d554b224`.
+- APK v2 signing certificate SHA256: `c3c50dab747c1cd3b7d7d04628ebf7807ab167bc5ffdf7d362c0cd70ea93869b`. It differs from 0.5.0; uninstall old build first, clearing settings/learning.
+- VersionName 0.5.1, versionCode 6. Pending: Samsung/Fold hardware touch feel, rapid alternating fingers, fold/cover/inner lifecycle, real speech provider and full accessibility. Offline sentence ranking remains limited and is not claimed accurate for arbitrary text.
+
+## Historical 0.5.0 verification
 
 Verified code commit: `2dac8c49d0b7d045d515a45e9e9484c03a39785b`, 2026-10-03.
 

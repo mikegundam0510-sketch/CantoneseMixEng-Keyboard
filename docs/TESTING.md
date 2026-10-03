@@ -41,3 +41,11 @@ Automated checks do not replace these device tests. Samsung-specific behaviour i
 - Long-press comma/period and choose punctuation; keyboard/editor focus should remain stable.
 - Swipe left/right across letter keys: cursor moves without key insertion. Check short taps still type, vertical motion does not begin cursor movement, candidate swipes only scroll candidates, and Shift/Delete long presses still work. Test selected text, Emoji, pending composition, both Fold displays, split and single-hand layouts.
 - Try direct voice with permission allowed/denied and an available/unavailable speech provider; verify real yue-HK and mixed-language results on Samsung hardware.
+
+## 0.5.1 touch and latency checks
+
+- Tap the outer edge and the gap inside each full key cell: code must be inserted once. Repeat with alternating fingers on Samsung/Fold hardware, both display sizes and one-hand layouts.
+- Rapidly tap a continuous Quick sentence while candidates are searching: no missing, duplicated or reordered code. Compare key positions before/after candidate/repair rows update.
+- Exact prefix choices appear after the leading sentence suggestion. Select a candidate marked ›: only that prefix commits and every remaining code is preserved.
+- Change editors, reset text, erase code or choose a prefix before a search completes: previous results must not overwrite current candidates.
+- Try arbitrary names and unusual clauses: whole-dictionary phrase preference is not a guarantee of sentence accuracy; verify manual prefix/segment choices remain available.
