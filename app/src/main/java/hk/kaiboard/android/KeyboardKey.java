@@ -30,6 +30,29 @@ final class KeyboardKey extends TextView {
         paint.setColor(getCurrentTextColor());
         Path path = new Path();
         switch (icon) {
+            case "recent":
+                canvas.drawCircle(12,12,9,paint);canvas.drawLine(12,5,12,12,paint);canvas.drawLine(12,12,17,15,paint);break;
+            case "person":
+                canvas.drawCircle(12,6,4,paint);canvas.drawArc(4,12,20,26,180,180,false,paint);break;
+            case "animal":
+                canvas.drawOval(7,12,17,21,paint);canvas.drawCircle(4,10,2,paint);canvas.drawCircle(9,5,2,paint);
+                canvas.drawCircle(15,5,2,paint);canvas.drawCircle(20,10,2,paint);break;
+            case "food":
+                canvas.drawArc(3,3,21,17,180,180,false,paint);canvas.drawLine(3,10,21,10,paint);
+                canvas.drawLine(2,14,22,14,paint);canvas.drawRoundRect(3,18,21,22,2,2,paint);break;
+            case "car":
+                canvas.drawRoundRect(2,9,22,19,2,2,paint);path.moveTo(5,9);path.lineTo(7,4);path.lineTo(17,4);path.lineTo(19,9);canvas.drawPath(path,paint);
+                canvas.drawCircle(6,19,2,paint);canvas.drawCircle(18,19,2,paint);break;
+            case "ball":
+                canvas.drawCircle(12,12,9,paint);canvas.drawOval(8,3,16,21,paint);canvas.drawLine(3,12,21,12,paint);break;
+            case "bulb":
+                canvas.drawArc(5,2,19,17,140,260,false,paint);path.moveTo(6,14);path.lineTo(9,19);path.lineTo(15,19);path.lineTo(18,14);canvas.drawPath(path,paint);
+                canvas.drawLine(9,22,15,22,paint);break;
+            case "symbols":
+                paint.setStyle(Paint.Style.FILL);paint.setTextSize(14);paint.setTextAlign(Paint.Align.CENTER);canvas.drawText("&%",12,17,paint);break;
+            case "flag":
+                canvas.drawLine(4,2,4,23,paint);path.moveTo(4,3);path.cubicTo(10,-1,15,8,22,3);path.lineTo(22,15);
+                path.cubicTo(15,20,10,10,4,15);canvas.drawPath(path,paint);break;
             case "clipboard":
                 canvas.drawRoundRect(5,5,19,22,2,2,paint); canvas.drawRoundRect(8,2,16,7,2,2,paint); break;
             case "keyboard":

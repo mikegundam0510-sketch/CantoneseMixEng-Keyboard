@@ -221,15 +221,15 @@ public final class KaiboardService extends InputMethodService {
         selectKey = select; select.setTextSize(14); select.setSingleLine(true);
         select.setContentDescription("選取本頁第一個候選字；沒有字碼時切換鍵盤");
         if (!numeric) {
-            key(bottom, ascii ? "," : "，", .9f, false, () -> insert(ascii ? "," : "，"), keyHeight());
             TextView space = key(bottom, "空格", splitLayout() ? 6.4f : 3.6f, false, this::space, keyHeight());
             space.setContentDescription("空白鍵，左右滑動移動游標"); attachSpaceGesture(space);
+            key(bottom, ascii ? "," : "，", .9f, false, () -> insert(ascii ? "," : "，"), keyHeight());
             key(bottom, ascii ? "." : "。", .9f, false, () -> insert(ascii ? "." : "。"), keyHeight());
         }
         if (symbols || emoji || numeric) deleteKey(bottom, 1.2f);
         TextView enterKey = key(bottom, enterLabel(), 1.45f, true, this::enter, keyHeight());
         enterKey.setBackground(background(functionColor));
-        enterKey.setTextColor(fg);
+        enterKey.setTextColor(fg); enterKey.setTextSize(14); enterKey.setSingleLine(true);
         if (getWindow() != null) {
             getWindow().getWindow().setNavigationBarColor(bg);
             getWindow().getWindow().getDecorView().setSystemUiVisibility(dark ? 0 : View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
@@ -425,7 +425,7 @@ public final class KaiboardService extends InputMethodService {
 
     private String enterLabel() {
         EditorInfo info = getCurrentInputEditorInfo();
-        if (info == null || (info.imeOptions & EditorInfo.IME_FLAG_NO_ENTER_ACTION) != 0) return "↵";
+        if (info == null || (info.imeOptions & EditorInfo.IME_FLAG_NO_ENTER_ACTION) != 0) return "換行";
         switch (info.imeOptions & EditorInfo.IME_MASK_ACTION) {
             case EditorInfo.IME_ACTION_GO: return "前往";
             case EditorInfo.IME_ACTION_SEARCH: return "搜尋";
@@ -619,11 +619,11 @@ public final class KaiboardService extends InputMethodService {
         emojiCategories=new HorizontalScrollView(this);emojiCategories.setHorizontalScrollBarEnabled(false);
         LinearLayout tabs=new LinearLayout(this);emojiCategories.addView(tabs);
         bottom.addView(emojiCategories,new LinearLayout.LayoutParams(0,dp(44),7));
-        String[] marks={"◷","☺","♙","♧","☕","✈","⚽","♢","&%","⚑"};
+        String[] marks={"recent","emoji","person","animal","food","car","ball","bulb","symbols","flag"};
         for(int i=-1;i<emojiCatalog.groupCount();i++) {
-            final int group=i;TextView category=new TextView(this);category.setText(marks[i+1]);category.setTextSize(23);
+            final int group=i;KeyboardKey category=new KeyboardKey(this);category.icon(marks[i+1]);
             category.setTextColor(muted);category.setGravity(Gravity.CENTER);category.setContentDescription(i<0?"最近使用":EmojiCatalog.LABELS[i]);
-            tabs.addView(category,new LinearLayout.LayoutParams(dp(32),dp(44)));emojiTabs.put(group,category);
+            tabs.addView(category,new LinearLayout.LayoutParams(dp(Math.max(24,(width-16)*7/95)),dp(44)));emojiTabs.put(group,category);
             category.setOnClickListener(v->{
                 if(!emojiQuery.isEmpty()){emojiQuery="";refreshEmoji();}
                 Integer position=emojiModel.starts.get(group);
