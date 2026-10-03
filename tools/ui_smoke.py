@@ -2,7 +2,7 @@
 import subprocess, time, xml.etree.ElementTree as ET, re, pathlib
 out=pathlib.Path("ui-evidence");out.mkdir(exist_ok=True)
 def adb(*args):
-    return subprocess.check_output(["adb",*args],text=True)
+    return subprocess.check_output(["adb",*args],text=True,timeout=30)
 def tree():
     for _ in range(3):
         try:
@@ -34,7 +34,7 @@ for _ in range(10):
         x,y=center(editor);adb("shell","input","tap",x,y)
     time.sleep(1)
 (out/"startup.xml").write_text(ET.tostring(tree(),encoding="unicode"),encoding="utf-8")
-(out/"logcat.txt").write_text(adb("logcat","-d","-t","500"),encoding="utf-8")
+(out/"logcat.txt").write_text(adb("logcat","-d"),encoding="utf-8")
 shot("01-keyboard")
 tap("Emoji")
 shot("02-emoji")
