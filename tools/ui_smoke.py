@@ -1,0 +1,51 @@
+"""UI smoke test on a disposable Android emulator. Saves actual screenshots."""
+import subprocess, time, xml.etree.ElementTree as ET, re, pathlib
+out=pathlib.Path("ui-evidence");out.mkdir(exist_ok=True)
+def adb(*args):
+    return subprocess.check_output(["adb",*args],text=True)
+def tree():
+    for _ in range(3):
+        try:
+            adb("shell","uiautomator","dump","/sdcard/window.xml")
+            return ET.fromstring(adb("shell","cat","/sdcard/window.xml"))
+        except Exception: time.sleep(1)
+    raise AssertionError("UI dump unavailable")
+def find(desc):
+    return next((n for n in tree().iter("node") if n.get("content-desc")==desc),None)
+def center(node):
+    assert node is not None,"Expected UI control missing"
+    a=list(map(int,re.findall(r"\d+",node.get("bounds"))))
+    return str((a[0]+a[2])//2),str((a[1]+a[3])//2)
+def tap(desc):
+    adb("shell","input","tap",*center(find(desc)));time.sleep(.5)
+def shot(name):
+    with (out/(name+".png")).open("wb") as f:subprocess.run(["adb","exec-out","screencap","-p"],stdout=f,check=True)
+adb("install","-r","apk/app-debug.apk")
+adb("shell","ime","enable","hk.kaiboard.android/.KaiboardService")
+adb("shell","ime","set","hk.kaiboard.android/.KaiboardService")
+adb("shell","am","start","-n","hk.kaiboard.android/.KeyboardPreviewActivity")
+time.sleep(3)
+shot("01-keyboard")
+tap("Emoji")
+shot("02-emoji")
+tap("人物")
+node=find("waving hand")
+assert node is not None,"People section must start with waving hand"
+x,y=center(node)
+adb("shell","input","swipe",x,y,x,y,"800");time.sleep(.5)
+shot("03-skin-tones")
+tap("waving hand: medium skin tone")
+assert any("👋🏽" in n.get("text","") for n in tree().iter("node")),"Skin-tone emoji not committed"
+tap("旗幟")
+assert find("旗幟").get("selected")=="true","Category jump not selected"
+shot("04-flags")
+tap("人物")
+lst=next(n for n in tree().iter("node") if n.get("class")=="android.widget.ListView")
+bounds=list(map(int,re.findall(r"\d+",lst.get("bounds"))))
+x=str((bounds[0]+bounds[2])//2)
+# Scroll backwards from People into Smileys; category highlight must follow.
+for _ in range(3):
+    adb("shell","input","swipe",x,str(bounds[1]+25),x,str(bounds[3]-25),"350");time.sleep(.4)
+assert find("表情").get("selected")=="true","Scroll did not update current category"
+shot("05-scroll-category")
+(out/"result.txt").write_text("PASS: keyboard launch, continuous category jump, scroll-driven selection, skin-tone popup and emoji commit.\n",encoding="utf-8")
