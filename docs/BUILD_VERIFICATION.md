@@ -1,4 +1,21 @@
-# Build verification — 0.2.0
+# Build verification — 0.5.0
+
+Verified code commit: `2dac8c49d0b7d045d515a45e9e9484c03a39785b`, 2026-10-03.
+
+- GitHub Actions push run: https://github.com/mikegundam0510-sketch/kaiboard-samsung/actions/runs/37128083672
+- 39 JVM tests passed: dictionary/learning 9, Emoji browser 5, Emoji catalog 4, input policy 3, mixed input/reselection/repair 9, Quick decoder 9. No failures or ignored tests.
+- `testDebugUnitTest lintDebug assembleDebug` passed. Lint reports 15 warnings, including custom touch accessibility; full TalkBack acceptance remains unverified.
+- API 31 emulator passed real keyboard touches for emoji categories/tone insertion, HK sentence ordering, candidate scrolling without commit, icon space, safe reselection/one-segment edit, English Space/repair/learning, case-preserved mixed sentence, pin/unpin, separate Quick typo correction, punctuation and left/right character-key cursor swipes without key insertion.
+- APK ZIP artifact: https://github.com/mikegundam0510-sketch/kaiboard-samsung/actions/runs/37128083672/artifacts/11274684093
+- UI screenshots/result: artifact 11275791963. Test/lint reports: artifact 11275458339.
+- APK SHA256: `06ea20e347d22ac5690ec8bc1fc1ea2034f3c0abf6ae6bc97ef36a8eb43af12a`.
+- APK v2 signing certificate SHA256: `0922a24de5df077f3137410db14dce14fca56453be1aeceddf7c6ced6cc0fec9`. It differs from verified 0.4.0; uninstalling the old build is required and clears settings/learning.
+- VersionName 0.5.0, versionCode 5. Requires API 26+. The app requests microphone permission for explicitly invoked Android speech recognition, and has no Internet permission.
+
+Remaining: physical Samsung/Fold cursor feel, cover/inner display/fold lifecycle, real speech provider and yue-HK results, full accessibility and custom-editor acceptance. Bounded offline Chinese/English inference can remain ambiguous; manual segment selection is available. Keep PR #1 draft and unmerged pending user feedback.
+
+## Historical 0.2.0 verification
+
 
 Verified on 2026-10-03 (Hong Kong time).
 
@@ -18,3 +35,4 @@ Verified on 2026-10-03 (Hong Kong time).
 APK installed successfully on an Android 15 / API 35 emulator, and the system discovered and enabled the input method. The emulator's System UI repeatedly became unresponsive under software emulation without hardware acceleration, including at reduced resolution. Consequently, end-to-end key taps, candidate selection and cover/inner-screen appearance were **not successfully verified**. No simulated screenshot is presented as a passed UI check.
 
 Not performed: physical Galaxy Z Fold7 / One UI 8.5 testing, Samsung Galaxy AI integration, fold/unfold lifecycle checks, or full accessibility acceptance. The split layout is selected using available width >= 600dp; it still needs testing on the target device. See TESTING.md for the concrete acceptance checklist. This is a debug build for device trials, not a certified production release.
+
