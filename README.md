@@ -1,6 +1,6 @@
 # 粵語中英混合keyboard
 
-原生 Android 離線鍵盤，目標裝置為 Samsung Galaxy Z Fold7／One UI 8.5。獨立開發。
+原生 Android 離線鍵盤，目標裝置為 Samsung Galaxy Z Fold7／One UI 8.5。
 
 ## 0.2.0 更新
 
