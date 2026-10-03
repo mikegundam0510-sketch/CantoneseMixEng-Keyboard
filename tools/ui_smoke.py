@@ -6,7 +6,7 @@ def adb(*args):
 def tree():
     for _ in range(3):
         try:
-            adb("shell","uiautomator","dump","/sdcard/window.xml")
+            adb("shell","uiautomator","dump","--windows","/sdcard/window.xml")
             return ET.fromstring(adb("shell","cat","/sdcard/window.xml"))
         except Exception: time.sleep(1)
     raise AssertionError("UI dump unavailable")
@@ -20,11 +20,20 @@ def tap(desc):
     adb("shell","input","tap",*center(find(desc)));time.sleep(.5)
 def shot(name):
     with (out/(name+".png")).open("wb") as f:subprocess.run(["adb","exec-out","screencap","-p"],stdout=f,check=True)
+import sys
+def failure(kind,value,tb):
+    try:
+        shot("failure")
+        (out/"failure-logcat.txt").write_text(adb("logcat","-d"),encoding="utf-8")
+        (out/"failure.xml").write_text(ET.tostring(tree(),encoding="unicode"),encoding="utf-8")
+    except Exception: pass
+    sys.__excepthook__(kind,value,tb)
+sys.excepthook=failure
 adb("shell","settings","put","secure","show_ime_with_hard_keyboard","1")
 adb("install","-r","apk/app-debug.apk")
 ime=None
 for _ in range(20):
-    ime=next((line.strip() for line in adb("shell","ime","list","-s").splitlines() if "hk.kaiboard.android" in line),None)
+    ime=next((line.strip() for line in adb("shell","ime","list","-a","-s").splitlines() if "hk.kaiboard.android" in line),None)
     if ime: break
     time.sleep(1)
 assert ime,"Installed input method was not registered"
