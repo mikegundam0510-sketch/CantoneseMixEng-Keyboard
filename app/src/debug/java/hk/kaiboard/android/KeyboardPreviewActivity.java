@@ -16,7 +16,7 @@ public final class KeyboardPreviewActivity extends Activity {
         LinearLayout root=new LinearLayout(this);root.setOrientation(LinearLayout.VERTICAL);
         root.setPadding(24,24,24,24);root.setBackgroundColor(Color.rgb(248,249,251));
         root.setOnApplyWindowInsetsListener((v,i)->{v.setPadding(24,i.getSystemWindowInsetTop()+24,24,i.getSystemWindowInsetBottom()+24);return i;});
-        TextView title=new TextView(this);title.setText("粵語中英混合keyboard");title.setTextSize(22);title.setTextColor(Color.rgb(39,45,54));root.addView(title);
+        TextView title=new TextView(this);title.setText(hk.kaiboard.android.R.string.app_name);title.setTextSize(22);title.setTextColor(Color.rgb(39,45,54));root.addView(title);
         input=new EditText(this);input.setId(android.view.View.generateViewId());input.setTextSize(24);input.setGravity(Gravity.TOP);
         input.setHint("試打中文、English 或 Emoji…");input.setMinLines(4);
         input.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_FLAG_MULTI_LINE);
