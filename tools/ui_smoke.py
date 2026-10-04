@@ -88,7 +88,7 @@ before=first.get("bounds")
 adb("shell","input","swipe",str(bounds[2]-10),y,str(bounds[0]+10),y,"450");time.sleep(.5)
 after=find("你今日食咗咩")
 assert after is None or after.get("bounds") != before, "Candidate strip did not scroll"
-assert any(n.get("text", "").upper()=="OFONAOVRMRQ" for n in tree().iter("node")), "Swiping accidentally committed a candidate"
+assert any(n.get("text", "")=="👋🏽ofonaovrmrq" for n in tree().iter("node") if n.get("class")=="android.widget.EditText"), "Swiping accidentally committed a candidate"
 shot("07-candidate-scroll")
 adb("shell","input","swipe",str(bounds[0]+10),y,str(bounds[2]-10),y,"450");time.sleep(.5)
 tap("你今日食咗咩")
@@ -140,8 +140,15 @@ reset_field();type_code("of");long_tap("係");tap("置頂此候選")
 strip=next(n for n in tree().iter("node") if n.get("class")=="android.widget.HorizontalScrollView")
 assert next(n.get("text") for n in strip.iter("node") if n.get("class")=="android.widget.TextView")=="係", "Pinned candidate did not lead"
 reset_field();type_code("of");long_tap("係");tap("取消置頂")
-# Adjacent-key repair is shown separately and committed only after selection.
-reset_field();type_code("od");tap("修正候選：你")
+# Adjacent-key repair shares the normal strip and commits only after selection.
+reset_field();type_code("od")
+repair=find("修正候選：你")
+assert repair is not None and repair.get("text")=="你", "Repair should have a plain text label"
+assert not any(n.get("text", "").startswith("↳") for n in tree().iter("node")), "Repair arrow is still visible"
+long_tap("修正候選：你")
+assert any("修正字碼" in n.get("text", "") for n in tree().iter("node")), "Repair long press lost code provenance"
+adb("shell","input","keyevent","4");time.sleep(.3)
+tap("修正候選：你")
 assert editor_text()=="你", "Quick typo suggestion failed"
 # Long-press punctuation is usable without changing input method.
 reset_field();long_tap("逗號，長按快捷標點");tap("？")
@@ -182,4 +189,48 @@ assert editor_text()=="你onaovrmrq", "Prefix choice discarded remaining codes"
 reset_field()
 assert find("你今日食咗咩") is None, "Stale async candidate survived editor reset"
 shot("13-key-edges-rapid-input")
-(out/"result.txt").write_text("PASS: emoji, candidate swipe, HK ranking, reselection/segment edit, English space/repair/learning, mixed sentence, pin/unpin, Quick typo repair, punctuation, key-area cursor swipes, key-edge taps, rapid key input, prefix selection and stale-search cancellation. Voice and Samsung/Fold hardware remain device checks.\n",encoding="utf-8")
+# Expanded selector lives outside the compact strip and preserves unconsumed codes.
+reset_field();type_code("ofonaovrmrq")
+assert not any(n.get("text")=="逐字選擇" for n in tree().iter("node")), "Per-character selector leaked into compact strip"
+tap("展開或收起候選字");tap_text("逐字選擇")
+tap_text("你")
+assert editor_text()=="你onaovrmrq", "Expanded prefix selection lost remaining codes"
+shot("14-expanded-prefix")
+# A URI-type editor can explicitly switch to Chinese and keep that choice on restart.
+reset_field()
+adb("shell","am","start","--activity-single-top","-n","hk.kaiboard.android/.KeyboardPreviewActivity","--es","test_text","__EMPTY__","--es","test_input_type","uri")
+time.sleep(1)
+mode=find("指定英文段或返回自動判斷")
+if mode.get("text")=="英文": tap("指定英文段或返回自動判斷")
+assert find("指定英文段或返回自動判斷").get("text")=="中文", "URI English mode unavailable"
+tap("指定英文段或返回自動判斷");type_code("ofvd");tap("你好")
+assert editor_text()=="你好", "Chinese input failed in URI editor"
+reset_field();type_code("ofvd");tap("你好")
+assert editor_text()=="你好", "URI restart forgot user's Chinese mode"
+shot("15-uri-chinese")
+# Numeric/password fields retain their restrictions.
+for kind in ("number","password"):
+    adb("shell","am","start","--activity-single-top","-n","hk.kaiboard.android/.KeyboardPreviewActivity","--es","test_text","__EMPTY__","--es","test_input_type",kind)
+    time.sleep(1)
+    mode=find("指定英文段或返回自動判斷")
+    assert mode is None or mode.get("enabled")=="false", "Restricted editor enabled Chinese mode"
+    shot("16-"+kind)
+# Inspect actual narrow cover-sized and wide unfolded-sized layouts.
+for name,size,density in (("cover","720x1600","320"),("unfolded","1440x1800","320")):
+    adb("shell","wm","size",size);adb("shell","wm","density",density);time.sleep(2)
+    adb("shell","am","start","--activity-single-top","-n","hk.kaiboard.android/.KeyboardPreviewActivity","--es","test_text","__EMPTY__","--es","test_input_type","normal")
+    time.sleep(1)
+    mode=find("指定英文段或返回自動判斷")
+    if mode.get("text")=="中文":tap("指定英文段或返回自動判斷")
+    type_code("ofonaovrmrq")
+    nodes=tree()
+    strips=[n for n in nodes.iter("node") if n.get("class")=="android.widget.HorizontalScrollView"]
+    assert len(strips)==1, "Collapsed layout must contain a single candidate strip"
+    for desc in ("Q，手","P，心","A，日","L，中","Z，重","M，一","空白鍵，左右滑動移動游標"):
+        key=find(desc);assert key is not None, name+" missing key "+desc
+        x1,y1,x2,y2=map(int,re.findall(r"\d+",key.get("bounds")))
+        assert 0<=x1<x2<=int(size.split("x")[0]) and 0<=y1<y2<=int(size.split("x")[1]), name+" clipped key "+desc
+    assert not any(n.get("text")=="逐字選擇" for n in nodes.iter("node")), "Collapsed layout contains extra selector"
+    shot("17-"+name)
+adb("shell","wm","size","reset");adb("shell","wm","density","reset")
+(out/"result.txt").write_text("PASS: emoji, single candidate strip and swipe, HK ranking, reselection/segment edit, English learning/repair, mixed sentence, pin/unpin, integrated Quick repair and code provenance, punctuation, cursor swipes, edge taps, rapid input, prefix selection, stale-search cancellation, expanded per-character selector, URI Chinese switch/restart, restricted fields, cover/unfolded layout bounds. Voice, overlapping multi-finger touches and physical Samsung/Fold acceptance remain device checks.\n",encoding="utf-8")

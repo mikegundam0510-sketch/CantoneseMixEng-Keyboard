@@ -25,6 +25,14 @@ public final class KeyboardPreviewActivity extends Activity {
     }
     @Override protected void onNewIntent(android.content.Intent intent) {
         super.onNewIntent(intent);
+        if (intent.hasExtra("test_input_type")) {
+            String type = intent.getStringExtra("test_input_type");
+            int flags = "uri".equals(type) ? InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_URI
+                : "password".equals(type) ? InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD
+                : "number".equals(type) ? InputType.TYPE_CLASS_NUMBER
+                : InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE;
+            input.setInputType(flags);
+        }
         if (intent.hasExtra("test_text")) {
             String value = intent.getStringExtra("test_text");
             input.setText("__EMPTY__".equals(value) ? "" : value);
