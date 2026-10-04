@@ -1,4 +1,22 @@
-# Build verification — 0.5.1
+# Build verification — 0.6.0 source preview
+
+Verified code commit: `94bbaefa309af5ce5278202c8e12c40c563aa20e`, 2026-10-04 (Hong Kong).
+
+- Push verification: https://github.com/mikegundam0510-sketch/kaiboard-samsung/actions/runs/37172187336 — success.
+- Draft PR verification: https://github.com/mikegundam0510-sketch/kaiboard-samsung/actions/runs/37172189586 — success.
+- `testDebugUnitTest lintDebug assembleDebug assembleDebugAndroidTest` passed. 45 JVM tests, zero failures/ignored tests. Lint: 14 warnings, no blocking errors.
+- Android 12 / API 31 emulator: four AndroidX instrumentation tests passed. 25 overlapping two-finger cycles generated all 50 expected key clicks, with no cursor gesture. Outer key-edge clicks and small finger movement remained clicks; a deliberate horizontal drag cancelled the key click and moved the cursor.
+- Actual UI acceptance passed: Emoji browsing/tone selection, one compact candidate strip and horizontal scrolling without committing, Cantonese ranking, reselection and segment replacement, English learning/spelling repair, mixed sentences, pin/unpin, integrated Quick repairs and long-press code provenance, punctuation, left/right cursor swipes, key-edge taps, rapid input, exact-prefix selection, stale-search cancellation and expanded per-character selection.
+- URI-type editor acceptance passed: explicit Chinese switch, Chinese commit, and preserving the selected mode after `restartInput`. This uses a local editor with Android URI input flags; a real browser/address bar still needs device acceptance. Password and numeric policies passed.
+- Actual screenshots and key-bound checks passed at 360dp cover-sized and 720dp unfolded-sized widths. These are representative emulator configurations, not physical Galaxy Fold hardware.
+- Fixed Back handling for an open candidate menu: Back dismisses the menu while keeping the keyboard and uncommitted codes available; the UI acceptance exercises this before selecting a repair.
+- Evidence artifact: https://github.com/mikegundam0510-sketch/kaiboard-samsung/actions/runs/37172187336/artifacts/11291752866
+- Artifact SHA256: `c0c8c9b98ef43eecda26f09f489f0367e89a31092457338c23cf55bc969c3f6d`.
+- Evidence contains test/lint reports and actual screenshots; its ZIP contains no APK. Internal test packages were prepared solely for the disposable emulator and removed after the run. No APK was published or supplied to the user.
+
+Remaining: physical Samsung/Fold touch feel, real browser/editor quirks, fold/cover/inner lifecycle, API 35 runtime and predictive-back acceptance, voice provider/yue-HK behavior and full accessibility. The offline model does not guarantee first-choice accuracy for arbitrary sentences. PR #1 remains draft and unmerged.
+
+## Historical 0.5.1 verification
 
 Verified code commit: `686827a88c400b1909d684b59d66fe8643a4f419`, 2026-10-03 UTC.
 
@@ -48,4 +66,5 @@ Verified on 2026-10-03 (Hong Kong time).
 APK installed successfully on an Android 15 / API 35 emulator, and the system discovered and enabled the input method. The emulator's System UI repeatedly became unresponsive under software emulation without hardware acceleration, including at reduced resolution. Consequently, end-to-end key taps, candidate selection and cover/inner-screen appearance were **not successfully verified**. No simulated screenshot is presented as a passed UI check.
 
 Not performed: physical Galaxy Z Fold7 / One UI 8.5 testing, Samsung Galaxy AI integration, fold/unfold lifecycle checks, or full accessibility acceptance. The split layout is selected using available width >= 600dp; it still needs testing on the target device. See TESTING.md for the concrete acceptance checklist. This is a debug build for device trials, not a certified production release.
+
 
