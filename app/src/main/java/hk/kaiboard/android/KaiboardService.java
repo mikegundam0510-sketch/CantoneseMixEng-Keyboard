@@ -65,7 +65,7 @@ public final class KaiboardService extends InputMethodService {
     private final StringBuilder composing = new StringBuilder();
     private List<String> candidates = Collections.emptyList();
     private int candidatePage, bg, keyColor, functionColor, fg, muted, accent;
-    private boolean secure, numeric, directField, ascii, shift, caps, symbols, emoji, aiHelp;
+    private boolean secure, numeric, directField, uriField, ascii, shift, caps, symbols, emoji, aiHelp;
     private boolean extraSymbols;
     private boolean quick, cangjie, english, dark;
     private static final int PAGE_SIZE = 7;
@@ -112,10 +112,10 @@ public final class KaiboardService extends InputMethodService {
         secure = InputPolicy.isSecure(info.inputType);
         noLearning = InputPolicy.noLearning(info.inputType, info.imeOptions);
         numeric = type == InputType.TYPE_CLASS_NUMBER || type == InputType.TYPE_CLASS_PHONE || type == InputType.TYPE_CLASS_DATETIME;
+        uriField = type == InputType.TYPE_CLASS_TEXT && variation == InputType.TYPE_TEXT_VARIATION_URI;
         directField = secure || numeric || type == InputType.TYPE_NULL || type == InputType.TYPE_CLASS_TEXT &&
-            (variation == InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS || variation == InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS
-            || variation == InputType.TYPE_TEXT_VARIATION_URI);
-        if (!restarting || secure || numeric) ascii = directField; shift = false; caps = false; symbols = false; extraSymbols = false; emoji = false; aiHelp = false; chooseFirst = false;
+            (variation == InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS || variation == InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS);
+        if (!restarting || secure || numeric || uriField) ascii = directField; shift = false; caps = false; symbols = false; extraSymbols = false; emoji = false; aiHelp = false; chooseFirst = false;
     }
 
     @Override public void onStartInputView(EditorInfo info, boolean restarting) {
@@ -289,10 +289,10 @@ public final class KaiboardService extends InputMethodService {
             TextView space = key(bottom, "", splitLayout() ? 6.4f : 3.6f, false, this::space, keyHeight());
             ((KeyboardKey) space).icon("space");
             space.setContentDescription("空白鍵，左右滑動移動游標"); attachSpaceGesture(space);
-            TextView comma = key(bottom, ascii || englishIntent() ? "," : "，", .9f, false,
-                () -> insert(ascii || englishIntent() ? "," : "，"), keyHeight());
-            TextView period = key(bottom, ascii || englishIntent() ? "." : "。", .9f, false,
-                () -> insert(ascii || englishIntent() ? "." : "。"), keyHeight());
+            TextView comma = key(bottom, uriField || ascii || englishIntent() ? "," : "，", .9f, false,
+                () -> insert(uriField || ascii || englishIntent() ? "," : "，"), keyHeight());
+            TextView period = key(bottom, uriField || ascii || englishIntent() ? "." : "。", .9f, false,
+                () -> insert(uriField || ascii || englishIntent() ? "." : "。"), keyHeight());
             comma.setContentDescription("逗號，長按快捷標點"); period.setContentDescription("句號，長按快捷標點");
             comma.setOnLongClickListener(v -> { punctuation(comma); return true; });
             period.setOnLongClickListener(v -> { punctuation(period); return true; });

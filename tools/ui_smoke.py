@@ -215,18 +215,21 @@ tap("展開或收起候選字");shot("14-expanded-controls");tap_text("逐字選
 tap_text("你")
 assert editor_text()=="你onaovrmrq", "Expanded prefix selection lost remaining codes"
 shot("14-expanded-prefix")
-# A URI-type editor can explicitly switch to Chinese and keep that choice on restart.
+# URI editors start in mixed mode without a language-switch gesture.
 reset_field()
 adb("shell","am","start","--activity-single-top","-n","hk.kaiboard.android/.KeyboardPreviewActivity","--es","test_text","__EMPTY__","--es","test_input_type","uri")
 time.sleep(1)
 assert find("指定英文段或返回自動判斷") is None, "URI toolbar regained language switch"
-if find("O，人") is None:
-    long_tap("選取本頁第一個候選字；沒有字碼時切換鍵盤")
-assert find("O，人") is not None, "URI long press did not restore mixed input"
+assert find("O，人") is not None, "URI did not default to mixed input"
 type_code("ofvd");tap("你好")
 assert editor_text()=="你好", "Chinese input failed in URI editor"
 reset_field();type_code("ofvd");tap("你好")
 assert editor_text()=="你好", "URI restart forgot user's Chinese mode"
+reset_field();type_code("www");tap("句號，長按快捷標點")
+type_code("example");tap("句號，長按快捷標點");type_code("com");tap("com")
+assert editor_text()=="www.example.com", "URI literal URL or ASCII dots changed"
+type_code("ofvd");tap("你好")
+assert editor_text()=="www.example.com你好", "URI could not mix English and Chinese without switching"
 shot("15-uri-chinese")
 # Numeric/password fields retain their restrictions.
 for kind in ("number","password"):
