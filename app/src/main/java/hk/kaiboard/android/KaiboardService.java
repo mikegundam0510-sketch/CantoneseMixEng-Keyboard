@@ -153,7 +153,7 @@ public final class KaiboardService extends InputMethodService {
         int top = dp(5), baseBottom = dp(6);
         if (root.getPaddingLeft() != side + left || root.getPaddingRight() != side + right ||
                 root.getPaddingTop() != top || root.getPaddingBottom() != baseBottom + bottom) {
-            if (BuildConfig.DEBUG) android.util.Log.d("KeyboardInsets", "navigationBottom=" +
+            if ((getApplicationInfo().flags & android.content.pm.ApplicationInfo.FLAG_DEBUGGABLE) != 0) android.util.Log.d("KeyboardInsets", "navigationBottom=" +
                 navigationBottom + " clearancePadding=" + bottom + " rootY=" + keyboardLocation[1] +
                 " rootHeight=" + root.getHeight());
             root.setPadding(side + left, top, side + right, baseBottom + bottom);
