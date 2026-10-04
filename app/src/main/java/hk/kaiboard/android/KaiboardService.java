@@ -302,7 +302,9 @@ public final class KaiboardService extends InputMethodService {
             strokeMode=true; render();
         }, false);
         pen.setEnabled(!secure && !numeric);
-        tool(toolbar, "mic", voiceListening ? "停止語音輸入" : "語音輸入", this::voice, voiceListening);
+        TextView mic = tool(toolbar, "mic", voiceListening ? "停止語音輸入" : "語音輸入", this::voice, voiceListening);
+        mic.setEnabled(!noLearning && !numeric);
+        mic.setAlpha(mic.isEnabled() ? 1f : .35f);
         tool(toolbar, "more", "鍵盤設定", () -> {
             finishLiteral(); startActivity(new Intent(this, SettingsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         }, false);
