@@ -193,7 +193,7 @@ public final class KaiboardService extends InputMethodService {
 
         toolbar = row(panel);
         toolbar.setLayoutParams(new LinearLayout.LayoutParams(-1, dp(50)));
-        raw = key(toolbar, ascii ? "中文" : "英文", 1, true, this::toggleLanguage, 44);
+        raw = key(toolbar, ascii ? "中文" : "英文", 1, true, this::toggleLanguage, 42);
         raw.setTextSize(13);
         raw.setContentDescription("指定英文段或返回自動判斷");
         raw.setEnabled(!secure && !numeric);
@@ -1193,7 +1193,7 @@ public final class KaiboardService extends InputMethodService {
     private TextView key(LinearLayout parent, String label, float weight, boolean special, Runnable action, int height) {
         KeyboardKey button = new KeyboardKey(this); button.setText(label); button.setTextColor(fg); button.setTextSize(label.length() > 2 && !label.contains("\n") ? 13 : 22);
         button.setGravity(Gravity.CENTER); button.setIncludeFontPadding(false); button.setMaxLines(2); button.setSingleLine(false);
-        button.setBackground(new android.graphics.drawable.InsetDrawable(background(special ? functionColor : keyColor), dp(2), dp(3), dp(2), dp(3))); button.setFocusable(true);
+        button.setBackground(new android.graphics.drawable.InsetDrawable(background(special ? functionColor : keyColor), dp(2.5f), dp(4), dp(2.5f), dp(4))); button.setFocusable(true);
         switch (label) {
             case "☺": button.icon("emoji"); break;
             case "⌫": button.icon("delete"); break;
@@ -1206,7 +1206,7 @@ public final class KaiboardService extends InputMethodService {
         }
         button.setElevation(dp(1));
         button.setOnClickListener(v -> { if (voiceListening) cancelVoice(); if (prefs.getBoolean("haptic", true)) v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP); action.run(); });
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, dp(height) + dp(6), weight);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, dp(height) + dp(8), weight);
         parent.addView(button, params); return button;
     }
 
@@ -1216,7 +1216,7 @@ public final class KaiboardService extends InputMethodService {
     }
 
     private int keyHeight() {
-        return getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE && !splitLayout() ? 40 : Integer.parseInt(prefs.getString("height", "50"));
+        return getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE && !splitLayout() ? 36 : Integer.parseInt(prefs.getString("height", "40"));
     }
     private void splitGap(LinearLayout line) {
         line.addView(new View(this), new LinearLayout.LayoutParams(dp(Math.min(80,getResources().getConfiguration().screenWidthDp * .085f)), 1));

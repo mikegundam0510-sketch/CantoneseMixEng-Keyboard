@@ -241,6 +241,10 @@ for name,size,density in (("cover","720x1600","320"),("unfolded","1440x1800","32
     mode=find("指定英文段或返回自動判斷")
     if mode.get("text")=="中文":tap("指定英文段或返回自動判斷")
     idle_bounds=find("O，人").get("bounds")
+    kb=list(map(int,re.findall(r"\d+",idle_bounds)))
+    assert kb[3]-kb[1]==96, "Standard letter key must use 40dp face plus 8dp spacing"
+    ab=list(map(int,re.findall(r"\d+",find("A，日").get("bounds"))))
+    assert ab[1]-kb[1]==96, "Letter rows must keep the reference pitch"
     shot("17-"+name+"-idle")
     type_code("ofonaovrmrq")
     nodes=tree()

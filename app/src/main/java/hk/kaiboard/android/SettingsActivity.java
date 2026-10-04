@@ -68,7 +68,7 @@ public final class SettingsActivity extends Activity {
         LinearLayout look = card("外觀與手感");
         choice(look, "主題", "theme", new String[]{"跟隨系統", "淺色", "深色"}, new String[]{"system", "light", "dark"}, "system");
         choice(look, "單手模式", "hand", new String[]{"全寬", "左手", "右手"}, new String[]{"full", "left", "right"}, "full");
-        choice(look, "按鍵高度", "height", new String[]{"標準", "較高", "特高"}, new String[]{"50", "56", "62"}, "50");
+        choice(look, "按鍵高度", "height", new String[]{"標準", "較高", "特高"}, new String[]{"40", "46", "52"}, "40");
         toggle(look, "顯示數字列", "numbers", true);
         toggle(look, "展開大螢幕時分體排列（Fold）", "split", true);
         toggle(look, "按鍵震動", "haptic", true);
@@ -217,3 +217,4 @@ public final class SettingsActivity extends Activity {
 
     private int dp(float v) { return Math.round(v * getResources().getDisplayMetrics().density); }
 }
+
