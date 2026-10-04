@@ -1,5 +1,22 @@
 # Build verification — 0.6.0 source preview
 
+## Full Cangjie and inset Latin legends (2026-10-04)
+
+App change: Latin legends are drawn further inside the key face (9dp horizontal origin; text top derived from font ascent at 9dp) while radical position and touch targets remain unchanged. No dictionary or Cangjie matching behavior was changed. The reported example uses full code SRLB for 屌; SRB is not its bundled full code. The user confirmed SRLB immediately displays the candidate on their phone.
+
+Verified product source: 730e934cadf709aba847c36be7c072ec857e208b (test timing follow-up 1b27dcbde85b55eacce6df0708911bf78aee7661).
+Run: https://github.com/mikegundam0510-sketch/kaiboard-samsung/actions/runs/37179203232
+Evidence: https://github.com/mikegundam0510-sketch/kaiboard-samsung/actions/runs/37179203232/artifacts/11294057623
+
+- 46 JVM tests passed, including full Cangjie with Quick disabled and the reported SRLB character; lint/build passed.
+- 4 Android touch-dispatch tests passed.
+- Focused real-IME checks passed: disable Quick in actual settings, ONF/VND/HDA/ETCU/SRLB candidates and selected commits, SRB absence, correcting SRB to SRLB refreshes the candidate, and cover/unfolded SRLB checks. cangjie-result.txt records PASS before cleanup.
+- Actual cover/unfolded screenshots were visually inspected: Latin legends have visible insets and do not overlap radicals.
+- The overall workflow FAILED when the focused test attempted to restore settings after display resizing; the following general UI smoke suite did not run. This is not a claim that the whole pipeline passed. The first attempt also stopped before input assertions while waiting for the settings screen.
+- Cleanup now stops the disposable emulator app and removes only its debug keyboard preference files to restore defaults. Python syntax checked; that cleanup follow-up has not yet been rerun on Android. No further product code changed after the passing focused checks.
+- PR remains draft/unmerged. No new user APK was produced for this change; the previously supplied APK does not include the new legend insets.
+
+
 ## Requested physical-device test APK
 
 On 2026-10-04 the user authorized providing a test APK and requested the display name `cantonesemixeng keyboard`. App, IME and settings title now use that name.
