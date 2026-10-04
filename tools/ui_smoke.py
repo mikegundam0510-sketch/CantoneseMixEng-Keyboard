@@ -136,6 +136,17 @@ tap("重新選字")
 assert editor_text()=="hello", "English reselection did not remove the confirmation space"
 reset_field();type_code("hellp");tap("hello")
 assert editor_text()=="hello", "English spelling suggestion was not committed"
+# Opt in through the real settings UI before testing optional local learning.
+adb("shell","am","start","-n","hk.kaiboard.android/.SettingsActivity");time.sleep(1)
+learning=None
+for _ in range(12):
+    learning=next((n for n in tree().iter("node") if n.get("text")=="儲存選字及英文詞作學習（預設關閉）"),None)
+    if learning is not None:break
+    adb("shell","input","swipe","200","700","200","300","350");time.sleep(.3)
+assert learning is not None, "Learning opt-in setting missing"
+assert learning.get("checked")=="false", "Learning must default to off"
+adb("shell","input","tap",*center(learning));time.sleep(.4)
+adb("shell","input","keyevent","4");time.sleep(1)
 # Explicit English fallback learns an unknown word for a later session.
 reset_field();type_code("nebulon");tap("展開或收起候選字");tap("指定英文段或返回自動判斷");tap("空白鍵，左右滑動移動游標")
 assert editor_text()=="nebulon ", "Forced English confirmation failed"
@@ -173,6 +184,16 @@ assert editor_text()=="你", "Quick typo suggestion failed"
 # Long-press punctuation is usable without changing input method.
 reset_field();long_tap("逗號，長按快捷標點");tap("？")
 assert editor_text()=="？", "Quick punctuation failed"
+# The question mark immediately above Backspace has both correct position and output.
+reset_field();tap("123")
+delete=find("刪除，長按連續刪除")
+bx,by=map(int,center(delete))
+questions=[n for n in tree().iter("node") if n.get("text")=="?" and n.get("clickable")=="true"]
+above=min(questions,key=lambda n:abs(int(center(n)[0])-bx))
+qx,qy=map(int,center(above))
+assert abs(qx-bx)<40 and qy<by, "Question mark is not above Backspace"
+adb("shell","input","tap",str(qx),str(qy));time.sleep(.4)
+assert editor_text()=="?", "Question key output is incorrect"
 # Drag over character keys moves the editor cursor, without inserting those keys.
 reset_field("abcdefghij")
 x1,y=center(find("O，人"));x2,_=center(find("W，田"))
@@ -276,3 +297,4 @@ for name,size,density in (("cover","720x1600","320"),("unfolded","1440x1800","32
     assert find("Emoji") is not None, "Clearing codes did not restore toolbar"
 adb("shell","wm","size","reset");adb("shell","wm","density","reset")
 (out/"result.txt").write_text("PASS: shared toolbar/candidate row, compact code badge, stable height and toolbar restore, emoji, single candidate strip and swipe, HK ranking, reselection/segment edit, English learning/repair, mixed sentence, pin/unpin, integrated Quick repair and code provenance, punctuation, cursor swipes, edge taps, rapid input, prefix selection, stale-search cancellation, expanded per-character selector, URI automatic mixed input/restart, bottom globe, text editing arrows/selection/copy/paste/Unicode deletion, restricted fields, cover/unfolded layout bounds. Voice and physical Samsung/Fold acceptance remain device checks; synthetic overlapping finger dispatch is verified separately by instrumentation.\n",encoding="utf-8")
+
