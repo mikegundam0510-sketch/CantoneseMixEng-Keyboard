@@ -34,13 +34,18 @@ sys.excepthook=failure
 adb("shell","settings","put","secure","show_ime_with_hard_keyboard","1")
 adb("install","-r","apk/app-debug.apk")
 ime=next(line.strip() for line in adb("shell","ime","list","-a","-s").splitlines() if "hk.kaiboard.android" in line)
-adb("shell","ime","enable",ime);adb("shell","ime","set",ime)
 adb("shell","am","force-stop","hk.kaiboard.android")
+adb("shell","ime","enable",ime);adb("shell","ime","set",ime)
 adb("shell","am","start","-n","hk.kaiboard.android/.KeyboardPreviewActivity")
 time.sleep(3)
 for _ in range(15):
     if find("文字編輯") is not None: break
+    nodes = tree()
+    editor = next((n for n in nodes.iter("node") if n.get("class") == "android.widget.EditText"), None)
+    if editor is not None: adb("shell","input","tap",*center(editor))
     time.sleep(1)
+assert adb("shell","settings","get","secure","default_input_method").strip() == ime, "Editor smoke lost selected IME"
+assert find("文字編輯") is not None, "Editor smoke keyboard did not open"
 radicals=dict(zip("abcdefghijklmnopqrstuvwxyz", "日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜重"))
 def reset_field(value="__EMPTY__"):
     adb("shell","am","start","--activity-single-top","-n","hk.kaiboard.android/.KeyboardPreviewActivity","--es","test_text",value)
