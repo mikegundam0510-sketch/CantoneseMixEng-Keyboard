@@ -39,12 +39,13 @@ for _ in range(20):
     if ime: break
     time.sleep(1)
 assert ime, "Editor smoke input method registration timed out"
-adb("shell","am","force-stop","hk.kaiboard.android")
 adb("shell","ime","enable",ime);adb("shell","ime","set",ime)
 adb("shell","am","start","-n","hk.kaiboard.android/.KeyboardPreviewActivity")
 time.sleep(3)
 for _ in range(15):
     if find("文字編輯") is not None: break
+    if adb("shell","settings","get","secure","default_input_method").strip() != ime:
+        adb("shell","ime","enable",ime); adb("shell","ime","set",ime)
     nodes = tree()
     editor = next((n for n in nodes.iter("node") if n.get("class") == "android.widget.EditText"), None)
     if editor is not None: adb("shell","input","tap",*center(editor))
@@ -108,4 +109,4 @@ assert editor_text()=="AB", "Selection split a supplementary character"
 shot("18-text-editor-selected");tap("返回鍵盤")
 (out/"android-meminfo.txt").write_text(adb("shell","dumpsys","meminfo","hk.kaiboard.android"))
 (out/"editor-result.txt").write_text("PASS: globe direct English/mixed; direct arrow selection/copy/paste; select all/delete; multiline up/down; supplementary character selection/delete.\n")
-adb("shell","am","force-stop","hk.kaiboard.android")
+reset_field()
