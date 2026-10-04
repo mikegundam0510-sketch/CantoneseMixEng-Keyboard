@@ -52,6 +52,7 @@ for _ in range(10):
     time.sleep(1)
 (out/"startup.xml").write_text(ET.tostring(tree(),encoding="unicode"),encoding="utf-8")
 (out/"logcat.txt").write_text(adb("logcat","-d"),encoding="utf-8")
+assert find("指定英文段或返回自動判斷") is None, "Toolbar still contains language switch"
 shot("01-keyboard")
 tap("Emoji")
 # The large offline vocabulary can still be loading on a busy emulator host.
@@ -218,10 +219,11 @@ shot("14-expanded-prefix")
 reset_field()
 adb("shell","am","start","--activity-single-top","-n","hk.kaiboard.android/.KeyboardPreviewActivity","--es","test_text","__EMPTY__","--es","test_input_type","uri")
 time.sleep(1)
-mode=find("指定英文段或返回自動判斷")
-if mode.get("text")=="英文": tap("指定英文段或返回自動判斷")
-assert find("指定英文段或返回自動判斷").get("text")=="中文", "URI English mode unavailable"
-tap("指定英文段或返回自動判斷");type_code("ofvd");tap("你好")
+assert find("指定英文段或返回自動判斷") is None, "URI toolbar regained language switch"
+if find("O，人") is None:
+    long_tap("選取本頁第一個候選字；沒有字碼時切換鍵盤")
+assert find("O，人") is not None, "URI long press did not restore mixed input"
+type_code("ofvd");tap("你好")
 assert editor_text()=="你好", "Chinese input failed in URI editor"
 reset_field();type_code("ofvd");tap("你好")
 assert editor_text()=="你好", "URI restart forgot user's Chinese mode"
@@ -238,8 +240,8 @@ for name,size,density in (("cover","720x1600","320"),("unfolded","1440x1800","32
     adb("shell","wm","size",size);adb("shell","wm","density",density);time.sleep(2)
     adb("shell","am","start","--activity-single-top","-n","hk.kaiboard.android/.KeyboardPreviewActivity","--es","test_text","__EMPTY__","--es","test_input_type","normal")
     time.sleep(1)
-    mode=find("指定英文段或返回自動判斷")
-    if mode.get("text")=="中文":tap("指定英文段或返回自動判斷")
+    if find("O，人") is None:
+        long_tap("選取本頁第一個候選字；沒有字碼時切換鍵盤")
     idle_bounds=find("O，人").get("bounds")
     kb=list(map(int,re.findall(r"\d+",idle_bounds)))
     assert kb[3]-kb[1]==96, "Standard letter key must use 40dp face plus 8dp spacing"

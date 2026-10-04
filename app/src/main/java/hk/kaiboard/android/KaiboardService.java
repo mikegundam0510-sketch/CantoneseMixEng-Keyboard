@@ -48,7 +48,7 @@ public final class KaiboardService extends InputMethodService {
     private LinearLayout root, panel, candidateRow;
     private HorizontalScrollView candidateScroll;
     private ScrollView expandedScroll;
-    private TextView raw, codeLabel, expandedMode, nextPage, selectKey;
+    private TextView codeLabel, expandedMode, nextPage, selectKey;
     private boolean chooseFirst, expanded, emojiSearch;
     private String emojiQuery = "";
     private LinearLayout toolbar, candidateBar;
@@ -181,7 +181,7 @@ public final class KaiboardService extends InputMethodService {
         if (root == null) return;
         if (tonePopup != null) { tonePopup.dismiss(); tonePopup = null; }
         dismissSelectionPopup();
-        stopRepeat(); colors(); expandedScroll = null; candidateRow = null; raw = null; codeLabel = null; expandedMode = null; nextPage = null;
+        stopRepeat(); colors(); expandedScroll = null; candidateRow = null; codeLabel = null; expandedMode = null; nextPage = null;
         quick = prefs.getBoolean("quick", true); cangjie = prefs.getBoolean("cangjie", true); english = prefs.getBoolean("english", true);
         int sidePadding = splitLayout() ? Math.round(foldWidth() * .041f) : 4;
         root.removeAllViews(); root.setBackgroundColor(bg); root.setPadding(dp(sidePadding), dp(5), dp(sidePadding), dp(6));
@@ -194,10 +194,6 @@ public final class KaiboardService extends InputMethodService {
 
         toolbar = row(panel);
         toolbar.setLayoutParams(new LinearLayout.LayoutParams(-1, dp(50)));
-        raw = key(toolbar, ascii ? "中文" : "英文", 1, true, this::toggleLanguage, 42);
-        raw.setTextSize(13);
-        raw.setContentDescription("指定英文段或返回自動判斷");
-        raw.setEnabled(!secure && !numeric);
         tool(toolbar, "emoji", "Emoji", () -> { if (!secure && !numeric) { finishLiteral(); emoji = !emoji; emojiSearch = false; emojiQuery = ""; render(); } }, emoji);
         undoKey = tool(toolbar, "undo", "重新選字", this::reselect, false);
         undoKey.setEnabled(canReselect()); undoKey.setAlpha(canReselect() ? 1f : .35f);
@@ -283,6 +279,12 @@ public final class KaiboardService extends InputMethodService {
         }, keyHeight());
         selectKey = select; select.setTextSize(14); select.setSingleLine(true);
         select.setContentDescription("選取本頁第一個候選字；沒有字碼時切換鍵盤");
+        select.setOnLongClickListener(v -> {
+            if (secure || numeric) return false;
+            toggleLanguage();
+            Toast.makeText(this, ascii || englishIntent() ? "英文輸入" : "中英混合輸入", Toast.LENGTH_SHORT).show();
+            return true;
+        });
         if (!numeric) {
             TextView space = key(bottom, "", splitLayout() ? 6.4f : 3.6f, false, this::space, keyHeight());
             ((KeyboardKey) space).icon("space");
@@ -595,14 +597,14 @@ public final class KaiboardService extends InputMethodService {
     }
 
     private void displayCandidates() {
-        if (candidateRow == null || raw == null) return;
+        if (candidateRow == null) return;
         candidateRow.removeAllViews();
-        raw.setText(ascii || englishIntent() ? "中文" : "英文");
-        if (expandedMode != null) expandedMode.setText(raw.getText());
+        if (expandedMode != null) {
+            expandedMode.setText(ascii || englishIntent() ? "中文" : "英文");
+            expandedMode.setEnabled(!secure && !numeric);
+        }
         if (undoKey != null) { undoKey.setEnabled(canReselect()); undoKey.setAlpha(canReselect() ? 1f : .35f); }
         if(selectKey!=null) selectKey.setText(composing.length()>0?"選字":"速成");
-        raw.setEnabled(!secure && !numeric);
-        raw.setAlpha(!secure && !numeric ? 1f : .45f);
         boolean active = composing.length() > 0 && !secure && !numeric;
         if (toolbar != null) toolbar.setVisibility(active ? View.GONE : View.VISIBLE);
         if (candidateBar != null) candidateBar.setVisibility(active ? View.VISIBLE : View.GONE);
