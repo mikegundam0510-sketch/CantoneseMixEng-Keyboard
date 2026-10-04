@@ -35,6 +35,14 @@ try:
     adb('shell','wm','size','720x1600'); adb('shell','wm','density','320')
     adb('shell','am','start','-n','hk.kaiboard.android/.KeyboardPreviewActivity'); time.sleep(2)
     if find('GOT IT') is not None: tap('GOT IT')
+    adb('shell','am','start','--activity-single-top','-n','hk.kaiboard.android/.KeyboardPreviewActivity','--es','test_text','__EMPTY__','--es','test_input_type','normal')
+    time.sleep(1)
+    editor=next(n for n in tree().iter('node') if n.get('class')=='android.widget.EditText')
+    x1,y1,x2,y2=map(int,re.findall(r'\d+',editor.get('bounds')))
+    adb('shell','input','tap',str((x1+x2)//2),str(y1+40));time.sleep(.5)
+    adb('shell','am','start','--activity-single-top','-n','hk.kaiboard.android/.KeyboardPreviewActivity','--es','test_text','__EMPTY__','--es','test_input_type','normal')
+    time.sleep(1)
+
     for _ in range(30):
         if find('語音輸入') is not None: break
         time.sleep(.5)

@@ -1,3 +1,4 @@
+# Initialize served preview editor before voice acceptance.
 name: Device test APK 0.6.12
 on:
   push:
