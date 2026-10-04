@@ -1,5 +1,5 @@
 name: Device test APK 0.6.9
-# Compact candidate expansion and editor focus checks; checks symbol placement on cover and unfolded screens after IME registration and fixture/window initialization.
+# Wait for asynchronous stroke dictionary loading; checks symbol placement on cover and unfolded screens after IME registration and fixture/window initialization.
 on:
   push:
     branches: [codex/reference-keyboard-emoji]

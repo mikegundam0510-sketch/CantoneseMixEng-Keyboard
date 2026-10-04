@@ -40,6 +40,10 @@ def wait_candidate(word):
   time.sleep(.3)
  raise AssertionError('Missing stroke candidate '+word)
 def check_empty_code():
+ for _ in range(30):
+  n=find('筆劃字碼')
+  if n is not None and n.get('text')!='正在載入筆劃…':break
+  time.sleep(.2)
  n=find('筆劃字碼');assert n is not None and n.get('text')=='筆劃',n.attrib if n is not None else None
 def failure(kind,value,tb):
  try:
