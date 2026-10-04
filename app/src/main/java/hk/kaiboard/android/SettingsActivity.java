@@ -51,6 +51,7 @@ public final class SettingsActivity extends Activity {
         toggle(methods, "中英混合分段候選", "mixed", true);
         toggle(methods, "參考上文排序候選", "context_candidates", true);
         toggle(methods, "英文拼字修正候選", "english_repair", true);
+        toggle(methods, "英文詞顯示中文候選", "english_chinese", true);
         toggle(methods, "速成相鄰按鍵修正候選", "quick_repair", true);
         toggle(methods, "儲存選字及英文詞作學習（預設關閉）", "learning", false);
         button(methods, "清除學習記錄", () -> new AlertDialog.Builder(this).setTitle("清除學習記錄？")
@@ -78,7 +79,7 @@ public final class SettingsActivity extends Activity {
         toggle(look, "顯示數字列", "numbers", true);
         toggle(look, "展開大螢幕時分體排列（Fold）", "split", true);
         toggle(look, "按鍵震動", "haptic", true);
-        toggle(look, "在字根按鍵區左右掃動游標", "swipe_cursor", true);
+        toggle(look, "在字根按鍵區左右掃動反白選字", "swipe_cursor", true);
 
         toggle(look, "保留最近使用 Emoji（預設關閉）", "emoji_recent", false);
         button(look, "清除最近使用 Emoji", () -> { prefs.edit().remove("recent_emoji").apply(); Toast.makeText(this, "已清除 Emoji 記錄", Toast.LENGTH_SHORT).show(); });
@@ -90,7 +91,7 @@ public final class SettingsActivity extends Activity {
         field.setMinLines(3); field.setGravity(Gravity.TOP);
         field.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_FLAG_MULTI_LINE);
         practice.addView(field, new LinearLayout.LayoutParams(-1, -2));
-        text(practice, "在字根按鍵區或空白鍵左右掃動游標；長按刪除鍵連續刪字；長按 ⇧ 鎖定大寫。", 13, Color.DKGRAY, false);
+        text(practice, "字根區左右掃動反白選字，反向掃動縮回並取消反白；空白鍵左右掃動游標；長按刪除鍵連續刪字；長按 ⇧ 鎖定大寫。", 13, Color.DKGRAY, false);
 
         LinearLayout ai = card("Samsung AI 寫作輔助");
         text(ai, "在支援 Galaxy AI 的 One UI 7 或以上裝置，輸入後長按並選取文字，再查看選單有否 Galaxy AI／寫作輔助。功能由 Samsung 提供，視手機、地區及應用程式而定。", 14, Color.DKGRAY, false);

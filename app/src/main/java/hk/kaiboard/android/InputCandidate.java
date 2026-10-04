@@ -6,9 +6,12 @@ import java.util.*;
 public final class InputCandidate {
     public static final class Segment {
         public final String code, text;
-        public final boolean english;
+        public final boolean english, translated;
         public Segment(String code, String text, boolean english) {
-            this.code = code; this.text = text; this.english = english;
+            this(code,text,english,false);
+        }
+        public Segment(String code, String text, boolean english, boolean translated) {
+            this.code=code;this.text=text;this.english=english;this.translated=translated;
         }
     }
     public final String source, text;
@@ -24,6 +27,9 @@ public final class InputCandidate {
     public static InputCandidate english(String source, String text) {
         return new InputCandidate(source, Collections.singletonList(new Segment(source, text, true)), false);
     }
+    public static InputCandidate translation(String source, String text) {
+        return new InputCandidate(source, Collections.singletonList(new Segment(source,text,true,true)),false);
+    }
     public static InputCandidate chinese(DictionaryEngine dictionary, String source, String text) {
         List<String> parts = dictionary.matchQuickCodes(source, text);
         if (parts.isEmpty()) return new InputCandidate(source,
@@ -36,7 +42,7 @@ public final class InputCandidate {
         return new InputCandidate(source, segments, false);
     }
     public boolean englishOnly() {
-        return !segments.isEmpty() && segments.stream().allMatch(s -> s.english);
+        return !segments.isEmpty() && segments.stream().allMatch(s -> s.english && !s.translated);
     }
     public String effectiveCode() {
         StringBuilder result = new StringBuilder();
@@ -46,7 +52,7 @@ public final class InputCandidate {
     public InputCandidate replace(int index, String replacement) {
         List<Segment> result = new ArrayList<>(segments);
         Segment original = result.get(index);
-        result.set(index, new Segment(original.code, replacement, original.english));
+        result.set(index, new Segment(original.code, replacement, original.english, original.translated));
         return new InputCandidate(source, result, corrected);
     }
 }

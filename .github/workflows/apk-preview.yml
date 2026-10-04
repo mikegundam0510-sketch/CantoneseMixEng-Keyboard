@@ -1,6 +1,4 @@
-name: Device test APK 0.6.9
-# Stroke dictionary and cover/unfolded touch acceptance passed on 19352e987c4720bc6be11b48eed1ff2a92d99d39.
-# App source is unchanged; finish the clipboard regression with served-editor initialization.
+name: Device test APK 0.6.10
 on:
   push:
     branches: [codex/reference-keyboard-emoji]
@@ -29,10 +27,10 @@ jobs:
           bash ./gradlew testDebugUnitTest lintDebug assembleDebug assembleDebugAndroidTest --no-daemon
           mkdir -p device-test apk
           cp app/build/outputs/apk/debug/app-debug.apk apk/
-          cp app/build/outputs/apk/debug/app-debug.apk device-test/cantonesemixeng-keyboard-0.6.9-device-test.apk
-          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose --print-certs device-test/cantonesemixeng-keyboard-0.6.9-device-test.apk > device-test/APK-verification.txt
-          "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging device-test/cantonesemixeng-keyboard-0.6.9-device-test.apk >> device-test/APK-verification.txt
-          sha256sum device-test/cantonesemixeng-keyboard-0.6.9-device-test.apk >> device-test/APK-verification.txt
+          cp app/build/outputs/apk/debug/app-debug.apk device-test/cantonesemixeng-keyboard-0.6.10-device-test.apk
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose --print-certs device-test/cantonesemixeng-keyboard-0.6.10-device-test.apk > device-test/APK-verification.txt
+          "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging device-test/cantonesemixeng-keyboard-0.6.10-device-test.apk >> device-test/APK-verification.txt
+          sha256sum device-test/cantonesemixeng-keyboard-0.6.10-device-test.apk >> device-test/APK-verification.txt
           git rev-parse HEAD >> device-test/APK-verification.txt
       - name: Free build-only tools before emulator startup
         run: |
@@ -47,7 +45,7 @@ jobs:
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
-      - name: Verify clipboard after stroke acceptance
+      - name: Verify swipe selection and English Chinese candidates
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 31
@@ -56,16 +54,16 @@ jobs:
           disk-size: 2048M
           emulator-boot-timeout: 300
           disable-animations: true
-          script: adb shell wm size 720x1600 && adb shell wm density 320 && python3 tools/clipboard_smoke.py
+          script: adb shell wm size 720x1600 && adb shell wm density 320 && python3 tools/verify_selection.py
       - name: Include device acceptance evidence
         if: always()
         run: |
-          for folder in stroke-evidence symbol-evidence clipboard-evidence ui-evidence acceptance-evidence; do
+          for folder in selection-evidence stroke-evidence symbol-evidence clipboard-evidence ui-evidence acceptance-evidence; do
             if [ -d "$folder" ]; then cp -r "$folder" device-test/; fi
           done
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: cantonesemixeng-keyboard-0.6.9-device-test
+          name: cantonesemixeng-keyboard-0.6.10-device-test
           path: device-test/
           retention-days: 14

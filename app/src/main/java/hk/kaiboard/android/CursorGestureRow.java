@@ -17,7 +17,7 @@ final class CursorGestureRow extends LinearLayout {
         if(event.getPointerCount()!=1){dragging=false;return false;}
         if(event.getActionMasked()==MotionEvent.ACTION_DOWN) {
             startX=lastX=event.getX();startY=event.getY();dragging=false;allowed=true;
-            // Shift/delete have their own gestures; don't begin cursor movement on them.
+            // Shift/delete have their own gestures; don't begin range gestures on them.
             View key=findKey(this,event.getX(),event.getY());
             if(key!=null && key.getContentDescription()!=null) {
                 String description=key.getContentDescription().toString();
@@ -27,7 +27,7 @@ final class CursorGestureRow extends LinearLayout {
         if(event.getActionMasked()==MotionEvent.ACTION_MOVE && allowed) {
             float dx=event.getX()-startX,dy=event.getY()-startY;
             if(!dragging && Math.abs(dx)>dp(36) && Math.abs(dx)>Math.abs(dy)*2f) {
-                dragging=true;lastX=event.getX();begin.run();getParent().requestDisallowInterceptTouchEvent(true);
+                dragging=true;lastX=startX+Math.signum(dx)*dp(36);begin.run();getParent().requestDisallowInterceptTouchEvent(true);
             }
         }
         return dragging;

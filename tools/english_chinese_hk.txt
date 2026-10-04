@@ -1,0 +1,186 @@
+can 可以 能夠
+report 報告 匯報
+thanks 多謝 謝謝
+thank 多謝 感謝
+please 請 唔該
+hello 你好
+hi 你好
+yes 係 是 可以
+no 唔係 不是 沒有
+okay 好 可以
+ok 好 可以
+sorry 對唔住 抱歉
+need 需要
+want 想要 想
+work 工作 返工
+office 辦公室
+meeting 會議 開會
+update 更新
+confirm 確認
+check 檢查 核對
+test 測試 檢測
+file 檔案 文件
+data 數據 資料
+information 資料 資訊
+email 電郵 電子郵件
+message 訊息
+phone 電話
+address 地址
+time 時間
+today 今日 今天
+tomorrow 聽日 明天
+yesterday 尋日 昨天
+tonight 今晚
+now 而家 現在
+later 遲啲 稍後
+wait 等 等候
+done 完成
+finish 完成
+send 傳送 發送
+receive 收到 接收
+received 收到
+help 幫忙 協助
+problem 問題
+question 問題 疑問
+answer 答案 回答
+result 結果
+change 更改 改變
+add 新增 加入
+remove 移除
+delete 刪除
+save 儲存
+open 開啟 打開
+close 關閉
+copy 複製
+paste 貼上
+keyboard 鍵盤
+english 英文 英語
+chinese 中文 漢語
+air 空氣
+quality 質素 品質
+environment 環境
+health 健康
+pollution 污染
+monitor 監測
+station 站 車站
+chart 圖表
+table 表格 桌
+compare 比較
+difference 差異 分別
+number 數字 號碼
+date 日期
+month 月份
+year 年
+day 日 天
+hour 小時
+minute 分鐘
+second 秒
+good 好
+bad 差 不好
+great 好 非常好
+beautiful 靚 美麗
+happy 開心 快樂
+tired 攰 疲倦
+busy 忙
+hot 熱
+cold 凍 冷
+food 食物
+eat 食 吃
+drink 飲 喝
+water 水
+coffee 咖啡
+tea 茶
+rice 飯 米
+lunch 午餐
+dinner 晚餐
+breakfast 早餐
+home 屋企 家
+money 錢 金錢
+price 價錢 價格
+buy 買 購買
+sell 賣 出售
+car 車 汽車
+bus 巴士
+train 火車
+taxi 的士
+bank 銀行
+computer 電腦
+screen 螢幕
+photo 相片 照片
+picture 圖片
+music 音樂
+song 歌 歌曲
+volume 音量
+connect 連接
+connection 連線 連接
+bluetooth 藍牙
+battery 電池
+charge 充電
+download 下載
+upload 上載
+install 安裝
+version 版本
+ready 準備好 就緒
+continue 繼續
+cancel 取消
+select 選擇
+text 文字
+space 空白 空間
+left 左 左邊
+right 右 右邊
+back 返回
+next 下一個
+previous 上一個
+first 第一
+last 最後
+more 更多
+less 較少
+same 一樣 相同
+different 不同
+with 跟 與
+without 沒有
+before 之前
+after 之後
+because 因為
+but 但 但是
+and 同 和
+or 或
+if 如果
+will 會 將會
+must 必須 一定要
+should 應該
+could 可以 能夠
+would 會
+may 可以 可能
+might 可能
+able 能夠
+cannot 不能 唔得
+cant 不能 唔得
+don't 不要
+goodbye 再見
+welcome 歡迎
+friend 朋友
+family 家人 家庭
+people 人 人們
+study 學習 研究
+research 研究
+understand 明白 理解
+think 諗 想
+know 知道
+see 睇 看
+look 睇 看
+read 閱讀
+write 寫
+typing 打字
+type 打字 類型
+weather 天氣
+rain 落雨 雨
+sun 太陽
+travel 旅行
+trip 旅程
+ticket 車票 門票
+hotel 酒店
+airport 機場
+city 城市
+hongkong 香港
+march 三月
