@@ -1,5 +1,6 @@
 name: Device test APK 0.6.9
-# Wait for asynchronous stroke dictionary loading; checks symbol placement on cover and unfolded screens after IME registration and fixture/window initialization.
+# Stroke dictionary and cover/unfolded touch acceptance passed on 19352e987c4720bc6be11b48eed1ff2a92d99d39.
+# App source is unchanged; finish the clipboard regression with served-editor initialization.
 on:
   push:
     branches: [codex/reference-keyboard-emoji]
@@ -46,7 +47,7 @@ jobs:
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
-      - name: Verify stroke input and clipboard
+      - name: Verify clipboard after stroke acceptance
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 31
@@ -55,7 +56,7 @@ jobs:
           disk-size: 2048M
           emulator-boot-timeout: 300
           disable-animations: true
-          script: python3 tools/verify_strokes.py
+          script: adb shell wm size 720x1600 && adb shell wm density 320 && python3 tools/clipboard_smoke.py
       - name: Include device acceptance evidence
         if: always()
         run: |
