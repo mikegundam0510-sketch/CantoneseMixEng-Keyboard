@@ -116,7 +116,7 @@ public final class KaiboardService extends InputMethodService {
     @Override public void onStartInput(EditorInfo info, boolean restarting) {
         super.onStartInput(info, restarting);
         cancelVoice(); dismissSelectionPopup(); invalidateReselection(); resetComposition(); stopRepeat();
-        editMode = false; textEditor.selecting = false;
+        editMode = false; textEditor.reset();
         selectionStart = info.initialSelStart; selectionEnd = info.initialSelEnd;
         int type = info.inputType & InputType.TYPE_MASK_CLASS;
         int variation = info.inputType & InputType.TYPE_MASK_VARIATION;
@@ -145,7 +145,7 @@ public final class KaiboardService extends InputMethodService {
 
     @Override public boolean onKeyUp(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && (selectionPopup != null || editMode)) {
-            if (!event.isCanceled()) { if (editMode) { editMode = false; textEditor.selecting = false; render(); } else dismissSelectionPopup(); }
+            if (!event.isCanceled()) { if (editMode) { editMode = false; textEditor.reset(); render(); } else dismissSelectionPopup(); }
             return true;
         }
         return super.onKeyUp(keyCode, event);
@@ -165,7 +165,7 @@ public final class KaiboardService extends InputMethodService {
     @Override public void onFinishInputView(boolean finishingInput) {
         cancelVoice(); dismissSelectionPopup(); invalidateReselection();
         if (tonePopup != null) tonePopup.dismiss();
-        editMode = false; textEditor.selecting = false;
+        editMode = false; textEditor.reset();
         stopRepeat(); finishLiteral(); super.onFinishInputView(finishingInput);
     }
 
@@ -174,7 +174,7 @@ public final class KaiboardService extends InputMethodService {
     }
 
     @Override public void onDestroy() {
-        destroyed = true; candidateGeneration.incrementAndGet(); cancelVoice(); dismissSelectionPopup(); invalidateReselection(); stopRepeat(); handler.removeCallbacksAndMessages(null); loader.shutdownNow(); candidateWorker.shutdownNow(); super.onDestroy();
+        destroyed = true; textEditor.reset(); candidateGeneration.incrementAndGet(); cancelVoice(); dismissSelectionPopup(); invalidateReselection(); stopRepeat(); handler.removeCallbacksAndMessages(null); loader.shutdownNow(); candidateWorker.shutdownNow(); super.onDestroy();
     }
 
     private void colors() {
@@ -212,7 +212,7 @@ public final class KaiboardService extends InputMethodService {
         toolbar.setLayoutParams(new LinearLayout.LayoutParams(-1, dp(50)));
         tool(toolbar, "emoji", "Emoji", () -> { if (!secure && !numeric) { finishLiteral(); emoji = !emoji; emojiSearch = false; emojiQuery = ""; render(); } }, emoji);
         tool(toolbar, "text_edit", "文字編輯", () -> {
-            prepareCursorSwipe(); emoji = false; symbols = false; editMode = true; textEditor.selecting = false; render();
+            prepareCursorSwipe(); emoji = false; symbols = false; editMode = true; textEditor.reset(); render();
         }, false);
         undoKey = tool(toolbar, "undo", "重新選字", this::reselect, false);
         undoKey.setEnabled(canReselect()); undoKey.setAlpha(canReselect() ? 1f : .35f);
@@ -321,7 +321,7 @@ public final class KaiboardService extends InputMethodService {
 
     private void renderTextEditor() {
         LinearLayout header = row(panel);
-        TextView back = key(header, "‹", .65f, true, () -> { editMode = false; textEditor.selecting = false; render(); }, 50);
+        TextView back = key(header, "‹", .65f, true, () -> { editMode = false; textEditor.reset(); render(); }, 50);
         back.setContentDescription("返回鍵盤");
         TextView title = new TextView(this); title.setText("文字編輯"); title.setTextSize(20); title.setTextColor(fg);
         title.setGravity(Gravity.CENTER_VERTICAL); header.addView(title, new LinearLayout.LayoutParams(0, dp(50), 3));
@@ -332,7 +332,7 @@ public final class KaiboardService extends InputMethodService {
         controls.addView(middle, new LinearLayout.LayoutParams(0, -2, 1));
         editKey(middle, "↑", "游標向上", () -> textEditor.move(getCurrentInputConnection(), KeyEvent.KEYCODE_DPAD_UP), 1, height, true);
         editorSelect = editKey(middle, "選取", "開始或停止選取文字", () -> {
-            textEditor.selecting = !textEditor.selecting;
+            textEditor.setSelecting(!textEditor.selecting, getCurrentInputConnection());
             editorSelect.setTextColor(textEditor.selecting ? accent : fg); editorSelect.setSelected(textEditor.selecting);
         }, 1, height, false);
         editKey(middle, "↓", "游標向下", () -> textEditor.move(getCurrentInputConnection(), KeyEvent.KEYCODE_DPAD_DOWN), 1, height, true);
@@ -811,6 +811,10 @@ public final class KaiboardService extends InputMethodService {
         invalidateReselection(); restoredCandidate = null;
         if (emojiSearch) { if (!emojiQuery.isEmpty()) emojiQuery = emojiQuery.substring(0, emojiQuery.length()-1); refreshEmoji(); return; }
         InputConnection ic = getCurrentInputConnection(); if (ic == null) return;
+        if (editMode && textEditor.selecting) {
+            textEditor.reset();
+            if (editorSelect != null) { editorSelect.setSelected(false); editorSelect.setTextColor(fg); }
+        }
         if (composing.length() > 0) {
             composing.deleteCharAt(composing.length() - 1);
             if (composing.length() == 0) { ic.commitText("", 1); ic.finishComposingText(); }

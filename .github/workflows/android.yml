@@ -45,7 +45,7 @@ jobs:
           arch: x86_64
           profile: pixel_2
           disable-animations: true
-          script: bash ./gradlew connectedDebugAndroidTest --no-daemon && python3 tools/ui_smoke.py
+          script: bash ./gradlew connectedDebugAndroidTest --no-daemon && python3 tools/editor_smoke.py && python3 tools/ui_smoke.py
       - name: Save test reports and actual UI screenshots
         uses: actions/upload-artifact@v4
         if: always()
