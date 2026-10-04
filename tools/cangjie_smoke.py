@@ -111,5 +111,8 @@ try:
 finally:
     adb("shell", "wm", "size", "reset")
     adb("shell", "wm", "density", "reset")
-    settings(True)
+    # Display changes can leave the old editor's IME covering settings controls.
     adb("shell", "am", "force-stop", "hk.kaiboard.android")
+    # Restore defaults only in this disposable debug emulator, after the IME exits.
+    adb("shell", "run-as", "hk.kaiboard.android", "rm", "-f",
+        "shared_prefs/keyboard.xml", "shared_prefs/keyboard.xml.bak")
