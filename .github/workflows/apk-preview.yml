@@ -1,4 +1,4 @@
-# Wait for IME registration after install.
+# Test letter keys by explicit accessible descriptions.
 name: Device test APK 0.6.10
 on:
   push:

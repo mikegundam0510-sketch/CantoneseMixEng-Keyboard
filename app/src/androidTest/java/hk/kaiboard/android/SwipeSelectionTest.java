@@ -72,6 +72,7 @@ public class SwipeSelectionTest {
    }
    Thread.sleep(250);
   }
+  screenshot("missing-key");
   throw new AssertionError("IME key missing: "+desc);
  }
  private void screenshot(String name)throws Exception{
@@ -124,7 +125,7 @@ public class SwipeSelectionTest {
    main(()->assertEquals("你可以",edit.getText().toString()));
    main(()->{edit.setText("");edit.setSelection(0);((InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE)).restartInput(edit);});
    SystemClock.sleep(300);drag(key("切換中英文，長按選擇系統鍵盤"),0);
-   for(String desc:new String[]{"C","A","N"})drag(key(desc),0);
+   for(String desc:new String[]{"英文字母 C","英文字母 A","英文字母 N"})drag(key(desc),0);
    drag(key("英轉中候選：可以"),0);main(()->assertEquals("可以",edit.getText().toString()));
   }
  }

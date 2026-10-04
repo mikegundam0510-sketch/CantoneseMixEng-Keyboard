@@ -609,6 +609,7 @@ public final class KaiboardService extends InputMethodService {
     private void addLetterKey(LinearLayout parent,char letter) {
         String latin=String.valueOf(Character.toUpperCase(letter));
         TextView button=key(parent,latin,1,false,()->typeLetter(letter),keyHeight());
+        button.setContentDescription("英文字母 "+latin);
         if(!ascii && !emojiSearch && (quick||cangjie)) ((KeyboardKey)button).legend(latin,String.valueOf(RADICALS.charAt(letter-'a')),muted);
     }
 
