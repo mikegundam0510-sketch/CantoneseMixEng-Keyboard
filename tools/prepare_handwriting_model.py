@@ -2,16 +2,19 @@
 import io,json,pathlib,urllib.request,zipfile,hashlib
 root=pathlib.Path(__file__).resolve().parents[1]
 assets=root/'app/src/main/assets';model=assets/'handwriting-zh_TW.model'
+expected_sha256='3aea4951f03b261bb9c98033c97b74cce5563da1898d1ec95e86e2f37f127bf6'
 url='https://github.com/tegaki/tegaki/releases/download/v0.3/tegaki-zinnia-traditional-chinese-light-0.3.zip'
 if model.is_file() and (assets/'licenses/handwriting/MODEL.json').is_file():
     report=json.loads((assets/'licenses/handwriting/MODEL.json').read_text())
-    if hashlib.sha256(model.read_bytes()).hexdigest()==report['sha256']:raise SystemExit(0)
+    if hashlib.sha256(model.read_bytes()).hexdigest()==expected_sha256 and report['sha256']==expected_sha256:raise SystemExit(0)
 req=urllib.request.Request(url,headers={'User-Agent':'CantoneseMixEng-model-builder'})
 with urllib.request.urlopen(req,timeout=90) as response:data=response.read()
 with zipfile.ZipFile(io.BytesIO(data)) as archive:
     files=[n for n in archive.namelist() if n.endswith('/handwriting-zh_TW.model')]
     if len(files)!=1:raise RuntimeError('Traditional Chinese model missing')
-    payload=archive.read(files[0]);assets.mkdir(parents=True,exist_ok=True);model.write_bytes(payload)
+    payload=archive.read(files[0])
+    if hashlib.sha256(payload).hexdigest()!=expected_sha256:raise RuntimeError('Unexpected handwriting model checksum')
+    assets.mkdir(parents=True,exist_ok=True);model.write_bytes(payload)
     notices=assets/'licenses/handwriting';notices.mkdir(parents=True,exist_ok=True)
     for name in archive.namelist():
         base=pathlib.PurePosixPath(name).name

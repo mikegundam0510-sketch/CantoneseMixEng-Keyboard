@@ -7,3 +7,5 @@ Recognition uses Zinnia's C++ classifier with the Tegaki 0.3 light Traditional C
 This is stroke-based single-character recognition. Correct stroke order and clear writing help; joined cursive writing, multi-character handwriting, uncommon Cantonese characters and unusual stroke orders require further acceptance/model work. No claim of full character coverage or Samsung-equivalent accuracy is made.
 
 Automated Android checks draw a stroke and require a genuine 一 candidate, select it into the current editor, undo and clear further strokes, return to this keyboard, verify the IME identity remains unchanged, and repeat at cover/unfolded sizes. Physical Samsung touch/stylus quality and broader handwritten-character accuracy still require device trials.
+
+The shipped model contains 11,722 labels. Direct label inspection confirms 研、究、下、唔、咁、佢、係; 嘅、喺、啲、嚟、㗎 are absent. Label presence alone is not a handwriting accuracy measurement. Model SHA-256: `3aea4951f03b261bb9c98033c97b74cce5563da1898d1ec95e86e2f37f127bf6`. The build rejects a different downloaded model.
