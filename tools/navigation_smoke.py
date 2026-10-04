@@ -34,19 +34,34 @@ def check(name,descs):
         n=find(nodes,desc);assert n is not None,name+" missing "+desc
         b=bounds(n);assert b[3]<=bottom,(name,desc,b,bottom)
     shot(name);(out/(name+".xml")).write_text(ET.tostring(nodes,encoding="unicode"))
+import sys
+def failure(kind,value,tb):
+    try:
+        shot("failure")
+        (out/"failure.xml").write_text(ET.tostring(tree(),encoding="unicode"))
+        (out/"failure-logcat.txt").write_text(adb("logcat","-d"))
+    except Exception: pass
+    sys.__excepthook__(kind,value,tb)
+sys.excepthook=failure
 adb("shell","settings","put","secure","show_ime_with_hard_keyboard","1")
 adb("install","-r","app/build/outputs/apk/debug/app-debug.apk")
-ime=next(x.strip() for x in adb("shell","ime","list","-a","-s").splitlines() if "hk.kaiboard.android" in x)
+ime=None
+for _ in range(30):
+    ime=next((x.strip() for x in adb("shell","ime","list","-a","-s").splitlines() if "hk.kaiboard.android" in x),None)
+    if ime: break
+    time.sleep(1)
+assert ime,"Installed input method was not registered"
 adb("shell","ime","enable",ime);adb("shell","ime","set",ime)
 for mode in ("threebutton","gestural"):
     adb("shell","cmd","overlay","enable-exclusive","--category","com.android.internal.systemui.navbar."+mode)
     time.sleep(2)
-    adb("shell","am","force-stop","hk.kaiboard.android")
-    adb("shell","am","start","-n","hk.kaiboard.android/.KeyboardPreviewActivity")
+    adb("shell","ime","set",ime)
+    adb("shell","am","start","--activity-single-top","-n","hk.kaiboard.android/.KeyboardPreviewActivity","--es","test_text","__EMPTY__")
     time.sleep(4)
     check(mode+"-keyboard",["切換中英文，長按選擇系統鍵盤","空白鍵，左右滑動移動游標","逗號，長按快捷標點","句號，長按快捷標點"])
     nodes=tree();tap(nodes,"切換中英文，長按選擇系統鍵盤")
     check(mode+"-english",["切換中英文，長按選擇系統鍵盤","空白鍵，左右滑動移動游標"])
+    tap(tree(),"切換中英文，長按選擇系統鍵盤")
     tap(tree(),"文字編輯")
     check(mode+"-editor",["移到文字開頭","移到文字結尾","刪除選取文字或前一個字"])
     tap(tree(),"返回鍵盤")
