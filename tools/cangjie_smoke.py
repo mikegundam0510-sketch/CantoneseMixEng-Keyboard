@@ -45,8 +45,13 @@ def type_code(code):
 def settings(quick):
     adb("shell", "am", "start", "-n", "hk.kaiboard.android/.SettingsActivity")
     time.sleep(1)
-    control = node("速成（首尾碼）", "text")
-    assert control is not None
+    control = None
+    for _ in range(10):
+        control = node("速成（首尾碼）", "text")
+        if control is not None:
+            break
+        time.sleep(1)
+    assert control is not None, "Settings switch did not appear"
     if (control.get("checked") == "true") != quick:
         tap(control)
     assert node("速成（首尾碼）", "text").get("checked") == str(quick).lower()
