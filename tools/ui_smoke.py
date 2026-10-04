@@ -239,7 +239,10 @@ adb("shell","input","tap",*center(node));time.sleep(.3)
 assert editor_text()=="o", "Direct English globe mode failed"
 tap("切換中英文，長按選擇系統鍵盤")
 assert find("O，人") is not None, "Globe did not return to mixed input"
-# Edit panel: select with keyboard arrows, replace selection, copy/paste and delete.
+# Edit panel: switch the fixture back to multiline before testing vertical arrows.
+adb("shell","am","start","--activity-single-top","-n","hk.kaiboard.android/.KeyboardPreviewActivity","--es","test_text","__EMPTY__","--es","test_input_type","normal")
+time.sleep(1)
+# Select with keyboard arrows, copy/paste and delete.
 reset_field("香港Hello");tap("文字編輯");shot("17-text-editor")
 tap("移到文字開頭");tap("開始或停止選取文字");tap("游標向右");tap("游標向右")
 tap("複製選取文字");tap("開始或停止選取文字");tap("移到文字結尾");tap("貼上文字")
@@ -302,4 +305,4 @@ for name,size,density in (("cover","720x1600","320"),("unfolded","1440x1800","32
     type_code("o");tap("刪除，長按連續刪除")
     assert find("Emoji") is not None, "Clearing codes did not restore toolbar"
 adb("shell","wm","size","reset");adb("shell","wm","density","reset")
-(out/"result.txt").write_text("PASS: shared toolbar/candidate row, compact code badge, stable height and toolbar restore, emoji, single candidate strip and swipe, HK ranking, reselection/segment edit, English learning/repair, mixed sentence, pin/unpin, integrated Quick repair and code provenance, punctuation, cursor swipes, edge taps, rapid input, prefix selection, stale-search cancellation, expanded per-character selector, URI Chinese switch/restart, restricted fields, cover/unfolded layout bounds. Voice and physical Samsung/Fold acceptance remain device checks; synthetic overlapping finger dispatch is verified separately by instrumentation.\n",encoding="utf-8")
+(out/"result.txt").write_text("PASS: shared toolbar/candidate row, compact code badge, stable height and toolbar restore, emoji, single candidate strip and swipe, HK ranking, reselection/segment edit, English learning/repair, mixed sentence, pin/unpin, integrated Quick repair and code provenance, punctuation, cursor swipes, edge taps, rapid input, prefix selection, stale-search cancellation, expanded per-character selector, URI automatic mixed input/restart, bottom globe, text editing arrows/selection/copy/paste/Unicode deletion, restricted fields, cover/unfolded layout bounds. Voice and physical Samsung/Fold acceptance remain device checks; synthetic overlapping finger dispatch is verified separately by instrumentation.\n",encoding="utf-8")
