@@ -1,4 +1,4 @@
-name: Device test APK 0.6.5
+name: Device test APK 0.6.6
 # Includes all-window native handwriting acceptance. Raw IME inset diagnostics use the application's debuggable flag.
 on:
   push:
@@ -9,7 +9,7 @@ permissions:
 jobs:
   package:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -25,12 +25,13 @@ jobs:
         run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0' 'ndk;27.0.12077973' 'cmake;3.22.1'
       - name: Build and verify device test APK
         run: |
-          bash ./gradlew testDebugUnitTest lintDebug assembleDebug --no-daemon
-          mkdir -p device-test
-          cp app/build/outputs/apk/debug/app-debug.apk device-test/cantonesemixeng-keyboard-0.6.5-device-test.apk
-          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose --print-certs device-test/cantonesemixeng-keyboard-0.6.5-device-test.apk > device-test/APK-verification.txt
-          "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging device-test/cantonesemixeng-keyboard-0.6.5-device-test.apk >> device-test/APK-verification.txt
-          sha256sum device-test/cantonesemixeng-keyboard-0.6.5-device-test.apk >> device-test/APK-verification.txt
+          bash ./gradlew testDebugUnitTest lintDebug assembleDebug assembleDebugAndroidTest --no-daemon
+          mkdir -p device-test apk
+          cp app/build/outputs/apk/debug/app-debug.apk apk/
+          cp app/build/outputs/apk/debug/app-debug.apk device-test/cantonesemixeng-keyboard-0.6.6-device-test.apk
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose --print-certs device-test/cantonesemixeng-keyboard-0.6.6-device-test.apk > device-test/APK-verification.txt
+          "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging device-test/cantonesemixeng-keyboard-0.6.6-device-test.apk >> device-test/APK-verification.txt
+          sha256sum device-test/cantonesemixeng-keyboard-0.6.6-device-test.apk >> device-test/APK-verification.txt
           git rev-parse HEAD >> device-test/APK-verification.txt
       - name: Free build-only tools before emulator startup
         run: |
@@ -45,7 +46,7 @@ jobs:
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
-      - name: Verify native handwriting on emulator
+      - name: Verify clipboard, text editing, keyboard and handwriting on emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 31
@@ -54,13 +55,16 @@ jobs:
           disk-size: 2048M
           emulator-boot-timeout: 300
           disable-animations: true
-          script: python3 tools/handwriting_smoke.py
-      - name: Include handwriting evidence
+          script: python3 tools/device_acceptance.py
+      - name: Include device acceptance evidence
         if: always()
-        run: cp -r handwriting-evidence device-test/ || true
+        run: |
+          for folder in handwriting-evidence clipboard-evidence ui-evidence acceptance-evidence; do
+            if [ -d "$folder" ]; then cp -r "$folder" device-test/; fi
+          done
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: cantonesemixeng-keyboard-0.6.5-device-test
+          name: cantonesemixeng-keyboard-0.6.6-device-test
           path: device-test/
           retention-days: 14

@@ -8,7 +8,7 @@ def tree():
     for attempt in range(8):
         try:
             adb('shell','rm','-f','/sdcard/clipboard.xml')
-            adb('shell','uiautomator','dump','/sdcard/clipboard.xml')
+            adb('shell','uiautomator','dump','--windows','/sdcard/clipboard.xml')
             return ET.fromstring(adb('shell','cat','/sdcard/clipboard.xml'))
         except (subprocess.CalledProcessError, ET.ParseError):
             if attempt==7:raise
@@ -28,7 +28,10 @@ def tap_text(label):
     n=next(n for n in tree().iter('node') if n.get('text')==label)
     b=list(map(int,re.findall(r'\d+',n.get('bounds'))));adb('shell','input','tap',str((b[0]+b[2])//2),str((b[1]+b[3])//2));time.sleep(.4)
 def reset(kind='normal'):
-    adb('shell','am','start','--activity-single-top','-n','hk.kaiboard.android/.KeyboardPreviewActivity','--es','test_text','__EMPTY__','--es','test_input_type',kind);time.sleep(1)
+    adb('shell','am','start','--activity-single-top','-n','hk.kaiboard.android/.KeyboardPreviewActivity','--es','test_text','__EMPTY__','--es','test_input_type',kind);time.sleep(2)
+    for node in tree().iter('node'):
+        if node.get('text') in ('GOT IT','Got it'):
+            tap_text(node.get('text'));time.sleep(.7);break
 def copy(text,sensitive=False):
     adb('shell','am','start','--activity-single-top','-n','hk.kaiboard.android/.KeyboardPreviewActivity','--es','test_clipboard',text,'--ez','test_sensitive_clip',str(sensitive).lower());time.sleep(.4)
 def editor():return next(n.get('text','') for n in tree().iter('node') if n.get('class')=='android.widget.EditText')
@@ -37,7 +40,13 @@ def shot(name):
     (out/(name+'.xml')).write_text(ET.tostring(tree(),encoding='unicode'))
 adb('install','-r','apk/app-debug.apk')
 adb('shell','settings','put','secure','show_ime_with_hard_keyboard','1')
-ime='hk.kaiboard.android/.KaiboardService';adb('shell','ime','enable',ime);adb('shell','ime','set',ime)
+ime=None
+for _ in range(30):
+    ime=next((x.strip() for x in adb('shell','ime','list','-a','-s').splitlines() if 'hk.kaiboard.android' in x),None)
+    if ime:break
+    time.sleep(.5)
+assert ime,'Keyboard IME was not registered'
+adb('shell','ime','enable',ime);adb('shell','ime','set',ime)
 reset()
 for _ in range(20):
     if find('剪貼簿') is not None:break
