@@ -1,5 +1,5 @@
 name: Device test APK 0.6.5
-# Includes native handwriting acceptance. Raw IME inset diagnostics use the application's debuggable flag.
+# Includes registration-aware native handwriting acceptance. Raw IME inset diagnostics use the application's debuggable flag.
 on:
   push:
     branches: [codex/reference-keyboard-emoji]

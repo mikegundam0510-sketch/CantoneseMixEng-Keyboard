@@ -1,5 +1,5 @@
 """Actual native handwriting-pad smoke check on a disposable emulator."""
-import pathlib,subprocess,time,shlex,re,xml.etree.ElementTree as ET
+import pathlib,subprocess,time,shlex,re,sys,xml.etree.ElementTree as ET
 out=pathlib.Path('handwriting-evidence');out.mkdir(exist_ok=True)
 def adb(*a):
  if a and a[0]=='shell':a=('shell',shlex.join(a[1:]))
@@ -24,9 +24,20 @@ def draw_horizontal():
   if find('手寫候選：一') is not None:return
   time.sleep(.3)
  raise AssertionError('Native handwriting did not recognize the horizontal stroke as 一')
+def failure(kind,value,tb):
+ try:shot('failure')
+ except Exception:pass
+ sys.__excepthook__(kind,value,tb)
+sys.excepthook=failure
 adb('install','-r','app/build/outputs/apk/debug/app-debug.apk')
 adb('shell','settings','put','secure','show_ime_with_hard_keyboard','1')
-ime='hk.kaiboard.android/.KaiboardService';adb('shell','ime','enable',ime);adb('shell','ime','set',ime)
+ime=None
+for _ in range(30):
+ ime=next((x.strip() for x in adb('shell','ime','list','-a','-s').splitlines() if 'hk.kaiboard.android' in x),None)
+ if ime:break
+ time.sleep(1)
+assert ime,'Installed input method was not registered'
+adb('shell','ime','enable',ime);adb('shell','ime','set',ime)
 for name,size in [('cover','720x1600'),('unfolded','1440x1800')]:
  adb('shell','wm','size',size);adb('shell','wm','density','320');reset();
  for _ in range(20):
