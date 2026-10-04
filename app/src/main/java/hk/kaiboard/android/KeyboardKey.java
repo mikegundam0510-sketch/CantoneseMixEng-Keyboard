@@ -23,7 +23,7 @@ final class KeyboardKey extends TextView {
             // Keep the legend inside the visible face (background inset: 2.5dp / 4dp).
             canvas.drawText(latin, dp(9), dp(9) - paint.ascent(), paint);
             paint.setColor(getCurrentTextColor()); paint.setTextSize(dp(22)); paint.setTextAlign(Paint.Align.CENTER);
-            float y = getHeight() - dp(12) - paint.descent();
+            float y = getHeight() - dp(12);
             canvas.drawText(radical, getWidth()/2f, y, paint); return;
         }
         if (icon == null) { super.onDraw(canvas); return; }
@@ -106,5 +106,4 @@ final class KeyboardKey extends TextView {
     }
     private float dp(float value) { return value * getResources().getDisplayMetrics().density; }
 }
-
 
