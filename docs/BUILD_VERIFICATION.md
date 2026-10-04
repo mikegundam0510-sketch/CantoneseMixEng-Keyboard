@@ -1,5 +1,16 @@
 # Build verification — 0.6.0 source preview
 
+## Requested physical-device test APK
+
+On 2026-10-04 the user authorized providing a test APK and requested the display name `cantonesemixeng keyboard`. App, IME and settings title now use that name.
+
+- Package build source: `5b461d299f29b0c50c09cfca10ec35b83e7e67b5`. Input behavior and geometry match the previously verified `ec42d6615bf686cf888f69bfee2ff4a9058419c1`; subsequent changes are display-name resources/titles and the packaging workflow.
+- Packaging run: https://github.com/mikegundam0510-sketch/kaiboard-samsung/actions/runs/37176101481 — success. `assembleDebug`, `apksigner verify` and `aapt dump badging` passed. This packaging result does not replace the prior emulator acceptance or establish physical-device reliability.
+- APK: `cantonesemixeng-keyboard-0.6.0-device-test.apk`, app ID `hk.kaiboard.android`, version 0.6.0 / code 7, min API 26, target API 35. Display label verified in compiled manifest. Debug test package; APK Signature Scheme v2 verified.
+- APK SHA256: `046ddea2e4fb07c54cc639744853e88420b2a47e778bfc5197d0e1fa861e3f6a`.
+- Signing certificate SHA256: `3f9dedfa58d91126c17d741511f7e45eae3e8b84836a71905ffcb079c21cf205`. Different from earlier delivered test builds; installing over those requires uninstalling first, which removes settings and learned words.
+- Artifact: https://github.com/mikegundam0510-sketch/kaiboard-samsung/actions/runs/37176101481/artifacts/11293327250 (14-day retention). Contains the APK and verification report. PR remains draft and unmerged; no GitHub release was created.
+
 ## Reference key proportions
 
 Verified code commit: `ec42d6615bf686cf888f69bfee2ff4a9058419c1`, 2026-10-04 UTC.
