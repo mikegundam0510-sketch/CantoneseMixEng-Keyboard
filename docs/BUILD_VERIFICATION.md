@@ -1,5 +1,20 @@
 # Build verification — 0.6.0 source preview
 
+## Shared toolbar and candidate row
+
+Verified code commit: `c726b5062ed42a7b8c5873deeae77bc11ae124b7`, 2026-10-04 UTC.
+
+- Draft PR verification: https://github.com/mikegundam0510-sketch/kaiboard-samsung/actions/runs/37173415608 — success.
+- Idle shows the function toolbar; uncommitted codes replace it with a compact code badge and the existing candidate strip in the same fixed 50dp slot. Committing all codes or clearing them restores the toolbar. Partial selection keeps the remaining codes in candidate mode, independent of asynchronous search results.
+- Chinese/English mode is available in the idle toolbar and in the expanded candidate panel during composition. Repair candidates keep their existing plain labels and long-press provenance.
+- Added API 31 UI acceptance passed at both 360dp and 720dp widths: toolbar absent during composition, bounded code badge, identical letter-key bounds before typing and after full commit, and toolbar restoration after commit and deleting the last code. Existing English forcing/learning, prefix selection, reselection, emoji and mixed-input checks passed.
+- Actual screenshot inspection passed. Against the previous verified screenshots at density 320, the keyboard upper edge moved from y=720 to y=818 on the 720×1600 cover configuration and from y=920 to y=1018 on the 1440×1800 unfolded configuration: 98px / 49dp less height. No extra toolbar row remains during composition. Expanded controls remain outside the compact strip.
+- `testDebugUnitTest lintDebug assembleDebug assembleDebugAndroidTest` passed: 45 JVM tests, no failures/ignored tests; lint has 14 warnings and no blocking errors. Four AndroidX touch instrumentation tests passed with no failures/skipped tests.
+- Evidence: https://github.com/mikegundam0510-sketch/kaiboard-samsung/actions/runs/37173415608/artifacts/11292542295 ; SHA256 `458ccd4ff6f7c89270cb08e9e3b464db6a6b87c580c504c91216ff343ea732d0`. Reports, UI acceptance result and actual screenshots only; inspected ZIP has no APK. Internal disposable emulator test packages were removed by the workflow.
+- PR #1 remains draft and unmerged; no APK was published or supplied. Physical Samsung/Fold acceptance and the device limits listed below remain outstanding.
+
+## Previous 0.6.0 validation
+
 Verified code commit: `94bbaefa309af5ce5278202c8e12c40c563aa20e`, 2026-10-04 (Hong Kong).
 
 - Push verification: https://github.com/mikegundam0510-sketch/kaiboard-samsung/actions/runs/37172187336 — success.
