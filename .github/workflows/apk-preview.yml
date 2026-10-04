@@ -1,3 +1,4 @@
+# Wait for IME registration after install.
 name: Device test APK 0.6.10
 on:
   push:

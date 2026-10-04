@@ -90,7 +90,6 @@ public class SwipeSelectionTest {
  }
  @Test public void actualImeGesturesOnCoverAndUnfolded()throws Exception{
   shell("settings put secure show_ime_with_hard_keyboard 1");
-  shell("ime enable hk.kaiboard.android/.KaiboardService");shell("ime set hk.kaiboard.android/.KaiboardService");
   AccessibilityServiceInfo serviceInfo=instrumentation.getUiAutomation().getServiceInfo();
   serviceInfo.flags|=AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS;
   instrumentation.getUiAutomation().setServiceInfo(serviceInfo);
