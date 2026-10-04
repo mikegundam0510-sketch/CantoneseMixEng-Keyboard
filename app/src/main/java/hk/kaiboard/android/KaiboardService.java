@@ -296,7 +296,6 @@ public final class KaiboardService extends InputMethodService {
         }
         if (symbols || emoji || numeric) deleteKey(bottom, 1.2f);
         TextView enterKey = key(bottom, enterLabel(), 1.45f, true, this::enter, keyHeight());
-        enterKey.setBackground(background(functionColor));
         enterKey.setTextColor(fg); enterKey.setTextSize(14); enterKey.setSingleLine(true);
         if (getWindow() != null) {
             getWindow().getWindow().setNavigationBarColor(bg);
