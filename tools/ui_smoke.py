@@ -141,6 +141,37 @@ assert editor_text()=="nebulon ", "Forced English confirmation failed"
 reset_field();type_code("nebulon");tap("空白鍵，左右滑動移動游標")
 assert editor_text()=="nebulon ", "Learned English word was not recognized"
 shot("10-english-space-learning")
+# Bottom globe toggles English/mixed without using the toolbar.
+reset_field();tap("切換中英文，長按選擇系統鍵盤")
+assert find("O，人") is None, "Globe did not switch to direct English"
+node=next(n for n in tree().iter("node") if n.get("text")=="o" or n.get("text")=="O")
+adb("shell","input","tap",*center(node));time.sleep(.3)
+assert editor_text()=="o", "Direct English globe mode failed"
+tap("切換中英文，長按選擇系統鍵盤")
+assert find("O，人") is not None, "Globe did not return to mixed input"
+# Edit panel: switch the fixture back to multiline before testing vertical arrows.
+adb("shell","am","start","--activity-single-top","-n","hk.kaiboard.android/.KeyboardPreviewActivity","--es","test_text","__EMPTY__","--es","test_input_type","normal")
+time.sleep(1)
+# Select with keyboard arrows, copy/paste and delete.
+reset_field("香港Hello");tap("文字編輯");shot("17-text-editor")
+tap("移到文字開頭");tap("開始或停止選取文字");tap("游標向右");tap("游標向右")
+tap("複製選取文字");tap("開始或停止選取文字");tap("移到文字結尾");tap("貼上文字")
+assert editor_text()=="香港Hello香港", "Arrow selection/copy/paste failed"
+tap("全部選取");tap("刪除選取文字或前一個字")
+assert editor_text()=="", "Select all/delete failed"
+tap("貼上文字");assert editor_text()=="香港", "Copy contents or paste changed"
+tap("返回鍵盤");assert find("O，人") is not None, "Editing back button lost keyboard"
+reset_field("甲\n乙\n丙");tap("文字編輯");tap("移到文字開頭");tap("游標向下")
+tap("刪除選取文字或前一個字")
+assert editor_text()=="甲乙\n丙", "Down movement did not preserve column"
+tap("移到文字結尾");tap("游標向上");tap("刪除選取文字或前一個字")
+assert editor_text()=="乙\n丙", "Up movement did not preserve column"
+tap("返回鍵盤")
+reset_field("A😀B");tap("文字編輯");tap("游標向左");tap("開始或停止選取文字");tap("游標向左")
+tap("刪除選取文字或前一個字")
+assert editor_text()=="AB", "Selection split a supplementary character"
+shot("18-text-editor-selected");tap("返回鍵盤")
+(out/"android-meminfo.txt").write_text(adb("shell","dumpsys","meminfo","hk.kaiboard.android"))
 # One buffer containing Chinese codes, a case-preserved brand, and more Chinese codes.
 reset_field();type_code("onaovrrov")
 tap("大寫，長按鎖定大寫");type_code("m");type_code("cdonaldrh")
@@ -226,42 +257,11 @@ assert editor_text()=="你好", "Chinese input failed in URI editor"
 reset_field();type_code("ofvd");tap("你好")
 assert editor_text()=="你好", "URI restart forgot user's Chinese mode"
 reset_field();type_code("www");tap("句號，長按快捷標點")
-type_code("example");tap("句號，長按快捷標點");type_code("com");tap_text("↵")
+type_code("example");tap("句號，長按快捷標點");type_code("com");tap_text("完成")
 assert editor_text()=="www.example.com", "URI literal URL or ASCII dots changed"
 type_code("ofvd");tap("你好")
 assert editor_text()=="www.example.com你好", "URI could not mix English and Chinese without switching"
 shot("15-uri-chinese")
-# Bottom globe toggles English/mixed without using the toolbar.
-reset_field();tap("切換中英文，長按選擇系統鍵盤")
-assert find("O，人") is None, "Globe did not switch to direct English"
-node=next(n for n in tree().iter("node") if n.get("text")=="o" or n.get("text")=="O")
-adb("shell","input","tap",*center(node));time.sleep(.3)
-assert editor_text()=="o", "Direct English globe mode failed"
-tap("切換中英文，長按選擇系統鍵盤")
-assert find("O，人") is not None, "Globe did not return to mixed input"
-# Edit panel: switch the fixture back to multiline before testing vertical arrows.
-adb("shell","am","start","--activity-single-top","-n","hk.kaiboard.android/.KeyboardPreviewActivity","--es","test_text","__EMPTY__","--es","test_input_type","normal")
-time.sleep(1)
-# Select with keyboard arrows, copy/paste and delete.
-reset_field("香港Hello");tap("文字編輯");shot("17-text-editor")
-tap("移到文字開頭");tap("開始或停止選取文字");tap("游標向右");tap("游標向右")
-tap("複製選取文字");tap("開始或停止選取文字");tap("移到文字結尾");tap("貼上文字")
-assert editor_text()=="香港Hello香港", "Arrow selection/copy/paste failed"
-tap("全部選取");tap("刪除選取文字或前一個字")
-assert editor_text()=="", "Select all/delete failed"
-tap("貼上文字");assert editor_text()=="香港", "Copy contents or paste changed"
-tap("返回鍵盤");assert find("O，人") is not None, "Editing back button lost keyboard"
-reset_field("甲\n乙\n丙");tap("文字編輯");tap("移到文字開頭");tap("游標向下")
-tap("刪除選取文字或前一個字")
-assert editor_text()=="甲乙\n丙", "Down movement did not preserve column"
-tap("移到文字結尾");tap("游標向上");tap("刪除選取文字或前一個字")
-assert editor_text()=="甲\n丙", "Up movement did not preserve column"
-tap("返回鍵盤")
-reset_field("A😀B");tap("文字編輯");tap("游標向左");tap("開始或停止選取文字");tap("游標向左")
-tap("刪除選取文字或前一個字")
-assert editor_text()=="AB", "Selection split a supplementary character"
-shot("18-text-editor-selected");tap("返回鍵盤")
-(out/"android-meminfo.txt").write_text(adb("shell","dumpsys","meminfo","hk.kaiboard.android"))
 # Numeric/password fields retain their restrictions.
 for kind in ("number","password"):
     adb("shell","am","start","--activity-single-top","-n","hk.kaiboard.android/.KeyboardPreviewActivity","--es","test_text","__EMPTY__","--es","test_input_type",kind)
