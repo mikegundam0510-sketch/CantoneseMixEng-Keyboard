@@ -1,5 +1,5 @@
 name: Device test APK
-# Includes IME caption-bar clearance on Android 15.
+# Reads raw IME window insets before framework consumption.
 on:
   push:
     branches: [codex/reference-keyboard-emoji]

@@ -113,26 +113,30 @@ public final class KaiboardService extends InputMethodService {
     @Override public View onCreateInputView() {
         root = new LinearLayout(this); root.setOrientation(LinearLayout.VERTICAL);
         root.setOnApplyWindowInsetsListener((view, insets) -> {
-            WindowInsets windowInsets = view.getRootWindowInsets();
-            if (windowInsets == null) windowInsets = insets;
+            updateKeyboardPadding();
+            return insets;
+        });
+        root.getViewTreeObserver().addOnGlobalLayoutListener(this::updateKeyboardPadding);
+        render(); root.requestApplyInsets(); return root;
+    }
+
+    private void updateKeyboardPadding() {
+        if (root == null) return;
+        // The framework can consume insets before dispatching them to the input view.
+        // Read the IME window's raw insets on each layout, including navigation mode changes.
+        WindowInsets windowInsets = getWindow() == null ? null :
+            getWindow().getWindow().getDecorView().getRootWindowInsets();
+        if (windowInsets != null) {
             if (Build.VERSION.SDK_INT >= 30) {
-                android.graphics.Insets safe = windowInsets.getInsets(
-                    WindowInsets.Type.navigationBars() | WindowInsets.Type.captionBar() | WindowInsets.Type.displayCutout());
+                android.graphics.Insets safe = windowInsets.getInsets(WindowInsets.Type.navigationBars() |
+                    WindowInsets.Type.captionBar() | WindowInsets.Type.displayCutout());
                 navigationLeft = safe.left; navigationRight = safe.right; navigationBottom = safe.bottom;
             } else {
                 navigationLeft = windowInsets.getSystemWindowInsetLeft();
                 navigationRight = windowInsets.getSystemWindowInsetRight();
                 navigationBottom = windowInsets.getSystemWindowInsetBottom();
             }
-            updateKeyboardPadding();
-            return insets;
-        });
-        root.addOnLayoutChangeListener((view, l, t, r, b, ol, ot, or, ob) -> updateKeyboardPadding());
-        render(); root.requestApplyInsets(); return root;
-    }
-
-    private void updateKeyboardPadding() {
-        if (root == null) return;
+        }
         int side = dp(splitLayout() ? Math.round(foldWidth() * .041f) : 4);
         int left = 0, right = 0, bottom = 0;
         if (root.isAttachedToWindow() && root.getHeight() > 0) {
@@ -149,6 +153,9 @@ public final class KaiboardService extends InputMethodService {
         int top = dp(5), baseBottom = dp(6);
         if (root.getPaddingLeft() != side + left || root.getPaddingRight() != side + right ||
                 root.getPaddingTop() != top || root.getPaddingBottom() != baseBottom + bottom) {
+            if (BuildConfig.DEBUG) android.util.Log.d("KeyboardInsets", "navigationBottom=" +
+                navigationBottom + " clearancePadding=" + bottom + " rootY=" + keyboardLocation[1] +
+                " rootHeight=" + root.getHeight());
             root.setPadding(side + left, top, side + right, baseBottom + bottom);
         }
     }
