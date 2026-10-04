@@ -33,7 +33,12 @@ def failure(kind,value,tb):
 sys.excepthook=failure
 adb("shell","settings","put","secure","show_ime_with_hard_keyboard","1")
 adb("install","-r","apk/app-debug.apk")
-ime=next(line.strip() for line in adb("shell","ime","list","-a","-s").splitlines() if "hk.kaiboard.android" in line)
+ime = None
+for _ in range(20):
+    ime = next((line.strip() for line in adb("shell","ime","list","-a","-s").splitlines() if "hk.kaiboard.android" in line), None)
+    if ime: break
+    time.sleep(1)
+assert ime, "Editor smoke input method registration timed out"
 adb("shell","am","force-stop","hk.kaiboard.android")
 adb("shell","ime","enable",ime);adb("shell","ime","set",ime)
 adb("shell","am","start","-n","hk.kaiboard.android/.KeyboardPreviewActivity")
