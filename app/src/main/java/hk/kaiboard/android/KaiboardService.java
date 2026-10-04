@@ -1109,11 +1109,15 @@ public final class KaiboardService extends InputMethodService {
         expandedScroll.removeAllViews();
         LinearLayout content = new LinearLayout(this); content.setOrientation(LinearLayout.VERTICAL);
         LinearLayout actions = new LinearLayout(this);
-        expandedMode = key(actions, ascii || englishIntent() ? "中文" : "英文", 1, true, this::toggleLanguage, 44);
+        actions.setOrientation(LinearLayout.HORIZONTAL);
+        actions.setGravity(Gravity.CENTER_VERTICAL);
+        // Align the key bounds, rather than the baselines of differently sized labels.
+        actions.setBaselineAligned(false);
+        expandedMode = expandedAction(actions, ascii || englishIntent() ? "中文" : "英文", this::toggleLanguage);
         expandedMode.setContentDescription("指定英文段或返回自動判斷");
         if (quick && prefs.getBoolean("continuous", true) && composing.length() > 2) {
-            key(actions, chooseFirst ? "返回整句候選" : "逐字選擇", 1, true,
-                () -> { chooseFirst = !chooseFirst; updateCandidates(); }, 44);
+            expandedAction(actions, chooseFirst ? "返回整句候選" : "逐字選擇",
+                () -> { chooseFirst = !chooseFirst; updateCandidates(); });
         }
         content.addView(actions);
         android.widget.GridLayout grid = new android.widget.GridLayout(this); grid.setColumnCount(5);
@@ -1126,6 +1130,14 @@ public final class KaiboardService extends InputMethodService {
             item.setOnLongClickListener(v -> { candidateMenu(item, candidateDetails.get(value)); return true; });
         }
         content.addView(grid); expandedScroll.addView(content);
+    }
+
+    private TextView expandedAction(LinearLayout parent, String label, Runnable action) {
+        TextView button = key(parent, label, 1, true, action, 44);
+        button.setTextSize(16);
+        button.setSingleLine(true);
+        button.setGravity(Gravity.CENTER);
+        return button;
     }
 
     private String recentEmoji() {
