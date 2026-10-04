@@ -27,7 +27,7 @@ jobs:
         run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
       - name: Test, lint and prepare internal emulator package
         run: |
-          bash ./gradlew testDebugUnitTest lintDebug assembleDebug --no-daemon
+          bash ./gradlew testDebugUnitTest lintDebug assembleDebug assembleDebugAndroidTest --no-daemon
           mkdir -p apk
           cp app/build/outputs/apk/debug/app-debug.apk apk/
       - name: Enable emulator acceleration
@@ -41,7 +41,7 @@ jobs:
           arch: x86_64
           profile: pixel_2
           disable-animations: true
-          script: python3 tools/ui_smoke.py && bash ./gradlew connectedDebugAndroidTest --no-daemon
+          script: bash ./gradlew connectedDebugAndroidTest --no-daemon && python3 tools/ui_smoke.py
       - name: Save test reports and actual UI screenshots
         uses: actions/upload-artifact@v4
         if: always()

@@ -54,6 +54,11 @@ for _ in range(10):
 (out/"logcat.txt").write_text(adb("logcat","-d"),encoding="utf-8")
 shot("01-keyboard")
 tap("Emoji")
+# The large offline vocabulary can still be loading on a busy emulator host.
+for _ in range(12):
+    if find("人物") is not None:break
+    time.sleep(1)
+assert find("人物") is not None, "Emoji catalog did not finish loading"
 shot("02-emoji")
 tap("人物")
 node=find("waving hand")
