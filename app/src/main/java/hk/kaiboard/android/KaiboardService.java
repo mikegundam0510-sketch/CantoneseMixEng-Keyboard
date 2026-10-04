@@ -1160,6 +1160,7 @@ public final class KaiboardService extends InputMethodService {
         attributes.type = WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG;
         attributes.token = getWindow().getWindow().getDecorView().getWindowToken();
         window.setAttributes(attributes);
+        window.addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
         final android.app.AlertDialog shown = voiceDialog;
         shown.setOnDismissListener(dialog -> { if (voiceDialog == shown) voiceDialog = null; });
         try { voiceDialog.show(); }
@@ -1186,6 +1187,13 @@ public final class KaiboardService extends InputMethodService {
             return;
         }
         voiceListening = true;
+        final Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, englishVoice ? "en-HK" : "yue-HK");
+        intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
+        intent.putExtra(RecognizerIntent.EXTRA_PREFER_OFFLINE, onDevice);
+        intent.putExtra("android.speech.extra.MASK_OFFENSIVE_WORDS", false);
+        final boolean[] triedAlternate = {false};
         voiceRecognizer.setRecognitionListener(new RecognitionListener() {
             @Override public void onReadyForSpeech(Bundle params) {
                 if (session == voiceSession) Toast.makeText(KaiboardService.this, "請講嘢；再撳咪可取消", Toast.LENGTH_SHORT).show();
@@ -1198,6 +1206,14 @@ public final class KaiboardService extends InputMethodService {
             @Override public void onEvent(int type, Bundle params) {}
             @Override public void onError(int error) {
                 if (session != voiceSession) return;
+                String alternate = VoicePolicy.alternate(intent.getStringExtra(RecognizerIntent.EXTRA_LANGUAGE), englishVoice);
+                if (!triedAlternate[0] && alternate != null &&
+                    (error == SpeechRecognizer.ERROR_LANGUAGE_NOT_SUPPORTED || error == SpeechRecognizer.ERROR_LANGUAGE_UNAVAILABLE)) {
+                    triedAlternate[0] = true;
+                    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, alternate);
+                    handler.postDelayed(() -> listenVoice(session, intent, onDevice), 150);
+                    return;
+                }
                 cancelVoice(); render();
                 if (onDevice && VoicePolicy.recovery(error)) voiceRecovery(VoicePolicy.error(error));
                 else Toast.makeText(KaiboardService.this, VoicePolicy.error(error), Toast.LENGTH_LONG).show();
@@ -1211,13 +1227,6 @@ public final class KaiboardService extends InputMethodService {
                 render();
             }
         });
-        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, englishVoice ? "en-HK" : "yue-HK");
-        intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
-        intent.putExtra(RecognizerIntent.EXTRA_PREFER_OFFLINE, onDevice);
-        // Public API 33 extra; use its wire key so older Android versions can ignore it safely.
-        intent.putExtra("android.speech.extra.MASK_OFFENSIVE_WORDS", false);
         render();
         if (Build.VERSION.SDK_INT >= 33) {
             final boolean[] started = {false};

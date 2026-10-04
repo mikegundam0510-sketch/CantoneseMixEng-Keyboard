@@ -8,6 +8,6 @@ The default remains `createOnDeviceSpeechRecognizer`. If the on-device service/m
 
 Cancel pending support checks and dialogs when input finishes or switches. Ignore stale recognition/support callbacks, and insert results only into the original live non-sensitive editor. Password/private and numeric fields keep their existing speech restrictions.
 
-Validation: VoicePolicy regression tests cover provider language tags, English fallback, refusal to substitute Mandarin, and error distinctions. CI compiles the application, runs all JVM tests, runs Android lint, and verifies the APK signature. Samsung Fold/One UI recognition provider availability, attached-dialog interaction, permission denial, switching editor during support checks, and actual Cantonese/English transcription still require physical-device checks. An emulator cannot establish OEM model support.
+Validation: seven VoicePolicy regression tests cover provider language tags, English fallback, one language-tag retry, refusal to substitute Mandarin, and error distinctions. CI compiles the application, runs all JVM tests, runs Android lint, verifies the APK signature, and checks the recovery dialog, cancellation, and sensitive fields on an emulator. Samsung Fold/One UI recognition provider availability, permission denial, switching editor during support checks, and actual Cantonese/English transcription still require physical-device checks. An emulator cannot establish OEM model support.
 
 This branch is based on 0.6.9 and changes voice input only. Other ongoing feature work is not part of this fix.

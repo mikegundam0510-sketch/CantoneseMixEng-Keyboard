@@ -31,6 +31,20 @@ jobs:
           "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging device-test/*.apk >> device-test/APK-verification.txt
           sha256sum device-test/*.apk >> device-test/APK-verification.txt
           git rev-parse HEAD >> device-test/APK-verification.txt
+      - name: Enable emulator acceleration
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Verify voice recovery and cancel
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 31
+          arch: x86_64
+          profile: pixel_2
+          disk-size: 2048M
+          disable-animations: true
+          script: python3 tools/voice_smoke.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -39,4 +53,5 @@ jobs:
             device-test/
             app/build/reports/tests/
             app/build/reports/lint-results-debug.html
+            voice-evidence/
           retention-days: 14

@@ -5,6 +5,12 @@ import java.util.Locale;
 
 /** Provider language tags vary; never replace Cantonese with Mandarin. */
 final class VoicePolicy {
+    static String alternate(String language, boolean english) {
+        if (english) return "en-HK".equalsIgnoreCase(language) ? "en-US" : null;
+        if ("yue-HK".equalsIgnoreCase(language)) return "yue-Hant-HK";
+        if ("yue-Hant-HK".equalsIgnoreCase(language)) return "yue-HK";
+        return null;
+    }
     static String language(boolean english, List<String> available) {
         if (available == null) return null;
         String[] preferred = english ? new String[]{"en-HK", "en-GB", "en-US", "en"} :
