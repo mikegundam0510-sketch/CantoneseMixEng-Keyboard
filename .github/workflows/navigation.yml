@@ -29,6 +29,13 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
       - run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0' 'ndk;27.0.12077973' 'cmake;3.22.1'
       - run: bash ./gradlew assembleDebug --no-daemon
+      - name: Free build tools for emulator
+        run: |
+          sudo python3 - "$ANDROID_HOME" <<'PY'
+          import sys, pathlib, shutil
+          for target in (pathlib.Path('/usr/share/dotnet'), pathlib.Path(sys.argv[1])/'ndk'/'27.0.12077973'):
+              if target.is_dir(): shutil.rmtree(target)
+          PY
       - name: Enable emulator acceleration
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
@@ -39,6 +46,8 @@ jobs:
           api-level: ${{ matrix.api }}
           arch: x86_64
           profile: pixel_2
+          disk-size: 2048M
+          emulator-boot-timeout: 300
           disable-animations: true
           script: python3 tools/navigation_smoke.py
       - uses: actions/upload-artifact@v4
