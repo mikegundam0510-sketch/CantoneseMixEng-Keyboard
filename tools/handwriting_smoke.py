@@ -5,8 +5,12 @@ def adb(*a):
  if a and a[0]=='shell':a=('shell',shlex.join(a[1:]))
  return subprocess.check_output(['adb',*a],text=True,timeout=30)
 def tree():
- adb('shell','uiautomator','dump','/sdcard/hwr.xml')
- return ET.fromstring(adb('shell','cat','/sdcard/hwr.xml'))
+ for _ in range(4):
+  try:
+   adb('shell','uiautomator','dump','--windows','/sdcard/hwr.xml')
+   return ET.fromstring(adb('shell','cat','/sdcard/hwr.xml'))
+  except Exception:time.sleep(1)
+ raise AssertionError('UI dump unavailable')
 def find(desc):return next((n for n in tree().iter('node') if n.get('content-desc')==desc),None)
 def bounds(n):assert n is not None;return list(map(int,re.findall(r'\d+',n.get('bounds'))))
 def tap(desc):
@@ -14,8 +18,12 @@ def tap(desc):
 def shot(name):
  with (out/(name+'.png')).open('wb') as f:subprocess.run(['adb','exec-out','screencap','-p'],stdout=f,check=True)
  (out/(name+'.xml')).write_text(ET.tostring(tree(),encoding='unicode'))
+def dismiss_system_prompt():
+ for node in tree().iter('node'):
+  if node.get('text') in ('GOT IT','Got it'):
+   b=bounds(node);adb('shell','input','tap',str((b[0]+b[2])//2),str((b[1]+b[3])//2));time.sleep(1);return
 def reset(kind='normal'):
- adb('shell','am','start','--activity-single-top','-n','hk.kaiboard.android/.KeyboardPreviewActivity','--es','test_text','__EMPTY__','--es','test_input_type',kind);time.sleep(1)
+ adb('shell','am','start','--activity-single-top','-n','hk.kaiboard.android/.KeyboardPreviewActivity','--es','test_text','__EMPTY__','--es','test_input_type',kind);time.sleep(2);dismiss_system_prompt()
 def editor():return next(n.get('text') for n in tree().iter('node') if n.get('class')=='android.widget.EditText')
 def draw_horizontal():
  b=bounds(find('手寫區'));size=min(b[2]-b[0],b[3]-b[1])-28;cx=(b[0]+b[2])/2;cy=(b[1]+b[3])/2
@@ -25,7 +33,9 @@ def draw_horizontal():
   time.sleep(.3)
  raise AssertionError('Native handwriting did not recognize the horizontal stroke as 一')
 def failure(kind,value,tb):
- try:shot('failure')
+ try:
+  (out/'failure-logcat.txt').write_text(adb('logcat','-d'))
+  shot('failure')
  except Exception:pass
  sys.__excepthook__(kind,value,tb)
 sys.excepthook=failure
