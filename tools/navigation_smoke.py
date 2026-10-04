@@ -59,6 +59,16 @@ for mode in ("threebutton","gestural"):
     adb("shell","ime","set",ime)
     adb("shell","am","start","--activity-single-top","-n","hk.kaiboard.android/.KeyboardPreviewActivity","--es","test_text","__EMPTY__")
     time.sleep(4)
+    for _ in range(15):
+        nodes = tree()
+        prompt = next((x for x in nodes.iter("node") if x.get("text") in ("GOT IT","Got it")),None)
+        if prompt is not None:
+            a,b,c,d=bounds(prompt);adb("shell","input","tap",str((a+c)//2),str((b+d)//2));time.sleep(1);continue
+        if find(nodes,"空白鍵，左右滑動移動游標") is not None:break
+        editor=next((x for x in nodes.iter("node") if x.get("class")=="android.widget.EditText"),None)
+        if editor is not None:
+            a,b,c,d=bounds(editor);adb("shell","input","tap",str((a+c)//2),str((b+d)//2))
+        time.sleep(1)
     check(mode+"-keyboard",["切換中英文，長按選擇系統鍵盤","空白鍵，左右滑動移動游標","逗號，長按快捷標點","句號，長按快捷標點"])
     nodes=tree();tap(nodes,"切換中英文，長按選擇系統鍵盤")
     check(mode+"-english",["切換中英文，長按選擇系統鍵盤","空白鍵，左右滑動移動游標"])
@@ -67,4 +77,7 @@ for mode in ("threebutton","gestural"):
     check(mode+"-editor",["移到文字開頭","移到文字結尾","刪除選取文字或前一個字"])
     tap(tree(),"返回鍵盤")
     check(mode+"-restored",["空白鍵，左右滑動移動游標"])
+    tap(tree(),"剪貼簿")
+    check(mode+"-clipboard",["返回鍵盤","更新剪貼簿","清空剪貼簿暫存"])
+    tap(tree(),"返回鍵盤")
 (out/"result.txt").write_text("PASS: Chinese, English, text editor and restored keyboard above actual three-button and gesture navigation bounds. Physical OEM acceptance remains a device check.")
