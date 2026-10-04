@@ -16,12 +16,13 @@ def shot(name):
     with (out/(name+".png")).open("wb") as f: subprocess.run(["adb","exec-out","screencap","-p"],stdout=f,check=True)
 def safe_bottom(nodes):
     frames=[bounds(n) for n in nodes.iter("node") if "navigation_bar_frame" in n.get("resource-id","")]
-    if frames: return min(b[1] for b in frames if b[3]>b[1])
+    frames=[b for b in frames if b[3]>b[1] and b[2]>b[0]]
+    if frames: return min(b[1] for b in frames)
     dump=adb("shell","dumpsys","window","displays")
     (out/"window-insets.txt").write_text(dump)
     frames=[]
     for line in dump.splitlines():
-        if "navigationBars" not in line: continue
+        if "navigationBars" not in line and "ITYPE_NAVIGATION_BAR" not in line: continue
         m=re.search(r"frame=\[(-?\d+),(-?\d+)\]\[(-?\d+),(-?\d+)\]",line)
         if m:
             b=tuple(map(int,m.groups()))

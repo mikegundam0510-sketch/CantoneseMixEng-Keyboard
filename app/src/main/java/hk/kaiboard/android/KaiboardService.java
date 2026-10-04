@@ -117,7 +117,7 @@ public final class KaiboardService extends InputMethodService {
             if (windowInsets == null) windowInsets = insets;
             if (Build.VERSION.SDK_INT >= 30) {
                 android.graphics.Insets safe = windowInsets.getInsets(
-                    WindowInsets.Type.navigationBars() | WindowInsets.Type.displayCutout());
+                    WindowInsets.Type.navigationBars() | WindowInsets.Type.captionBar() | WindowInsets.Type.displayCutout());
                 navigationLeft = safe.left; navigationRight = safe.right; navigationBottom = safe.bottom;
             } else {
                 navigationLeft = windowInsets.getSystemWindowInsetLeft();
