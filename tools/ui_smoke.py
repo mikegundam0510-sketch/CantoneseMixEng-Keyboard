@@ -19,6 +19,9 @@ def center(node):
     return str((a[0]+a[2])//2),str((a[1]+a[3])//2)
 def tap(desc):
     adb("shell","input","tap",*center(find(desc)));time.sleep(.5)
+def tap_text(label):
+    node=next((n for n in tree().iter("node") if n.get("text")==label and n.get("clickable")=="true"),None)
+    adb("shell","input","tap",*center(node));time.sleep(.5)
 def shot(name):
     print("UI checkpoint: "+name,flush=True)
     with (out/(name+".png")).open("wb") as f:subprocess.run(["adb","exec-out","screencap","-p"],stdout=f,check=True)
@@ -185,7 +188,7 @@ assert editor_text()=="你", "Quick typo suggestion failed"
 reset_field();long_tap("逗號，長按快捷標點");tap("？")
 assert editor_text()=="？", "Quick punctuation failed"
 # The question mark immediately above Backspace has both correct position and output.
-reset_field();tap("123")
+reset_field();tap_text("123")
 delete=find("刪除，長按連續刪除")
 bx,by=map(int,center(delete))
 questions=[n for n in tree().iter("node") if n.get("text")=="?" and n.get("clickable")=="true"]
