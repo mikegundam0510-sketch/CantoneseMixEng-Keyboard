@@ -41,7 +41,7 @@ jobs:
           arch: x86_64
           profile: pixel_2
           disable-animations: true
-          script: python3 tools/ui_smoke.py
+          script: python3 tools/ui_smoke.py && bash ./gradlew connectedDebugAndroidTest --no-daemon
       - name: Save test reports and actual UI screenshots
         uses: actions/upload-artifact@v4
         if: always()
@@ -49,6 +49,7 @@ jobs:
           name: Keyboard-verification-evidence
           path: |
             app/build/reports/tests/
+            app/build/reports/androidTests/
             app/build/reports/lint-results-debug.html
             ui-evidence/
       - name: Remove internal test package

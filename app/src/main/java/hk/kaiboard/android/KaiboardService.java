@@ -124,6 +124,22 @@ public final class KaiboardService extends InputMethodService {
 
     @Override public boolean onEvaluateFullscreenMode() { return false; }
 
+    @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && selectionPopup != null) {
+            event.startTracking();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && selectionPopup != null) {
+            if (!event.isCanceled()) dismissSelectionPopup();
+            return true;
+        }
+        return super.onKeyUp(keyCode, event);
+    }
+
     @Override public void onUpdateSelection(int oldStart, int oldEnd, int start, int end, int composingStart, int composingEnd) {
         super.onUpdateSelection(oldStart, oldEnd, start, end, composingStart, composingEnd);
         selectionStart = start; selectionEnd = end;

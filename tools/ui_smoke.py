@@ -19,6 +19,7 @@ def center(node):
 def tap(desc):
     adb("shell","input","tap",*center(find(desc)));time.sleep(.5)
 def shot(name):
+    print("UI checkpoint: "+name,flush=True)
     with (out/(name+".png")).open("wb") as f:subprocess.run(["adb","exec-out","screencap","-p"],stdout=f,check=True)
 import sys
 def failure(kind,value,tb):
@@ -100,7 +101,12 @@ def reset_field(value="__EMPTY__"):
     adb("shell","am","start","--activity-single-top","-n","hk.kaiboard.android/.KeyboardPreviewActivity","--es","test_text",value)
     time.sleep(1)
 def type_code(code):
-    for char in code: tap(char.upper()+"，"+radicals[char.lower()])
+    nodes=tree()
+    positions={n.get("content-desc"):center(n) for n in nodes.iter("node") if n.get("content-desc") and n.get("bounds")}
+    for char in code:
+        adb("shell","input","tap",*positions[char.upper()+"，"+radicals[char.lower()]])
+        time.sleep(.08)
+    time.sleep(.8)
 def editor_text():
     return next(n.get("text","") for n in tree().iter("node") if n.get("class")=="android.widget.EditText")
 def long_tap(desc):
@@ -143,11 +149,18 @@ reset_field();type_code("of");long_tap("係");tap("取消置頂")
 # Adjacent-key repair shares the normal strip and commits only after selection.
 reset_field();type_code("od")
 repair=find("修正候選：你")
+for _ in range(16):
+    if repair is not None:break
+    bar=next(n for n in tree().iter("node") if n.get("class")=="android.widget.HorizontalScrollView")
+    b=list(map(int,re.findall(r"\d+",bar.get("bounds"))));y=str((b[1]+b[3])//2)
+    adb("shell","input","swipe",str(b[2]-10),y,str(b[0]+10),y,"250");time.sleep(.2)
+    repair=find("修正候選：你")
 assert repair is not None and repair.get("text")=="你", "Repair should have a plain text label"
 assert not any(n.get("text", "").startswith("↳") for n in tree().iter("node")), "Repair arrow is still visible"
 long_tap("修正候選：你")
 assert any("修正字碼" in n.get("text", "") for n in tree().iter("node")), "Repair long press lost code provenance"
 adb("shell","input","keyevent","4");time.sleep(.3)
+assert find("Emoji") is not None, "Back from candidate menu hid the keyboard"
 tap("修正候選：你")
 assert editor_text()=="你", "Quick typo suggestion failed"
 # Long-press punctuation is usable without changing input method.
@@ -233,4 +246,4 @@ for name,size,density in (("cover","720x1600","320"),("unfolded","1440x1800","32
     assert not any(n.get("text")=="逐字選擇" for n in nodes.iter("node")), "Collapsed layout contains extra selector"
     shot("17-"+name)
 adb("shell","wm","size","reset");adb("shell","wm","density","reset")
-(out/"result.txt").write_text("PASS: emoji, single candidate strip and swipe, HK ranking, reselection/segment edit, English learning/repair, mixed sentence, pin/unpin, integrated Quick repair and code provenance, punctuation, cursor swipes, edge taps, rapid input, prefix selection, stale-search cancellation, expanded per-character selector, URI Chinese switch/restart, restricted fields, cover/unfolded layout bounds. Voice, overlapping multi-finger touches and physical Samsung/Fold acceptance remain device checks.\n",encoding="utf-8")
+(out/"result.txt").write_text("PASS: emoji, single candidate strip and swipe, HK ranking, reselection/segment edit, English learning/repair, mixed sentence, pin/unpin, integrated Quick repair and code provenance, punctuation, cursor swipes, edge taps, rapid input, prefix selection, stale-search cancellation, expanded per-character selector, URI Chinese switch/restart, restricted fields, cover/unfolded layout bounds. Voice and physical Samsung/Fold acceptance remain device checks; synthetic overlapping finger dispatch is verified separately by instrumentation.\n",encoding="utf-8")
