@@ -135,7 +135,7 @@ assert editor_text()=="hello", "English reselection did not remove the confirmat
 reset_field();type_code("hellp");tap("hello")
 assert editor_text()=="hello", "English spelling suggestion was not committed"
 # Explicit English fallback learns an unknown word for a later session.
-reset_field();type_code("nebulon");tap("指定英文段或返回自動判斷");tap("空白鍵，左右滑動移動游標")
+reset_field();type_code("nebulon");tap("展開或收起候選字");tap("指定英文段或返回自動判斷");tap("空白鍵，左右滑動移動游標")
 assert editor_text()=="nebulon ", "Forced English confirmation failed"
 reset_field();type_code("nebulon");tap("空白鍵，左右滑動移動游標")
 assert editor_text()=="nebulon ", "Learned English word was not recognized"
@@ -165,7 +165,7 @@ assert not any(n.get("text", "").startswith("↳") for n in tree().iter("node"))
 long_tap("修正候選：你")
 assert any("修正字碼" in n.get("text", "") for n in tree().iter("node")), "Repair long press lost code provenance"
 adb("shell","input","keyevent","4");time.sleep(.3)
-assert find("Emoji") is not None, "Back from candidate menu hid the keyboard"
+assert find("O，人") is not None, "Back from candidate menu hid the keyboard"
 tap("修正候選：你")
 assert editor_text()=="你", "Quick typo suggestion failed"
 # Long-press punctuation is usable without changing input method.
@@ -210,7 +210,7 @@ shot("13-key-edges-rapid-input")
 # Expanded selector lives outside the compact strip and preserves unconsumed codes.
 reset_field();type_code("ofonaovrmrq")
 assert not any(n.get("text")=="逐字選擇" for n in tree().iter("node")), "Per-character selector leaked into compact strip"
-tap("展開或收起候選字");tap_text("逐字選擇")
+tap("展開或收起候選字");shot("14-expanded-controls");tap_text("逐字選擇")
 tap_text("你")
 assert editor_text()=="你onaovrmrq", "Expanded prefix selection lost remaining codes"
 shot("14-expanded-prefix")
@@ -240,8 +240,17 @@ for name,size,density in (("cover","720x1600","320"),("unfolded","1440x1800","32
     time.sleep(1)
     mode=find("指定英文段或返回自動判斷")
     if mode.get("text")=="中文":tap("指定英文段或返回自動判斷")
+    idle_bounds=find("O，人").get("bounds")
+    shot("17-"+name+"-idle")
     type_code("ofonaovrmrq")
     nodes=tree()
+    assert find("Emoji") is None, "Toolbar must share the candidate row"
+    assert find("O，人").get("bounds")==idle_bounds, "Typing changed keyboard height"
+    badge=find("輸入碼：ofonaovrmrq")
+    assert badge is not None, "Compact code badge missing"
+    bx1,by1,bx2,by2=map(int,re.findall(r"\d+",badge.get("bounds")))
+    assert bx2-bx1<=144, "Code badge crowded candidates"
+
     strips=[n for n in nodes.iter("node") if n.get("class")=="android.widget.HorizontalScrollView"]
     assert len(strips)==1, "Collapsed layout must contain a single candidate strip"
     for desc in ("Q，手","P，心","A，日","L，中","Z，重","M，一","空白鍵，左右滑動移動游標"):
@@ -250,5 +259,10 @@ for name,size,density in (("cover","720x1600","320"),("unfolded","1440x1800","32
         assert 0<=x1<x2<=int(size.split("x")[0]) and 0<=y1<y2<=int(size.split("x")[1]), name+" clipped key "+desc
     assert not any(n.get("text")=="逐字選擇" for n in nodes.iter("node")), "Collapsed layout contains extra selector"
     shot("17-"+name)
+    tap("你今日食咗咩")
+    assert find("Emoji") is not None, "Commit did not restore toolbar"
+    assert find("O，人").get("bounds")==idle_bounds, "Commit changed keyboard height"
+    type_code("o");tap("刪除，長按連續刪除")
+    assert find("Emoji") is not None, "Clearing codes did not restore toolbar"
 adb("shell","wm","size","reset");adb("shell","wm","density","reset")
-(out/"result.txt").write_text("PASS: emoji, single candidate strip and swipe, HK ranking, reselection/segment edit, English learning/repair, mixed sentence, pin/unpin, integrated Quick repair and code provenance, punctuation, cursor swipes, edge taps, rapid input, prefix selection, stale-search cancellation, expanded per-character selector, URI Chinese switch/restart, restricted fields, cover/unfolded layout bounds. Voice and physical Samsung/Fold acceptance remain device checks; synthetic overlapping finger dispatch is verified separately by instrumentation.\n",encoding="utf-8")
+(out/"result.txt").write_text("PASS: shared toolbar/candidate row, compact code badge, stable height and toolbar restore, emoji, single candidate strip and swipe, HK ranking, reselection/segment edit, English learning/repair, mixed sentence, pin/unpin, integrated Quick repair and code provenance, punctuation, cursor swipes, edge taps, rapid input, prefix selection, stale-search cancellation, expanded per-character selector, URI Chinese switch/restart, restricted fields, cover/unfolded layout bounds. Voice and physical Samsung/Fold acceptance remain device checks; synthetic overlapping finger dispatch is verified separately by instrumentation.\n",encoding="utf-8")
