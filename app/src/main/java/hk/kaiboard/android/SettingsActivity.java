@@ -53,6 +53,8 @@ public final class SettingsActivity extends Activity {
         toggle(methods, "英文拼字修正候選", "english_repair", true);
         toggle(methods, "英文詞顯示中文候選", "english_chinese", true);
         toggle(methods, "速成相鄰按鍵修正候選", "quick_repair", true);
+        toggle(methods, "倉頡相鄰按鍵修正候選", "cangjie_repair", true);
+        toggle(methods, "倉頡／速成自動修正", "chinese_autocorrect", true);
         toggle(methods, "儲存選字及英文詞作學習（預設關閉）", "learning", false);
         button(methods, "清除學習記錄", () -> new AlertDialog.Builder(this).setTitle("清除學習記錄？")
             .setMessage("將恢復預設選字次序。鍵盤設定不受影響。")
@@ -64,7 +66,7 @@ public final class SettingsActivity extends Activity {
         button(methods, "管理英文學習記錄", this::manageEnglishLearning);
         button(methods, "新增自訂詞", this::addCustomWord);
         button(methods, "管理自訂詞及置頂候選", this::managePersonal);
-        text(methods, "英文段按空白鍵確認詞語及加入空格。有歧義時點「英文」指定。長按候選可置頂或分段改選；↶ 重選最近一次已完成的選字。修正候選由你選取才採用。", 13, Color.DKGRAY, false);
+        text(methods, "英文段按空白鍵確認詞語及加入空格。有歧義時點「英文」指定。長按候選可置頂或分段改選；↶ 重選最近一次已完成的選字。自動修正會於空白鍵或下一段輸入時採用明確較合理的修正字；信心不足時保留候選。修正後按刪除可還原原碼（若已開始下一段，先刪除下一段）。", 13, Color.DKGRAY, false);
 
         LinearLayout tools = card("功能列");
         choice(tools, "自訂功能鍵", "toolbar_action", new String[]{"剪貼簿", "候選展開", "快捷文字", "Undo"},
@@ -250,5 +252,6 @@ public final class SettingsActivity extends Activity {
 
     private int dp(float v) { return Math.round(v * getResources().getDisplayMetrics().density); }
 }
+
 
 

@@ -14,7 +14,7 @@ public final class VoicePermissionActivity extends Activity {
         if (checkSelfPermission(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) { finish(); return; }
         if (state == null) new AlertDialog.Builder(this)
             .setTitle("語音輸入")
-            .setMessage("使用手機嘅語音辨識服務，可能需要網絡並將語音交畀服務供應商處理。允許咪高峰後，返回輸入框再撳咪開始。")
+            .setMessage("預設使用裝置內語音辨識，鍵盤唔會儲存錄音。只有你另行選擇「今次用系統語音」先會使用可能經網絡處理語音嘅手機預設服務。允許咪高峰後，返回輸入框再撳咪開始。")
             .setPositiveButton("繼續", (dialog, which) -> requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO}, 1))
             .setNegativeButton("取消", (dialog, which) -> finish())
             .setOnCancelListener(dialog -> finish()).show();

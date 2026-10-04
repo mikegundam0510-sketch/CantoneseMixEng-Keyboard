@@ -51,6 +51,9 @@ public final class KaiboardService extends InputMethodService {
     private SharedPreferences personal, englishLearned;
     private final Map<String, InputCandidate> candidateDetails = new HashMap<>();
     private List<InputCandidate> corrections = Collections.emptyList();
+    private InputCandidate autoUndo;
+    private int autoUndoCursor = -1;
+    private String autoUndoBefore = "", rejectedAutoCode = "";
     private boolean forceEnglish, forceChinese, reselectionLearned;
         private TextView undoKey;
     private PopupWindow selectionPopup;
@@ -62,6 +65,8 @@ public final class KaiboardService extends InputMethodService {
     private SpeechRecognizer voiceRecognizer;
     private boolean voiceListening;
     private int voiceSession;
+    private android.app.AlertDialog voiceDialog;
+    private Runnable voiceSupportTimeout;
     private SharedPreferences prefs;
     private SharedPreferences learned;
     private boolean noLearning;
@@ -303,7 +308,9 @@ public final class KaiboardService extends InputMethodService {
             strokeMode=true; render();
         }, false);
         pen.setEnabled(!secure && !numeric);
-        tool(toolbar, "mic", voiceListening ? "停止語音輸入" : "語音輸入", this::voice, voiceListening);
+        TextView mic = tool(toolbar, "mic", voiceListening ? "停止語音輸入" : "語音輸入", this::voice, voiceListening);
+        mic.setEnabled(!noLearning && !numeric);
+        mic.setAlpha(mic.isEnabled() ? 1f : .35f);
         tool(toolbar, "more", "鍵盤設定", () -> {
             finishLiteral(); startActivity(new Intent(this, SettingsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         }, false);
@@ -621,6 +628,7 @@ public final class KaiboardService extends InputMethodService {
         String value = String.valueOf(shift || caps ? Character.toUpperCase(lower) : lower);
         if (secure || ascii && !prefs.getBoolean("english_chinese", true)) insert(value);
         else {
+            maybeAutocorrect(lower);
             if (composing.length() >= 48) selectCandidate();
             composing.append(value); InputConnection ic = getCurrentInputConnection();
             if (ic != null) ic.setComposingText(composing, 1);
@@ -844,6 +852,12 @@ public final class KaiboardService extends InputMethodService {
                 for (InputCandidate candidate : repaired) if (!results.contains(candidate.text)) distinct.add(candidate);
                 request.corrections = distinct;
             }
+            if (cangjie && !chooseFirst && !request.isEnglish && !forceEnglish && dictionary != null
+                    && request.enabled("cangjie_repair", true)) {
+                List<InputCandidate> repairs = new ArrayList<>(request.corrections);
+                repairs.addAll(ChineseAutocorrect.cangjieRepairs(dictionary, input));
+                request.corrections = repairs;
+            }
             if (results.isEmpty()) request.add(results, InputCandidate.english(input, input));
         }
         if (continuous && !chooseFirst && !request.isEnglish && !forceEnglish) {
@@ -864,12 +878,12 @@ public final class KaiboardService extends InputMethodService {
             for (String value : request.values) {
                 InputCandidate detail = request.details.get(value);
                 if (detail != null && detail.source.length() == input.length() && !detail.englishOnly())
-                    baselineScore = Math.max(baselineScore, decoder.languageScore(preceding, value));
+                    baselineScore = Math.max(baselineScore, repairScore(preceding, value));
             }
             int promoted = 0;
             for (InputCandidate candidate : request.corrections) {
                 if (promoted < 2 && !results.contains(candidate.text)
-                    && decoder.languageScore(preceding, candidate.text) > baselineScore + Math.log(4)) {
+                    && repairScore(preceding, candidate.text) > baselineScore + Math.log(4)) {
                     request.add(combined, candidate); promoted++;
                 }
             }
@@ -962,8 +976,65 @@ public final class KaiboardService extends InputMethodService {
         });
     }
 
+    private double repairScore(String preceding, String text) {
+        return decoder == null ? Math.log(dictionary.frequency(text)) : decoder.languageScore(preceding, text);
+    }
+
+    private boolean maybeAutocorrect(Character next) {
+        String code = composing.toString();
+        if (!prefs.getBoolean("chinese_autocorrect", true) || secure || numeric || ascii || strokeMode
+                || forceEnglish || chooseFirst || dictionary == null || decoder == null || englishIntent()
+                || code.equals(rejectedAutoCode) || code.length() < 2 || code.length() > 16) return false;
+        if (next != null) {
+            // Preserve Quick phrase composition and legitimate longer Cangjie codes.
+            if (quick && prefs.getBoolean("continuous", true) && (code.length() < 4 || code.length()%2 != 0)) return false;
+            if (cangjie && dictionary.hasCangjiePrefix(code + next)) return false;
+            if (!quick && (!cangjie || code.length() < 3
+                    || code.length() < 5 && dictionary.hasCangjiePrefix(code))) return false;
+        }
+        if (pendingCandidates != null) { pendingCandidates.cancel(true); pendingCandidates = null; }
+        candidateGeneration.incrementAndGet();
+        CandidateRequest request = new CandidateRequest();
+        computeCandidates(request);
+        InputCandidate chosen = ChineseAutocorrect.choose(code, request.preceding,
+            request.details.values(), request.corrections, text -> repairScore(request.preceding, text));
+        if (chosen == null || !decoder.supportsCorrection(request.preceding, chosen.text)) return false;
+        commitDetail(chosen, false);
+        if (composing.length() != 0) return false;
+        InputConnection ic = getCurrentInputConnection();
+        CharSequence before = ic == null ? null : ic.getTextBeforeCursor(128, 0);
+        ExtractedText extracted = ic == null ? null : ic.getExtractedText(new ExtractedTextRequest(), 0);
+        if (before != null && before.toString().endsWith(chosen.text) && extracted != null
+                && extracted.selectionStart == extracted.selectionEnd) {
+            autoUndo = chosen; autoUndoBefore = before.toString();
+            autoUndoCursor = extracted.startOffset + extracted.selectionEnd;
+        }
+        return true;
+    }
+
+    private boolean undoAutocorrect(InputConnection ic) {
+        if (autoUndo == null || composing.length() != 0) return false;
+        CharSequence before = ic.getTextBeforeCursor(128, 0), selected = ic.getSelectedText(0);
+        ExtractedText extracted = ic.getExtractedText(new ExtractedTextRequest(), 0);
+        InputCandidate record = autoUndo; autoUndo = null;
+        if (extracted == null || extracted.selectionStart != extracted.selectionEnd
+                || extracted.startOffset + extracted.selectionEnd != autoUndoCursor
+                || before == null || !before.toString().equals(autoUndoBefore)
+                || selected != null && selected.length() > 0) return false;
+        ic.beginBatchEdit();
+        boolean removed = ic.deleteSurroundingText(record.text.length(), 0);
+        if (removed) {
+            composing.append(record.source); rejectedAutoCode = record.source;
+            ic.setComposingText(composing, 1);
+        }
+        ic.endBatchEdit();
+        if (removed) { invalidateReselection(); updateCandidates(); }
+        return removed;
+    }
+
     private void space() {
         if (emojiSearch) { emojiQuery += " "; refreshEmoji(); return; }
+        if (composing.length() > 0 && maybeAutocorrect(null)) return;
         if (composing.length() > 0 && englishIntent()) {
             String word = composing.toString();
             List<InputCandidate.Segment> parts = Arrays.asList(new InputCandidate.Segment(word,word,true),
@@ -981,6 +1052,7 @@ public final class KaiboardService extends InputMethodService {
     }
 
     private void commit(String value) {
+        autoUndo = null; rejectedAutoCode = "";
         InputCandidate detail = candidateDetails.get(value);
         if (detail == null) detail = InputCandidate.english(composing.toString(), value);
         commitDetail(detail, true);
@@ -1051,6 +1123,7 @@ public final class KaiboardService extends InputMethodService {
             InputConnection ic = getCurrentInputConnection(); if (ic != null) ic.setComposingText(composing,1);
             updateCandidates(); return;
         }
+        autoUndo = null; rejectedAutoCode = "";
         cancelVoice(); invalidateReselection(); restoredCandidate = null;
         finishLiteral(); InputConnection ic = getCurrentInputConnection(); if (ic != null) ic.commitText(text, 1);
     }
@@ -1061,6 +1134,7 @@ public final class KaiboardService extends InputMethodService {
         invalidateReselection(); restoredCandidate = null;
         if (emojiSearch) { if (!emojiQuery.isEmpty()) emojiQuery = emojiQuery.substring(0, emojiQuery.length()-1); refreshEmoji(); return; }
         InputConnection ic = getCurrentInputConnection(); if (ic == null) return;
+        if (undoAutocorrect(ic)) return;
         if (editMode && textEditor.selecting) {
             textEditor.reset();
             if (editorSelect != null) { editorSelect.setSelected(false); editorSelect.setTextColor(fg); }
@@ -1104,7 +1178,7 @@ public final class KaiboardService extends InputMethodService {
     }
 
     private void picker() { cancelVoice(); invalidateReselection(); finishLiteral(); ((InputMethodManager)getSystemService(INPUT_METHOD_SERVICE)).showInputMethodPicker(); }
-    private void resetComposition() { candidateGeneration.incrementAndGet(); forceEnglish = forceChinese = false; restoredCandidate = null; expanded = false; emojiSearch = false; emojiQuery = ""; composing.setLength(0); candidates = Collections.emptyList(); consumedCodes.clear(); candidatePage = 0; chooseFirst = false; }
+    private void resetComposition() { autoUndo = null; rejectedAutoCode = ""; candidateGeneration.incrementAndGet(); forceEnglish = forceChinese = false; restoredCandidate = null; expanded = false; emojiSearch = false; emojiQuery = ""; composing.setLength(0); candidates = Collections.emptyList(); consumedCodes.clear(); candidatePage = 0; chooseFirst = false; }
     private void sendKey(int keyCode) { InputConnection ic = getCurrentInputConnection(); if (ic != null) {
         ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, keyCode)); ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, keyCode));
     } }
@@ -1150,29 +1224,84 @@ public final class KaiboardService extends InputMethodService {
     private void cancelVoice() {
         voiceSession++;
         voiceListening = false;
+        if (voiceSupportTimeout != null) { handler.removeCallbacks(voiceSupportTimeout); voiceSupportTimeout = null; }
+        if (voiceDialog != null) { voiceDialog.dismiss(); voiceDialog = null; }
         if (voiceRecognizer != null) {
-            voiceRecognizer.cancel(); voiceRecognizer.destroy(); voiceRecognizer = null;
+            SpeechRecognizer old = voiceRecognizer; voiceRecognizer = null;
+            try { old.cancel(); } catch (RuntimeException ignored) { }
+            try { old.destroy(); } catch (RuntimeException ignored) { }
         }
     }
 
     private void voice() {
         if (voiceListening) { cancelVoice(); render(); return; }
         if (noLearning || numeric || getCurrentInputConnection() == null) return;
-        if (android.os.Build.VERSION.SDK_INT < 31 || !SpeechRecognizer.isOnDeviceRecognitionAvailable(this)) {
-            Toast.makeText(this, "手機未有裝置內語音辨識；為保障私隱，不會使用雲端辨識", Toast.LENGTH_LONG).show(); return;
-        }
         if (checkSelfPermission(Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             startActivity(new Intent(this, VoicePermissionActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
             return;
         }
+        startVoice(true);
+    }
+
+    private void voiceRecovery(String reason) {
+        if (destroyed || noLearning || numeric || !isInputViewShown() || getCurrentInputConnection() == null) return;
+        final InputConnection editor = getCurrentInputConnection();
+        final int session = voiceSession;
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this)
+            .setTitle("語音輸入")
+            .setMessage(reason + "\n\n預設只用裝置內辨識。你可選擇今次用手機預設語音服務；該服務可能透過網絡處理語音。鍵盤唔會儲存錄音，亦唔會自動轉用網上辨識。")
+            .setNegativeButton("取消", null)
+            .setNeutralButton("語音設定", (dialog, which) -> {
+                try { startActivity(new Intent("android.settings.VOICE_INPUT_SETTINGS").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)); }
+                catch (ActivityNotFoundException unavailable) {
+                    startActivity(new Intent(android.provider.Settings.ACTION_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                }
+            });
+        if (SpeechRecognizer.isRecognitionAvailable(this)) builder.setPositiveButton("今次用系統語音", (dialog, which) -> {
+            if (session == voiceSession && editor == getCurrentInputConnection() && isInputViewShown() && !noLearning)
+                startVoice(false);
+        });
+        voiceDialog = builder.create();
+        Window window = voiceDialog.getWindow();
+        if (window == null || getWindow() == null) { voiceDialog = null; return; }
+        WindowManager.LayoutParams attributes = window.getAttributes();
+        attributes.type = WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG;
+        attributes.token = getWindow().getWindow().getDecorView().getWindowToken();
+        window.setAttributes(attributes);
+        window.addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        final android.app.AlertDialog shown = voiceDialog;
+        shown.setOnDismissListener(dialog -> { if (voiceDialog == shown) voiceDialog = null; });
+        try { voiceDialog.show(); }
+        catch (WindowManager.BadTokenException exception) {
+            voiceDialog = null; Toast.makeText(this, reason, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void startVoice(boolean onDevice) {
+        if (noLearning || numeric || destroyed || !isInputViewShown() || getCurrentInputConnection() == null) return;
+        cancelVoice();
+        if (onDevice && (Build.VERSION.SDK_INT < 31 || !SpeechRecognizer.isOnDeviceRecognitionAvailable(this))) {
+            voiceRecovery("手機未有可用嘅裝置內語音辨識服務。"); return;
+        }
         finishLiteral();
         final int session = ++voiceSession;
         final InputConnection editor = getCurrentInputConnection();
-        try { voiceRecognizer = SpeechRecognizer.createOnDeviceSpeechRecognizer(this); }
+        final boolean englishVoice = ascii;
+        try { voiceRecognizer = onDevice ? SpeechRecognizer.createOnDeviceSpeechRecognizer(this) : SpeechRecognizer.createSpeechRecognizer(this); }
         catch (RuntimeException exception) {
-            Toast.makeText(this, "未能啟動裝置內語音辨識", Toast.LENGTH_LONG).show(); return;
+            cancelVoice();
+            if (onDevice) voiceRecovery("未能連接裝置內語音辨識服務。");
+            else Toast.makeText(this, "未能連接系統語音服務；請檢查語音設定", Toast.LENGTH_LONG).show();
+            return;
         }
         voiceListening = true;
+        final Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, englishVoice ? "en-HK" : "yue-HK");
+        intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
+        intent.putExtra(RecognizerIntent.EXTRA_PREFER_OFFLINE, onDevice);
+        intent.putExtra("android.speech.extra.MASK_OFFENSIVE_WORDS", false);
+        final boolean[] triedAlternate = {false};
         voiceRecognizer.setRecognitionListener(new RecognitionListener() {
             @Override public void onReadyForSpeech(Bundle params) {
                 if (session == voiceSession) Toast.makeText(KaiboardService.this, "請講嘢；再撳咪可取消", Toast.LENGTH_SHORT).show();
@@ -1185,11 +1314,17 @@ public final class KaiboardService extends InputMethodService {
             @Override public void onEvent(int type, Bundle params) {}
             @Override public void onError(int error) {
                 if (session != voiceSession) return;
+                String alternate = VoicePolicy.alternate(intent.getStringExtra(RecognizerIntent.EXTRA_LANGUAGE), englishVoice);
+                if (!triedAlternate[0] && alternate != null &&
+                    (error == SpeechRecognizer.ERROR_LANGUAGE_NOT_SUPPORTED || error == SpeechRecognizer.ERROR_LANGUAGE_UNAVAILABLE)) {
+                    triedAlternate[0] = true;
+                    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, alternate);
+                    handler.postDelayed(() -> listenVoice(session, intent, onDevice), 150);
+                    return;
+                }
                 cancelVoice(); render();
-                String message = error == SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS ? "請允許咪高峰權限" :
-                    error == SpeechRecognizer.ERROR_NO_MATCH || error == SpeechRecognizer.ERROR_SPEECH_TIMEOUT ? "未聽清楚，請再試" :
-                    "語音辨識暫時未能使用，請檢查裝置內辨識服務及離線語言支援";
-                Toast.makeText(KaiboardService.this, message, Toast.LENGTH_LONG).show();
+                if (onDevice && VoicePolicy.recovery(error)) voiceRecovery(VoicePolicy.error(error));
+                else Toast.makeText(KaiboardService.this, VoicePolicy.error(error), Toast.LENGTH_LONG).show();
             }
             @Override public void onResults(Bundle results) {
                 if (session != voiceSession) return;
@@ -1200,17 +1335,51 @@ public final class KaiboardService extends InputMethodService {
                 render();
             }
         });
-        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, ascii ? "en-HK" : "yue-HK");
-        intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
-        intent.putExtra(RecognizerIntent.EXTRA_PREFER_OFFLINE, true);
-        // Public API 33 extra; use its wire key so older Android versions can ignore it safely.
-        intent.putExtra("android.speech.extra.MASK_OFFENSIVE_WORDS", false);
-        try { voiceRecognizer.startListening(intent); render(); }
+        render();
+        if (Build.VERSION.SDK_INT >= 33) {
+            final boolean[] started = {false};
+            voiceSupportTimeout = () -> {
+                if (session == voiceSession && !started[0]) {
+                    started[0] = true; listenVoice(session, intent, onDevice);
+                }
+            };
+            handler.postDelayed(voiceSupportTimeout, 3500);
+            try {
+                voiceRecognizer.checkRecognitionSupport(intent, handler::post, new RecognitionSupportCallback() {
+                    @Override public void onSupportResult(RecognitionSupport support) {
+                        if (session != voiceSession || started[0]) return;
+                        started[0] = true; handler.removeCallbacks(voiceSupportTimeout); voiceSupportTimeout = null;
+                        List<String> languages = new ArrayList<>(support.getInstalledOnDeviceLanguages());
+                        if (!onDevice) languages.addAll(support.getOnlineLanguages());
+                        String language = VoicePolicy.language(englishVoice, languages);
+                        if (language == null && onDevice) {
+                            cancelVoice(); render();
+                            voiceRecovery("手機未有可用嘅" + (englishVoice ? "英文" : "廣東話") + "離線語音模型；請在語音設定檢查語言支援。");
+                        } else {
+                            if (language != null) intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, language);
+                            listenVoice(session, intent, onDevice);
+                        }
+                    }
+                    @Override public void onError(int error) {
+                        if (session != voiceSession || started[0]) return;
+                        started[0] = true; handler.removeCallbacks(voiceSupportTimeout); voiceSupportTimeout = null;
+                        // Some OEM services implement recognition but cannot answer support queries.
+                        listenVoice(session, intent, onDevice);
+                    }
+                });
+            } catch (RuntimeException exception) {
+                if (!started[0]) { started[0] = true; handler.removeCallbacks(voiceSupportTimeout); voiceSupportTimeout = null; listenVoice(session, intent, onDevice); }
+            }
+        } else listenVoice(session, intent, onDevice);
+    }
+
+    private void listenVoice(int session, Intent intent, boolean onDevice) {
+        if (session != voiceSession || voiceRecognizer == null || noLearning || !isInputViewShown()) return;
+        try { voiceRecognizer.startListening(intent); }
         catch (RuntimeException exception) {
             cancelVoice(); render();
-            Toast.makeText(this, "未能啟動語音辨識服務", Toast.LENGTH_LONG).show();
+            if (onDevice) voiceRecovery("未能啟動裝置內語音辨識服務。");
+            else Toast.makeText(this, "未能啟動系統語音服務；請檢查咪高峰權限及語音設定", Toast.LENGTH_LONG).show();
         }
     }
 

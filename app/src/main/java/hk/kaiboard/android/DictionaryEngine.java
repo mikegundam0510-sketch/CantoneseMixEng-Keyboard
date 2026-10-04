@@ -6,6 +6,7 @@ import java.util.*;
 /** Immutable after loading; independent of Android so the actual dictionary is testable. */
 public final class DictionaryEngine {
     private final Map<String, List<String>> cangjie = new HashMap<>();
+    private final Set<String> cangjiePrefixes = new HashSet<>();
     private final Map<String, List<String>> quick = new HashMap<>();
     private final List<String> english = new ArrayList<>();
     private final Map<String, Set<String>> reverseQuick = new HashMap<>();
@@ -37,6 +38,7 @@ public final class DictionaryEngine {
                 if (fields.length < 2 || !fields[1].matches("[a-z]{1,5}")) continue;
                 String word = fields[0], code = fields[1];
                 add(cangjie, code, word);
+                for (int size=1; size<=code.length(); size++) cangjiePrefixes.add(code.substring(0,size));
                 add(quick, quickCode(code), word);
                 reverseQuick.computeIfAbsent(word, key -> new HashSet<>()).add(quickCode(code));
                 entries++;
@@ -72,6 +74,8 @@ public final class DictionaryEngine {
         if (code.isEmpty()) return "";
         return code.length() == 1 ? code : "" + code.charAt(0) + code.charAt(code.length() - 1);
     }
+
+    public boolean hasCangjiePrefix(String code) { return cangjiePrefixes.contains(code.toLowerCase(Locale.ROOT)); }
 
     public int entryCount() { return entries; }
 

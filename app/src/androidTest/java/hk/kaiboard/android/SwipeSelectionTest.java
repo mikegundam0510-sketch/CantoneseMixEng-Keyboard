@@ -65,10 +65,12 @@ public class SwipeSelectionTest {
   return null;
  }
  private Rect key(String desc)throws Exception{
+  SystemClock.sleep(500);
+  Rect previous=null;int stable=0;
   for(int tries=0;tries<40;tries++){
    for(AccessibilityWindowInfo window:instrumentation.getUiAutomation().getWindows()){
     AccessibilityNodeInfo node=find(window.getRoot(),desc);
-    if(node!=null){Rect bounds=new Rect();node.getBoundsInScreen(bounds);if(bounds.width()>0&&bounds.height()>0)return bounds;}
+    if(node!=null){Rect bounds=new Rect();node.getBoundsInScreen(bounds);if(bounds.width()>0&&bounds.height()>0){stable=bounds.equals(previous)?stable+1:0;previous=bounds;if(stable>=2)return bounds;}}
    }
    Thread.sleep(250);
   }
@@ -81,6 +83,10 @@ public class SwipeSelectionTest {
  }
  private void drag(Rect start,int dx){
   long down=SystemClock.uptimeMillis();float x=start.exactCenterX(),y=start.exactCenterY();
+  if(dx==0){
+   MotionEvent event=MotionEvent.obtain(down,down,MotionEvent.ACTION_DOWN,x,y,0);event.setSource(InputDevice.SOURCE_TOUCHSCREEN);assertTrue(instrumentation.getUiAutomation().injectInputEvent(event,true));event.recycle();SystemClock.sleep(50);
+   event=MotionEvent.obtain(down,SystemClock.uptimeMillis(),MotionEvent.ACTION_UP,x,y,0);event.setSource(InputDevice.SOURCE_TOUCHSCREEN);assertTrue(instrumentation.getUiAutomation().injectInputEvent(event,true));event.recycle();instrumentation.waitForIdleSync();SystemClock.sleep(300);return;
+  }
   for(int i=0;i<=12;i++){
    int action=i==0?MotionEvent.ACTION_DOWN:i==12?MotionEvent.ACTION_UP:MotionEvent.ACTION_MOVE;
    MotionEvent event=MotionEvent.obtain(down,SystemClock.uptimeMillis(),action,x+dx*i/12f,y,0);
@@ -89,11 +95,27 @@ public class SwipeSelectionTest {
   }
   instrumentation.waitForIdleSync();SystemClock.sleep(200);
  }
+
+ private java.io.Reader asset(String name)throws Exception{return new java.io.InputStreamReader(instrumentation.getTargetContext().getAssets().open(name),java.nio.charset.StandardCharsets.UTF_8);}
+ private String[] autoFixture()throws Exception{
+  DictionaryEngine d=new DictionaryEngine(asset("cangjie5.base.dict.yaml"),asset("english.txt"),asset("character_frequencies.tsv"));
+  QuickDecoder decoder=new QuickDecoder(d,asset("quick_phrases.tsv"),asset("hk_phrases.tsv"),asset("cantonese_phrases.tsv"),OfflineLanguageModel.load(instrumentation.getTargetContext().getAssets().open("language_model.b64")));
+  QuickTypos repairs=new QuickTypos(d,decoder);EnglishEngine english=new EnglishEngine(asset("english.txt"));
+  for(String context:new String[]{"我想見","我想食","我想飲","研究","唔","香","開","多"})
+   for(String source:new String[]{"oa","oz","oq","iz","zz","pp","qx","wz","xx","za","xs","xz","qa","qs","qz","gq","fq","xq","zq","bz","od","vr","mm","qo","ha","rr","ab","on","of","my"}){
+    if(english.likelyEnglish(source,java.util.Collections.emptyList()))continue;
+    java.util.List<InputCandidate> baseline=new java.util.ArrayList<>();for(String word:d.quickCandidates(source))baseline.add(InputCandidate.chinese(d,source,word));
+    InputCandidate winner=ChineseAutocorrect.choose(source,context,baseline,repairs.suggest(source,baseline.subList(0,Math.min(3,baseline.size())),context),text->decoder.languageScore(context,text));
+    if(winner!=null&&decoder.supportsCorrection(context,winner.text))return new String[]{context,source,winner.text};
+   }
+  throw new AssertionError("No confidence-qualified autocorrect fixture");
+ }
  @Test public void actualImeGesturesOnCoverAndUnfolded()throws Exception{
   shell("settings put secure show_ime_with_hard_keyboard 1");
   AccessibilityServiceInfo serviceInfo=instrumentation.getUiAutomation().getServiceInfo();
   serviceInfo.flags|=AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS;
   instrumentation.getUiAutomation().setServiceInfo(serviceInfo);
+  String[] repair=autoFixture();
   for(String size:new String[]{"720x1600","1440x1800"}){
    main(()->activity.finish());
    shell("wm size "+size);shell("wm density 320");SystemClock.sleep(700);
@@ -116,13 +138,23 @@ public class SwipeSelectionTest {
    main(()->{edit.setText("");edit.setSelection(0);((InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE)).restartInput(edit);});
    SystemClock.sleep(400);
    for(String desc:new String[]{"C，金","A，日","N，弓"})drag(key(desc),0);
-   Rect translated=key("英轉中候選：可以");screenshot("can-"+size);drag(translated,0);
+   screenshot("can-"+size);Rect translated=key("英轉中候選：可以");drag(translated,0);
    main(()->assertEquals("可以",edit.getText().toString()));
    main(()->{edit.setText("");edit.setSelection(0);((InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE)).restartInput(edit);});
    SystemClock.sleep(300);
    for(String desc:new String[]{"O，人","F，火","C，金","A，日","N，弓"})drag(key(desc),0);
    Rect mixed=key("英轉中候選：你可以");drag(mixed,0);
    main(()->assertEquals("你可以",edit.getText().toString()));
+   main(()->{edit.setText(repair[0]);edit.setSelection(edit.length());((InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE)).restartInput(edit);});
+   SystemClock.sleep(500);
+   String radicals="日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜重";
+   for(char c:repair[1].toCharArray())drag(key(Character.toUpperCase(c)+"，"+radicals.charAt(c-'a')),0);
+   drag(key("空白鍵，左右滑動移動游標"),0);
+   main(()->assertEquals(repair[0]+repair[2],edit.getText().toString()));
+   screenshot("autocorrect-"+size);
+   drag(key("刪除，長按連續刪除"),0);
+   main(()->assertEquals(repair[0]+repair[1],edit.getText().toString()));
+
    main(()->{edit.setText("");edit.setSelection(0);((InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE)).restartInput(edit);});
    SystemClock.sleep(300);drag(key("切換中英文，長按選擇系統鍵盤"),0);
    for(String desc:new String[]{"英文字母 C","英文字母 A","英文字母 N"})drag(key(desc),0);

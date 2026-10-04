@@ -12,6 +12,7 @@ public final class QuickDecoder {
     private final Map<String, Double> pairCounts = new HashMap<>();
     private final Map<String, Double> outgoing = new HashMap<>();
     private final Map<String, List<Token>> vocabulary = new HashMap<>();
+    private final Set<String> knownPhrases = new HashSet<>();
     private final Set<String> hkUsage = new HashSet<>();
     private static final class Token {
         final String text; final double score;
@@ -49,6 +50,15 @@ public final class QuickDecoder {
         for (List<Token> tokens : vocabulary.values()) tokens.sort(Comparator.comparingDouble((Token t) -> t.score).reversed());
     }
 
+    public boolean supportsCorrection(String context, String text) {
+        int[] before = context.codePoints().toArray(), after = text.codePoints().toArray();
+        // Require a real vocabulary phrase crossing the editor context / corrected text boundary.
+        for (int left=1; left<=Math.min(3,before.length); left++)
+            for (int right=1; right<=Math.min(3,after.length); right++)
+                if (knownPhrases.contains(new String(before,before.length-left,left) + new String(after,0,right))) return true;
+        return false;
+    }
+
     private void readVocabulary(Reader input, Map<String, Double> wordCounts, boolean localUsage) throws IOException {
         try (BufferedReader reader = new BufferedReader(input)) {
             String line;
@@ -57,6 +67,7 @@ public final class QuickDecoder {
                 String[] f = line.split("\\t");
                 if (f.length != 3) continue;
                 if (!hanText(f[1])) continue;
+                knownPhrases.add(f[1]);
                 int characters = f[1].codePointCount(0, f[1].length());
                 if (localUsage && characters >= 2 && characters <= 4) hkUsage.add(f[1]);
                 double count = Double.parseDouble(f[2]);

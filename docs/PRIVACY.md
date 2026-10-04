@@ -22,10 +22,12 @@ Ordinary-field context is used temporarily for offline suggestions, not written 
 Clipboard contents are accessed only for an explicit paste action, with no clipboard
 listener or history store.
 
-Voice input uses Android's on-device recognition API (API 31+), only after a user tap
-and microphone permission. There is no fallback to the network-capable default
-recognizer. Unsupported devices/languages may be unable to use voice input. This app
-does not save audio. The recognition service and operating system remain separate
+Voice input defaults to Android's on-device recognition API (API 31+), only after a
+user tap and microphone permission. If a service or language model is unavailable,
+the user may explicitly choose the network-capable system recognizer for that attempt
+in a keyboard dialog. The dialog discloses that the provider may process audio online.
+There is no automatic network fallback or saved consent; every new microphone tap
+starts with on-device recognition. The app does not save audio. The recognition service and operating system remain separate
 components, outside this source review. Galaxy AI shortcuts only explain how to use
 Samsung's tools; choosing those tools is subject to Samsung's own data handling.
 
