@@ -437,36 +437,92 @@ public final class KaiboardService extends InputMethodService {
         }
     }
 
+    private KeyboardKey textPanelButton(String icon, String description, Runnable action) {
+        KeyboardKey button = new KeyboardKey(this);
+        button.icon(icon); button.setTextColor(fg); button.setGravity(Gravity.CENTER);
+        button.setContentDescription(description); button.setTooltipText(description);
+        button.setFocusable(true);
+        button.setBackground(new android.graphics.drawable.InsetDrawable(textPanelBackground(functionColor, 24), dp(4)));
+        button.setOnClickListener(v -> {
+            if (prefs.getBoolean("haptic", true)) v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+            action.run();
+        });
+        return button;
+    }
+
+    private android.graphics.drawable.Drawable textPanelBackground(int color, int radius) {
+        GradientDrawable shape = new GradientDrawable(); shape.setColor(color); shape.setCornerRadius(dp(radius));
+        return new android.graphics.drawable.RippleDrawable(android.content.res.ColorStateList.valueOf(dark ? 0x40FFFFFF : 0x22000000), shape, null);
+    }
+
     private void renderTextPanel() {
-        LinearLayout header = row(panel);
-        key(header, "‹", .6f, true, () -> { clipboardMode = quickTextMode = false; render(); }, 50).setContentDescription("返回鍵盤");
+        LinearLayout header = row(panel); header.setGravity(Gravity.CENTER_VERTICAL);
+        header.setPadding(dp(4), 0, dp(4), 0);
+        header.addView(textPanelButton("back", "返回鍵盤", () -> { clipboardMode = quickTextMode = false; render(); }),
+                new LinearLayout.LayoutParams(dp(48), dp(48)));
         TextView title = new TextView(this); title.setText(quickTextMode ? "快捷文字" : "剪貼簿");
         title.setTextColor(fg); title.setTextSize(20); title.setGravity(Gravity.CENTER_VERTICAL);
-        header.addView(title, new LinearLayout.LayoutParams(0, dp(50), 1.5f));
+        title.setPadding(dp(8), 0, dp(8), 0);
+        header.addView(title, new LinearLayout.LayoutParams(0, dp(58), 1));
         if (quickTextMode) {
-            key(header, "管理", .8f, true, () -> startActivity(new Intent(this, SettingsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)), 50).setContentDescription("管理快捷文字");
+            header.addView(textPanelButton("pen", "管理快捷文字", () -> startActivity(new Intent(this, SettingsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))),
+                    new LinearLayout.LayoutParams(dp(48), dp(48)));
         } else {
-            key(header, "更新", .8f, true, () -> { readClipboardOnDemand(); render(); }, 50).setContentDescription("更新剪貼簿");
-            key(header, "清空", .8f, true, () -> { sessionClipboard.clear(); render(); }, 50).setContentDescription("清空剪貼簿暫存");
+            header.addView(textPanelButton("refresh", "更新剪貼簿", () -> { readClipboardOnDemand(); render(); }),
+                    new LinearLayout.LayoutParams(dp(48), dp(48)));
+            header.addView(textPanelButton("trash", "清空剪貼簿暫存", () -> { sessionClipboard.clear(); render(); }),
+                    new LinearLayout.LayoutParams(dp(48), dp(48)));
         }
-        ScrollView scroll = new ScrollView(this);
+        ScrollView scroll = new ScrollView(this); scroll.setFillViewport(true);
         int height = 4 * (keyHeight() + 8) + (prefs.getBoolean("numbers", true) ? 45 : 0);
         panel.addView(scroll, new LinearLayout.LayoutParams(-1, dp(height)));
-        LinearLayout list = new LinearLayout(this); list.setOrientation(LinearLayout.VERTICAL); scroll.addView(list);
+        LinearLayout list = new LinearLayout(this); list.setOrientation(LinearLayout.VERTICAL);
+        list.setPadding(dp(6), dp(6), dp(6), dp(10)); scroll.addView(list);
         List<String> values = quickTextMode ? QuickTexts.read(prefs) : sessionClipboard.items();
+        TextView section = new TextView(this); section.setText(quickTextMode ? "常用文字" : "最近");
+        section.setTextColor(muted); section.setTextSize(13); section.setPadding(dp(6), 0, dp(6), dp(8)); list.addView(section);
         if (values.isEmpty()) {
-            TextView empty = new TextView(this); empty.setText(quickTextMode ? "未有快捷文字，請到設定新增。" : "未有可用文字。複製後按「更新」。");
-            empty.setTextColor(muted); empty.setTextSize(16); empty.setPadding(dp(14),dp(20),dp(14),dp(20)); list.addView(empty);
+            LinearLayout empty = new LinearLayout(this); empty.setOrientation(LinearLayout.VERTICAL);
+            empty.setGravity(Gravity.CENTER); empty.setPadding(dp(20), dp(24), dp(20), dp(24));
+            empty.setBackground(textPanelBackground(keyColor, 16));
+            KeyboardKey illustration = new KeyboardKey(this); illustration.icon("clipboard"); illustration.setTextColor(muted);
+            illustration.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
+            empty.addView(illustration, new LinearLayout.LayoutParams(dp(40), dp(40)));
+            TextView hint = new TextView(this); hint.setText(quickTextMode ? "未有快捷文字，請到設定新增。" : "未有可用文字。複製後輕按右上角更新。");
+            hint.setTextColor(muted); hint.setTextSize(15); hint.setGravity(Gravity.CENTER); hint.setPadding(0,dp(8),0,0);
+            empty.addView(hint); list.addView(empty);
         }
-        for (String value : values) {
-            LinearLayout line = row(list);
-            TextView item = new TextView(this); item.setText(value); item.setTextSize(17); item.setTextColor(fg);
-            item.setMaxLines(3); item.setEllipsize(TextUtils.TruncateAt.END); item.setMinHeight(dp(56));
-            item.setGravity(Gravity.CENTER_VERTICAL); item.setPadding(dp(12),dp(10),dp(12),dp(10)); item.setBackground(background(keyColor));
-            item.setContentDescription((quickTextMode ? "貼上快捷文字：" : "貼上剪貼簿：") + value);
-            item.setOnClickListener(v -> { if (!secure) insert(value); });
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0,-2,1); lp.setMargins(dp(3),dp(3),dp(3),dp(3)); line.addView(item,lp);
-            if (!quickTextMode) key(line,"×",.18f,true,() -> { sessionClipboard.remove(value); render(); },50).setContentDescription("刪除剪貼簿項目："+value);
+        int columns = getResources().getConfiguration().screenWidthDp >= 600 ? 3 :
+                getResources().getConfiguration().screenWidthDp >= 340 ? 2 : 1;
+        LinearLayout line = null;
+        for (int i = 0; i < values.size(); i++) {
+            String value = values.get(i);
+            if (i % columns == 0) { line = row(list); line.setGravity(Gravity.TOP); }
+            LinearLayout card = new LinearLayout(this); card.setOrientation(LinearLayout.VERTICAL);
+            card.setPadding(dp(12),dp(4),dp(8),dp(12)); card.setBackground(textPanelBackground(keyColor, 14));
+            card.setFocusable(true); card.setContentDescription((quickTextMode ? "貼上快捷文字：" : "貼上剪貼簿：") + value);
+            card.setOnClickListener(v -> { if (!secure) insert(value); });
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0,-2,1); lp.setMargins(dp(4),dp(4),dp(4),dp(4)); line.addView(card,lp);
+            LinearLayout cardHeader = row(card); cardHeader.setGravity(Gravity.CENTER_VERTICAL);
+            KeyboardKey type = new KeyboardKey(this); type.icon(value.trim().matches("(?i)^https?://.*") ? "link" : "clipboard");
+            type.setTextColor(muted); type.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
+            cardHeader.addView(type, new LinearLayout.LayoutParams(dp(24),dp(44)));
+            View spacer = new View(this); cardHeader.addView(spacer, new LinearLayout.LayoutParams(0, 1, 1));
+            if (!quickTextMode) {
+                KeyboardKey remove = textPanelButton("close", "刪除剪貼簿項目：" + value, () -> { sessionClipboard.remove(value); render(); });
+                remove.setBackground(new android.graphics.drawable.InsetDrawable(textPanelBackground(keyColor, 22), dp(4)));
+                cardHeader.addView(remove, new LinearLayout.LayoutParams(dp(44), dp(44)));
+            }
+            TextView item = new TextView(this); item.setText(value); item.setTextSize(16); item.setTextColor(fg);
+            item.setMaxLines(3); item.setEllipsize(TextUtils.TruncateAt.END); item.setMinHeight(dp(48));
+            item.setPadding(0, dp(2), dp(4), 0); item.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
+            card.addView(item, new LinearLayout.LayoutParams(-1,-2));
+        }
+        if (line != null && values.size() % columns != 0) {
+            for (int i = values.size() % columns; i < columns; i++) {
+                View spacer = new View(this); LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0,1,1);
+                lp.setMargins(dp(4),dp(4),dp(4),dp(4)); line.addView(spacer,lp);
+            }
         }
     }
 
@@ -1484,3 +1540,4 @@ public final class KaiboardService extends InputMethodService {
     }
     private int dp(float value) { return Math.round(value * getResources().getDisplayMetrics().density); }
 }
+

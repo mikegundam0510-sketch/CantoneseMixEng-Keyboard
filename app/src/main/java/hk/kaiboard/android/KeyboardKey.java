@@ -32,6 +32,19 @@ final class KeyboardKey extends TextView {
         paint.setColor(getCurrentTextColor());
         Path path = new Path();
         switch (icon) {
+            case "back":
+                canvas.drawLine(21,12,3,12,paint); path.moveTo(10,5); path.lineTo(3,12); path.lineTo(10,19); canvas.drawPath(path,paint); break;
+            case "refresh":
+                canvas.drawArc(4,4,20,20,45,285,false,paint); path.moveTo(20,3); path.lineTo(20,9); path.lineTo(14,9); canvas.drawPath(path,paint); break;
+            case "trash":
+                canvas.drawLine(4,6,20,6,paint); canvas.drawRoundRect(8,2,16,6,1,1,paint);
+                path.moveTo(6,6); path.lineTo(7,21); path.lineTo(17,21); path.lineTo(18,6); canvas.drawPath(path,paint);
+                canvas.drawLine(10,10,10,17,paint); canvas.drawLine(14,10,14,17,paint); break;
+            case "close":
+                canvas.drawLine(6,6,18,18,paint); canvas.drawLine(18,6,6,18,paint); break;
+            case "link":
+                canvas.drawRoundRect(2,7,15,17,5,5,paint); canvas.drawRoundRect(9,7,22,17,5,5,paint);
+                canvas.drawLine(8,12,16,12,paint); break;
             case "text_edit":
                 canvas.drawLine(12,3,12,21,paint); canvas.drawLine(9,3,15,3,paint); canvas.drawLine(9,21,15,21,paint);
                 paint.setStyle(Paint.Style.FILL);
@@ -106,4 +119,5 @@ final class KeyboardKey extends TextView {
     }
     private float dp(float value) { return value * getResources().getDisplayMetrics().density; }
 }
+
 
