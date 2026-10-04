@@ -37,6 +37,15 @@ public class DictionaryEngineTest {
         assertFalse(engine.lookup("of", false, true, false).contains("你"));
         assertEquals(Collections.singletonList("of"), engine.lookup("of", false, false, false));
     }
+    @Test public void fullCangjieWorksWithoutQuickIncludingReportedCharacter() {
+        String[][] cases = {{"onf", "你"}, {"vnd", "好"}, {"hda", "香"},
+            {"etcu", "港"}, {"srlb", "屌"}, {"SRLB", "屌"}};
+        for (String[] item : cases)
+            assertTrue(item[0], engine.lookup(item[0], false, true, false).contains(item[1]));
+        assertFalse(engine.lookup("srb", false, true, false).contains("屌"));
+        assertFalse(engine.lookup("srlb", false, false, true).contains("屌"));
+    }
+
     @Test public void literalEnglishAndCapitalizationArePreserved() {
         assertTrue(engine.lookup("He", true, true, true).contains("Hello"));
         assertTrue(engine.lookup("HEL", true, true, true).contains("HELLO"));
@@ -74,4 +83,5 @@ public class DictionaryEngineTest {
         assertNotEquals(LearningRanker.key("of", true, false, "你"), LearningRanker.key("of", true, true, "你"));
     }
 }
+
 
