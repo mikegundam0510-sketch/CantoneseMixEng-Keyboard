@@ -28,7 +28,12 @@ def shot(name):
 
 adb("shell","settings","put","secure","show_ime_with_hard_keyboard","1")
 adb("install","-r","apk/app-debug.apk")
-ime=next(line.strip() for line in adb("shell","ime","list","-a","-s").splitlines() if "hk.kaiboard.android" in line)
+ime=None
+for _ in range(30):
+    ime=next((line.strip() for line in adb("shell","ime","list","-a","-s").splitlines() if "hk.kaiboard.android" in line),None)
+    if ime: break
+    time.sleep(1)
+assert ime,"Installed input method did not register"
 adb("shell","ime","enable",ime);adb("shell","ime","set",ime)
 def reset_field(value="x"):
     adb("shell","am","start","--activity-single-top","-n","hk.kaiboard.android/.KeyboardPreviewActivity","--es","test_text",value,"--es","test_input_type","normal")
