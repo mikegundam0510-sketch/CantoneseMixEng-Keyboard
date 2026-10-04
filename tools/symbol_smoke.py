@@ -40,6 +40,17 @@ def reset_field(value="x"):
     time.sleep(1)
     adb("shell","am","start","--activity-single-top","-n","hk.kaiboard.android/.KeyboardPreviewActivity","--es","test_text",value,"--es","test_input_type","normal")
     time.sleep(2)
+    for _ in range(20):
+        nodes=tree()
+        if any(n.get("text")=="123" and n.get("clickable")=="true" for n in nodes.iter("node")): return
+        prompt=next((n for n in nodes.iter("node") if n.get("text") in ("GOT IT","Got it")),None)
+        editor=next((n for n in nodes.iter("node") if n.get("class")=="android.widget.EditText"),None)
+        node=prompt if prompt is not None else editor
+        if node is not None: adb("shell","input","tap",*center(node))
+        time.sleep(1)
+    shot("missing-keyboard")
+    (out/"missing-keyboard.xml").write_text(ET.tostring(tree(),encoding="unicode"))
+    raise AssertionError("Keyboard did not become ready")
 def editor_text():
     return next(n.get("text","") for n in tree().iter("node") if n.get("class")=="android.widget.EditText")
 for name,size in (("cover","720x1600"),("unfolded","1440x1800")):
