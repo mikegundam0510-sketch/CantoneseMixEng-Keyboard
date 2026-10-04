@@ -1,12 +1,24 @@
 """Clipboard/custom toolbar acceptance on a disposable emulator; synthetic text only."""
-import pathlib, subprocess, time, shlex, re, xml.etree.ElementTree as ET
+import pathlib, subprocess, time, shlex, re, atexit, xml.etree.ElementTree as ET
 out=pathlib.Path('clipboard-evidence');out.mkdir(exist_ok=True)
 def adb(*a):
     if a and a[0]=='shell': a=('shell',shlex.join(a[1:]))
     return subprocess.check_output(['adb',*a],text=True,timeout=30)
 def tree():
-    adb('shell','uiautomator','dump','/sdcard/clipboard.xml')
-    return ET.fromstring(adb('shell','cat','/sdcard/clipboard.xml'))
+    for attempt in range(8):
+        try:
+            adb('shell','rm','-f','/sdcard/clipboard.xml')
+            adb('shell','uiautomator','dump','/sdcard/clipboard.xml')
+            return ET.fromstring(adb('shell','cat','/sdcard/clipboard.xml'))
+        except (subprocess.CalledProcessError, ET.ParseError):
+            if attempt==7:raise
+            time.sleep(.7)
+def diagnostics():
+    try:
+        (out/'logcat.txt').write_text(adb('logcat','-d','-t','1500'))
+        with (out/'last-screen.png').open('wb') as f:subprocess.run(['adb','exec-out','screencap','-p'],stdout=f,check=True)
+    except Exception:pass
+atexit.register(diagnostics)
 def find(desc): return next((n for n in tree().iter('node') if n.get('content-desc')==desc),None)
 def tap(desc):
     n=find(desc);assert n is not None,desc
@@ -26,7 +38,12 @@ def shot(name):
 adb('install','-r','apk/app-debug.apk')
 adb('shell','settings','put','secure','show_ime_with_hard_keyboard','1')
 ime='hk.kaiboard.android/.KaiboardService';adb('shell','ime','enable',ime);adb('shell','ime','set',ime)
-reset();copy('alpha')
+reset()
+for _ in range(20):
+    if find('剪貼簿') is not None:break
+    time.sleep(.5)
+assert find('剪貼簿') is not None,'Keyboard did not become ready'
+copy('alpha')
 assert find('選擇鍵盤') is None,'Old toolbar keyboard switch remains'
 tap('剪貼簿');tap('貼上剪貼簿：alpha');assert editor()=='alpha'
 copy('beta');tap('更新剪貼簿')
