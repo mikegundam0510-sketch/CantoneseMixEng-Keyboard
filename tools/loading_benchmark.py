@@ -16,7 +16,8 @@ with tempfile.TemporaryDirectory() as tmp:
         subprocess.run(['javac','-encoding','UTF-8','-d',str(directory),*sources,str(root/'tools/LoadingBenchmark.java')],check=True)
         runs=[json.loads(subprocess.check_output(['java','-Xms256m','-Xmx512m','-cp',str(directory),'LoadingBenchmark'],cwd=root,text=True)) for _ in range(3)]
         report[revision]={'runs':runs, 'median':{k:statistics.median(r[k] for r in runs) for k in ('basic_ms','full_ms','heap_bytes','english_alloc_bytes')}}
-    assert [r['candidates'] for r in report['before']['runs']]==[r['candidates'] for r in report['after']['runs']], 'Candidate ranking changed'
+    # Ranking deliberately changes with the HK usage/symbol fix. Exact-code and
+    # first-choice behavior are validated by the decoder regression tests.
 out=root/'ui-evidence';out.mkdir(exist_ok=True)
 (out/'loading-benchmark.json').write_text(json.dumps(report,ensure_ascii=False,indent=2))
 print(json.dumps({k:v['median'] for k,v in report.items()},ensure_ascii=False),flush=True)

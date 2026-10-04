@@ -12,6 +12,7 @@ public final class QuickDecoder {
     private final Map<String, Double> pairCounts = new HashMap<>();
     private final Map<String, Double> outgoing = new HashMap<>();
     private final Map<String, List<Token>> vocabulary = new HashMap<>();
+    private final Set<String> hkUsage = new HashSet<>();
     private static final class Token {
         final String text; final double score;
         Token(String text, double score) { this.text = text; this.score = score; }
@@ -31,9 +32,9 @@ public final class QuickDecoder {
         this.dictionary = dictionary; this.model = model;
         // The trained model replaces fallback pair statistics entirely.
         Map<String, Double> wordCounts = model == null ? new HashMap<>() : null;
-        readVocabulary(input, wordCounts);
-        if (hkInput != null) readVocabulary(hkInput, wordCounts);
-        if (cantoneseInput != null) readVocabulary(cantoneseInput, wordCounts);
+        readVocabulary(input, wordCounts, false);
+        if (hkInput != null) readVocabulary(hkInput, wordCounts, true);
+        if (cantoneseInput != null) readVocabulary(cantoneseInput, wordCounts, false);
         if (wordCounts != null) for (Map.Entry<String, Double> entry : wordCounts.entrySet()) {
             String previous = null;
             for (int cp : entry.getKey().codePoints().toArray()) {
@@ -48,7 +49,7 @@ public final class QuickDecoder {
         for (List<Token> tokens : vocabulary.values()) tokens.sort(Comparator.comparingDouble((Token t) -> t.score).reversed());
     }
 
-    private void readVocabulary(Reader input, Map<String, Double> wordCounts) throws IOException {
+    private void readVocabulary(Reader input, Map<String, Double> wordCounts, boolean localUsage) throws IOException {
         try (BufferedReader reader = new BufferedReader(input)) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -56,6 +57,8 @@ public final class QuickDecoder {
                 String[] f = line.split("\\t");
                 if (f.length != 3) continue;
                 if (!hanText(f[1])) continue;
+                int characters = f[1].codePointCount(0, f[1].length());
+                if (localUsage && characters >= 2 && characters <= 4) hkUsage.add(f[1]);
                 double count = Double.parseDouble(f[2]);
                 if (wordCounts != null) wordCounts.merge(f[1], count, Math::max);
                 List<Token> tokens = vocabulary.computeIfAbsent(f[0], k -> new ArrayList<>());
@@ -139,7 +142,7 @@ public final class QuickDecoder {
     }
 
     public double languageScore(String prefix, String text) {
-        if (model != null) return model.score(prefix, text);
+        if (model != null) return model.score(prefix, text) + hongKongBonus(prefix, text);
         String previous = prefix.isEmpty() ? null : new String(Character.toChars(prefix.codePointBefore(prefix.length())));
         double score = 0;
         for (int cp : text.codePoints().toArray()) {
@@ -157,6 +160,26 @@ public final class QuickDecoder {
         return score;
     }
 
+    private double hongKongBonus(String prefix, String text) {
+        if (hkUsage.isEmpty()) return 0;
+        String history = OfflineLanguageModel.contextTail(prefix);
+        double bonus = 0;
+        for (int cp : text.codePoints().toArray()) {
+            if (Character.UnicodeScript.of(cp) != Character.UnicodeScript.HAN) { history = ""; continue; }
+            history += new String(Character.toChars(cp));
+            int count = history.codePointCount(0, history.length());
+            if (count > 4) { history = history.substring(history.offsetByCodePoints(0, count - 4)); count = 4; }
+            double matched = 0;
+            for (int length = 2; length <= count; length++) {
+                String suffix = history.substring(history.offsetByCodePoints(0, count - length));
+                if (hkUsage.contains(suffix)) matched += .65 * (length - 1);
+            }
+            // A bounded local preference, so Chinese codes and statistical context still determine choices.
+            bonus += Math.min(2, matched);
+        }
+        return bonus;
+    }
+
     // The base Cangjie dictionary also contains symbols and phonetic letters.
     // Keep them available for direct lookup, but never splice them into Chinese sentences.
     static boolean hanText(String text) {
@@ -171,4 +194,3 @@ public final class QuickDecoder {
         return result;
     }
 }
-

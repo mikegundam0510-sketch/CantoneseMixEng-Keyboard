@@ -25,7 +25,13 @@ public final class LoadingBenchmark {
         long allocated = bean.getThreadAllocatedBytes(thread)-before;
         String[] codes = {"ofvd", "ofonaovrmrq", "hisuvmjuisgehr", "abcdef"};
         List<String> choices = new ArrayList<>();
-        for (String code : codes) choices.add(decoder.decode(code, (c,w)->0).toString());
+        for (String code : codes) {
+            List<String> values = decoder.decode(code, (c,w)->0);
+            if (values.isEmpty()) throw new AssertionError("Missing candidates: " + code);
+            for (String value : values)
+                if (dictionary.matchQuickCodes(code, value).isEmpty()) throw new AssertionError("Unreachable candidate: " + value);
+            choices.add(values.toString());
+        }
         System.out.printf(Locale.ROOT,"{\"basic_ms\":%.1f,\"full_ms\":%.1f,\"heap_bytes\":%d,\"english_alloc_bytes\":%d,\"candidates\":\"%s\"}%n",basicMs,fullMs,heap,allocated,String.join(" / ",choices));
     }
 }

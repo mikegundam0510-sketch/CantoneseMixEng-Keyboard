@@ -54,6 +54,28 @@ public class OfflineLanguageModelTest {
         // Explicit symbol lookup remains available to the user.
         assertTrue(dictionary.quickCandidates("yq").contains("♂"));
     }
+    @Test public void hongKongFragmentsComposeNaturalUnlistedSentences() {
+        String[][] cases = {
+            {"hidpmtjnmmy", "我想研究一下"},
+            {"ofgbhibhmy", "你幫我睇下"},
+            {"hispayesfmm", "我聽日返緊工"},
+            {"rryogbhiskye", "唔該幫我改返"},
+            {"hinjhumbymmy", "等陣先再試下"},
+            {"hidporkbkbtcod", "我想知有冇其他"},
+            {"hiypogyqrihu", "我諗住遲啲先"},
+            {"hirdspaatoa", "我哋聽日開會"}
+        };
+        for (String[] example : cases) {
+            assertEquals(example[0], example[1], decoder.decode(example[0], (c,w)->0).get(0));
+            assertFalse(dictionary.matchQuickCodes(example[0], example[1]).isEmpty());
+        }
+    }
+    @Test public void hongKongUsageBonusCrossesTokenBoundariesAndStopsAtPunctuation() {
+        assertEquals(decoder.languageScore("", "幫我睇下"),
+            decoder.languageScore("", "幫我") + decoder.languageScore("幫我", "睇下"), 1e-9);
+        assertEquals(decoder.languageScore("", "睇下"), decoder.languageScore("幫我，", "睇下"), 1e-9);
+        assertTrue(decoder.languageScore("幫我", "睇下") > model.score("幫我", "睇下"));
+    }
     @Test public void productionDecoderReturnsExactReachableDistinctCandidates() {
         for (String code : Arrays.asList("ofvd", "ofvdrf", "haeu", "rryo", "ofonaovrmrq", "hisuvmjuisgehr", "abcdef")) {
             List<String> values=decoder.decode(code,(c,w)->0,"我今日");

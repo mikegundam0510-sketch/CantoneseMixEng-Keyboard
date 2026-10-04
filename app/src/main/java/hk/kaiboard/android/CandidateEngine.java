@@ -18,7 +18,8 @@ public final class CandidateEngine {
             for(String text:quick.decode(code,learned,context)) result.put(text,InputCandidate.chinese(dictionary,code,text));
         List<String> singles=dictionary.lookup(code,useQuick,useCangjie,false);
         singles.remove(code);
-        if (!context.isEmpty()) singles.sort(Comparator.comparingDouble((String text)->quick.languageScore(context,text)).reversed());
+        if (!context.isEmpty()) singles.sort(Comparator.comparingDouble((String text)->
+            QuickDecoder.hanText(text) ? quick.languageScore(context,text) : Double.NEGATIVE_INFINITY).reversed());
         singles=LearningRanker.rank(singles,w->learned.applyAsInt(code,w));
         for(String text:singles)result.putIfAbsent(text,InputCandidate.chinese(dictionary,code,text));
         return new ArrayList<>(result.values());
