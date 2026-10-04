@@ -9,8 +9,8 @@ android {
         applicationId 'hk.kaiboard.android'
         minSdk 26
         targetSdk 35
-        versionCode 14
-        versionName '0.6.7'
+        versionCode 15
+        versionName '0.6.8'
         ndk { abiFilters 'arm64-v8a', 'armeabi-v7a', 'x86_64' }
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
@@ -25,7 +25,9 @@ android {
 tasks.register('prepareHandwritingModel', Exec) {
     workingDir rootProject.projectDir
     commandLine 'python3', 'tools/prepare_handwriting_model.py'
+    inputs.files rootProject.file('tools/prepare_handwriting_model.py'), rootProject.file('tools/build_handwriting_shapes.py')
     outputs.file 'src/main/assets/handwriting-zh_TW.model'
+    outputs.file 'src/main/assets/handwriting-shapes.bin'
     outputs.dir 'src/main/assets/licenses/handwriting'
 }
 tasks.named('preBuild').configure { dependsOn 'prepareHandwritingModel' }

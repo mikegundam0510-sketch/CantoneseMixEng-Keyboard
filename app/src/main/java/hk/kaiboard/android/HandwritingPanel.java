@@ -69,7 +69,7 @@ final class HandwritingPanel extends LinearLayout implements AutoCloseable {
     }
     @Override public void close(){if(disposed)return;disposed=true;generation++;handler.removeCallbacksAndMessages(null);if(pending!=null)pending.cancel(false);pad.clear();choices.removeAllViews();worker.execute(()->{if(engine!=null){engine.close();engine=null;}});worker.shutdown();}
     private final class InkView extends View {
-        final List<List<PointF>> strokes=new ArrayList<>();final Paint ink=new Paint(Paint.ANTI_ALIAS_FLAG);
+        final List<InkStroke> strokes=new ArrayList<>();final Paint ink=new Paint(Paint.ANTI_ALIAS_FLAG);
         boolean active;int pointer=-1;float left,top,size;
         InkView(Context c){super(c);setContentDescription("手寫區");setBackgroundColor(keyColor);}
         void clear(){strokes.clear();active=false;pointer=-1;invalidate();}
@@ -79,19 +79,18 @@ final class HandwritingPanel extends LinearLayout implements AutoCloseable {
             ink.setColor(accent);ink.setAlpha(60);ink.setStyle(Paint.Style.STROKE);ink.setStrokeWidth(dp(1));
             c.drawRect(left,top,left+size,top+size,ink);c.drawLine(left+size/2,top,left+size/2,top+size,ink);c.drawLine(left,top+size/2,left+size,top+size/2,ink);
             ink.setColor(fg);ink.setAlpha(255);ink.setStrokeWidth(dp(3));ink.setStrokeCap(Paint.Cap.ROUND);ink.setStrokeJoin(Paint.Join.ROUND);
-            for(List<PointF> stroke:strokes){if(stroke.isEmpty())continue;Path p=new Path();PointF first=stroke.get(0);p.moveTo(left+first.x*size/1000,top+first.y*size/1000);
-                for(PointF point:stroke)p.lineTo(left+point.x*size/1000,top+point.y*size/1000);
+            for(InkStroke inkStroke:strokes){List<InkStroke.Point> stroke=inkStroke.points;if(stroke.isEmpty())continue;Path p=new Path();InkStroke.Point first=stroke.get(0);p.moveTo(left+first.x*size/1000,top+first.y*size/1000);
+                for(InkStroke.Point point:stroke)p.lineTo(left+point.x*size/1000,top+point.y*size/1000);
                 if(stroke.size()==1)c.drawPoint(left+first.x*size/1000,top+first.y*size/1000,ink);else c.drawPath(p,ink);
             }
         }
-        void point(float x,float y){List<PointF> stroke=strokes.get(strokes.size()-1);int total=0;for(List<PointF> s:strokes)total+=s.size();if(stroke.size()>=128||total>=2048)return;
-            PointF p=new PointF(Math.max(0,Math.min(1000,(x-left)*1000/size)),Math.max(0,Math.min(1000,(y-top)*1000/size)));
-            if(stroke.isEmpty()||Math.hypot(p.x-stroke.get(stroke.size()-1).x,p.y-stroke.get(stroke.size()-1).y)>=3)stroke.add(p);invalidate();
+        void point(float x,float y){
+            strokes.get(strokes.size()-1).add(Math.max(0,Math.min(1000,(x-left)*1000/size)),Math.max(0,Math.min(1000,(y-top)*1000/size)));invalidate();
         }
         @Override public boolean onTouchEvent(android.view.MotionEvent e){
             int action=e.getActionMasked();if(action==MotionEvent.ACTION_DOWN){
                 if(e.getX()<left||e.getX()>left+size||e.getY()<top||e.getY()>top+size||strokes.size()>=48)return false;
-                pointer=e.getPointerId(0);active=true;strokes.add(new ArrayList<>());changed();point(e.getX(),e.getY());getParent().requestDisallowInterceptTouchEvent(true);return true;
+                pointer=e.getPointerId(0);active=true;strokes.add(new InkStroke());changed();point(e.getX(),e.getY());getParent().requestDisallowInterceptTouchEvent(true);return true;
             }
             if(action==MotionEvent.ACTION_CANCEL){if(active){undo();changed();}return true;}
             int index=e.findPointerIndex(pointer);if(index<0)return false;
@@ -100,8 +99,13 @@ final class HandwritingPanel extends LinearLayout implements AutoCloseable {
             if(action==MotionEvent.ACTION_CANCEL){undo();changed();return true;}return active;
         }
         @Override public boolean performClick(){super.performClick();return true;}
-        int[] snapshot(){int total=0;for(List<PointF> stroke:strokes)total+=stroke.size();if(total>2048)return new int[0];int[] points=new int[total*3];int i=0,s=0;
-            for(List<PointF> stroke:strokes){for(PointF p:stroke){points[i++]=s;points[i++]=Math.round(p.x);points[i++]=Math.round(p.y);}s++;}return points;
+        int[] snapshot(){
+            List<List<InkStroke.Point>> sampled=new ArrayList<>();int total=0;
+            for(InkStroke stroke:strokes){List<InkStroke.Point> points=stroke.snapshot(40);sampled.add(points);total+=points.size();}
+            int[] points=new int[total*3];int i=0,s=0;
+            for(List<InkStroke.Point> stroke:sampled){for(InkStroke.Point point:stroke){points[i++]=s;points[i++]=Math.round(point.x);points[i++]=Math.round(point.y);}s++;}
+            return points;
         }
     }
 }
+
