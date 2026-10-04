@@ -52,7 +52,7 @@ public final class SettingsActivity extends Activity {
         toggle(methods, "參考上文排序候選", "context_candidates", true);
         toggle(methods, "英文拼字修正候選", "english_repair", true);
         toggle(methods, "速成相鄰按鍵修正候選", "quick_repair", true);
-        toggle(methods, "學習選字排序（只儲存於手機）", "learning", true);
+        toggle(methods, "儲存選字及英文詞作學習（預設關閉）", "learning", false);
         button(methods, "清除學習記錄", () -> new AlertDialog.Builder(this).setTitle("清除學習記錄？")
             .setMessage("將恢復預設選字次序。鍵盤設定不受影響。")
             .setNegativeButton("取消", null).setPositiveButton("清除", (d, which) -> {
@@ -74,7 +74,7 @@ public final class SettingsActivity extends Activity {
         toggle(look, "按鍵震動", "haptic", true);
         toggle(look, "在字根按鍵區左右掃動游標", "swipe_cursor", true);
 
-        toggle(look, "保留最近使用 Emoji（只儲存於手機）", "emoji_recent", true);
+        toggle(look, "保留最近使用 Emoji（預設關閉）", "emoji_recent", false);
         button(look, "清除最近使用 Emoji", () -> { prefs.edit().remove("recent_emoji").apply(); Toast.makeText(this, "已清除 Emoji 記錄", Toast.LENGTH_SHORT).show(); });
 
         LinearLayout practice = card("試打一下");
@@ -92,7 +92,7 @@ public final class SettingsActivity extends Activity {
         button(ai, "開啟鍵盤選擇器", () -> ((InputMethodManager)getSystemService(INPUT_METHOD_SERVICE)).showInputMethodPicker());
 
         LinearLayout about = card("離線與私隱");
-        text(about, "字碼及候選可離線使用，App 無網絡權限。上文只用於當次候選排序，不保存整段文字。學習的中文字及英文詞、自訂詞、置頂候選和最近 Emoji 只儲存於手機，可分別管理及清除；不備份到雲端。密碼欄停用候選和學習；要求不學習的輸入框不使用或更新個人詞庫。剪貼簿只在你按貼上時讀取。語音由手機辨識服務處理，可能使用網絡；本 App 不保存錄音。", 14, Color.DKGRAY, false);
+        text(about, "字碼及候選可離線使用，App 無網絡權限。上文只用於當次候選排序，不保存整段文字。自動學習及最近 Emoji 記錄預設關閉，更新時清除舊自動學習紀錄。如你自行開啟，所選中文字及英文詞或 Emoji 會儲存於手機；手動自訂詞和置頂亦會儲存，可管理及清除，不作備份或轉移。密碼欄停用候選和學習；敏感欄位及要求不學習的輸入框不使用或更新個人詞庫，亦不讀取上文或啟動語音。剪貼簿只在你按貼上時讀取。語音只使用裝置內辨識，不支援時不會改用雲端；本 App 不保存錄音。", 14, Color.DKGRAY, false);
         text(about, "獨立開發的 Android 鍵盤，並非 Kaiboard 或 Samsung 官方產品。採用 Rime 倉頡五代碼表與詞庫，以及 Unicode Emoji 資料；速成由首尾碼生成，選字次序可能與其他速成鍵盤不同。", 13, Color.DKGRAY, false);
         button(about, "開源資料與授權", this::showLicenses);
     }
@@ -217,4 +217,5 @@ public final class SettingsActivity extends Activity {
 
     private int dp(float v) { return Math.round(v * getResources().getDisplayMetrics().density); }
 }
+
 

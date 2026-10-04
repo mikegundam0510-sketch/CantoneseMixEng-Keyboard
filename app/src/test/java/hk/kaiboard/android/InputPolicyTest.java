@@ -26,4 +26,14 @@ public class InputPolicyTest {
         assertFalse(InputPolicy.isSecure(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL));
         assertFalse(InputPolicy.isSecure(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS));
     }
+    @Test public void personalDetailsAndNumbersNeverLearn() {
+        int[] types = { InputType.TYPE_NULL, InputType.TYPE_CLASS_NUMBER,
+            InputType.TYPE_CLASS_PHONE, InputType.TYPE_CLASS_DATETIME,
+            InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS,
+            InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS,
+            InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_URI,
+            InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PERSON_NAME,
+            InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_POSTAL_ADDRESS };
+        for (int type : types) assertTrue(InputPolicy.noLearning(type, 0));
+    }
 }

@@ -316,10 +316,10 @@ public final class KaiboardService extends InputMethodService {
             String[][] symbolRows = extraSymbols ? new String[][]{
                 {"_","[","]","{","}","<",">","\\","^","~"},
                 {"`","|","€","£","¥","•","÷","×","「","」"},
-                {"，","。","？","！","：","；","（","）","《","》"}}
+                {"，","。","？","！","：","；","（","）","？","》"}}
                 : new String[][]{{"1","2","3","4","5","6","7","8","9","0"},
                 {"@","#","$","%","&","*","-","+","(",")"},
-                {"?","!",":",";","'","\"","/","=",",","."}};
+                {"?","!",":",";","'","\"","/","=","?","."}};
             for (String[] group : symbolRows) {
                 LinearLayout line = row(panel); for (String value : group) key(line, value, 1, false, () -> insert(value), keyHeight());
             }
@@ -466,7 +466,7 @@ public final class KaiboardService extends InputMethodService {
     }
 
     private String context() {
-        if (secure || !prefs.getBoolean("context_candidates", true)) return "";
+        if (noLearning || !prefs.getBoolean("context_candidates", true)) return "";
         InputConnection ic = getCurrentInputConnection(); if (ic == null) return "";
         CharSequence preceding = ic.getTextBeforeCursor(128, 0); if (preceding == null) return "";
         String text = preceding.toString(), code = composing.toString();
@@ -478,7 +478,7 @@ public final class KaiboardService extends InputMethodService {
         List<String> result = new ArrayList<>(); if (noLearning) return result;
         for (Map.Entry<String, ?> entry : personal.getAll().entrySet())
             if (entry.getKey().startsWith("e:") && entry.getValue() instanceof String) result.add((String) entry.getValue());
-        if (prefs.getBoolean("learning", true)) {
+        if (prefs.getBoolean("learning", false)) {
             List<String> words = new ArrayList<>(englishLearned.getAll().keySet());
             words.sort(Comparator.comparingInt((String word) -> englishLearned.getInt(word, 0)));
             result.addAll(words);
@@ -493,7 +493,7 @@ public final class KaiboardService extends InputMethodService {
 
     private List<String> englishSuggestions(String input) {
         List<String> result = new ArrayList<>(englishEngine.suggest(input, personalEnglish(), prefs.getBoolean("english_repair", true)));
-        if (!noLearning && prefs.getBoolean("learning", true) && result.size() > 1)
+        if (!noLearning && prefs.getBoolean("learning", false) && result.size() > 1)
             result.subList(1,result.size()).sort(Comparator.comparingInt((String word) -> englishLearned.getInt(word,0)).reversed());
         return result;
     }
@@ -536,14 +536,14 @@ public final class KaiboardService extends InputMethodService {
         }
         boolean enabled(String name, boolean fallback) { Object value = settings.get(name); return value instanceof Boolean ? (Boolean)value : fallback; }
         int learnedCount(String code, String word) {
-            if (noLearning || !enabled("learning", true)) return 0;
+            if (noLearning || !enabled("learning", false)) return 0;
             Object value = counts.get(LearningRanker.key(code, quick, cangjie, word));
             return value instanceof Integer ? (Integer)value : 0;
         }
         String pinPrefix(String code) { return "p:" + (quick ? "Q" : "-") + (cangjie ? "C" : "-") + ":" + code.toLowerCase(Locale.ROOT) + ":"; }
         List<String> englishSuggestions() {
             List<String> result = new ArrayList<>(englishEngine.suggest(input, englishWords, enabled("english_repair", true)));
-            if (!noLearning && enabled("learning", true) && result.size() > 1)
+            if (!noLearning && enabled("learning", false) && result.size() > 1)
                 result.subList(1, result.size()).sort(Comparator.comparingInt((String word) -> {
                     Object count = englishCounts.get(word); return count instanceof Integer ? (Integer)count : 0;
                 }).reversed());
@@ -698,7 +698,7 @@ public final class KaiboardService extends InputMethodService {
     }
 
     private int learnedCount(String code, String word) {
-        return noLearning || !prefs.getBoolean("learning", true) ? 0 : learned.getInt(LearningRanker.key(code, quick, cangjie, word), 0);
+        return noLearning || !prefs.getBoolean("learning", false) ? 0 : learned.getInt(LearningRanker.key(code, quick, cangjie, word), 0);
     }
 
     private void toggleLanguage() {
@@ -796,7 +796,7 @@ public final class KaiboardService extends InputMethodService {
         invalidateReselection();
         ic.beginBatchEdit();
         boolean accepted = ic.commitText(detail.text, 1);
-        if (accepted && learn && !noLearning && prefs.getBoolean("learning", true)) {
+        if (accepted && learn && !noLearning && prefs.getBoolean("learning", false)) {
             for (InputCandidate.Segment segment : detail.segments) {
                 if (segment.english) learnEnglish(segment.text);
                 else if (LearningRanker.isLearnable(segment.text)) learnCharacter(segment.code, segment.text);
@@ -813,7 +813,7 @@ public final class KaiboardService extends InputMethodService {
             if (extracted != null && extracted.selectionStart == extracted.selectionEnd && before != null) {
                 int cursor = extracted.startOffset + extracted.selectionEnd;
                 reselection = new ReselectionRecord(detail, cursor, before.toString());
-                reselectionLearned = !noLearning && prefs.getBoolean("learning", true);
+                reselectionLearned = !noLearning && prefs.getBoolean("learning", false);
                 selectionStart = selectionEnd = cursor;
             }
         }
@@ -821,7 +821,7 @@ public final class KaiboardService extends InputMethodService {
     }
 
     private void learnEnglish(String word) {
-        if (!EnglishEngine.validWord(word)) return;
+        if (noLearning || !prefs.getBoolean("learning", false) || !EnglishEngine.validWord(word)) return;
         SharedPreferences.Editor editor = englishLearned.edit();
         Map<String, ?> all = englishLearned.getAll();
         if (!all.containsKey(word) && all.size() >= 500)
@@ -830,7 +830,7 @@ public final class KaiboardService extends InputMethodService {
     }
 
     private void learnCharacter(String code, String character) {
-        if (!LearningRanker.isLearnable(character)) return;
+        if (noLearning || !prefs.getBoolean("learning", false) || !LearningRanker.isLearnable(character)) return;
         String key = LearningRanker.key(code, quick, cangjie, character);
         SharedPreferences.Editor edit = learned.edit();
         Map<String, ?> all = learned.getAll();
@@ -956,18 +956,21 @@ public final class KaiboardService extends InputMethodService {
 
     private void voice() {
         if (voiceListening) { cancelVoice(); render(); return; }
-        if (secure || numeric || getCurrentInputConnection() == null) return;
+        if (noLearning || numeric || getCurrentInputConnection() == null) return;
+        if (android.os.Build.VERSION.SDK_INT < 31 || !SpeechRecognizer.isOnDeviceRecognitionAvailable(this)) {
+            Toast.makeText(this, "手機未有裝置內語音辨識；為保障私隱，不會使用雲端辨識", Toast.LENGTH_LONG).show(); return;
+        }
         if (checkSelfPermission(Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             startActivity(new Intent(this, VoicePermissionActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
             return;
         }
-        if (!SpeechRecognizer.isRecognitionAvailable(this)) {
-            Toast.makeText(this, "手機未有可用嘅語音辨識服務", Toast.LENGTH_LONG).show(); return;
-        }
         finishLiteral();
         final int session = ++voiceSession;
         final InputConnection editor = getCurrentInputConnection();
-        voiceRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
+        try { voiceRecognizer = SpeechRecognizer.createOnDeviceSpeechRecognizer(this); }
+        catch (RuntimeException exception) {
+            Toast.makeText(this, "未能啟動裝置內語音辨識", Toast.LENGTH_LONG).show(); return;
+        }
         voiceListening = true;
         voiceRecognizer.setRecognitionListener(new RecognitionListener() {
             @Override public void onReadyForSpeech(Bundle params) {
@@ -984,13 +987,13 @@ public final class KaiboardService extends InputMethodService {
                 cancelVoice(); render();
                 String message = error == SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS ? "請允許咪高峰權限" :
                     error == SpeechRecognizer.ERROR_NO_MATCH || error == SpeechRecognizer.ERROR_SPEECH_TIMEOUT ? "未聽清楚，請再試" :
-                    "語音辨識暫時未能使用，請檢查辨識服務、語言及網絡";
+                    "語音辨識暫時未能使用，請檢查裝置內辨識服務及離線語言支援";
                 Toast.makeText(KaiboardService.this, message, Toast.LENGTH_LONG).show();
             }
             @Override public void onResults(Bundle results) {
                 if (session != voiceSession) return;
                 ArrayList<String> texts = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-                boolean sameEditor = editor == getCurrentInputConnection() && isInputViewShown() && !secure;
+                boolean sameEditor = editor == getCurrentInputConnection() && isInputViewShown() && !noLearning;
                 cancelVoice();
                 if (sameEditor && texts != null && !texts.isEmpty()) insert(texts.get(0));
                 render();
@@ -1000,6 +1003,7 @@ public final class KaiboardService extends InputMethodService {
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, ascii ? "en-HK" : "yue-HK");
         intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
+        intent.putExtra(RecognizerIntent.EXTRA_PREFER_OFFLINE, true);
         // Public API 33 extra; use its wire key so older Android versions can ignore it safely.
         intent.putExtra("android.speech.extra.MASK_OFFENSIVE_WORDS", false);
         try { voiceRecognizer.startListening(intent); render(); }
@@ -1192,7 +1196,7 @@ public final class KaiboardService extends InputMethodService {
     }
 
     private String recentEmoji() {
-        return noLearning || !prefs.getBoolean("emoji_recent",true) ? "" : prefs.getString("recent_emoji","");
+        return noLearning || !prefs.getBoolean("emoji_recent",false) ? "" : prefs.getString("recent_emoji","");
     }
 
     private void refreshEmoji() {
@@ -1219,7 +1223,7 @@ public final class KaiboardService extends InputMethodService {
 
     private void commitEmoji(String symbol) {
         InputConnection ic=getCurrentInputConnection(); if(ic==null || !ic.commitText(symbol,1)) return;
-        if(!noLearning && prefs.getBoolean("emoji_recent",true))
+        if(!noLearning && prefs.getBoolean("emoji_recent",false))
             prefs.edit().putString("recent_emoji",emojiCatalog.remember(recentEmoji(),symbol)).apply();
     }
 
@@ -1372,3 +1376,4 @@ public final class KaiboardService extends InputMethodService {
     }
     private int dp(float value) { return Math.round(value * getResources().getDisplayMetrics().density); }
 }
+

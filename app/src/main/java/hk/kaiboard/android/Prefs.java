@@ -11,7 +11,15 @@ final class Prefs {
             String height = "56".equals(oldHeight) ? "46" : "62".equals(oldHeight) ? "52" : "40";
             prefs.edit().putString("height", height).putBoolean("compact_key_geometry", true).apply();
         }
+        if (!prefs.getBoolean("privacy_defaults_v1", false)) {
+            // Clear automatically collected history before marking migration complete.
+            context.getSharedPreferences("learned", Context.MODE_PRIVATE).edit().clear().commit();
+            context.getSharedPreferences("english_learned", Context.MODE_PRIVATE).edit().clear().commit();
+            prefs.edit().putBoolean("learning", false).putBoolean("emoji_recent", false)
+                .remove("recent_emoji").putBoolean("privacy_defaults_v1", true).commit();
+        }
         return prefs;
     }
 }
+
 
