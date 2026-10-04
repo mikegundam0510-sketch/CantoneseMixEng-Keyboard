@@ -1,5 +1,5 @@
 name: Device test APK 0.6.7
-# Checks symbol placement on cover and unfolded screens after IME registration.
+# Checks symbol placement on cover and unfolded screens after IME registration and fixture initialization.
 on:
   push:
     branches: [codex/reference-keyboard-emoji]
