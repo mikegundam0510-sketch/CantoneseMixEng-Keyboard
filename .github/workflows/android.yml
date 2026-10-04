@@ -26,7 +26,7 @@ jobs:
           log-accepted-android-sdk-licenses: false
       - uses: gradle/actions/setup-gradle@v4
       - name: Install SDK
-        run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
+        run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0' 'ndk;27.0.12077973' 'cmake;3.22.1'
       - name: Test, lint and prepare internal emulator package
         run: |
           bash ./gradlew testDebugUnitTest lintDebug assembleDebug assembleDebugAndroidTest --no-daemon
@@ -59,3 +59,4 @@ jobs:
       - name: Remove internal test package
         if: always()
         run: rm -rf apk app/build/outputs/apk
+

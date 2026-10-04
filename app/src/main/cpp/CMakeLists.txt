@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.22.1)
+project(kaiboard_handwriting)
+add_library(handwriting SHARED handwriting_jni.cpp zinnia/character.cpp zinnia/feature.cpp zinnia/recognizer.cpp zinnia/sexp.cpp)
+target_compile_features(handwriting PRIVATE cxx_std_11)
+target_compile_definitions(handwriting PRIVATE HAVE_CONFIG_H WORDS_LITENDIAN)
+target_include_directories(handwriting PRIVATE zinnia)

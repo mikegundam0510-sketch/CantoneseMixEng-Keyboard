@@ -20,6 +20,9 @@ import java.util.*;
 import java.util.concurrent.*;
 
 public final class KaiboardService extends InputMethodService {
+    private boolean handwritingMode;
+    private HandwritingPanel handwritingPanel;
+    private void closeHandwriting() { if(handwritingPanel!=null){handwritingPanel.close();handwritingPanel=null;} }
     private final Handler handler = new Handler(Looper.getMainLooper());
     private final ExecutorService loader = Executors.newSingleThreadExecutor();
     private final ScheduledExecutorService candidateWorker = Executors.newSingleThreadScheduledExecutor();
@@ -163,7 +166,7 @@ public final class KaiboardService extends InputMethodService {
     @Override public void onStartInput(EditorInfo info, boolean restarting) {
         super.onStartInput(info, restarting);
         cancelVoice(); dismissSelectionPopup(); invalidateReselection(); resetComposition(); stopRepeat();
-        editMode = false; textEditor.reset();
+        closeHandwriting(); handwritingMode = false; editMode = false; textEditor.reset();
         selectionStart = info.initialSelStart; selectionEnd = info.initialSelEnd;
         int type = info.inputType & InputType.TYPE_MASK_CLASS;
         int variation = info.inputType & InputType.TYPE_MASK_VARIATION;
@@ -183,7 +186,7 @@ public final class KaiboardService extends InputMethodService {
     @Override public boolean onEvaluateFullscreenMode() { return false; }
 
     @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && (selectionPopup != null || editMode)) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && (selectionPopup != null || editMode || handwritingMode)) {
             event.startTracking();
             return true;
         }
@@ -191,8 +194,8 @@ public final class KaiboardService extends InputMethodService {
     }
 
     @Override public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && (selectionPopup != null || editMode)) {
-            if (!event.isCanceled()) { if (editMode) { editMode = false; textEditor.reset(); render(); } else dismissSelectionPopup(); }
+        if (keyCode == KeyEvent.KEYCODE_BACK && (selectionPopup != null || editMode || handwritingMode)) {
+            if (!event.isCanceled()) { if (handwritingMode) { handwritingMode = false; render(); } else if (editMode) { editMode = false; textEditor.reset(); render(); } else dismissSelectionPopup(); }
             return true;
         }
         return super.onKeyUp(keyCode, event);
@@ -210,6 +213,7 @@ public final class KaiboardService extends InputMethodService {
     }
 
     @Override public void onFinishInputView(boolean finishingInput) {
+        closeHandwriting(); handwritingMode = false;
         cancelVoice(); dismissSelectionPopup(); invalidateReselection();
         if (tonePopup != null) tonePopup.dismiss();
         editMode = false; textEditor.reset();
@@ -217,10 +221,12 @@ public final class KaiboardService extends InputMethodService {
     }
 
     @Override public void onFinishInput() {
+        closeHandwriting(); handwritingMode = false;
         cancelVoice(); dismissSelectionPopup(); invalidateReselection(); stopRepeat(); resetComposition(); updateCandidates(); super.onFinishInput();
     }
 
     @Override public void onDestroy() {
+        closeHandwriting();
         destroyed = true; textEditor.reset(); candidateGeneration.incrementAndGet(); cancelVoice(); dismissSelectionPopup(); invalidateReselection(); stopRepeat(); handler.removeCallbacksAndMessages(null); loader.shutdownNow(); candidateWorker.shutdownNow(); super.onDestroy();
     }
 
@@ -238,6 +244,7 @@ public final class KaiboardService extends InputMethodService {
 
     private void render() {
         if (root == null) return;
+        closeHandwriting();
         if (tonePopup != null) { tonePopup.dismiss(); tonePopup = null; }
         dismissSelectionPopup();
         // Release the previous Emoji view tree when returning to the keyboard/editor.
@@ -252,6 +259,11 @@ public final class KaiboardService extends InputMethodService {
         dock.addView(panel, new LinearLayout.LayoutParams(0, -2, hand.equals("full") ? 1 : .82f));
         if (hand.equals("left")) dock.addView(new View(this), new LinearLayout.LayoutParams(0, 1, .18f));
 
+        if (handwritingMode && !secure && !numeric) {
+            handwritingPanel = new HandwritingPanel(this,bg,fg,keyColor,accent,this::insert,
+                () -> { handwritingMode=false; render(); },this::delete,this::enter);
+            panel.addView(handwritingPanel); return;
+        }
         if (editMode) { renderTextEditor(); return; }
 
         toolbar = row(panel);
@@ -271,7 +283,12 @@ public final class KaiboardService extends InputMethodService {
             }
         }, false);
         tool(toolbar, "keyboard", "選擇鍵盤", this::picker, false);
-        tool(toolbar, "pen", "切換系統鍵盤使用手寫", () -> systemTool("手寫"), false);
+        TextView pen = tool(toolbar, "pen", "手寫", () -> {
+            if(secure || numeric)return;
+            finishLiteral(); cancelVoice(); emoji=false; symbols=false; expanded=false; editMode=false;
+            handwritingMode=true; render();
+        }, false);
+        pen.setEnabled(!secure && !numeric);
         tool(toolbar, "mic", voiceListening ? "停止語音輸入" : "語音輸入", this::voice, voiceListening);
         tool(toolbar, "more", "鍵盤設定", () -> {
             finishLiteral(); startActivity(new Intent(this, SettingsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
