@@ -187,16 +187,36 @@ assert editor_text()=="你", "Quick typo suggestion failed"
 # Long-press punctuation is usable without changing input method.
 reset_field();long_tap("逗號，長按快捷標點");tap("？")
 assert editor_text()=="？", "Quick punctuation failed"
-# The question mark immediately above Backspace has both correct position and output.
+# Symbol layout: question immediately left of Delete, bottom comma/dot and longer space.
 reset_field();tap_text("123")
 delete=find("刪除，長按連續刪除")
 bx,by=map(int,center(delete))
 questions=[n for n in tree().iter("node") if n.get("text")=="?" and n.get("clickable")=="true"]
-above=min(questions,key=lambda n:abs(int(center(n)[0])-bx))
-qx,qy=map(int,center(above))
-assert abs(qx-bx)<40 and qy<by, "Question mark is not above Backspace"
+left=min(questions,key=lambda n:abs(int(center(n)[0])-bx))
+qx,qy=map(int,center(left))
+assert qx<bx and abs(qy-by)<5, "Question mark is not immediately left of Backspace"
 adb("shell","input","tap",str(qx),str(qy));time.sleep(.4)
 assert editor_text()=="?", "Question key output is incorrect"
+tap("刪除，長按連續刪除")
+assert editor_text()=="", "Moved Backspace did not delete"
+comma=find("逗號，長按快捷標點");period=find("句號，長按快捷標點")
+cx,cy=map(int,center(comma));px,py=map(int,center(period))
+space=find("空白鍵，左右滑動移動游標")
+sx,sy=map(int,center(space))
+assert comma.get("text")=="," and period.get("text")==".", "Symbol bottom punctuation must be comma and ASCII dot"
+assert sx<cx<px and abs(cy-py)<5 and cy>by, "Bottom punctuation order is incorrect"
+sb=list(map(int,re.findall(r"\d+",space.get("bounds"))))
+cb=list(map(int,re.findall(r"\d+",comma.get("bounds"))))
+assert sb[2]-sb[0]>4*(cb[2]-cb[0]), "Symbol spacebar is too short"
+assert not any(n.get("text")=="。" and n.get("clickable")=="true" for n in tree().iter("node")), "Chinese full-stop key still present"
+tap("逗號，長按快捷標點");tap("句號，長按快捷標點")
+assert editor_text()==",.", "Bottom comma/dot output is incorrect"
+shot("12-symbol-layout")
+tap_text("#+=")
+assert find("刪除，長按連續刪除") is not None, "Extra-symbol page lost Backspace"
+tap("刪除，長按連續刪除")
+assert editor_text()==",", "Extra-symbol Backspace did not delete"
+tap_text("ABC")
 # Drag over character keys moves the editor cursor, without inserting those keys.
 reset_field("abcdefghij")
 x1,y=center(find("O，人"));x2,_=center(find("W，田"))

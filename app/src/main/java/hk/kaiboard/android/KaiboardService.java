@@ -343,12 +343,16 @@ public final class KaiboardService extends InputMethodService {
             String[][] symbolRows = extraSymbols ? new String[][]{
                 {"_","[","]","{","}","<",">","\\","^","~"},
                 {"`","|","€","£","¥","•","÷","×","「","」"},
-                {"，","。","？","！","：","；","（","）","《","》"}}
+                {"，","？","！","：","；","（","）","《","》","⌫"}}
                 : new String[][]{{"1","2","3","4","5","6","7","8","9","0"},
                 {"@","#","$","%","&","*","-","+","(",")"},
-                {"?","!",":",";","'","\"","/","=","?","."}};
+                {"?","!",":",";","'","\"","/","=","?","⌫"}};
             for (String[] group : symbolRows) {
-                LinearLayout line = row(panel); for (String value : group) key(line, value, 1, false, () -> insert(value), keyHeight());
+                LinearLayout line = row(panel);
+                for (String value : group) {
+                    if ("⌫".equals(value)) deleteKey(line, 1f);
+                    else key(line, value, 1, false, () -> insert(value), keyHeight());
+                }
             }
         } else {
             if (prefs.getBoolean("numbers", true)) {
@@ -372,18 +376,18 @@ public final class KaiboardService extends InputMethodService {
         select.setContentDescription("切換中英文，長按選擇系統鍵盤");
         select.setOnLongClickListener(v -> { picker(); return true; });
         if (!numeric) {
-            TextView space = key(bottom, "", splitLayout() ? 6.4f : 3.6f, false, this::space, keyHeight());
+            TextView space = key(bottom, "", splitLayout() ? 6.4f : symbols ? 4.8f : 3.6f, false, this::space, keyHeight());
             ((KeyboardKey) space).icon("space");
             space.setContentDescription("空白鍵，左右滑動移動游標"); attachSpaceGesture(space);
-            TextView comma = key(bottom, uriField || ascii || englishIntent() ? "," : "，", .9f, false,
-                () -> insert(uriField || ascii || englishIntent() ? "," : "，"), keyHeight());
-            TextView period = key(bottom, uriField || ascii || englishIntent() ? "." : "。", .9f, false,
-                () -> insert(uriField || ascii || englishIntent() ? "." : "。"), keyHeight());
+            TextView comma = key(bottom, symbols || uriField || ascii || englishIntent() ? "," : "，", .9f, false,
+                () -> insert(symbols || uriField || ascii || englishIntent() ? "," : "，"), keyHeight());
+            TextView period = key(bottom, ".", .9f, false,
+                () -> insert("."), keyHeight());
             comma.setContentDescription("逗號，長按快捷標點"); period.setContentDescription("句號，長按快捷標點");
             comma.setOnLongClickListener(v -> { punctuation(comma); return true; });
             period.setOnLongClickListener(v -> { punctuation(period); return true; });
         }
-        if (symbols || emoji || numeric) deleteKey(bottom, 1.2f);
+        if (emoji || numeric) deleteKey(bottom, 1.2f);
         TextView enterKey = key(bottom, enterLabel(), 1.45f, true, this::enter, keyHeight());
         enterKey.setTextColor(fg); enterKey.setTextSize(14); enterKey.setSingleLine(true);
         if (getWindow() != null) {

@@ -1,4 +1,4 @@
-name: Device test APK 0.6.6
+name: Device test APK 0.6.7
 # Includes all-window native handwriting acceptance. Raw IME inset diagnostics use the application's debuggable flag.
 on:
   push:
@@ -28,10 +28,10 @@ jobs:
           bash ./gradlew testDebugUnitTest lintDebug assembleDebug assembleDebugAndroidTest --no-daemon
           mkdir -p device-test apk
           cp app/build/outputs/apk/debug/app-debug.apk apk/
-          cp app/build/outputs/apk/debug/app-debug.apk device-test/cantonesemixeng-keyboard-0.6.6-device-test.apk
-          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose --print-certs device-test/cantonesemixeng-keyboard-0.6.6-device-test.apk > device-test/APK-verification.txt
-          "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging device-test/cantonesemixeng-keyboard-0.6.6-device-test.apk >> device-test/APK-verification.txt
-          sha256sum device-test/cantonesemixeng-keyboard-0.6.6-device-test.apk >> device-test/APK-verification.txt
+          cp app/build/outputs/apk/debug/app-debug.apk device-test/cantonesemixeng-keyboard-0.6.7-device-test.apk
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose --print-certs device-test/cantonesemixeng-keyboard-0.6.7-device-test.apk > device-test/APK-verification.txt
+          "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging device-test/cantonesemixeng-keyboard-0.6.7-device-test.apk >> device-test/APK-verification.txt
+          sha256sum device-test/cantonesemixeng-keyboard-0.6.7-device-test.apk >> device-test/APK-verification.txt
           git rev-parse HEAD >> device-test/APK-verification.txt
       - name: Free build-only tools before emulator startup
         run: |
@@ -65,6 +65,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: cantonesemixeng-keyboard-0.6.6-device-test
+          name: cantonesemixeng-keyboard-0.6.7-device-test
           path: device-test/
           retention-days: 14
