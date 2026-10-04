@@ -52,6 +52,8 @@ public final class KaiboardService extends InputMethodService {
     private SharedPreferences learned;
     private boolean noLearning;
     private LinearLayout root, panel, candidateRow;
+    private int navigationLeft, navigationRight, navigationBottom;
+    private final int[] keyboardLocation = new int[2];
     private HorizontalScrollView candidateScroll;
     private ScrollView expandedScroll;
     private TextView codeLabel, expandedMode, nextPage, selectKey;
@@ -110,7 +112,45 @@ public final class KaiboardService extends InputMethodService {
 
     @Override public View onCreateInputView() {
         root = new LinearLayout(this); root.setOrientation(LinearLayout.VERTICAL);
-        render(); return root;
+        root.setOnApplyWindowInsetsListener((view, insets) -> {
+            WindowInsets windowInsets = view.getRootWindowInsets();
+            if (windowInsets == null) windowInsets = insets;
+            if (Build.VERSION.SDK_INT >= 30) {
+                android.graphics.Insets safe = windowInsets.getInsets(
+                    WindowInsets.Type.navigationBars() | WindowInsets.Type.displayCutout());
+                navigationLeft = safe.left; navigationRight = safe.right; navigationBottom = safe.bottom;
+            } else {
+                navigationLeft = windowInsets.getSystemWindowInsetLeft();
+                navigationRight = windowInsets.getSystemWindowInsetRight();
+                navigationBottom = windowInsets.getSystemWindowInsetBottom();
+            }
+            updateKeyboardPadding();
+            return insets;
+        });
+        root.addOnLayoutChangeListener((view, l, t, r, b, ol, ot, or, ob) -> updateKeyboardPadding());
+        render(); root.requestApplyInsets(); return root;
+    }
+
+    private void updateKeyboardPadding() {
+        if (root == null) return;
+        int side = dp(splitLayout() ? Math.round(foldWidth() * .041f) : 4);
+        int left = 0, right = 0, bottom = 0;
+        if (root.isAttachedToWindow() && root.getHeight() > 0) {
+            android.util.DisplayMetrics display = new android.util.DisplayMetrics();
+            root.getDisplay().getRealMetrics(display);
+            root.getLocationOnScreen(keyboardLocation);
+            // Some IME windows already stop above the navigation bar. Add only the overlap.
+            left = Math.max(0, navigationLeft - Math.max(0, keyboardLocation[0]));
+            right = Math.max(0, navigationRight - Math.max(0,
+                display.widthPixels - keyboardLocation[0] - root.getWidth()));
+            bottom = Math.max(0, navigationBottom - Math.max(0,
+                display.heightPixels - keyboardLocation[1] - root.getHeight()));
+        }
+        int top = dp(5), baseBottom = dp(6);
+        if (root.getPaddingLeft() != side + left || root.getPaddingRight() != side + right ||
+                root.getPaddingTop() != top || root.getPaddingBottom() != baseBottom + bottom) {
+            root.setPadding(side + left, top, side + right, baseBottom + bottom);
+        }
     }
 
     @Override public void onStartInput(EditorInfo info, boolean restarting) {
@@ -197,8 +237,7 @@ public final class KaiboardService extends InputMethodService {
         emojiList = null; emojiAdapter = null; emojiModel = null; emojiSearchLabel = null; emojiCategories = null; emojiTabs.clear();
         stopRepeat(); colors(); expandedScroll = null; candidateRow = null; codeLabel = null; expandedMode = null; nextPage = null; selectKey = null; toolbar = null; candidateBar = null; undoKey = null; editorSelect = null;
         quick = prefs.getBoolean("quick", true); cangjie = prefs.getBoolean("cangjie", true); english = prefs.getBoolean("english", true);
-        int sidePadding = splitLayout() ? Math.round(foldWidth() * .041f) : 4;
-        root.removeAllViews(); root.setBackgroundColor(bg); root.setPadding(dp(sidePadding), dp(5), dp(sidePadding), dp(6));
+        root.removeAllViews(); root.setBackgroundColor(bg); updateKeyboardPadding();
         LinearLayout dock = row(root);
         String hand = prefs.getString("hand", "full");
         if (hand.equals("right")) dock.addView(new View(this), new LinearLayout.LayoutParams(0, 1, .18f));
@@ -315,7 +354,10 @@ public final class KaiboardService extends InputMethodService {
         enterKey.setTextColor(fg); enterKey.setTextSize(14); enterKey.setSingleLine(true);
         if (getWindow() != null) {
             getWindow().getWindow().setNavigationBarColor(bg);
-            getWindow().getWindow().getDecorView().setSystemUiVisibility(dark ? 0 : View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+            View decor = getWindow().getWindow().getDecorView();
+            int flags = decor.getSystemUiVisibility();
+            decor.setSystemUiVisibility(dark ? flags & ~View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR :
+                flags | View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
         }
     }
 

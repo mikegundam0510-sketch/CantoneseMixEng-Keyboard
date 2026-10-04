@@ -26,13 +26,13 @@ jobs:
         run: |
           bash ./gradlew assembleDebug --no-daemon
           mkdir -p device-test
-          cp app/build/outputs/apk/debug/app-debug.apk device-test/cantonesemixeng-keyboard-0.6.2-device-test.apk
-          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose --print-certs device-test/cantonesemixeng-keyboard-0.6.2-device-test.apk > device-test/APK-verification.txt
-          "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging device-test/cantonesemixeng-keyboard-0.6.2-device-test.apk >> device-test/APK-verification.txt
-          sha256sum device-test/cantonesemixeng-keyboard-0.6.2-device-test.apk >> device-test/APK-verification.txt
+          cp app/build/outputs/apk/debug/app-debug.apk device-test/cantonesemixeng-keyboard-0.6.3-device-test.apk
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose --print-certs device-test/cantonesemixeng-keyboard-0.6.3-device-test.apk > device-test/APK-verification.txt
+          "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging device-test/cantonesemixeng-keyboard-0.6.3-device-test.apk >> device-test/APK-verification.txt
+          sha256sum device-test/cantonesemixeng-keyboard-0.6.3-device-test.apk >> device-test/APK-verification.txt
           git rev-parse HEAD >> device-test/APK-verification.txt
       - uses: actions/upload-artifact@v4
         with:
-          name: cantonesemixeng-keyboard-0.6.2-device-test
+          name: cantonesemixeng-keyboard-0.6.3-device-test
           path: device-test/
           retention-days: 14
