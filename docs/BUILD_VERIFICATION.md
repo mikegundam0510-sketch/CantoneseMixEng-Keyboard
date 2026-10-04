@@ -1,5 +1,18 @@
 # Build verification — 0.6.0 source preview
 
+## Reference key proportions
+
+Verified code commit: `ec42d6615bf686cf888f69bfee2ff4a9058419c1`, 2026-10-04 UTC.
+
+- Push verification: https://github.com/mikegundam0510-sketch/kaiboard-samsung/actions/runs/37174672639 — success. 45 JVM tests and four AndroidX touch tests passed, no failures/skipped tests. Lint: 14 warnings, no blocking errors. Full emulator UI acceptance passed, including the new 96px / 48dp letter-key bounds and row-pitch assertions at density 320, shared-row stability and all existing input checks.
+- Actual idle/typing screenshots inspected at 360dp and 720dp widths: radicals and icons are visible, and keyboard height is another 30dp lower than the shared-row build. Top edge moved from y=818 to y=878 on cover and y=1018 to y=1078 on unfolded, both 60px at density 320.
+- Evidence: https://github.com/mikegundam0510-sketch/kaiboard-samsung/actions/runs/37174672639/artifacts/11292759064 ; SHA256 `6adea8fafe6a0e24ebbfb2f69808b97c2e8476d317ddc991884eb44aab23f49a`. The inspected ZIP contains no APK; internal test packages were removed.
+- A separate PR run on the same code (37174674487) failed its English confirmation check: `hello` was entered as `helo`, then Space added a space correctly. The independent successful run passed this check and the remaining rapid/edge/gesture checks without changing production code or weakening assertions. The cause of that isolated dropped repeat tap is unresolved; these emulator results do not guarantee zero missed taps on real Samsung/Fold hardware.
+
+- Matched the supplied reference by proportional measurement at equal keyboard widths. Standard letter-key face height is 40dp (previously 50dp), vertical visual gap 8dp (previously 6dp), horizontal visual gap 5dp (previously 4dp). The resulting 48dp row pitch closely follows the reference's approximately 47dp pitch at 360dp width; exact physical size depends on device density, screen and one-hand settings.
+- Number-key face remains 37dp. Enter now uses the same visual insets as adjacent keys. Landscape compact height is 36dp.
+- Standard/high/extra-high preferences become 40/46/52dp, with one-time migration from the old 50/56/62dp choices. Full key bounds still receive touches including the visual gaps. Existing shared toolbar/candidate row behavior is retained.
+
 ## Shared toolbar and candidate row
 
 Verified code commit: `c726b5062ed42a7b8c5873deeae77bc11ae124b7`, 2026-10-04 UTC.
