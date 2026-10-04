@@ -188,7 +188,7 @@ assert editor_text()=="你", "Quick typo suggestion failed"
 reset_field();long_tap("逗號，長按快捷標點");tap("？")
 assert editor_text()=="？", "Quick punctuation failed"
 # Symbol layout: question immediately left of Delete, bottom comma/dot and longer space.
-reset_field();tap_text("123")
+reset_field("x");tap_text("123")
 delete=find("刪除，長按連續刪除")
 bx,by=map(int,center(delete))
 questions=[n for n in tree().iter("node") if n.get("text")=="?" and n.get("clickable")=="true"]
@@ -196,9 +196,9 @@ left=min(questions,key=lambda n:abs(int(center(n)[0])-bx))
 qx,qy=map(int,center(left))
 assert qx<bx and abs(qy-by)<5, "Question mark is not immediately left of Backspace"
 adb("shell","input","tap",str(qx),str(qy));time.sleep(.4)
-assert editor_text()=="?", "Question key output is incorrect"
+assert editor_text()=="x?", "Question key output is incorrect"
 tap("刪除，長按連續刪除")
-assert editor_text()=="", "Moved Backspace did not delete"
+assert editor_text()=="x", "Moved Backspace did not delete"
 comma=find("逗號，長按快捷標點");period=find("句號，長按快捷標點")
 cx,cy=map(int,center(comma));px,py=map(int,center(period))
 space=find("空白鍵，左右滑動移動游標")
@@ -210,12 +210,12 @@ cb=list(map(int,re.findall(r"\d+",comma.get("bounds"))))
 assert sb[2]-sb[0]>4*(cb[2]-cb[0]), "Symbol spacebar is too short"
 assert not any(n.get("text")=="。" and n.get("clickable")=="true" for n in tree().iter("node")), "Chinese full-stop key still present"
 tap("逗號，長按快捷標點");tap("句號，長按快捷標點")
-assert editor_text()==",.", "Bottom comma/dot output is incorrect"
+assert editor_text()=="x,.", "Bottom comma/dot output is incorrect"
 shot("12-symbol-layout")
 tap_text("#+=")
 assert find("刪除，長按連續刪除") is not None, "Extra-symbol page lost Backspace"
 tap("刪除，長按連續刪除")
-assert editor_text()==",", "Extra-symbol Backspace did not delete"
+assert editor_text()=="x,", "Extra-symbol Backspace did not delete"
 tap_text("ABC")
 # Drag over character keys moves the editor cursor, without inserting those keys.
 reset_field("abcdefghij")
@@ -320,3 +320,4 @@ for name,size,density in (("cover","720x1600","320"),("unfolded","1440x1800","32
     assert find("Emoji") is not None, "Clearing codes did not restore toolbar"
 adb("shell","wm","size","reset");adb("shell","wm","density","reset")
 (out/"result.txt").write_text("PASS: shared toolbar/candidate row, compact code badge, stable height and toolbar restore, emoji, single candidate strip and swipe, HK ranking, reselection/segment edit, English learning/repair, mixed sentence, pin/unpin, integrated Quick repair and code provenance, punctuation, cursor swipes, edge taps, rapid input, prefix selection, stale-search cancellation, expanded per-character selector, URI automatic mixed input/restart, bottom globe, text editing arrows/selection/copy/paste/Unicode deletion, restricted fields, cover/unfolded layout bounds. Voice and physical Samsung/Fold acceptance remain device checks; synthetic overlapping finger dispatch is verified separately by instrumentation.\n",encoding="utf-8")
+

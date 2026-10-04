@@ -46,7 +46,7 @@ jobs:
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
-      - name: Verify clipboard, text editing, keyboard and handwriting on emulator
+      - name: Verify symbol layout on cover and unfolded emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 31
@@ -55,11 +55,11 @@ jobs:
           disk-size: 2048M
           emulator-boot-timeout: 300
           disable-animations: true
-          script: python3 tools/device_acceptance.py
+          script: python3 tools/symbol_smoke.py
       - name: Include device acceptance evidence
         if: always()
         run: |
-          for folder in handwriting-evidence clipboard-evidence ui-evidence acceptance-evidence; do
+          for folder in symbol-evidence handwriting-evidence clipboard-evidence ui-evidence acceptance-evidence; do
             if [ -d "$folder" ]; then cp -r "$folder" device-test/; fi
           done
       - uses: actions/upload-artifact@v4
