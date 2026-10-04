@@ -417,7 +417,7 @@ public final class KaiboardService extends InputMethodService {
     private void readClipboardOnDemand() {
         if (secure) return;
         if (noLearning) sessionClipboard.clear();
-        ClipboardManager manager = (ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
+        android.content.ClipboardManager manager = (android.content.ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
         try {
             ClipData clip = manager == null ? null : manager.getPrimaryClip();
             if (clip == null) return;
