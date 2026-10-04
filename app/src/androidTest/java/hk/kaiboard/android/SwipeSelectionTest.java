@@ -96,6 +96,23 @@ public class SwipeSelectionTest {
   instrumentation.waitForIdleSync();SystemClock.sleep(200);
  }
 
+
+ @Test public void voiceRecoveryAndCancel()throws Exception{
+  shell("pm grant hk.kaiboard.android android.permission.RECORD_AUDIO");
+  AccessibilityServiceInfo info=instrumentation.getUiAutomation().getServiceInfo();info.flags|=AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS;instrumentation.getUiAutomation().setServiceInfo(info);
+  main(()->{edit.setInputType(android.text.InputType.TYPE_CLASS_TEXT|android.text.InputType.TYPE_TEXT_FLAG_MULTI_LINE);edit.setText("");edit.requestFocus();});
+  SystemClock.sleep(700);
+  main(()->{InputMethodManager manager=(InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);manager.restartInput(edit);manager.showSoftInput(edit,InputMethodManager.SHOW_FORCED);});
+  drag(key("C，金"),0);drag(key("刪除，長按連續刪除"),0);
+  main(()->assertEquals("",edit.getText().toString()));
+  drag(key("語音輸入"),0);key("語音設定");screenshot("voice-recovery");drag(key("取消"),0);key("語音輸入");
+  drag(key("語音輸入"),0);key("語音設定");drag(key("取消"),0);key("語音輸入");screenshot("voice-cancelled");
+  main(()->assertEquals("",edit.getText().toString()));
+  for(int input:new int[]{android.text.InputType.TYPE_CLASS_TEXT|android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD,android.text.InputType.TYPE_CLASS_TEXT}){
+   main(()->{edit.setInputType(input);edit.setImeOptions(input==android.text.InputType.TYPE_CLASS_TEXT?EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING:0);((InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE)).restartInput(edit);});SystemClock.sleep(700);
+   boolean found=false;for(AccessibilityWindowInfo window:instrumentation.getUiAutomation().getWindows()){AccessibilityNodeInfo mic=find(window.getRoot(),"語音輸入");if(mic!=null){assertFalse(mic.isEnabled());found=true;}}assertTrue(found);
+  }
+ }
  private java.io.Reader asset(String name)throws Exception{return new java.io.InputStreamReader(instrumentation.getTargetContext().getAssets().open(name),java.nio.charset.StandardCharsets.UTF_8);}
  private String[] autoFixture()throws Exception{
   DictionaryEngine d=new DictionaryEngine(asset("cangjie5.base.dict.yaml"),asset("english.txt"),asset("character_frequencies.tsv"));
