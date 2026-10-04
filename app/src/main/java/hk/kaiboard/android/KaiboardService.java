@@ -1240,7 +1240,7 @@ public final class KaiboardService extends InputMethodService {
             startActivity(new Intent(this, VoicePermissionActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
             return;
         }
-        startVoice(true);
+        startVoice(prefs.getBoolean("voice_offline_only", false));
     }
 
     private void voiceRecovery(String reason) {
@@ -1249,7 +1249,7 @@ public final class KaiboardService extends InputMethodService {
         final int session = voiceSession;
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this)
             .setTitle("語音輸入")
-            .setMessage(reason + "\n\n預設只用裝置內辨識。你可選擇今次用手機預設語音服務；該服務可能透過網絡處理語音。鍵盤唔會儲存錄音，亦唔會自動轉用網上辨識。")
+            .setMessage(reason + "\n\n你已開啟只用裝置內辨識。可在設定關閉此選項，或今次用手機預設語音服務；該服務可能透過網絡處理語音。鍵盤唔會儲存錄音，亦唔會自動轉用網上辨識。")
             .setNegativeButton("取消", null)
             .setNeutralButton("語音設定", (dialog, which) -> {
                 try { startActivity(new Intent("android.settings.VOICE_INPUT_SETTINGS").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)); }
@@ -1336,7 +1336,7 @@ public final class KaiboardService extends InputMethodService {
             }
         });
         render();
-        if (Build.VERSION.SDK_INT >= 33) {
+        if (onDevice && Build.VERSION.SDK_INT >= 33) {
             final boolean[] started = {false};
             voiceSupportTimeout = () -> {
                 if (session == voiceSession && !started[0]) {

@@ -22,12 +22,15 @@ Ordinary-field context is used temporarily for offline suggestions, not written 
 Clipboard contents are accessed only for an explicit paste action, with no clipboard
 listener or history store.
 
-Voice input defaults to Android's on-device recognition API (API 31+), only after a
-user tap and microphone permission. If a service or language model is unavailable,
-the user may explicitly choose the network-capable system recognizer for that attempt
-in a keyboard dialog. The dialog discloses that the provider may process audio online.
-There is no automatic network fallback or saved consent; every new microphone tap
-starts with on-device recognition. The app does not save audio. The recognition service and operating system remain separate
+Voice input starts the phone's default recognition service directly after a microphone
+button tap and permission grant. That external service may process audio online. This
+behavior restores the earlier user-requested direct voice flow; no offline-model or
+per-attempt provider confirmation dialog blocks the default path. Settings and the
+first microphone-permission explanation disclose the provider's possible network use.
+Users may explicitly enable `voice_offline_only` to require Android's on-device
+recognition API. In that mode, unavailable models produce recovery choices and never
+silently switch to online recognition. The keyboard does not save audio. The recognition
+service and operating system remain separate
 components, outside this source review. Galaxy AI shortcuts only explain how to use
 Samsung's tools; choosing those tools is subject to Samsung's own data handling.
 

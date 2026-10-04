@@ -98,6 +98,7 @@ public class SwipeSelectionTest {
 
 
  @Test public void voiceRecoveryAndCancel()throws Exception{
+  main(()->Prefs.get(instrumentation.getTargetContext()).edit().putBoolean("voice_offline_only",true).commit());
   shell("pm grant hk.kaiboard.android android.permission.RECORD_AUDIO");
   AccessibilityServiceInfo info=instrumentation.getUiAutomation().getServiceInfo();info.flags|=AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS;instrumentation.getUiAutomation().setServiceInfo(info);
   main(()->{edit.setInputType(android.text.InputType.TYPE_CLASS_TEXT|android.text.InputType.TYPE_TEXT_FLAG_MULTI_LINE);edit.setText("");edit.requestFocus();});
@@ -111,6 +112,36 @@ public class SwipeSelectionTest {
   for(int input:new int[]{android.text.InputType.TYPE_CLASS_TEXT|android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD,android.text.InputType.TYPE_CLASS_TEXT}){
    main(()->{edit.setInputType(input);edit.setImeOptions(input==android.text.InputType.TYPE_CLASS_TEXT?EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING:0);((InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE)).restartInput(edit);});SystemClock.sleep(700);
    boolean found=false;for(AccessibilityWindowInfo window:instrumentation.getUiAutomation().getWindows()){AccessibilityNodeInfo mic=find(window.getRoot(),"語音輸入");if(mic!=null){assertFalse(mic.isEnabled());found=true;}}assertTrue(found);
+  }
+  main(()->Prefs.get(instrumentation.getTargetContext()).edit().remove("voice_offline_only").commit());
+ }
+ @Test public void systemVoiceStartsDirectlyAndCancelPreventsInsertion()throws Exception{
+  main(()->{
+   Prefs.get(instrumentation.getTargetContext()).edit().remove("voice_offline_only").commit();
+   assertFalse(Prefs.get(instrumentation.getTargetContext()).getBoolean("voice_offline_only",false));
+  });
+  shell("pm grant hk.kaiboard.android android.permission.RECORD_AUDIO");
+  shell("pm grant hk.kaiboard.android.test android.permission.RECORD_AUDIO");
+  String original=android.provider.Settings.Secure.getString(instrumentation.getTargetContext().getContentResolver(),"voice_recognition_service");
+  shell("settings put secure voice_recognition_service hk.kaiboard.android.test/hk.kaiboard.android.FakeVoiceService");
+  try{
+   AccessibilityServiceInfo info=instrumentation.getUiAutomation().getServiceInfo();info.flags|=AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS;instrumentation.getUiAutomation().setServiceInfo(info);
+   main(()->{edit.setInputType(android.text.InputType.TYPE_CLASS_TEXT|android.text.InputType.TYPE_TEXT_FLAG_MULTI_LINE);edit.setText("");edit.requestFocus();});
+   SystemClock.sleep(700);
+   main(()->{InputMethodManager manager=(InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);manager.restartInput(edit);manager.showSoftInput(edit,InputMethodManager.SHOW_FORCED);});
+   drag(key("C，金"),0);drag(key("刪除，長按連續刪除"),0);
+   drag(key("語音輸入"),0);key("停止語音輸入");
+   for(AccessibilityWindowInfo window:instrumentation.getUiAutomation().getWindows())assertNull(find(window.getRoot(),"今次用系統語音"));
+   screenshot("voice-direct");
+   SystemClock.sleep(6500);main(()->assertEquals("語音測試",edit.getText().toString()));
+   key("語音輸入");
+   main(()->{edit.setText("");((InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE)).restartInput(edit);});
+   SystemClock.sleep(700);drag(key("語音輸入"),0);drag(key("停止語音輸入"),0);
+   SystemClock.sleep(6500);main(()->assertEquals("",edit.getText().toString()));
+   key("語音輸入");screenshot("voice-direct-cancelled");
+  }finally{
+   if(original==null||original.isEmpty())shell("settings delete secure voice_recognition_service");
+   else shell("settings put secure voice_recognition_service "+original);
   }
  }
  private java.io.Reader asset(String name)throws Exception{return new java.io.InputStreamReader(instrumentation.getTargetContext().getAssets().open(name),java.nio.charset.StandardCharsets.UTF_8);}
