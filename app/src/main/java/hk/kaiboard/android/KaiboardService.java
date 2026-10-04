@@ -60,6 +60,8 @@ public final class KaiboardService extends InputMethodService {
     private SpeechRecognizer voiceRecognizer;
     private boolean voiceListening;
     private int voiceSession;
+    private android.app.AlertDialog voiceDialog;
+    private Runnable voiceSupportTimeout;
     private SharedPreferences prefs;
     private SharedPreferences learned;
     private boolean noLearning;
@@ -1114,27 +1116,74 @@ public final class KaiboardService extends InputMethodService {
     private void cancelVoice() {
         voiceSession++;
         voiceListening = false;
+        if (voiceSupportTimeout != null) { handler.removeCallbacks(voiceSupportTimeout); voiceSupportTimeout = null; }
+        if (voiceDialog != null) { voiceDialog.dismiss(); voiceDialog = null; }
         if (voiceRecognizer != null) {
-            voiceRecognizer.cancel(); voiceRecognizer.destroy(); voiceRecognizer = null;
+            SpeechRecognizer old = voiceRecognizer; voiceRecognizer = null;
+            try { old.cancel(); } catch (RuntimeException ignored) { }
+            try { old.destroy(); } catch (RuntimeException ignored) { }
         }
     }
 
     private void voice() {
         if (voiceListening) { cancelVoice(); render(); return; }
         if (noLearning || numeric || getCurrentInputConnection() == null) return;
-        if (android.os.Build.VERSION.SDK_INT < 31 || !SpeechRecognizer.isOnDeviceRecognitionAvailable(this)) {
-            Toast.makeText(this, "手機未有裝置內語音辨識；為保障私隱，不會使用雲端辨識", Toast.LENGTH_LONG).show(); return;
-        }
         if (checkSelfPermission(Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             startActivity(new Intent(this, VoicePermissionActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
             return;
         }
+        startVoice(true);
+    }
+
+    private void voiceRecovery(String reason) {
+        if (destroyed || noLearning || numeric || !isInputViewShown() || getCurrentInputConnection() == null) return;
+        final InputConnection editor = getCurrentInputConnection();
+        final int session = voiceSession;
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this)
+            .setTitle("語音輸入")
+            .setMessage(reason + "\n\n預設只用裝置內辨識。你可選擇今次用手機預設語音服務；該服務可能透過網絡處理語音。鍵盤唔會儲存錄音，亦唔會自動轉用網上辨識。")
+            .setNegativeButton("取消", null)
+            .setNeutralButton("語音設定", (dialog, which) -> {
+                try { startActivity(new Intent("android.settings.VOICE_INPUT_SETTINGS").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)); }
+                catch (ActivityNotFoundException unavailable) {
+                    startActivity(new Intent(android.provider.Settings.ACTION_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                }
+            });
+        if (SpeechRecognizer.isRecognitionAvailable(this)) builder.setPositiveButton("今次用系統語音", (dialog, which) -> {
+            if (session == voiceSession && editor == getCurrentInputConnection() && isInputViewShown() && !noLearning)
+                startVoice(false);
+        });
+        voiceDialog = builder.create();
+        Window window = voiceDialog.getWindow();
+        if (window == null || getWindow() == null) { voiceDialog = null; return; }
+        WindowManager.LayoutParams attributes = window.getAttributes();
+        attributes.type = WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG;
+        attributes.token = getWindow().getWindow().getDecorView().getWindowToken();
+        window.setAttributes(attributes);
+        final android.app.AlertDialog shown = voiceDialog;
+        shown.setOnDismissListener(dialog -> { if (voiceDialog == shown) voiceDialog = null; });
+        try { voiceDialog.show(); }
+        catch (WindowManager.BadTokenException exception) {
+            voiceDialog = null; Toast.makeText(this, reason, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void startVoice(boolean onDevice) {
+        if (noLearning || numeric || destroyed || !isInputViewShown() || getCurrentInputConnection() == null) return;
+        cancelVoice();
+        if (onDevice && (Build.VERSION.SDK_INT < 31 || !SpeechRecognizer.isOnDeviceRecognitionAvailable(this))) {
+            voiceRecovery("手機未有可用嘅裝置內語音辨識服務。"); return;
+        }
         finishLiteral();
         final int session = ++voiceSession;
         final InputConnection editor = getCurrentInputConnection();
-        try { voiceRecognizer = SpeechRecognizer.createOnDeviceSpeechRecognizer(this); }
+        final boolean englishVoice = ascii;
+        try { voiceRecognizer = onDevice ? SpeechRecognizer.createOnDeviceSpeechRecognizer(this) : SpeechRecognizer.createSpeechRecognizer(this); }
         catch (RuntimeException exception) {
-            Toast.makeText(this, "未能啟動裝置內語音辨識", Toast.LENGTH_LONG).show(); return;
+            cancelVoice();
+            if (onDevice) voiceRecovery("未能連接裝置內語音辨識服務。");
+            else Toast.makeText(this, "未能連接系統語音服務；請檢查語音設定", Toast.LENGTH_LONG).show();
+            return;
         }
         voiceListening = true;
         voiceRecognizer.setRecognitionListener(new RecognitionListener() {
@@ -1150,10 +1199,8 @@ public final class KaiboardService extends InputMethodService {
             @Override public void onError(int error) {
                 if (session != voiceSession) return;
                 cancelVoice(); render();
-                String message = error == SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS ? "請允許咪高峰權限" :
-                    error == SpeechRecognizer.ERROR_NO_MATCH || error == SpeechRecognizer.ERROR_SPEECH_TIMEOUT ? "未聽清楚，請再試" :
-                    "語音辨識暫時未能使用，請檢查裝置內辨識服務及離線語言支援";
-                Toast.makeText(KaiboardService.this, message, Toast.LENGTH_LONG).show();
+                if (onDevice && VoicePolicy.recovery(error)) voiceRecovery(VoicePolicy.error(error));
+                else Toast.makeText(KaiboardService.this, VoicePolicy.error(error), Toast.LENGTH_LONG).show();
             }
             @Override public void onResults(Bundle results) {
                 if (session != voiceSession) return;
@@ -1166,15 +1213,56 @@ public final class KaiboardService extends InputMethodService {
         });
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, ascii ? "en-HK" : "yue-HK");
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, englishVoice ? "en-HK" : "yue-HK");
         intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
-        intent.putExtra(RecognizerIntent.EXTRA_PREFER_OFFLINE, true);
+        intent.putExtra(RecognizerIntent.EXTRA_PREFER_OFFLINE, onDevice);
         // Public API 33 extra; use its wire key so older Android versions can ignore it safely.
         intent.putExtra("android.speech.extra.MASK_OFFENSIVE_WORDS", false);
-        try { voiceRecognizer.startListening(intent); render(); }
+        render();
+        if (Build.VERSION.SDK_INT >= 33) {
+            final boolean[] started = {false};
+            voiceSupportTimeout = () -> {
+                if (session == voiceSession && !started[0]) {
+                    started[0] = true; listenVoice(session, intent, onDevice);
+                }
+            };
+            handler.postDelayed(voiceSupportTimeout, 3500);
+            try {
+                voiceRecognizer.checkRecognitionSupport(intent, handler::post, new RecognitionSupportCallback() {
+                    @Override public void onSupportResult(RecognitionSupport support) {
+                        if (session != voiceSession || started[0]) return;
+                        started[0] = true; handler.removeCallbacks(voiceSupportTimeout); voiceSupportTimeout = null;
+                        List<String> languages = new ArrayList<>(support.getInstalledOnDeviceLanguages());
+                        if (!onDevice) languages.addAll(support.getOnlineLanguages());
+                        String language = VoicePolicy.language(englishVoice, languages);
+                        if (language == null && onDevice) {
+                            cancelVoice(); render();
+                            voiceRecovery("手機未有可用嘅" + (englishVoice ? "英文" : "廣東話") + "離線語音模型；請在語音設定檢查語言支援。");
+                        } else {
+                            if (language != null) intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, language);
+                            listenVoice(session, intent, onDevice);
+                        }
+                    }
+                    @Override public void onError(int error) {
+                        if (session != voiceSession || started[0]) return;
+                        started[0] = true; handler.removeCallbacks(voiceSupportTimeout); voiceSupportTimeout = null;
+                        // Some OEM services implement recognition but cannot answer support queries.
+                        listenVoice(session, intent, onDevice);
+                    }
+                });
+            } catch (RuntimeException exception) {
+                if (!started[0]) { started[0] = true; handler.removeCallbacks(voiceSupportTimeout); voiceSupportTimeout = null; listenVoice(session, intent, onDevice); }
+            }
+        } else listenVoice(session, intent, onDevice);
+    }
+
+    private void listenVoice(int session, Intent intent, boolean onDevice) {
+        if (session != voiceSession || voiceRecognizer == null || noLearning || !isInputViewShown()) return;
+        try { voiceRecognizer.startListening(intent); }
         catch (RuntimeException exception) {
             cancelVoice(); render();
-            Toast.makeText(this, "未能啟動語音辨識服務", Toast.LENGTH_LONG).show();
+            if (onDevice) voiceRecovery("未能啟動裝置內語音辨識服務。");
+            else Toast.makeText(this, "未能啟動系統語音服務；請檢查咪高峰權限及語音設定", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -1541,4 +1629,3 @@ public final class KaiboardService extends InputMethodService {
     }
     private int dp(float value) { return Math.round(value * getResources().getDisplayMetrics().density); }
 }
-
