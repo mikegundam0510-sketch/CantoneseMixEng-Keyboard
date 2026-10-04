@@ -64,7 +64,8 @@ def type_code(code):
         time.sleep(.08)
     time.sleep(.8)
 def editor_text():
-    return next(n.get("text","") for n in tree().iter("node") if n.get("class")=="android.widget.EditText")
+    value = next(n.get("text","") for n in tree().iter("node") if n.get("class")=="android.widget.EditText")
+    return "" if value == "試打中文、English 或 Emoji…" else value
 def long_tap(desc):
     x,y=center(find(desc));adb("shell","input","swipe",x,y,x,y,"800");time.sleep(.4)
 def tap_text(value):
@@ -83,25 +84,30 @@ adb("shell","am","start","--activity-single-top","-n","hk.kaiboard.android/.Keyb
 time.sleep(1)
 # Select with keyboard arrows, copy/paste and delete.
 reset_field("香港Hello");tap("文字編輯");shot("17-text-editor")
-tap("移到文字開頭");tap("開始或停止選取文字");tap("游標向右");tap("游標向右")
+tap("移到文字開頭");tap("開始或停止選取文字");tap("游標向右");tap("游標向右");shot("18-text-editor-highlight")
 tap("複製選取文字");tap("開始或停止選取文字");tap("移到文字結尾");tap("貼上文字")
 assert editor_text()=="香港Hello香港", "Arrow selection/copy/paste failed"
+print("PASS: horizontal selection/copy/paste",flush=True)
 tap("全部選取");tap("刪除選取文字或前一個字")
 assert editor_text()=="", "Select all/delete failed"
 tap("貼上文字");assert editor_text()=="香港", "Copy contents or paste changed"
+print("PASS: select all/delete/paste",flush=True)
 tap("返回鍵盤");assert find("O，人") is not None, "Editing back button lost keyboard"
 reset_field("甲\n乙\n丙");tap("文字編輯");tap("移到文字開頭");tap("游標向下")
 tap("刪除選取文字或前一個字")
 assert editor_text()=="甲乙\n丙", "Down movement did not preserve column"
 tap("移到文字結尾");tap("游標向上");tap("刪除選取文字或前一個字")
 assert editor_text()=="乙\n丙", "Up movement did not preserve column"
+print("PASS: multiline cursor arrows",flush=True)
 tap("返回鍵盤")
 reset_field("甲\n乙\n丙");tap("文字編輯");tap("移到文字開頭");tap("開始或停止選取文字");tap("游標向下")
 tap("複製選取文字");tap("開始或停止選取文字");tap("移到文字結尾");tap("貼上文字")
 assert editor_text()=="甲\n乙\n丙甲\n", "Vertical selection/copy failed"
+print("PASS: vertical selection/copy",flush=True)
 tap("返回鍵盤")
 reset_field("abcd");tap("文字編輯");tap("移到文字開頭");long_tap("游標向右");tap("刪除選取文字或前一個字")
 assert editor_text()=="abc", "Held arrow did not repeat or failed to stop"
+print("PASS: held arrow repeats and stops",flush=True)
 tap("返回鍵盤")
 reset_field("A😀B");tap("文字編輯");tap("游標向左");tap("開始或停止選取文字");tap("游標向左")
 tap("刪除選取文字或前一個字")
