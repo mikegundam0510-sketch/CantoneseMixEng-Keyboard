@@ -951,6 +951,8 @@ public final class KaiboardService extends InputMethodService {
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, ascii ? "en-HK" : "yue-HK");
         intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
+        // Public API 33 extra; use its wire key so older Android versions can ignore it safely.
+        intent.putExtra("android.speech.extra.MASK_OFFENSIVE_WORDS", false);
         try { voiceRecognizer.startListening(intent); render(); }
         catch (RuntimeException exception) {
             cancelVoice(); render();
