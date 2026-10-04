@@ -3,15 +3,12 @@ plugins { id 'com.android.application' }
 android {
     namespace 'hk.kaiboard.android'
     compileSdk 35
-    ndkVersion '27.0.12077973'
-    externalNativeBuild { cmake { path 'src/main/cpp/CMakeLists.txt'; version '3.22.1' } }
     defaultConfig {
         applicationId 'hk.kaiboard.android'
         minSdk 26
         targetSdk 35
-        versionCode 15
-        versionName '0.6.8'
-        ndk { abiFilters 'arm64-v8a', 'armeabi-v7a', 'x86_64' }
+        versionCode 16
+        versionName '0.6.9'
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
     compileOptions {
@@ -22,15 +19,14 @@ android {
     testOptions { unitTests.returnDefaultValues = true }
 }
 
-tasks.register('prepareHandwritingModel', Exec) {
+tasks.register('prepareStrokeData', Exec) {
     workingDir rootProject.projectDir
-    commandLine 'python3', 'tools/prepare_handwriting_model.py'
-    inputs.files rootProject.file('tools/prepare_handwriting_model.py'), rootProject.file('tools/build_handwriting_shapes.py')
-    outputs.file 'src/main/assets/handwriting-zh_TW.model'
-    outputs.file 'src/main/assets/handwriting-shapes.bin'
-    outputs.dir 'src/main/assets/licenses/handwriting'
+    commandLine 'python3', 'tools/prepare_stroke_data.py'
+    inputs.files rootProject.file('tools/prepare_stroke_data.py'), file('src/main/assets/cangjie5.base.dict.yaml'), file('src/main/assets/character_frequencies.tsv')
+    outputs.file 'src/main/assets/stroke.tsv'
+    outputs.dir 'src/main/assets/licenses/stroke'
 }
-tasks.named('preBuild').configure { dependsOn 'prepareHandwritingModel' }
+tasks.named('preBuild').configure { dependsOn 'prepareStrokeData' }
 
 dependencies {
     testImplementation 'junit:junit:4.13.2'

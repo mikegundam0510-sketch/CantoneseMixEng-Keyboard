@@ -71,6 +71,10 @@ final class KeyboardKey extends TextView {
             case "bulb":
                 canvas.drawArc(5,2,19,17,140,260,false,paint);path.moveTo(6,14);path.lineTo(9,19);path.lineTo(15,19);path.lineTo(18,14);canvas.drawPath(path,paint);
                 canvas.drawLine(9,22,15,22,paint);break;
+            case "stroke":
+                canvas.drawLine(3,5,12,5,paint); canvas.drawLine(18,2,18,10,paint);
+                canvas.drawLine(8,13,3,21,paint); canvas.drawLine(13,14,16,18,paint);
+                path.moveTo(18,13);path.lineTo(23,13);path.lineTo(19,21);canvas.drawPath(path,paint);break;
             case "symbols":
                 paint.setStyle(Paint.Style.FILL);paint.setTextSize(14);paint.setTextAlign(Paint.Align.CENTER);canvas.drawText("&%",12,17,paint);break;
             case "flag":

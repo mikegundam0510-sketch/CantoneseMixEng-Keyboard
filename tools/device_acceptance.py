@@ -7,7 +7,7 @@ subprocess.run(['adb','install','-r','app/build/outputs/apk/androidTest/debug/ap
 r=subprocess.run(['adb','shell','am','instrument','-w','hk.kaiboard.android.test/androidx.test.runner.AndroidJUnitRunner'],text=True,capture_output=True,timeout=180)
 (out/'instrumentation.txt').write_text(r.stdout+r.stderr)
 results['Android touch tests']=r.returncode==0 and 'OK (' in r.stdout and 'FAILURES!!!' not in r.stdout
-for script in ['clipboard_smoke.py','editor_smoke.py','ui_smoke.py','handwriting_smoke.py']:
+for script in ['clipboard_smoke.py','editor_smoke.py','ui_smoke.py','stroke_smoke.py']:
     print('Running '+script,flush=True)
     r=subprocess.run([sys.executable,'tools/'+script],text=True,capture_output=True,timeout=1200)
     (out/(script+'.log')).write_text(r.stdout+r.stderr)
