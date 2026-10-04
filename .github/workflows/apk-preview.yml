@@ -1,4 +1,5 @@
-# Initialize served preview editor before voice acceptance.
+# Combined swipe/bilingual/autocorrect touch acceptance passed on c62b8cec01c5d7a7df3d4d74d24edc6aa3396d64.
+# App source is unchanged; finish the voice regression.
 name: Device test APK 0.6.12
 on:
   push:
@@ -55,7 +56,7 @@ jobs:
           disk-size: 2048M
           emulator-boot-timeout: 300
           disable-animations: true
-          script: adb shell wm size 720x1600 && adb shell wm density 320 && python3 tools/verify_selection.py && python3 tools/voice_smoke.py
+          script: adb shell wm size 720x1600 && adb shell wm density 320 && python3 tools/voice_smoke.py
       - name: Include device acceptance evidence
         if: always()
         run: |
