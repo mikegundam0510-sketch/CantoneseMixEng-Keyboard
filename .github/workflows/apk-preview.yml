@@ -34,7 +34,7 @@ jobs:
           git rev-parse HEAD >> device-test/APK-verification.txt
       - name: Free build-only tools before emulator startup
         run: |
-          sudo python3 - <<'PY'
+          sudo env ANDROID_HOME="$ANDROID_HOME" python3 - <<'PY'
           import os, pathlib, shutil
           for target in (pathlib.Path('/usr/share/dotnet'), pathlib.Path(os.environ['ANDROID_HOME'])/'ndk'/'27.0.12077973'):
               if target.is_dir(): shutil.rmtree(target)
