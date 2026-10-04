@@ -183,7 +183,8 @@ public final class KaiboardService extends InputMethodService {
         dismissSelectionPopup();
         stopRepeat(); colors(); expandedScroll = null; candidateRow = null; raw = null; codeLabel = null; expandedMode = null; nextPage = null;
         quick = prefs.getBoolean("quick", true); cangjie = prefs.getBoolean("cangjie", true); english = prefs.getBoolean("english", true);
-        root.removeAllViews(); root.setBackgroundColor(bg); root.setPadding(dp(splitLayout() ? 14 : 4), dp(5), dp(splitLayout() ? 14 : 4), dp(6));
+        int sidePadding = splitLayout() ? Math.round(foldWidth() * .041f) : 4;
+        root.removeAllViews(); root.setBackgroundColor(bg); root.setPadding(dp(sidePadding), dp(5), dp(sidePadding), dp(6));
         LinearLayout dock = row(root);
         String hand = prefs.getString("hand", "full");
         if (hand.equals("right")) dock.addView(new View(this), new LinearLayout.LayoutParams(0, 1, .18f));
@@ -266,7 +267,7 @@ public final class KaiboardService extends InputMethodService {
                 LinearLayout line = row(panel); int i = 0;
                 for (char n : "1234567890".toCharArray()) {
                     if (splitLayout() && i++ == 5) splitGap(line);
-                    key(line, "" + n, 1, false, () -> insert("" + n), 37);
+                    key(line, "" + n, 1, false, () -> insert("" + n), splitLayout() ? Math.round(keyHeight() * .92f) : 37);
                 }
             }
             letters("qwertyuiop", false); letters("asdfghjkl", false); letters("zxcvbnm", true);
@@ -1192,7 +1193,8 @@ public final class KaiboardService extends InputMethodService {
     private TextView key(LinearLayout parent, String label, float weight, boolean special, Runnable action, int height) {
         KeyboardKey button = new KeyboardKey(this); button.setText(label); button.setTextColor(fg); button.setTextSize(label.length() > 2 && !label.contains("\n") ? 13 : 22);
         button.setGravity(Gravity.CENTER); button.setIncludeFontPadding(false); button.setMaxLines(2); button.setSingleLine(false);
-        button.setBackground(new android.graphics.drawable.InsetDrawable(background(special ? functionColor : keyColor), dp(2.5f), dp(4), dp(2.5f), dp(4))); button.setFocusable(true);
+        float horizontalInset = splitLayout() ? foldWidth() * .0055f : 2.5f;
+        button.setBackground(new android.graphics.drawable.InsetDrawable(background(special ? functionColor : keyColor), dp(horizontalInset), dp(4), dp(horizontalInset), dp(4))); button.setFocusable(true);
         switch (label) {
             case "☺": button.icon("emoji"); break;
             case "⌫": button.icon("delete"); break;
@@ -1215,10 +1217,19 @@ public final class KaiboardService extends InputMethodService {
     }
 
     private int keyHeight() {
+        if (splitLayout()) {
+            // Samsung Fold reference: letter face height is about 5.5% of the unfolded width.
+            float preferenceScale = Integer.parseInt(prefs.getString("height", "40")) / 40f;
+            return Math.round(Math.max(34, Math.min(48, foldWidth() * .055f)) * preferenceScale);
+        }
         return getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE && !splitLayout() ? 36 : Integer.parseInt(prefs.getString("height", "40"));
     }
+    private int foldWidth() {
+        return getResources().getConfiguration().screenWidthDp;
+    }
     private void splitGap(LinearLayout line) {
-        line.addView(new View(this), new LinearLayout.LayoutParams(dp(Math.min(80,getResources().getConfiguration().screenWidthDp * .085f)), 1));
+        // 19% gap plus the two key-face insets matches the central opening in the reference.
+        line.addView(new View(this), new LinearLayout.LayoutParams(dp(foldWidth() * .19f), 1));
     }
     private boolean splitLayout() {
         return prefs.getBoolean("split", true) && prefs.getString("hand", "full").equals("full")
