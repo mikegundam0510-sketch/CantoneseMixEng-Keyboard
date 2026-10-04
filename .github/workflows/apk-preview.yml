@@ -1,5 +1,5 @@
 name: Device test APK 0.6.5
-# Raw IME inset diagnostics use the application's debuggable flag.
+# Includes native handwriting acceptance. Raw IME inset diagnostics use the application's debuggable flag.
 on:
   push:
     branches: [codex/reference-keyboard-emoji]
@@ -32,6 +32,11 @@ jobs:
           "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging device-test/cantonesemixeng-keyboard-0.6.5-device-test.apk >> device-test/APK-verification.txt
           sha256sum device-test/cantonesemixeng-keyboard-0.6.5-device-test.apk >> device-test/APK-verification.txt
           git rev-parse HEAD >> device-test/APK-verification.txt
+      - name: Enable emulator acceleration
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
       - name: Verify native handwriting on emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
