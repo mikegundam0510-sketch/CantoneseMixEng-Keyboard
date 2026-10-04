@@ -20,6 +20,7 @@ final class StrokePanel extends LinearLayout implements AutoCloseable {
     private final LinearLayout choices;
     private final ScrollView gridScroll;
     private final GridLayout grid;
+    private final LinearLayout strokeTop,strokeBottom;
     private final Consumer<String> commit;
     private final int fg,keyColor,accent;
     private StrokeEngine engine;
@@ -37,8 +38,8 @@ final class StrokePanel extends LinearLayout implements AutoCloseable {
         choices=new LinearLayout(context);scroll.addView(choices);candidateBar.addView(scroll,new LayoutParams(0,dp(50),1));
         expand=button(candidateBar,"⌄","展開或收起筆劃候選",()->{expanded=!expanded;refresh();},.18f,44);
         grid=new GridLayout(context);grid.setColumnCount(5);gridScroll=new ScrollView(context);gridScroll.addView(grid);addView(gridScroll,new LayoutParams(-1,dp(172)));
-        LinearLayout top=row();stroke(top,"一\n橫",'h',"筆劃：橫");stroke(top,"丨\n豎",'s',"筆劃：豎");stroke(top,"丿\n撇",'p',"筆劃：撇");
-        LinearLayout second=row();stroke(second,"丶\n點／捺",'n',"筆劃：點捺");stroke(second,"乙\n折",'z',"筆劃：折");stroke(second,"＊\n代一筆",'*',"筆劃：萬用一筆");
+        strokeTop=row();LinearLayout top=strokeTop;stroke(top,"一\n橫",'h',"筆劃：橫");stroke(top,"丨\n豎",'s',"筆劃：豎");stroke(top,"丿\n撇",'p',"筆劃：撇");
+        strokeBottom=row();LinearLayout second=strokeBottom;stroke(second,"丶\n點／捺",'n',"筆劃：點捺");stroke(second,"乙\n折",'z',"筆劃：折");stroke(second,"＊\n代一筆",'*',"筆劃：萬用一筆");
         LinearLayout bottom=row();button(bottom,"ABC","返回鍵盤",()->{code.setLength(0);back.run();},1.1f,44);
         button(bottom,",","筆劃逗號",()->punctuation(","),.65f,44);
         button(bottom,"␣","筆劃空白",()->{if(code.length()==0)commit.accept(" ");else chooseFirst();},2f,44);
@@ -71,7 +72,7 @@ final class StrokePanel extends LinearLayout implements AutoCloseable {
         choices.removeAllViews();grid.removeAllViews();
         for(String word:candidates){candidate(choices,word,false);if(expanded)candidate(grid,word,true);}
         if(engine!=null&&code.length()>0&&candidates.isEmpty()){TextView empty=new TextView(getContext());empty.setText("未有候選，繼續輸入或退格");empty.setTextColor(fg);empty.setGravity(Gravity.CENTER);choices.addView(empty,new LayoutParams(-2,dp(50)));}
-        gridScroll.setVisibility(expanded&&!candidates.isEmpty()?VISIBLE:GONE);expand.setText(expanded?"⌃":"⌄");
+        boolean showGrid=expanded&&!candidates.isEmpty();gridScroll.setVisibility(showGrid?VISIBLE:GONE);strokeTop.setVisibility(showGrid?GONE:VISIBLE);strokeBottom.setVisibility(showGrid?GONE:VISIBLE);expand.setText(expanded?"⌃":"⌄");
     }
     private void candidate(android.view.ViewGroup parent,String word,boolean expanded){
         TextView b=new TextView(getContext());b.setText(word);b.setContentDescription("筆劃候選："+word);b.setTextColor(accent);b.setTextSize(25);b.setGravity(Gravity.CENTER);
