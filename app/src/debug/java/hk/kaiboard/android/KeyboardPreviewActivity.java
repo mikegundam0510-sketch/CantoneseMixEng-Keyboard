@@ -40,6 +40,7 @@ public final class KeyboardPreviewActivity extends Activity {
                 : "number".equals(type) ? InputType.TYPE_CLASS_NUMBER
                 : InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE;
             input.setInputType(flags);
+            input.setImeOptions("private".equals(type) ? android.view.inputmethod.EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING : 0);
         }
         if (intent.hasExtra("test_text")) {
             String value = intent.getStringExtra("test_text");
@@ -50,4 +51,3 @@ public final class KeyboardPreviewActivity extends Activity {
         }
     }
 }
-

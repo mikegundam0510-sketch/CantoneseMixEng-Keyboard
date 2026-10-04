@@ -44,6 +44,9 @@ copy('sensitive-fixture',True);tap('清空剪貼簿暫存');tap('更新剪貼簿
 assert find('貼上剪貼簿：sensitive-fixture') is None
 reset('password');assert find('剪貼簿').get('enabled')=='false'
 shot('02-password')
+reset('private');copy('private-one');tap('剪貼簿');copy('private-two');tap('更新剪貼簿')
+assert find('貼上剪貼簿：private-one') is None
+assert find('貼上剪貼簿：private-two') is not None
 reset()
 # Change options via real settings UI, then verify persistence and the next editor session.
 def configure(label):
@@ -67,6 +70,9 @@ tap_text('新增快捷文字');adb('shell','input','text','AQHI-fixture');tap_te
 adb('shell','input','keyevent','4');time.sleep(.8);reset();tap('快捷文字');tap('貼上快捷文字：AQHI-fixture')
 assert editor()=='AQHI-fixture'
 tap('返回鍵盤');configure('Undo');assert find('Undo（重新選字）').get('enabled')=='false'
+tap('O，人');tap('F，火');time.sleep(.8);tap('你')
+assert editor()=='你'
+tap('Undo（重新選字）');assert editor()=='of'
 configure('候選展開');tap('候選展開');tap('O，人');time.sleep(1)
 assert any(n.get('class')=='android.widget.ScrollView' and '逐字選擇' in ET.tostring(n,encoding='unicode') for n in tree().iter('node')) or find('指定英文段或返回自動判斷') is not None
 shot('03-expanded')

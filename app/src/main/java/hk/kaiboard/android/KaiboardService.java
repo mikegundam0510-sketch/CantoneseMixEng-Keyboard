@@ -32,6 +32,7 @@ public final class KaiboardService extends InputMethodService {
     private final SessionClipboard sessionClipboard = new SessionClipboard();
     private TextView customTool;
     private void clearClipboardSession() {
+        if (clipboardMode && root != null) root.removeAllViews();
         clipboardMode = false; quickTextMode = false; expandNextCandidates = false;
         sessionClipboard.clear();
     }
@@ -415,6 +416,7 @@ public final class KaiboardService extends InputMethodService {
 
     private void readClipboardOnDemand() {
         if (secure) return;
+        if (noLearning) sessionClipboard.clear();
         ClipboardManager manager = (ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
         try {
             ClipData clip = manager == null ? null : manager.getPrimaryClip();
@@ -1478,4 +1480,3 @@ public final class KaiboardService extends InputMethodService {
     }
     private int dp(float value) { return Math.round(value * getResources().getDisplayMetrics().density); }
 }
-
