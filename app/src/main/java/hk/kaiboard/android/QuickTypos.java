@@ -43,7 +43,7 @@ public final class QuickTypos {
                     List<InputCandidate.Segment> segments=new ArrayList<>(baseline.segments);
                     segments.set(segmentIndex,new InputCandidate.Segment(corrected,letters.get(n),false));
                     InputCandidate candidate=new InputCandidate(source,segments,true);
-                    if(!candidate.text.equals(baseline.text))options.add(candidate);
+                    if(QuickDecoder.hanText(letters.get(n)) && !candidate.text.equals(baseline.text))options.add(candidate);
                 }
             }
             offset+=segment.code.length();

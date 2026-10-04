@@ -41,6 +41,19 @@ public class OfflineLanguageModelTest {
         try { OfflineLanguageModel.load(new ByteArrayInputStream("broken".getBytes(StandardCharsets.UTF_8))); fail(); }
         catch (IOException expected) { }
     }
+    @Test public void researchPhraseAndSymbolContainingCodesStayChineseAndReachable() {
+        assertEquals("研究一下", decoder.decode("mtjnmmy", (c,w)->0).get(0));
+        for (String code : Arrays.asList("mtjnmyqv", "mtjnmy", "mtjnmmy", "myqv", "mtjnmyq")) {
+            List<String> values = decoder.decode(code, (c,w)->0);
+            assertFalse(code, values.isEmpty());
+            for (String value : values) {
+                assertTrue(code + " / " + value, QuickDecoder.hanText(value));
+                assertFalse(code + " / " + value, dictionary.matchQuickCodes(code, value).isEmpty());
+            }
+        }
+        // Explicit symbol lookup remains available to the user.
+        assertTrue(dictionary.quickCandidates("yq").contains("♂"));
+    }
     @Test public void productionDecoderReturnsExactReachableDistinctCandidates() {
         for (String code : Arrays.asList("ofvd", "ofvdrf", "haeu", "rryo", "ofonaovrmrq", "hisuvmjuisgehr", "abcdef")) {
             List<String> values=decoder.decode(code,(c,w)->0,"我今日");

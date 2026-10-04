@@ -1358,10 +1358,10 @@ public final class KaiboardService extends InputMethodService {
     private int keyHeight() {
         if (splitLayout()) {
             // Samsung Fold reference: letter face height is about 5.5% of the unfolded width.
-            float preferenceScale = Integer.parseInt(prefs.getString("height", "40")) / 40f;
+            float preferenceScale = Integer.parseInt(prefs.getString("height", "44")) / 40f;
             return Math.round(Math.max(34, Math.min(48, foldWidth() * .055f)) * preferenceScale);
         }
-        return getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE && !splitLayout() ? 36 : Integer.parseInt(prefs.getString("height", "40"));
+        return getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE && !splitLayout() ? 40 : Integer.parseInt(prefs.getString("height", "44"));
     }
     private int foldWidth() {
         return getResources().getConfiguration().screenWidthDp;
@@ -1376,4 +1376,3 @@ public final class KaiboardService extends InputMethodService {
     }
     private int dp(float value) { return Math.round(value * getResources().getDisplayMetrics().density); }
 }
-

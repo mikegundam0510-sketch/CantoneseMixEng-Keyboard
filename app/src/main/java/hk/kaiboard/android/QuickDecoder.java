@@ -55,6 +55,7 @@ public final class QuickDecoder {
                 if (line.startsWith("#")) continue;
                 String[] f = line.split("\\t");
                 if (f.length != 3) continue;
+                if (!hanText(f[1])) continue;
                 double count = Double.parseDouble(f[2]);
                 if (wordCounts != null) wordCounts.merge(f[1], count, Math::max);
                 List<Token> tokens = vocabulary.computeIfAbsent(f[0], k -> new ArrayList<>());
@@ -87,7 +88,8 @@ public final class QuickDecoder {
                 List<Token> known = vocabulary.getOrDefault(part, Collections.emptyList());
                 for (int j = 0; j < Math.min(24, known.size()); j++) options.put(known.get(j).text, known.get(j).score);
                 if (length <= 2) {
-                    List<String> letters = new ArrayList<>(dictionary.quickCandidates(part));
+                    List<String> letters = new ArrayList<>();
+                    for (String word : dictionary.quickCandidates(part)) if (hanText(word)) letters.add(word);
                     letters.sort(Comparator.comparingInt((String w) -> learned.applyAsInt(part, w)).reversed());
                     for (int j = 0; j < Math.min(24, letters.size()); j++) {
                         String word = letters.get(j);
@@ -153,6 +155,13 @@ public final class QuickDecoder {
             previous = current;
         }
         return score;
+    }
+
+    // The base Cangjie dictionary also contains symbols and phonetic letters.
+    // Keep them available for direct lookup, but never splice them into Chinese sentences.
+    static boolean hanText(String text) {
+        return !text.isEmpty() && text.codePoints().allMatch(cp ->
+            Character.UnicodeScript.of(cp) == Character.UnicodeScript.HAN);
     }
 
     private static List<Path> prune(List<Path> input) {

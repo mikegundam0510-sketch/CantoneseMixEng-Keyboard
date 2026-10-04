@@ -269,9 +269,9 @@ for name,size,density in (("cover","720x1600","320"),("unfolded","1440x1800","32
         tap("切換中英文，長按選擇系統鍵盤")
     idle_bounds=find("O，人").get("bounds")
     kb=list(map(int,re.findall(r"\d+",idle_bounds)))
-    assert kb[3]-kb[1]==96, "Standard letter key must use 40dp face plus 8dp spacing"
+    assert kb[3]-kb[1]==104, "Standard letter key must use 44dp face plus 8dp spacing"
     ab=list(map(int,re.findall(r"\d+",find("A，日").get("bounds"))))
-    assert ab[1]-kb[1]==96, "Letter rows must keep the reference pitch"
+    assert ab[1]-kb[1]==104, "Letter rows must keep the roomier pitch"
     shot("17-"+name+"-idle")
     type_code("ofonaovrmrq")
     nodes=tree()
@@ -297,4 +297,3 @@ for name,size,density in (("cover","720x1600","320"),("unfolded","1440x1800","32
     assert find("Emoji") is not None, "Clearing codes did not restore toolbar"
 adb("shell","wm","size","reset");adb("shell","wm","density","reset")
 (out/"result.txt").write_text("PASS: shared toolbar/candidate row, compact code badge, stable height and toolbar restore, emoji, single candidate strip and swipe, HK ranking, reselection/segment edit, English learning/repair, mixed sentence, pin/unpin, integrated Quick repair and code provenance, punctuation, cursor swipes, edge taps, rapid input, prefix selection, stale-search cancellation, expanded per-character selector, URI automatic mixed input/restart, bottom globe, text editing arrows/selection/copy/paste/Unicode deletion, restricted fields, cover/unfolded layout bounds. Voice and physical Samsung/Fold acceptance remain device checks; synthetic overlapping finger dispatch is verified separately by instrumentation.\n",encoding="utf-8")
-
