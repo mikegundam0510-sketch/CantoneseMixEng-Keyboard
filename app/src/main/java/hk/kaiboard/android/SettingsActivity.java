@@ -65,6 +65,12 @@ public final class SettingsActivity extends Activity {
         button(methods, "管理自訂詞及置頂候選", this::managePersonal);
         text(methods, "英文段按空白鍵確認詞語及加入空格。有歧義時點「英文」指定。長按候選可置頂或分段改選；↶ 重選最近一次已完成的選字。修正候選由你選取才採用。", 13, Color.DKGRAY, false);
 
+        LinearLayout tools = card("功能列");
+        choice(tools, "自訂功能鍵", "toolbar_action", new String[]{"剪貼簿", "候選展開", "快捷文字", "Undo"},
+            new String[]{"clipboard", "expand", "quick_text", "undo"}, "clipboard");
+        button(tools, "新增快捷文字", this::addQuickText);
+        button(tools, "管理快捷文字", this::manageQuickTexts);
+
         LinearLayout look = card("外觀與手感");
         choice(look, "主題", "theme", new String[]{"跟隨系統", "淺色", "深色"}, new String[]{"system", "light", "dark"}, "system");
         choice(look, "單手模式", "hand", new String[]{"全寬", "左手", "右手"}, new String[]{"full", "left", "right"}, "full");
@@ -92,7 +98,7 @@ public final class SettingsActivity extends Activity {
         button(ai, "開啟鍵盤選擇器", () -> ((InputMethodManager)getSystemService(INPUT_METHOD_SERVICE)).showInputMethodPicker());
 
         LinearLayout about = card("離線與私隱");
-        text(about, "字碼及候選可離線使用，App 無網絡權限。上文只用於當次候選排序，不保存整段文字。自動學習及最近 Emoji 記錄預設關閉，更新時清除舊自動學習紀錄。如你自行開啟，所選中文字及英文詞或 Emoji 會儲存於手機；手動自訂詞和置頂亦會儲存，可管理及清除，不作備份或轉移。密碼欄停用候選和學習；敏感欄位及要求不學習的輸入框不使用或更新個人詞庫，亦不讀取上文或啟動語音。剪貼簿只在你按貼上時讀取。語音只使用裝置內辨識，不支援時不會改用雲端；本 App 不保存錄音。", 14, Color.DKGRAY, false);
+        text(about, "字碼及候選可離線使用，App 無網絡權限。上文只用於當次候選排序，不保存整段文字。自動學習及最近 Emoji 記錄預設關閉，更新時清除舊自動學習紀錄。如你自行開啟，所選中文字及英文詞或 Emoji 會儲存於手機；手動自訂詞和置頂亦會儲存，可管理及清除，不作備份或轉移。密碼欄停用候選和學習；敏感欄位及要求不學習的輸入框不使用或更新個人詞庫，亦不讀取上文或啟動語音。剪貼簿只在你開啟面板或按更新時讀取，最多暫存 10 項；收起鍵盤或轉到另一輸入框即清除，不寫入檔案。密碼欄不讀取，系統標示為敏感的剪貼簿不加入面板；要求不學習的輸入框只顯示當前剪貼簿。快捷文字只儲存你自行新增的內容，可刪除及清空。語音只使用裝置內辨識，不支援時不會改用雲端；本 App 不保存錄音。", 14, Color.DKGRAY, false);
         text(about, "獨立開發的 Android 鍵盤，並非 Kaiboard 或 Samsung 官方產品。採用 Rime 倉頡五代碼表與詞庫，以及 Unicode Emoji 資料；速成由首尾碼生成，選字次序可能與其他速成鍵盤不同。", 13, Color.DKGRAY, false);
         button(about, "開源資料與授權", this::showLicenses);
     }
@@ -142,6 +148,32 @@ public final class SettingsActivity extends Activity {
     private void button(LinearLayout parent, String title, Runnable action) {
         Button b = new Button(this); b.setText(title); b.setAllCaps(false); b.setTextColor(accent); b.setOnClickListener(v -> action.run());
         parent.addView(b, new LinearLayout.LayoutParams(-1, -2));
+    }
+
+    private void addQuickText() {
+        EditText input = new EditText(this); input.setHint("輸入常用句、地址或電話");
+        input.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+        AlertDialog dialog = new AlertDialog.Builder(this).setTitle("新增快捷文字").setView(input)
+            .setNegativeButton("取消",null).setPositiveButton("儲存",null).create();
+        dialog.setOnShowListener(d -> dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
+            String value = input.getText().toString(); java.util.List<String> values = QuickTexts.read(prefs);
+            if (value.trim().isEmpty() || value.length() > 2000) { input.setError("請輸入最多 2000 字的文字"); return; }
+            if (!values.contains(value)) {
+                if (values.size() >= 50) { input.setError("最多 50 項，請先刪除部分文字"); return; }
+                values.add(value); QuickTexts.write(prefs, values);
+            }
+            dialog.dismiss();
+        })); dialog.show();
+    }
+
+    private void manageQuickTexts() {
+        java.util.List<String> values = QuickTexts.read(prefs);
+        if (values.isEmpty()) { Toast.makeText(this,"未有快捷文字",Toast.LENGTH_SHORT).show(); return; }
+        new AlertDialog.Builder(this).setTitle("點選快捷文字可刪除").setItems(values.toArray(new String[0]),(d,index) -> {
+            values.remove(index); QuickTexts.write(prefs,values); manageQuickTexts();
+        }).setNegativeButton("關閉",null).setNeutralButton("清空",(d,index) ->
+            new AlertDialog.Builder(this).setTitle("清空快捷文字？").setNegativeButton("取消",null)
+                .setPositiveButton("清空",(confirm,which) -> prefs.edit().remove("quick_texts").apply()).show()).show();
     }
 
     private void addCustomWord() {
@@ -217,4 +249,5 @@ public final class SettingsActivity extends Activity {
 
     private int dp(float v) { return Math.round(v * getResources().getDisplayMetrics().density); }
 }
+
 

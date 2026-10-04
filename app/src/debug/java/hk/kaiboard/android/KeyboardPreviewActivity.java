@@ -25,6 +25,14 @@ public final class KeyboardPreviewActivity extends Activity {
     }
     @Override protected void onNewIntent(android.content.Intent intent) {
         super.onNewIntent(intent);
+        if (intent.hasExtra("test_clipboard")) {
+            android.content.ClipData clip = android.content.ClipData.newPlainText("fixture", intent.getStringExtra("test_clipboard"));
+            if (intent.getBooleanExtra("test_sensitive_clip", false)) {
+                android.os.PersistableBundle extras = new android.os.PersistableBundle();
+                extras.putBoolean("android.content.extra.IS_SENSITIVE", true); clip.getDescription().setExtras(extras);
+            }
+            ((android.content.ClipboardManager)getSystemService(CLIPBOARD_SERVICE)).setPrimaryClip(clip);
+        }
         if (intent.hasExtra("test_input_type")) {
             String type = intent.getStringExtra("test_input_type");
             int flags = "uri".equals(type) ? InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_URI

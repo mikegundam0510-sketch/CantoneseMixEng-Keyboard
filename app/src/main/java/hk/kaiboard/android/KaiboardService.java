@@ -28,6 +28,13 @@ public final class KaiboardService extends InputMethodService {
     private final ScheduledExecutorService candidateWorker = Executors.newSingleThreadScheduledExecutor();
     private Future<?> pendingCandidates;
     private boolean editMode;
+    private boolean clipboardMode, quickTextMode, expandNextCandidates;
+    private final SessionClipboard sessionClipboard = new SessionClipboard();
+    private TextView customTool;
+    private void clearClipboardSession() {
+        clipboardMode = false; quickTextMode = false; expandNextCandidates = false;
+        sessionClipboard.clear();
+    }
     private final TextEditorController textEditor = new TextEditorController();
     private TextView editorSelect;
     private Runnable editingAction;
@@ -165,6 +172,7 @@ public final class KaiboardService extends InputMethodService {
 
     @Override public void onStartInput(EditorInfo info, boolean restarting) {
         super.onStartInput(info, restarting);
+        clearClipboardSession();
         cancelVoice(); dismissSelectionPopup(); invalidateReselection(); resetComposition(); stopRepeat();
         closeHandwriting(); handwritingMode = false; editMode = false; textEditor.reset();
         selectionStart = info.initialSelStart; selectionEnd = info.initialSelEnd;
@@ -186,7 +194,7 @@ public final class KaiboardService extends InputMethodService {
     @Override public boolean onEvaluateFullscreenMode() { return false; }
 
     @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && (selectionPopup != null || editMode || handwritingMode)) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && (selectionPopup != null || editMode || handwritingMode || clipboardMode || quickTextMode)) {
             event.startTracking();
             return true;
         }
@@ -194,8 +202,8 @@ public final class KaiboardService extends InputMethodService {
     }
 
     @Override public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && (selectionPopup != null || editMode || handwritingMode)) {
-            if (!event.isCanceled()) { if (handwritingMode) { handwritingMode = false; render(); } else if (editMode) { editMode = false; textEditor.reset(); render(); } else dismissSelectionPopup(); }
+        if (keyCode == KeyEvent.KEYCODE_BACK && (selectionPopup != null || editMode || handwritingMode || clipboardMode || quickTextMode)) {
+            if (!event.isCanceled()) { if (clipboardMode || quickTextMode) { clipboardMode = quickTextMode = false; render(); } else if (handwritingMode) { handwritingMode = false; render(); } else if (editMode) { editMode = false; textEditor.reset(); render(); } else dismissSelectionPopup(); }
             return true;
         }
         return super.onKeyUp(keyCode, event);
@@ -213,6 +221,7 @@ public final class KaiboardService extends InputMethodService {
     }
 
     @Override public void onFinishInputView(boolean finishingInput) {
+        clearClipboardSession();
         closeHandwriting(); handwritingMode = false;
         cancelVoice(); dismissSelectionPopup(); invalidateReselection();
         if (tonePopup != null) tonePopup.dismiss();
@@ -221,11 +230,13 @@ public final class KaiboardService extends InputMethodService {
     }
 
     @Override public void onFinishInput() {
+        clearClipboardSession();
         closeHandwriting(); handwritingMode = false;
         cancelVoice(); dismissSelectionPopup(); invalidateReselection(); stopRepeat(); resetComposition(); updateCandidates(); super.onFinishInput();
     }
 
     @Override public void onDestroy() {
+        clearClipboardSession();
         closeHandwriting();
         destroyed = true; textEditor.reset(); candidateGeneration.incrementAndGet(); cancelVoice(); dismissSelectionPopup(); invalidateReselection(); stopRepeat(); handler.removeCallbacksAndMessages(null); loader.shutdownNow(); candidateWorker.shutdownNow(); super.onDestroy();
     }
@@ -249,7 +260,7 @@ public final class KaiboardService extends InputMethodService {
         dismissSelectionPopup();
         // Release the previous Emoji view tree when returning to the keyboard/editor.
         emojiList = null; emojiAdapter = null; emojiModel = null; emojiSearchLabel = null; emojiCategories = null; emojiTabs.clear();
-        stopRepeat(); colors(); expandedScroll = null; candidateRow = null; codeLabel = null; expandedMode = null; nextPage = null; selectKey = null; toolbar = null; candidateBar = null; undoKey = null; editorSelect = null;
+        stopRepeat(); colors(); expandedScroll = null; candidateRow = null; codeLabel = null; expandedMode = null; nextPage = null; selectKey = null; toolbar = null; candidateBar = null; undoKey = null; editorSelect = null; customTool = null;
         quick = prefs.getBoolean("quick", true); cangjie = prefs.getBoolean("cangjie", true); english = prefs.getBoolean("english", true);
         root.removeAllViews(); root.setBackgroundColor(bg); updateKeyboardPadding();
         LinearLayout dock = row(root);
@@ -265,6 +276,7 @@ public final class KaiboardService extends InputMethodService {
             panel.addView(handwritingPanel); return;
         }
         if (editMode) { renderTextEditor(); return; }
+        if (clipboardMode || quickTextMode) { renderTextPanel(); return; }
 
         toolbar = row(panel);
         toolbar.setLayoutParams(new LinearLayout.LayoutParams(-1, dp(50)));
@@ -274,15 +286,12 @@ public final class KaiboardService extends InputMethodService {
         }, false);
         undoKey = tool(toolbar, "undo", "重新選字", this::reselect, false);
         undoKey.setEnabled(canReselect()); undoKey.setAlpha(canReselect() ? 1f : .35f);
-        tool(toolbar, "clipboard", "貼上剪貼簿", () -> {
-            if (secure) return;
-            android.content.ClipboardManager cb = (android.content.ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
-            if (cb.hasPrimaryClip() && cb.getPrimaryClip() != null && cb.getPrimaryClip().getItemCount() > 0) {
-                CharSequence text = cb.getPrimaryClip().getItemAt(0).coerceToText(this);
-                if (text != null) insert(text.toString());
-            }
-        }, false);
-        tool(toolbar, "keyboard", "選擇鍵盤", this::picker, false);
+        String custom = prefs.getString("toolbar_action", "clipboard");
+        String icon = "expand".equals(custom) ? "hide" : "quick_text".equals(custom) ? "symbols" : "undo".equals(custom) ? "undo" : "clipboard";
+        String label = "expand".equals(custom) ? "候選展開" : "quick_text".equals(custom) ? "快捷文字" : "undo".equals(custom) ? "Undo（重新選字）" : "剪貼簿";
+        customTool = tool(toolbar, icon, label, this::runCustomTool, "expand".equals(custom) && expandNextCandidates);
+        customTool.setEnabled(!secure && ("undo".equals(custom) ? canReselect() : !numeric));
+        customTool.setAlpha(customTool.isEnabled() ? 1f : .35f);
         TextView pen = tool(toolbar, "pen", "手寫", () -> {
             if(secure || numeric)return;
             finishLiteral(); cancelVoice(); emoji=false; symbols=false; expanded=false; editMode=false;
@@ -382,6 +391,76 @@ public final class KaiboardService extends InputMethodService {
             int flags = decor.getSystemUiVisibility();
             decor.setSystemUiVisibility(dark ? flags & ~View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR :
                 flags | View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+        }
+    }
+
+    private void runCustomTool() {
+        if (secure || numeric) return;
+        String action = prefs.getString("toolbar_action", "clipboard");
+        if ("undo".equals(action)) { reselect(); return; }
+        if ("expand".equals(action)) {
+            if (!candidates.isEmpty() && composing.length() > 0) { expanded = !expanded; render(); }
+            else {
+                expandNextCandidates = !expandNextCandidates;
+                Toast.makeText(this, expandNextCandidates ? "下次輸入字碼時展開候選" : "已取消自動展開", Toast.LENGTH_SHORT).show();
+                render();
+            }
+            return;
+        }
+        finishLiteral(); cancelVoice(); emoji = symbols = expanded = editMode = false;
+        quickTextMode = "quick_text".equals(action); clipboardMode = !quickTextMode;
+        if (clipboardMode) readClipboardOnDemand();
+        render();
+    }
+
+    private void readClipboardOnDemand() {
+        if (secure) return;
+        ClipboardManager manager = (ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
+        try {
+            ClipData clip = manager == null ? null : manager.getPrimaryClip();
+            if (clip == null) return;
+            // Never retain Android-marked sensitive clips. Plain text only: do not resolve content URIs.
+            android.os.PersistableBundle extras = clip.getDescription().getExtras();
+            if (extras != null && extras.getBoolean("android.content.extra.IS_SENSITIVE", false)) return;
+            for (int i = clip.getItemCount() - 1; i >= 0; i--) {
+                CharSequence value = clip.getItemAt(i).getText();
+                if (value != null) sessionClipboard.add(value.toString(), !noLearning);
+            }
+        } catch (SecurityException ignored) {
+            Toast.makeText(this, "未能讀取剪貼簿", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void renderTextPanel() {
+        LinearLayout header = row(panel);
+        key(header, "‹", .6f, true, () -> { clipboardMode = quickTextMode = false; render(); }, 50).setContentDescription("返回鍵盤");
+        TextView title = new TextView(this); title.setText(quickTextMode ? "快捷文字" : "剪貼簿");
+        title.setTextColor(fg); title.setTextSize(20); title.setGravity(Gravity.CENTER_VERTICAL);
+        header.addView(title, new LinearLayout.LayoutParams(0, dp(50), 1.5f));
+        if (quickTextMode) {
+            key(header, "管理", .8f, true, () -> startActivity(new Intent(this, SettingsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)), 50).setContentDescription("管理快捷文字");
+        } else {
+            key(header, "更新", .8f, true, () -> { readClipboardOnDemand(); render(); }, 50).setContentDescription("更新剪貼簿");
+            key(header, "清空", .8f, true, () -> { sessionClipboard.clear(); render(); }, 50).setContentDescription("清空剪貼簿暫存");
+        }
+        ScrollView scroll = new ScrollView(this);
+        int height = 4 * (keyHeight() + 8) + (prefs.getBoolean("numbers", true) ? 45 : 0);
+        panel.addView(scroll, new LinearLayout.LayoutParams(-1, dp(height)));
+        LinearLayout list = new LinearLayout(this); list.setOrientation(LinearLayout.VERTICAL); scroll.addView(list);
+        List<String> values = quickTextMode ? QuickTexts.read(prefs) : sessionClipboard.items();
+        if (values.isEmpty()) {
+            TextView empty = new TextView(this); empty.setText(quickTextMode ? "未有快捷文字，請到設定新增。" : "未有可用文字。複製後按「更新」。");
+            empty.setTextColor(muted); empty.setTextSize(16); empty.setPadding(dp(14),dp(20),dp(14),dp(20)); list.addView(empty);
+        }
+        for (String value : values) {
+            LinearLayout line = row(list);
+            TextView item = new TextView(this); item.setText(value); item.setTextSize(17); item.setTextColor(fg);
+            item.setMaxLines(3); item.setEllipsize(TextUtils.TruncateAt.END); item.setMinHeight(dp(56));
+            item.setGravity(Gravity.CENTER_VERTICAL); item.setPadding(dp(12),dp(10),dp(12),dp(10)); item.setBackground(background(keyColor));
+            item.setContentDescription((quickTextMode ? "貼上快捷文字：" : "貼上剪貼簿：") + value);
+            item.setOnClickListener(v -> { if (!secure) insert(value); });
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0,-2,1); lp.setMargins(dp(3),dp(3),dp(3),dp(3)); line.addView(item,lp);
+            if (!quickTextMode) key(line,"×",.18f,true,() -> { sessionClipboard.remove(value); render(); },50).setContentDescription("刪除剪貼簿項目："+value);
         }
     }
 
@@ -612,6 +691,9 @@ public final class KaiboardService extends InputMethodService {
         candidatePage = 0; consumedCodes.clear(); candidateDetails.clear();
         consumedCodes.putAll(request.consumed); candidateDetails.putAll(request.details);
         candidates = new ArrayList<>(request.values); corrections = request.corrections;
+        if (expandNextCandidates && !candidates.isEmpty() && composing.length() > 0) {
+            expandNextCandidates = false; expanded = true; render(); return;
+        }
         displayCandidates();
         if (expanded && expandedScroll != null) renderExpandedCandidates();
     }
@@ -736,6 +818,9 @@ public final class KaiboardService extends InputMethodService {
             expandedMode.setEnabled(!secure && !numeric);
         }
         if (undoKey != null) { undoKey.setEnabled(canReselect()); undoKey.setAlpha(canReselect() ? 1f : .35f); }
+        if (customTool != null && "undo".equals(prefs.getString("toolbar_action", "clipboard"))) {
+            customTool.setEnabled(canReselect()); customTool.setAlpha(canReselect() ? 1f : .35f);
+        }
         if(selectKey!=null) selectKey.setTextColor(ascii || englishIntent() ? accent : fg);
         boolean active = composing.length() > 0 && !secure && !numeric;
         if (toolbar != null) toolbar.setVisibility(active ? View.GONE : View.VISIBLE);
@@ -1393,3 +1478,4 @@ public final class KaiboardService extends InputMethodService {
     }
     private int dp(float value) { return Math.round(value * getResources().getDisplayMetrics().density); }
 }
+
