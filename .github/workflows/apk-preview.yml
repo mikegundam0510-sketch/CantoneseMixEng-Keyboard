@@ -1,5 +1,5 @@
 name: Device test APK 0.6.9
-# Full service source restored; checks symbol placement on cover and unfolded screens after IME registration and fixture/window initialization.
+# Initialize served editor before stroke checks; checks symbol placement on cover and unfolded screens after IME registration and fixture/window initialization.
 on:
   push:
     branches: [codex/reference-keyboard-emoji]
