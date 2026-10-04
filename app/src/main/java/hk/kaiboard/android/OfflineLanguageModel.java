@@ -15,7 +15,7 @@ public final class OfflineLanguageModel {
     }
     public static OfflineLanguageModel load(InputStream encoded) throws IOException {
         try (DataInputStream data = new DataInputStream(new BufferedInputStream(
-                new GZIPInputStream(Base64.getMimeDecoder().wrap(encoded))))) {
+                new GZIPInputStream(Base64.getMimeDecoder().wrap(new BufferedInputStream(encoded, 32768)), 32768)))) {
             if (data.readInt()!=0x4B4C4D32 || data.readInt()!=5) throw new IOException("Unsupported language model");
             int count=data.readInt(); float unknown=data.readFloat();
             if (count<1 || count>2000000 || !Float.isFinite(unknown) || unknown<=0 || unknown>=1)
@@ -72,3 +72,4 @@ public final class OfflineLanguageModel {
     public int entryCount() { return keys.length; }
     public long arrayBytes() { return 16L*keys.length; }
 }
+

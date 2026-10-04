@@ -20,7 +20,7 @@ final class KeyboardKey extends TextView {
         if (latin != null) {
             paint.setStyle(Paint.Style.FILL); paint.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
             paint.setColor(legendColor); paint.setTextSize(dp(10)); paint.setTextAlign(Paint.Align.LEFT);
-            // Keep the legend inside the visible face (including the background inset).
+            // Keep the legend inside the visible face (background inset: 2.5dp / 4dp).
             canvas.drawText(latin, dp(9), dp(9) - paint.ascent(), paint);
             paint.setColor(getCurrentTextColor()); paint.setTextSize(dp(22)); paint.setTextAlign(Paint.Align.CENTER);
             float y = getHeight() - dp(8); canvas.drawText(radical, getWidth()/2f, y, paint); return;
@@ -31,6 +31,11 @@ final class KeyboardKey extends TextView {
         paint.setColor(getCurrentTextColor());
         Path path = new Path();
         switch (icon) {
+            case "text_edit":
+                canvas.drawLine(12,3,12,21,paint); canvas.drawLine(9,3,15,3,paint); canvas.drawLine(9,21,15,21,paint);
+                paint.setStyle(Paint.Style.FILL);
+                path.moveTo(2,12); path.lineTo(6,8); path.lineTo(6,16); path.close(); canvas.drawPath(path,paint);
+                path.reset(); path.moveTo(22,12); path.lineTo(18,8); path.lineTo(18,16); path.close(); canvas.drawPath(path,paint); break;
             case "undo":
                 path.moveTo(8,5); path.lineTo(3,10); path.lineTo(8,15); canvas.drawPath(path,paint);
                 path.reset(); path.moveTo(3,10); path.lineTo(14,10); path.cubicTo(24,10,23,21,14,21); canvas.drawPath(path,paint); break;
@@ -84,7 +89,8 @@ final class KeyboardKey extends TextView {
             case "shift":
                 path.moveTo(3,12); path.lineTo(12,3); path.lineTo(21,12); path.lineTo(16,12); path.lineTo(16,21); path.lineTo(8,21); path.lineTo(8,12); path.close(); canvas.drawPath(path,paint); break;
             case "globe":
-                canvas.drawCircle(12,12,9,paint); canvas.drawOval(8,3,16,21,paint); canvas.drawLine(3,12,21,12,paint); break;
+                canvas.drawCircle(12,12,9,paint); canvas.drawOval(8,3,16,21,paint); canvas.drawLine(3,12,21,12,paint);
+                canvas.drawLine(4.5f,7.5f,19.5f,7.5f,paint); canvas.drawLine(4.5f,16.5f,19.5f,16.5f,paint); break;
             case "hide":
                 path.moveTo(5,9); path.lineTo(12,16); path.lineTo(19,9); canvas.drawPath(path,paint); break;
             case "enter":

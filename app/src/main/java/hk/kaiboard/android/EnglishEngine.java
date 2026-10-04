@@ -5,6 +5,9 @@ import java.util.*;
 
 /** Offline, opt-in suggestions; spelling repairs are never silently applied. */
 public final class EnglishEngine {
+    private static final java.util.regex.Pattern WORD = java.util.regex.Pattern.compile("[A-Za-z][A-Za-z'-]{0,39}");
+    private List<String> cachedPersonal = Collections.emptyList();
+    private Map<String, String> cachedWords;
     private final Map<String, String> words = new LinkedHashMap<>();
     public EnglishEngine(Reader input) throws IOException {
         try (BufferedReader reader = new BufferedReader(input)) {
@@ -12,10 +15,14 @@ public final class EnglishEngine {
             while ((line = reader.readLine()) != null) if (validWord(line)) words.put(line.toLowerCase(Locale.ROOT), line);
         }
     }
-    public static boolean validWord(String word) { return word.matches("[A-Za-z][A-Za-z'-]{0,39}"); }
-    private Map<String, String> combined(Collection<String> personal) {
+    public static boolean validWord(String word) { return WORD.matcher(word).matches(); }
+    private synchronized Map<String, String> combined(Collection<String> personal) {
+        if (personal.isEmpty()) { cachedPersonal = Collections.emptyList(); cachedWords = null; return words; }
+        List<String> snapshot = new ArrayList<>(personal);
+        if (snapshot.equals(cachedPersonal) && cachedWords != null) return cachedWords;
         Map<String, String> result = new LinkedHashMap<>(words);
         for (String word : personal) if (validWord(word)) result.put(word.toLowerCase(Locale.ROOT), word);
+        cachedPersonal = snapshot; cachedWords = result;
         return result;
     }
     public boolean likelyEnglish(String input, Collection<String> personal) {
@@ -72,3 +79,4 @@ public final class EnglishEngine {
         return true;
     }
 }
+

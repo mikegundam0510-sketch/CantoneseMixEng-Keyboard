@@ -29,11 +29,12 @@ public final class QuickDecoder {
     public QuickDecoder(DictionaryEngine dictionary, Reader input, Reader hkInput, Reader cantoneseInput,
                         OfflineLanguageModel model) throws IOException {
         this.dictionary = dictionary; this.model = model;
-        Map<String, Double> wordCounts = new HashMap<>();
+        // The trained model replaces fallback pair statistics entirely.
+        Map<String, Double> wordCounts = model == null ? new HashMap<>() : null;
         readVocabulary(input, wordCounts);
         if (hkInput != null) readVocabulary(hkInput, wordCounts);
         if (cantoneseInput != null) readVocabulary(cantoneseInput, wordCounts);
-        for (Map.Entry<String, Double> entry : wordCounts.entrySet()) {
+        if (wordCounts != null) for (Map.Entry<String, Double> entry : wordCounts.entrySet()) {
             String previous = null;
             for (int cp : entry.getKey().codePoints().toArray()) {
                 String current = new String(Character.toChars(cp));
@@ -55,7 +56,7 @@ public final class QuickDecoder {
                 String[] f = line.split("\\t");
                 if (f.length != 3) continue;
                 double count = Double.parseDouble(f[2]);
-                wordCounts.merge(f[1], count, Math::max);
+                if (wordCounts != null) wordCounts.merge(f[1], count, Math::max);
                 List<Token> tokens = vocabulary.computeIfAbsent(f[0], k -> new ArrayList<>());
                 Token existing = null;
                 for (Token token : tokens) if (token.text.equals(f[1])) { existing = token; break; }
@@ -77,6 +78,7 @@ public final class QuickDecoder {
         for (int i = 0; i <= code.length(); i++) lattice.add(new ArrayList<>());
         lattice.get(0).add(new Path("", 0));
         for (int pos = 0; pos < code.length(); pos++) {
+            if (Thread.currentThread().isInterrupted()) return Collections.emptyList();
             List<Path> paths = prune(lattice.get(pos));
             if (paths.isEmpty()) continue;
             for (int length = 1; length <= Math.min(16, code.length() - pos); length++) {
@@ -160,3 +162,4 @@ public final class QuickDecoder {
         return result;
     }
 }
+
