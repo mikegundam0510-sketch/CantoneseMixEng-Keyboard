@@ -1,5 +1,5 @@
 name: Device test APK 0.6.7
-# Includes all-window native handwriting acceptance. Raw IME inset diagnostics use the application's debuggable flag.
+# Checks symbol placement on cover and unfolded screens after IME registration.
 on:
   push:
     branches: [codex/reference-keyboard-emoji]
