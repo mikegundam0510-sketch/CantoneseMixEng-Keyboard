@@ -36,6 +36,8 @@ for _ in range(30):
 assert ime,"Installed input method did not register"
 adb("shell","ime","enable",ime);adb("shell","ime","set",ime)
 def reset_field(value="x"):
+    adb("shell","am","start","--activity-single-top","-n","hk.kaiboard.android/.KeyboardPreviewActivity")
+    time.sleep(1)
     adb("shell","am","start","--activity-single-top","-n","hk.kaiboard.android/.KeyboardPreviewActivity","--es","test_text",value,"--es","test_input_type","normal")
     time.sleep(2)
 def editor_text():
