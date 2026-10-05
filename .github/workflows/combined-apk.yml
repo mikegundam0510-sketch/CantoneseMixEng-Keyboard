@@ -1,4 +1,4 @@
-name: Combined APK 0.6.15
+name: Combined APK 0.6.16
 on:
   push:
     branches: [codex/cangjie-space-predictions]
@@ -26,7 +26,7 @@ jobs:
         run: |
           mkdir -p device-test apk
           cp app/build/outputs/apk/debug/app-debug.apk apk/
-          cp app/build/outputs/apk/debug/app-debug.apk device-test/cantonesemixeng-keyboard-0.6.15.apk
+          cp app/build/outputs/apk/debug/app-debug.apk device-test/cantonesemixeng-keyboard-0.6.16.apk
           "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose --print-certs device-test/*.apk > device-test/APK-verification.txt
           "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging device-test/*.apk >> device-test/APK-verification.txt
           sha256sum device-test/*.apk >> device-test/APK-verification.txt
@@ -35,7 +35,7 @@ jobs:
           if grep -q FakeVoiceService device-test/manifest.txt; then exit 1; fi
       - uses: actions/upload-artifact@v4
         with:
-          name: cantonesemixeng-keyboard-0.6.15
+          name: cantonesemixeng-keyboard-0.6.16
           path: device-test/
           retention-days: 14
       - name: Free space for emulator
@@ -59,6 +59,9 @@ jobs:
             adb shell settings put secure show_ime_with_hard_keyboard 1
             adb shell ime enable hk.kaiboard.android/.KaiboardService
             adb shell ime set hk.kaiboard.android/.KaiboardService
+            adb shell wm size 720x1600
+            adb shell wm density 320
+            python3 tools/predictions_smoke.py
             bash ./gradlew connectedDebugAndroidTest --no-daemon
             python3 tools/clipboard_smoke.py
             python3 tools/editor_smoke.py
@@ -67,7 +70,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: combined-0.6.15-verification
+          name: combined-0.6.16-verification
           path: |
             app/build/reports/tests/
             app/build/reports/androidTests/

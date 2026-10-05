@@ -1058,6 +1058,7 @@ public final class KaiboardService extends InputMethodService {
         if (!prefs.getBoolean("chinese_autocorrect", true) || secure || numeric || ascii || strokeMode
                 || forceEnglish || chooseFirst || dictionary == null || decoder == null || englishIntent()
                 || code.equals(rejectedAutoCode) || code.length() < 2 || code.length() > 16) return false;
+        if (!ChineseAutocorrect.allowTrigger(next != null, forceChinese, prefs.getBoolean("english", true))) return false;
         if (next != null) {
             // Preserve Quick phrase composition and legitimate longer Cangjie codes.
             if (quick && prefs.getBoolean("continuous", true) && (code.length() < 4 || code.length()%2 != 0)) return false;

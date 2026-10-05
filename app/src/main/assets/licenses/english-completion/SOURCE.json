@@ -1,0 +1,10 @@
+{
+  "source": "https://github.com/hermitdave/FrequencyWords",
+  "revision": "525f9b560de45753a5ea01069454e72e9aa541c6",
+  "input": "content/2018/en/en_50k.txt",
+  "author": "Hermit Dave",
+  "dataset": "OpenSubtitles2018",
+  "license": "CC-BY-SA-4.0",
+  "changes": "First 30,000 unique supported words in frequency order, merged with project-authored vocabulary and preferred casing. Word syntax: ASCII letters, apostrophes and hyphens, 1–40 characters.",
+  "words": 30076
+}

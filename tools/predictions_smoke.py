@@ -69,5 +69,18 @@ for _ in range(10):
 assert quick is not None
 if quick.get('checked') != 'true': tap_node(quick)
 adb('shell','input','keyevent','4')
+# Reproduce the reported Chinese-context/English-word interruption in mixed mode.
+for word in ('effect', 'EFFECT', 'aqhibrandxyz'):
+    reset('星期五')
+    if node('O，人') is None: tap('切換中英文，長按選擇系統鍵盤')
+    for index, c in enumerate(word.lower()):
+        if word.isupper(): tap('大寫，長按鎖定大寫')
+        tap(c.upper()+'，'+radicals[c])
+        assert text() == '星期五'+word[:index+1], 'English prefix was silently committed as Chinese: '+word
+    if word.lower() == 'effect':
+        tap('空白鍵，左右滑動移動游標')
+        assert text() == '星期五'+word+' ', 'Completed English word was converted at space'
+shot('20-effect-after-friday')
+reset()
 (out/'predictions-result.txt').write_text('PASS: Cangjie space commit, post-commit suggestions, HK phrase tails, chained insertion, idle space, punctuation/new-code dismissal and private/password fields.\n')
 print('Post-commit suggestion UI checks passed', flush=True)

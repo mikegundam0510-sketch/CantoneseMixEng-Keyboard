@@ -5,6 +5,11 @@ import java.util.function.ToDoubleFunction;
 
 /** Bounded, offline repairs. Only a clearly better full-code Chinese choice is automatic. */
 public final class ChineseAutocorrect {
+    /** Automatic mixed input has no reliable boundary between an English prefix and Chinese codes. */
+    public static boolean allowTrigger(boolean nextLetter, boolean forcedChinese, boolean englishEnabled) {
+        return !nextLetter || forcedChinese || !englishEnabled;
+    }
+
     public static InputCandidate choose(String source, String context,
             Collection<InputCandidate> exact, Collection<InputCandidate> repairs,
             ToDoubleFunction<String> score) {
