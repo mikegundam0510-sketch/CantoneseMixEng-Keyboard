@@ -47,10 +47,28 @@ tap('空白鍵，左右滑動移動游標')
 assert text() == '你', 'Cangjie space must commit highlighted candidate without adding whitespace'
 assert node('聯想字') is not None, 'Suggestions hidden after space confirmation'
 shot('18-cangjie-space')
+# Dismissal restores the toolbar without changing text or discarding Undo.
+tap('取消候選及聯想字，返回功能列')
+assert text() == '你', 'Cancel changed committed text'
+assert node('聯想字') is None and node('Emoji') is not None, 'Cancel did not restore toolbar'
+undo = node('重新選字')
+assert undo is not None and undo.get('enabled') == 'true', 'Cancel discarded reselection state'
+time.sleep(1)
+assert node('聯想字') is None, 'Stale prediction search reappeared after cancel'
+tap('重新選字'); assert text() == 'onf', 'Undo became unusable after dismissing suggestions'
+tap('空白鍵，左右滑動移動游標')
+assert text() == '你' and node('聯想字') is not None, 'New commit did not resume predictions'
+shot('18-cancel-restores-undo')
+
 reset('研究')
 assert node('一下') is not None, 'HK phrase continuation missing'
 tap('一下'); assert text() == '研究一下', 'Suggestion duplicated the existing prefix'
 shot('19-next-phrase')
+reset('研究'); tap('展開或收起候選字'); tap('取消候選及聯想字，返回功能列')
+assert text() == '研究' and node('Emoji') is not None, 'Expanded cancel failed to restore toolbar'
+assert node('聯想字') is None, 'Expanded predictions survived cancellation'
+tap('O，人')
+assert node('輸入碼：o') is not None and node('取消候選及聯想字，返回功能列') is not None, 'Typing after cancel failed'
 reset('研究一'); tap('下'); assert text() == '研究一下', 'Chained next-character insertion failed'
 reset('研究'); tap('空白鍵，左右滑動移動游標')
 assert text() == '研究 ', 'Idle space must insert space instead of auto-accepting a suggestion'
