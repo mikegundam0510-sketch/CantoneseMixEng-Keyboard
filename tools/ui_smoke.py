@@ -322,7 +322,11 @@ for name,size,density in (("cover","720x1600","320"),("unfolded","1440x1800","32
     assert by2<=sy1, "Input codes must sit above candidate words"
     left=min(int(re.findall(r"\d+",find(desc).get("bounds"))[0]) for desc in ("Q，手","A，日"))
     right=max(int(re.findall(r"\d+",find(desc).get("bounds"))[2]) for desc in ("P，心","L，中"))
-    assert sx1<=left, "Candidates must start at the left keyboard edge"
+    cancel=find("取消候選及聯想字，返回功能列")
+    assert cancel is not None, "Candidate cancel control missing"
+    cx1,cy1,cx2,cy2=map(int,re.findall(r"\d+",cancel.get("bounds")))
+    assert cx1<=left and cx2==sx1, "Cancel must sit to the left of scrollable candidates"
+    assert cy1==sy1 and cy2==sy2, "Cancel must align vertically with candidates"
     words=[n for n in strips[0].iter("node") if n.get("class")=="android.widget.TextView"]
     assert words, "Candidate row is empty"
     wx1=int(re.findall(r"\d+",words[0].get("bounds"))[0])
