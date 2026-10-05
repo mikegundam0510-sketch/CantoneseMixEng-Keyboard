@@ -181,7 +181,7 @@ public final class KaiboardService extends InputMethodService {
     }
 
     @Override public void onStartInput(EditorInfo info, boolean restarting) {
-        super.onStartInput(info, restarting); swipeSelection.reset();
+        super.onStartInput(info, restarting); resolvedCandidates = null; swipeSelection.reset();
         clearClipboardSession();
         cancelVoice(); dismissSelectionPopup(); invalidateReselection(); resetComposition(); stopRepeat();
         closeStroke(); strokeMode = false; strokeCode.setLength(0); editMode = false; textEditor.reset();
@@ -242,13 +242,13 @@ public final class KaiboardService extends InputMethodService {
     @Override public void onFinishInput() {
         clearClipboardSession();
         closeStroke(); strokeMode = false; strokeCode.setLength(0);
-        cancelVoice(); dismissSelectionPopup(); invalidateReselection(); stopRepeat(); resetComposition(); updateCandidates(); super.onFinishInput();
+        cancelVoice(); dismissSelectionPopup(); invalidateReselection(); stopRepeat(); resetComposition(); updateCandidates(); resolvedCandidates = null; super.onFinishInput();
     }
 
     @Override public void onDestroy() {
         clearClipboardSession();
         closeStroke();
-        destroyed = true; textEditor.reset(); candidateGeneration.incrementAndGet(); cancelVoice(); dismissSelectionPopup(); invalidateReselection(); stopRepeat(); handler.removeCallbacksAndMessages(null); loader.shutdownNow(); candidateWorker.shutdownNow(); super.onDestroy();
+        destroyed = true; resolvedCandidates = null; textEditor.reset(); candidateGeneration.incrementAndGet(); cancelVoice(); dismissSelectionPopup(); invalidateReselection(); stopRepeat(); handler.removeCallbacksAndMessages(null); loader.shutdownNow(); candidateWorker.shutdownNow(); super.onDestroy();
     }
 
     private void colors() {
@@ -1014,7 +1014,8 @@ public final class KaiboardService extends InputMethodService {
         if (pendingCandidates != null) { pendingCandidates.cancel(true); pendingCandidates = null; }
         candidateGeneration.incrementAndGet();
         CandidateRequest request = resolvedCandidates;
-        if (request == null || !request.input.equals(code) || !request.preceding.equals(context())) {
+        if (request == null || request.quick != quick || request.cangjie != cangjie
+                || !request.input.equals(code) || !request.preceding.equals(context())) {
             request = new CandidateRequest();
             computeCandidates(request);
         }

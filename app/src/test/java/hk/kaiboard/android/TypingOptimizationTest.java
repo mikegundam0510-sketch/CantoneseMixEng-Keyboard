@@ -36,7 +36,7 @@ public final class TypingOptimizationTest {
         check(meanings.lookup("CAN","研究",(a,b)->Double.NaN).equals(List.of("可以","能夠","罐")),"nonfinite context does not scramble meanings");
         check(meanings.lookup("zzqxxxy","研究",(a,b)->0).isEmpty(),"no invented meanings");
         InputCandidate good = new InputCandidate("abcd",List.of(new InputCandidate.Segment("abfd","乙",false)),true);
-        check(ChineseAutocorrect.choose("abcd","研究",List.of(InputCandidate.chinese(dictionary,"abcd","甲")),List.of(good),t->t.equals("甲")?Double.NaN:5)==good,"nonfinite exact score does not block a finite repair");
+        check(ChineseAutocorrect.choose("abcd","研究",List.of(InputCandidate.chinese(dictionary,"abcd","甲")),List.of(good),t->t.equals("甲")?Double.NaN:5)==null,"nonfinite exact score blocks automatic guessing");
         check(ChineseAutocorrect.choose("abcd","",List.of(),List.of(good),t->5)==null,"empty context never auto repairs");
         long started=System.nanoTime();
         for(int i=0;i<100;i++) ChineseAutocorrect.cangjieRepairs(dictionary,"onnf");

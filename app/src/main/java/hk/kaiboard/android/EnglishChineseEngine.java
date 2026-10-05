@@ -54,6 +54,7 @@ public final class EnglishChineseEngine {
    List<String> meanings=lookup(suffix);if(meanings.isEmpty())continue;
    List<InputCandidate> preceding=chinese.chinese(prefix,context,true,true,false,learned);
    if(preceding.isEmpty()||!QuickDecoder.hanText(preceding.get(0).text))continue;
+   meanings=lookup(suffix,context+preceding.get(0).text,chinese::languageScore);
    List<InputCandidate> result=new ArrayList<>();List<InputCandidate.Segment> original=new ArrayList<>(preceding.get(0).segments);
    original.add(new InputCandidate.Segment(suffix,suffix,true));result.add(new InputCandidate(input,original,false));
    for(String meaning:meanings.subList(0,Math.min(2,meanings.size()))){

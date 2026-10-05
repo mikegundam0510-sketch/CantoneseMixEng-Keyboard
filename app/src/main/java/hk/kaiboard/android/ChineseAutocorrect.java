@@ -16,7 +16,8 @@ public final class ChineseAutocorrect {
         for (InputCandidate c : exact) {
             if (!c.corrected && c.source.equals(source) && !c.englishOnly()) {
                 double value = score.applyAsDouble(c.text);
-                if (Double.isFinite(value)) baseline = Math.max(baseline, value);
+                if (!Double.isFinite(value)) return null;
+                baseline = Math.max(baseline, value);
                 seen.add(c.text);
             }
         }
