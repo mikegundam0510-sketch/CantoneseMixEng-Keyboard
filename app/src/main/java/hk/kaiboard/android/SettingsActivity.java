@@ -71,6 +71,10 @@ public final class SettingsActivity extends Activity {
         LinearLayout tools = card("功能列");
         choice(tools, "自訂功能鍵", "toolbar_action", new String[]{"剪貼簿", "候選展開", "快捷文字", "Undo"},
             new String[]{"clipboard", "expand", "quick_text", "undo"}, "clipboard");
+        choice(tools, "剪貼簿自動清除時間", "clipboard_clear_ms",
+            new String[]{"關閉", "1 分鐘", "5 分鐘", "15 分鐘", "1 小時"},
+            new String[]{"0", "60000", "300000", "900000", "3600000"}, "300000");
+        text(tools, "自動清除鍵盤內的剪貼簿暫存；每項由首次讀取時計時。收起鍵盤或轉到另一輸入框仍會立即清除。", 13, Color.DKGRAY, false);
         button(tools, "新增快捷文字", this::addQuickText);
         button(tools, "管理快捷文字", this::manageQuickTexts);
 
