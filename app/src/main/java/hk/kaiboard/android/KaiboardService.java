@@ -1150,7 +1150,7 @@ public final class KaiboardService extends InputMethodService {
         boolean accepted = ic.commitText(detail.text, 1);
         if (accepted && learn && !noLearning && prefs.getBoolean("learning", false)) {
             for (InputCandidate.Segment segment : detail.segments) {
-                if (segment.translated) continue;
+                if (segment.translated || segment.code.isEmpty()) continue;
                 if (segment.english) learnEnglish(segment.text);
                 else if (LearningRanker.isLearnable(segment.text)) learnCharacter(segment.code, segment.text);
             }
