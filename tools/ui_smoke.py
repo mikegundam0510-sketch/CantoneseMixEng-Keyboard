@@ -302,6 +302,7 @@ for name,size,density in (("cover","720x1600","320"),("unfolded","1440x1800","32
     assert find("O，人").get("bounds")==idle_bounds, "Typing changed keyboard height"
     badge=find("輸入碼：ofonaovrmrq")
     assert badge is not None, "Compact code badge missing"
+    assert badge.get("text")=="ofonaovrmrq  人火人弓日人女口一口手", "Code header must show original letters and Chinese radicals together"
     bx1,by1,bx2,by2=map(int,re.findall(r"\d+",badge.get("bounds")))
 
     strips=[n for n in nodes.iter("node") if n.get("class")=="android.widget.HorizontalScrollView"]
