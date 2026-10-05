@@ -11,10 +11,10 @@ final class CursorGestureRow extends LinearLayout {
     private final Runnable begin;
     private float startX,startY,lastX;
     private boolean dragging,allowed;
-    CursorGestureRow(Context context,Runnable begin,IntConsumer move){super(context);this.begin=begin;this.move=move;}
+    CursorGestureRow(Context context,Runnable begin,IntConsumer move){super(context);setMotionEventSplittingEnabled(true);this.begin=begin;this.move=move;}
     private float dp(float n){return n*getResources().getDisplayMetrics().density;}
     @Override public boolean onInterceptTouchEvent(MotionEvent event) {
-        if(event.getPointerCount()!=1){dragging=false;return false;}
+        if(event.getPointerCount()!=1){allowed=false;return dragging;}
         if(event.getActionMasked()==MotionEvent.ACTION_DOWN) {
             startX=lastX=event.getX();startY=event.getY();dragging=false;allowed=true;
             // Shift/delete have their own gestures; don't begin range gestures on them.
@@ -52,3 +52,4 @@ final class CursorGestureRow extends LinearLayout {
         return true;
     }
 }
+

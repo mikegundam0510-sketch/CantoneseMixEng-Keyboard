@@ -35,6 +35,17 @@ public final class EnglishChineseEngine {
   for(String stem:stems){result=words.get(stem);if(result!=null)return result;}
   return Collections.emptyList();
  }
+ /** Rank exact meanings by the extra evidence supplied by the editor context.
+  * Comparing conditional vs standalone scores avoids preferring short translations.
+  */
+ public List<String> lookup(String input,String context,java.util.function.ToDoubleBiFunction<String,String> score){
+  List<String> result=new ArrayList<>(lookup(input));
+  if(!context.isEmpty())result.sort(Comparator.comparingDouble((String text)->{
+   double evidence=(score.applyAsDouble(context,text)-score.applyAsDouble("",text))/Math.sqrt(text.codePointCount(0,text.length()));
+   return Double.isFinite(evidence)?evidence:Double.NEGATIVE_INFINITY;
+  }).reversed());
+  return result;
+ }
  public List<InputCandidate> mixedSuffix(String input,String context,CandidateEngine chinese,ToIntBiFunction<String,String> learned){
   if(chinese==null)return Collections.emptyList();
   for(int at=2;at<=input.length()-3;at++){
@@ -43,6 +54,7 @@ public final class EnglishChineseEngine {
    List<String> meanings=lookup(suffix);if(meanings.isEmpty())continue;
    List<InputCandidate> preceding=chinese.chinese(prefix,context,true,true,false,learned);
    if(preceding.isEmpty()||!QuickDecoder.hanText(preceding.get(0).text))continue;
+   meanings=lookup(suffix,context+preceding.get(0).text,chinese::languageScore);
    List<InputCandidate> result=new ArrayList<>();List<InputCandidate.Segment> original=new ArrayList<>(preceding.get(0).segments);
    original.add(new InputCandidate.Segment(suffix,suffix,true));result.add(new InputCandidate(input,original,false));
    for(String meaning:meanings.subList(0,Math.min(2,meanings.size()))){
@@ -54,3 +66,4 @@ public final class EnglishChineseEngine {
   return Collections.emptyList();
  }
 }
+

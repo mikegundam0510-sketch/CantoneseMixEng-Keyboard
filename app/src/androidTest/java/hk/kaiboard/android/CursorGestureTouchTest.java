@@ -35,7 +35,8 @@ public final class CursorGestureTouchTest {
             row = new CursorGestureRow(activity, starts::incrementAndGet, steps::addAndGet);
             row.setMotionEventSplittingEnabled(true);
             for (int i=0;i<2;i++) {
-                TextView key = new TextView(activity);
+                KeyboardKey key = new KeyboardKey(activity);
+                key.typingTouch(true);
                 key.setContentDescription(i==0 ? "A，日" : "B，月");
                 key.setOnClickListener(v -> clicks.incrementAndGet());
                 row.addView(key,new LinearLayout.LayoutParams(200,100));
@@ -98,3 +99,4 @@ public final class CursorGestureTouchTest {
 
     }
 }
+

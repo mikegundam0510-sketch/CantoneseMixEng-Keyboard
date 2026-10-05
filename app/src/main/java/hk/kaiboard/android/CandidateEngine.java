@@ -24,6 +24,8 @@ public final class CandidateEngine {
         for(String text:singles)result.putIfAbsent(text,InputCandidate.chinese(dictionary,code,text));
         return new ArrayList<>(result.values());
     }
+    double languageScore(String context, String text) { return quick.languageScore(context, text); }
+
     public List<InputCandidate> mixed(String input,String context,Collection<String> personal,
             ToIntBiFunction<String,String> learned) {
         List<int[]> spans=english.spans(input,personal);
@@ -46,7 +48,8 @@ public final class CandidateEngine {
             String context,ToIntBiFunction<String,String> learned) {
         List<List<InputCandidate.Segment>> result=new ArrayList<>();
         for(List<InputCandidate.Segment> path:paths) {
-            String preceding=path.isEmpty()?context:path.get(path.size()-1).text;
+            String preceding=context;
+            for (InputCandidate.Segment segment : path) preceding+=segment.text;
             List<InputCandidate> options=chinese(code,preceding,true,true,false,learned);
             for(int i=0;i<Math.min(3,options.size());i++) {
                 List<InputCandidate.Segment> combined=new ArrayList<>(path);combined.addAll(options.get(i).segments);
@@ -56,3 +59,4 @@ public final class CandidateEngine {
         return result;
     }
 }
+
