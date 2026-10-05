@@ -338,19 +338,41 @@ public final class KaiboardService extends InputMethodService {
         codeLabel.setEllipsize(android.text.TextUtils.TruncateAt.END);
         codeLabel.setPadding(dp(8), 0, dp(4), 0);
         codeRow.addView(codeLabel, new LinearLayout.LayoutParams(0, -1, 1));
-        nextPage = new TextView(this); nextPage.setTextColor(fg);
-        nextPage.setGravity(Gravity.CENTER); nextPage.setIncludeFontPadding(false);
-        nextPage.setBackground(background(bg));
-        nextPage.setOnClickListener(v -> { expanded = !expanded; render(); });
-        codeRow.addView(nextPage, new LinearLayout.LayoutParams(dp(36), -1));
-        nextPage.setContentDescription("展開或收起候選字");
+        LinearLayout candidateLine = row(bar);
+        candidateLine.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+        candidateLine.setLayoutParams(new LinearLayout.LayoutParams(-1, dp(42)));
         candidateScroll = new HorizontalScrollView(this); candidateScroll.setHorizontalScrollBarEnabled(false); candidateScroll.setFillViewport(false);
         candidateScroll.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
         candidateRow = new LinearLayout(this); candidateRow.setOrientation(LinearLayout.HORIZONTAL);
         candidateRow.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
         candidateRow.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
         candidateScroll.addView(candidateRow, new HorizontalScrollView.LayoutParams(-2, -1));
-        bar.addView(candidateScroll, new LinearLayout.LayoutParams(-1, dp(42)));
+        candidateLine.addView(candidateScroll, new LinearLayout.LayoutParams(0, -1, 1));
+        nextPage = new TextView(this) {
+            private final android.graphics.Paint arrowPaint = new android.graphics.Paint(android.graphics.Paint.ANTI_ALIAS_FLAG);
+            private final android.graphics.Path arrowPath = new android.graphics.Path();
+            @Override protected void onDraw(android.graphics.Canvas canvas) {
+                arrowPaint.setColor(fg); arrowPaint.setStyle(android.graphics.Paint.Style.STROKE);
+                arrowPaint.setStrokeWidth(dp(2)); arrowPaint.setStrokeCap(android.graphics.Paint.Cap.ROUND);
+                arrowPaint.setStrokeJoin(android.graphics.Paint.Join.ROUND);
+                float cx = getWidth() / 2f, cy = getHeight() / 2f;
+                arrowPath.reset();
+                if (expanded) {
+                    arrowPath.moveTo(cx - dp(9), cy + dp(4.5f));
+                    arrowPath.lineTo(cx, cy - dp(4.5f));
+                    arrowPath.lineTo(cx + dp(9), cy + dp(4.5f));
+                } else {
+                    arrowPath.moveTo(cx - dp(4.5f), cy - dp(9));
+                    arrowPath.lineTo(cx + dp(4.5f), cy);
+                    arrowPath.lineTo(cx - dp(4.5f), cy + dp(9));
+                }
+                canvas.drawPath(arrowPath, arrowPaint);
+            }
+        };
+        nextPage.setBackground(background(bg));
+        nextPage.setOnClickListener(v -> { expanded = !expanded; render(); });
+        candidateLine.addView(nextPage, new LinearLayout.LayoutParams(dp(36), -1));
+        nextPage.setContentDescription("展開或收起候選字");
         updateCandidates();
 
         if (expanded && !candidates.isEmpty()) {
@@ -988,7 +1010,7 @@ public final class KaiboardService extends InputMethodService {
             candidateRow.addView(item, params);
         }
         nextPage.setVisibility(View.VISIBLE);
-        nextPage.setText(expanded ? "⌃" : "⌄"); nextPage.setTextSize(14);
+        nextPage.invalidate();
         final int first = candidatePage * PAGE_SIZE;
         candidateScroll.post(() -> {
             if (first < candidateRow.getChildCount()) candidateScroll.scrollTo(candidateRow.getChildAt(first).getLeft(), 0);
