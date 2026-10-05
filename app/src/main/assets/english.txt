@@ -2158,7 +2158,7 @@ aside
 jerk
 mail
 dawn
-Effect
+effect
 spell
 freak
 wood
