@@ -303,10 +303,20 @@ for name,size,density in (("cover","720x1600","320"),("unfolded","1440x1800","32
     badge=find("輸入碼：ofonaovrmrq")
     assert badge is not None, "Compact code badge missing"
     bx1,by1,bx2,by2=map(int,re.findall(r"\d+",badge.get("bounds")))
-    assert bx2-bx1<=144, "Code badge crowded candidates"
 
     strips=[n for n in nodes.iter("node") if n.get("class")=="android.widget.HorizontalScrollView"]
     assert len(strips)==1, "Collapsed layout must contain a single candidate strip"
+    sx1,sy1,sx2,sy2=map(int,re.findall(r"\d+",strips[0].get("bounds")))
+    assert by2<=sy1, "Input codes must sit above candidate words"
+    left=min(int(re.findall(r"\d+",find(desc).get("bounds"))[0]) for desc in ("Q，手","A，日"))
+    right=max(int(re.findall(r"\d+",find(desc).get("bounds"))[2]) for desc in ("P，心","L，中"))
+    assert sx1<=left and sx2>=right, "Candidates must use the full keyboard width"
+    words=[n for n in strips[0].iter("node") if n.get("class")=="android.widget.TextView"]
+    assert words, "Candidate row is empty"
+    wx1=int(re.findall(r"\d+",words[0].get("bounds"))[0])
+    assert wx1==sx1, "First candidate must start at the left edge"
+    ex1,ey1,ex2,ey2=map(int,re.findall(r"\d+",find("展開或收起候選字").get("bounds")))
+    assert ey2<=sy1, "Expand control must not consume candidate row width"
     for desc in ("Q，手","P，心","A，日","L，中","Z，重","M，一","空白鍵，左右滑動移動游標"):
         key=find(desc);assert key is not None, name+" missing key "+desc
         x1,y1,x2,y2=map(int,re.findall(r"\d+",key.get("bounds")))
