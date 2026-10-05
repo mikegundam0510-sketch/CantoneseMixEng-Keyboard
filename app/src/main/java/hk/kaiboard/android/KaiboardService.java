@@ -983,7 +983,8 @@ public final class KaiboardService extends InputMethodService {
                 label.append(!englishIntent() && (quick || cangjie) && index >= 0 && index < 26
                     ? RADICALS.charAt(index) : c);
             }
-            codeLabel.setText(label.toString());
+            String radicals = label.toString();
+            codeLabel.setText(radicals.equals(code) ? code : code + "  " + radicals);
             codeLabel.setContentDescription("輸入碼：" + code);
         }
         if (restoredCandidate != null) {
