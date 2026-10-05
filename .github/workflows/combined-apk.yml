@@ -54,7 +54,15 @@ jobs:
           disk-size: 2048M
           emulator-boot-timeout: 300
           disable-animations: true
-          script: bash ./gradlew connectedDebugAndroidTest --no-daemon && python3 tools/clipboard_smoke.py && python3 tools/editor_smoke.py && python3 tools/ui_smoke.py
+          script: |
+            adb install -r app/build/outputs/apk/debug/app-debug.apk
+            adb shell settings put secure show_ime_with_hard_keyboard 1
+            adb shell ime enable hk.kaiboard.android/.KaiboardService
+            adb shell ime set hk.kaiboard.android/.KaiboardService
+            bash ./gradlew connectedDebugAndroidTest --no-daemon
+            python3 tools/clipboard_smoke.py
+            python3 tools/editor_smoke.py
+            python3 tools/ui_smoke.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
