@@ -93,6 +93,7 @@ public final class KaiboardService extends InputMethodService {
     private ScrollView expandedScroll;
     private TextView codeLabel, expandedMode, nextPage, selectKey;
     private boolean chooseFirst, expanded, emojiSearch;
+    private boolean nextSuggestionsDismissed;
     private String emojiQuery = "";
     private LinearLayout toolbar, candidateBar;
     private TextView emojiSearchLabel;
@@ -198,6 +199,7 @@ public final class KaiboardService extends InputMethodService {
 
     @Override public void onStartInput(EditorInfo info, boolean restarting) {
         super.onStartInput(info, restarting); resolvedCandidates = null; swipeSelection.reset();
+        nextSuggestionsDismissed = false;
         clearClipboardSession();
         cancelVoice(); dismissSelectionPopup(); invalidateReselection(); resetComposition(); stopRepeat();
         closeStroke(); strokeMode = false; strokeCode.setLength(0); editMode = false; textEditor.reset();
@@ -359,6 +361,22 @@ public final class KaiboardService extends InputMethodService {
         LinearLayout candidateLine = row(bar);
         candidateLine.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
         candidateLine.setLayoutParams(new LinearLayout.LayoutParams(-1, dp(42)));
+        TextView cancelCandidates = new TextView(this) {
+            private final android.graphics.Paint paint = new android.graphics.Paint(android.graphics.Paint.ANTI_ALIAS_FLAG);
+            @Override protected void onDraw(android.graphics.Canvas canvas) {
+                paint.setColor(muted); paint.setStyle(android.graphics.Paint.Style.STROKE);
+                paint.setStrokeWidth(dp(1.8f)); paint.setStrokeCap(android.graphics.Paint.Cap.ROUND);
+                float cx = getWidth() / 2f, cy = getHeight() / 2f;
+                canvas.drawCircle(cx, cy, dp(9), paint);
+                float inset = dp(3.5f);
+                canvas.drawLine(cx - inset, cy - inset, cx + inset, cy + inset, paint);
+                canvas.drawLine(cx + inset, cy - inset, cx - inset, cy + inset, paint);
+            }
+        };
+        cancelCandidates.setBackground(background(bg));
+        cancelCandidates.setContentDescription("取消候選及聯想字，返回功能列");
+        cancelCandidates.setOnClickListener(v -> dismissCandidates());
+        candidateLine.addView(cancelCandidates, new LinearLayout.LayoutParams(dp(36), -1));
         candidateScroll = new HorizontalScrollView(this); candidateScroll.setHorizontalScrollBarEnabled(false); candidateScroll.setFillViewport(false);
         candidateScroll.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
         candidateRow = new LinearLayout(this); candidateRow.setOrientation(LinearLayout.HORIZONTAL);
@@ -676,6 +694,7 @@ public final class KaiboardService extends InputMethodService {
     }
 
     private void typeLetter(char lower) {
+        nextSuggestionsDismissed = false;
         swipeSelection.reset();
         if (voiceListening) { cancelVoice(); render(); }
         if (emojiSearch) { emojiQuery += lower; refreshEmoji(); return; }
@@ -741,7 +760,7 @@ public final class KaiboardService extends InputMethodService {
     /** All mutable editor/personal state is copied on the UI thread before searching. */
     private final class CandidateRequest {
         final String input, preceding;
-        final boolean quick, cangjie, continuous, chooseFirst, forceEnglish, forceChinese, noLearning, secure, isEnglish;
+        final boolean quick, cangjie, continuous, chooseFirst, forceEnglish, forceChinese, noLearning, secure, isEnglish, nextSuggestionsDismissed;
         final InputCandidate restoredCandidate;
         final Map<String, ?> personal, counts, englishCounts, settings;
         final List<String> englishWords;
@@ -752,6 +771,7 @@ public final class KaiboardService extends InputMethodService {
         List<InputCandidate> corrections = Collections.emptyList();
         CandidateRequest() {
             input = composing.toString(); preceding = context();
+            nextSuggestionsDismissed = KaiboardService.this.nextSuggestionsDismissed;
             quick = KaiboardService.this.quick; cangjie = KaiboardService.this.cangjie;
             chooseFirst = KaiboardService.this.chooseFirst; forceEnglish = KaiboardService.this.forceEnglish || ascii;
             forceChinese = KaiboardService.this.forceChinese; noLearning = KaiboardService.this.noLearning;
@@ -854,7 +874,7 @@ public final class KaiboardService extends InputMethodService {
             noLearning = request.noLearning, secure = request.secure;
         InputCandidate restoredCandidate = request.restoredCandidate;
         LinkedHashSet<String> results = new LinkedHashSet<>();
-        if (!secure && !numeric && !request.noLearning && input.isEmpty() && decoder != null
+        if (!secure && !numeric && !request.noLearning && !request.nextSuggestionsDismissed && input.isEmpty() && decoder != null
                 && request.enabled("next_suggestions", true)) {
             InputConnection ic = getCurrentInputConnection();
             CharSequence selected = ic == null ? null : ic.getSelectedText(0);
@@ -989,6 +1009,23 @@ public final class KaiboardService extends InputMethodService {
             boolean wasEnglish = englishIntent(); forceEnglish = !wasEnglish; forceChinese = wasEnglish;
             chooseFirst = false; updateCandidates();
         }
+    }
+
+    private void dismissCandidates() {
+        // Keep committed text and its reselection record intact. No candidate is accepted here.
+        candidateGeneration.incrementAndGet();
+        if (pendingCandidates != null) { pendingCandidates.cancel(true); pendingCandidates = null; }
+        if (composing.length() > 0) {
+            InputConnection ic = getCurrentInputConnection();
+            if (ic != null) ic.finishComposingText();
+            composing.setLength(0); forceEnglish = forceChinese = false; chooseFirst = false;
+            restoredCandidate = null;
+        }
+        nextSuggestionsDismissed = true;
+        resolvedCandidates = null; candidates = Collections.emptyList(); corrections = Collections.emptyList();
+        candidateDetails.clear(); consumedCodes.clear(); candidatePage = 0;
+        expanded = false; expandNextCandidates = false;
+        dismissSelectionPopup(); render();
     }
 
     private void displayCandidates() {
@@ -1157,6 +1194,7 @@ public final class KaiboardService extends InputMethodService {
             }
         }
         if (accepted) {
+            nextSuggestionsDismissed = false;
             composing.setLength(0); composing.append(remaining); chooseFirst = false; forceEnglish = forceChinese = false; restoredCandidate = null;
             if (remaining.isEmpty()) ic.finishComposingText(); else ic.setComposingText(remaining, 1);
         }
@@ -1200,6 +1238,7 @@ public final class KaiboardService extends InputMethodService {
     }
 
     private void insert(String text) {
+        nextSuggestionsDismissed = false;
         swipeSelection.reset();
         if (text.equals("'") && !secure && !ascii && composing.length() >= 2 && composing.toString().matches("[A-Za-z]+")) {
             composing.append(text); forceEnglish = true; forceChinese = false;
