@@ -31,8 +31,24 @@ public final class KaiboardService extends InputMethodService {
     private boolean editMode;
     private boolean clipboardMode, quickTextMode, expandNextCandidates;
     private final SessionClipboard sessionClipboard = new SessionClipboard();
+    private final Runnable clipboardExpiry = this::expireClipboard;
+    private void expireClipboard() {
+        sessionClipboard.items();
+        if (clipboardMode && root != null && !destroyed) render();
+        else scheduleClipboardExpiry();
+    }
+    private void scheduleClipboardExpiry() {
+        handler.removeCallbacks(clipboardExpiry);
+        long age;
+        try { age = Long.parseLong(prefs.getString("clipboard_clear_ms", "300000")); }
+        catch (NumberFormatException invalid) { age = 300000; }
+        sessionClipboard.setMaxAgeMillis(age);
+        long delay = sessionClipboard.nextExpiryMillis();
+        if (delay >= 0 && !destroyed) handler.postDelayed(clipboardExpiry, delay);
+    }
     private TextView customTool;
     private void clearClipboardSession() {
+        handler.removeCallbacks(clipboardExpiry);
         if (clipboardMode && root != null) root.removeAllViews();
         clipboardMode = false; quickTextMode = false; expandNextCandidates = false;
         sessionClipboard.clear();
@@ -463,6 +479,7 @@ public final class KaiboardService extends InputMethodService {
 
     private void readClipboardOnDemand() {
         if (secure) return;
+        scheduleClipboardExpiry();
         if (noLearning) sessionClipboard.clear();
         android.content.ClipboardManager manager = (android.content.ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
         try {
@@ -477,6 +494,8 @@ public final class KaiboardService extends InputMethodService {
             }
         } catch (SecurityException ignored) {
             Toast.makeText(this, "未能讀取剪貼簿", Toast.LENGTH_SHORT).show();
+        } finally {
+            scheduleClipboardExpiry();
         }
     }
 
@@ -499,6 +518,7 @@ public final class KaiboardService extends InputMethodService {
     }
 
     private void renderTextPanel() {
+        if (clipboardMode) scheduleClipboardExpiry();
         LinearLayout header = row(panel); header.setGravity(Gravity.CENTER_VERTICAL);
         header.setPadding(dp(4), 0, dp(4), 0);
         header.addView(textPanelButton("back", "返回鍵盤", () -> { clipboardMode = quickTextMode = false; render(); }),
