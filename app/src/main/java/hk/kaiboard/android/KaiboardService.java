@@ -289,7 +289,7 @@ public final class KaiboardService extends InputMethodService {
         if (clipboardMode || quickTextMode) { renderTextPanel(); return; }
 
         toolbar = row(panel);
-        toolbar.setLayoutParams(new LinearLayout.LayoutParams(-1, dp(50)));
+        toolbar.setLayoutParams(new LinearLayout.LayoutParams(-1, dp(60)));
         tool(toolbar, "emoji", "Emoji", () -> { if (!secure && !numeric) { finishLiteral(); emoji = !emoji; emojiSearch = false; emojiQuery = ""; render(); } }, emoji);
         tool(toolbar, "text_edit", "文字編輯", () -> {
             prepareCursorSwipe(); emoji = false; symbols = false; editMode = true; textEditor.reset(); render();
@@ -326,21 +326,31 @@ public final class KaiboardService extends InputMethodService {
             return;
         }
 
-        LinearLayout bar = row(panel); candidateBar = bar;
-        bar.setLayoutParams(new LinearLayout.LayoutParams(-1, dp(50)));
-        codeLabel = new TextView(this); codeLabel.setTextColor(accent); codeLabel.setTextSize(12);
-        codeLabel.setGravity(Gravity.CENTER); codeLabel.setSingleLine(true);
+        LinearLayout bar = new LinearLayout(this); candidateBar = bar;
+        bar.setOrientation(LinearLayout.VERTICAL);
+        bar.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+        panel.addView(bar, new LinearLayout.LayoutParams(-1, dp(60)));
+        LinearLayout codeRow = row(bar);
+        codeRow.setLayoutParams(new LinearLayout.LayoutParams(-1, dp(18)));
+        codeLabel = new TextView(this); codeLabel.setTextColor(muted); codeLabel.setTextSize(11);
+        codeLabel.setGravity(Gravity.START | Gravity.CENTER_VERTICAL); codeLabel.setSingleLine(true);
+        codeLabel.setIncludeFontPadding(false);
         codeLabel.setEllipsize(android.text.TextUtils.TruncateAt.END);
-        codeLabel.setMinWidth(dp(32)); codeLabel.setMaxWidth(dp(72));
-        codeLabel.setPadding(dp(6), 0, dp(6), 0);
-        bar.addView(codeLabel, new LinearLayout.LayoutParams(-2, -1));
+        codeLabel.setPadding(dp(8), 0, dp(4), 0);
+        codeRow.addView(codeLabel, new LinearLayout.LayoutParams(0, -1, 1));
+        nextPage = new TextView(this); nextPage.setTextColor(fg);
+        nextPage.setGravity(Gravity.CENTER); nextPage.setIncludeFontPadding(false);
+        nextPage.setBackground(background(bg));
+        nextPage.setOnClickListener(v -> { expanded = !expanded; render(); });
+        codeRow.addView(nextPage, new LinearLayout.LayoutParams(dp(36), -1));
+        nextPage.setContentDescription("展開或收起候選字");
         candidateScroll = new HorizontalScrollView(this); candidateScroll.setHorizontalScrollBarEnabled(false); candidateScroll.setFillViewport(false);
         candidateScroll.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
         candidateRow = new LinearLayout(this); candidateRow.setOrientation(LinearLayout.HORIZONTAL);
-        candidateScroll.addView(candidateRow, new HorizontalScrollView.LayoutParams(-2, -1)); bar.addView(candidateScroll, new LinearLayout.LayoutParams(0, dp(50), 1));
-        nextPage = key(bar, "⌄", .65f, true, () -> { expanded = !expanded; render(); }, 43);
-        nextPage.setLayoutParams(new LinearLayout.LayoutParams(dp(36), dp(50)));
-        nextPage.setContentDescription("展開或收起候選字");
+        candidateRow.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
+        candidateRow.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+        candidateScroll.addView(candidateRow, new HorizontalScrollView.LayoutParams(-2, -1));
+        bar.addView(candidateScroll, new LinearLayout.LayoutParams(-1, dp(42)));
         updateCandidates();
 
         if (expanded && !candidates.isEmpty()) {
@@ -949,7 +959,7 @@ public final class KaiboardService extends InputMethodService {
             TextView edit = new TextView(this); edit.setText("分段改選"); edit.setTextColor(accent); edit.setTextSize(15);
             edit.setGravity(Gravity.CENTER); edit.setPadding(dp(8),0,dp(8),0); edit.setContentDescription("分段改選");
             edit.setOnClickListener(v -> segmentMenu(edit, restoredCandidate));
-            candidateRow.addView(edit, new LinearLayout.LayoutParams(-2, dp(48)));
+            candidateRow.addView(edit, new LinearLayout.LayoutParams(-2, dp(42)));
         }
         if (candidates.isEmpty()) { nextPage.setVisibility(View.INVISIBLE); return; }
         int pages = (candidates.size() + PAGE_SIZE - 1) / PAGE_SIZE;
@@ -965,11 +975,11 @@ public final class KaiboardService extends InputMethodService {
             if (i == candidatePage * PAGE_SIZE) { item.setTextColor(accent); item.setTypeface(null, Typeface.BOLD); }
             item.setBackgroundColor(Color.TRANSPARENT); item.setOnClickListener(v -> commit(value));
             item.setOnLongClickListener(v -> { candidateMenu(item, candidateDetails.get(value)); return true; });
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-2, dp(42)); params.setMargins(dp(3), dp(3), dp(3), dp(3));
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-2, dp(42)); params.setMargins(0, 0, 0, 0);
             candidateRow.addView(item, params);
         }
         nextPage.setVisibility(View.VISIBLE);
-        nextPage.setText(expanded ? "⌃" : "⌄"); nextPage.setTextSize(23);
+        nextPage.setText(expanded ? "⌃" : "⌄"); nextPage.setTextSize(14);
         final int first = candidatePage * PAGE_SIZE;
         candidateScroll.post(() -> {
             if (first < candidateRow.getChildCount()) candidateScroll.scrollTo(candidateRow.getChildAt(first).getLeft(), 0);
