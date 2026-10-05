@@ -45,6 +45,17 @@ assert ime,"Installed input method was not registered"
 print(adb("shell","ime","enable",ime),flush=True)
 print(adb("shell","ime","set",ime),flush=True)
 assert adb("shell","settings","get","secure","default_input_method").strip()==ime,"IME switch failed"
+# Preserve legacy toolbar scenarios with predictions explicitly disabled; the
+# dedicated predictions smoke exercises enabled mode and restores it afterward.
+adb("shell","am","start","-n","hk.kaiboard.android/.SettingsActivity");time.sleep(1)
+setting=None
+for _ in range(10):
+    setting=next((n for n in tree().iter("node") if n.get("text")=="輸入完成後顯示聯想字"),None)
+    if setting is not None:break
+    adb("shell","input","swipe","400","650","400","300","250");time.sleep(.3)
+assert setting is not None,"Prediction preference missing"
+if setting.get("checked")=="true":adb("shell","input","tap",*center(setting));time.sleep(.5)
+adb("shell","input","keyevent","4")
 adb("shell","am","start","-n","hk.kaiboard.android/.KeyboardPreviewActivity")
 time.sleep(3)
 for _ in range(10):

@@ -13,6 +13,7 @@ public final class QuickDecoder {
     private final Map<String, Double> outgoing = new HashMap<>();
     private final Map<String, List<Token>> vocabulary = new HashMap<>();
     private final Set<String> knownPhrases = new HashSet<>();
+    private final Map<Integer, List<Token>> continuations = new HashMap<>();
     private final Set<String> hkUsage = new HashSet<>();
     private static final class Token {
         final String text; final double score;
@@ -50,6 +51,30 @@ public final class QuickDecoder {
         for (List<Token> tokens : vocabulary.values()) tokens.sort(Comparator.comparingDouble((Token t) -> t.score).reversed());
     }
 
+    /** Only attested phrase tails are offered; no editor text is stored. */
+    public List<String> nextSuggestions(String context, int limit) {
+        if (context == null || context.isEmpty() || limit <= 0) return Collections.emptyList();
+        int last = context.codePointBefore(context.length());
+        if (!hanText(new String(Character.toChars(last)))) return Collections.emptyList();
+        int[] history = context.codePoints().toArray();
+        Map<String, Double> scores = new HashMap<>();
+        for (int length = Math.min(8, history.length); length >= 1; length--) {
+            String prefix = new String(history, history.length - length, length);
+            if (!hanText(prefix)) continue;
+            for (Token phrase : continuations.getOrDefault(prefix.codePointAt(0), Collections.emptyList())) {
+                if (!phrase.text.startsWith(prefix) || phrase.text.length() == prefix.length()) continue;
+                String tail = phrase.text.substring(prefix.length());
+                int size = tail.codePointCount(0, tail.length());
+                double score = length * 100 + Math.log1p(phrase.score)
+                    + languageScore(context, tail) / size;
+                if (Double.isFinite(score)) scores.merge(tail, score, Math::max);
+            }
+        }
+        List<String> result = new ArrayList<>(scores.keySet());
+        result.sort(Comparator.comparingDouble((String text) -> scores.get(text)).reversed().thenComparing(text -> text));
+        return new ArrayList<>(result.subList(0, Math.min(limit, result.size())));
+    }
+
     public boolean supportsCorrection(String context, String text) {
         int[] before = context.codePoints().toArray(), after = text.codePoints().toArray();
         // Require a real vocabulary phrase crossing the editor context / corrected text boundary.
@@ -67,10 +92,11 @@ public final class QuickDecoder {
                 String[] f = line.split("\\t");
                 if (f.length != 3) continue;
                 if (!hanText(f[1])) continue;
-                knownPhrases.add(f[1]);
+                boolean newPhrase = knownPhrases.add(f[1]);
                 int characters = f[1].codePointCount(0, f[1].length());
                 if (localUsage && characters >= 2 && characters <= 4) hkUsage.add(f[1]);
                 double count = Double.parseDouble(f[2]);
+                if (newPhrase) continuations.computeIfAbsent(f[1].codePointAt(0), k -> new ArrayList<>()).add(new Token(f[1], count));
                 if (wordCounts != null) wordCounts.merge(f[1], count, Math::max);
                 List<Token> tokens = vocabulary.computeIfAbsent(f[0], k -> new ArrayList<>());
                 Token existing = null;

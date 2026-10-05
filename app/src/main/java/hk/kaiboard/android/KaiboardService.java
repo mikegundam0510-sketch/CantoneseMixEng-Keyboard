@@ -243,6 +243,8 @@ public final class KaiboardService extends InputMethodService {
             InputConnection ic = getCurrentInputConnection();
             if (ic != null) ic.finishComposingText();
             resetComposition(); updateCandidates();
+        } else if (composing.length() == 0 && (start != oldStart || end != oldEnd)) {
+            updateCandidates();
         }
     }
 
@@ -852,6 +854,15 @@ public final class KaiboardService extends InputMethodService {
             noLearning = request.noLearning, secure = request.secure;
         InputCandidate restoredCandidate = request.restoredCandidate;
         LinkedHashSet<String> results = new LinkedHashSet<>();
+        if (!secure && !numeric && !request.noLearning && input.isEmpty() && decoder != null
+                && request.enabled("next_suggestions", true)) {
+            InputConnection ic = getCurrentInputConnection();
+            CharSequence selected = ic == null ? null : ic.getSelectedText(0);
+            if (selected == null || selected.length() == 0)
+                for (String tail : decoder.nextSuggestions(preceding, 12))
+                    request.add(results, new InputCandidate("", Collections.singletonList(
+                        new InputCandidate.Segment("", tail, false)), false));
+        }
         if (!secure && !input.isEmpty()) {
             if (continuous && chooseFirst && dictionary != null) {
                 for (int size = 2; size >= 1; size--) {
@@ -992,7 +1003,7 @@ public final class KaiboardService extends InputMethodService {
             customTool.setEnabled(canReselect()); customTool.setAlpha(canReselect() ? 1f : .35f);
         }
         if(selectKey!=null) selectKey.setTextColor(ascii || englishIntent() ? accent : fg);
-        boolean active = composing.length() > 0 && !secure && !numeric;
+        boolean active = (composing.length() > 0 || !candidates.isEmpty()) && !secure && !numeric;
         if (toolbar != null) toolbar.setVisibility(active ? View.GONE : View.VISIBLE);
         if (candidateBar != null) candidateBar.setVisibility(active ? View.VISIBLE : View.GONE);
         if (codeLabel != null) {
@@ -1004,7 +1015,7 @@ public final class KaiboardService extends InputMethodService {
                     ? RADICALS.charAt(index) : c);
             }
             String radicals = label.toString();
-            codeLabel.setText(radicals.equals(code) ? code : code + "  " + radicals);
+            codeLabel.setText(code.isEmpty() && !candidates.isEmpty() ? "聯想字" : radicals.equals(code) ? code : code + "  " + radicals);
             codeLabel.setContentDescription("輸入碼：" + code);
         }
         if (restoredCandidate != null) {
@@ -1026,7 +1037,7 @@ public final class KaiboardService extends InputMethodService {
             item.setContentDescription((translated ? "英轉中候選：" : corrected ? "修正候選：" : "") + value + (partial || chooseFirst ? "，先輸入此字並保留後續字碼" : ""));
             if (i == candidatePage * PAGE_SIZE) { item.setTextColor(accent); item.setTypeface(null, Typeface.BOLD); }
             item.setBackgroundColor(Color.TRANSPARENT); item.setOnClickListener(v -> commit(value));
-            item.setOnLongClickListener(v -> { candidateMenu(item, candidateDetails.get(value)); return true; });
+            if (composing.length() > 0) item.setOnLongClickListener(v -> { candidateMenu(item, candidateDetails.get(value)); return true; });
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-2, dp(42)); params.setMargins(0, 0, 0, 0);
             candidateRow.addView(item, params);
         }
@@ -1101,6 +1112,10 @@ public final class KaiboardService extends InputMethodService {
 
     private void space() {
         if (emojiSearch) { emojiQuery += " "; refreshEmoji(); return; }
+        // Explicit Cangjie confirmation accepts the highlighted candidate.
+        if (composing.length() > 0 && cangjie && !englishIntent() && !candidates.isEmpty()) {
+            selectCandidate(); return;
+        }
         if (composing.length() > 0 && maybeAutocorrect(null)) return;
         if (composing.length() > 0 && englishIntent()) {
             String word = composing.toString();
@@ -1193,6 +1208,7 @@ public final class KaiboardService extends InputMethodService {
         autoUndo = null; rejectedAutoCode = "";
         cancelVoice(); invalidateReselection(); restoredCandidate = null;
         finishLiteral(); InputConnection ic = getCurrentInputConnection(); if (ic != null) ic.commitText(text, 1);
+        updateCandidates();
     }
 
     private void delete() {
@@ -1628,7 +1644,7 @@ public final class KaiboardService extends InputMethodService {
             android.widget.GridLayout.LayoutParams lp = new android.widget.GridLayout.LayoutParams();
             lp.width = 0; lp.columnSpec = android.widget.GridLayout.spec(android.widget.GridLayout.UNDEFINED,1f);
             grid.addView(item,lp); item.setOnClickListener(v -> commit(value));
-            item.setOnLongClickListener(v -> { candidateMenu(item, candidateDetails.get(value)); return true; });
+            if (composing.length() > 0) item.setOnLongClickListener(v -> { candidateMenu(item, candidateDetails.get(value)); return true; });
         }
         content.addView(grid); expandedScroll.addView(content);
     }
