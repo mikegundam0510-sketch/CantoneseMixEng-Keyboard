@@ -38,8 +38,12 @@ public final class QuickTypos {
             if(segment.english || segment.code.length()>2){offset+=segment.code.length();continue;}
             for(int i=0;i<segment.code.length();i++)for(char adjacent:neighbors(Character.toLowerCase(segment.code.charAt(i))).toCharArray()) {
                 String corrected=segment.code.substring(0,i)+adjacent+segment.code.substring(i+1);
-                List<String> letters=dictionary.quickCandidates(corrected);
-                for(int n=0;n<Math.min(2,letters.size());n++) {
+                List<String> letters=new ArrayList<>(dictionary.quickCandidates(corrected));
+                String preceding=context;
+                for(int prior=0;prior<segmentIndex;prior++) preceding+=baseline.segments.get(prior).text;
+                final String history=preceding;
+                letters.sort(Comparator.comparingDouble((String text)->decoder.languageScore(history,text)).reversed());
+                for(int n=0;n<Math.min(4,letters.size());n++) {
                     List<InputCandidate.Segment> segments=new ArrayList<>(baseline.segments);
                     segments.set(segmentIndex,new InputCandidate.Segment(corrected,letters.get(n),false));
                     InputCandidate candidate=new InputCandidate(source,segments,true);
@@ -54,3 +58,4 @@ public final class QuickTypos {
         return result;
     }
 }
+

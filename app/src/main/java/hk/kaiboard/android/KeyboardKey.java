@@ -9,6 +9,35 @@ final class KeyboardKey extends TextView {
     private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private String latin, radical, icon;
     private int legendColor;
+    private boolean typingTouch, typingPressed;
+    private int typingPointer = -1;
+    void typingTouch(boolean enabled) { typingTouch = enabled; }
+    @Override public boolean onTouchEvent(android.view.MotionEvent event) {
+        if (!typingTouch || !isEnabled()) return super.onTouchEvent(event);
+        int action = event.getActionMasked();
+        if (action == android.view.MotionEvent.ACTION_DOWN) {
+            typingPointer = event.getPointerId(0); typingPressed = true; setPressed(true); return true;
+        }
+        if (action == android.view.MotionEvent.ACTION_CANCEL) {
+            typingPressed = false; typingPointer = -1; setPressed(false); return true;
+        }
+        int index = event.findPointerIndex(typingPointer);
+        if (index < 0) return true;
+        if (action == android.view.MotionEvent.ACTION_MOVE) {
+            float tolerance = dp(14);
+            if (event.getX(index) < -tolerance || event.getX(index) > getWidth()+tolerance
+                    || event.getY(index) < -tolerance || event.getY(index) > getHeight()+tolerance) {
+                typingPressed = false; setPressed(false);
+            }
+        }
+        if (action == android.view.MotionEvent.ACTION_UP
+                || action == android.view.MotionEvent.ACTION_POINTER_UP && event.getPointerId(event.getActionIndex()) == typingPointer) {
+            boolean commit = typingPressed; typingPressed = false; typingPointer = -1; setPressed(false);
+            // Synchronous click preserves rapid overlapping tap order. Parent swipe cancellation wins.
+            if (commit) performClick();
+        }
+        return true;
+    }
     KeyboardKey(Context context) { super(context); }
     void legend(String latin, String radical, int legendColor) {
         this.latin = latin; this.radical = radical; this.legendColor = legendColor;
@@ -123,5 +152,6 @@ final class KeyboardKey extends TextView {
     }
     private float dp(float value) { return value * getResources().getDisplayMetrics().density; }
 }
+
 
 

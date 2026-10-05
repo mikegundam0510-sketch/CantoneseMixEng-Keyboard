@@ -168,7 +168,7 @@ public final class QuickDecoder {
             score += Math.log(Math.max(1e-9, probability));
             previous = current;
         }
-        return score;
+        return score + hongKongBonus(prefix, text);
     }
 
     private double hongKongBonus(String prefix, String text) {
@@ -205,3 +205,4 @@ public final class QuickDecoder {
         return result;
     }
 }
+

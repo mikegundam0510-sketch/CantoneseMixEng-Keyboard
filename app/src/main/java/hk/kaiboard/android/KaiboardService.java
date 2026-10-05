@@ -626,6 +626,7 @@ public final class KaiboardService extends InputMethodService {
     private void addLetterKey(LinearLayout parent,char letter) {
         String latin=String.valueOf(Character.toUpperCase(letter));
         TextView button=key(parent,latin,1,false,()->typeLetter(letter),keyHeight());
+        ((KeyboardKey)button).typingTouch(true);
         button.setContentDescription("英文字母 "+latin);
         if(!ascii && !emojiSearch && (quick||cangjie)) ((KeyboardKey)button).legend(latin,String.valueOf(RADICALS.charAt(letter-'a')),muted);
     }
@@ -691,6 +692,8 @@ public final class KaiboardService extends InputMethodService {
         consumedCodes.putIfAbsent(candidate.text, candidate.source.length());
     }
 
+    private CandidateRequest resolvedCandidates;
+
     /** All mutable editor/personal state is copied on the UI thread before searching. */
     private final class CandidateRequest {
         final String input, preceding;
@@ -700,6 +703,7 @@ public final class KaiboardService extends InputMethodService {
         final List<String> englishWords;
         final Map<String, InputCandidate> details = new HashMap<>();
         final Map<String, Integer> consumed = new HashMap<>();
+        boolean computed;
         List<String> values = Collections.emptyList();
         List<InputCandidate> corrections = Collections.emptyList();
         CandidateRequest() {
@@ -771,7 +775,7 @@ public final class KaiboardService extends InputMethodService {
 
     private void addTranslations(CandidateRequest request, LinkedHashSet<String> result) {
         if (request.secure || !request.enabled("english_chinese",true) || englishChineseEngine==null)return;
-        List<String> meanings=englishChineseEngine.lookup(request.input);
+        List<String> meanings=englishChineseEngine.lookup(request.input,request.preceding,this::repairScore);
         for (String text:meanings.subList(0,Math.min(3,meanings.size())))request.add(result,InputCandidate.translation(request.input,text));
     }
 
@@ -779,12 +783,16 @@ public final class KaiboardService extends InputMethodService {
         if (dictionary == null || !request.quick || request.forceEnglish) return;
         for (int size = Math.min(2, request.input.length()); size >= 1; size--) {
             String part = request.input.substring(0, size);
-            List<String> words = LearningRanker.rank(dictionary.quickCandidates(part), word -> request.learnedCount(part, word));
+            List<String> words = new ArrayList<>(dictionary.quickCandidates(part));
+            if (decoder != null && !request.preceding.isEmpty()) words.sort(Comparator.comparingDouble(
+                (String word) -> decoder.languageScore(request.preceding, word)).reversed());
+            words = LearningRanker.rank(words, word -> request.learnedCount(part, word));
             for (int i = 0; i < Math.min(limit, words.size()); i++) request.add(result, InputCandidate.chinese(dictionary, part, words.get(i)));
         }
     }
 
     private void applyCandidates(CandidateRequest request) {
+        if (request.computed) resolvedCandidates = request;
         candidatePage = 0; consumedCodes.clear(); candidateDetails.clear();
         consumedCodes.putAll(request.consumed); candidateDetails.putAll(request.details);
         candidates = new ArrayList<>(request.values); corrections = request.corrections;
@@ -873,8 +881,8 @@ public final class KaiboardService extends InputMethodService {
         if (continuous && !chooseFirst && !request.isEnglish && !forceEnglish) {
             LinkedHashSet<String> ordered = new LinkedHashSet<>();
             int count = 0;
-            for (String value : results) { ordered.add(value); if (++count == 1) break; }
-            addPrefixChoices(request, ordered, 5);
+            for (String value : results) { ordered.add(value); if (++count == 3) break; }
+            addPrefixChoices(request, ordered, 2);
             ordered.addAll(results); results = ordered;
         }
         request.values = new ArrayList<>(results);
@@ -913,6 +921,7 @@ public final class KaiboardService extends InputMethodService {
             visible.addAll(request.values);request.values=new ArrayList<>(visible);
         }
         for (String word : request.values) request.consumed.putIfAbsent(word, input.length());
+        request.computed = true;
     }
 
     private int learnedCount(String code, String word) {
@@ -1004,10 +1013,14 @@ public final class KaiboardService extends InputMethodService {
         }
         if (pendingCandidates != null) { pendingCandidates.cancel(true); pendingCandidates = null; }
         candidateGeneration.incrementAndGet();
-        CandidateRequest request = new CandidateRequest();
-        computeCandidates(request);
+        CandidateRequest request = resolvedCandidates;
+        if (request == null || !request.input.equals(code) || !request.preceding.equals(context())) {
+            request = new CandidateRequest();
+            computeCandidates(request);
+        }
+        final String preceding = request.preceding;
         InputCandidate chosen = ChineseAutocorrect.choose(code, request.preceding,
-            request.details.values(), request.corrections, text -> repairScore(request.preceding, text));
+            request.details.values(), request.corrections, text -> repairScore(preceding, text));
         if (chosen == null || !decoder.supportsCorrection(request.preceding, chosen.text)) return false;
         commitDetail(chosen, false);
         if (composing.length() != 0) return false;
@@ -1765,4 +1778,5 @@ public final class KaiboardService extends InputMethodService {
     }
     private int dp(float value) { return Math.round(value * getResources().getDisplayMetrics().density); }
 }
+
 
