@@ -310,13 +310,15 @@ for name,size,density in (("cover","720x1600","320"),("unfolded","1440x1800","32
     assert by2<=sy1, "Input codes must sit above candidate words"
     left=min(int(re.findall(r"\d+",find(desc).get("bounds"))[0]) for desc in ("Q，手","A，日"))
     right=max(int(re.findall(r"\d+",find(desc).get("bounds"))[2]) for desc in ("P，心","L，中"))
-    assert sx1<=left and sx2>=right, "Candidates must use the full keyboard width"
+    assert sx1<=left, "Candidates must start at the left keyboard edge"
     words=[n for n in strips[0].iter("node") if n.get("class")=="android.widget.TextView"]
     assert words, "Candidate row is empty"
     wx1=int(re.findall(r"\d+",words[0].get("bounds"))[0])
     assert wx1==sx1, "First candidate must start at the left edge"
     ex1,ey1,ex2,ey2=map(int,re.findall(r"\d+",find("展開或收起候選字").get("bounds")))
-    assert ey2<=sy1, "Expand control must not consume candidate row width"
+    assert ex1==sx2 and ex2>=right, "Expand control must sit at the far right of the candidate row"
+    assert ey1==sy1 and ey2==sy2, "Expand control must be vertically aligned with candidates"
+    assert ey2-ey1==84 and ex2-ex1==72, "Expand control must keep its 36dp by 42dp touch target"
     for desc in ("Q，手","P，心","A，日","L，中","Z，重","M，一","空白鍵，左右滑動移動游標"):
         key=find(desc);assert key is not None, name+" missing key "+desc
         x1,y1,x2,y2=map(int,re.findall(r"\d+",key.get("bounds")))
