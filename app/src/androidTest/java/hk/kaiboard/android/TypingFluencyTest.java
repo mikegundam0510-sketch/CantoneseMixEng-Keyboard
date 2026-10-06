@@ -137,6 +137,11 @@ public class TypingFluencyTest {
         String code="";
         for(int i=0;i<8;i++){code+=CODE.charAt(i);tap(keys.get(CODE.charAt(i)),CONTEXT+code);}
         awaitAcknowledgements();
+        if(semantic&&new SemanticRanker(activity).budget()!=null){
+            // Wait for a genuine candidate request to begin model loading before stressing it.
+            long deadline=SystemClock.uptimeMillis()+15000;
+            while(!modelMapped()&&SystemClock.uptimeMillis()<deadline)SystemClock.sleep(25);
+        }
         SystemClock.sleep(allowColdLoad?650:2500);
         for(int i=8;i<CODE.length();i++){code+=CODE.charAt(i);tap(keys.get(CODE.charAt(i)),CONTEXT+code);}
         awaitAcknowledgements();
@@ -151,6 +156,10 @@ public class TypingFluencyTest {
         result.put("max_ms",measured.get(measured.size()-1));result.put("process_pss_kib",memory.getTotalPss());
         result.put("semantic_requested",semantic);result.put("model_bundled",BuildConfig.SEMANTIC_MODEL);
         result.put("model_mapped",modelMapped());
+        result.put("model_load_attempts",SemanticRanker.loadAttempts.get());
+        result.put("model_rank_attempts",SemanticRanker.rankAttempts.get());
+        result.put("model_failure",SemanticRanker.lastFailure);
+        if(SemanticRanker.loadAttempts.get()>0)result.put("native_link_failure",SemanticNative.debugAvailabilityFailure());
         capture("dumpsys gfxinfo hk.kaiboard.android framestats",name+"-frames.txt");
         return result;
     }
@@ -168,6 +177,9 @@ public class TypingFluencyTest {
         report.put("hardware_note","Android emulator; not a physical Fold 7 measurement");
         try(var out=new FileOutputStream(new File(activity.getExternalFilesDir(null),"typing-fluency.json"))){
             out.write(report.toString(2).getBytes(java.nio.charset.StandardCharsets.UTF_8));
+        }
+        if(memory.totalMem>=2500*SemanticPolicy.MIB){
+            assertTrue("4GB test must actually exercise model inference: "+report,warm.getInt("model_rank_attempts")>0);
         }
         // Relative and absolute gates allow emulator variance but reject visible input stalls.
         long limit=Math.max(150,baseline.getLong("p95_ms")*2+50);

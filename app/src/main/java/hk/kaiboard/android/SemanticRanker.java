@@ -10,6 +10,10 @@ import java.util.function.BooleanSupplier;
 
 /** Used only on its dedicated worker; model data is the only data written to disk. */
 public final class SemanticRanker implements AutoCloseable {
+    // Aggregate debug acceptance counters; no editor content, logging or persistence.
+    static final java.util.concurrent.atomic.AtomicInteger loadAttempts=new java.util.concurrent.atomic.AtomicInteger();
+    static final java.util.concurrent.atomic.AtomicInteger rankAttempts=new java.util.concurrent.atomic.AtomicInteger();
+    static volatile String lastFailure="";
     private final Context app;
     private volatile SemanticNative model;
     private int failures;
@@ -52,7 +56,11 @@ public final class SemanticRanker implements AutoCloseable {
         if(budget==null){close();return original;}
         if(!current.getAsBoolean()||System.nanoTime()<retryAt)return original;
         try {
-            if(model==null)model=SemanticNative.load(prepareModel().getAbsolutePath(),budget.threads);
+            if(model==null){
+                if(BuildConfig.DEBUG)loadAttempts.incrementAndGet();
+                model=SemanticNative.load(prepareModel().getAbsolutePath(),budget.threads);
+                if(BuildConfig.DEBUG&&model==null)lastFailure="native_load_unavailable";
+            }
             if(model==null||!current.getAsBoolean())return original;
             // Loading may change available memory; do not start inference under pressure.
             budget=budget();if(budget==null){close();return original;}
@@ -63,6 +71,7 @@ public final class SemanticRanker implements AutoCloseable {
             // Reset cancellation before rechecking generation, so a later cancel cannot be lost.
             model.arm();if(!current.getAsBoolean())return original;
             long start=System.nanoTime();
+            if(BuildConfig.DEBUG)rankAttempts.incrementAndGet();
             float[] logits=model.rank(SemanticPrompt.build(context,eligible),eligible.size(),budget.milliseconds);
             long milliseconds=(System.nanoTime()-start)/1000000;
             if(!current.getAsBoolean())return original;
@@ -71,6 +80,7 @@ public final class SemanticRanker implements AutoCloseable {
             }
             failures=0;return SemanticPolicy.promote(original,eligible,logits);
         } catch(Exception | LinkageError unavailable) {
+            if(BuildConfig.DEBUG)lastFailure=unavailable.getClass().getSimpleName();
             close();retryAt=System.nanoTime()+60_000_000_000L;return original;
         }
     }

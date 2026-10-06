@@ -6,14 +6,16 @@ import java.util.concurrent.atomic.AtomicLong;
 /** No network, text logging, persistence or generated candidates. */
 public final class SemanticNative implements AutoCloseable {
     private static final boolean AVAILABLE;
+    private static String availabilityFailure="";
     static {
         boolean loaded;
         try { System.loadLibrary("kaiboard_semantic"); loaded=true; }
-        catch (UnsatisfiedLinkError unavailable) { loaded=false; }
+        catch (UnsatisfiedLinkError unavailable) { loaded=false; if(BuildConfig.DEBUG)availabilityFailure=unavailable.getMessage(); }
         AVAILABLE=loaded;
     }
     private final AtomicLong handle;
     private SemanticNative(long handle) { this.handle=new AtomicLong(handle); }
+    public static String debugAvailabilityFailure() { return availabilityFailure; }
     public static SemanticNative load(String path, int threads) {
         if (!AVAILABLE) return null;
         long handle=nativeLoad(path.getBytes(StandardCharsets.UTF_8),threads);
