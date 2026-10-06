@@ -19,11 +19,37 @@ public class SwipeSelectionTest {
  private EditText edit;
  private InputConnection connection;
  private SwipeSelectionController selection;
+ private java.util.Map<String,?> savedPrefs;
  @Before public void setup()throws Exception{
+  // connectedAndroidTest installs the APK but does not select its IME.
+  shell("settings put secure show_ime_with_hard_keyboard 1");
+  shell("ime enable hk.kaiboard.android/.KaiboardService");
+  shell("ime set hk.kaiboard.android/.KaiboardService");
+  savedPrefs=new java.util.HashMap<>(Prefs.get(instrumentation.getTargetContext()).getAll());
+  Prefs.get(instrumentation.getTargetContext()).edit().putBoolean("quick",true)
+   .putBoolean("cangjie",true).putBoolean("english",true).putBoolean("mixed",true)
+   .putBoolean("english_chinese",true).putBoolean("chinese_autocorrect",true)
+   .putBoolean("next_suggestions",false).commit();
   activity=instrumentation.startActivitySync(new Intent(instrumentation.getTargetContext(),KeyboardPreviewActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
   instrumentation.runOnMainSync(()->{edit=new EditText(activity);activity.setContentView(edit);edit.requestFocus();connection=edit.onCreateInputConnection(new EditorInfo());selection=new SwipeSelectionController();});
  }
- @After public void finish(){instrumentation.runOnMainSync(()->{selection.reset();activity.finish();});}
+ @After public void finish()throws Exception{
+  instrumentation.runOnMainSync(()->{if(selection!=null)selection.reset();if(activity!=null)activity.finish();});
+  if(savedPrefs!=null){
+   android.content.SharedPreferences.Editor restored=Prefs.get(instrumentation.getTargetContext()).edit().clear();
+   for(java.util.Map.Entry<String,?> entry:savedPrefs.entrySet()){
+    Object v=entry.getValue();String k=entry.getKey();
+    if(v instanceof Boolean)restored.putBoolean(k,(Boolean)v);
+    else if(v instanceof String)restored.putString(k,(String)v);
+    else if(v instanceof Integer)restored.putInt(k,(Integer)v);
+    else if(v instanceof Long)restored.putLong(k,(Long)v);
+    else if(v instanceof Float)restored.putFloat(k,(Float)v);
+    else if(v instanceof java.util.Set)restored.putStringSet(k,(java.util.Set<String>)v);
+   }
+   restored.commit();
+  }
+  shell("wm size reset");shell("wm density reset");
+ }
  private void main(Runnable r){instrumentation.runOnMainSync(r);instrumentation.waitForIdleSync();}
  @Test public void reverseShrinksAndStopsAtAnchorAcrossSeparateSwipes(){
   main(()->{

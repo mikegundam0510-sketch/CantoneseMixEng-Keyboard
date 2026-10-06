@@ -23,6 +23,16 @@ def reset(value='__EMPTY__', kind='normal'):
 def shot(name):
     with (out/(name+'.png')).open('wb') as f:
         subprocess.run(['adb','exec-out','screencap','-p'],stdout=f,check=True)
+import sys
+def failure(kind, value, tb):
+    try:
+        shot('predictions-failure')
+        (out/'predictions-failure.xml').write_text(ET.tostring(tree(), encoding='unicode'))
+        (out/'predictions-failure-logcat.txt').write_text(adb('logcat','-d'))
+    except Exception: pass
+    sys.__excepthook__(kind, value, tb)
+sys.excepthook = failure
+adb('shell','input','keyevent','4')
 adb('shell','am','start','-n','hk.kaiboard.android/.SettingsActivity'); time.sleep(1)
 for _ in range(10):
     setting = node('輸入完成後顯示聯想字')
@@ -79,11 +89,12 @@ assert node('聯想字') is None, 'New code must replace post-commit predictions
 reset('研究', 'private'); assert node('聯想字') is None, 'Private field leaked contextual predictions'
 reset('研究', 'password'); assert node('聯想字') is None, 'Password field leaked predictions'
 reset()
+adb('shell','input','keyevent','4')
 adb('shell','am','start','-n','hk.kaiboard.android/.SettingsActivity'); time.sleep(1)
 for _ in range(10):
     quick = node('速成（首尾碼）')
     if quick is not None: break
-    adb('shell','input','swipe','400','300','400','650','250'); time.sleep(.3)
+    adb('shell','input','swipe','400','650','400','300','250'); time.sleep(.3)
 assert quick is not None
 if quick.get('checked') != 'true': tap_node(quick)
 adb('shell','input','keyevent','4')
