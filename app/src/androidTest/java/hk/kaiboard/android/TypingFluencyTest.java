@@ -139,7 +139,7 @@ public class TypingFluencyTest {
         String code="";
         for(int i=0;i<8;i++){code+=CODE.charAt(i);tap(keys.get(CODE.charAt(i)),CONTEXT+code);}
         awaitAcknowledgements();
-        if(semantic&&new SemanticRanker(activity).budget()!=null){
+        if(semantic&&BuildConfig.SEMANTIC_MODEL&&new SemanticRanker(activity).budget()!=null){
             // Wait for a genuine candidate request to begin model loading before stressing it.
             long deadline=SystemClock.uptimeMillis()+15000;
             while(SemanticRanker.rankAttempts.get()<=ranksBefore&&SystemClock.uptimeMillis()<deadline)SystemClock.sleep(10);
@@ -183,7 +183,7 @@ public class TypingFluencyTest {
         try(var out=new FileOutputStream(new File(activity.getExternalFilesDir(null),"typing-fluency.json"))){
             out.write(report.toString(2).getBytes(java.nio.charset.StandardCharsets.UTF_8));
         }
-        if(memory.totalMem>=2500*SemanticPolicy.MIB){
+        if(BuildConfig.SEMANTIC_MODEL&&memory.totalMem>=2500*SemanticPolicy.MIB){
             assertTrue("4GB test must actually exercise model inference: "+report,cold.getInt("new_model_rank_attempts")>0&&warm.getInt("new_model_rank_attempts")>0);
         }
         // Relative and absolute gates allow emulator variance but reject visible input stalls.
@@ -191,7 +191,7 @@ public class TypingFluencyTest {
         assertTrue("Cold model loading delays typing",cold.getLong("p95_ms")<=limit);
         assertTrue("Warm inference delays typing",warm.getLong("p95_ms")<=limit);
         for(int i=0;i<phases.length();i++)assertTrue("Visible keyboard stall",phases.getJSONObject(i).getLong("max_ms")<1000);
-        if(new SemanticRanker(activity).budget()!=null){
+        if(BuildConfig.SEMANTIC_MODEL&&new SemanticRanker(activity).budget()!=null){
             int handlesBefore=SemanticNative.debugModelCount();
             int loadsBefore=SemanticRanker.loadAttempts.get();
             SemanticRanker retiring=new SemanticRanker(activity);
