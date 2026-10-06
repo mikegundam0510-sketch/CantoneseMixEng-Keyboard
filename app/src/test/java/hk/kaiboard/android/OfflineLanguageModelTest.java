@@ -113,6 +113,32 @@ public class OfflineLanguageModelTest {
         assertEquals(decoder.languageScore("", "單車"), decoder.languageScore("踩，", "單車"), 1e-9);
     }
 
+    @Test public void predicateQuestionsGeneralizeAcrossUnlistedVerbsAndObjects() {
+        String[][] cases = {
+            {"onardrrrdrjjj", "今日踩唔踩單車"},
+            {"onaqrrrqraujm", "今日搭唔搭巴士"},
+            {"onabhrrbhmuah", "今日睇唔睇電影"},
+            {"onaoorroorrry", "今日飲唔飲咖啡"},
+            {"rdrrrd", "踩唔踩"}
+        };
+        for (String[] example : cases) {
+            List<String> values = decoder.decode(example[0], (c,w)->0);
+            assertEquals(example[0], example[1], values.get(0));
+            for (String value : values)
+                assertFalse(example[0] + " / " + value, dictionary.matchQuickCodes(example[0], value).isEmpty());
+        }
+        assertEquals("踩唔踩單車", decoder.decode("rdrrrdrjjj", (c,w)->0, "今日").get(0));
+        assertEquals("今日踩唔踩單車", decoder.decode("onardrrrdrjjj", (c,w)->0).get(0));
+    }
+
+    @Test public void questionGrammarSurvivesTokenBoundariesAndStopsAtPunctuation() {
+        assertEquals(decoder.languageScore("今日", "踩唔踩單車"),
+            decoder.languageScore("今日", "踩唔") + decoder.languageScore("今日踩唔", "踩單車"), 1e-9);
+        assertEquals(decoder.languageScore("", "踩"), decoder.languageScore("踩唔，", "踩"), 1e-9);
+        assertEquals(model.score("車唔", "車"), decoder.languageScore("車唔", "車"), 1e-9);
+        assertEquals(model.score("咪唔", "咪"), decoder.languageScore("咪唔", "咪"), 1e-9);
+    }
+
 
     @Test public void candidateEngineExposesRerankedSentenceWithEditableCharacterCodes() throws Exception {
         CandidateEngine engine = new CandidateEngine(dictionary, decoder, new EnglishEngine(asset("english.txt")));

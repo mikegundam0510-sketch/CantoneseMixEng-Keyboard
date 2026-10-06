@@ -7,6 +7,9 @@ import java.util.function.ToIntBiFunction;
 /** Bounded offline word-lattice decoder, including one-code Quick characters. */
 public final class QuickDecoder {
     private static final int BEAM = 48;
+    // Productive Cantonese predicate questions, rather than memorized full sentences.
+    // Particles and nouns must not receive the A-not-A grammar preference.
+    private static final String QUESTION_PREDICATES = "食飲去做睇買返係得知要想試用踩搭打踢聽講問答寫讀開關拎攞畀揀改整洗煮玩行跑坐企瞓等記識明信收放賣換借還帶着著學幫肯敢好啱忙攰凍熱快慢靚貴平難易";
     private final DictionaryEngine dictionary;
     private final OfflineLanguageModel model;
     private final Map<String, Double> pairCounts = new HashMap<>();
@@ -37,6 +40,7 @@ public final class QuickDecoder {
         readVocabulary(input, wordCounts, false);
         if (hkInput != null) readVocabulary(hkInput, wordCounts, true);
         if (cantoneseInput != null) readVocabulary(cantoneseInput, wordCounts, false);
+        addPredicateQuestions();
         if (wordCounts != null) for (Map.Entry<String, Double> entry : wordCounts.entrySet()) {
             String previous = null;
             for (int cp : entry.getKey().codePoints().toArray()) {
@@ -49,6 +53,20 @@ public final class QuickDecoder {
             }
         }
         for (List<Token> tokens : vocabulary.values()) tokens.sort(Comparator.comparingDouble((Token t) -> t.score).reversed());
+    }
+
+    private void addPredicateQuestions() {
+        for (int cp : QUESTION_PREDICATES.codePoints().distinct().toArray()) {
+            String predicate = new String(Character.toChars(cp));
+            String question = predicate + "唔" + predicate;
+            for (String left : dictionary.quickCodesFor(predicate))
+                for (String middle : dictionary.quickCodesFor("唔"))
+                    for (String right : dictionary.quickCodesFor(predicate)) {
+                        List<Token> tokens = vocabulary.computeIfAbsent(left + middle + right, k -> new ArrayList<>());
+                        if (tokens.stream().noneMatch(t -> t.text.equals(question)))
+                            tokens.add(new Token(question, 30000));
+                    }
+        }
     }
 
     /** Only attested phrase tails are offered; no editor text is stored. */
@@ -218,6 +236,7 @@ public final class QuickDecoder {
         double bonus = 0;
         for (int cp : text.codePoints().toArray()) {
             if (!OfflineLanguageModel.han(cp)) { history = ""; continue; }
+            String previous = history;
             history += new String(Character.toChars(cp));
             int count = history.codePointCount(0, history.length());
             if (count > 4) { history = history.substring(history.offsetByCodePoints(0, count - 4)); count = 4; }
@@ -227,6 +246,18 @@ public final class QuickDecoder {
                 // Completion supplies right-hand evidence for earlier ambiguous codes,
                 // including when the phrase is split across lattice token boundaries.
                 matched += phraseEvidence.getOrDefault(suffix, 0.0);
+            }
+            if (count >= 3) {
+                String ending = history.substring(history.offsetByCodePoints(0, count - 3));
+                int[] pattern = ending.codePoints().toArray();
+                if (pattern[0] == cp && pattern[1] == '唔' && QUESTION_PREDICATES.indexOf(cp) >= 0) {
+                    matched = Math.max(matched, 3.3);
+                    // Back off an unseen repeated predicate to an attested question's
+                    // grammatical transition. Keep its own lexical/context likelihood
+                    // and the following object's evidence; never force a whole sentence.
+                    if (model != null) bonus += Math.min(12, Math.max(0,
+                        model.score("食唔", "食") - model.score(previous, new String(Character.toChars(cp)))));
+                }
             }
             // A bounded local preference, so Chinese codes and statistical context still determine choices.
             bonus += Math.min(4, matched);

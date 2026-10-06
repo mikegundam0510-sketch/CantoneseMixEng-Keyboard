@@ -107,6 +107,11 @@ public final class DictionaryEngine {
         return Collections.unmodifiableList(quick.getOrDefault(code.toLowerCase(Locale.ROOT), Collections.emptyList()));
     }
 
+    public List<String> quickCodesFor(String character) {
+        String codes = reverseQuick.get(character);
+        return codes == null ? Collections.emptyList() : Arrays.asList(codes.split(","));
+    }
+
     public List<String> matchQuickCodes(String input, String text) {
         List<String> result = new ArrayList<>();
         return match(input.toLowerCase(Locale.ROOT), 0, text, 0, result) ? result : Collections.emptyList();
@@ -150,4 +155,3 @@ public final class DictionaryEngine {
         return new ArrayList<>(result);
     }
 }
-

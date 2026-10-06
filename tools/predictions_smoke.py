@@ -110,6 +110,13 @@ for word in ('effect', 'EFFECT', 'aqhibrandxyz'):
         tap('空白鍵，左右滑動移動游標')
         assert text() == '星期五'+word+' ', 'Completed English word was converted at space'
 shot('20-effect-after-friday')
+# Regression: an unlisted A-not-A question must expose the intended exact sentence.
+reset()
+for c in 'onardrrrdrjjj': tap(c.upper()+'，'+radicals[c])
+assert node('今日踩唔踩單車') is not None, 'Predicate question candidate missing'
+tap('今日踩唔踩單車')
+assert text() == '今日踩唔踩單車', 'Question candidate did not commit exact text'
+shot('21-predicate-question')
 reset()
 (out/'predictions-result.txt').write_text('PASS: Cangjie space commit, post-commit suggestions, HK phrase tails, chained insertion, idle space, punctuation/new-code dismissal and private/password fields.\n')
 print('Post-commit suggestion UI checks passed', flush=True)
