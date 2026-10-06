@@ -209,10 +209,13 @@ public final class QuickDecoder {
             double matched = 0;
             for (int length = 2; length <= count; length++) {
                 String suffix = history.substring(history.offsetByCodePoints(0, count - length));
-                if (hkUsage.contains(suffix)) matched += .65 * (length - 1);
+                // A completed longer local phrase supplies evidence from the right-hand
+                // characters too (e.g. 單車 disambiguates the earlier rd as 踩).
+                // Apply this at the phrase end, including across lattice token boundaries.
+                if (hkUsage.contains(suffix)) matched += .65 * (length - 1) + (length >= 3 ? 2 : 0);
             }
             // A bounded local preference, so Chinese codes and statistical context still determine choices.
-            bonus += Math.min(2, matched);
+            bonus += Math.min(4, matched);
         }
         return bonus;
     }

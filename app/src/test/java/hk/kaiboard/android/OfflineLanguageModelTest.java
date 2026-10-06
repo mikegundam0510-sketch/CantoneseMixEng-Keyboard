@@ -84,4 +84,44 @@ public class OfflineLanguageModelTest {
         }
         assertEquals("你好",decoder.decode("ofvd",(c,w)->0).get(0));
     }
+
+    @Test public void laterCodesDisambiguateEarlierQuickCharactersInUnlistedSentences() {
+        String[][] cases = {
+            {"vkmmnkmrvordrjjj", "收工又可以踩單車"},
+            {"hidprdrjjj", "我想踩單車"},
+            {"hispardrjjj", "我聽日踩單車"},
+            {"hirdmrvo", "我哋可以"}
+        };
+        for (String[] example : cases) {
+            List<String> values = decoder.decode(example[0], (c,w)->0);
+            assertEquals(example[0], example[1], values.get(0));
+            assertEquals(values.size(), new HashSet<>(values).size());
+            for (String value : values)
+                assertFalse(example[0] + " / " + value, dictionary.matchQuickCodes(example[0], value).isEmpty());
+        }
+        // The whole sentence is composed; only reusable verb/object fragments are authored.
+        List<String> values = decoder.decode("vkmmnkmrvordrjjj", (c,w)->0);
+        assertTrue(values.contains("收工又可以咪單車"));
+        assertEquals(Arrays.asList("vk","mm","nk","mr","vo","rd","rj","jj"),
+            dictionary.matchQuickCodes("vkmmnkmrvordrjjj", values.get(0)));
+        assertEquals("踩單車", decoder.decode("rdrjjj", (c,w)->0, "收工又可以").get(0));
+    }
+    @Test public void collocationEvidenceCrossesTokensAndResetsAtPunctuation() {
+        assertEquals(decoder.languageScore("可以", "踩單車"),
+            decoder.languageScore("可以", "踩") + decoder.languageScore("可以踩", "單車"), 1e-9);
+        assertTrue(decoder.languageScore("踩", "單車") > model.score("踩", "單車"));
+        assertEquals(decoder.languageScore("", "單車"), decoder.languageScore("踩，", "單車"), 1e-9);
+    }
+
+
+    @Test public void candidateEngineExposesRerankedSentenceWithEditableCharacterCodes() throws Exception {
+        CandidateEngine engine = new CandidateEngine(dictionary, decoder, new EnglishEngine(asset("english.txt")));
+        InputCandidate candidate = engine.chinese("vkmmnkmrvordrjjj", "", true, true, false, (c,w)->0).get(0);
+        assertEquals("收工又可以踩單車", candidate.text);
+        assertEquals("vkmmnkmrvordrjjj", candidate.effectiveCode());
+        assertEquals("rd", candidate.segments.get(5).code);
+        assertEquals("踩", candidate.segments.get(5).text);
+        assertFalse(candidate.corrected);
+    }
+
 }
