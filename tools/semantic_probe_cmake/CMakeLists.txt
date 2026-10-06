@@ -12,3 +12,6 @@ set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
 add_subdirectory(${LLAMA_SOURCE} llama)
 add_executable(semantic-probe ../semantic_probe.cpp ../../app/src/main/cpp/semantic_core.cpp)
 target_link_libraries(semantic-probe PRIVATE llama)
+
+add_executable(semantic-likelihood ../semantic_likelihood.cpp)
+target_link_libraries(semantic-likelihood PRIVATE llama)

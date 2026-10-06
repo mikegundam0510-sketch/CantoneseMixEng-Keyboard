@@ -12,7 +12,7 @@ public class ExportSemanticCases {
         var model = OfflineLanguageModel.load(Files.newInputStream(assets.resolve("language_model.b64")));
         var decoder = new QuickDecoder(dictionary,asset("quick_phrases.tsv"),asset("hk_phrases.tsv"),asset("cantonese_phrases.tsv"),model);
         var out = Path.of(args[1]); Files.createDirectories(out);
-        StringBuilder cases = new StringBuilder("["), manifest = new StringBuilder(); int i = 0;
+        StringBuilder cases = new StringBuilder("["), manifest = new StringBuilder(), likelihood = new StringBuilder(); int i = 0;
         for (String line : Files.readAllLines(Path.of(args[0]))) {
             if (line.isBlank() || line.startsWith("#")) continue;
             String[] f = line.split("\t",-1); String context = f[0], expected = f[1];
@@ -25,6 +25,9 @@ public class ExportSemanticCases {
             var prompt = out.resolve(String.format(Locale.ROOT,"prompt-%03d.txt",i));
             Files.writeString(prompt,SemanticPrompt.build(context,candidates));
             manifest.append(candidates.size()).append(' ').append(prompt).append('\n');
+            var continuation=out.resolve(String.format(Locale.ROOT,"continuation-%03d.txt",i));
+            Files.writeString(continuation,context+"\n"+String.join("\n",candidates)+"\n");
+            likelihood.append(continuation).append('\n');
             if (i++ > 0) cases.append(',');
             cases.append("{\"context\":").append(SemanticPrompt.quote(context))
                 .append(",\"expected\":").append(SemanticPrompt.quote(expected))
@@ -34,5 +37,6 @@ public class ExportSemanticCases {
         }
         Files.writeString(out.resolve("cases.json"),cases.append("]\n").toString());
         Files.writeString(out.resolve("manifest.txt"),manifest.toString());
+        Files.writeString(out.resolve("likelihood-manifest.txt"),likelihood.toString());
     }
 }

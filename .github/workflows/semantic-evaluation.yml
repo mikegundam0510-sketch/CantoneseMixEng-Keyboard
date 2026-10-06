@@ -27,7 +27,7 @@ jobs:
           if [ ! -d /tmp/llama/.git ]; then git clone https://github.com/ggml-org/llama.cpp.git /tmp/llama; fi
           git -C /tmp/llama checkout d7a695ef679138c13d86359b84c1731d36213d32
           cmake -S tools/semantic_probe_cmake -B /tmp/semantic-build -DLLAMA_SOURCE=/tmp/llama -DCMAKE_BUILD_TYPE=Release
-          cmake --build /tmp/semantic-build --target semantic-probe llama-quantize -j 2
+          cmake --build /tmp/semantic-build --target semantic-probe semantic-likelihood llama-quantize -j 2
       - name: Prepare attributed, hash-verified model
         run: |
           if [ ! -f /tmp/qwen-q8.gguf ]; then curl --fail --location --retry 3 'https://huggingface.co/Qwen/Qwen3-0.6B-GGUF/resolve/1eaf4d9657fe65ad10a51eab76a8db5b363bddaa/Qwen3-0.6B-Q8_0.gguf' -o /tmp/qwen-q8.gguf; fi
@@ -41,6 +41,8 @@ jobs:
           java -cp /tmp/semantic-java hk.kaiboard.android.ExportSemanticCases tools/semantic_cases.tsv semantic-evidence
           /tmp/semantic-build/semantic-probe /tmp/semantic-model.gguf semantic-evidence/manifest.txt > semantic-evidence/scores.tsv
           python3 tools/semantic_report.py semantic-evidence/cases.json semantic-evidence/scores.tsv semantic-evidence/report.json
+          /tmp/semantic-build/semantic-likelihood /tmp/semantic-model.gguf semantic-evidence/likelihood-manifest.txt > semantic-evidence/likelihood-scores.tsv
+          python3 tools/semantic_report.py semantic-evidence/cases.json semantic-evidence/likelihood-scores.tsv semantic-evidence/likelihood-report.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
