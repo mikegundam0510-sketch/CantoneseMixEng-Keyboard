@@ -2,6 +2,12 @@
 
 原生 Android 離線鍵盤，目標裝置為 Samsung Galaxy Z Fold7／One UI 8.5。
 
+## 0.6.23 更新
+
+- Fold7 展開按鍵按第二張參考圖嘅高／闊比例調整鍵高，保留 0.6.22 分體位置、字母及字碼；數字同角落標示同步放大。
+- Shift 改成較大嘅空心向上箭嘴，Backspace 改成較大嘅空心退格框連叉號。
+- 沿用固定簽名同學習資料；版本碼 30。
+
 ## 0.6.22 更新
 
 - Fold7 展開分體佈局按使用者參考圖調整：`QWERT｜YUIOP`、`ASDFG｜GHJKL`、`Shift＋ZXCV｜VBNM＋刪除`，兩邊均可按 G／V。

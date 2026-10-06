@@ -53,7 +53,7 @@ final class KeyboardKey extends TextView {
     @Override protected void onDraw(Canvas canvas) {
         if (latin != null) {
             paint.setStyle(Paint.Style.FILL); paint.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
-            paint.setColor(legendColor); paint.setTextSize(dp(10)); paint.setTextAlign(rightLegend ? Paint.Align.RIGHT : Paint.Align.LEFT);
+            paint.setColor(legendColor); paint.setTextSize(rightLegend ? Math.max(dp(10), Math.min(dp(14), (getHeight()-dp(8))*.22f)) : dp(10)); paint.setTextAlign(rightLegend ? Paint.Align.RIGHT : Paint.Align.LEFT);
             // Keep the legend inside the visible face (background inset: 2.5dp / 4dp).
             canvas.drawText(latin, rightLegend ? getWidth() - dp(9) : dp(9), dp(9) - paint.ascent(), paint);
             paint.setColor(getCurrentTextColor()); paint.setTextSize(dp(22)); paint.setTextAlign(Paint.Align.CENTER);
@@ -61,8 +61,10 @@ final class KeyboardKey extends TextView {
             canvas.drawText(radical, getWidth()/2f, y, paint); return;
         }
         if (icon == null) { super.onDraw(canvas); return; }
-        canvas.save(); float size = dp(22); canvas.translate((getWidth()-size)/2, (getHeight()-size)/2); canvas.scale(size/24, size/24);
-        paint.setStyle(Paint.Style.STROKE); paint.setStrokeWidth(1.7f); paint.setStrokeCap(Paint.Cap.ROUND); paint.setStrokeJoin(Paint.Join.ROUND);
+        boolean referenceEditingIcon = "shift".equals(icon) || "delete".equals(icon);
+        float size = referenceEditingIcon ? Math.min(getWidth()-dp(16), (getHeight()-dp(8))*.58f) : dp(22);
+        canvas.save(); canvas.translate((getWidth()-size)/2, (getHeight()-size)/2); canvas.scale(size/24, size/24);
+        paint.setStyle(Paint.Style.STROKE); paint.setStrokeWidth(referenceEditingIcon ? 2.1f : 1.7f); paint.setStrokeCap(Paint.Cap.ROUND); paint.setStrokeJoin(Paint.Join.ROUND);
         paint.setColor(getCurrentTextColor());
         Path path = new Path();
         switch (icon) {
@@ -136,10 +138,10 @@ final class KeyboardKey extends TextView {
                 canvas.drawCircle(12,12,9,paint); canvas.drawCircle(8.5f,9,.5f,paint); canvas.drawCircle(15.5f,9,.5f,paint);
                 canvas.drawArc(7,8,17,17,20,140,false,paint); break;
             case "delete":
-                path.moveTo(2,12); path.lineTo(8,5); path.lineTo(22,5); path.lineTo(22,19); path.lineTo(8,19); path.close(); canvas.drawPath(path,paint);
+                path.moveTo(2,12); path.lineTo(8,4); path.lineTo(22,4); path.lineTo(22,20); path.lineTo(8,20); path.close(); canvas.drawPath(path,paint);
                 canvas.drawLine(12,9,18,15,paint); canvas.drawLine(18,9,12,15,paint); break;
             case "shift":
-                path.moveTo(3,12); path.lineTo(12,3); path.lineTo(21,12); path.lineTo(16,12); path.lineTo(16,21); path.lineTo(8,21); path.lineTo(8,12); path.close(); canvas.drawPath(path,paint); break;
+                path.moveTo(2,12); path.lineTo(12,2); path.lineTo(22,12); path.lineTo(16,12); path.lineTo(16,22); path.lineTo(8,22); path.lineTo(8,12); path.close(); canvas.drawPath(path,paint); break;
             case "globe":
                 canvas.drawCircle(12,12,9,paint); canvas.drawOval(8,3,16,21,paint); canvas.drawLine(3,12,21,12,paint);
                 canvas.drawLine(4.5f,7.5f,19.5f,7.5f,paint); canvas.drawLine(4.5f,16.5f,19.5f,16.5f,paint); break;
@@ -159,4 +161,3 @@ final class KeyboardKey extends TextView {
     }
     private float dp(float value) { return value * getResources().getDisplayMetrics().density; }
 }
-

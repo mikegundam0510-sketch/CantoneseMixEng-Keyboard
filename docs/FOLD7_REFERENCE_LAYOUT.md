@@ -30,3 +30,25 @@ Release build and lint are checked; the APK keeps the persistent signer from
 been performed. Check unfolding/folding while composing, both G/V copies,
 delete repeat, Shift lock, space cursor gestures, punctuation long press,
 accessibility action labels and entering/searching/sending in actual editors.
+
+## 0.6.23 size and editing-icon refinement
+
+The second supplied image, 133914.jpg, is used only for face-size proportions
+and Shift/Backspace drawings. Its compact row arrangement and printed key
+codes/letters are not adopted. Keep the split rows, duplicates, weights and
+bottom-row controls introduced in 0.6.22.
+
+Estimate the five-key half's letter face width after existing side padding,
+center gap and key-face insets. Set its height to the reference ratio of roughly
+140/110, bounded to 44–68dp before applying the user's height preference. At
+700dp available width and default height preference this is about 55dp rather
+than the previous 42dp. Number faces remain 92% of the letter height, with
+larger number text; right-corner legends scale with face height. The bottom
+row remains 4dp taller than letters.
+
+Shift and Backspace use larger rounded-stroke outlines proportional to their
+faces, with the hollow up arrow and left-pointing deletion frame plus X shown
+in the reference. Caps-lock and deletion behavior are unchanged. Cover-screen
+key heights retain their existing settings; editing-icon drawings apply in both
+layouts. Version code 30 / 0.6.23 retains the pinned signer and learned data.
+Release build and lint are checked; real Fold7 rendering remains unverified.
