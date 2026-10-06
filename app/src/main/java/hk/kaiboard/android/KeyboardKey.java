@@ -9,6 +9,7 @@ final class KeyboardKey extends TextView {
     private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private String latin, radical, icon;
     private int legendColor;
+    private boolean rightLegend;
     private boolean typingTouch, typingPressed;
     private int typingPointer = -1;
     void typingTouch(boolean enabled) { typingTouch = enabled; }
@@ -40,7 +41,11 @@ final class KeyboardKey extends TextView {
     }
     KeyboardKey(Context context) { super(context); }
     void legend(String latin, String radical, int legendColor) {
+        legend(latin, radical, legendColor, false);
+    }
+    void legend(String latin, String radical, int legendColor, boolean rightLegend) {
         this.latin = latin; this.radical = radical; this.legendColor = legendColor;
+        this.rightLegend = rightLegend;
         setContentDescription(latin + "，" + radical); invalidate();
     }
     void icon(String icon) { this.icon = icon; invalidate(); }
@@ -48,11 +53,11 @@ final class KeyboardKey extends TextView {
     @Override protected void onDraw(Canvas canvas) {
         if (latin != null) {
             paint.setStyle(Paint.Style.FILL); paint.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
-            paint.setColor(legendColor); paint.setTextSize(dp(10)); paint.setTextAlign(Paint.Align.LEFT);
+            paint.setColor(legendColor); paint.setTextSize(dp(10)); paint.setTextAlign(rightLegend ? Paint.Align.RIGHT : Paint.Align.LEFT);
             // Keep the legend inside the visible face (background inset: 2.5dp / 4dp).
-            canvas.drawText(latin, dp(9), dp(9) - paint.ascent(), paint);
+            canvas.drawText(latin, rightLegend ? getWidth() - dp(9) : dp(9), dp(9) - paint.ascent(), paint);
             paint.setColor(getCurrentTextColor()); paint.setTextSize(dp(22)); paint.setTextAlign(Paint.Align.CENTER);
-            float y = getHeight() - dp(12);
+            float y = rightLegend ? getHeight()/2f - (paint.ascent()+paint.descent())/2f + dp(2) : getHeight() - dp(12);
             canvas.drawText(radical, getWidth()/2f, y, paint); return;
         }
         if (icon == null) { super.onDraw(canvas); return; }
@@ -142,6 +147,8 @@ final class KeyboardKey extends TextView {
                 path.moveTo(5,9); path.lineTo(12,16); path.lineTo(19,9); canvas.drawPath(path,paint); break;
             case "enter":
                 path.moveTo(20,5); path.lineTo(20,14); path.lineTo(4,14); path.moveTo(9,9); path.lineTo(4,14); path.lineTo(9,19); canvas.drawPath(path,paint); break;
+            case "forward":
+                canvas.drawLine(4,12,20,12,paint); path.moveTo(13,5); path.lineTo(20,12); path.lineTo(13,19); canvas.drawPath(path,paint); break;
             case "settings":
                 for(int i=0;i<8;i++) { double a=i*Math.PI/4; canvas.drawLine(12+(float)Math.cos(a)*7,12+(float)Math.sin(a)*7,12+(float)Math.cos(a)*10,12+(float)Math.sin(a)*10,paint); }
                 canvas.drawCircle(12,12,7,paint); canvas.drawCircle(12,12,2.5f,paint); break;
@@ -152,6 +159,4 @@ final class KeyboardKey extends TextView {
     }
     private float dp(float value) { return value * getResources().getDisplayMetrics().density; }
 }
-
-
 

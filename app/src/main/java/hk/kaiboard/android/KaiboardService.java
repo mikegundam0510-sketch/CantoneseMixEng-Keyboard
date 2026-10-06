@@ -457,30 +457,46 @@ public final class KaiboardService extends InputMethodService {
         }
 
         LinearLayout bottom = row(panel);
-        if (!numeric) key(bottom, symbols || emoji ? "ABC" : "123", 1.25f, true, () -> {
+        boolean foldLetters = splitLayout() && !numeric && !symbols && !emoji;
+        int bottomHeight = keyHeight() + (foldLetters ? 4 : 0);
+        if (!numeric) {
+            TextView modeKey = key(bottom, symbols || emoji ? "ABC" : foldLetters ? "?123" : "123", foldLetters ? 1.35f : 1.25f, true, () -> {
             finishLiteral(); if (emoji) emoji = false; else symbols = !symbols; render();
-        }, keyHeight());
+            }, bottomHeight);
+            if (foldLetters) modeKey.setBackground(new android.graphics.drawable.InsetDrawable(background(functionColor, bottomHeight / 2f), dp(foldWidth() * .0055f), dp(4), dp(foldWidth() * .0055f), dp(4)));
+        }
         if (symbols && !emoji && !numeric) key(bottom, extraSymbols ? "123" : "#+=", 1, true, () -> { extraSymbols = !extraSymbols; render(); }, keyHeight());
-        TextView select = key(bottom, "🌐", 1, true, this::toggleLanguage, keyHeight());
+        if (foldLetters) key(bottom, "/", 1, false, () -> insert("/"), bottomHeight);
+        TextView select = key(bottom, "🌐", 1, true, this::toggleLanguage, bottomHeight);
         selectKey = select; select.setEnabled(!secure && !numeric);
         select.setTextColor(ascii || englishIntent() ? accent : fg);
         select.setContentDescription("切換中英文，長按選擇系統鍵盤");
         select.setOnLongClickListener(v -> { picker(); return true; });
         if (!numeric) {
-            TextView space = key(bottom, "", splitLayout() ? 6.4f : symbols ? 4.8f : 3.6f, false, this::space, keyHeight());
-            ((KeyboardKey) space).icon("space");
+            String spaceLabel = foldLetters ? ascii || englishIntent() ? "English" : quick ? "速成" : cangjie ? "倉頡" : "English" : "";
+            TextView space = key(bottom, spaceLabel, foldLetters ? 8f : splitLayout() ? 6.4f : symbols ? 4.8f : 3.6f, false, this::space, bottomHeight);
+            if (!foldLetters) ((KeyboardKey) space).icon("space");
             space.setContentDescription("空白鍵，左右滑動移動游標"); attachSpaceGesture(space);
-            TextView comma = key(bottom, symbols || uriField || ascii || englishIntent() ? "," : "，", .9f, false,
-                () -> insert(symbols || uriField || ascii || englishIntent() ? "," : "，"), keyHeight());
-            TextView period = key(bottom, ".", .9f, false,
-                () -> insert("."), keyHeight());
-            comma.setContentDescription("逗號，長按快捷標點"); period.setContentDescription("句號，長按快捷標點");
-            comma.setOnLongClickListener(v -> { punctuation(comma); return true; });
+            if (!foldLetters) {
+                TextView comma = key(bottom, symbols || uriField || ascii || englishIntent() ? "," : "，", .9f, false,
+                    () -> insert(symbols || uriField || ascii || englishIntent() ? "," : "，"), keyHeight());
+                comma.setContentDescription("逗號，長按快捷標點");
+                comma.setOnLongClickListener(v -> { punctuation(comma); return true; });
+            }
+            TextView period = key(bottom, ".", foldLetters ? 1f : .9f, false,
+                () -> insert("."), bottomHeight);
+            period.setContentDescription("句號，長按快捷標點");
             period.setOnLongClickListener(v -> { punctuation(period); return true; });
         }
         if (emoji || numeric) deleteKey(bottom, 1.2f);
-        TextView enterKey = key(bottom, enterLabel(), 1.45f, true, this::enter, keyHeight());
+        TextView enterKey = key(bottom, enterLabel(), foldLetters ? 1.35f : 1.45f, true, this::enter, bottomHeight);
         enterKey.setTextColor(fg); enterKey.setTextSize(14); enterKey.setSingleLine(true);
+        if (foldLetters) {
+            ((KeyboardKey) enterKey).icon("forward");
+            enterKey.setContentDescription(enterLabel());
+            enterKey.setBackground(new android.graphics.drawable.InsetDrawable(background(accent, bottomHeight / 2f), dp(foldWidth() * .0055f), dp(4), dp(foldWidth() * .0055f), dp(4)));
+            enterKey.setTextColor(dark ? 0xFF172338 : Color.WHITE);
+        }
         if (getWindow() != null) {
             getWindow().getWindow().setNavigationBarColor(bg);
             View decor = getWindow().getWindow().getDecorView();
@@ -677,12 +693,19 @@ public final class KaiboardService extends InputMethodService {
             LinearLayout left = new LinearLayout(this), right = new LinearLayout(this);
             line.addView(left, new LinearLayout.LayoutParams(0,-2,1)); splitGap(line);
             line.addView(right, new LinearLayout.LayoutParams(0,-2,1));
-            if (withShift) shiftKey(left,1);
-            int split = withShift ? 4 : 5;
-            for (int i=0;i<letters.length();i++) addLetterKey(i<split?left:right,letters.charAt(i));
+            String leftLetters, rightLetters;
             if (withShift) {
-                right.addView(new View(this),new LinearLayout.LayoutParams(0,1,1)); deleteKey(right,1);
-            } else if (letters.length()==9) right.addView(new View(this),new LinearLayout.LayoutParams(0,1,1));
+                shiftKey(left,1.25f);
+                leftLetters = "zxcv"; rightLetters = "vbnm";
+            } else if (letters.length()==9) {
+                left.addView(new View(this),new LinearLayout.LayoutParams(0,1,.3f));
+                leftLetters = "asdfg"; rightLetters = "ghjkl";
+            } else {
+                leftLetters = letters.substring(0,5); rightLetters = letters.substring(5);
+            }
+            for (char letter : leftLetters.toCharArray()) addLetterKey(left,letter);
+            for (char letter : rightLetters.toCharArray()) addLetterKey(right,letter);
+            if (withShift) deleteKey(right,1.25f);
         } else {
             if (withShift) shiftKey(line,1.4f);
             else if (letters.length()==9) line.setPadding(dp(14),0,dp(14),0);
@@ -702,7 +725,7 @@ public final class KaiboardService extends InputMethodService {
         TextView button=key(parent,latin,1,false,()->typeLetter(letter),keyHeight());
         ((KeyboardKey)button).typingTouch(true);
         button.setContentDescription("英文字母 "+latin);
-        if(!ascii && !emojiSearch && (quick||cangjie)) ((KeyboardKey)button).legend(latin,String.valueOf(RADICALS.charAt(letter-'a')),muted);
+        if(!ascii && !emojiSearch && (quick||cangjie)) ((KeyboardKey)button).legend(splitLayout() ? String.valueOf(letter) : latin,splitLayout() && letter=='t' ? "甘" : String.valueOf(RADICALS.charAt(letter-'a')),muted,splitLayout());
     }
 
     private void typeLetter(char lower) {
@@ -1947,7 +1970,10 @@ public final class KaiboardService extends InputMethodService {
     }
 
     private android.graphics.drawable.Drawable background(int color) {
-        GradientDrawable shape = new GradientDrawable(); shape.setColor(color); shape.setCornerRadius(dp(7));
+        return background(color, 7);
+    }
+    private android.graphics.drawable.Drawable background(int color, float radius) {
+        GradientDrawable shape = new GradientDrawable(); shape.setColor(color); shape.setCornerRadius(dp(radius));
         return new android.graphics.drawable.RippleDrawable(android.content.res.ColorStateList.valueOf(dark ? 0x40FFFFFF : 0x22000000), shape, null);
     }
 
