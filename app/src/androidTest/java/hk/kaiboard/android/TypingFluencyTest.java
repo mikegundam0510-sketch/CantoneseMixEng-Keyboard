@@ -134,15 +134,18 @@ public class TypingFluencyTest {
         preferences.edit().putBoolean("semantic_candidates",semantic).commit();
         synchronized(pending){pending.clear();latencies.clear();acknowledged=0;}
         // This warm-up opens a real exact-candidate request. A pause lets loading overlap subsequent typing.
+        int ranksBefore=SemanticRanker.rankAttempts.get();
+        long loadingWaitStart=SystemClock.uptimeMillis();
         String code="";
         for(int i=0;i<8;i++){code+=CODE.charAt(i);tap(keys.get(CODE.charAt(i)),CONTEXT+code);}
         awaitAcknowledgements();
         if(semantic&&new SemanticRanker(activity).budget()!=null){
             // Wait for a genuine candidate request to begin model loading before stressing it.
             long deadline=SystemClock.uptimeMillis()+15000;
-            while(!modelMapped()&&SystemClock.uptimeMillis()<deadline)SystemClock.sleep(25);
+            while(SemanticRanker.rankAttempts.get()<=ranksBefore&&SystemClock.uptimeMillis()<deadline)SystemClock.sleep(10);
         }
-        SystemClock.sleep(allowColdLoad?650:2500);
+        long readyWait=SystemClock.uptimeMillis()-loadingWaitStart;
+        SystemClock.sleep(semantic?25:2500);
         for(int i=8;i<CODE.length();i++){code+=CODE.charAt(i);tap(keys.get(CODE.charAt(i)),CONTEXT+code);}
         awaitAcknowledgements();
         for(int i=CODE.length();i>0;i--)tap(deleteKey,CONTEXT+CODE.substring(0,i-1));
@@ -158,6 +161,8 @@ public class TypingFluencyTest {
         result.put("model_mapped",modelMapped());
         result.put("model_load_attempts",SemanticRanker.loadAttempts.get());
         result.put("model_rank_attempts",SemanticRanker.rankAttempts.get());
+        result.put("new_model_rank_attempts",SemanticRanker.rankAttempts.get()-ranksBefore);
+        result.put("candidate_and_model_ready_wait_ms",readyWait);
         result.put("model_failure",SemanticRanker.lastFailure);
         if(SemanticRanker.loadAttempts.get()>0)result.put("native_link_failure",SemanticNative.debugAvailabilityFailure());
         capture("dumpsys gfxinfo hk.kaiboard.android framestats",name+"-frames.txt");
@@ -179,7 +184,7 @@ public class TypingFluencyTest {
             out.write(report.toString(2).getBytes(java.nio.charset.StandardCharsets.UTF_8));
         }
         if(memory.totalMem>=2500*SemanticPolicy.MIB){
-            assertTrue("4GB test must actually exercise model inference: "+report,warm.getInt("model_rank_attempts")>0);
+            assertTrue("4GB test must actually exercise model inference: "+report,cold.getInt("new_model_rank_attempts")>0&&warm.getInt("new_model_rank_attempts")>0);
         }
         // Relative and absolute gates allow emulator variance but reject visible input stalls.
         long limit=Math.max(150,baseline.getLong("p95_ms")*2+50);
