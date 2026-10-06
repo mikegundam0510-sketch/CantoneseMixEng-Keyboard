@@ -228,15 +228,19 @@ assert find("刪除，長按連續刪除") is not None, "Extra-symbol page lost 
 tap("刪除，長按連續刪除")
 assert editor_text()=="x,", "Extra-symbol Backspace did not delete"
 tap_text("ABC")
-# Drag over character keys moves the editor cursor, without inserting those keys.
+# Letter-key swipes select text; an opposite swipe cancels at the original anchor.
 reset_field("abcdefghij")
 x1,y=center(find("O，人"));x2,_=center(find("W，田"))
-adb("shell","input","swipe",x1,y,x2,y,"550");time.sleep(.5);tap_text("1")
-assert editor_text()=="1abcdefghij", "Left key-area swipe did not move cursor or inserted an unwanted key"
+adb("shell","input","swipe",x1,y,x2,y,"550");time.sleep(.5)
+assert editor_text()=="abcdefghij", "Selection swipe inserted or removed text"
 x1,y=center(find("W，田"));x2,_=center(find("O，人"))
+adb("shell","input","swipe",x1,y,x2,y,"550");time.sleep(.5);tap_text("1")
+assert editor_text()=="abcdefghij1", "Opposite swipe did not cancel selection at the original anchor"
+reset_field("abcdefghij")
+x1,y=center(find("O，人"));x2,_=center(find("W，田"))
 adb("shell","input","swipe",x1,y,x2,y,"550");time.sleep(.5);tap_text("2")
-assert editor_text()=="1abcdefghij2", "Right key-area swipe did not move cursor"
-assert find("重新選字").get("enabled")=="false", "Cursor movement did not disable stale reselection"
+assert editor_text()=="2", "Typing did not replace the text selected by the key-area swipe"
+assert find("重新選字").get("enabled")=="false", "Selection movement did not disable stale reselection"
 shot("12-cursor-swipes")
 # The visual key gap belongs to the key touch target, including its outer edge.
 reset_field()
