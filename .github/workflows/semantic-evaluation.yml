@@ -1,0 +1,40 @@
+name: Offline semantic model evaluation
+on:
+  push:
+    branches: [codex/offline-semantic-ranking]
+permissions:
+  contents: read
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Build pinned CPU inference engine
+        run: |
+          git clone https://github.com/ggml-org/llama.cpp.git /tmp/llama
+          git -C /tmp/llama checkout d7a695ef679138c13d86359b84c1731d36213d32
+          cmake -S tools/semantic_probe_cmake -B /tmp/semantic-build -DLLAMA_SOURCE=/tmp/llama -DCMAKE_BUILD_TYPE=Release
+          cmake --build /tmp/semantic-build --target semantic-probe llama-quantize -j 2
+      - name: Prepare attributed, hash-verified model
+        run: |
+          curl --fail --location --retry 3 'https://huggingface.co/Qwen/Qwen3-0.6B-GGUF/resolve/1eaf4d9657fe65ad10a51eab76a8db5b363bddaa/Qwen3-0.6B-Q8_0.gguf' -o /tmp/qwen-q8.gguf
+          echo '9465e63a22add5354d9bb4b99e90117043c7124007664907259bd16d043bb031  /tmp/qwen-q8.gguf' | sha256sum --check
+          /tmp/semantic-build/llama/bin/llama-quantize --allow-requantize /tmp/qwen-q8.gguf /tmp/semantic-model.gguf Q4_K_M
+          sha256sum /tmp/semantic-model.gguf
+      - name: Export exact decoder candidates and evaluate full context
+        run: |
+          mkdir -p /tmp/semantic-java semantic-evidence
+          javac -d /tmp/semantic-java app/src/main/java/hk/kaiboard/android/{DictionaryEngine,OfflineLanguageModel,QuickDecoder,SemanticPrompt}.java tools/ExportSemanticCases.java
+          java -cp /tmp/semantic-java hk.kaiboard.android.ExportSemanticCases tools/semantic_cases.tsv semantic-evidence
+          /tmp/semantic-build/semantic-probe /tmp/semantic-model.gguf semantic-evidence/manifest.txt > semantic-evidence/scores.tsv
+          python3 tools/semantic_report.py semantic-evidence/cases.json semantic-evidence/scores.tsv semantic-evidence/report.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: semantic-evaluation
+          path: semantic-evidence/
