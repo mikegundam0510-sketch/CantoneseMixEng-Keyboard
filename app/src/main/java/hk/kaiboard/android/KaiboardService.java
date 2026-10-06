@@ -492,10 +492,10 @@ public final class KaiboardService extends InputMethodService {
         }
         if (emoji || numeric) deleteKey(bottom, 1.2f);
         TextView enterKey = key(bottom, enterLabel(), foldLetters ? 1.35f : 1.45f, true, this::enter, bottomHeight);
+        ((KeyboardKey) enterKey).icon(null);
+        enterKey.setContentDescription(enterLabel());
         enterKey.setTextColor(fg); enterKey.setTextSize(14); enterKey.setSingleLine(true);
         if (foldLetters) {
-            ((KeyboardKey) enterKey).icon("forward");
-            enterKey.setContentDescription(enterLabel());
             enterKey.setBackground(new android.graphics.drawable.InsetDrawable(background(accent, bottomHeight / 2f), dp(foldWidth() * .0055f), dp(4), dp(foldWidth() * .0055f), dp(4)));
             enterKey.setTextColor(dark ? 0xFF172338 : Color.WHITE);
         }
@@ -727,7 +727,7 @@ public final class KaiboardService extends InputMethodService {
         TextView button=key(parent,latin,1,false,()->typeLetter(letter),keyHeight());
         ((KeyboardKey)button).typingTouch(true);
         button.setContentDescription("英文字母 "+latin);
-        if(!ascii && !emojiSearch && (quick||cangjie)) ((KeyboardKey)button).legend(splitLayout() ? String.valueOf(letter) : latin,splitLayout() && letter=='t' ? "甘" : String.valueOf(RADICALS.charAt(letter-'a')),muted,splitLayout());
+        if(!ascii && !emojiSearch && (quick||cangjie)) ((KeyboardKey)button).legend(latin,String.valueOf(RADICALS.charAt(letter-'a')),muted,splitLayout());
     }
 
     private void typeLetter(char lower) {
@@ -1396,7 +1396,7 @@ public final class KaiboardService extends InputMethodService {
             case EditorInfo.IME_ACTION_SEND: return "傳送";
             case EditorInfo.IME_ACTION_NEXT: return "下一個";
             case EditorInfo.IME_ACTION_DONE: return "完成";
-            default: return "↵";
+            default: return "換行";
         }
     }
 

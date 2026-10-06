@@ -74,3 +74,12 @@ legends, bottom controls and the user's height preference.
 
 Version code 31 / 0.6.24 retains the persistent signer and learning data.
 Release/lint/signature checks apply; physical Fold7 validation is pending.
+
+## 0.6.25 label corrections
+
+Following the user's device screenshot, restore uppercase Latin legends at the
+top left with the existing 6dp clearance. T uses the canonical 廿 radical from
+RADICALS, rather than the reference image's 甘. Existing row positions and key
+sizes remain unchanged. Draw the editor action as text instead of the arrow
+icon; plain enter displays 換行, while search/send/next/done retain their actual
+action labels and behavior. Version code 32 keeps the same persistent signer.
