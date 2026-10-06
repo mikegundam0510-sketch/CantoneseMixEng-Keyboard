@@ -43,6 +43,8 @@ jobs:
           python3 tools/semantic_report.py semantic-evidence/cases.json semantic-evidence/scores.tsv semantic-evidence/report.json
           /tmp/semantic-build/semantic-likelihood /tmp/semantic-model.gguf semantic-evidence/likelihood-manifest.txt > semantic-evidence/likelihood-scores.tsv
           python3 tools/semantic_report.py semantic-evidence/cases.json semantic-evidence/likelihood-scores.tsv semantic-evidence/likelihood-report.json
+          /tmp/semantic-build/semantic-likelihood /tmp/semantic-model.gguf semantic-evidence/likelihood-manifest.txt chat > semantic-evidence/chat-likelihood-scores.tsv
+          python3 tools/semantic_report.py semantic-evidence/cases.json semantic-evidence/chat-likelihood-scores.tsv semantic-evidence/chat-likelihood-report.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
