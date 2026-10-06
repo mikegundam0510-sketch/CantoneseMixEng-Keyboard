@@ -14,17 +14,25 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
+      - uses: actions/cache@v4
+        with:
+          path: |
+            /tmp/llama
+            /tmp/semantic-build
+            /tmp/qwen-q8.gguf
+            /tmp/semantic-model.gguf
+          key: semantic-cpu-v1-${{ runner.os }}-d7a695ef-9465e63a
       - name: Build pinned CPU inference engine
         run: |
-          git clone https://github.com/ggml-org/llama.cpp.git /tmp/llama
+          if [ ! -d /tmp/llama/.git ]; then git clone https://github.com/ggml-org/llama.cpp.git /tmp/llama; fi
           git -C /tmp/llama checkout d7a695ef679138c13d86359b84c1731d36213d32
           cmake -S tools/semantic_probe_cmake -B /tmp/semantic-build -DLLAMA_SOURCE=/tmp/llama -DCMAKE_BUILD_TYPE=Release
           cmake --build /tmp/semantic-build --target semantic-probe llama-quantize -j 2
       - name: Prepare attributed, hash-verified model
         run: |
-          curl --fail --location --retry 3 'https://huggingface.co/Qwen/Qwen3-0.6B-GGUF/resolve/1eaf4d9657fe65ad10a51eab76a8db5b363bddaa/Qwen3-0.6B-Q8_0.gguf' -o /tmp/qwen-q8.gguf
+          if [ ! -f /tmp/qwen-q8.gguf ]; then curl --fail --location --retry 3 'https://huggingface.co/Qwen/Qwen3-0.6B-GGUF/resolve/1eaf4d9657fe65ad10a51eab76a8db5b363bddaa/Qwen3-0.6B-Q8_0.gguf' -o /tmp/qwen-q8.gguf; fi
           echo '9465e63a22add5354d9bb4b99e90117043c7124007664907259bd16d043bb031  /tmp/qwen-q8.gguf' | sha256sum --check
-          /tmp/semantic-build/llama/bin/llama-quantize --allow-requantize /tmp/qwen-q8.gguf /tmp/semantic-model.gguf Q4_K_M
+          if [ ! -f /tmp/semantic-model.gguf ]; then /tmp/semantic-build/bin/llama-quantize --allow-requantize /tmp/qwen-q8.gguf /tmp/semantic-model.gguf Q4_K_M; fi
           sha256sum /tmp/semantic-model.gguf
       - name: Export exact decoder candidates and evaluate full context
         run: |
