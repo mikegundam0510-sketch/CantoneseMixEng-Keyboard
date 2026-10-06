@@ -33,6 +33,9 @@ accessibility action labels and entering/searching/sending in actual editors.
 
 ## 0.6.23 size and editing-icon refinement
 
+This version's interpretation of the second image was superseded by the
+0.6.24 correction below; its unfolded size/icon changes are no longer applied.
+
 The second supplied image, 133914.jpg, is used only for face-size proportions
 and Shift/Backspace drawings. Its compact row arrangement and printed key
 codes/letters are not adopted. Keep the split rows, duplicates, weights and
@@ -52,3 +55,22 @@ in the reference. Caps-lock and deletion behavior are unchanged. Cover-screen
 key heights retain their existing settings; editing-icon drawings apply in both
 layouts. Version code 30 / 0.6.23 retains the pinned signer and learned data.
 Release build and lint are checked; real Fold7 rendering remains unverified.
+
+## 0.6.24 correction: unfolded baseline and cover-only reference
+
+Restore the unfolded 0.6.22 height formula, number sizes, key radii and editing
+icon size/strokes. Keep its split rows and all codes. Per the latest user
+instruction, unfolded Latin legends now sit at the top left with 6dp clearance
+from the visible key face's left/top edges; horizontal clearance includes the
+face inset, so wider Fold layouts do not push the legend against the border.
+
+Apply the 140/110 face-height proportion only to full-width portrait letter
+layouts narrower than 600dp (the cover display). Cover number faces are 92%
+of letter height with proportionally larger number text. Cover Shift/Backspace
+use the second image's larger outlined up arrow and deletion frame with X.
+Single-hand, landscape, numeric/symbol views and wide unfolded views do not
+use this cover sizing. Preserve all existing row order, letter codes, character
+legends, bottom controls and the user's height preference.
+
+Version code 31 / 0.6.24 retains the persistent signer and learning data.
+Release/lint/signature checks apply; physical Fold7 validation is pending.

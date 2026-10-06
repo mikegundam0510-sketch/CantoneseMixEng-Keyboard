@@ -9,7 +9,11 @@ final class KeyboardKey extends TextView {
     private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private String latin, radical, icon;
     private int legendColor;
-    private boolean rightLegend;
+    private boolean foldLegend;
+    private float faceInsetDp = 2.5f;
+    void faceInset(float value) { faceInsetDp = value; }
+    private boolean referenceEditingIcons;
+    void referenceEditingIcons(boolean enabled) { referenceEditingIcons = enabled; invalidate(); }
     private boolean typingTouch, typingPressed;
     private int typingPointer = -1;
     void typingTouch(boolean enabled) { typingTouch = enabled; }
@@ -43,9 +47,9 @@ final class KeyboardKey extends TextView {
     void legend(String latin, String radical, int legendColor) {
         legend(latin, radical, legendColor, false);
     }
-    void legend(String latin, String radical, int legendColor, boolean rightLegend) {
+    void legend(String latin, String radical, int legendColor, boolean foldLegend) {
         this.latin = latin; this.radical = radical; this.legendColor = legendColor;
-        this.rightLegend = rightLegend;
+        this.foldLegend = foldLegend;
         setContentDescription(latin + "，" + radical); invalidate();
     }
     void icon(String icon) { this.icon = icon; invalidate(); }
@@ -53,18 +57,19 @@ final class KeyboardKey extends TextView {
     @Override protected void onDraw(Canvas canvas) {
         if (latin != null) {
             paint.setStyle(Paint.Style.FILL); paint.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
-            paint.setColor(legendColor); paint.setTextSize(rightLegend ? Math.max(dp(10), Math.min(dp(14), (getHeight()-dp(8))*.22f)) : dp(10)); paint.setTextAlign(rightLegend ? Paint.Align.RIGHT : Paint.Align.LEFT);
+            paint.setColor(legendColor); paint.setTextSize(dp(10)); paint.setTextAlign(Paint.Align.LEFT);
             // Keep the legend inside the visible face (background inset: 2.5dp / 4dp).
-            canvas.drawText(latin, rightLegend ? getWidth() - dp(9) : dp(9), dp(9) - paint.ascent(), paint);
+            // Fold letters sit 6dp inside the actual face, after its horizontal inset.
+            canvas.drawText(latin, foldLegend ? dp(faceInsetDp + 6) : dp(9), dp(foldLegend ? 10 : 9) - paint.ascent(), paint);
             paint.setColor(getCurrentTextColor()); paint.setTextSize(dp(22)); paint.setTextAlign(Paint.Align.CENTER);
-            float y = rightLegend ? getHeight()/2f - (paint.ascent()+paint.descent())/2f + dp(2) : getHeight() - dp(12);
+            float y = foldLegend ? getHeight()/2f - (paint.ascent()+paint.descent())/2f + dp(2) : getHeight() - dp(12);
             canvas.drawText(radical, getWidth()/2f, y, paint); return;
         }
         if (icon == null) { super.onDraw(canvas); return; }
-        boolean referenceEditingIcon = "shift".equals(icon) || "delete".equals(icon);
-        float size = referenceEditingIcon ? Math.min(getWidth()-dp(16), (getHeight()-dp(8))*.58f) : dp(22);
+        boolean coverEditingIcon = referenceEditingIcons && ("shift".equals(icon) || "delete".equals(icon));
+        float size = coverEditingIcon ? Math.min(getWidth()-dp(16), (getHeight()-dp(8))*.58f) : dp(22);
         canvas.save(); canvas.translate((getWidth()-size)/2, (getHeight()-size)/2); canvas.scale(size/24, size/24);
-        paint.setStyle(Paint.Style.STROKE); paint.setStrokeWidth(referenceEditingIcon ? 2.1f : 1.7f); paint.setStrokeCap(Paint.Cap.ROUND); paint.setStrokeJoin(Paint.Join.ROUND);
+        paint.setStyle(Paint.Style.STROKE); paint.setStrokeWidth(coverEditingIcon ? 2.1f : 1.7f); paint.setStrokeCap(Paint.Cap.ROUND); paint.setStrokeJoin(Paint.Join.ROUND);
         paint.setColor(getCurrentTextColor());
         Path path = new Path();
         switch (icon) {
@@ -138,10 +143,12 @@ final class KeyboardKey extends TextView {
                 canvas.drawCircle(12,12,9,paint); canvas.drawCircle(8.5f,9,.5f,paint); canvas.drawCircle(15.5f,9,.5f,paint);
                 canvas.drawArc(7,8,17,17,20,140,false,paint); break;
             case "delete":
-                path.moveTo(2,12); path.lineTo(8,4); path.lineTo(22,4); path.lineTo(22,20); path.lineTo(8,20); path.close(); canvas.drawPath(path,paint);
+                float top = coverEditingIcon ? 4 : 5, bottom = coverEditingIcon ? 20 : 19;
+                path.moveTo(2,12); path.lineTo(8,top); path.lineTo(22,top); path.lineTo(22,bottom); path.lineTo(8,bottom); path.close(); canvas.drawPath(path,paint);
                 canvas.drawLine(12,9,18,15,paint); canvas.drawLine(18,9,12,15,paint); break;
             case "shift":
-                path.moveTo(2,12); path.lineTo(12,2); path.lineTo(22,12); path.lineTo(16,12); path.lineTo(16,22); path.lineTo(8,22); path.lineTo(8,12); path.close(); canvas.drawPath(path,paint); break;
+                float edge = coverEditingIcon ? 2 : 3, foot = coverEditingIcon ? 22 : 21;
+                path.moveTo(edge,12); path.lineTo(12,edge); path.lineTo(24-edge,12); path.lineTo(16,12); path.lineTo(16,foot); path.lineTo(8,foot); path.lineTo(8,12); path.close(); canvas.drawPath(path,paint); break;
             case "globe":
                 canvas.drawCircle(12,12,9,paint); canvas.drawOval(8,3,16,21,paint); canvas.drawLine(3,12,21,12,paint);
                 canvas.drawLine(4.5f,7.5f,19.5f,7.5f,paint); canvas.drawLine(4.5f,16.5f,19.5f,16.5f,paint); break;
