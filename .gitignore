@@ -6,3 +6,10 @@ local.properties
 *.jks
 *.keystore
 dist/
+
+# Persistent APK keys and secret values stay outside source control.
+*.p12
+*.jks
+*.keystore
+KAI_KEYSTORE_B64.txt
+KAI_KEYSTORE_PASSWORD.txt

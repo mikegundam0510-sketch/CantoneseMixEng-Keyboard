@@ -8,10 +8,12 @@ permissions:
 concurrency:
   group: android-verification-${{ github.ref }}
   cancel-in-progress: true
+env:
+  KAI_KEYSTORE_PASSWORD: ${{ secrets.KAI_KEYSTORE_PASSWORD }}
 jobs:
   verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
         with:
@@ -20,6 +22,10 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
+      - name: Restore persistent APK signing key
+        env:
+          KAI_KEYSTORE_B64: ${{ secrets.KAI_KEYSTORE_B64 }}
+        run: python3 tools/restore_signing_key.py
       - uses: android-actions/setup-android@v3
         with:
           packages: platform-tools
@@ -46,7 +52,7 @@ jobs:
           profile: pixel_2
           disk-size: 2048M
           disable-animations: true
-          script: bash ./gradlew connectedDebugAndroidTest --no-daemon && python3 tools/clipboard_smoke.py && python3 tools/editor_smoke.py && python3 tools/ui_smoke.py
+          script: bash tools/connected_acceptance.sh && python3 tools/clipboard_smoke.py && python3 tools/editor_smoke.py && python3 tools/ui_smoke.py && python3 tools/predictions_smoke.py
       - name: Save test reports and actual UI screenshots
         uses: actions/upload-artifact@v4
         if: always()

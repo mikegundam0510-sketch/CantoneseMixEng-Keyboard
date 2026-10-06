@@ -82,6 +82,38 @@ public class DictionaryEngineTest {
         assertEquals(LearningRanker.key("OF", true, false, "你"), LearningRanker.key("of", true, false, "你"));
         assertNotEquals(LearningRanker.key("of", true, false, "你"), LearningRanker.key("of", true, true, "你"));
     }
+
+    @Test public void completedDictionaryIncludesHkCharactersAndSupplementaryPlanes() {
+        assertTrue(engine.entryCount() >= 130000);
+        String[][] cases = {{"rkrd","㗎"}, {"wlln","𠝹"}, {"rgob","𡁻"},
+            {"rnn","𠮩"}, {"ribp","𠹌"}, {"iboe","鿿"}, {"rsfr","𫬷"}, {"yjcp","𰻞"}};
+        for (String[] item : cases) {
+            assertTrue(item[0], engine.lookup(item[0], false, true, false).contains(item[1]));
+            String quick = DictionaryEngine.quickCode(item[0]);
+            assertTrue(engine.quickCandidates(quick).contains(item[1]));
+            assertEquals(Collections.singletonList(quick), engine.matchQuickCodes(quick, item[1]));
+        }
+        assertTrue(engine.matchQuickCodes("r", "踩").isEmpty());
+        // Different regional forms remain accepted.
+        assertTrue(engine.lookup("imno",false,true,false).contains("次"));
+        assertTrue(engine.lookup("mmno",false,true,false).contains("次"));
+    }
+    @Test public void everyFullCodeAndItsPrefixesRemainReachable() throws Exception {
+        try (BufferedReader reader = new BufferedReader(new FileReader("src/main/assets/cangjie5.base.dict.yaml"))) {
+            String line; boolean body = false;
+            while ((line = reader.readLine()) != null) {
+                if (line.equals("...")) { body = true; continue; }
+                if (!body || line.startsWith("#")) continue;
+                String[] fields = line.split("\\t");
+                if (fields.length < 2 || !fields[1].matches("[a-z]{1,5}")) continue;
+                assertTrue(fields[0] + " / " + fields[1],
+                    engine.lookup(fields[1],false,true,false).contains(fields[0]));
+                for (int n = 1; n <= fields[1].length(); n++)
+                    assertTrue(fields[1], engine.hasCangjiePrefix(fields[1].substring(0,n)));
+            }
+        }
+        assertFalse(engine.hasCangjiePrefix(""));
+        assertFalse(engine.hasCangjiePrefix("abcdef"));
+    }
+
 }
-
-

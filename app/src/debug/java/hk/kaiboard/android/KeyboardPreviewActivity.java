@@ -21,10 +21,15 @@ public final class KeyboardPreviewActivity extends Activity {
         input.setHint("試打中文、English 或 Emoji…");input.setMinLines(4);
         input.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_FLAG_MULTI_LINE);
         root.addView(input,new LinearLayout.LayoutParams(-1,0,1));setContentView(root);
+        applyTestIntent(getIntent());
         input.requestFocus();input.postDelayed(()->((InputMethodManager)getSystemService(INPUT_METHOD_SERVICE)).showSoftInput(input,InputMethodManager.SHOW_IMPLICIT),700);
     }
     @Override protected void onNewIntent(android.content.Intent intent) {
         super.onNewIntent(intent);
+        setIntent(intent);
+        applyTestIntent(intent);
+    }
+    private void applyTestIntent(android.content.Intent intent) {
         if (intent.hasExtra("test_clipboard")) {
             android.content.ClipData clip = android.content.ClipData.newPlainText("fixture", intent.getStringExtra("test_clipboard"));
             if (intent.getBooleanExtra("test_sensitive_clip", false)) {

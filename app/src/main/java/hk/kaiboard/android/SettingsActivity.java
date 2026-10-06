@@ -50,6 +50,7 @@ public final class SettingsActivity extends Activity {
         toggle(methods, "英文補全", "english", true);
         toggle(methods, "中英混合分段候選", "mixed", true);
         toggle(methods, "參考上文排序候選", "context_candidates", true);
+        toggle(methods, "輸入完成後顯示聯想字", "next_suggestions", true);
         toggle(methods, "英文拼字修正候選", "english_repair", true);
         toggle(methods, "英文詞顯示中文候選", "english_chinese", true);
         toggle(methods, "速成相鄰按鍵修正候選", "quick_repair", true);
@@ -66,7 +67,7 @@ public final class SettingsActivity extends Activity {
         button(methods, "管理英文學習記錄", this::manageEnglishLearning);
         button(methods, "新增自訂詞", this::addCustomWord);
         button(methods, "管理自訂詞及置頂候選", this::managePersonal);
-        text(methods, "英文段按空白鍵確認詞語及加入空格。有歧義時點「英文」指定。長按候選可置頂或分段改選；↶ 重選最近一次已完成的選字。自動修正會於空白鍵或下一段輸入時採用明確較合理的修正字；信心不足時保留候選。修正後按刪除可還原原碼（若已開始下一段，先刪除下一段）。", 13, Color.DKGRAY, false);
+        text(methods, "倉頡按空白鍵確認目前突出顯示的候選字。輸入完成後可點選聯想字繼續輸入。英文段按空白鍵確認詞語及加入空格。有歧義時點「英文」指定。長按候選可置頂或分段改選；↶ 重選最近一次已完成的選字。自動修正會於空白鍵或下一段輸入時採用明確較合理的修正字；信心不足時保留候選。修正後按刪除可還原原碼（若已開始下一段，先刪除下一段）。", 13, Color.DKGRAY, false);
 
         LinearLayout tools = card("功能列");
         choice(tools, "自訂功能鍵", "toolbar_action", new String[]{"剪貼簿", "候選展開", "快捷文字", "Undo"},
@@ -246,7 +247,7 @@ public final class SettingsActivity extends Activity {
     private void showLicenses() {
         StringBuilder content = new StringBuilder("Rime Cangjie dictionary\nhttps://github.com/rime/rime-cangjie\nCommit: 52d90a1b1312e74042b38c1cbc8142defbc53171\n\n");
         content.append("HKCanCor: Luke, Kang Kwong & Wong, May L. Y. (2015), The Hong Kong Cantonese Corpus\nhttps://github.com/fcbond/hkcancor\nRime Cantonese: CanCLID contributors\nhttps://github.com/rime/rime-cantonese\nDerived vocabulary and offline 5-gram model; CC BY 4.0.\n\n");
-        for (String name : new String[]{"AUTHORS", "GPL-3.0.txt", "LGPL-3.0.txt", "ESSAY-AUTHORS.txt", "UNICODE-LICENSE.txt", "HKCANCOR-CC-BY-4.0.txt", "RIME-CANTONESE-CC-BY-4.0.txt"}) {
+        for (String name : new String[]{"AUTHORS", "GPL-3.0.txt", "LGPL-3.0.txt", "ESSAY-AUTHORS.txt", "UNICODE-LICENSE.txt", "HKCANCOR-CC-BY-4.0.txt", "RIME-CANTONESE-CC-BY-4.0.txt", "cangjie-completion/LICENSE.txt"}) {
             try (InputStream stream = getAssets().open("licenses/" + name)) {
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream(); byte[] buf = new byte[4096]; int n;
                 while ((n = stream.read(buf)) != -1) bytes.write(buf, 0, n);

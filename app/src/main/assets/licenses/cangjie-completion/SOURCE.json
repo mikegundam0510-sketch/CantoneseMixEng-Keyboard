@@ -1,0 +1,24 @@
+{
+  "sources": [
+    {
+      "url": "https://raw.githubusercontent.com/rime/rime-cangjie/52d90a1b1312e74042b38c1cbc8142defbc53171/cangjie5.base.dict.yaml",
+      "sha256": "8690f2ad8aafd38780846881aa916b5779e6d9247a351a1da426d3f3257afca4"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Jackchows/Cangjie5/e4a4242f518ab0d34066bbd8aa44cb0cefd61db2/Cangjie5_HK.txt",
+      "sha256": "fdbbc0af05a289d88f2ab3ceae12f5a4f0bd54966cbb0c4c8f34145246194314"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Jackchows/Cangjie5/e4a4242f518ab0d34066bbd8aa44cb0cefd61db2/LICENSE",
+      "sha256": "cf2746abe0b37ba14fb0e735eb868d418e4d335b9040887f579da958f95ffa77"
+    }
+  ],
+  "base_revision": "52d90a1b1312e74042b38c1cbc8142defbc53171",
+  "completion_revision": "e4a4242f518ab0d34066bbd8aa44cb0cefd61db2",
+  "base_mappings": 23936,
+  "added_mappings": 109296,
+  "mappings": 133232,
+  "characters": 103942,
+  "output_sha256": "f54e79093cba732c1fa1211c78703e1250320efa0ae9eb0627397cfd6fda963d",
+  "processing": "Keep all original mappings and candidate order; append unique HK completion mappings, including alternative regional forms and supplementary-plane characters. Quick indexes are derived at runtime. Glyph display depends on device fonts."
+}

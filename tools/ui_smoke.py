@@ -45,6 +45,17 @@ assert ime,"Installed input method was not registered"
 print(adb("shell","ime","enable",ime),flush=True)
 print(adb("shell","ime","set",ime),flush=True)
 assert adb("shell","settings","get","secure","default_input_method").strip()==ime,"IME switch failed"
+# Preserve legacy toolbar scenarios with predictions explicitly disabled; the
+# dedicated predictions smoke exercises enabled mode and restores it afterward.
+adb("shell","am","start","--activity-clear-top","-n","hk.kaiboard.android/.SettingsActivity");time.sleep(1)
+setting=None
+for _ in range(10):
+    setting=next((n for n in tree().iter("node") if n.get("text")=="輸入完成後顯示聯想字"),None)
+    if setting is not None:break
+    adb("shell","input","swipe","400","650","400","300","250");time.sleep(.3)
+assert setting is not None,"Prediction preference missing"
+if setting.get("checked")=="true":adb("shell","input","tap",*center(setting));time.sleep(.5)
+adb("shell","input","keyevent","4")
 adb("shell","am","start","-n","hk.kaiboard.android/.KeyboardPreviewActivity")
 time.sleep(3)
 for _ in range(10):
@@ -140,7 +151,7 @@ assert editor_text()=="hello", "English reselection did not remove the confirmat
 reset_field();type_code("hellp");tap("hello")
 assert editor_text()=="hello", "English spelling suggestion was not committed"
 # Opt in through the real settings UI before testing optional local learning.
-adb("shell","am","start","-n","hk.kaiboard.android/.SettingsActivity");time.sleep(1)
+adb("shell","am","start","--activity-clear-top","-n","hk.kaiboard.android/.SettingsActivity");time.sleep(1)
 learning=None
 for _ in range(12):
     learning=next((n for n in tree().iter("node") if n.get("text")=="儲存選字及英文詞作學習（預設關閉）"),None)
@@ -217,15 +228,19 @@ assert find("刪除，長按連續刪除") is not None, "Extra-symbol page lost 
 tap("刪除，長按連續刪除")
 assert editor_text()=="x,", "Extra-symbol Backspace did not delete"
 tap_text("ABC")
-# Drag over character keys moves the editor cursor, without inserting those keys.
+# Letter-key swipes select text; an opposite swipe cancels at the original anchor.
 reset_field("abcdefghij")
 x1,y=center(find("O，人"));x2,_=center(find("W，田"))
-adb("shell","input","swipe",x1,y,x2,y,"550");time.sleep(.5);tap_text("1")
-assert editor_text()=="1abcdefghij", "Left key-area swipe did not move cursor or inserted an unwanted key"
+adb("shell","input","swipe",x1,y,x2,y,"550");time.sleep(.5)
+assert editor_text()=="abcdefghij", "Selection swipe inserted or removed text"
 x1,y=center(find("W，田"));x2,_=center(find("O，人"))
+adb("shell","input","swipe",x1,y,x2,y,"550");time.sleep(.5);tap_text("1")
+assert editor_text()=="abcdefghij1", "Opposite swipe did not cancel selection at the original anchor"
+reset_field("abcdefghij")
+x1,y=center(find("O，人"));x2,_=center(find("W，田"))
 adb("shell","input","swipe",x1,y,x2,y,"550");time.sleep(.5);tap_text("2")
-assert editor_text()=="1abcdefghij2", "Right key-area swipe did not move cursor"
-assert find("重新選字").get("enabled")=="false", "Cursor movement did not disable stale reselection"
+assert editor_text()=="2", "Typing did not replace the text selected by the key-area swipe"
+assert find("重新選字").get("enabled")=="false", "Selection movement did not disable stale reselection"
 shot("12-cursor-swipes")
 # The visual key gap belongs to the key touch target, including its outer edge.
 reset_field()
@@ -240,12 +255,13 @@ code="ofonaovrmrq"
 for char in code: adb("shell","input","tap",*positions[char.upper()+"，"+radicals[char]])
 time.sleep(.8)
 assert editor_text()==code, "Rapid real-key taps lost or reordered code"
-for _ in range(3):
+# Use slow, overlapping drags so a fling cannot skip a short prefix chip.
+for _ in range(16):
     if find("你，先輸入此字並保留後續字碼") is not None: break
     nodes=tree(); bar=next(n for n in nodes.iter("node") if n.get("class")=="android.widget.HorizontalScrollView")
     bounds=list(map(int,re.findall(r"\d+",bar.get("bounds"))))
     y=str((bounds[1]+bounds[3])//2)
-    adb("shell","input","swipe",str(bounds[2]-10),y,str(bounds[0]+10),y,"250");time.sleep(.2)
+    adb("shell","input","swipe",str(bounds[2]-20),y,str((bounds[0]+bounds[2])//2),y,"800");time.sleep(.2)
 assert find("你，先輸入此字並保留後續字碼") is not None, "Exact prefix fallback is missing"
 tap("你，先輸入此字並保留後續字碼")
 assert editor_text()=="你onaovrmrq", "Prefix choice discarded remaining codes"
@@ -311,7 +327,11 @@ for name,size,density in (("cover","720x1600","320"),("unfolded","1440x1800","32
     assert by2<=sy1, "Input codes must sit above candidate words"
     left=min(int(re.findall(r"\d+",find(desc).get("bounds"))[0]) for desc in ("Q，手","A，日"))
     right=max(int(re.findall(r"\d+",find(desc).get("bounds"))[2]) for desc in ("P，心","L，中"))
-    assert sx1<=left, "Candidates must start at the left keyboard edge"
+    cancel=find("取消候選及聯想字，返回功能列")
+    assert cancel is not None, "Candidate cancel control missing"
+    cx1,cy1,cx2,cy2=map(int,re.findall(r"\d+",cancel.get("bounds")))
+    assert cx1<=left and cx2==sx1, "Cancel must sit to the left of scrollable candidates"
+    assert cy1==sy1 and cy2==sy2, "Cancel must align vertically with candidates"
     words=[n for n in strips[0].iter("node") if n.get("class")=="android.widget.TextView"]
     assert words, "Candidate row is empty"
     wx1=int(re.findall(r"\d+",words[0].get("bounds"))[0])

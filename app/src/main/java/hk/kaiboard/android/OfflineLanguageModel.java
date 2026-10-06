@@ -37,7 +37,16 @@ public final class OfflineLanguageModel {
         return result;
     }
     private int index(int[] text,int start,int length) { return Arrays.binarySearch(keys,hash(text,start,length)); }
-    private static boolean han(int cp) { return Character.UnicodeScript.of(cp)==Character.UnicodeScript.HAN; }
+    /** CJK blocks through Extension J, even on runtimes with an older Unicode table. */
+    static boolean han(int cp) {
+        if (Character.UnicodeScript.of(cp)==Character.UnicodeScript.HAN) return true;
+        return cp>=0x3400 && cp<=0x4DBF || cp>=0x4E00 && cp<=0x9FFF || cp>=0xF900 && cp<=0xFAFF
+            || cp>=0x20000 && cp<=0x2A6DF || cp>=0x2A700 && cp<=0x2B73F
+            || cp>=0x2B740 && cp<=0x2B81F || cp>=0x2B820 && cp<=0x2CEAF
+            || cp>=0x2CEB0 && cp<=0x2EBEF || cp>=0x2EBF0 && cp<=0x2EE5F
+            || cp>=0x2F800 && cp<=0x2FA1F || cp>=0x30000 && cp<=0x3134F
+            || cp>=0x31350 && cp<=0x323AF || cp>=0x323B0 && cp<=0x3347F;
+    }
     public static String contextTail(String text) {
         int start=text.length(), count=0;
         while(start>0 && count<4) {

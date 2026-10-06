@@ -9,6 +9,28 @@ public final class EnglishEngine {
     private List<String> cachedPersonal = Collections.emptyList();
     private Map<String, String> cachedWords;
     private final Map<String, String> words = new LinkedHashMap<>();
+    private Map<String, String> indexedWords;
+    private NavigableMap<String, String> prefixIndex;
+    private Map<Integer, List<String>> lengthIndex;
+    private Map<String, Integer> ranks;
+    private String lastLikelyInput;
+    private boolean lastLikely;
+    private final LinkedHashMap<String, List<String>> suggestionCache = new LinkedHashMap<>();
+    private void index(Map<String, String> all) {
+        if (indexedWords == all) return;
+        indexedWords = all; prefixIndex = new TreeMap<>(all); lengthIndex = new HashMap<>(); ranks = new HashMap<>();
+        int rank = 0;
+        for (String word : all.keySet()) {
+            ranks.put(word, rank++);
+            lengthIndex.computeIfAbsent(word.length(), key -> new ArrayList<>()).add(word);
+        }
+        lastLikelyInput = null; suggestionCache.clear();
+    }
+    private List<String> nearbyLengths(int length) {
+        List<String> result = new ArrayList<>();
+        for (int size = length - 1; size <= length + 1; size++) result.addAll(lengthIndex.getOrDefault(size, Collections.emptyList()));
+        result.sort(Comparator.comparingInt(ranks::get)); return result;
+    }
     public EnglishEngine(Reader input) throws IOException {
         try (BufferedReader reader = new BufferedReader(input)) {
             String line;
@@ -25,25 +47,48 @@ public final class EnglishEngine {
         cachedPersonal = snapshot; cachedWords = result;
         return result;
     }
-    public boolean likelyEnglish(String input, Collection<String> personal) {
+    public synchronized boolean likelyEnglish(String input, Collection<String> personal) {
+        Map<String, String> all = combined(personal); index(all);
+        if (input.equals(lastLikelyInput)) return lastLikely;
         String lower = input.toLowerCase(Locale.ROOT);
-        Map<String, String> all = combined(personal);
-        if (input.length() >= 3 && all.containsKey(lower)) return true;
-        if (input.length() >= 2 && input.equals(input.toUpperCase(Locale.ROOT)) && all.containsKey(lower)) return true;
-        if (input.length() >= 4) for (String word : all.keySet()) if (word.startsWith(lower)) return true;
-        if (input.length() >= 4) for (String word : all.keySet()) if (oneEdit(lower, word)) return true;
-        return false;
+        boolean result = input.length() >= 3 && all.containsKey(lower)
+            || input.length() >= 2 && input.equals(input.toUpperCase(Locale.ROOT)) && all.containsKey(lower);
+        if (!result && input.length() >= 4) {
+            String prefix = prefixIndex.ceilingKey(lower);
+            result = prefix != null && prefix.startsWith(lower);
+            if (!result) for (int length = lower.length()-1; length <= lower.length()+1; length++) {
+                for (String word : lengthIndex.getOrDefault(length, Collections.emptyList()))
+                    if (oneEdit(lower, word)) { result = true; break; }
+                if (result) break;
+            }
+        }
+        lastLikelyInput = input; lastLikely = result; return result;
     }
-    public List<String> suggest(String input, Collection<String> personal, boolean repair) {
+    public synchronized List<String> suggest(String input, Collection<String> personal, boolean repair) {
         if (!validWord(input)) return Collections.emptyList();
         String lower = input.toLowerCase(Locale.ROOT);
-        Map<String, String> all = combined(personal);
+        Map<String, String> all = combined(personal); index(all);
+        String cacheKey = (repair ? "1:" : "0:") + input;
+        List<String> cached = suggestionCache.get(cacheKey);
+        if (cached != null) return new ArrayList<>(cached);
         LinkedHashSet<String> result = new LinkedHashSet<>(); result.add(input);
-        for (Map.Entry<String, String> entry : all.entrySet())
-            if (entry.getKey().startsWith(lower)) result.add(casing(input, entry.getValue()));
-        if (repair && input.length() >= 4) for (Map.Entry<String, String> entry : all.entrySet())
-            if (!entry.getKey().equals(lower) && oneEdit(lower, entry.getKey())) result.add(casing(input, entry.getValue()));
-        return new ArrayList<>(result).subList(0, Math.min(12, result.size()));
+        List<String> matches = new ArrayList<>();
+        for (String word : prefixIndex.tailMap(lower, true).keySet()) {
+            if (!word.startsWith(lower)) break;
+            matches.add(word);
+        }
+        matches.sort(Comparator.comparingInt(ranks::get));
+        for (String word : matches) {
+            result.add(casing(input, all.get(word))); if (result.size() >= 12) break;
+        }
+        if (repair && input.length() >= 4 && result.size() < 12) for (String word : nearbyLengths(lower.length())) {
+            if (!word.equals(lower) && oneEdit(lower, word)) result.add(casing(input, all.get(word)));
+            if (result.size() >= 12) break;
+        }
+        List<String> values = new ArrayList<>(result);
+        if (suggestionCache.size() >= 8) suggestionCache.remove(suggestionCache.keySet().iterator().next());
+        suggestionCache.put(cacheKey, values);
+        return new ArrayList<>(values);
     }
     public static String casing(String input, String word) {
         if (input.equals(input.toUpperCase(Locale.ROOT))) return word.toUpperCase(Locale.ROOT);
