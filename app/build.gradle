@@ -1,4 +1,5 @@
 plugins { id 'com.android.application' }
+def semanticEnabled = System.getenv('KAI_SEMANTIC_MODEL') == 'true'
 
 def persistentStore = System.getenv('KAI_KEYSTORE_PATH')
 def persistentPassword = System.getenv('KAI_KEYSTORE_PASSWORD')?.trim()
@@ -17,6 +18,13 @@ android {
         versionCode 25
         versionName '0.6.18'
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+        buildConfigField 'boolean', 'SEMANTIC_MODEL', semanticEnabled.toString()
+        if (semanticEnabled) {
+            ndk { abiFilters 'arm64-v8a', 'x86_64' }
+            externalNativeBuild {
+                cmake { arguments '-DLLAMA_SOURCE=' + rootProject.file('.native/llama').absolutePath }
+            }
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
@@ -41,6 +49,13 @@ android {
         }
     }
     testOptions { unitTests.returnDefaultValues = true }
+    buildFeatures { buildConfig true }
+    if (semanticEnabled) {
+        ndkVersion '27.0.12077973'
+        externalNativeBuild { cmake { path file('src/main/cpp/CMakeLists.txt'); version '3.22.1' } }
+        sourceSets.main.assets.srcDir layout.buildDirectory.dir('generated/semanticAssets')
+        androidResources { noCompress 'gguf' }
+    }
 }
 
 tasks.register('prepareStrokeData', Exec) {

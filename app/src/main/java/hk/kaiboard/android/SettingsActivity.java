@@ -50,6 +50,7 @@ public final class SettingsActivity extends Activity {
         toggle(methods, "英文補全", "english", true);
         toggle(methods, "中英混合分段候選", "mixed", true);
         toggle(methods, "參考上文排序候選", "context_candidates", true);
+        toggle(methods, "離線語境選字", "semantic_candidates", true);
         toggle(methods, "輸入完成後顯示聯想字", "next_suggestions", true);
         toggle(methods, "英文拼字修正候選", "english_repair", true);
         toggle(methods, "英文詞顯示中文候選", "english_chinese", true);
@@ -261,6 +262,5 @@ public final class SettingsActivity extends Activity {
 
     private int dp(float v) { return Math.round(v * getResources().getDisplayMetrics().density); }
 }
-
 
 

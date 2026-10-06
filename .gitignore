@@ -6,6 +6,8 @@ local.properties
 *.jks
 *.keystore
 dist/
+.native/
+*.gguf
 
 # Persistent APK keys and secret values stay outside source control.
 *.p12

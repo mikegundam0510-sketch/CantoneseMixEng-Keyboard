@@ -18,7 +18,11 @@ def center(node):
     a=list(map(int,re.findall(r"\d+",node.get("bounds"))))
     return str((a[0]+a[2])//2),str((a[1]+a[3])//2)
 def tap(desc):
-    adb("shell","input","tap",*center(find(desc)));time.sleep(.5)
+    deadline=time.monotonic()+8
+    node=find(desc)
+    while node is None and time.monotonic()<deadline:
+        time.sleep(.1);node=find(desc)
+    adb("shell","input","tap",*center(node));time.sleep(.5)
 def tap_text(label):
     node=next((n for n in tree().iter("node") if n.get("text")==label and n.get("clickable")=="true"),None)
     adb("shell","input","tap",*center(node));time.sleep(.5)
@@ -353,4 +357,3 @@ for name,size,density in (("cover","720x1600","320"),("unfolded","1440x1800","32
     assert find("Emoji") is not None, "Clearing codes did not restore toolbar"
 adb("shell","wm","size","reset");adb("shell","wm","density","reset")
 (out/"result.txt").write_text("PASS: shared toolbar/candidate row, compact code badge, stable height and toolbar restore, emoji, single candidate strip and swipe, HK ranking, reselection/segment edit, English learning/repair, mixed sentence, pin/unpin, integrated Quick repair and code provenance, punctuation, cursor swipes, edge taps, rapid input, prefix selection, stale-search cancellation, expanded per-character selector, URI automatic mixed input/restart, bottom globe, text editing arrows/selection/copy/paste/Unicode deletion, restricted fields, cover/unfolded layout bounds. Voice and physical Samsung/Fold acceptance remain device checks; synthetic overlapping finger dispatch is verified separately by instrumentation.\n",encoding="utf-8")
-

@@ -28,6 +28,10 @@ public final class KaiboardService extends InputMethodService {
     private final ExecutorService loader = Executors.newSingleThreadExecutor();
     private final ScheduledExecutorService candidateWorker = Executors.newSingleThreadScheduledExecutor();
     private Future<?> pendingCandidates;
+    private final ScheduledThreadPoolExecutor semanticWorker = new ScheduledThreadPoolExecutor(1);
+    private Future<?> pendingSemantic;
+    private SemanticRanker semanticRanker;
+    private int semanticFrozenGeneration = -1;
     private boolean editMode;
     private boolean clipboardMode, quickTextMode, expandNextCandidates;
     private final SessionClipboard sessionClipboard = new SessionClipboard();
@@ -117,6 +121,8 @@ public final class KaiboardService extends InputMethodService {
 
     @Override public void onCreate() {
         super.onCreate(); prefs = Prefs.get(this); learned = getSharedPreferences("learned", MODE_PRIVATE);
+        semanticWorker.setRemoveOnCancelPolicy(true);
+        semanticRanker = new SemanticRanker(this);
         personal = getSharedPreferences("personal", MODE_PRIVATE);
         englishLearned = getSharedPreferences("english_learned", MODE_PRIVATE);
         loader.execute(() -> {
@@ -198,6 +204,7 @@ public final class KaiboardService extends InputMethodService {
     }
 
     @Override public void onStartInput(EditorInfo info, boolean restarting) {
+        cancelSemantic();
         super.onStartInput(info, restarting); resolvedCandidates = null; swipeSelection.reset();
         nextSuggestionsDismissed = false;
         clearClipboardSession();
@@ -251,6 +258,7 @@ public final class KaiboardService extends InputMethodService {
     }
 
     @Override public void onFinishInputView(boolean finishingInput) {
+        releaseSemantic();
         clearClipboardSession(); swipeSelection.reset();
         closeStroke(); strokeMode = false; strokeCode.setLength(0);
         cancelVoice(); dismissSelectionPopup(); invalidateReselection();
@@ -260,12 +268,14 @@ public final class KaiboardService extends InputMethodService {
     }
 
     @Override public void onFinishInput() {
+        releaseSemantic();
         clearClipboardSession();
         closeStroke(); strokeMode = false; strokeCode.setLength(0);
         cancelVoice(); dismissSelectionPopup(); invalidateReselection(); stopRepeat(); resetComposition(); updateCandidates(); resolvedCandidates = null; super.onFinishInput();
     }
 
     @Override public void onDestroy() {
+        cancelSemantic(); semanticRanker.close(); semanticWorker.shutdownNow();
         clearClipboardSession();
         closeStroke();
         destroyed = true; resolvedCandidates = null; textEditor.reset(); candidateGeneration.incrementAndGet(); cancelVoice(); dismissSelectionPopup(); invalidateReselection(); stopRepeat(); handler.removeCallbacksAndMessages(null); loader.shutdownNow(); candidateWorker.shutdownNow(); super.onDestroy();
@@ -378,6 +388,7 @@ public final class KaiboardService extends InputMethodService {
         cancelCandidates.setOnClickListener(v -> dismissCandidates());
         candidateLine.addView(cancelCandidates, new LinearLayout.LayoutParams(dp(36), -1));
         candidateScroll = new HorizontalScrollView(this); candidateScroll.setHorizontalScrollBarEnabled(false); candidateScroll.setFillViewport(false);
+        candidateScroll.setOnTouchListener((v,e) -> { if(e.getActionMasked()==MotionEvent.ACTION_DOWN)freezeSemantic(); return false; });
         candidateScroll.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
         candidateRow = new LinearLayout(this); candidateRow.setOrientation(LinearLayout.HORIZONTAL);
         candidateRow.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
@@ -714,10 +725,10 @@ public final class KaiboardService extends InputMethodService {
     private String context() {
         if (noLearning || !prefs.getBoolean("context_candidates", true)) return "";
         InputConnection ic = getCurrentInputConnection(); if (ic == null) return "";
-        CharSequence preceding = ic.getTextBeforeCursor(128, 0); if (preceding == null) return "";
+        CharSequence preceding = ic.getTextBeforeCursor(256, 0); if (preceding == null) return "";
         String text = preceding.toString(), code = composing.toString();
         if (!code.isEmpty() && text.endsWith(code)) text = text.substring(0, text.length() - code.length());
-        return OfflineLanguageModel.contextTail(text);
+        return SemanticPrompt.window(text);
     }
 
     private List<String> personalEnglish() {
@@ -809,11 +820,12 @@ public final class KaiboardService extends InputMethodService {
     }
 
     private void updateCandidates() {
+        cancelSemantic();
         if (pendingCandidates != null) { pendingCandidates.cancel(true); pendingCandidates = null; }
         final int generation = candidateGeneration.incrementAndGet();
         final CandidateRequest request = new CandidateRequest();
         if (!request.continuous || request.chooseFirst || candidateEngine == null) {
-            computeCandidates(request); applyCandidates(request); return;
+            computeCandidates(request); applyCandidates(request); scheduleSemantic(request, generation); return;
         }
         // Immediately usable exact first-character choices; never show stale choices from an older code.
         LinkedHashSet<String> immediate = new LinkedHashSet<>();
@@ -832,9 +844,55 @@ public final class KaiboardService extends InputMethodService {
             computeCandidates(finished);
             handler.post(() -> {
                 if (!destroyed && candidateGeneration.get() == generation && composing.toString().equals(finished.input))
-                    applyCandidates(finished);
+                    { applyCandidates(finished); scheduleSemantic(finished, generation); }
             });
         }, 30, TimeUnit.MILLISECONDS);
+    }
+
+    private void cancelSemantic() {
+        if (pendingSemantic != null) { pendingSemantic.cancel(false); pendingSemantic = null; }
+        if (semanticRanker != null) semanticRanker.cancel();
+    }
+    private void releaseSemantic() {
+        cancelSemantic();
+        if (!semanticWorker.isShutdown()) semanticWorker.execute(() -> semanticRanker.close());
+    }
+    @Override public void onTrimMemory(int level) {
+        super.onTrimMemory(level);
+        if (level >= android.content.ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW) releaseSemantic();
+    }
+    private void freezeSemantic() {
+        semanticFrozenGeneration = candidateGeneration.get(); cancelSemantic();
+    }
+    private void scheduleSemantic(CandidateRequest request, int generation) {
+        if (destroyed || !BuildConfig.SEMANTIC_MODEL || request.secure || request.noLearning || request.isEnglish
+                || request.chooseFirst || request.restoredCandidate != null || request.input.isEmpty()
+                || !request.enabled("context_candidates", true) || !request.enabled("semantic_candidates", true)
+                || semanticFrozenGeneration == generation) return;
+        List<String> exact = new ArrayList<>();
+        for (String value : request.values) {
+            InputCandidate detail = request.details.get(value);
+            if (detail == null) continue;
+            if (request.personal.containsKey(request.pinPrefix(detail.effectiveCode()) + value)
+                    || request.personal.containsKey("c:" + request.input.toLowerCase(Locale.ROOT) + ":" + value)) return;
+            if (!detail.corrected && !detail.englishOnly() && detail.source.equals(request.input)
+                    && detail.effectiveCode().equals(request.input) && detail.segments.stream().noneMatch(s -> s.translated))
+                exact.add(value);
+        }
+        if (exact.size() < 2) return;
+        List<String> original = new ArrayList<>(request.values);
+        pendingSemantic = semanticWorker.schedule(() -> {
+            android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
+            List<String> ranked = semanticRanker.rerank(request.preceding, original, exact,
+                () -> candidateGeneration.get() == generation && !Thread.currentThread().isInterrupted());
+            if (ranked.equals(original)) return;
+            handler.post(() -> {
+                if (!destroyed && candidateGeneration.get() == generation && semanticFrozenGeneration != generation
+                        && composing.toString().equals(request.input) && isInputViewShown()) {
+                    request.values = ranked; applyCandidates(request);
+                }
+            });
+        }, 350, TimeUnit.MILLISECONDS);
     }
 
     private void addTranslations(CandidateRequest request, LinkedHashSet<String> result) {
@@ -1074,6 +1132,7 @@ public final class KaiboardService extends InputMethodService {
             item.setContentDescription((translated ? "英轉中候選：" : corrected ? "修正候選：" : "") + value + (partial || chooseFirst ? "，先輸入此字並保留後續字碼" : ""));
             if (i == candidatePage * PAGE_SIZE) { item.setTextColor(accent); item.setTypeface(null, Typeface.BOLD); }
             item.setBackgroundColor(Color.TRANSPARENT); item.setOnClickListener(v -> commit(value));
+            item.setOnTouchListener((v, event) -> { if(event.getActionMasked()==MotionEvent.ACTION_DOWN)freezeSemantic(); return false; });
             if (composing.length() > 0) item.setOnLongClickListener(v -> { candidateMenu(item, candidateDetails.get(value)); return true; });
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-2, dp(42)); params.setMargins(0, 0, 0, 0);
             candidateRow.addView(item, params);
@@ -1661,6 +1720,7 @@ public final class KaiboardService extends InputMethodService {
     private void renderExpandedCandidates() {
         if (expandedScroll == null) {
             expandedScroll = new ScrollView(this);
+            expandedScroll.setOnTouchListener((v,e) -> { if(e.getActionMasked()==MotionEvent.ACTION_DOWN)freezeSemantic(); return false; });
             panel.addView(expandedScroll,new LinearLayout.LayoutParams(-1,dp(210)));
         }
         expandedScroll.removeAllViews();
@@ -1684,6 +1744,7 @@ public final class KaiboardService extends InputMethodService {
             android.widget.GridLayout.LayoutParams lp = new android.widget.GridLayout.LayoutParams();
             lp.width = 0; lp.columnSpec = android.widget.GridLayout.spec(android.widget.GridLayout.UNDEFINED,1f);
             grid.addView(item,lp); item.setOnClickListener(v -> commit(value));
+            item.setOnTouchListener((v,event) -> { if(event.getActionMasked()==MotionEvent.ACTION_DOWN)freezeSemantic(); return false; });
             if (composing.length() > 0) item.setOnLongClickListener(v -> { candidateMenu(item, candidateDetails.get(value)); return true; });
         }
         content.addView(grid); expandedScroll.addView(content);
@@ -1878,5 +1939,3 @@ public final class KaiboardService extends InputMethodService {
     }
     private int dp(float value) { return Math.round(value * getResources().getDisplayMetrics().density); }
 }
-
-
