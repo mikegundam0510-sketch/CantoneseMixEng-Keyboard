@@ -7,6 +7,9 @@
 int main(int argc, char **argv) {
     if (argc != 3) return 2;
     SemanticCore model(argv[1], 2);
+    model.cancel();
+    if (!model.rank("Cancelled request", 2, 1000).empty()) return 17;
+    model.arm();
     std::ifstream input(argv[2]);
     std::string line;
     while (std::getline(input, line)) {

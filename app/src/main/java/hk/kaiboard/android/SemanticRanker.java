@@ -60,6 +60,8 @@ public final class SemanticRanker implements AutoCloseable {
             if(eligible.size()<2)return original;
             int count=context.codePointCount(0,context.length());
             if(count>budget.context)context=context.substring(context.offsetByCodePoints(0,count-budget.context));
+            // Reset cancellation before rechecking generation, so a later cancel cannot be lost.
+            model.arm();if(!current.getAsBoolean())return original;
             long start=System.nanoTime();
             float[] logits=model.rank(SemanticPrompt.build(context,eligible),eligible.size(),budget.milliseconds);
             long milliseconds=(System.nanoTime()-start)/1000000;

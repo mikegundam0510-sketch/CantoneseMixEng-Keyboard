@@ -31,7 +31,7 @@ public final class KaiboardService extends InputMethodService {
     private final ScheduledThreadPoolExecutor semanticWorker = new ScheduledThreadPoolExecutor(1);
     private Future<?> pendingSemantic;
     private SemanticRanker semanticRanker;
-    private int semanticFrozenGeneration = -1;
+    private volatile int semanticFrozenGeneration = -1;
     private boolean editMode;
     private boolean clipboardMode, quickTextMode, expandNextCandidates;
     private final SessionClipboard sessionClipboard = new SessionClipboard();
@@ -884,7 +884,7 @@ public final class KaiboardService extends InputMethodService {
         pendingSemantic = semanticWorker.schedule(() -> {
             android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
             List<String> ranked = semanticRanker.rerank(request.preceding, original, exact,
-                () -> candidateGeneration.get() == generation && !Thread.currentThread().isInterrupted());
+                () -> candidateGeneration.get() == generation && semanticFrozenGeneration != generation && !Thread.currentThread().isInterrupted());
             if (ranked.equals(original)) return;
             handler.post(() -> {
                 if (!destroyed && candidateGeneration.get() == generation && semanticFrozenGeneration != generation

@@ -33,7 +33,7 @@ public class TypingFluencyTest {
     private final List<Long> latencies=new ArrayList<>();
     private int acknowledged;
     private Rect deleteKey;
-    private static final String CONTEXT="聽日要返工，";
+    private static final String CONTEXT="聽日要返工，午飯之後再睇電影。Booked all afternoon。".repeat(4);
     private static final String CODE="onardrjjjhionardrjjjyeomm";
     private static class Sample {
         final String text;final long time;
@@ -66,6 +66,7 @@ public class TypingFluencyTest {
         }));
         // am instrument stops the target process, including its previously bound IME.
         // Re-select after the instrumented activity is attached so the service is bound again.
+        capture("settings put secure show_ime_with_hard_keyboard 1","hardware-keyboard.txt");
         capture("ime reset","ime-reset.txt");
         capture("ime enable hk.kaiboard.android/.KaiboardService","ime-enable.txt");
         capture("ime set hk.kaiboard.android/.KaiboardService","ime-select.txt");
@@ -75,7 +76,7 @@ public class TypingFluencyTest {
             manager.restartInput(editor);
             manager.showSoftInput(editor,android.view.inputmethod.InputMethodManager.SHOW_FORCED);
         });
-        for(char c:CODE.toCharArray())if(!keys.containsKey(c))keys.put(c,find("英文字母 "+Character.toUpperCase(c)));
+        for(char c:CODE.toCharArray())if(!keys.containsKey(c))keys.put(c,find(Character.toUpperCase(c)+"，"));
         deleteKey=find("刪除，長按連續刪除");
     }
     private Rect find(String prefix) throws Exception {
@@ -157,7 +158,9 @@ public class TypingFluencyTest {
         JSONArray phases=new JSONArray();
         JSONObject baseline=phase("basic",false,false);phases.put(baseline);
         JSONObject cold=phase("semantic_cold",true,true);phases.put(cold);
-        JSONObject warm=phase("semantic_warm",true,false);phases.put(warm);
+        // Allow initial mapping/context allocation to settle, then interrupt a fresh warm inference.
+        SystemClock.sleep(3500);
+        JSONObject warm=phase("semantic_warm",true,true);phases.put(warm);
         var manager=(ActivityManager)activity.getSystemService(Context.ACTIVITY_SERVICE);
         var memory=new ActivityManager.MemoryInfo();manager.getMemoryInfo(memory);
         JSONObject report=new JSONObject();report.put("phases",phases);report.put("total_memory_bytes",memory.totalMem);

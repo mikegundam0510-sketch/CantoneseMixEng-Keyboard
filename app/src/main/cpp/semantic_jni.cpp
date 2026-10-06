@@ -38,3 +38,7 @@ extern "C" JNIEXPORT void JNICALL Java_hk_kaiboard_android_SemanticNative_native
     auto model=get(handle); if(model)model->cancel();
     std::lock_guard<std::mutex> lock(handles_mutex);handles.erase(handle);
 }
+
+extern "C" JNIEXPORT void JNICALL Java_hk_kaiboard_android_SemanticNative_nativeArm(JNIEnv*,jclass,jlong handle) {
+    auto model=get(handle); if(model)model->arm();
+}

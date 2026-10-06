@@ -23,10 +23,12 @@ public final class SemanticNative implements AutoCloseable {
         long current=handle.get();
         return current==0 ? null : nativeRank(current,prompt.getBytes(StandardCharsets.UTF_8),count,budget);
     }
+    public void arm() { long current=handle.get(); if(current!=0)nativeArm(current); }
     public void cancel() { long current=handle.get(); if(current!=0) nativeCancel(current); }
     @Override public void close() { long current=handle.getAndSet(0); if(current!=0)nativeClose(current); }
     private static native long nativeLoad(byte[] path,int threads);
     private static native float[] nativeRank(long handle,byte[] prompt,int count,int budget);
+    private static native void nativeArm(long handle);
     private static native void nativeCancel(long handle);
     private static native void nativeClose(long handle);
 }

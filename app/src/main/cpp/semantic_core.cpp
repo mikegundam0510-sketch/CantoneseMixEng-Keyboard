@@ -33,7 +33,7 @@ SemanticCore::~SemanticCore() {
 }
 std::vector<float> SemanticCore::rank(const std::string &prompt, int count, int budget_ms) {
     if (count < 2 || count > 20) return {};
-    cancelled.store(false); deadline = now_ms() + budget_ms;
+    deadline = now_ms() + budget_ms;
     // Keep every request ephemeral. No KV/session serialization or prompt cache on disk.
     llama_memory_clear(llama_get_memory(context), true);
     int needed = -llama_tokenize(vocab, prompt.data(), prompt.size(), nullptr, 0, false, true);

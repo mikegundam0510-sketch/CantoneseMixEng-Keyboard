@@ -10,6 +10,8 @@ public:
     ~SemanticCore();
     std::vector<float> rank(const std::string &prompt, int count, int budget_ms);
     void cancel() { cancelled.store(true); }
+    // Arm before the caller rechecks whether its request is still current.
+    void arm() { cancelled.store(false); }
 private:
     llama_model *model = nullptr;
     llama_context *context = nullptr;
