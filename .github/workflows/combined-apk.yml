@@ -1,9 +1,11 @@
-name: Combined APK 0.6.16
+name: Combined APK 0.6.17
 on:
   push:
     branches: [codex/cangjie-space-predictions]
 permissions:
   contents: read
+env:
+  KAI_KEYSTORE_PASSWORD: ${{ secrets.KAI_KEYSTORE_PASSWORD }}
 jobs:
   package:
     runs-on: ubuntu-latest
@@ -14,6 +16,10 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
+      - name: Restore persistent APK signing key
+        env:
+          KAI_KEYSTORE_B64: ${{ secrets.KAI_KEYSTORE_B64 }}
+        run: python3 tools/restore_signing_key.py
       - uses: android-actions/setup-android@v3
         with:
           packages: platform-tools
@@ -26,7 +32,7 @@ jobs:
         run: |
           mkdir -p device-test apk
           cp app/build/outputs/apk/debug/app-debug.apk apk/
-          cp app/build/outputs/apk/debug/app-debug.apk device-test/cantonesemixeng-keyboard-0.6.16.apk
+          cp app/build/outputs/apk/debug/app-debug.apk device-test/cantonesemixeng-keyboard-0.6.17.apk
           "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose --print-certs device-test/*.apk > device-test/APK-verification.txt
           "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging device-test/*.apk >> device-test/APK-verification.txt
           sha256sum device-test/*.apk >> device-test/APK-verification.txt
@@ -35,7 +41,7 @@ jobs:
           if grep -q FakeVoiceService device-test/manifest.txt; then exit 1; fi
       - uses: actions/upload-artifact@v4
         with:
-          name: cantonesemixeng-keyboard-0.6.16
+          name: cantonesemixeng-keyboard-0.6.17
           path: device-test/
           retention-days: 14
       - name: Free space for emulator
@@ -70,7 +76,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: combined-0.6.16-verification
+          name: combined-0.6.17-verification
           path: |
             app/build/reports/tests/
             app/build/reports/androidTests/

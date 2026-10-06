@@ -1,5 +1,12 @@
 plugins { id 'com.android.application' }
 
+def persistentStore = System.getenv('KAI_KEYSTORE_PATH')
+def persistentPassword = System.getenv('KAI_KEYSTORE_PASSWORD')?.trim()
+if (System.getenv('KAI_REQUIRE_STABLE_SIGNING') == 'true' && (!persistentStore || !persistentPassword))
+    throw new GradleException('Persistent signing key is required for distributed APKs')
+if (persistentStore && !persistentPassword)
+    throw new GradleException('KAI_KEYSTORE_PASSWORD is required with KAI_KEYSTORE_PATH')
+
 android {
     namespace 'hk.kaiboard.android'
     compileSdk 35
@@ -7,15 +14,32 @@ android {
         applicationId 'hk.kaiboard.android'
         minSdk 26
         targetSdk 35
-        versionCode 23
-        versionName '0.6.16'
+        versionCode 24
+        versionName '0.6.17'
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
-    buildTypes { release { minifyEnabled false } }
+    signingConfigs {
+        if (persistentStore) {
+            persistent {
+                storeFile file(persistentStore)
+                storeType 'PKCS12'
+                storePassword persistentPassword
+                keyAlias 'cantonesemixeng'
+                keyPassword persistentPassword
+            }
+        }
+    }
+    buildTypes {
+        debug { if (persistentStore) signingConfig signingConfigs.persistent }
+        release {
+            minifyEnabled false
+            if (persistentStore) signingConfig signingConfigs.persistent
+        }
+    }
     testOptions { unitTests.returnDefaultValues = true }
 }
 

@@ -4,7 +4,7 @@
 
 Source: https://github.com/rime/rime-cangjie
 Revision: 52d90a1b1312e74042b38c1cbc8142defbc53171
-File: app/src/main/assets/cangjie5.base.dict.yaml (unchanged upstream file)
+File: app/src/main/assets/cangjie5.base.dict.yaml (original mappings retained; supplemental mappings appended)
 
 The dictionary header identifies its license as GPL and credits the 五倉世紀 table from www.chinesecj.com, 惜緣 and 佛振 (2012-04-08). The upstream repository includes an LGPL-3.0 LICENSE and an AUTHORS file crediting ibus-table by acevery (Yu Yuwei), original work by 朱邦復 / Chu Bong-Foo, and Gong Chen. These upstream notices are retained without attempting to resolve or replace their differing descriptions.
 
@@ -49,3 +49,13 @@ Modified data: Quick-code vocabulary cantonese_phrases.tsv and statistical five-
 ## English completion vocabulary
 
 FrequencyWords by Hermit Dave, https://github.com/hermitdave/FrequencyWords at 525f9b560de45753a5ea01069454e72e9aa541c6, content/2018/en/en_50k.txt, derived from OpenSubtitles2018. Content licensed CC BY-SA 4.0. This app filters the first 30,000 unique words to its supported syntax and merges project-authored vocabulary and casing. The modified list is distributed under CC BY-SA 4.0; provenance and the full license are bundled in app/src/main/assets/licenses/english-completion/. No user input or learned text was used to create this asset.
+
+## Cangjie 5 HK completion mappings
+
+Source: https://github.com/Jackchows/Cangjie5
+Revision: e4a4242f518ab0d34066bbd8aa44cb0cefd61db2
+Input: Cangjie5_HK.txt (MIT License).
+
+Merge 109,296 additional unique character/code pairs into the original dictionary without deleting legacy mappings. The combined asset contains 133,232 mappings for 103,942 distinct characters and symbols, including regional code variants, HKSCS and supplementary-plane characters. The HK source candidate order is retained among appended mappings; existing character frequencies and learned priorities still control runtime ordering. Display of very recent Unicode characters depends on device fonts.
+
+Reproduce with tools/prepare_cangjie_data.py. Pinned source/output checksums and processing details are in app/src/main/assets/licenses/cangjie-completion/SOURCE.json; the source MIT notice is bundled in LICENSE.txt and shown in app settings.

@@ -6,10 +6,11 @@ import java.util.*;
 /** Immutable after loading; independent of Android so the actual dictionary is testable. */
 public final class DictionaryEngine {
     private final Map<String, List<String>> cangjie = new HashMap<>();
-    private final Set<String> cangjiePrefixes = new HashSet<>();
+    private final String[] cangjieCodes;
     private final Map<String, List<String>> quick = new HashMap<>();
     private final List<String> english = new ArrayList<>();
-    private final Map<String, Set<String>> reverseQuick = new HashMap<>();
+    // Shared short strings avoid a HashSet/HashMap allocation for every Unicode character.
+    private final Map<String, String> reverseQuick = new HashMap<>();
     private int entries;
     private final Map<String, Integer> frequencies = new HashMap<>();
     private static final String HK_COMMON = "係唔嘅咗喺佢哋嘢咁啲冇嚟啦喎睇返畀攞噉咩食飲";
@@ -29,6 +30,7 @@ public final class DictionaryEngine {
                     frequencies.put(fields[0], Integer.parseInt(fields[1]));
             }
         }
+        Map<String, String> quickCodes = new HashMap<>();
         try (BufferedReader reader = new BufferedReader(chinese)) {
             String line; boolean body = false;
             while ((line = reader.readLine()) != null) {
@@ -38,12 +40,18 @@ public final class DictionaryEngine {
                 if (fields.length < 2 || !fields[1].matches("[a-z]{1,5}")) continue;
                 String word = fields[0], code = fields[1];
                 add(cangjie, code, word);
-                for (int size=1; size<=code.length(); size++) cangjiePrefixes.add(code.substring(0,size));
-                add(quick, quickCode(code), word);
-                reverseQuick.computeIfAbsent(word, key -> new HashSet<>()).add(quickCode(code));
+                String shortCode = quickCode(code);
+                shortCode = quickCodes.computeIfAbsent(shortCode, key -> key);
+                add(quick, shortCode, word);
+                String previous = reverseQuick.get(word);
+                if (previous == null) reverseQuick.put(word, shortCode);
+                else if (!hasCode(previous, shortCode)) reverseQuick.put(word, previous + "," + shortCode);
                 entries++;
             }
         }
+        // Reuse full-code map keys instead of retaining every prefix as another String.
+        cangjieCodes = cangjie.keySet().toArray(new String[0]);
+        Arrays.sort(cangjieCodes);
         Comparator<String> priority = Comparator.comparingInt(this::frequency).reversed();
         cangjie.values().forEach(list -> list.sort(priority));
         quick.values().forEach(list -> list.sort(priority));
@@ -75,7 +83,23 @@ public final class DictionaryEngine {
         return code.length() == 1 ? code : "" + code.charAt(0) + code.charAt(code.length() - 1);
     }
 
-    public boolean hasCangjiePrefix(String code) { return cangjiePrefixes.contains(code.toLowerCase(Locale.ROOT)); }
+    public boolean hasCangjiePrefix(String code) {
+        if (code.isEmpty()) return false;
+        code = code.toLowerCase(Locale.ROOT);
+        int at = Arrays.binarySearch(cangjieCodes, code);
+        if (at >= 0) return true;
+        at = -at - 1;
+        return at < cangjieCodes.length && cangjieCodes[at].startsWith(code);
+    }
+
+    private static boolean hasCode(String choices, String code) {
+        for (int at = choices.indexOf(code); at >= 0; at = choices.indexOf(code, at + 1)) {
+            int end = at + code.length();
+            if ((at == 0 || choices.charAt(at - 1) == ',') &&
+                (end == choices.length() || choices.charAt(end) == ',')) return true;
+        }
+        return false;
+    }
 
     public int entryCount() { return entries; }
 
@@ -91,11 +115,11 @@ public final class DictionaryEngine {
     private boolean match(String code, int pos, String text, int at, List<String> result) {
         if (at == text.length()) return pos == code.length();
         String character = new String(Character.toChars(text.codePointAt(at)));
-        Set<String> choices = reverseQuick.getOrDefault(character, Collections.emptySet());
+        String choices = reverseQuick.getOrDefault(character, "");
         for (int size = 2; size >= 1; size--) {
             if (pos + size > code.length()) continue;
             String part = code.substring(pos, pos + size);
-            if (choices.contains(part)) {
+            if (hasCode(choices, part)) {
                 result.add(part);
                 if (match(code, pos + size, text, at + character.length(), result)) return true;
                 result.remove(result.size() - 1);

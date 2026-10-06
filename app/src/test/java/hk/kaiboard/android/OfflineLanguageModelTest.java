@@ -124,4 +124,43 @@ public class OfflineLanguageModelTest {
         assertFalse(candidate.corrected);
     }
 
+
+    @Test public void corpusPhraseEvidenceAppliesWithoutTheAuthoredHkList() throws Exception {
+        QuickDecoder general = new QuickDecoder(dictionary, asset("quick_phrases.tsv"), null,
+            asset("cantonese_phrases.tsv"), model);
+        String[][] boundaries = {{"打","電話"}, {"修","理"}, {"開","會"}, {"食","飯"}};
+        for (String[] boundary : boundaries) {
+            String left = boundary[0], right = boundary[1];
+            assertTrue(left + right, general.languageScore(left,right) > model.score(left,right));
+            assertEquals(general.languageScore("",left+right),
+                general.languageScore("",left)+general.languageScore(left,right),1e-9);
+        }
+        assertEquals("我想打電話", general.decode("hidpqnmuyr",(c,w)->0).get(0));
+    }
+    @Test public void recentCjkCharactersNeverReceiveTheNonHanZeroScore() {
+        for (int cp : new int[]{0x9FFF, 0x2EBF0, 0x31350, 0x323B0, 0x33479}) {
+            String text = new String(Character.toChars(cp));
+            assertTrue(QuickDecoder.hanText(text));
+            assertEquals(text, OfflineLanguageModel.contextTail("hello" + text));
+            assertTrue(Double.isFinite(model.score("",text)));
+            assertTrue(model.score("",text) < 0);
+            assertEquals(model.score("",text), model.score("香港","，"+text),1e-9);
+        }
+    }
+    @Test public void generalContextRanksDifferentActivitiesAndObjects() {
+        String[][] cases = {
+            {"hidpwcbemf","我想買股票"},
+            {"hidpbhmuah","我想睇電影"},
+            {"hidpohmgrjjj","我想修理單車"},
+            {"vkmmnkmrvooorrry","收工又可以飲咖啡"},
+            {"vkmmnkmrvoqraujm","收工又可以搭巴士"}
+        };
+        for (String[] item : cases) {
+            List<String> values = decoder.decode(item[0],(c,w)->0);
+            assertEquals(item[0],item[1],values.get(0));
+            for (String value : values)
+                assertFalse(dictionary.matchQuickCodes(item[0],value).isEmpty());
+        }
+    }
+
 }

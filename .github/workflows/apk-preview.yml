@@ -6,6 +6,8 @@ on:
     paths: [.github/workflows/apk-preview.yml]
 permissions:
   contents: read
+env:
+  KAI_KEYSTORE_PASSWORD: ${{ secrets.KAI_KEYSTORE_PASSWORD }}
 jobs:
   package:
     runs-on: ubuntu-latest
@@ -16,6 +18,10 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
+      - name: Restore persistent APK signing key
+        env:
+          KAI_KEYSTORE_B64: ${{ secrets.KAI_KEYSTORE_B64 }}
+        run: python3 tools/restore_signing_key.py
       - uses: android-actions/setup-android@v3
         with:
           packages: platform-tools
