@@ -59,3 +59,13 @@ Input: Cangjie5_HK.txt (MIT License).
 Merge 109,296 additional unique character/code pairs into the original dictionary without deleting legacy mappings. The combined asset contains 133,232 mappings for 103,942 distinct characters and symbols, including regional code variants, HKSCS and supplementary-plane characters. The HK source candidate order is retained among appended mappings; existing character frequencies and learned priorities still control runtime ordering. Display of very recent Unicode characters depends on device fonts.
 
 Reproduce with tools/prepare_cangjie_data.py. Pinned source/output checksums and processing details are in app/src/main/assets/licenses/cangjie-completion/SOURCE.json; the source MIT notice is bundled in LICENSE.txt and shown in app settings.
+
+## Cangjie 3 compatibility mappings
+
+Source: https://github.com/Arthurmcarthur/Cangjie3-Plus
+Revision: 26a3e71f6328ab3aa0505304803bb8d8092ee785
+Inputs: cj3.txt and cj3-special.txt (MIT License).
+
+Append 6,124 unique mappings of 1–5 letters, retaining every existing Cangjie 5 mapping and its original order. The resulting asset contains 139,356 unique character/code pairs and the same 103,942 distinct characters and symbols. Quick codes are derived from both generations. Prefix-x disambiguation codes longer than five letters are not imported; the supported character inventory does not shrink. This is an independently maintained mapping table, not Microsoft's original Windows dictionary, and does not establish exact Windows parity.
+
+The upstream MIT notice is bundled in app/src/main/assets/licenses/cangjie-completion/LICENSE-CJ3.txt and shown in app settings. Source and output hashes are recorded in SOURCE.json.

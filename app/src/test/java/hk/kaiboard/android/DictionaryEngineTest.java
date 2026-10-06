@@ -116,4 +116,13 @@ public class DictionaryEngineTest {
         assertFalse(engine.hasCangjiePrefix("abcdef"));
     }
 
+    @Test public void thirdGenerationAndLegacyCodesRemainReachableAlongsideFifthGeneration() {
+        String[][] cases = {{"mwyl", "面"}, {"mwsl", "面"},
+            {"qhxm", "捏"}, {"qfbq", "撐"}, {"qfbh", "撐"}};
+        for (String[] item : cases) {
+            assertTrue(item[0], engine.lookup(item[0], false, true, false).contains(item[1]));
+            assertTrue(item[0], engine.quickCandidates(DictionaryEngine.quickCode(item[0])).contains(item[1]));
+        }
+    }
+
 }
