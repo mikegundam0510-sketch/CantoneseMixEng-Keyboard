@@ -117,7 +117,7 @@ public final class QuickDecoder {
                     // All bundled vocabulary supplies evidence, not just a small HK list.
                     // Corpus counts calibrate confidence; local authored priorities retain
                     // their stronger preference without pretending to be measured counts.
-                    double evidence = localUsage ? .65 * (characters - 1) + (characters >= 3 ? 2 : 0)
+                    double evidence = localUsage ? 2 * (characters - 1) + (characters >= 3 ? 2 : 0)
                         : .45 * (characters - 1) * Math.min(1, Math.log1p(count) / Math.log1p(3000));
                     phraseEvidence.merge(f[1], evidence, Math::max);
                 }
