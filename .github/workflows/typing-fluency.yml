@@ -1,0 +1,101 @@
+name: Experimental typing fluency
+on:
+  push:
+    branches: [codex/offline-semantic-ranking]
+    paths:
+      - 'app/**'
+      - 'tools/typing_fluency.sh'
+      - 'tools/prepare_semantic_model.sh'
+      - '.github/workflows/typing-fluency.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: typing-fluency-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      KAI_SEMANTIC_MODEL: 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
+          log-accepted-android-sdk-licenses: false
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/cache/restore@v4
+        with:
+          path: |
+            /tmp/llama
+            /tmp/semantic-build
+            /tmp/qwen-q8.gguf
+            /tmp/semantic-model.gguf
+          key: semantic-cpu-v1-${{ runner.os }}-d7a695ef-9465e63a
+          fail-on-cache-miss: true
+      - name: Prepare experimental assets and pinned native source
+        run: |
+          mkdir -p .native app/build/generated/semanticAssets/licenses/semantic
+          cp -a /tmp/llama .native/llama
+          test "$(git -C .native/llama rev-parse HEAD)" = d7a695ef679138c13d86359b84c1731d36213d32
+          cp /tmp/semantic-model.gguf app/build/generated/semanticAssets/semantic-model.gguf
+          sha256sum app/build/generated/semanticAssets/semantic-model.gguf | cut -d ' ' -f 1 > app/build/generated/semanticAssets/semantic-model.sha256
+          cp .native/llama/LICENSE app/build/generated/semanticAssets/licenses/semantic/LLAMA-MIT.txt
+          curl --fail --location --retry 3 'https://huggingface.co/Qwen/Qwen3-0.6B-GGUF/resolve/1eaf4d9657fe65ad10a51eab76a8db5b363bddaa/LICENSE' -o app/build/generated/semanticAssets/licenses/semantic/QWEN-APACHE-2.0.txt
+          sdkmanager 'platforms;android-35' 'build-tools;35.0.0' 'ndk;27.0.12077973' 'cmake;3.22.1'
+      - name: Compile experimental model package and test code
+        run: bash ./gradlew testDebugUnitTest lintDebug assembleDebug assembleDebugAndroidTest --no-daemon
+      - uses: actions/upload-artifact@v4
+        with:
+          name: experimental-fluency-packages
+          retention-days: 7
+          compression-level: 0
+          path: |
+            app/build/outputs/apk/debug/app-debug.apk
+            app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: experimental-build-reports
+          path: |
+            app/build/reports/tests/
+            app/build/reports/lint-results-debug.html
+  fluency:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        ram: [2048,4096]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: experimental-fluency-packages
+          path: fluency-apks
+      - name: Enable emulator acceleration
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 31
+          arch: x86_64
+          profile: pixel_2
+          disk-size: 4096M
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -memory ${{ matrix.ram }}
+          script: bash tools/typing_fluency.sh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: typing-fluency-${{ matrix.ram }}MiB
+          path: fluency-evidence/
