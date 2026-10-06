@@ -63,8 +63,7 @@ jobs:
           script: |
             adb install -r app/build/outputs/apk/debug/app-debug.apk
             adb shell settings put secure show_ime_with_hard_keyboard 1
-            adb shell ime enable hk.kaiboard.android/.KaiboardService
-            adb shell ime set hk.kaiboard.android/.KaiboardService
+            bash tools/enable_ime.sh
             adb shell wm size 720x1600
             adb shell wm density 320
             python3 tools/predictions_smoke.py
