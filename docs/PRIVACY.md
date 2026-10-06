@@ -41,3 +41,22 @@ to an input method; it is not evidence that this app records or transmits keystr
 Validation includes unit tests for sensitive editor policies and Android instrumentation
 tests for fresh-install defaults, history removal on upgrade, preservation of manual
 words/settings, and persistence of an explicit subsequent opt-in.
+
+## 0.6.19 phrase learning
+
+Existing 0.6.18 privacy migration flags and preference files remain unchanged.
+An in-place update using the same signer preserves single-character Chinese counts, English counts,
+manual words, pins and settings. New `W:` keys share the existing `learned` file
+and store at most 1,000 bundled Chinese words (2–8 characters) and their counts.
+They do not evict the separate 2,000-character quota. Selecting a known phrase or
+its continuation can update these counts; English/translation spans and punctuation
+break phrase matching. An automatic correction does not learn a phrase. Reselecting
+a committed candidate reverses its phrase increments. Surrounding editor text is
+transient and never becomes a key; unknown sentences are not collected. Disabling
+learning prevents reads and writes of these personal counts. Clearing learning
+clears both character and phrase keys. Sensitive editor restrictions are unchanged.
+
+The user-authorized new signing identity begins at 0.6.19. Transition from the
+old 0.6.18 signer cannot use an ordinary in-place update and cannot promise
+preservation of that installation's data. Subsequent releases must retain the
+new 0.6.19 signer to preserve opted-in learning through normal updates.

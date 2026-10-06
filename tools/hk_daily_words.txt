@@ -1,0 +1,25 @@
+# Additional authored Hong Kong daily words; GPL-3.0-or-later.
+# Existing vocabulary priorities are preserved. These priorities are not corpus counts.
+多謝你
+係咁先
+原來係咁
+傾吓
+陣間再傾
+搞掂晒
+收到晒
+出咗門口
+到咗
+遲啲到
+慢慢嚟
+做緊咩
+熱奶茶
+凍檸茶
+叉燒飯
+搭港鐵
+搭小巴
+將軍澳站
+攞嘢
+睇唔明
+聽日見
+陣間見
+下次見

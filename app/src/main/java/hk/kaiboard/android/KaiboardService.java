@@ -75,6 +75,7 @@ public final class KaiboardService extends InputMethodService {
     private int autoUndoCursor = -1;
     private String autoUndoBefore = "", rejectedAutoCode = "";
     private boolean forceEnglish, forceChinese, reselectionLearned;
+    private List<String> reselectionPhrases = Collections.emptyList();
         private TextView undoKey;
     private PopupWindow selectionPopup;
     private ReselectionRecord reselection;
@@ -789,8 +790,8 @@ public final class KaiboardService extends InputMethodService {
             secure = KaiboardService.this.secure; restoredCandidate = KaiboardService.this.restoredCandidate;
             settings = new HashMap<>(prefs.getAll());
             personal = noLearning ? Collections.emptyMap() : new HashMap<>(KaiboardService.this.personal.getAll());
-            counts = noLearning ? Collections.emptyMap() : new HashMap<>(learned.getAll());
-            englishCounts = noLearning ? Collections.emptyMap() : new HashMap<>(englishLearned.getAll());
+            counts = noLearning || !enabled("learning", false) ? Collections.emptyMap() : new HashMap<>(learned.getAll());
+            englishCounts = noLearning || !enabled("learning", false) ? Collections.emptyMap() : new HashMap<>(englishLearned.getAll());
             englishWords = new ArrayList<>(personalEnglish());
             continuous = quick && enabled("continuous", true) && input.length() > 2 && !secure;
             isEnglish = forceEnglish || !forceChinese && enabled("english", true) && englishEngine != null
@@ -800,9 +801,11 @@ public final class KaiboardService extends InputMethodService {
         boolean enabled(String name, boolean fallback) { Object value = settings.get(name); return value instanceof Boolean ? (Boolean)value : fallback; }
         int learnedCount(String code, String word) {
             if (noLearning || !enabled("learning", false)) return 0;
-            Object value = counts.get(LearningRanker.key(code, quick, cangjie, word));
+            Object value = counts.get(LearningRanker.isLearnable(word)
+                ? LearningRanker.key(code, quick, cangjie, word) : PhraseLearning.key(word));
             return value instanceof Integer ? (Integer)value : 0;
         }
+        int phraseCount(String word) { return learnedCount("", word); }
         String pinPrefix(String code) { return "p:" + (quick ? "Q" : "-") + (cangjie ? "C" : "-") + ":" + code.toLowerCase(Locale.ROOT) + ":"; }
         List<String> englishSuggestions() {
             List<String> result = new ArrayList<>(englishEngine.suggest(input, englishWords, enabled("english_repair", true)));
@@ -874,7 +877,8 @@ public final class KaiboardService extends InputMethodService {
             InputCandidate detail = request.details.get(value);
             if (detail == null) continue;
             if (request.personal.containsKey(request.pinPrefix(detail.effectiveCode()) + value)
-                    || request.personal.containsKey("c:" + request.input.toLowerCase(Locale.ROOT) + ":" + value)) return;
+                    || request.personal.containsKey("c:" + request.input.toLowerCase(Locale.ROOT) + ":" + value)
+                    || decoder.knownWord(value) && request.learnedCount(request.input, value) > 0) return;
             if (!detail.corrected && !detail.englishOnly() && detail.source.equals(request.input)
                     && detail.effectiveCode().equals(request.input) && detail.segments.stream().noneMatch(s -> s.translated))
                 exact.add(value);
@@ -937,7 +941,7 @@ public final class KaiboardService extends InputMethodService {
             InputConnection ic = getCurrentInputConnection();
             CharSequence selected = ic == null ? null : ic.getSelectedText(0);
             if (selected == null || selected.length() == 0)
-                for (String tail : decoder.nextSuggestions(preceding, 12))
+                for (String tail : decoder.nextSuggestions(preceding, 12, request::phraseCount))
                     request.add(results, new InputCandidate("", Collections.singletonList(
                         new InputCandidate.Segment("", tail, false)), false));
         }
@@ -1056,7 +1060,8 @@ public final class KaiboardService extends InputMethodService {
     }
 
     private int learnedCount(String code, String word) {
-        return noLearning || !prefs.getBoolean("learning", false) ? 0 : learned.getInt(LearningRanker.key(code, quick, cangjie, word), 0);
+        return noLearning || !prefs.getBoolean("learning", false) ? 0 : learned.getInt(
+            LearningRanker.isLearnable(word) ? LearningRanker.key(code, quick, cangjie, word) : PhraseLearning.key(word), 0);
     }
 
     private void toggleLanguage() {
@@ -1242,6 +1247,9 @@ public final class KaiboardService extends InputMethodService {
         InputConnection ic = getCurrentInputConnection(); if (ic == null) return;
         int consumed = Math.min(detail.source.length(), composing.length());
         String remaining = composing.substring(consumed);
+        List<String> selectedPhrases = decoder == null || !learn ? Collections.emptyList()
+            : PhraseLearning.selectedWords(context(), detail, decoder::knownWord,
+                prefs.getBoolean("learning", false), noLearning);
         invalidateReselection();
         ic.beginBatchEdit();
         boolean accepted = ic.commitText(detail.text, 1);
@@ -1251,6 +1259,7 @@ public final class KaiboardService extends InputMethodService {
                 if (segment.english) learnEnglish(segment.text);
                 else if (LearningRanker.isLearnable(segment.text)) learnCharacter(segment.code, segment.text);
             }
+            for (String word : selectedPhrases) incrementPhrase(word);
         }
         if (accepted) {
             nextSuggestionsDismissed = false;
@@ -1265,6 +1274,7 @@ public final class KaiboardService extends InputMethodService {
                 int cursor = extracted.startOffset + extracted.selectionEnd;
                 reselection = new ReselectionRecord(detail, cursor, before.toString());
                 reselectionLearned = !noLearning && prefs.getBoolean("learning", false);
+                reselectionPhrases = selectedPhrases;
                 selectionStart = selectionEnd = cursor;
             }
         }
@@ -1285,10 +1295,24 @@ public final class KaiboardService extends InputMethodService {
         String key = LearningRanker.key(code, quick, cangjie, character);
         SharedPreferences.Editor edit = learned.edit();
         Map<String, ?> all = learned.getAll();
-        if (!all.containsKey(key) && all.size() >= 2000) {
-            String leastUsed = Collections.min(all.keySet(), Comparator.comparingInt(k -> learned.getInt(k, 0)));
+        List<String> characterKeys = new ArrayList<>();
+        for (String existing : all.keySet()) if (!existing.startsWith("W:")) characterKeys.add(existing);
+        if (!all.containsKey(key) && characterKeys.size() >= 2000) {
+            String leastUsed = Collections.min(characterKeys, Comparator.comparingInt(k -> learned.getInt(k, 0)));
             edit.remove(leastUsed);
         }
+        edit.putInt(key, Math.min(100000, learned.getInt(key, 0) + 1)).apply();
+    }
+
+    private void incrementPhrase(String word) {
+        if (decoder == null || !decoder.knownWord(word)) return;
+        String key = PhraseLearning.key(word);
+        Map<String, ?> all = learned.getAll();
+        List<String> phraseKeys = new ArrayList<>();
+        for (String existing : all.keySet()) if (existing.startsWith("W:")) phraseKeys.add(existing);
+        SharedPreferences.Editor edit = learned.edit();
+        if (!all.containsKey(key) && phraseKeys.size() >= 1000)
+            edit.remove(Collections.min(phraseKeys, Comparator.comparingInt(k -> learned.getInt(k, 0))));
         edit.putInt(key, Math.min(100000, learned.getInt(key, 0) + 1)).apply();
     }
 
@@ -1567,6 +1591,7 @@ public final class KaiboardService extends InputMethodService {
 
     private void invalidateReselection() {
         reselection = null; reselectionLearned = false;
+        reselectionPhrases = Collections.emptyList();
         if (undoKey != null) { undoKey.setEnabled(false); undoKey.setAlpha(.35f); }
     }
 
@@ -1582,6 +1607,7 @@ public final class KaiboardService extends InputMethodService {
         if (!canReselect()) { invalidateReselection(); return; }
         ReselectionRecord record = reselection;
         boolean undoLearning = reselectionLearned;
+        List<String> undoPhrases = reselectionPhrases;
         InputConnection ic = getCurrentInputConnection();
         invalidateReselection(); cancelVoice();
         ic.beginBatchEdit();
@@ -1593,7 +1619,14 @@ public final class KaiboardService extends InputMethodService {
         }
         ic.endBatchEdit();
         if (accepted) {
+            if (undoLearning) for (String word : undoPhrases) {
+                String key = PhraseLearning.key(word);
+                int count = learned.getInt(key, 0);
+                if (count <= 1) learned.edit().remove(key).apply();
+                else learned.edit().putInt(key, count - 1).apply();
+            }
             if (undoLearning) for (InputCandidate.Segment segment : record.candidate.segments) {
+                if (segment.translated || segment.code.isEmpty()) continue;
                 if (segment.english) {
                     int count = englishLearned.getInt(segment.text,0);
                     if (count <= 1) englishLearned.edit().remove(segment.text).apply();

@@ -1,12 +1,30 @@
 plugins { id 'com.android.application' }
 def semanticEnabled = System.getenv('KAI_SEMANTIC_MODEL') == 'true'
 
-def persistentStore = System.getenv('KAI_KEYSTORE_PATH')
+def persistentStore = System.getenv('KAI_KEYSTORE_PATH') ?: project.findProperty('kaiKeystorePath')
+def persistentPasswordFile = project.findProperty('kaiKeystorePasswordFile')
 def persistentPassword = System.getenv('KAI_KEYSTORE_PASSWORD')?.trim()
+if (persistentStore && !persistentPassword && persistentPasswordFile)
+    persistentPassword = file(persistentPasswordFile).text.trim()
 if (System.getenv('KAI_REQUIRE_STABLE_SIGNING') == 'true' && (!persistentStore || !persistentPassword))
     throw new GradleException('Persistent signing key is required for distributed APKs')
 if (persistentStore && !persistentPassword)
     throw new GradleException('KAI_KEYSTORE_PASSWORD is required with KAI_KEYSTORE_PATH')
+if (persistentStore) {
+    def store = java.security.KeyStore.getInstance('PKCS12')
+    file(persistentStore).withInputStream { stream -> store.load(stream, persistentPassword.toCharArray()) }
+    def certificate = store.getCertificate('cantonesemixeng')
+    if (certificate == null || !store.isKeyEntry('cantonesemixeng'))
+        throw new GradleException('Persistent signing alias cantonesemixeng is missing')
+    def fingerprint = java.security.MessageDigest.getInstance('SHA-256').digest(certificate.encoded).encodeHex().toString()
+    def expected = rootProject.file('.github/signing-cert.sha256').text.trim().toLowerCase(Locale.ROOT)
+    if (fingerprint != expected)
+        throw new GradleException('Signing certificate differs from the pinned persistent signer; refusing an incompatible update')
+}
+gradle.taskGraph.whenReady { graph ->
+    if (!persistentStore && graph.allTasks.any { it.project == project && it.name in ['packageRelease', 'signReleaseBundle'] })
+        throw new GradleException('Release packaging requires the pinned persistent signing key')
+}
 
 android {
     namespace 'hk.kaiboard.android'
@@ -15,8 +33,8 @@ android {
         applicationId 'hk.kaiboard.android'
         minSdk 26
         targetSdk 35
-        versionCode 25
-        versionName '0.6.18'
+        versionCode 26
+        versionName '0.6.19'
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         buildConfigField 'boolean', 'SEMANTIC_MODEL', semanticEnabled.toString()
         if (semanticEnabled) {

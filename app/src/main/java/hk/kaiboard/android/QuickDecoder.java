@@ -3,6 +3,7 @@ package hk.kaiboard.android;
 import java.io.*;
 import java.util.*;
 import java.util.function.ToIntBiFunction;
+import java.util.function.ToIntFunction;
 
 /** Bounded offline word-lattice decoder, including one-code Quick characters. */
 public final class QuickDecoder {
@@ -71,6 +72,16 @@ public final class QuickDecoder {
 
     /** Only attested phrase tails are offered; no editor text is stored. */
     public List<String> nextSuggestions(String context, int limit) {
+        return nextSuggestions(context, limit, word -> 0);
+    }
+
+    public boolean knownWord(String text) {
+        int size = text.codePointCount(0, text.length());
+        return size >= 2 && size <= 8 && knownPhrases.contains(text);
+    }
+
+    /** Learned counts apply only to a matching bundled word, within its prefix group. */
+    public List<String> nextSuggestions(String context, int limit, ToIntFunction<String> learned) {
         if (context == null || context.isEmpty() || limit <= 0) return Collections.emptyList();
         int last = context.codePointBefore(context.length());
         if (!hanText(new String(Character.toChars(last)))) return Collections.emptyList();
@@ -84,7 +95,8 @@ public final class QuickDecoder {
                 String tail = phrase.text.substring(prefix.length());
                 int size = tail.codePointCount(0, tail.length());
                 double score = length * 100 + Math.log1p(phrase.score)
-                    + languageScore(context, tail) / size;
+                    + languageScore(context, tail) / size
+                    + Math.min(20, Math.log1p(Math.max(0, learned.applyAsInt(phrase.text))) * 4);
                 if (Double.isFinite(score)) scores.merge(tail, score, Math::max);
             }
         }
@@ -152,7 +164,7 @@ public final class QuickDecoder {
             for (int length = 1; length <= Math.min(16, code.length() - pos); length++) {
                 String part = code.substring(pos, pos + length);
                 LinkedHashMap<String, Double> options = new LinkedHashMap<>();
-                List<Token> known = vocabulary.getOrDefault(part, Collections.emptyList());
+                List<Token> known = personalizedTokens(part, learned);
                 for (int j = 0; j < Math.min(24, known.size()); j++) options.put(known.get(j).text, known.get(j).score);
                 if (length <= 2) {
                     List<String> letters = new ArrayList<>();
@@ -167,6 +179,8 @@ public final class QuickDecoder {
                 List<Path> target = lattice.get(pos + length);
                 for (Map.Entry<String, Double> choice : options.entrySet()) {
                     double bonus = 0;
+                    if (knownWord(choice.getKey()))
+                        bonus += Math.min(6, Math.log1p(Math.max(0, learned.applyAsInt(part, choice.getKey()))) * 1.5);
                     List<String> codes = dictionary.matchQuickCodes(part, choice.getKey());
                     int offset = 0;
                     for (String c : codes) {
@@ -192,14 +206,15 @@ public final class QuickDecoder {
         }
         List<String> result = new ArrayList<>();
         // An attested complete word/phrase is safer than a sentence invented from pair statistics.
-        List<Token> wholeWords = new ArrayList<>(vocabulary.getOrDefault(code, Collections.emptyList()));
+        List<Token> wholeWords = personalizedTokens(code, learned);
         // With the trained model, complete words already participate in the lattice.
         // Give their observed frequency a bounded prior, then compare actual scores;
         // do not pin five words ahead of a better contextual sentence regardless of score.
         if (model != null) for (Token token : wholeWords)
             if (!dictionary.matchQuickCodes(code, token.text).isEmpty())
                 lattice.get(code.length()).add(new Path(token.text,
-                    languageScore(context, token.text) + Math.min(8, Math.log1p(token.score) * .7)));
+                    languageScore(context, token.text) + Math.min(8, Math.log1p(token.score) * .7)
+                    + Math.min(6, Math.log1p(Math.max(0, learned.applyAsInt(code, token.text))) * 1.5)));
         for (Token token : model == null ? wholeWords : Collections.<Token>emptyList()) {
             if (!dictionary.matchQuickCodes(code, token.text).isEmpty() && !result.contains(token.text)) result.add(token.text);
             if (result.size() == 5) break;
@@ -208,6 +223,24 @@ public final class QuickDecoder {
             if (path.text.codePointCount(0, path.text.length()) > 1 && !result.contains(path.text)) result.add(path.text);
             if (result.size() == 20) break;
         }
+        // Explicit repeated choices outrank statistical guesses. Zero counts preserve
+        // the existing context order; only exact, bundled words can be personalized.
+        result.sort(Comparator.comparingInt((String text) -> knownWord(text)
+            ? Math.max(0, learned.applyAsInt(code, text)) : 0).reversed());
+        return result;
+    }
+
+    private List<Token> personalizedTokens(String code, ToIntBiFunction<String, String> learned) {
+        List<Token> original = vocabulary.getOrDefault(code, Collections.emptyList());
+        // Preserve the zero-history path and avoid a per-token allocation/sort there.
+        boolean hasCounts = false;
+        for (Token token : original) if (knownWord(token.text) && learned.applyAsInt(code, token.text) > 0) {
+            hasCounts = true; break;
+        }
+        if (!hasCounts) return original;
+        List<Token> result = new ArrayList<>(original);
+        result.sort(Comparator.comparingDouble((Token token) -> Math.log1p(token.score)
+            + Math.min(6, Math.log1p(Math.max(0, learned.applyAsInt(code, token.text))) * 1.5)).reversed());
         return result;
     }
 

@@ -57,7 +57,7 @@ public final class SettingsActivity extends Activity {
         toggle(methods, "速成相鄰按鍵修正候選", "quick_repair", true);
         toggle(methods, "倉頡相鄰按鍵修正候選", "cangjie_repair", true);
         toggle(methods, "倉頡／速成自動修正", "chinese_autocorrect", true);
-        toggle(methods, "儲存選字及英文詞作學習（預設關閉）", "learning", false);
+        toggle(methods, "學習常選字、詞組及聯想字（預設關閉）", "learning", false);
         button(methods, "清除學習記錄", () -> new AlertDialog.Builder(this).setTitle("清除學習記錄？")
             .setMessage("將恢復預設選字次序。鍵盤設定不受影響。")
             .setNegativeButton("取消", null).setPositiveButton("清除", (d, which) -> {
@@ -111,7 +111,7 @@ public final class SettingsActivity extends Activity {
         button(ai, "開啟鍵盤選擇器", () -> ((InputMethodManager)getSystemService(INPUT_METHOD_SERVICE)).showInputMethodPicker());
 
         LinearLayout about = card("離線與私隱");
-        text(about, "字碼及候選可離線使用，App 無網絡權限。上文只用於當次候選排序，不保存整段文字。自動學習及最近 Emoji 記錄預設關閉，更新時清除舊自動學習紀錄。如你自行開啟，所選中文字及英文詞或 Emoji 會儲存於手機；手動自訂詞和置頂亦會儲存，可管理及清除，不作備份或轉移。密碼欄停用候選和學習；敏感欄位及要求不學習的輸入框不使用或更新個人詞庫，亦不讀取上文或啟動語音。剪貼簿只在你開啟面板或按更新時讀取，最多暫存 10 項；收起鍵盤或轉到另一輸入框即清除，不寫入檔案。密碼欄不讀取，系統標示為敏感的剪貼簿不加入面板；要求不學習的輸入框只顯示當前剪貼簿。快捷文字只儲存你自行新增的內容，可刪除及清空。語音預設使用手機語音服務，可能經網絡處理；可選擇只用裝置內辨識。本 App 不保存錄音。", 14, Color.DKGRAY, false);
+        text(about, "字碼及候選可離線使用，App 無網絡權限。上文只用於當次候選排序，不保存整段文字。自動學習及最近 Emoji 記錄預設關閉；相同簽名原位更新會保留已有設定和學習紀錄。如你自行開啟，所選中文字、內置詞庫中最長 8 字的詞組次數、英文詞或 Emoji 會儲存於手機；常選詞組亦會用於聯想排序，未收錄整句不保存；手動自訂詞和置頂亦會儲存，可管理及清除，不作備份或轉移。密碼欄停用候選和學習；敏感欄位及要求不學習的輸入框不使用或更新個人詞庫，亦不讀取上文或啟動語音。剪貼簿只在你開啟面板或按更新時讀取，最多暫存 10 項；收起鍵盤或轉到另一輸入框即清除，不寫入檔案。密碼欄不讀取，系統標示為敏感的剪貼簿不加入面板；要求不學習的輸入框只顯示當前剪貼簿。快捷文字只儲存你自行新增的內容，可刪除及清空。語音預設使用手機語音服務，可能經網絡處理；可選擇只用裝置內辨識。本 App 不保存錄音。", 14, Color.DKGRAY, false);
         text(about, "獨立開發的 Android 鍵盤，並非 Kaiboard 或 Samsung 官方產品。採用 Rime 倉頡五代碼表與詞庫，以及 Unicode Emoji 資料；速成由首尾碼生成，選字次序可能與其他速成鍵盤不同。", 13, Color.DKGRAY, false);
         button(about, "開源資料與授權", this::showLicenses);
     }
@@ -262,5 +262,4 @@ public final class SettingsActivity extends Activity {
 
     private int dp(float v) { return Math.round(v * getResources().getDisplayMetrics().density); }
 }
-
 

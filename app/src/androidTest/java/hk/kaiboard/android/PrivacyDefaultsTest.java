@@ -53,4 +53,19 @@ public final class PrivacyDefaultsTest {
         assertTrue(Prefs.get(context).getBoolean("learning", false));
         assertEquals(1, data("english_learned").getInt("AQHI", 0));
     }
+    @Test public void updateFrom0618KeepsChinesePhraseAndEnglishLearning() {
+        Prefs.get(context).edit().putBoolean("learning", true).putString("theme", "dark").commit();
+        data("learned").edit().putInt("QC:of:你", 12).putInt("W:唔該晒", 7).commit();
+        data("english_learned").edit().putInt("AQHI", 3).commit();
+        data("personal").edit().putString("manual", "自訂詞").commit();
+        for (int i = 0; i < 3; i++) {
+            SharedPreferences prefs = Prefs.get(context);
+            assertTrue(prefs.getBoolean("learning", false));
+            assertEquals("dark", prefs.getString("theme", ""));
+            assertEquals(12, data("learned").getInt("QC:of:你", 0));
+            assertEquals(7, data("learned").getInt("W:唔該晒", 0));
+            assertEquals(3, data("english_learned").getInt("AQHI", 0));
+            assertEquals("自訂詞", data("personal").getString("manual", ""));
+        }
+    }
 }

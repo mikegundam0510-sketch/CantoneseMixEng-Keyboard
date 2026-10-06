@@ -46,6 +46,8 @@ hk_extra += '踩單車 踩油門 踩煞車 飲咖啡 飲奶茶 飲啤酒 搭巴�
 hk_extra += '記得 忘記 記住 提醒 帶遮 帶嘢 帶袋 帶錢 帶衫 帶水 帶飯 帶鎖匙 麵包 牛奶 豆奶 蛋糕 餅乾 水果 香蕉 蘋果 早餐 午餐 晚餐 買餸 買飛 買票 買衫 買鞋 買嘢 訂飛 訂票 訂枱 車飛 戲飛 門票 修理 維修 檢查 修好 整好 整壞'.split()
 hk_extra += [prefix + verb for prefix in ['記得', '唔記得']
              for verb in '帶拎食飲做返買睇問交還覆打開關收']
+hk_extra += (ROOT / 'tools/hk_daily_words.txt').read_text().splitlines()
+hk_extra = [w for w in hk_extra if w and not w.startswith('#')]
 for word in hk:
     if all(c in reverse for c in word):
         weights[word] = max(weights.get(word, 0), 30000 if len(word) > 2 else 12000)
