@@ -64,7 +64,7 @@ public class TypingFluencyTest {
                 }
             }
         }));
-        for(char c:CODE.toCharArray())if(!keys.containsKey(c))keys.put(c,find(Character.toUpperCase(c)+"，"));
+        for(char c:CODE.toCharArray())if(!keys.containsKey(c))keys.put(c,find("英文字母 "+Character.toUpperCase(c)));
         deleteKey=find("刪除，長按連續刪除");
     }
     private Rect find(String prefix) throws Exception {
@@ -102,7 +102,21 @@ public class TypingFluencyTest {
         while(SystemClock.uptimeMillis()<end){synchronized(pending){if(acknowledged==pending.size())return;}SystemClock.sleep(10);}
         synchronized(pending){assertEquals("Every touch must reach the editor in order",pending.size(),acknowledged);}
     }
+    private void capture(String command,String filename) throws IOException {
+        try(var descriptor=automation.executeShellCommand(command);
+            var input=new android.os.ParcelFileDescriptor.AutoCloseInputStream(descriptor);
+            var output=new FileOutputStream(new File(activity.getExternalFilesDir(null),filename))){
+            byte[] bytes=new byte[16384];int n;while((n=input.read(bytes))!=-1)output.write(bytes,0,n);
+        }
+    }
+    private boolean modelMapped() throws IOException {
+        try(var in=new BufferedReader(new FileReader("/proc/self/maps"))){
+            String line;while((line=in.readLine())!=null)if(line.contains(".gguf"))return true;
+        }
+        return false;
+    }
     private JSONObject phase(String name,boolean semantic,boolean allowColdLoad) throws Exception {
+        capture("dumpsys gfxinfo hk.kaiboard.android reset",name+"-frames-reset.txt");
         preferences.edit().putBoolean("semantic_candidates",semantic).commit();
         synchronized(pending){pending.clear();latencies.clear();acknowledged=0;}
         // This warm-up opens a real exact-candidate request. A pause lets loading overlap subsequent typing.
@@ -122,6 +136,8 @@ public class TypingFluencyTest {
         result.put("p95_ms",measured.get((int)Math.ceil(measured.size()*0.95)-1));
         result.put("max_ms",measured.get(measured.size()-1));result.put("process_pss_kib",memory.getTotalPss());
         result.put("semantic_requested",semantic);result.put("model_bundled",BuildConfig.SEMANTIC_MODEL);
+        result.put("model_mapped",modelMapped());
+        capture("dumpsys gfxinfo hk.kaiboard.android framestats",name+"-frames.txt");
         return result;
     }
     @Test public void actualImeKeepsEveryRapidTypingAndDeleteTouch() throws Exception {
@@ -144,7 +160,11 @@ public class TypingFluencyTest {
         for(int i=0;i<phases.length();i++)assertTrue("Visible keyboard stall",phases.getJSONObject(i).getLong("max_ms")<1000);
     }
     @After public void teardown(){
-        if(activity!=null)instrumentation.runOnMainSync(()->activity.finish());
+        if(activity!=null){
+            try{capture("dumpsys meminfo hk.kaiboard.android","final-memory.txt");}
+            catch(IOException unavailable){ /* Timing assertions remain authoritative. */ }
+            instrumentation.runOnMainSync(()->activity.finish());
+        }
         if(preferences==null||saved==null)return;
         SharedPreferences.Editor edit=preferences.edit().clear();
         for(var item:saved.entrySet()){
