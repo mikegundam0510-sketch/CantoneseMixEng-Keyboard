@@ -64,6 +64,17 @@ public class TypingFluencyTest {
                 }
             }
         }));
+        // am instrument stops the target process, including its previously bound IME.
+        // Re-select after the instrumented activity is attached so the service is bound again.
+        capture("ime reset","ime-reset.txt");
+        capture("ime enable hk.kaiboard.android/.KaiboardService","ime-enable.txt");
+        capture("ime set hk.kaiboard.android/.KaiboardService","ime-select.txt");
+        instrumentation.runOnMainSync(()->{
+            editor.requestFocus();
+            var manager=(android.view.inputmethod.InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            manager.restartInput(editor);
+            manager.showSoftInput(editor,android.view.inputmethod.InputMethodManager.SHOW_FORCED);
+        });
         for(char c:CODE.toCharArray())if(!keys.containsKey(c))keys.put(c,find("英文字母 "+Character.toUpperCase(c)));
         deleteKey=find("刪除，長按連續刪除");
     }
@@ -76,6 +87,8 @@ public class TypingFluencyTest {
             }
             SystemClock.sleep(100);
         }
+        capture("dumpsys input_method","ime-unavailable.txt");
+        capture("dumpsys activity activities","activity-unavailable.txt");
         throw new AssertionError("IME key unavailable: "+prefix);
     }
     private Rect search(AccessibilityNodeInfo node,String prefix){
