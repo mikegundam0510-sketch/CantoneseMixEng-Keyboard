@@ -1,0 +1,33 @@
+name: Hong Kong context accuracy
+on:
+  push:
+    branches: [codex/hk-context-collocations]
+  pull_request:
+    paths:
+      - app/src/main/assets/hk_phrases.tsv
+      - app/src/main/java/hk/kaiboard/android/QuickDecoder.java
+      - tools/ContextAccuracy.java
+      - tools/context_accuracy.sh
+      - .github/workflows/context-accuracy.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Compare exact decoder accuracy with pinned baseline
+        run: bash tools/context_accuracy.sh 0bff053 context-evidence
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hk-context-accuracy
+          path: context-evidence/
