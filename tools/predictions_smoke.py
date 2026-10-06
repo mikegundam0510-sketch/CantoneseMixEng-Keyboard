@@ -33,7 +33,7 @@ def failure(kind, value, tb):
     sys.__excepthook__(kind, value, tb)
 sys.excepthook = failure
 adb('shell','input','keyevent','4')
-adb('shell','am','start','-n','hk.kaiboard.android/.SettingsActivity'); time.sleep(1)
+adb('shell','am','start','--activity-clear-top','-n','hk.kaiboard.android/.SettingsActivity'); time.sleep(1)
 for _ in range(10):
     setting = node('輸入完成後顯示聯想字')
     if setting is not None: break
@@ -90,7 +90,7 @@ reset('研究', 'private'); assert node('聯想字') is None, 'Private field lea
 reset('研究', 'password'); assert node('聯想字') is None, 'Password field leaked predictions'
 reset()
 adb('shell','input','keyevent','4')
-adb('shell','am','start','-n','hk.kaiboard.android/.SettingsActivity'); time.sleep(1)
+adb('shell','am','start','--activity-clear-top','-n','hk.kaiboard.android/.SettingsActivity'); time.sleep(1)
 for _ in range(10):
     quick = node('速成（首尾碼）')
     if quick is not None: break

@@ -80,7 +80,7 @@ assert find('貼上剪貼簿：private-two') is not None
 reset()
 # Change options via real settings UI, then verify persistence and the next editor session.
 def configure(label):
-    adb('shell','am','start','-n','hk.kaiboard.android/.SettingsActivity');time.sleep(.8)
+    adb('shell','am','start','--activity-clear-top','-n','hk.kaiboard.android/.SettingsActivity');time.sleep(.8)
     for _ in range(15):
         n=next((n for n in tree().iter('node') if n.get('text','').startswith('自訂功能鍵')),None)
         if n is not None:break

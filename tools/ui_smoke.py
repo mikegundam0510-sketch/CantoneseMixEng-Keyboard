@@ -47,7 +47,7 @@ print(adb("shell","ime","set",ime),flush=True)
 assert adb("shell","settings","get","secure","default_input_method").strip()==ime,"IME switch failed"
 # Preserve legacy toolbar scenarios with predictions explicitly disabled; the
 # dedicated predictions smoke exercises enabled mode and restores it afterward.
-adb("shell","am","start","-n","hk.kaiboard.android/.SettingsActivity");time.sleep(1)
+adb("shell","am","start","--activity-clear-top","-n","hk.kaiboard.android/.SettingsActivity");time.sleep(1)
 setting=None
 for _ in range(10):
     setting=next((n for n in tree().iter("node") if n.get("text")=="輸入完成後顯示聯想字"),None)
@@ -151,7 +151,7 @@ assert editor_text()=="hello", "English reselection did not remove the confirmat
 reset_field();type_code("hellp");tap("hello")
 assert editor_text()=="hello", "English spelling suggestion was not committed"
 # Opt in through the real settings UI before testing optional local learning.
-adb("shell","am","start","-n","hk.kaiboard.android/.SettingsActivity");time.sleep(1)
+adb("shell","am","start","--activity-clear-top","-n","hk.kaiboard.android/.SettingsActivity");time.sleep(1)
 learning=None
 for _ in range(12):
     learning=next((n for n in tree().iter("node") if n.get("text")=="儲存選字及英文詞作學習（預設關閉）"),None)

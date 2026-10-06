@@ -68,7 +68,7 @@ jobs:
             adb shell wm size 720x1600
             adb shell wm density 320
             python3 tools/predictions_smoke.py
-            bash ./gradlew connectedDebugAndroidTest --no-daemon
+            bash tools/connected_acceptance.sh
             python3 tools/clipboard_smoke.py
             python3 tools/editor_smoke.py
             python3 tools/ui_smoke.py

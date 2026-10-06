@@ -43,7 +43,7 @@ def type_code(code):
     time.sleep(.6)
 
 def settings(quick):
-    adb("shell", "am", "start", "-n", "hk.kaiboard.android/.SettingsActivity")
+    adb("shell", "am", "start", "--activity-clear-top", "-n", "hk.kaiboard.android/.SettingsActivity")
     time.sleep(1)
     control = None
     for _ in range(10):

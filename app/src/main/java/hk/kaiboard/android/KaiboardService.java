@@ -332,7 +332,7 @@ public final class KaiboardService extends InputMethodService {
         mic.setEnabled(!noLearning && !numeric);
         mic.setAlpha(mic.isEnabled() ? 1f : .35f);
         tool(toolbar, "more", "鍵盤設定", () -> {
-            finishLiteral(); startActivity(new Intent(this, SettingsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+            finishLiteral(); startActivity(new Intent(this, SettingsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
         }, false);
         if (emoji) { renderEmoji(); return; }
 
@@ -548,7 +548,7 @@ public final class KaiboardService extends InputMethodService {
         title.setPadding(dp(8), 0, dp(8), 0);
         header.addView(title, new LinearLayout.LayoutParams(0, dp(58), 1));
         if (quickTextMode) {
-            header.addView(textPanelButton("pen", "管理快捷文字", () -> startActivity(new Intent(this, SettingsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))),
+            header.addView(textPanelButton("pen", "管理快捷文字", () -> startActivity(new Intent(this, SettingsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP))),
                     new LinearLayout.LayoutParams(dp(48), dp(48)));
         } else {
             header.addView(textPanelButton("refresh", "更新剪貼簿", () -> { readClipboardOnDemand(); render(); }),

@@ -101,6 +101,7 @@ public class SwipeSelectionTest {
    Thread.sleep(250);
   }
   screenshot("missing-key");
+  shell("logcat -d -f /sdcard/Android/data/hk.kaiboard.android/files/missing-key-logcat.txt");
   throw new AssertionError("IME key missing: "+desc);
  }
  private void screenshot(String name)throws Exception{
@@ -219,6 +220,8 @@ public class SwipeSelectionTest {
    for(String desc:new String[]{"O，人","F，火","C，金","A，日","N，弓"})drag(key(desc),0);
    Rect mixed=key("英轉中候選：你可以");drag(mixed,0);
    main(()->assertEquals("你可以",edit.getText().toString()));
+   // The generated fixture is a Quick-only correction; full Cangjie adds other valid mappings.
+   main(()->Prefs.get(instrumentation.getTargetContext()).edit().putBoolean("cangjie",false).commit());
    main(()->{edit.setText(repair[0]);edit.setSelection(edit.length());((InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE)).restartInput(edit);});
    SystemClock.sleep(500);
    String radicals="日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜重";
