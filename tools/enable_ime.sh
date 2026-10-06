@@ -3,7 +3,7 @@
 set -euo pipefail
 ime='hk.kaiboard.android/.KaiboardService'
 for attempt in $(seq 1 30); do
-    if adb shell ime list -s | tr -d '\r' | grep -Fxq "$ime"; then
+    if adb shell ime list -a -s | tr -d '\r' | grep -Fxq "$ime"; then
         adb shell ime enable "$ime"
         adb shell ime set "$ime"
         exit 0
