@@ -102,6 +102,9 @@ assert editor()=='AQHI-fixture'
 tap('返回鍵盤');configure('Undo');assert find('Undo（重新選字）').get('enabled')=='false'
 tap('O，人');tap('F，火');time.sleep(.8);tap('你')
 assert editor()=='你'
+# Predictions occupy the toolbar; dismiss them without discarding Undo.
+if find('取消候選及聯想字，返回功能列') is not None:
+    tap('取消候選及聯想字，返回功能列')
 tap('Undo（重新選字）');assert editor()=='of'
 configure('候選展開');tap('候選展開');tap('O，人');time.sleep(1)
 assert any(n.get('class')=='android.widget.ScrollView' and '逐字選擇' in ET.tostring(n,encoding='unicode') for n in tree().iter('node')) or find('指定英文段或返回自動判斷') is not None

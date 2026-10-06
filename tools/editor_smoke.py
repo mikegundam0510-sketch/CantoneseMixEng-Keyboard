@@ -18,6 +18,8 @@ def center(node):
     a=list(map(int,re.findall(r"\d+",node.get("bounds"))))
     return str((a[0]+a[2])//2),str((a[1]+a[3])//2)
 def tap(desc):
+    if desc == "文字編輯" and find(desc) is None and find("取消候選及聯想字，返回功能列") is not None:
+        adb("shell","input","tap",*center(find("取消候選及聯想字，返回功能列")));time.sleep(.5)
     adb("shell","input","tap",*center(find(desc)));time.sleep(.5)
 def shot(name):
     print("UI checkpoint: "+name,flush=True)
@@ -40,7 +42,7 @@ for _ in range(20):
     time.sleep(1)
 assert ime, "Editor smoke input method registration timed out"
 adb("shell","ime","enable",ime);adb("shell","ime","set",ime)
-adb("shell","am","start","-n","hk.kaiboard.android/.KeyboardPreviewActivity")
+adb("shell","am","start","--activity-single-top","-n","hk.kaiboard.android/.KeyboardPreviewActivity","--es","test_text","__EMPTY__","--es","test_input_type","normal")
 time.sleep(3)
 for _ in range(15):
     if find("文字編輯") is not None: break
