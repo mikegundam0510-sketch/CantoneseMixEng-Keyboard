@@ -1,0 +1,31 @@
+{
+  "windows_version": "22H2 / Build 19045.6466",
+  "source_description": "User-supplied Windows system dictionary export; original binary files are not redistributed. Only missing character/code facts are retained.",
+  "sources": {
+    "cangjie_new": {
+      "path": "System32/zh-hk/ChtCangjie.sdc",
+      "sha256": "c4ea698bb39e93b14659a23b14bbe6e2e583c71e585f704aea15b174c3c5a783"
+    },
+    "cangjie_legacy": {
+      "path": "InputMethod/CHT/ChtChangjie.lex",
+      "sha256": "ef60e92a9bf209870e8df62f9f4258ba0ad8763e2b1755e7a24029e30183fa23"
+    },
+    "quick_legacy": {
+      "path": "InputMethod/CHT/ChtQuick.lex",
+      "sha256": "48c3e8455940ff50ac71fbf5ed6af1ae6a47c320d09effc470d9885989dee266"
+    },
+    "cangjie_extension": {
+      "path": "System32/zh-hk/ChtCangjieExt.lex",
+      "sha256": "cc6a9b04fbcc45f684f7e486213273c0cdca6570228b935ea077760a4cc022d1"
+    },
+    "quick_extension": {
+      "path": "InputMethod/CHT/ChtQuickExt.lex",
+      "sha256": "45eaafd3910d1de01c7685d50d06f7167c111dc45b232d9387cdfb1825574fd5"
+    }
+  },
+  "additions": 4808,
+  "supplement_sha256": "e4d870fbd967e022a098d1615a12e40a0d3235c6e18a93532af10d8dfe682359",
+  "quick_missing_before": 1725,
+  "quick_remaining_after_derived_codes": 0,
+  "scope": "New and legacy Cangjie and legacy Quick, including supplied extension dictionaries; file comparison, not live Windows runtime testing."
+}

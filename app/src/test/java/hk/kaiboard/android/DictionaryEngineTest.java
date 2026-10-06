@@ -125,4 +125,38 @@ public class DictionaryEngineTest {
         }
     }
 
+    @Test public void windowsCodesReachCommonCharactersAndSymbolsInBothModes() {
+        String[][] cases = {{"hgi", "丟"}, {"hkr", "吞"}, {"yhhqm", "產"},
+            {"yhhhh", "彥"}, {"pim", "勻"}, {"smm", "€"}, {"xm", "═"}};
+        for (String[] item : cases) {
+            assertTrue(item[0], engine.lookup(item[0], false, true, false).contains(item[1]));
+            assertTrue(item[0], engine.lookup(DictionaryEngine.quickCode(item[0]), true, false, false).contains(item[1]));
+        }
+        assertTrue(engine.lookup("mgi", false, true, false).contains("丟"));
+        assertTrue(engine.lookup("mkr", false, true, false).contains("吞"));
+        assertFalse(engine.lookup("hgi", false, false, false).contains("丟"));
+    }
+
+    @Test public void everyWindowsSupplementCodeReachesTheActualCandidateEngine() throws Exception {
+        CandidateEngine candidates = new CandidateEngine(engine, null, null);
+        int checked = 0;
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(
+                new FileInputStream("../tools/windows_cangjie_compat.tsv"), StandardCharsets.UTF_8))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.startsWith("#")) continue;
+                String[] fields = line.split("\t");
+                assertEquals(2, fields.length);
+                String word = fields[0], code = fields[1];
+                assertTrue(code + ": " + word, candidates.chinese(code, "", false, false, true, (c,w) -> 0)
+                    .stream().anyMatch(candidate -> candidate.text.equals(word)));
+                String quick = DictionaryEngine.quickCode(code);
+                assertTrue(quick + ": " + word, candidates.chinese(quick, "", false, true, false, (c,w) -> 0)
+                    .stream().anyMatch(candidate -> candidate.text.equals(word)));
+                checked++;
+            }
+        }
+        assertEquals(4808, checked);
+    }
+
 }

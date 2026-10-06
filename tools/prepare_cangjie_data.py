@@ -73,6 +73,20 @@ def main():
                 third_added.append(row)
     output += '\n# Cangjie 3 compatibility mappings (MIT); see licenses/cangjie-completion/LICENSE-CJ3.txt.\n'
     output += ''.join(f'{word}\t{code}\n' for word, code in third_added)
+    windows_file = ROOT / 'tools/windows_cangjie_compat.tsv'
+    windows_source = json.loads((ROOT / 'tools/windows_ime_compat_source.json').read_text(encoding='utf-8'))
+    windows_data = windows_file.read_bytes()
+    if hashlib.sha256(windows_data).hexdigest() != windows_source['supplement_sha256']:
+        raise ValueError('Windows compatibility supplement checksum mismatch')
+    windows_added = []
+    for row in mappings(windows_data.decode('utf-8')):
+        if row not in combined:
+            combined.add(row)
+            windows_added.append(row)
+    if len(windows_added) != windows_source['additions']:
+        raise ValueError('Windows compatibility supplement count changed; review source metadata')
+    output += '\n# Windows compatibility additions; see tools/windows_ime_compat_source.json.\n'
+    output += ''.join(f'{word}\t{code}\n' for word, code in windows_added)
     (ASSETS / 'cangjie5.base.dict.yaml').write_text(output, encoding='utf-8')
     notices = ASSETS / 'licenses/cangjie-completion'
     notices.mkdir(parents=True, exist_ok=True)
@@ -82,12 +96,14 @@ def main():
         'sources': [{'url': url, 'sha256': digest} for url, digest in SOURCES.values()],
         'base_revision': BASE_REV, 'completion_revision': HK_REV,
         'third_generation_revision': CJ3_REV, 'third_generation_added_mappings': len(third_added),
+        'windows_compatibility': windows_source,
         'base_mappings': len(old), 'added_mappings': len(added),
         'mappings': len(combined), 'characters': len({word for word, _ in combined}),
         'output_sha256': hashlib.sha256(output.encode('utf-8')).hexdigest(),
         'processing': 'Keep all original mappings and candidate order; append unique HK completion mappings, '
                       'including alternative regional forms and supplementary-plane characters; '
                       'append unique Cangjie 3 and legacy special-table codes of 1–5 letters. '
+                      'append the checksummed Windows compatibility supplement. '
                       'Quick indexes are derived at runtime. Glyph display depends on device fonts.'
     }
     (notices / 'SOURCE.json').write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')

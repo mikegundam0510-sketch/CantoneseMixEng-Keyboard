@@ -69,3 +69,9 @@ Inputs: cj3.txt and cj3-special.txt (MIT License).
 Append 6,124 unique mappings of 1–5 letters, retaining every existing Cangjie 5 mapping and its original order. The resulting asset contains 139,356 unique character/code pairs and the same 103,942 distinct characters and symbols. Quick codes are derived from both generations. Prefix-x disambiguation codes longer than five letters are not imported; the supported character inventory does not shrink. This is an independently maintained mapping table, not Microsoft's original Windows dictionary, and does not establish exact Windows parity.
 
 The upstream MIT notice is bundled in app/src/main/assets/licenses/cangjie-completion/LICENSE-CJ3.txt and shown in app settings. Source and output hashes are recorded in SOURCE.json.
+
+## Windows code compatibility supplement
+
+The user supplied Windows 10 22H2 build 19045.6466 Cangjie/Quick system dictionary files for comparison. The app retains only 4,808 previously missing character/code associations in tools/windows_cangjie_compat.tsv; no Microsoft binary, association-word database or ranking data is redistributed. Windows is a Microsoft product; these associations do not imply Microsoft endorsement or a license to the original dictionary files. Original file hashes, scope and the supplement checksum are recorded in tools/windows_ime_compat_source.json and the bundled SOURCE.json.
+
+The final combined dictionary contains 144,164 distinct character/code pairs and 103,976 distinct characters/symbols. Existing mappings and relative order remain intact. Quick derivation also covers all 1,725 previously missing Quick associations in the provided files. Other Windows builds and runtime candidate order are outside this verification.
