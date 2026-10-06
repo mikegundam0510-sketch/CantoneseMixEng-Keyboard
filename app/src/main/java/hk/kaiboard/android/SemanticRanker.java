@@ -16,6 +16,7 @@ public final class SemanticRanker implements AutoCloseable {
     static volatile String lastFailure="";
     private final Context app;
     private volatile SemanticNative model;
+    private final java.util.concurrent.atomic.AtomicLong closeEpoch=new java.util.concurrent.atomic.AtomicLong();
     private int failures;
     private long retryAt;
     public SemanticRanker(Context context) { app=context.getApplicationContext(); }
@@ -57,8 +58,11 @@ public final class SemanticRanker implements AutoCloseable {
         if(!current.getAsBoolean()||System.nanoTime()<retryAt)return original;
         try {
             if(model==null){
+                long epoch=closeEpoch.get();
                 if(BuildConfig.DEBUG)loadAttempts.incrementAndGet();
                 model=SemanticNative.load(prepareModel().getAbsolutePath(),budget.threads);
+                // A service may close while native loading is still running. Retire that late handle.
+                if(closeEpoch.get()!=epoch){close();return original;}
                 if(BuildConfig.DEBUG&&model==null)lastFailure="native_load_unavailable";
             }
             if(model==null||!current.getAsBoolean())return original;
@@ -85,5 +89,5 @@ public final class SemanticRanker implements AutoCloseable {
         }
     }
     public void cancel(){var current=model;if(current!=null)current.cancel();}
-    @Override public void close(){var current=model;model=null;if(current!=null)current.close();failures=0;}
+    @Override public void close(){closeEpoch.incrementAndGet();var current=model;model=null;if(current!=null)current.close();failures=0;}
 }

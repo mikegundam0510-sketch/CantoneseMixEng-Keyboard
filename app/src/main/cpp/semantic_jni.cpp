@@ -42,3 +42,7 @@ extern "C" JNIEXPORT void JNICALL Java_hk_kaiboard_android_SemanticNative_native
 extern "C" JNIEXPORT void JNICALL Java_hk_kaiboard_android_SemanticNative_nativeArm(JNIEnv*,jclass,jlong handle) {
     auto model=get(handle); if(model)model->arm();
 }
+
+extern "C" JNIEXPORT jint JNICALL Java_hk_kaiboard_android_SemanticNative_nativeModelCount(JNIEnv*,jclass) {
+    std::lock_guard<std::mutex> lock(handles_mutex);return handles.size();
+}

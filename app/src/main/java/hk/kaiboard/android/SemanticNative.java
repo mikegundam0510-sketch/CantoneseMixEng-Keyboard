@@ -15,6 +15,7 @@ public final class SemanticNative implements AutoCloseable {
     }
     private final AtomicLong handle;
     private SemanticNative(long handle) { this.handle=new AtomicLong(handle); }
+    public static int debugModelCount() { return AVAILABLE&&BuildConfig.DEBUG?nativeModelCount():0; }
     public static String debugAvailabilityFailure() { return availabilityFailure; }
     public static SemanticNative load(String path, int threads) {
         if (!AVAILABLE) return null;
@@ -30,6 +31,7 @@ public final class SemanticNative implements AutoCloseable {
     @Override public void close() { long current=handle.getAndSet(0); if(current!=0)nativeClose(current); }
     private static native long nativeLoad(byte[] path,int threads);
     private static native float[] nativeRank(long handle,byte[] prompt,int count,int budget);
+    private static native int nativeModelCount();
     private static native void nativeArm(long handle);
     private static native void nativeCancel(long handle);
     private static native void nativeClose(long handle);

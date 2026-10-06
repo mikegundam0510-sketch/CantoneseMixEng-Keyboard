@@ -191,6 +191,28 @@ public class TypingFluencyTest {
         assertTrue("Cold model loading delays typing",cold.getLong("p95_ms")<=limit);
         assertTrue("Warm inference delays typing",warm.getLong("p95_ms")<=limit);
         for(int i=0;i<phases.length();i++)assertTrue("Visible keyboard stall",phases.getJSONObject(i).getLong("max_ms")<1000);
+        if(new SemanticRanker(activity).budget()!=null){
+            int handlesBefore=SemanticNative.debugModelCount();
+            int loadsBefore=SemanticRanker.loadAttempts.get();
+            SemanticRanker retiring=new SemanticRanker(activity);
+            var worker=java.util.concurrent.Executors.newSingleThreadExecutor();
+            try{
+                var values=Arrays.asList("有時間","冇時間","希時間","帶時間");
+                var future=worker.submit(()->retiring.rerank(CONTEXT,values,values,()->true));
+                long deadline=SystemClock.uptimeMillis()+5000;
+                while(SemanticRanker.loadAttempts.get()<=loadsBefore&&SystemClock.uptimeMillis()<deadline)SystemClock.sleep(1);
+                assertTrue("Lifecycle fixture must begin real loading",SemanticRanker.loadAttempts.get()>loadsBefore);
+                retiring.close();
+                future.get(30,java.util.concurrent.TimeUnit.SECONDS);
+                int handlesAfter=SemanticNative.debugModelCount();
+                report.put("close_during_load_handles_before",handlesBefore);
+                report.put("close_during_load_handles_after",handlesAfter);
+                try(var out=new FileOutputStream(new File(activity.getExternalFilesDir(null),"typing-fluency.json"))){
+                    out.write(report.toString(2).getBytes(java.nio.charset.StandardCharsets.UTF_8));
+                }
+                assertEquals("Closing during loading must not retain a late native model",handlesBefore,handlesAfter);
+            }finally{retiring.close();worker.shutdownNow();}
+        }
     }
     @After public void teardown(){
         if(activity!=null){
