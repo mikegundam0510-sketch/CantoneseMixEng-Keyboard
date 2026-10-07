@@ -57,12 +57,13 @@ public final class SettingsActivity extends Activity {
         toggle(methods, "速成相鄰按鍵修正候選", "quick_repair", true);
         toggle(methods, "倉頡相鄰按鍵修正候選", "cangjie_repair", true);
         toggle(methods, "倉頡／速成自動修正", "chinese_autocorrect", true);
-        toggle(methods, "學習常選字、詞組及聯想字（預設關閉）", "learning", false);
+        toggle(methods, "學習常選字、詞組及聯想字（近期＋累積；預設關閉）", "learning", false);
         button(methods, "清除學習記錄", () -> new AlertDialog.Builder(this).setTitle("清除學習記錄？")
             .setMessage("將恢復預設選字次序。鍵盤設定不受影響。")
             .setNegativeButton("取消", null).setPositiveButton("清除", (d, which) -> {
                 getSharedPreferences("learned", MODE_PRIVATE).edit().clear().apply();
                 getSharedPreferences("english_learned", MODE_PRIVATE).edit().clear().apply();
+                getSharedPreferences("recent_learned", MODE_PRIVATE).edit().clear().apply();
                 Toast.makeText(this, "已清除學習記錄", Toast.LENGTH_SHORT).show();
             }).show());
         button(methods, "管理英文學習記錄", this::manageEnglishLearning);
@@ -221,7 +222,8 @@ public final class SettingsActivity extends Activity {
         java.util.Collections.sort(words,String.CASE_INSENSITIVE_ORDER);
         if (words.isEmpty()) { Toast.makeText(this,"未有英文學習記錄",Toast.LENGTH_SHORT).show(); return; }
         new AlertDialog.Builder(this).setTitle("點選英文詞可刪除").setItems(words.toArray(new String[0]),(d,index)->{
-            data.edit().remove(words.get(index)).apply(); manageEnglishLearning();
+            data.edit().remove(words.get(index)).apply();
+            getSharedPreferences("recent_learned", MODE_PRIVATE).edit().remove("E:" + words.get(index)).apply(); manageEnglishLearning();
         }).setNegativeButton("關閉",null).show();
     }
 

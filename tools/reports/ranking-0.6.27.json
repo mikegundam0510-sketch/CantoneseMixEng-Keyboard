@@ -1,0 +1,89 @@
+{
+  "baseline_commit": "96361a1e7fdb69594196635b95899017e9f95a49",
+  "release": "0.6.27",
+  "accepted_change": "Recent personal usage bonus (7-day half-life, capped at 32 recent selections) added to retained lifetime counts; opt-in only.",
+  "cold_start_heldout": {
+    "case_source": "tools/lm_heldout_cases.tsv",
+    "case_sha256": "bae16312e7f843fa503a61b54b7a734086aab3ff3d0b7d3576f095107bb8d392",
+    "baseline": {
+      "cases": 120,
+      "top1": 61,
+      "top5": 97,
+      "top20": 108,
+      "mrr": 0.6434118230625584
+    },
+    "release": {
+      "cases": 120,
+      "top1": 61,
+      "top5": 97,
+      "top20": 108,
+      "mrr": 0.6434118230625584
+    },
+    "entire_ranked_lists_identical": true
+  },
+  "simulated_preference_change": {
+    "cases": 20,
+    "construction": "Deterministically choose first 20 ambiguous HK vocabulary codes in sorted order. Existing preference has 10 lifetime selections, alternative has 3 selections at the current time. The recent layer weights the alternative at 12; older preference remains at 10. This is synthetic behavior verification, not measured user accuracy.",
+    "baseline_recent_choice_top1": 0,
+    "release_recent_choice_top1": 20,
+    "lifetime_preference_restored_after_8_weeks": 20,
+    "details": "personal-ranking-0.6.27.tsv"
+  },
+  "experiments_not_shipped": {
+    "observed_corpus_phrase_bonus": {
+      "training": "HKCanCor training conversations only, 13,163 existing phrases with at least 3 observations. Validation/test conversations excluded. 2–8 and 3–8 character phrase bonuses tested at strengths 0.2, 0.4, 0.8.",
+      "selected_validation_candidate": "3–8 characters, strength 0.2",
+      "validation_baseline": {
+        "cases": 120,
+        "top1": 59,
+        "top5": 79,
+        "top20": 92,
+        "mrr": 0.5715047221297221
+      },
+      "validation_candidate": {
+        "cases": 120,
+        "top1": 59,
+        "top5": 80,
+        "top20": 92,
+        "mrr": 0.5723975792725793
+      },
+      "heldout_candidate": {
+        "cases": 120,
+        "top1": 61,
+        "top5": 97,
+        "top20": 108,
+        "mrr": 0.6415120214752569
+      },
+      "reason": "First-choice accuracy did not improve, held-out MRR declined slightly; retain the existing trained language model and vocabulary scoring."
+    },
+    "wider_beam": {
+      "tested_widths": [
+        64,
+        96
+      ],
+      "existing_width": 48,
+      "reason": "No first-choice or top-20 improvement on the 120-case validation sample; retain the existing width."
+    }
+  },
+  "reproduce": [
+    "source /workspace/android-environment/activate.sh",
+    "javac -d /tmp/ranking-eval app/src/main/java/hk/kaiboard/android/{DictionaryEngine,OfflineLanguageModel,QuickDecoder,RecentLearning}.java tools/{RankingEvaluation,PersonalRankingEvaluation}.java",
+    "java -Xmx1g -cp /tmp/ranking-eval hk.kaiboard.android.RankingEvaluation app/src/main/assets tools/lm_heldout_cases.tsv /tmp/ranking-eval.tsv",
+    "java -Xmx1g -cp /tmp/ranking-eval hk.kaiboard.android.PersonalRankingEvaluation app/src/main/assets /tmp/personal-eval.tsv"
+  ],
+  "limits": "JVM comparisons use the production dictionary/model and scoring callbacks. They do not measure Fold7 typing latency, Android UI behavior or real user preference accuracy; Android instrumentation tests are compiled but not executed in this environment.",
+  "validation": {
+    "unit_tests": {
+      "tests": 111,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "lint": {
+      "Error": 0,
+      "Warning": 24
+    },
+    "release_apk": "Signed certificate pin verified; hk.kaiboard.android versionName 0.6.27, versionCode 34",
+    "instrumentation": "assembleDebugAndroidTest passed; not run on device"
+  }
+}

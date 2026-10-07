@@ -23,7 +23,7 @@ public final class PrivacyDefaultsTest {
     }
     @After public void clear() {
         if (context == null) return;
-        for (String name : new String[]{"keyboard", "learned", "english_learned", "personal"})
+        for (String name : new String[]{"keyboard", "learned", "english_learned", "recent_learned", "personal"})
             data(name).edit().clear().commit();
     }
     @Test public void freshInstallDoesNotRecordHistory() {
@@ -37,6 +37,7 @@ public final class PrivacyDefaultsTest {
             .putString("recent_emoji", "😀").putString("theme", "dark").commit();
         data("learned").edit().putInt("test", 8).commit();
         data("english_learned").edit().putInt("Confidential", 3).commit();
+        data("recent_learned").edit().putString("E:Confidential", "123:1.0").commit();
         data("personal").edit().putString("manual", "AQHI").commit();
         SharedPreferences prefs = Prefs.get(context);
         assertFalse(prefs.getBoolean("learning", true));
@@ -44,6 +45,7 @@ public final class PrivacyDefaultsTest {
         assertFalse(prefs.contains("recent_emoji"));
         assertTrue(data("learned").getAll().isEmpty());
         assertTrue(data("english_learned").getAll().isEmpty());
+        assertTrue(data("recent_learned").getAll().isEmpty());
         assertEquals("AQHI", data("personal").getString("manual", ""));
         assertEquals("dark", prefs.getString("theme", ""));
     }
@@ -58,12 +60,14 @@ public final class PrivacyDefaultsTest {
         data("learned").edit().putInt("QC:of:你", 12).putInt("W:唔該晒", 7).commit();
         data("english_learned").edit().putInt("AQHI", 3).commit();
         data("personal").edit().putString("manual", "自訂詞").commit();
+        data("recent_learned").edit().putString("W:唔該晒", "123:2.0").commit();
         for (int i = 0; i < 3; i++) {
             SharedPreferences prefs = Prefs.get(context);
             assertTrue(prefs.getBoolean("learning", false));
             assertEquals("dark", prefs.getString("theme", ""));
             assertEquals(12, data("learned").getInt("QC:of:你", 0));
             assertEquals(7, data("learned").getInt("W:唔該晒", 0));
+            assertEquals("123:2.0", data("recent_learned").getString("W:唔該晒", null));
             assertEquals(3, data("english_learned").getInt("AQHI", 0));
             assertEquals("自訂詞", data("personal").getString("manual", ""));
         }
