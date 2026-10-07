@@ -23,6 +23,7 @@ final class StrokePanel extends LinearLayout implements AutoCloseable {
     private final LinearLayout strokeTop,strokeBottom;
     private final Consumer<String> commit;
     private final int fg,keyColor,accent;
+    private final CandidateGlyphFilter candidateGlyphs=DeviceCandidateGlyphs.create();
     private StrokeEngine engine;
     private List<String> candidates=Collections.emptyList();
     private boolean disposed,expanded;
@@ -65,7 +66,7 @@ final class StrokePanel extends LinearLayout implements AutoCloseable {
         int token=++generation;candidates=Collections.emptyList();expanded=false;refresh();
         if(engine==null||code.length()==0)return;
         String query=code.toString();StrokeEngine loaded=engine;
-        worker.execute(()->{List<String> result=loaded.lookup(query,256);handler.post(()->{if(!disposed&&token==generation){candidates=result;refresh();}});});
+        worker.execute(()->{List<String> result=new ArrayList<>(loaded.lookup(query,256));result.removeIf(word->!candidateGlyphs.canDisplay(word));handler.post(()->{if(!disposed&&token==generation){candidates=result;refresh();}});});
     }
     private void refresh(){
         status.setText(engine==null?"正在載入筆劃…":code.length()==0?"筆劃":StrokeEngine.display(code.toString()));

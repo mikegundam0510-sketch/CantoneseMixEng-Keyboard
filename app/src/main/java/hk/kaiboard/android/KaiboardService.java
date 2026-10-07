@@ -787,11 +787,12 @@ public final class KaiboardService extends InputMethodService {
     }
 
     private void addCandidate(LinkedHashSet<String> result, InputCandidate candidate) {
-        if (candidate.text.isEmpty()) return;
+        if (!candidateGlyphs.canDisplay(candidate.text)) return;
         if (result.add(candidate.text)) candidateDetails.put(candidate.text, candidate);
         consumedCodes.putIfAbsent(candidate.text, candidate.source.length());
     }
 
+    private final CandidateGlyphFilter candidateGlyphs = DeviceCandidateGlyphs.create();
     private CandidateRequest resolvedCandidates;
 
     /** All mutable editor/personal state is copied on the UI thread before searching. */
@@ -841,7 +842,7 @@ public final class KaiboardService extends InputMethodService {
             return result;
         }
         void add(LinkedHashSet<String> result, InputCandidate candidate) {
-            if (candidate.text.isEmpty()) return;
+            if (!candidateGlyphs.canDisplay(candidate.text)) return;
             if (result.add(candidate.text)) details.put(candidate.text, candidate);
             consumed.putIfAbsent(candidate.text, candidate.source.length());
         }
@@ -938,7 +939,12 @@ public final class KaiboardService extends InputMethodService {
             if (decoder != null && !request.preceding.isEmpty()) words.sort(Comparator.comparingDouble(
                 (String word) -> decoder.languageScore(request.preceding, word)).reversed());
             words = LearningRanker.rank(words, word -> request.learnedCount(part, word));
-            for (int i = 0; i < Math.min(limit, words.size()); i++) request.add(result, InputCandidate.chinese(dictionary, part, words.get(i)));
+            int visible = 0;
+            for (String word : words) {
+                if (!candidateGlyphs.canDisplay(word)) continue;
+                request.add(result, InputCandidate.chinese(dictionary, part, word));
+                if (++visible == limit) break;
+            }
         }
     }
 
@@ -1027,13 +1033,14 @@ public final class KaiboardService extends InputMethodService {
                 }
                 List<InputCandidate> repaired = quickTypos.suggest(input, baselines, preceding);
                 List<InputCandidate> distinct = new ArrayList<>();
-                for (InputCandidate candidate : repaired) if (!results.contains(candidate.text)) distinct.add(candidate);
+                for (InputCandidate candidate : repaired) if (!results.contains(candidate.text) && candidateGlyphs.canDisplay(candidate.text)) distinct.add(candidate);
                 request.corrections = distinct;
             }
             if (cangjie && !chooseFirst && !request.isEnglish && !forceEnglish && dictionary != null
                     && request.enabled("cangjie_repair", true)) {
                 List<InputCandidate> repairs = new ArrayList<>(request.corrections);
-                repairs.addAll(ChineseAutocorrect.cangjieRepairs(dictionary, input));
+                for (InputCandidate repair : ChineseAutocorrect.cangjieRepairs(dictionary, input))
+                    if (candidateGlyphs.canDisplay(repair.text)) repairs.add(repair);
                 request.corrections = repairs;
             }
             if (results.isEmpty()) request.add(results, InputCandidate.english(input, input));
@@ -1748,6 +1755,7 @@ public final class KaiboardService extends InputMethodService {
             List<String> values = dictionary.lookup(segment.code, quick, cangjie, false); values.remove(segment.code);
             choices.addAll(values);
         }
+        choices.removeIf(word -> !candidateGlyphs.canDisplay(word));
         List<String> labels = new ArrayList<>(choices);
         popupChoices(anchor, labels, which -> {
             InputCandidate revised = candidate.replace(index, labels.get(which));
