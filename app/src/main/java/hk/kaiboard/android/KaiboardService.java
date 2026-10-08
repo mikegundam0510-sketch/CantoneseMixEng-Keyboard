@@ -1102,6 +1102,7 @@ public final class KaiboardService extends InputMethodService {
 
     private void toggleLanguage() {
         if (secure || numeric) return;
+        chooseFirst = false;
         if (ascii || composing.length() == 0) {
             finishLiteral(); ascii = !ascii; forceEnglish = forceChinese = false; render();
         } else {
@@ -1299,7 +1300,7 @@ public final class KaiboardService extends InputMethodService {
         }
         if (accepted) {
             nextSuggestionsDismissed = false;
-            composing.setLength(0); composing.append(remaining); chooseFirst = false; forceEnglish = forceChinese = false; restoredCandidate = null;
+            composing.setLength(0); composing.append(remaining); forceEnglish = forceChinese = false; restoredCandidate = null;
             if (remaining.isEmpty()) ic.finishComposingText(); else ic.setComposingText(remaining, 1);
         }
         ic.endBatchEdit();
@@ -1314,7 +1315,10 @@ public final class KaiboardService extends InputMethodService {
                 selectionStart = selectionEnd = cursor;
             }
         }
-        expanded = false; render();
+        // Single-character confirmation keeps the remaining code and its open grid.
+        // Finish the current code with the keyboard visible, retaining the mode until switched/reset.
+        if (accepted && (!chooseFirst || remaining.isEmpty())) expanded = false;
+        render();
     }
 
     private void updateRecent(String key, int delta) {
@@ -1820,8 +1824,8 @@ public final class KaiboardService extends InputMethodService {
         actions.setBaselineAligned(false);
         expandedMode = expandedAction(actions, ascii || englishIntent() ? "中文" : "英文", this::toggleLanguage);
         expandedMode.setContentDescription("指定英文段或返回自動判斷");
-        if (quick && prefs.getBoolean("continuous", true) && composing.length() > 2) {
-            expandedAction(actions, chooseFirst ? "返回整句候選" : "逐字選擇",
+        if (quick && prefs.getBoolean("continuous", true) && (chooseFirst || composing.length() > 2)) {
+            expandedAction(actions, chooseFirst ? "返回整句候選" : "單字",
                 () -> { chooseFirst = !chooseFirst; updateCandidates(); });
         }
         content.addView(actions);
