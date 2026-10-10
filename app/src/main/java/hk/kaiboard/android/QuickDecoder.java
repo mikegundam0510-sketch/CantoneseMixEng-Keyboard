@@ -11,6 +11,11 @@ public final class QuickDecoder {
     // Productive Cantonese predicate questions, rather than memorized full sentences.
     // Particles and nouns must not receive the A-not-A grammar preference.
     private static final String QUESTION_PREDICATES = "食飲去做睇買返係得知要想試用踩搭打踢聽講問答寫讀開關拎攞畀揀改整洗煮玩行跑坐企瞓等記識明信收放賣換借還帶着著學幫肯敢好啱忙攰凍熱快慢靚貴平難易";
+    // Productive request/action constructions. No complete typed sentence is stored.
+    private static final String ACTIONS = "睇試改做查問諗學聽講寫讀用打幫去返買飲食整揀拎攞";
+    private static final Set<String> ACTION_WORDS = new HashSet<>(Arrays.asList(
+        "繼續", "完善", "改善", "修改", "調整", "檢查", "研究", "練習", "試用", "更新",
+        "確認", "提供", "處理", "解釋", "補充", "輸入", "打字", "安排", "完成", "幫手"));
     private final DictionaryEngine dictionary;
     private final OfflineLanguageModel model;
     private final Map<String, Double> pairCounts = new HashMap<>();
@@ -279,6 +284,20 @@ public final class QuickDecoder {
                 // Completion supplies right-hand evidence for earlier ambiguous codes,
                 // including when the phrase is split across lattice token boundaries.
                 matched += phraseEvidence.getOrDefault(suffix, 0.0);
+            }
+            if (count >= 3) {
+                String lastThree = history.substring(history.offsetByCodePoints(0, count - 3));
+                int[] action = lastThree.codePoints().toArray();
+                if (action[2] == '下' && (ACTIONS.indexOf(action[1]) >= 0
+                        || ACTION_WORDS.contains(new String(action, 0, 2)))) matched += 1.5;
+                if (action[0] == '想' && "你我佢".indexOf(action[1]) >= 0
+                        && ACTIONS.indexOf(action[2]) >= 0) matched += 2;
+            }
+            if (count >= 4) {
+                String lastFour = history.substring(history.offsetByCodePoints(0, count - 4));
+                int[] action = lastFour.codePoints().toArray();
+                if (action[0] == '想' && "你我佢".indexOf(action[1]) >= 0
+                        && ACTION_WORDS.contains(new String(action, 2, 2))) matched += 2;
             }
             if (count >= 3) {
                 String ending = history.substring(history.offsetByCodePoints(0, count - 3));

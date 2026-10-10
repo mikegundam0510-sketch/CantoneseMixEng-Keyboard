@@ -1,0 +1,64 @@
+{
+  "baseline_commit": "134554c4155bc4d5bbe4d41b352e8819af93064b",
+  "release": "0.6.29",
+  "change": "Authored daily word priorities and bounded productive singular-pronoun request/action constructions; existing language model, beam width, learned data and code mappings preserved. No complete user sentence is added to vocabulary.",
+  "reported_case": {
+    "code": "dpofvivcjutrmyyjvcqnjd",
+    "text": "想你繼續完善下連續打字",
+    "before_rank": 11,
+    "after_rank": 1,
+    "personal_history": false,
+    "context": ""
+  },
+  "authored_development_cases": {
+    "source": "tools/continuous_clause_cases.tsv",
+    "before": {
+      "cases": 8,
+      "top1": 2,
+      "top5": 7,
+      "top20": 8,
+      "mrr": 0.5426136363636364
+    },
+    "after": {
+      "cases": 8,
+      "top1": 8,
+      "top5": 8,
+      "top20": 8,
+      "mrr": 1.0
+    },
+    "note": "Constructed requests vary pronouns, verbs and objects. These examples verify behavior and are not an unbiased corpus accuracy estimate."
+  },
+  "heldout_conversations": {
+    "source": "tools/lm_heldout_cases.tsv",
+    "before": {
+      "cases": 120,
+      "top1": 61,
+      "top5": 97,
+      "top20": 108,
+      "mrr": 0.6434118230625584
+    },
+    "after": {
+      "cases": 120,
+      "top1": 61,
+      "top5": 97,
+      "top20": 108,
+      "mrr": 0.6434118230625584
+    },
+    "case_sha256": "bae16312e7f843fa503a61b54b7a734086aab3ff3d0b7d3576f095107bb8d392"
+  },
+  "limits": "No Fold7 device test. Ranking uses the production model/dictionary without personal history; editor context and existing learned preferences can change actual ranks.",
+  "validation": {
+    "unit_tests": {
+      "tests": 114,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "lint": {
+      "Error": 0,
+      "Warning": 24
+    },
+    "signed_release_apk": "0.6.29 (36), pinned persistent certificate verified",
+    "device_test": false
+  }
+}
