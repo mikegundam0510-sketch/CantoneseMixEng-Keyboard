@@ -43,9 +43,16 @@ public final class KeyboardPreviewActivity extends Activity {
             int flags = "uri".equals(type) ? InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_URI
                 : "password".equals(type) ? InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD
                 : "number".equals(type) ? InputType.TYPE_CLASS_NUMBER
+                : "pin".equals(type) ? InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD
+                : "decimal".equals(type) ? InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED
+                : "phone".equals(type) ? InputType.TYPE_CLASS_PHONE
+                : "datetime".equals(type) ? InputType.TYPE_CLASS_DATETIME
                 : InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE;
             input.setInputType(flags);
             input.setImeOptions("private".equals(type) ? android.view.inputmethod.EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING : 0);
+        }
+        if (intent.hasExtra("test_ime_action")) {
+            input.setImeOptions(intent.getIntExtra("test_ime_action",android.view.inputmethod.EditorInfo.IME_ACTION_NONE));
         }
         if (intent.hasExtra("test_text")) {
             String value = intent.getStringExtra("test_text");

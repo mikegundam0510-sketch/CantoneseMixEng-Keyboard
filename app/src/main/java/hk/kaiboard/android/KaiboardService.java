@@ -300,6 +300,13 @@ public final class KaiboardService extends InputMethodService {
         fg = Color.parseColor(dark ? "#F5F6F8" : "#272D36");
         muted = Color.parseColor(dark ? "#C5CAD3" : "#535D6D");
         accent = Color.parseColor(dark ? "#AFC8FC" : "#087CF0");
+        if (numeric) {
+            if (dark) {
+                bg = 0xFF1F2022; keyColor = 0xFF37383A; functionColor = 0xFF434545;
+                fg = 0xFFE8EAED;
+            }
+            accent = 0xFFA8C7FA;
+        }
     }
 
     private void render() {
@@ -356,6 +363,9 @@ public final class KaiboardService extends InputMethodService {
             finishLiteral(); startActivity(new Intent(this, SettingsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
         }, false);
         if (emoji) { renderEmoji(); return; }
+        if (numeric) {
+            renderNumericKeypad(); updateNavigationBar(); return;
+        }
 
         if (aiHelp) {
             TextView help = new TextView(this); help.setTextColor(fg); help.setTextSize(15); help.setPadding(dp(14), dp(12), dp(14), dp(12));
@@ -435,11 +445,6 @@ public final class KaiboardService extends InputMethodService {
 
         if (expanded && !candidates.isEmpty()) {
             renderExpandedCandidates();
-        } else if (numeric) {
-            for (String group : new String[]{"123", "456", "789", ".0-"}) {
-                LinearLayout line = row(panel);
-                for (char value : group.toCharArray()) key(line, String.valueOf(value), 1, false, () -> insert(String.valueOf(value)), keyHeight());
-            }
         } else if (symbols) {
             String[][] symbolRows = extraSymbols ? new String[][]{
                 {"_","[","]","{","}","<",">","\\","^","~"},
@@ -509,6 +514,10 @@ public final class KaiboardService extends InputMethodService {
             enterKey.setBackground(new android.graphics.drawable.InsetDrawable(background(accent, bottomHeight / 2f), dp(foldWidth() * .0055f), dp(4), dp(foldWidth() * .0055f), dp(4)));
             enterKey.setTextColor(dark ? 0xFF172338 : Color.WHITE);
         }
+        updateNavigationBar();
+    }
+
+    private void updateNavigationBar() {
         if (getWindow() != null) {
             getWindow().getWindow().setNavigationBarColor(bg);
             View decor = getWindow().getWindow().getDecorView();
@@ -516,6 +525,76 @@ public final class KaiboardService extends InputMethodService {
             decor.setSystemUiVisibility(dark ? flags & ~View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR :
                 flags | View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
         }
+    }
+
+    private void renderNumericKeypad() {
+        boolean wide = foldWidth() >= 600;
+        // Compensate for the existing Fold margins without moving the shared toolbar.
+        int side = splitLayout() ? Math.round(foldWidth() * .041f) : 4;
+        float fraction = wide ? .69f * (foldWidth()-8f) / (foldWidth()-2f*side) : .75f;
+        float scale = Integer.parseInt(prefs.getString("height", "44")) / 44f;
+        int faceHeight = Math.max(40, Math.round((wide ? 42 : 46) * scale));
+        int verticalGap = wide ? 10 : 6;
+        LinearLayout frame = row(panel);
+        frame.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+        frame.addView(new View(this), new LinearLayout.LayoutParams(0, 1, (1-fraction)/2));
+        LinearLayout keypad = new LinearLayout(this); keypad.setOrientation(LinearLayout.VERTICAL);
+        keypad.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+        keypad.setContentDescription("數字鍵盤");
+        frame.addView(keypad, new LinearLayout.LayoutParams(0, -2, fraction));
+        frame.addView(new View(this), new LinearLayout.LayoutParams(0, 1, (1-fraction)/2));
+        for (String group : new String[]{"123", "456", "789"}) {
+            LinearLayout line = row(keypad);
+            for (char value : group.toCharArray()) {
+                String digit = String.valueOf(value);
+                TextView button = key(line, digit, 1, false, () -> insert(digit), faceHeight);
+                styleNumericKey(button, faceHeight, verticalGap, wide, keyColor);
+                button.setContentDescription(digit);
+            }
+        }
+        LinearLayout bottom = row(keypad);
+        TextView backspace = deleteKey(bottom, 1, faceHeight);
+        styleNumericKey(backspace, faceHeight, verticalGap, wide, functionColor);
+        ((KeyboardKey) backspace).referenceEditingIcons(true);
+        TextView zero = key(bottom, "0", 1, false, () -> insert("0"), faceHeight);
+        styleNumericKey(zero, faceHeight, verticalGap, wide, keyColor); zero.setContentDescription("0");
+        TextView action = key(bottom, "", 1, true, this::enter, faceHeight);
+        styleNumericKey(action, faceHeight, verticalGap, wide, accent);
+        ((KeyboardKey) action).icon("next"); ((KeyboardKey) action).iconSize(24);
+        action.setTextColor(0xFF173358); action.setContentDescription(enterLabel());
+
+        EditorInfo info = getCurrentInputEditorInfo();
+        if (info == null) return;
+        int type = info.inputType & InputType.TYPE_MASK_CLASS;
+        String extra = type == InputType.TYPE_CLASS_PHONE ? "+*#" : type == InputType.TYPE_CLASS_DATETIME ? "/:-" : "";
+        if (type == InputType.TYPE_CLASS_NUMBER && !secure) {
+            if ((info.inputType & InputType.TYPE_NUMBER_FLAG_SIGNED) != 0) extra += "-";
+            if ((info.inputType & InputType.TYPE_NUMBER_FLAG_DECIMAL) != 0) extra += ".";
+        }
+        // PIN and ordinary integer editors retain exactly the reference's twelve keys.
+        // Other numeric editors expose only the extra symbols required by their input type.
+        if (!extra.isEmpty()) {
+            LinearLayout extras = row(keypad);
+            for (char value : extra.toCharArray()) {
+                String symbol = String.valueOf(value);
+                TextView button = key(extras, symbol, 1, false, () -> insert(symbol), faceHeight);
+                styleNumericKey(button, faceHeight, verticalGap, wide, keyColor);
+                button.setContentDescription(symbol);
+            }
+        }
+    }
+
+    private void styleNumericKey(TextView button, int faceHeight, int verticalGap, boolean wide, int color) {
+        float horizontalInset = wide ? 3.5f : 2.5f;
+        int rowHeight = Math.max(48, faceHeight + verticalGap);
+        button.setLayoutParams(new LinearLayout.LayoutParams(0, dp(rowHeight), 1));
+        button.setBackground(new android.graphics.drawable.InsetDrawable(background(color, faceHeight / 2f),
+            dp(horizontalInset), dp(verticalGap / 2f), dp(horizontalInset), dp(verticalGap / 2f)));
+        button.setPadding(0, 0, 0, 0); button.setElevation(0);
+        button.setTypeface(android.graphics.Typeface.create("sans-serif-light", android.graphics.Typeface.NORMAL));
+        // TextView single-line scrolling can move custom Canvas icons off the key face.
+        button.setTextSize(wide ? 24 : 28); button.setSingleLine(false);
+        button.setMaxLines(1); button.setHorizontallyScrolling(false);
     }
 
     private void runCustomTool() {
@@ -1534,7 +1613,10 @@ public final class KaiboardService extends InputMethodService {
     private void stopRepeat() { handler.removeCallbacks(repeatDelete); handler.removeCallbacks(repeatEditing); editingAction = null; }
 
     private void deleteKey(LinearLayout line, float weight) {
-        TextView button = key(line, "⌫", weight, true, this::delete, keyHeight()); button.setContentDescription("刪除，長按連續刪除");
+        deleteKey(line, weight, keyHeight());
+    }
+    private TextView deleteKey(LinearLayout line, float weight, int height) {
+        TextView button = key(line, "⌫", weight, true, this::delete, height); button.setContentDescription("刪除，長按連續刪除");
         button.setOnTouchListener((v, event) -> {
             switch (event.getActionMasked()) {
                 case MotionEvent.ACTION_DOWN: v.performClick(); v.setPressed(true); handler.postDelayed(repeatDelete, 400); break;
@@ -1543,6 +1625,7 @@ public final class KaiboardService extends InputMethodService {
             }
             return true;
         });
+        return button;
     }
 
     private void attachSpaceGesture(TextView key) {

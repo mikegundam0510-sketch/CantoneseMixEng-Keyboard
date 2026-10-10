@@ -13,6 +13,8 @@ final class KeyboardKey extends TextView {
     private float faceInsetDp = 2.5f;
     void faceInset(float value) { faceInsetDp = value; }
     private boolean referenceEditingIcons;
+    private float iconSizeDp = 22;
+    void iconSize(float value) { iconSizeDp = value; invalidate(); }
     void referenceEditingIcons(boolean enabled) { referenceEditingIcons = enabled; invalidate(); }
     private boolean typingTouch, typingPressed;
     private int typingPointer = -1;
@@ -67,8 +69,9 @@ final class KeyboardKey extends TextView {
         }
         if (icon == null) { super.onDraw(canvas); return; }
         boolean coverEditingIcon = referenceEditingIcons && ("shift".equals(icon) || "delete".equals(icon));
-        float size = coverEditingIcon ? Math.min(getWidth()-dp(16), (getHeight()-dp(8))*.58f) : dp(22);
-        canvas.save(); canvas.translate((getWidth()-size)/2, (getHeight()-size)/2); canvas.scale(size/24, size/24);
+        float size = coverEditingIcon ? Math.min(getWidth()-dp(16), (getHeight()-dp(8))*.58f) : dp(iconSizeDp);
+        // Icons belong to the visible face, even when TextView adjusts its text scroll.
+        canvas.save(); canvas.translate(getScrollX()+(getWidth()-size)/2, getScrollY()+(getHeight()-size)/2); canvas.scale(size/24, size/24);
         paint.setStyle(Paint.Style.STROKE); paint.setStrokeWidth(coverEditingIcon ? 2.1f : 1.7f); paint.setStrokeCap(Paint.Cap.ROUND); paint.setStrokeJoin(Paint.Join.ROUND);
         paint.setColor(getCurrentTextColor());
         Path path = new Path();
@@ -158,6 +161,9 @@ final class KeyboardKey extends TextView {
                 path.moveTo(20,5); path.lineTo(20,14); path.lineTo(4,14); path.moveTo(9,9); path.lineTo(4,14); path.lineTo(9,19); canvas.drawPath(path,paint); break;
             case "forward":
                 canvas.drawLine(4,12,20,12,paint); path.moveTo(13,5); path.lineTo(20,12); path.lineTo(13,19); canvas.drawPath(path,paint); break;
+            case "next":
+                canvas.drawLine(3,12,17,12,paint); path.moveTo(11,6); path.lineTo(17,12); path.lineTo(11,18); canvas.drawPath(path,paint);
+                canvas.drawLine(21,5,21,19,paint); break;
             case "settings":
                 for(int i=0;i<8;i++) { double a=i*Math.PI/4; canvas.drawLine(12+(float)Math.cos(a)*7,12+(float)Math.sin(a)*7,12+(float)Math.cos(a)*10,12+(float)Math.sin(a)*10,paint); }
                 canvas.drawCircle(12,12,7,paint); canvas.drawCircle(12,12,2.5f,paint); break;

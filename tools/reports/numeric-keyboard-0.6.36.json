@@ -1,0 +1,125 @@
+{
+  "release": "0.6.36",
+  "version_code": 43,
+  "baseline_commit": "e1c7b907b8285cf00b7edfafa189e69175cbadcb",
+  "scope": "Numeric/PIN keys and icons; shared toolbar and alphabetical/Fold layouts retained",
+  "reference_images": {
+    "2-134495.jpg": "938e67c7b40fbccf722655240da76cf2d9bbca4a532ebec3a354b15752e4dc4e",
+    "1-134497.jpg": "7286be9bf341929fb0532aaa9187db66fb046d20b4c931e2b14ad96569fb6a1f"
+  },
+  "layout": {
+    "rows": [
+      "123",
+      "456",
+      "789",
+      "backspace / 0 / editor action"
+    ],
+    "key_shape": "capsule",
+    "cover_width_fraction": 0.75,
+    "wide_width_fraction_after_existing_margins": 0.69,
+    "wide_threshold_dp": 600,
+    "default_face_height_dp": {
+      "cover": 46,
+      "wide": 42
+    },
+    "minimum_touch_height_dp": 48,
+    "height_preference_preserved": true,
+    "required_symbol_rows": [
+      "signed/decimal",
+      "phone",
+      "datetime"
+    ]
+  },
+  "behavior": {
+    "backspace": "existing single deletion and long repeat",
+    "action": "existing native editor action, matching accessibility description",
+    "numeric_learning_policy": "protected, unchanged",
+    "icon_scroll": "center relative to visible key face rather than TextView scroll"
+  },
+  "unit_tests": {
+    "tests": 149,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "lint": {
+    "Error": 0,
+    "Warning": 25
+  },
+  "signing": {
+    "certificate_sha256": "78c3bd69b5625c63b3dff5357681154f063020a49c5b862fdfa9fed575fccb63",
+    "persistent_identity_verified": true
+  },
+  "apk": {
+    "path": "dist/CantoneseMixEng-Keyboard-0.6.36.apk",
+    "sha256": "52c75f4df297f032407b3db4ccf45f183351d5978b8c56fc3ca3edd0e3ddc188"
+  },
+  "native_acceptance": {
+    "status": "passed",
+    "tests": 1,
+    "failures": 0,
+    "duration_seconds": 290.783,
+    "method": "Actual touchscreen injection, native EditText acknowledgements, exact native editor actions and screenshot icon pixels",
+    "emulator": "Android 12 / API 31, software CPU emulation, density 320; not a physical Fold7",
+    "capture": "SurfaceFlinger screencap; navigation layout verified stable before accepting icon pixels",
+    "resize_synchronization": "Re-show IME if simulated System UI restart leaves navigation controls over an old frame; touch coordinates refreshed before input",
+    "checks": [
+      {
+        "layout": "cover",
+        "window": "720x1600",
+        "bounds": "[96,1046][624,1462]",
+        "digit_taps": true,
+        "backspace_and_repeat": true,
+        "pin_and_next": true,
+        "icon_pixels": true
+      },
+      {
+        "layout": "unfolded",
+        "window": "1440x1800",
+        "bounds": "[228,1246][1211,1662]",
+        "digit_taps": true,
+        "backspace_and_repeat": true,
+        "pin_and_next": true,
+        "icon_pixels": true
+      },
+      {
+        "type": "decimal",
+        "required_symbols_and_done": true
+      },
+      {
+        "type": "phone",
+        "required_symbols_and_done": true
+      },
+      {
+        "type": "datetime",
+        "required_symbols_and_done": true
+      }
+    ],
+    "learning_enabled": true,
+    "learning_unchanged": true,
+    "learning_stores_checked": [
+      "learned",
+      "recent_learned",
+      "rejected_learned",
+      "english_learned"
+    ],
+    "evidence_sha256": {
+      "datetime.png": "072ffd357124e4c7fa21d935d7f6c4a6edf3dbb5659818306d2d830f58b503a2",
+      "phone.png": "7684884aec6f947216174c68272656ceeca86bbeabb46b43104fe704ad621686",
+      "decimal.png": "bb322f07d9c0470bec02855c46e72ffe1b01e4bd943529d5238edd728efd8583",
+      "unfolded-pin.png": "0a2802d9ac7a848328761b3ae6e2a0a147ce4f294924c21e38c20691b700159c",
+      "unfolded-number.png": "10472b6a2cbdd01e89dafd0e847c21bd9848ec644227e79d061fa39fb3ca7432",
+      "cover-pin.png": "03696084908d78d6b027466a7e5821f78ed7ca81596c869ed110745fe3cba5db",
+      "cover-number.png": "180b92f749ea4217deeca73f143c10ba897766312d4a3c498bfd8ae5b38fe14b",
+      "result.json": "6f6d1f7541c7235227c325c06b713418051549d83199819ac8463e34b7110bdb",
+      "instrumentation.txt": "fa1428c533954299c80955e3d43374aea8d588a9fc482beba5d84d7af05b3105"
+    }
+  },
+  "limitations": [
+    "No physical Galaxy Z Fold7 tested; emulator size simulation does not validate One UI rendering."
+  ],
+  "preview_artifacts": [
+    "dist/numeric-cover-0.6.36.png",
+    "dist/numeric-unfolded-0.6.36.png"
+  ]
+}
