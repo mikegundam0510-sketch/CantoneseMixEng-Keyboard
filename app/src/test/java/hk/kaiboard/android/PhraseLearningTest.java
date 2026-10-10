@@ -79,4 +79,41 @@ public class PhraseLearningTest {
         assertEquals("W:唔該晒", PhraseLearning.key("唔該晒"));
         assertNotEquals(PhraseLearning.key("香港"), LearningRanker.key(code("香港"), true, true, "香港"));
     }
+    @Test public void singleModePreferencesImproveWholeSentenceRanking() {
+        String target = "等你哋確認下", input = code(target);
+        List<String> baseline = decoder.decode(input, (c,w) -> 0, "");
+        Map<String,Integer> counts = new HashMap<>();
+        for (int attempt=0;attempt<3;attempt++) {
+            SingleSelectionHistory history = new SingleSelectionHistory();
+            String remaining = input;
+            for (InputCandidate.Segment segment : InputCandidate.chinese(dictionary,input,target).segments) {
+                InputCandidate choice = new InputCandidate(segment.code,Collections.singletonList(segment),false);
+                String context = history.contextFor(remaining, "");
+                counts.merge(LearningRanker.key(segment.code,true,true,segment.text),1,Integer::sum);
+                for (String word : PhraseLearning.selectedWords(context,choice,decoder::knownWord,true,false))
+                    counts.merge(PhraseLearning.key(word),1,Integer::sum);
+                String next = remaining.substring(segment.code.length());
+                history.confirm(remaining,choice,next,context,null); remaining=next;
+            }
+        }
+        List<String> learned = decoder.decode(input,(c,w) -> counts.getOrDefault(
+            LearningRanker.isLearnable(w) ? LearningRanker.key(c,true,true,w) : PhraseLearning.key(w),0), "");
+        assertEquals(target,learned.get(0));
+        assertTrue(baseline.indexOf(target) >= learned.indexOf(target));
+        assertFalse(counts.containsKey(PhraseLearning.key(target)));
+        for (String key : counts.keySet()) if(key.startsWith("W:")) assertTrue(decoder.knownWord(key.substring(2)));
+    }
+    @Test public void explicitCorrectionCanReverseLegacyWholeWordPreference() {
+        String input="hiru";
+        long now=1_790_000_000_000L;
+        String rejected=CorrectionLearning.update(null,now,1);
+        rejected=CorrectionLearning.update(rejected,now,-.25);
+        rejected=CorrectionLearning.update(rejected,now,1);
+        final int oldWeight=CorrectionLearning.adjust(100,rejected,now);
+        final int newWeight=RecentLearning.weight(2,RecentLearning.update(null,now,2),now);
+        assertEquals("得嘅",decoder.decode(input,(c,w) -> w.equals("得嘅") ? 100 : 0,"").get(0));
+        List<String> corrected=decoder.decode(input,(c,w) -> w.equals("得嘅") ? oldWeight : w.equals("我嘅") ? newWeight : -2,"");
+        assertEquals("我嘅",corrected.get(0));
+        for(String value : corrected) assertFalse(dictionary.matchQuickCodes(input,value).isEmpty());
+    }
 }

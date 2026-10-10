@@ -1,0 +1,64 @@
+{
+  "release": "0.6.30",
+  "baseline_commit": "2e9f268457f6e47538120ea941ef38bcb004cc45",
+  "change": "Bounded productive plural-pronoun/assistance grammar, authored word priorities, decaying explicit correction feedback and transient Single selection assembly learning. No language model retraining or unknown sentence persistence.",
+  "authored_development_cases": {
+    "source": "tools/hk_plural_assistance_cases.tsv",
+    "before": {
+      "cases": 18,
+      "top1": 13,
+      "top5": 16,
+      "top20": 18,
+      "mrr": 0.8117283950617283
+    },
+    "after": {
+      "cases": 18,
+      "top1": 15,
+      "top5": 18,
+      "top20": 18,
+      "mrr": 0.9027777777777778
+    },
+    "note": "Authored examples are development behavior checks, not real user accuracy."
+  },
+  "heldout_conversations": {
+    "source": "tools/lm_heldout_cases.tsv",
+    "before": {
+      "cases": 120,
+      "top1": 61,
+      "top5": 97,
+      "top20": 108,
+      "mrr": 0.6434118230625584
+    },
+    "after": {
+      "cases": 120,
+      "top1": 61,
+      "top5": 97,
+      "top20": 108,
+      "mrr": 0.6434118230625584
+    },
+    "case_sha256": "bae16312e7f843fa503a61b54b7a734086aab3ff3d0b7d3576f095107bb8d392"
+  },
+  "previous_clause_cases": {
+    "cases": 8,
+    "top1": 8,
+    "top5": 8,
+    "top20": 8,
+    "mrr": 1.0
+  },
+  "validation": {
+    "unit_tests": {
+      "tests": 125,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "lint": {
+      "Error": 0,
+      "Warning": 25
+    },
+    "android_preferences_tests": "Compiled only; no device execution",
+    "signed_release_apk": "0.6.30 (37), pinned persistent certificate verified",
+    "device_test": false
+  },
+  "learning_limits": "Opt-in, local only; protected fields excluded. Saves existing single-character/known-word keys; selected spans are transient and reset on code discontinuity, mode switch or completion. Corrections require an explicit replacement, decay with 7-day half-life, bounded to 512 entries. No inference from merely unselected candidates."
+}

@@ -101,7 +101,7 @@ public final class QuickDecoder {
                 int size = tail.codePointCount(0, tail.length());
                 double score = length * 100 + Math.log1p(phrase.score)
                     + languageScore(context, tail) / size
-                    + Math.min(20, Math.log1p(Math.max(0, learned.applyAsInt(phrase.text))) * 4);
+                    + personalBonus(learned.applyAsInt(phrase.text), 20, 4);
                 if (Double.isFinite(score)) scores.merge(tail, score, Math::max);
             }
         }
@@ -185,13 +185,13 @@ public final class QuickDecoder {
                 for (Map.Entry<String, Double> choice : options.entrySet()) {
                     double bonus = 0;
                     if (knownWord(choice.getKey()))
-                        bonus += Math.min(6, Math.log1p(Math.max(0, learned.applyAsInt(part, choice.getKey()))) * 1.5);
+                        bonus += personalBonus(learned.applyAsInt(part, choice.getKey()), 6, 1.5);
                     List<String> codes = dictionary.matchQuickCodes(part, choice.getKey());
                     int offset = 0;
                     for (String c : codes) {
                         int cp = choice.getKey().codePointAt(offset);
                         String character = new String(Character.toChars(cp)); offset += Character.charCount(cp);
-                        bonus += Math.min(2.5, Math.log1p(learned.applyAsInt(c, character)) * .65);
+                        bonus += personalBonus(learned.applyAsInt(c, character), 2.5, .65);
                     }
                     String word = choice.getKey();
                     int boundaryLength = Math.min(model == null ? 1 : 4, word.codePointCount(0, word.length()));
@@ -219,7 +219,7 @@ public final class QuickDecoder {
             if (!dictionary.matchQuickCodes(code, token.text).isEmpty())
                 lattice.get(code.length()).add(new Path(token.text,
                     languageScore(context, token.text) + Math.min(8, Math.log1p(token.score) * .7)
-                    + Math.min(6, Math.log1p(Math.max(0, learned.applyAsInt(code, token.text))) * 1.5)));
+                    + personalBonus(learned.applyAsInt(code, token.text), 6, 1.5)));
         for (Token token : model == null ? wholeWords : Collections.<Token>emptyList()) {
             if (!dictionary.matchQuickCodes(code, token.text).isEmpty() && !result.contains(token.text)) result.add(token.text);
             if (result.size() == 5) break;
@@ -231,21 +231,26 @@ public final class QuickDecoder {
         // Explicit repeated choices outrank statistical guesses. Zero counts preserve
         // the existing context order; only exact, bundled words can be personalized.
         result.sort(Comparator.comparingInt((String text) -> knownWord(text)
-            ? Math.max(0, learned.applyAsInt(code, text)) : 0).reversed());
+            ? learned.applyAsInt(code, text) : 0).reversed());
         return result;
+    }
+
+    private static double personalBonus(int weight, double cap, double scale) {
+        double value = Math.min(cap, Math.log1p(Math.abs((double) weight)) * scale);
+        return weight < 0 ? -value : value;
     }
 
     private List<Token> personalizedTokens(String code, ToIntBiFunction<String, String> learned) {
         List<Token> original = vocabulary.getOrDefault(code, Collections.emptyList());
         // Preserve the zero-history path and avoid a per-token allocation/sort there.
         boolean hasCounts = false;
-        for (Token token : original) if (knownWord(token.text) && learned.applyAsInt(code, token.text) > 0) {
+        for (Token token : original) if (knownWord(token.text) && learned.applyAsInt(code, token.text) != 0) {
             hasCounts = true; break;
         }
         if (!hasCounts) return original;
         List<Token> result = new ArrayList<>(original);
         result.sort(Comparator.comparingDouble((Token token) -> Math.log1p(token.score)
-            + Math.min(6, Math.log1p(Math.max(0, learned.applyAsInt(code, token.text))) * 1.5)).reversed());
+            + personalBonus(learned.applyAsInt(code, token.text), 6, 1.5)).reversed());
         return result;
     }
 
@@ -268,16 +273,26 @@ public final class QuickDecoder {
         return score + phraseBonus(prefix, text);
     }
 
+    private static String clauseContext(String text) {
+        int start = text.length(), count = 0;
+        while (start > 0 && count < 5) {
+            int cp = text.codePointBefore(start);
+            if (!OfflineLanguageModel.han(cp)) break;
+            start -= Character.charCount(cp); count++;
+        }
+        return text.substring(start);
+    }
+
     private double phraseBonus(String prefix, String text) {
         if (phraseEvidence.isEmpty()) return 0;
-        String history = OfflineLanguageModel.contextTail(prefix);
+        String history = clauseContext(prefix);
         double bonus = 0;
         for (int cp : text.codePoints().toArray()) {
             if (!OfflineLanguageModel.han(cp)) { history = ""; continue; }
             String previous = history;
             history += new String(Character.toChars(cp));
             int count = history.codePointCount(0, history.length());
-            if (count > 4) { history = history.substring(history.offsetByCodePoints(0, count - 4)); count = 4; }
+            if (count > 5) { history = history.substring(history.offsetByCodePoints(0, count - 5)); count = 5; }
             double matched = 0;
             for (int length = 2; length <= count; length++) {
                 String suffix = history.substring(history.offsetByCodePoints(0, count - length));
@@ -288,16 +303,27 @@ public final class QuickDecoder {
             if (count >= 3) {
                 String lastThree = history.substring(history.offsetByCodePoints(0, count - 3));
                 int[] action = lastThree.codePoints().toArray();
-                if (action[2] == '下' && (ACTIONS.indexOf(action[1]) >= 0
+                if ("下吓".indexOf(action[2]) >= 0 && (ACTIONS.indexOf(action[1]) >= 0
                         || ACTION_WORDS.contains(new String(action, 0, 2)))) matched += 1.5;
                 if (action[0] == '想' && "你我佢".indexOf(action[1]) >= 0
                         && ACTIONS.indexOf(action[2]) >= 0) matched += 2;
+                if ("幫畀等".indexOf(action[0]) >= 0 && "你我佢".indexOf(action[1]) >= 0
+                        && ACTIONS.indexOf(action[2]) >= 0) matched += 1.5;
             }
             if (count >= 4) {
                 String lastFour = history.substring(history.offsetByCodePoints(0, count - 4));
                 int[] action = lastFour.codePoints().toArray();
                 if (action[0] == '想' && "你我佢".indexOf(action[1]) >= 0
                         && ACTION_WORDS.contains(new String(action, 2, 2))) matched += 2;
+                if ("想幫畀等".indexOf(action[0]) >= 0 && "你我佢".indexOf(action[1]) >= 0) {
+                    if (action[2] == '哋' && ACTIONS.indexOf(action[3]) >= 0) matched += action[0] == '想' ? 2 : 1.5;
+                    if (action[0] != '想' && ACTION_WORDS.contains(new String(action, 2, 2))) matched += 1.5;
+                }
+            }
+            if (count >= 5) {
+                int[] action = history.substring(history.offsetByCodePoints(0, count - 5)).codePoints().toArray();
+                if ("想幫畀等".indexOf(action[0]) >= 0 && "你我佢".indexOf(action[1]) >= 0 && action[2] == '哋'
+                        && ACTION_WORDS.contains(new String(action, 3, 2))) matched += action[0] == '想' ? 2 : 1.5;
             }
             if (count >= 3) {
                 String ending = history.substring(history.offsetByCodePoints(0, count - 3));

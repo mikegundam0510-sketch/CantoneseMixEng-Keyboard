@@ -21,6 +21,7 @@ final class Prefs {
             context.getSharedPreferences("learned", Context.MODE_PRIVATE).edit().clear().commit();
             context.getSharedPreferences("english_learned", Context.MODE_PRIVATE).edit().clear().commit();
             context.getSharedPreferences("recent_learned", Context.MODE_PRIVATE).edit().clear().commit();
+            context.getSharedPreferences("rejected_learned", Context.MODE_PRIVATE).edit().clear().commit();
             prefs.edit().putBoolean("learning", false).putBoolean("emoji_recent", false)
                 .remove("recent_emoji").putBoolean("privacy_defaults_v1", true).commit();
         }

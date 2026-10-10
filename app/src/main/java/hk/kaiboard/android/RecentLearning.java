@@ -6,7 +6,7 @@ final class RecentLearning {
     private static final double MAX_RECENT = 32;
     private RecentLearning() {}
 
-    private static double recent(String value, long now) {
+    static double recent(String value, long now) {
         if (value == null) return 0;
         try {
             String[] fields = value.split(":", -1);

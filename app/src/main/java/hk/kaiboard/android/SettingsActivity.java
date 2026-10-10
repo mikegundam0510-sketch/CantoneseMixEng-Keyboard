@@ -64,6 +64,7 @@ public final class SettingsActivity extends Activity {
                 getSharedPreferences("learned", MODE_PRIVATE).edit().clear().apply();
                 getSharedPreferences("english_learned", MODE_PRIVATE).edit().clear().apply();
                 getSharedPreferences("recent_learned", MODE_PRIVATE).edit().clear().apply();
+                getSharedPreferences("rejected_learned", MODE_PRIVATE).edit().clear().apply();
                 Toast.makeText(this, "已清除學習記錄", Toast.LENGTH_SHORT).show();
             }).show());
         button(methods, "管理英文學習記錄", this::manageEnglishLearning);
