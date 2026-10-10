@@ -1,0 +1,183 @@
+{
+  "release": "0.6.31",
+  "baseline_commit": "c439b5766d21ad71320430a080e1bf146d44b5f0",
+  "accepted_changes": [
+    "Authored short daily/action/recipient phrase priorities; no full user sentence stored",
+    "Productive pronoun + verb + 咗 and completion-question evidence across up to 12 transient Han characters",
+    "Omit unsupported sentence guesses more than 10 score units below the best path; preserve attested phrases, positively learned code-aligned character sequences and Single mode",
+    "Per-position boundary score cache; unchanged 48-path beam and 24-character option cap"
+  ],
+  "reported_case": {
+    "code": "ofykrmmsydwljpvwjd",
+    "text": "你交咗功課畀老細未",
+    "before_rank": 0,
+    "after_rank": 1,
+    "rank_zero_meaning": "Absent from first 20; not a measured rank beyond 20",
+    "context": "",
+    "personal_history": false
+  },
+  "authored_development_cases": {
+    "source": "tools/hk_completion_cases.tsv",
+    "case_sha256": "2762c747d770efaf45c2541bd30473f7b227473953c26ed311c017902107c192",
+    "before": {
+      "cases": 16,
+      "top1": 2,
+      "top5": 4,
+      "top20": 7,
+      "mrr": 0.19754464285714285,
+      "displayed_candidates": 320
+    },
+    "after": {
+      "cases": 16,
+      "top1": 10,
+      "top5": 14,
+      "top20": 15,
+      "mrr": 0.7044642857142858,
+      "displayed_candidates": 313
+    },
+    "note": "Authored related examples are not an unbiased real-user accuracy estimate."
+  },
+  "validation_conversations": {
+    "generator": "tools/build_ranking_cases.py",
+    "source": "checksum-pinned HKCanCor ZIP; validation conversation names from MODEL_REPORT.json",
+    "case_sha256": "70e4db560eeedd4f44619cd4c631624c102124ced01aa4c75f698cadc9371710",
+    "before": {
+      "cases": 240,
+      "top1": 122,
+      "top5": 166,
+      "top20": 186,
+      "mrr": 0.5917313473563474,
+      "displayed_candidates": 4800
+    },
+    "after": {
+      "cases": 240,
+      "top1": 122,
+      "top5": 166,
+      "top20": 186,
+      "mrr": 0.5917313473563474,
+      "displayed_candidates": 4438
+    }
+  },
+  "additional_heldout_conversations": {
+    "generator": "tools/build_ranking_cases.py",
+    "case_sha256": "3649889c21fd1dc454e025d59a0c4cf0c775f8f31b33d4bacdbed899bb656476",
+    "note": "Deterministic sample excludes all previous 120 context/target pairs. Neither split is added to n-gram training or vocabulary. Used for regression checks, not parameter selection.",
+    "before": {
+      "cases": 240,
+      "top1": 100,
+      "top5": 151,
+      "top20": 171,
+      "mrr": 0.510736065405183,
+      "displayed_candidates": 4800
+    },
+    "after": {
+      "cases": 240,
+      "top1": 100,
+      "top5": 151,
+      "top20": 171,
+      "mrr": 0.510736065405183,
+      "displayed_candidates": 4551
+    }
+  },
+  "previous_heldout_conversations": {
+    "source": "tools/lm_heldout_cases.tsv",
+    "case_sha256": "bae16312e7f843fa503a61b54b7a734086aab3ff3d0b7d3576f095107bb8d392",
+    "before": {
+      "cases": 120,
+      "top1": 61,
+      "top5": 97,
+      "top20": 108,
+      "mrr": 0.6434118230625584,
+      "displayed_candidates": 2400
+    },
+    "after": {
+      "cases": 120,
+      "top1": 61,
+      "top5": 97,
+      "top20": 108,
+      "mrr": 0.6434118230625584,
+      "displayed_candidates": 2203
+    }
+  },
+  "experiments_not_shipped": {
+    "character_pool_48": {
+      "validation": {
+        "cases": 240,
+        "top1": 122,
+        "top5": 171,
+        "top20": 193,
+        "mrr": 0.5996946993638169,
+        "displayed_candidates": 4800
+      },
+      "additional_heldout": {
+        "cases": 240,
+        "top1": 99,
+        "top5": 152,
+        "top20": 173,
+        "mrr": 0.5113674247865424,
+        "displayed_candidates": 4561
+      },
+      "reason": "Additional held-out top1 declined 100 to 99; roughly twice baseline elapsed time."
+    },
+    "lexical_lookahead_4": {
+      "validation": {
+        "cases": 240,
+        "top1": 122,
+        "top5": 166,
+        "top20": 186,
+        "mrr": 0.5917313473563474,
+        "displayed_candidates": 4800
+      },
+      "reason": "No rank improvement, higher latency."
+    },
+    "pos_transition_reranking": {
+      "validation": {
+        "cases": 240,
+        "top1": 117,
+        "top5": 168,
+        "top20": 187,
+        "mrr": 0.585199962074962,
+        "displayed_candidates": 4800
+      },
+      "reason": "Top1 declined 122 to 117."
+    },
+    "word_pair_reranking": {
+      "validation": {
+        "cases": 240,
+        "top1": 112,
+        "top5": 168,
+        "top20": 184,
+        "mrr": 0.5700319547010724,
+        "displayed_candidates": 4800
+      },
+      "reason": "Top1 declined 122 to 112. Conservative strengths also declined; neither shipped."
+    }
+  },
+  "limits": "Confidence filtering is not proof of grammatical impossibility; plausible but unwanted alternatives can remain. No Fold7 test or device latency measurement. Actual ranks depend on editor context and local learning.",
+  "validation": {
+    "unit_tests": {
+      "tests": 131,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "lint": {
+      "Error": 0,
+      "Warning": 25
+    },
+    "signed_release_apk": "0.6.31 (38), pinned persistent certificate verified",
+    "device_test": false
+  },
+  "previous_request_cases": {
+    "cases": 8,
+    "top1": 8,
+    "top5": 8,
+    "top20": 8
+  },
+  "previous_plural_cases": {
+    "cases": 18,
+    "top1": 15,
+    "top5": 18,
+    "top20": 18
+  }
+}

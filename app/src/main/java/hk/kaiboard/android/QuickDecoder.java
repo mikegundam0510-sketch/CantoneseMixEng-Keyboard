@@ -8,11 +8,13 @@ import java.util.function.ToIntFunction;
 /** Bounded offline word-lattice decoder, including one-code Quick characters. */
 public final class QuickDecoder {
     private static final int BEAM = 48;
+    // Selected on separate validation conversations, before held-out evaluation.
+    private static final double SENTENCE_SCORE_MARGIN = 10;
     // Productive Cantonese predicate questions, rather than memorized full sentences.
     // Particles and nouns must not receive the A-not-A grammar preference.
     private static final String QUESTION_PREDICATES = "食飲去做睇買返係得知要想試用踩搭打踢聽講問答寫讀開關拎攞畀揀改整洗煮玩行跑坐企瞓等記識明信收放賣換借還帶着著學幫肯敢好啱忙攰凍熱快慢靚貴平難易";
     // Productive request/action constructions. No complete typed sentence is stored.
-    private static final String ACTIONS = "睇試改做查問諗學聽講寫讀用打幫去返買飲食整揀拎攞";
+    private static final String ACTIONS = "交還送借收睇試改做查問諗學聽講寫讀用打幫去返買飲食整揀拎攞";
     private static final Set<String> ACTION_WORDS = new HashSet<>(Arrays.asList(
         "繼續", "完善", "改善", "修改", "調整", "檢查", "研究", "練習", "試用", "更新",
         "確認", "提供", "處理", "解釋", "補充", "輸入", "打字", "安排", "完成", "幫手"));
@@ -166,6 +168,9 @@ public final class QuickDecoder {
             if (Thread.currentThread().isInterrupted()) return Collections.emptyList();
             List<Path> paths = prune(lattice.get(pos), context, following.get(pos));
             if (paths.isEmpty()) continue;
+            Map<Path, String> histories = new IdentityHashMap<>();
+            for (Path path : paths) histories.put(path, sentenceContext(context + path.text));
+            Map<String, Map<String, Double>> boundaryScores = new HashMap<>();
             for (int length = 1; length <= Math.min(16, code.length() - pos); length++) {
                 String part = code.substring(pos, pos + length);
                 LinkedHashMap<String, Double> options = new LinkedHashMap<>();
@@ -194,11 +199,13 @@ public final class QuickDecoder {
                         bonus += personalBonus(learned.applyAsInt(c, character), 2.5, .65);
                     }
                     String word = choice.getKey();
-                    int boundaryLength = Math.min(model == null ? 1 : 4, word.codePointCount(0, word.length()));
+                    int boundaryLength = Math.min(12, word.codePointCount(0, word.length()));
                     String first = word.substring(0, word.offsetByCodePoints(0, boundaryLength));
                     double internalScore = languageScore("", word) - languageScore("", first);
                     for (Path prefix : paths) {
-                        double score = languageScore(context + prefix.text, first) + internalScore;
+                        String history = histories.get(prefix);
+                        Map<String, Double> cached = boundaryScores.computeIfAbsent(history, h -> new HashMap<>());
+                        double score = cached.computeIfAbsent(first, wordStart -> languageScore(history, wordStart)) + internalScore;
                         int characters = choice.getKey().codePointCount(0, choice.getKey().length());
                         // A modest word bonus, with character likelihood applied across token boundaries.
                         double wordBonus = characters > 1 ? Math.min(1.5, Math.log1p(choice.getValue()) / 10) * (characters - 1) : 0;
@@ -224,7 +231,14 @@ public final class QuickDecoder {
             if (!dictionary.matchQuickCodes(code, token.text).isEmpty() && !result.contains(token.text)) result.add(token.text);
             if (result.size() == 5) break;
         }
-        for (Path path : prune(lattice.get(code.length()))) {
+        List<Path> completed = prune(lattice.get(code.length()));
+        double bestScore = completed.isEmpty() ? Double.NEGATIVE_INFINITY : completed.get(0).score;
+        for (Path path : completed) {
+            // A score gap is uncertainty, not proof that unfamiliar Chinese is invalid.
+            // Keep attested words and explicit character sequences; Single mode remains available.
+            if (model != null && path.text.codePointCount(0, path.text.length()) > 3
+                    && path.score < bestScore - SENTENCE_SCORE_MARGIN && !knownWord(path.text)
+                    && !learnedSequence(code, path.text, learned)) continue;
             if (path.text.codePointCount(0, path.text.length()) > 1 && !result.contains(path.text)) result.add(path.text);
             if (result.size() == 20) break;
         }
@@ -233,6 +247,18 @@ public final class QuickDecoder {
         result.sort(Comparator.comparingInt((String text) -> knownWord(text)
             ? learned.applyAsInt(code, text) : 0).reversed());
         return result;
+    }
+
+    private boolean learnedSequence(String code, String text, ToIntBiFunction<String, String> learned) {
+        List<String> codes = dictionary.matchQuickCodes(code, text);
+        if (codes.isEmpty()) return false;
+        int at = 0;
+        for (String part : codes) {
+            String character = new String(Character.toChars(text.codePointAt(at)));
+            at += character.length();
+            if (learned.applyAsInt(part, character) <= 0) return false;
+        }
+        return true;
     }
 
     private static double personalBonus(int weight, double cap, double scale) {
@@ -255,7 +281,7 @@ public final class QuickDecoder {
     }
 
     public double languageScore(String prefix, String text) {
-        if (model != null) return model.score(prefix, text) + phraseBonus(prefix, text);
+        if (model != null) return model.score(prefix, text) + phraseBonus(prefix, text) + completionBonus(prefix, text);
         String previous = prefix.isEmpty() ? null : new String(Character.toChars(prefix.codePointBefore(prefix.length())));
         double score = 0;
         for (int cp : text.codePoints().toArray()) {
@@ -270,7 +296,36 @@ public final class QuickDecoder {
             score += Math.log(Math.max(1e-9, probability));
             previous = current;
         }
-        return score + phraseBonus(prefix, text);
+        return score + phraseBonus(prefix, text) + completionBonus(prefix, text);
+    }
+
+    private static String sentenceContext(String text) {
+        int at = text.length(), count = 0;
+        while (at > 0 && count < 12 && OfflineLanguageModel.han(text.codePointBefore(at))) {
+            at -= Character.charCount(text.codePointBefore(at)); count++;
+        }
+        return text.substring(at);
+    }
+
+    private static double pendingQuestion(String history) {
+        if (!history.endsWith("未")) return 0;
+        int at = history.lastIndexOf('咗');
+        return at > 0 && ACTIONS.indexOf(history.codePointBefore(at)) >= 0 ? 1.5 : 0;
+    }
+
+    private static double completionBonus(String prefix, String text) {
+        String history = sentenceContext(prefix);
+        double pending = pendingQuestion(history), bonus = 0;
+        for (int cp : text.codePoints().toArray()) {
+            if (!OfflineLanguageModel.han(cp)) { history = ""; pending = 0; continue; }
+            // Withdraw a tentative question bonus when Han text continues after 未,
+            // e.g. 未來. The difference telescopes across lattice token boundaries.
+            bonus -= pending;
+            history = sentenceContext(history + new String(Character.toChars(cp)));
+            pending = pendingQuestion(history);
+            bonus += pending;
+        }
+        return bonus;
     }
 
     private static String clauseContext(String text) {
@@ -303,6 +358,7 @@ public final class QuickDecoder {
             if (count >= 3) {
                 String lastThree = history.substring(history.offsetByCodePoints(0, count - 3));
                 int[] action = lastThree.codePoints().toArray();
+                if ("你我佢".indexOf(action[0]) >= 0 && ACTIONS.indexOf(action[1]) >= 0 && action[2] == '咗') matched += 1.5;
                 if ("下吓".indexOf(action[2]) >= 0 && (ACTIONS.indexOf(action[1]) >= 0
                         || ACTION_WORDS.contains(new String(action, 0, 2)))) matched += 1.5;
                 if (action[0] == '想' && "你我佢".indexOf(action[1]) >= 0

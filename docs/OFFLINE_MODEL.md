@@ -19,3 +19,20 @@ Run the standalone benchmark from app/ after compiling the production Java core 
 Initial source-only validation on 2026-10-04 (Hong Kong): all production Android Java sources compiled against API 35 and 45 JVM tests passed. Subsequent verification at `94bbaefa309af5ce5278202c8e12c40c563aa20e` passed Gradle checks, four Android touch instrumentation tests and the API 31 emulator UI acceptance, including the URI-type editor switch and expanded selector. Disposable internal test packages were used; no APK artifact was published. Physical Samsung/Fold and real browser acceptance remain unverified. See BUILD_VERIFICATION.md for the exact run, screenshots and limits.
 
 The candidate strip removes the code preview and separate repair strip. Repairs use ordinary text labels; accessibility descriptions and long-press options retain repair provenance. Only substantially stronger repairs are inserted after the first exact choices, with other repairs later in the same scrollable row. The per-character toggle resides in the expanded panel, preserving key sizes and one normal strip height.
+
+## Candidate confidence and completion questions (0.6.31)
+
+The character model still uses four preceding characters. Productive completion-question evidence uses up to twelve contiguous Han characters, and lexical/request evidence uses five. Token-boundary scoring retains up to twelve characters so these rules are independent of how a sentence is segmented. Per-position score caches are scoped to a single decode and contain no persistent editor history.
+
+Completed candidates more than ten score units below the best path are omitted when they exceed three characters and have neither an attested whole phrase nor positive learned counts for every aligned character. The margin was selected on 240 validation snippets to preserve reachable targets. This reduces weak guesses, not a guarantee of grammatical correctness; unusual text remains accessible in Single mode. The 48-path beam and 24 initial character choices remain unchanged: widening the latter increased latency and regressed first-choice results, so it was not shipped.
+
+Reproduce the separate validation and additional held-out cases from the checksum-pinned source:
+
+```sh
+python3 tools/build_ranking_cases.py path/to/hkcancor-utf8.zip /tmp/ranking-cases
+javac -d /tmp/ranking-classes app/src/main/java/hk/kaiboard/android/{DictionaryEngine,OfflineLanguageModel,QuickDecoder,RecentLearning}.java tools/RankingEvaluation.java
+java -Xmx1g -cp /tmp/ranking-classes hk.kaiboard.android.RankingEvaluation app/src/main/assets /tmp/ranking-cases/validation.tsv /tmp/validation-results.tsv
+java -Xmx1g -cp /tmp/ranking-classes hk.kaiboard.android.RankingEvaluation app/src/main/assets /tmp/ranking-cases/heldout.tsv /tmp/heldout-results.tsv
+```
+
+The additional held-out snippets exclude all 120 earlier evaluation context/target pairs. No snippets are added to the vocabulary or training model. Authored priorities and grammatical rules are documented separately from corpus measurements.

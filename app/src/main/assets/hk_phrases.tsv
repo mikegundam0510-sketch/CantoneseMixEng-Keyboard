@@ -706,3 +706,27 @@ wlz	畀我	12000
 ybebdo	講清楚	30000
 ybye	講返	12000
 yqrm	遲啲	12000
+
+# Additional authored daily words and productive request/action vocabulary.
+jpvw	老細	12000
+msyd	功課	12000
+msydokju	功課做完	30000
+wlbrjn	畀同事	30000
+wljpvw	畀老細	30000
+ykgehr	交報告	30000
+ykmsyd	交功課	30000
+ykye	交返	12000
+ykykoq	交文件	30000
+ykyx	交齊	12000
+
+# Additional authored daily words and productive request/action vocabulary.
+bhrmykoq	睇咗文件	30000
+jfrmgehr	寫咗報告	30000
+okrmmsyd	做咗功課	30000
+oormtd	飲咗茶	30000
+ovrmxe	食咗飯	30000
+ykrmci	交咗錢	30000
+ykrmgehr	交咗報告	30000
+ykrmmsyd	交咗功課	30000
+ykrmqv	交咗表	30000
+ykrmykoq	交咗文件	30000
