@@ -58,7 +58,7 @@ public final class SettingsActivity extends Activity {
         toggle(methods, "速成相鄰按鍵修正候選", "quick_repair", true);
         toggle(methods, "倉頡相鄰按鍵修正候選", "cangjie_repair", true);
         toggle(methods, "倉頡／速成自動修正", "chinese_autocorrect", true);
-        toggle(methods, "學習常選字、詞組及聯想字（近期＋累積；預設關閉）", "learning", false);
+        toggle(methods, "學習常選字、短字序、詞組及聯想字（預設關閉）", "learning", false);
         button(methods, "清除學習記錄", () -> new AlertDialog.Builder(this).setTitle("清除學習記錄？")
             .setMessage("將恢復預設選字次序。鍵盤設定不受影響。")
             .setNegativeButton("取消", null).setPositiveButton("清除", (d, which) -> {

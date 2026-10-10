@@ -13,14 +13,19 @@ public final class CandidateEngine {
     }
     public List<InputCandidate> chinese(String code, String context, boolean continuous, boolean useQuick,
             boolean useCangjie, ToIntBiFunction<String,String> learned) {
+        return chinese(code,context,continuous,useQuick,useCangjie,learned,null);
+    }
+    public List<InputCandidate> chinese(String code, String context, boolean continuous, boolean useQuick,
+            boolean useCangjie, ToIntBiFunction<String,String> learned,ContextLearning.Preferences contextual) {
         LinkedHashMap<String,InputCandidate> result=new LinkedHashMap<>();
         if (useQuick && continuous && code.length()>2)
-            for(String text:quick.decode(code,learned,context)) result.put(text,InputCandidate.chinese(dictionary,code,text));
+            for(String text:quick.decode(code,learned,context,contextual)) result.put(text,InputCandidate.chinese(dictionary,code,text));
         List<String> singles=dictionary.lookup(code,useQuick,useCangjie,false);
         singles.remove(code);
         if (!context.isEmpty()) singles.sort(Comparator.comparingDouble((String text)->
             QuickDecoder.hanText(text) ? quick.languageScore(context,text) : Double.NEGATIVE_INFINITY).reversed());
-        singles=LearningRanker.rank(singles,w->learned.applyAsInt(code,w));
+        singles=LearningRanker.rank(singles,w->learned.applyAsInt(code,w)
+            +(contextual==null || !LearningRanker.isLearnable(w) ? 0 : contextual.weight(context,code,w)));
         for(String text:singles)result.putIfAbsent(text,InputCandidate.chinese(dictionary,code,text));
         return new ArrayList<>(result.values());
     }
@@ -28,29 +33,33 @@ public final class CandidateEngine {
 
     public List<InputCandidate> mixed(String input,String context,Collection<String> personal,
             ToIntBiFunction<String,String> learned) {
+        return mixed(input,context,personal,learned,null);
+    }
+    public List<InputCandidate> mixed(String input,String context,Collection<String> personal,
+            ToIntBiFunction<String,String> learned,ContextLearning.Preferences contextual) {
         List<int[]> spans=english.spans(input,personal);
         if(spans.isEmpty() || spans.size()==1 && spans.get(0)[0]==0 && spans.get(0)[1]==input.length())return Collections.emptyList();
         List<List<InputCandidate.Segment>> paths=new ArrayList<>();paths.add(new ArrayList<>());
         int position=0;
         for(int[] span:spans) {
-            if(span[0]>position)paths=appendChinese(paths,input.substring(position,span[0]),context,learned);
+            if(span[0]>position)paths=appendChinese(paths,input.substring(position,span[0]),context,learned,contextual);
             for(List<InputCandidate.Segment> path:paths) {
                 String word=input.substring(span[0],span[1]);path.add(new InputCandidate.Segment(word,word,true));
             }
             position=span[1];
         }
-        if(position<input.length())paths=appendChinese(paths,input.substring(position),context,learned);
+        if(position<input.length())paths=appendChinese(paths,input.substring(position),context,learned,contextual);
         List<InputCandidate> result=new ArrayList<>();
         for(List<InputCandidate.Segment> path:paths)result.add(new InputCandidate(input,path,false));
         return result;
     }
     private List<List<InputCandidate.Segment>> appendChinese(List<List<InputCandidate.Segment>> paths,String code,
-            String context,ToIntBiFunction<String,String> learned) {
+            String context,ToIntBiFunction<String,String> learned,ContextLearning.Preferences contextual) {
         List<List<InputCandidate.Segment>> result=new ArrayList<>();
         for(List<InputCandidate.Segment> path:paths) {
             String preceding=context;
             for (InputCandidate.Segment segment : path) preceding+=segment.text;
-            List<InputCandidate> options=chinese(code,preceding,true,true,false,learned);
+            List<InputCandidate> options=chinese(code,preceding,true,true,false,learned,contextual);
             for(int i=0;i<Math.min(3,options.size());i++) {
                 List<InputCandidate.Segment> combined=new ArrayList<>(path);combined.addAll(options.get(i).segments);
                 result.add(combined);if(result.size()==12)return result;

@@ -157,4 +157,34 @@ public class ContinuousClauseRankingTest {
         assertEquals(3, decoder.languageScore("你交咗功課畀老細","未未")-
             decoder.languageScore("你未交功課畀老細","未未"),1e-9);
     }
+    @Test public void singleChoicesImproveTheNextWholeSentenceWithNoSentenceKey() {
+        String code="gbhidmmynvynrj",wanted="幫我查下張訂單";
+        InputCandidate sentence=InputCandidate.chinese(dictionary,code,wanted);
+        Map<String,Integer> counts=new HashMap<>();SingleSelectionHistory history=new SingleSelectionHistory();
+        String remaining=code;
+        for(InputCandidate.Segment part:sentence.segments) {
+            String context=history.contextFor(remaining,"");
+            InputCandidate selected=InputCandidate.chinese(dictionary,part.code,part.text);
+            for(String key:ContextLearning.selectedKeys(context,selected,true,false)) counts.put(key,12);
+            String next=remaining.substring(part.code.length());
+            history.confirm(remaining,selected,next,context,null);remaining=next;
+        }
+        ContextLearning.Preferences preferences=new ContextLearning.Preferences(counts.keySet(),k->counts.getOrDefault(k,0));
+        List<String> values=decoder.decode(code,(c,w)->0,"",preferences);
+        assertEquals(wanted,values.get(0));assertFalse(decoder.knownWord(wanted));
+        for(String key:counts.keySet()) assertFalse(key.contains(wanted));
+        for(String value:values) assertFalse(dictionary.matchQuickCodes(code,value).isEmpty());
+    }
+    @Test public void shortContextCanDisambiguateTwoValidActionsWithIdenticalCodes() throws Exception {
+        String code="osykrmykoqwlbrjn",wanted="佢送咗文件畀同事";
+        InputCandidate candidate=InputCandidate.chinese(dictionary,code,wanted);
+        Set<String> keys=ContextLearning.selectedKeys("",candidate,true,false);
+        ContextLearning.Preferences preferences=new ContextLearning.Preferences(keys,k->keys.contains(k) ? 12 : 0);
+        assertEquals(wanted,decoder.decode(code,(c,w)->0,"",preferences).get(0));
+        assertEquals(decoder.decode(code,(c,w)->0,""),decoder.decode(code,(c,w)->0,"",null));
+        CandidateEngine engine=new CandidateEngine(dictionary,decoder,new EnglishEngine(asset("english.txt")));
+        assertEquals("送",engine.chinese("yk","佢",false,true,false,(c,w)->0,preferences).get(0).text);
+        assertEquals(engine.chinese("yk","我，",false,true,false,(c,w)->0).get(0).text,
+            engine.chinese("yk","我，",false,true,false,(c,w)->0,preferences).get(0).text);
+    }
 }

@@ -76,6 +76,9 @@ public final class KaiboardService extends InputMethodService {
     private String autoUndoBefore = "", rejectedAutoCode = "";
     private boolean forceEnglish, forceChinese, reselectionLearned;
     private List<String> reselectionPhrases = Collections.emptyList();
+    private Set<String> reselectionContexts = Collections.emptySet();
+    private String reselectionContext="";
+    private String pendingCorrectionContext = "";
         private TextView undoKey;
     private PopupWindow selectionPopup;
     private ReselectionRecord reselection;
@@ -809,6 +812,7 @@ public final class KaiboardService extends InputMethodService {
         final InputCandidate restoredCandidate;
         final Map<String, ?> personal, counts, englishCounts, recentCounts, rejectionCounts, settings;
         final long learningTime = System.currentTimeMillis();
+        final ContextLearning.Preferences contextual;
         final List<String> englishWords;
         final Map<String, InputCandidate> details = new HashMap<>();
         final Map<String, Integer> consumed = new HashMap<>();
@@ -816,7 +820,9 @@ public final class KaiboardService extends InputMethodService {
         List<String> values = Collections.emptyList();
         List<InputCandidate> corrections = Collections.emptyList();
         CandidateRequest() {
-            input = composing.toString(); preceding = context();
+            input = composing.toString(); preceding = KaiboardService.this.chooseFirst
+                && !KaiboardService.this.noLearning && prefs.getBoolean("learning",false)
+                ? singleHistory.contextFor(input,context()) : context();
             nextSuggestionsDismissed = KaiboardService.this.nextSuggestionsDismissed;
             quick = KaiboardService.this.quick; cangjie = KaiboardService.this.cangjie;
             chooseFirst = KaiboardService.this.chooseFirst; forceEnglish = KaiboardService.this.forceEnglish || ascii;
@@ -828,6 +834,9 @@ public final class KaiboardService extends InputMethodService {
             englishCounts = noLearning || !enabled("learning", false) ? Collections.emptyMap() : new HashMap<>(englishLearned.getAll());
             recentCounts = noLearning || !enabled("learning", false) ? Collections.emptyMap() : new HashMap<>(recentLearned.getAll());
             rejectionCounts = noLearning || !enabled("learning", false) ? Collections.emptyMap() : new HashMap<>(rejectedLearned.getAll());
+            Set<String> contextKeys=new HashSet<>(counts.keySet());contextKeys.addAll(rejectionCounts.keySet());
+            contextKeys.removeIf(k->!k.startsWith("S:"));
+            contextual = contextKeys.isEmpty() ? null : new ContextLearning.Preferences(contextKeys,this::contextCount);
             englishWords = new ArrayList<>(personalEnglish());
             continuous = quick && enabled("continuous", true) && input.length() > 2 && !secure;
             isEnglish = forceEnglish || !forceChinese && enabled("english", true) && englishEngine != null
@@ -842,6 +851,10 @@ public final class KaiboardService extends InputMethodService {
             return CorrectionLearning.adjust(RecentLearning.weight(counts.get(key), recentCounts.get(key), learningTime), rejectionCounts.get(key), learningTime);
         }
         int phraseCount(String word) { return learnedCount("", word); }
+        int contextCount(String key) {
+            if(noLearning || !enabled("learning",false)) return 0;
+            return CorrectionLearning.adjust(RecentLearning.weight(counts.get(key),recentCounts.get(key),learningTime),rejectionCounts.get(key),learningTime);
+        }
         String pinPrefix(String code) { return "p:" + (quick ? "Q" : "-") + (cangjie ? "C" : "-") + ":" + code.toLowerCase(Locale.ROOT) + ":"; }
         List<String> englishSuggestions() {
             List<String> result = new ArrayList<>(englishEngine.suggest(input, englishWords, enabled("english_repair", true)));
@@ -914,7 +927,8 @@ public final class KaiboardService extends InputMethodService {
             if (detail == null) continue;
             if (request.personal.containsKey(request.pinPrefix(detail.effectiveCode()) + value)
                     || request.personal.containsKey("c:" + request.input.toLowerCase(Locale.ROOT) + ":" + value)
-                    || decoder.knownWord(value) && request.learnedCount(request.input, value) > 0) return;
+                    || decoder.knownWord(value) && request.learnedCount(request.input, value) > 0
+                    || ContextLearning.supports(request.preceding,detail,request.contextual)) return;
             if (!detail.corrected && !detail.englishOnly() && detail.source.equals(request.input)
                     && detail.effectiveCode().equals(request.input) && detail.segments.stream().noneMatch(s -> s.translated))
                 exact.add(value);
@@ -990,7 +1004,8 @@ public final class KaiboardService extends InputMethodService {
             if (continuous && chooseFirst && dictionary != null) {
                 for (int size = 2; size >= 1; size--) {
                     String part = input.substring(0, size);
-                    for (String word : LearningRanker.rank(dictionary.quickCandidates(part), w -> request.learnedCount(part, w)))
+                    for (String word : LearningRanker.rank(dictionary.quickCandidates(part), w -> request.learnedCount(part, w)
+                            +(request.contextual==null || !LearningRanker.isLearnable(w) ? 0 : request.contextual.weight(preceding,part,w))))
                         request.add(results, InputCandidate.chinese(dictionary, part, word));
                 }
             } else {
@@ -1007,10 +1022,10 @@ public final class KaiboardService extends InputMethodService {
                 }
                 if (candidateEngine != null && !forceEnglish) {
                     if (continuous && !forceChinese && request.enabled("mixed", true) && request.enabled("english", true))
-                        for (InputCandidate candidate : candidateEngine.mixed(input, preceding, request.englishWords, request::learnedCount)) request.add(results, candidate);
+                        for (InputCandidate candidate : candidateEngine.mixed(input, preceding, request.englishWords, request::learnedCount,request.contextual)) request.add(results, candidate);
                     if (continuous && !forceChinese && !request.isEnglish && request.enabled("mixed",true) && request.enabled("english_chinese",true) && englishChineseEngine!=null)
                         for(InputCandidate candidate:englishChineseEngine.mixedSuffix(input,preceding,candidateEngine,request::learnedCount))request.add(results,candidate);
-                    for (InputCandidate candidate : candidateEngine.chinese(input, preceding, continuous, quick, cangjie, request::learnedCount)) request.add(results, candidate);
+                    for (InputCandidate candidate : candidateEngine.chinese(input, preceding, continuous, quick, cangjie, request::learnedCount,request.contextual)) request.add(results, candidate);
                 }
                 if (!noLearning && dictionary != null) {
                     String prefix = "c:" + input.toLowerCase(Locale.ROOT) + ":";
@@ -1293,6 +1308,7 @@ public final class KaiboardService extends InputMethodService {
         if (detail.text.isEmpty() || !composing.toString().startsWith(detail.source)) return;
         InputConnection ic = getCurrentInputConnection(); if (ic == null) return;
         InputCandidate correctedFrom = pendingCorrection;
+        String correctedContext = pendingCorrectionContext;
         boolean recordCorrection = pendingCorrectionLearned && pendingCorrectionQuick == quick && pendingCorrectionCangjie == cangjie;
         String inputBefore = composing.toString();
         boolean learningAllowed = learn && !noLearning && prefs.getBoolean("learning", false);
@@ -1303,6 +1319,7 @@ public final class KaiboardService extends InputMethodService {
         List<String> selectedPhrases = decoder == null || !learn ? Collections.emptyList()
             : PhraseLearning.selectedWords(phraseContext, detail, decoder::knownWord,
                 prefs.getBoolean("learning", false), noLearning);
+        Set<String> selectedContexts=ContextLearning.selectedKeys(phraseContext,detail,learningAllowed,noLearning);
         invalidateReselection();
         ic.beginBatchEdit();
         boolean accepted = ic.commitText(detail.text, 1);
@@ -1313,13 +1330,15 @@ public final class KaiboardService extends InputMethodService {
                 else if (LearningRanker.isLearnable(segment.text)) learnCharacter(segment.code, segment.text);
             }
             for (String word : selectedPhrases) incrementPhrase(word);
+            for (String key : selectedContexts) incrementContext(key);
             if (chooseFirst) {
+                String originalContext=singleHistory.correctionContext(recordCorrection ? correctedContext : phraseContext);
                 InputCandidate[] completed = singleHistory.confirm(inputBefore, detail, remaining, phraseContext,
-                    recordCorrection ? correctedFrom : null);
-                if (completed != null) learnCorrection(completed[0], completed[1]);
+                    recordCorrection ? correctedFrom : null,correctedContext);
+                if (completed != null) learnCorrection(completed[0], completed[1],originalContext);
             } else {
                 singleHistory.clear();
-                if (recordCorrection) learnCorrection(correctedFrom, detail);
+                if (recordCorrection) learnCorrection(correctedFrom, detail,correctedContext);
             }
         }
         if (accepted) {
@@ -1329,7 +1348,7 @@ public final class KaiboardService extends InputMethodService {
             if (remaining.isEmpty()) ic.finishComposingText(); else ic.setComposingText(remaining, 1);
         }
         ic.endBatchEdit();
-        if (!accepted) { pendingCorrection = correctedFrom; pendingCorrectionLearned = recordCorrection; }
+        if (!accepted) { pendingCorrection = correctedFrom; pendingCorrectionLearned = recordCorrection; pendingCorrectionContext=correctedContext; }
         if (accepted && learn && remaining.isEmpty() && !secure && !detail.source.isEmpty()) {
             ExtractedText extracted = ic.getExtractedText(new ExtractedTextRequest(), 0);
             CharSequence before = ic.getTextBeforeCursor(128, 0);
@@ -1338,6 +1357,8 @@ public final class KaiboardService extends InputMethodService {
                 reselection = new ReselectionRecord(detail, cursor, before.toString());
                 reselectionLearned = !noLearning && prefs.getBoolean("learning", false);
                 reselectionPhrases = selectedPhrases;
+                reselectionContexts = selectedContexts;
+                reselectionContext=ContextLearning.tail(phraseContext);
                 selectionStart = selectionEnd = cursor;
             }
         }
@@ -1347,14 +1368,16 @@ public final class KaiboardService extends InputMethodService {
         render();
     }
 
-    private void learnCorrection(InputCandidate previous, InputCandidate selected) {
+    private void learnCorrection(InputCandidate previous, InputCandidate selected,String context) {
         if (decoder == null || noLearning || !prefs.getBoolean("learning", false)) return;
         Set<String> rejected = CorrectionLearning.rejectedKeys(previous, selected, decoder::knownWord,
             quick, cangjie, true, false);
+        rejected.addAll(ContextLearning.rejectedKeys(context,previous,selected));
         for (String key : rejected) updateRejection(key, 1);
         // An explicit reversal back to a previously rejected word restores its confidence.
         for (String key : CorrectionLearning.rejectedKeys(selected, previous, decoder::knownWord,
                 quick, cangjie, true, false)) rejectedLearned.edit().remove(key).apply();
+        for(String key:ContextLearning.rejectedKeys(context,selected,previous)) rejectedLearned.edit().remove(key).apply();
     }
 
     private void updateRejection(String key, double delta) {
@@ -1395,7 +1418,7 @@ public final class KaiboardService extends InputMethodService {
         SharedPreferences.Editor edit = learned.edit();
         Map<String, ?> all = learned.getAll();
         List<String> characterKeys = new ArrayList<>();
-        for (String existing : all.keySet()) if (!existing.startsWith("W:")) characterKeys.add(existing);
+        for (String existing : all.keySet()) if (!existing.startsWith("W:") && !existing.startsWith("S:")) characterKeys.add(existing);
         if (!all.containsKey(key) && characterKeys.size() >= 2000) {
             String leastUsed = Collections.min(characterKeys, Comparator.comparingInt(k -> learned.getInt(k, 0)));
             edit.remove(leastUsed); recentLearned.edit().remove(leastUsed).apply();
@@ -1419,6 +1442,17 @@ public final class KaiboardService extends InputMethodService {
         edit.putInt(key, Math.min(100000, learned.getInt(key, 0) + 1)).apply();
         updateRecent(key, 1);
         if (rejectedLearned.contains(key)) updateRejection(key, -.25);
+    }
+
+    private void incrementContext(String key) {
+        if(noLearning || !prefs.getBoolean("learning",false) || !key.startsWith("S:")) return;
+        Map<String,?> all=learned.getAll();String evicted=ContextLearning.evictionKey(all,key);
+        SharedPreferences.Editor edit=learned.edit();
+        if(evicted!=null) {
+            edit.remove(evicted);recentLearned.edit().remove(evicted).apply();rejectedLearned.edit().remove(evicted).apply();
+        }
+        edit.putInt(key,Math.min(100000,learned.getInt(key,0)+1)).apply();updateRecent(key,1);
+        if(rejectedLearned.contains(key)) updateRejection(key,-.25);
     }
 
     private void finishLiteral() {
@@ -1489,7 +1523,7 @@ public final class KaiboardService extends InputMethodService {
     }
 
     private void picker() { cancelVoice(); invalidateReselection(); finishLiteral(); ((InputMethodManager)getSystemService(INPUT_METHOD_SERVICE)).showInputMethodPicker(); }
-    private void resetComposition() { singleHistory.clear(); pendingCorrection = null; pendingCorrectionLearned = false; autoUndo = null; rejectedAutoCode = ""; candidateGeneration.incrementAndGet(); forceEnglish = forceChinese = false; restoredCandidate = null; expanded = false; emojiSearch = false; emojiQuery = ""; composing.setLength(0); candidates = Collections.emptyList(); consumedCodes.clear(); candidatePage = 0; chooseFirst = false; }
+    private void resetComposition() { singleHistory.clear(); pendingCorrection = null; pendingCorrectionLearned = false; pendingCorrectionContext = ""; autoUndo = null; rejectedAutoCode = ""; candidateGeneration.incrementAndGet(); forceEnglish = forceChinese = false; restoredCandidate = null; expanded = false; emojiSearch = false; emojiQuery = ""; composing.setLength(0); candidates = Collections.emptyList(); consumedCodes.clear(); candidatePage = 0; chooseFirst = false; }
     private void sendKey(int keyCode) { InputConnection ic = getCurrentInputConnection(); if (ic != null) {
         ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, keyCode)); ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, keyCode));
     } }
@@ -1698,6 +1732,7 @@ public final class KaiboardService extends InputMethodService {
         reselection = null; reselectionLearned = false;
         pendingCorrection = null; pendingCorrectionLearned = false;
         reselectionPhrases = Collections.emptyList();
+        reselectionContexts=Collections.emptySet();reselectionContext="";pendingCorrectionContext="";
         if (undoKey != null) { undoKey.setEnabled(false); undoKey.setAlpha(.35f); }
     }
 
@@ -1714,6 +1749,8 @@ public final class KaiboardService extends InputMethodService {
         ReselectionRecord record = reselection;
         boolean undoLearning = reselectionLearned;
         List<String> undoPhrases = reselectionPhrases;
+        Set<String> undoContexts = reselectionContexts;
+        String undoContext=reselectionContext;
         InputConnection ic = getCurrentInputConnection();
         invalidateReselection(); cancelVoice();
         ic.beginBatchEdit();
@@ -1724,10 +1761,16 @@ public final class KaiboardService extends InputMethodService {
             restoredCandidate = record.candidate;
             pendingCorrection = record.candidate; pendingCorrectionLearned = undoLearning;
             pendingCorrectionQuick = quick; pendingCorrectionCangjie = cangjie;
+            pendingCorrectionContext=undoContext;
             chooseFirst = false; forceEnglish = forceChinese = false;
         }
         ic.endBatchEdit();
         if (accepted) {
+            if(undoLearning) for(String key:undoContexts) {
+                int count=learned.getInt(key,0);
+                if(count<=1) learned.edit().remove(key).apply();else learned.edit().putInt(key,count-1).apply();
+                updateRecent(key,-1);
+            }
             if (undoLearning) for (String word : undoPhrases) {
                 String key = PhraseLearning.key(word);
                 int count = learned.getInt(key, 0);

@@ -1,0 +1,395 @@
+{
+  "source": "https://raw.githubusercontent.com/rime/rime-cantonese/259f0e48bba840c3a2e0d117539e96937f3d89bc/essay-cantonese.txt",
+  "revision": "259f0e48bba840c3a2e0d117539e96937f3d89bc",
+  "source_sha256": "d08836175f598219f43c2f2f9e12e12711212dbefe08d57b2eddb7a9d9f22a5d",
+  "upstream_revision_date": "2026-08-13",
+  "authors": "CanCLID and Rime Cantonese contributors; see https://github.com/rime/rime-cantonese",
+  "license": "CC BY 4.0; ../RIME-CANTONESE-CC-BY-4.0.txt",
+  "transform": "Curated daily terms; source weight capped at 3000; at most eight exact Quick-code variants; base entries retained",
+  "terms": {
+    "訊息": {
+      "source_weight": 2402,
+      "applied_weight": 2402
+    },
+    "個訊息": {
+      "source_weight": 533,
+      "applied_weight": 533
+    },
+    "嘅訊息": {
+      "source_weight": 711,
+      "applied_weight": 711
+    },
+    "短訊": {
+      "source_weight": 1334,
+      "applied_weight": 1334
+    },
+    "電郵": {
+      "source_weight": 88,
+      "applied_weight": 88
+    },
+    "電郵地址": {
+      "source_weight": 505,
+      "applied_weight": 505
+    },
+    "回覆": {
+      "source_weight": 7652,
+      "applied_weight": 3000
+    },
+    "覆返": {
+      "source_weight": 444,
+      "applied_weight": 444
+    },
+    "聯絡": {
+      "source_weight": 13526,
+      "applied_weight": 3000
+    },
+    "電話": {
+      "source_weight": 198707,
+      "applied_weight": 3000
+    },
+    "打電話": {
+      "source_weight": 17886,
+      "applied_weight": 3000
+    },
+    "電話號碼": {
+      "source_weight": 1562,
+      "applied_weight": 1562
+    },
+    "確認": {
+      "source_weight": 7474,
+      "applied_weight": 3000
+    },
+    "文件": {
+      "source_weight": 4360,
+      "applied_weight": 3000
+    },
+    "報告": {
+      "source_weight": 5695,
+      "applied_weight": 3000
+    },
+    "資料": {
+      "source_weight": 15038,
+      "applied_weight": 3000
+    },
+    "同事": {
+      "source_weight": 16729,
+      "applied_weight": 3000
+    },
+    "老細": {
+      "source_weight": 10500,
+      "applied_weight": 3000
+    },
+    "開會": {
+      "source_weight": 3648,
+      "applied_weight": 3000
+    },
+    "會議": {
+      "source_weight": 5072,
+      "applied_weight": 3000
+    },
+    "會議室": {
+      "source_weight": 2003,
+      "applied_weight": 2003
+    },
+    "返工": {
+      "source_weight": 32302,
+      "applied_weight": 3000
+    },
+    "放工": {
+      "source_weight": 8987,
+      "applied_weight": 3000
+    },
+    "收工": {
+      "source_weight": 8809,
+      "applied_weight": 3000
+    },
+    "打卡": {
+      "source_weight": 1067,
+      "applied_weight": 1067
+    },
+    "工資": {
+      "source_weight": 444,
+      "applied_weight": 444
+    },
+    "人工": {
+      "source_weight": 9165,
+      "applied_weight": 3000
+    },
+    "加班": {
+      "source_weight": 177,
+      "applied_weight": 177
+    },
+    "請假": {
+      "source_weight": 1957,
+      "applied_weight": 1957
+    },
+    "遲到": {
+      "source_weight": 13170,
+      "applied_weight": 3000
+    },
+    "準時": {
+      "source_weight": 7296,
+      "applied_weight": 3000
+    },
+    "巴士": {
+      "source_weight": 69498,
+      "applied_weight": 3000
+    },
+    "地鐵": {
+      "source_weight": 23047,
+      "applied_weight": 3000
+    },
+    "的士": {
+      "source_weight": 33993,
+      "applied_weight": 3000
+    },
+    "搭車": {
+      "source_weight": 3648,
+      "applied_weight": 3000
+    },
+    "塞車": {
+      "source_weight": 1868,
+      "applied_weight": 1868
+    },
+    "車站": {
+      "source_weight": 12636,
+      "applied_weight": 3000
+    },
+    "巴士站": {
+      "source_weight": 4449,
+      "applied_weight": 3000
+    },
+    "地鐵站": {
+      "source_weight": 1183,
+      "applied_weight": 1183
+    },
+    "上車": {
+      "source_weight": 8542,
+      "applied_weight": 3000
+    },
+    "落車": {
+      "source_weight": 11034,
+      "applied_weight": 3000
+    },
+    "轉車": {
+      "source_weight": 622,
+      "applied_weight": 622
+    },
+    "車費": {
+      "source_weight": 177,
+      "applied_weight": 177
+    },
+    "車程": {
+      "source_weight": 2046,
+      "applied_weight": 2046
+    },
+    "屋企": {
+      "source_weight": 342332,
+      "applied_weight": 3000
+    },
+    "未到": {
+      "source_weight": 2135,
+      "applied_weight": 2135
+    },
+    "等車": {
+      "source_weight": 711,
+      "applied_weight": 711
+    },
+    "等陣": {
+      "source_weight": 16373,
+      "applied_weight": 3000
+    },
+    "食飯": {
+      "source_weight": 48586,
+      "applied_weight": 3000
+    },
+    "早餐": {
+      "source_weight": 32658,
+      "applied_weight": 3000
+    },
+    "午餐": {
+      "source_weight": 6585,
+      "applied_weight": 3000
+    },
+    "晚餐": {
+      "source_weight": 3025,
+      "applied_weight": 3000
+    },
+    "外賣": {
+      "source_weight": 5161,
+      "applied_weight": 3000
+    },
+    "叫外賣": {
+      "source_weight": 1,
+      "applied_weight": 1
+    },
+    "餐廳": {
+      "source_weight": 14504,
+      "applied_weight": 3000
+    },
+    "飲茶": {
+      "source_weight": 2758,
+      "applied_weight": 2758
+    },
+    "飲嘢": {
+      "source_weight": 1957,
+      "applied_weight": 1957
+    },
+    "飲水": {
+      "source_weight": 1868,
+      "applied_weight": 1868
+    },
+    "咖啡": {
+      "source_weight": 17174,
+      "applied_weight": 3000
+    },
+    "奶茶": {
+      "source_weight": 4894,
+      "applied_weight": 3000
+    },
+    "買餸": {
+      "source_weight": 421,
+      "applied_weight": 421
+    },
+    "網購": {
+      "source_weight": 999,
+      "applied_weight": 999
+    },
+    "落單": {
+      "source_weight": 622,
+      "applied_weight": 622
+    },
+    "訂單": {
+      "source_weight": 88,
+      "applied_weight": 88
+    },
+    "送貨": {
+      "source_weight": 533,
+      "applied_weight": 533
+    },
+    "送貨上門": {
+      "source_weight": 869,
+      "applied_weight": 869
+    },
+    "送貨到": {
+      "source_weight": 517,
+      "applied_weight": 517
+    },
+    "收貨": {
+      "source_weight": 711,
+      "applied_weight": 711
+    },
+    "快遞": {
+      "source_weight": 6768,
+      "applied_weight": 3000
+    },
+    "自取": {
+      "source_weight": 266,
+      "applied_weight": 266
+    },
+    "付款": {
+      "source_weight": 6563,
+      "applied_weight": 3000
+    },
+    "找數": {
+      "source_weight": 1156,
+      "applied_weight": 1156
+    },
+    "轉賬": {
+      "source_weight": 1867,
+      "applied_weight": 1867
+    },
+    "退款": {
+      "source_weight": 1588,
+      "applied_weight": 1588
+    },
+    "退貨": {
+      "source_weight": 355,
+      "applied_weight": 355
+    },
+    "地址": {
+      "source_weight": 7029,
+      "applied_weight": 3000
+    },
+    "價錢": {
+      "source_weight": 6140,
+      "applied_weight": 3000
+    },
+    "畀錢": {
+      "source_weight": 1868,
+      "applied_weight": 1868
+    },
+    "已經": {
+      "source_weight": 637057,
+      "applied_weight": 3000
+    },
+    "而家": {
+      "source_weight": 374902,
+      "applied_weight": 3000
+    },
+    "聽日": {
+      "source_weight": 60244,
+      "applied_weight": 3000
+    },
+    "今晚": {
+      "source_weight": 63536,
+      "applied_weight": 3000
+    },
+    "頭先": {
+      "source_weight": 138018,
+      "applied_weight": 3000
+    },
+    "唔使": {
+      "source_weight": 61045,
+      "applied_weight": 3000
+    },
+    "得閒": {
+      "source_weight": 35950,
+      "applied_weight": 3000
+    },
+    "有時間": {
+      "source_weight": 788,
+      "applied_weight": 788
+    },
+    "幫我": {
+      "source_weight": 10739,
+      "applied_weight": 3000
+    },
+    "幫你": {
+      "source_weight": 6997,
+      "applied_weight": 3000
+    }
+  },
+  "not_in_frequency_source": [
+    "短訊息",
+    "聯絡電話",
+    "份文件",
+    "嘅文件",
+    "份報告",
+    "開緊會",
+    "返緊工",
+    "搭巴士",
+    "搭地鐵",
+    "港鐵",
+    "搭的士",
+    "返屋企",
+    "返到屋企",
+    "出門口",
+    "到咗",
+    "等陣先",
+    "食早餐",
+    "食午餐",
+    "食晚餐",
+    "杯咖啡",
+    "杯奶茶",
+    "收貨地址",
+    "幾多錢",
+    "有冇",
+    "得唔得閒",
+    "唔使急",
+    "慢慢嚟",
+    "冇時間",
+    "搵返"
+  ],
+  "note": "Public dictionary weights, not measured Hong Kong chat frequencies. No evaluation sentences or personal text imported."
+}

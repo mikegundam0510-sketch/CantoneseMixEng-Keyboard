@@ -171,6 +171,11 @@ public final class QuickDecoder {
     }
 
     public List<String> decode(String input, ToIntBiFunction<String, String> learned, String context) {
+        return decode(input,learned,context,null);
+    }
+
+    public List<String> decode(String input, ToIntBiFunction<String, String> learned, String context,
+            ContextLearning.Preferences contextual) {
         String code = input.toLowerCase(Locale.ROOT);
         if (code.length() < 3 || code.length() > 48 || !code.matches("[a-z]+")) return Collections.emptyList();
         List<List<Path>> lattice = new ArrayList<>();
@@ -198,6 +203,18 @@ public final class QuickDecoder {
                         String word = letters.get(j);
                         options.putIfAbsent(word, (double) dictionary.frequency(word));
                     }
+                    if(contextual!=null) {
+                        Map<String,Integer> favored=new LinkedHashMap<>();
+                        for(String history:new LinkedHashSet<>(histories.values()))
+                            for(String character:contextual.favored(history,part))
+                                if(letters.contains(character)) favored.merge(character,contextual.weight(history,part,character),Math::max);
+                        List<String> protectedChoices=new ArrayList<>(favored.keySet());
+                        protectedChoices.sort(Comparator.comparingInt((String w)->favored.get(w)).reversed());
+                        for(int j=0;j<Math.min(4,protectedChoices.size());j++) {
+                            String character=protectedChoices.get(j);
+                            options.putIfAbsent(character,(double)dictionary.frequency(character));
+                        }
+                    }
                 }
                 if (options.isEmpty()) continue;
                 List<Path> target = lattice.get(pos + length);
@@ -220,6 +237,7 @@ public final class QuickDecoder {
                         String history = histories.get(prefix);
                         Map<String, Double> cached = boundaryScores.computeIfAbsent(history, h -> new HashMap<>());
                         double score = cached.computeIfAbsent(first, wordStart -> languageScore(history, wordStart)) + internalScore;
+                        if(contextual!=null) score+=contextualScore(history,word,codes,contextual);
                         int characters = choice.getKey().codePointCount(0, choice.getKey().length());
                         // A modest word bonus, with character likelihood applied across token boundaries.
                         double wordBonus = characters > 1 ? Math.min(1.5, Math.log1p(choice.getValue()) / 10) * (characters - 1) : 0;
@@ -240,6 +258,7 @@ public final class QuickDecoder {
             if (!dictionary.matchQuickCodes(code, token.text).isEmpty())
                 lattice.get(code.length()).add(new Path(token.text,
                     languageScore(context, token.text) + Math.min(8, Math.log1p(token.score) * .7)
+                    + (contextual==null ? 0 : contextualScore(context,token.text,dictionary.matchQuickCodes(code,token.text),contextual))
                     + personalBonus(learned.applyAsInt(code, token.text), 6, 1.5)));
         for (Token token : model == null ? wholeWords : Collections.<Token>emptyList()) {
             if (!dictionary.matchQuickCodes(code, token.text).isEmpty() && !result.contains(token.text)) result.add(token.text);
@@ -252,7 +271,8 @@ public final class QuickDecoder {
             // Keep attested words and explicit character sequences; Single mode remains available.
             if (model != null && path.text.codePointCount(0, path.text.length()) > 3
                     && path.score < bestScore - SENTENCE_SCORE_MARGIN && !knownWord(path.text)
-                    && !learnedSequence(code, path.text, learned)) continue;
+                    && !learnedSequence(code, path.text, learned)
+                    && (contextual==null || !ContextLearning.supports(context,InputCandidate.chinese(dictionary,code,path.text),contextual))) continue;
             if (path.text.codePointCount(0, path.text.length()) > 1 && !result.contains(path.text)) result.add(path.text);
             if (result.size() == 20) break;
         }
@@ -261,6 +281,16 @@ public final class QuickDecoder {
         result.sort(Comparator.comparingInt((String text) -> knownWord(text)
             ? learned.applyAsInt(code, text) : 0).reversed());
         return result;
+    }
+
+    private static double contextualScore(String context,String word,List<String> codes,ContextLearning.Preferences preferences) {
+        String history=ContextLearning.tail(context);int at=0;double score=0;
+        for(String code:codes) {
+            String character=new String(Character.toChars(word.codePointAt(at)));at+=character.length();
+            score+=personalBonus(preferences.weight(history,code,character),4,1.25);
+            history=ContextLearning.tail(history+character);
+        }
+        return score;
     }
 
     private boolean learnedSequence(String code, String text, ToIntBiFunction<String, String> learned) {

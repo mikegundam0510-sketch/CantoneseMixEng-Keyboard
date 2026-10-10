@@ -1,0 +1,251 @@
+{
+  "release": "0.6.35",
+  "version_code": 42,
+  "baseline_commit": "8f69609a3e002e35f34ed6a48fb561febfe28363",
+  "accepted_changes": [
+    "88 selected daily Hong Kong phrase weights, 109 appended exact-code rows; capped public Rime dictionary weights, not newly measured chat frequencies",
+    "Code-aligned local bigram/trigram learning from explicit whole-candidate and Single selections, used in sentence lattice and character ranking",
+    "At most four additional context-favored exact dictionary characters beyond the usual 24 candidates per lattice step; unchanged beam of 48",
+    "Specific-context rejection overrides shorter positive history; reselection withdraws the corresponding positive sequence event, explicit corrections reject only changed contexts",
+    "No full private sentence keys, corpus model retraining, Fold7 layout or signing changes"
+  ],
+  "source": {
+    "manifest": "app/src/main/assets/licenses/hk-usage/SOURCE.json",
+    "selected_terms": 88,
+    "appended_rows": 109,
+    "manifest_sha256": "267be0636f924af35de3f1022d326a694d9bf350fdc7fadd577820aa4e145f6b",
+    "dictionary_sha256": "a4ae9e56fc2c89dd881f01b205807454e2cc8a32aaf7d75a5b54edc81bd9cc17",
+    "rime_revision": "259f0e48bba840c3a2e0d117539e96937f3d89bc",
+    "upstream_revision_date": "2026-08-13",
+    "license": "CC BY 4.0",
+    "importer_repeated_run": "0 additional rows; pinned checksum verified"
+  },
+  "daily_authored_cases": {
+    "case_sha256": "d29faa28d581c87e6b480ce3924c778e4794fa830d6067249a3369daad6528af",
+    "cases_fixed_before_source_supplement": true,
+    "personal_history": false,
+    "before": {
+      "cases": 32,
+      "top1": 15,
+      "top5": 22,
+      "top20": 29,
+      "mrr": 0.5691366792929293
+    },
+    "after": {
+      "cases": 32,
+      "top1": 15,
+      "top5": 23,
+      "top20": 30,
+      "mrr": 0.5771836670274171
+    },
+    "target_rank_changes": [
+      {
+        "target": "幫我覆返個訊息",
+        "before": 11,
+        "after": 4
+      },
+      {
+        "target": "你覆咗個訊息未",
+        "before": 0,
+        "after": 15
+      },
+      {
+        "target": "你搭地鐵定巴士",
+        "before": 9,
+        "after": 7
+      }
+    ]
+  },
+  "single_learning_simulation": {
+    "tool": "tools/ContextLearningEvaluation.java",
+    "method": "Three passes of explicit per-character selections across the same 32 authored cases using actual SingleSelectionHistory and PhraseLearning; both arms share identical legacy character/known-word counts and RecentLearning weights. Contextual arm additionally receives the selected short sequence records. No full sentence key created.",
+    "case_sha256": "d29faa28d581c87e6b480ce3924c778e4794fa830d6067249a3369daad6528af",
+    "sequence_records": 294,
+    "legacy_history_only": {
+      "cases": 32,
+      "top1": 26,
+      "top5": 32,
+      "top20": 32,
+      "mrr": 0.8932291666666666
+    },
+    "legacy_and_contextual_history": {
+      "cases": 32,
+      "top1": 32,
+      "top5": 32,
+      "top20": 32,
+      "mrr": 1.0
+    },
+    "target_rank_changes": [
+      {
+        "target": "幫我確認份文件",
+        "legacy_rank": 2,
+        "contextual_rank": 1
+      },
+      {
+        "target": "你搭地鐵定巴士",
+        "legacy_rank": 3,
+        "contextual_rank": 1
+      },
+      {
+        "target": "你收到件貨未",
+        "legacy_rank": 4,
+        "contextual_rank": 1
+      },
+      {
+        "target": "你想送貨定自取",
+        "legacy_rank": 2,
+        "contextual_rank": 1
+      },
+      {
+        "target": "幫我查下張訂單",
+        "legacy_rank": 2,
+        "contextual_rank": 1
+      },
+      {
+        "target": "我幫你搵返份文件",
+        "legacy_rank": 2,
+        "contextual_rank": 1
+      }
+    ],
+    "limitation": "Replaying explicitly selected examples measures personalization, not generalization or unseen real-user accuracy; all contexts are empty initially."
+  },
+  "validation_conversations": {
+    "case_sha256": "70e4db560eeedd4f44619cd4c631624c102124ced01aa4c75f698cadc9371710",
+    "before": {
+      "cases": 240,
+      "top1": 122,
+      "top5": 166,
+      "top20": 186,
+      "mrr": 0.5910369029119029
+    },
+    "after": {
+      "cases": 240,
+      "top1": 122,
+      "top5": 166,
+      "top20": 186,
+      "mrr": 0.5910369029119029
+    },
+    "first_candidate_changes": 0,
+    "target_rank_changes": 0,
+    "any_displayed_list_changes": 0
+  },
+  "additional_heldout_conversations": {
+    "case_sha256": "3649889c21fd1dc454e025d59a0c4cf0c775f8f31b33d4bacdbed899bb656476",
+    "before": {
+      "cases": 240,
+      "top1": 100,
+      "top5": 151,
+      "top20": 171,
+      "mrr": 0.510736065405183
+    },
+    "after": {
+      "cases": 240,
+      "top1": 100,
+      "top5": 151,
+      "top20": 171,
+      "mrr": 0.510736065405183
+    },
+    "first_candidate_changes": 0,
+    "target_rank_changes": 0,
+    "any_displayed_list_changes": 2
+  },
+  "previous_heldout_conversations": {
+    "case_sha256": "bae16312e7f843fa503a61b54b7a734086aab3ff3d0b7d3576f095107bb8d392",
+    "before": {
+      "cases": 120,
+      "top1": 61,
+      "top5": 97,
+      "top20": 108,
+      "mrr": 0.6434118230625584
+    },
+    "after": {
+      "cases": 120,
+      "top1": 61,
+      "top5": 97,
+      "top20": 108,
+      "mrr": 0.6434118230625584
+    },
+    "first_candidate_changes": 0,
+    "target_rank_changes": 0,
+    "any_displayed_list_changes": 1
+  },
+  "previous_authored_regressions": {
+    "handover": {
+      "cases": 30,
+      "top1": 29,
+      "top5": 30,
+      "top20": 30,
+      "mrr": 0.9833333333333333
+    },
+    "completion": {
+      "cases": 16,
+      "top1": 16,
+      "top5": 16,
+      "top20": 16,
+      "mrr": 1.0
+    },
+    "requests": {
+      "cases": 8,
+      "top1": 8,
+      "top5": 8,
+      "top20": 8,
+      "mrr": 1.0
+    },
+    "plural": {
+      "cases": 18,
+      "top1": 15,
+      "top5": 18,
+      "top20": 18,
+      "mrr": 0.9027777777777778
+    }
+  },
+  "privacy": {
+    "default": "Learning off by default; protected/password/noLearning fields produce no learning records",
+    "positive_sequence_capacity": 512,
+    "rejection_capacity": 512,
+    "sequence_storage": "S:<typed character code>:<one or two previous Han characters>:<selected Han character>, stored locally in existing learning preferences",
+    "temporal_weight": "Existing lifetime counts plus bounded recent component, seven-day half-life",
+    "clear_learning": "Existing clear-learning action clears positive, recent and rejection stores, including new S records",
+    "migration": "Existing Q/C/W/E records retained; character pruning excludes new S records"
+  },
+  "wordshk": {
+    "useful_for": "Hong Kong expressions, definitions and attested example combinations",
+    "csv_access": "https://words.hk/faiman/request_data/",
+    "data_imported_in_this_release": false,
+    "access_observed": "Homepage returned HTTP 403; public AlienKevin/wordshk-tools README documents the official CSV access request",
+    "license": "MIT tool license is not taken as permission to reuse original dictionary data; confirm data terms before import"
+  },
+  "validation": {
+    "unit_tests": {
+      "tests": 149,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "lint": {
+      "Error": 0,
+      "Warning": 25
+    },
+    "signed_release_apk": "0.6.35 (42), pinned persistent certificate verified",
+    "signer_sha256": "78c3bd69b5625c63b3dff5357681154f063020a49c5b862fdfa9fed575fccb63",
+    "device_test": false,
+    "all_evaluation_outputs_exact_codes": true,
+    "windows_character_coverage": {
+      "cp950": 13070,
+      "big5hkscs": 17618,
+      "missing": 0
+    },
+    "signing_safeguard_tests": {
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "environment": "Configured Java 17 and Gradle cache activated before running tools/test_signing.py"
+    }
+  },
+  "limits": [
+    "Small no-history authored top-5/top-20 gain; no first-choice gain or conversational target-rank gain measured without personal history.",
+    "Three lower candidate lists changed across the 600 conversation cases, while first candidates and target ranks all remained unchanged.",
+    "Short learned sequences cannot guarantee every wanted sentence enters the bounded search or becomes first; repeated explicit selections may be needed.",
+    "No Android editor/Fold7 device or device-latency validation in this cloud run."
+  ]
+}
