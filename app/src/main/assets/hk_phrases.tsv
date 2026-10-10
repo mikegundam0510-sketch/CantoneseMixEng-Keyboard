@@ -730,3 +730,42 @@ ykrmgehr	交咗報告	30000
 ykrmmsyd	交咗功課	30000
 ykrmqv	交咗表	30000
 ykrmykoq	交咗文件	30000
+
+# Additional authored daily words and productive request/action vocabulary.
+bbke	朋友	12000
+brhd	同學	12000
+hwrm	留咗	12000
+joo	家人	12000
+jphb	老師	12000
+jrhs	客戶	12000
+jro	客人	12000
+jrrm	寄咗	12000
+kbrm	帶咗	12000
+merm	覆咗	12000
+meye	覆返	12000
+oirm	傳咗	12000
+ojbrjn	俾同事	30000
+ojjphb	俾老師	30000
+qirm	拎咗	12000
+qlrm	拎咗	12000
+sgomo	屋企人	30000
+vkyx	收齊	12000
+wlbbke	畀朋友	30000
+wljoo	畀家人	30000
+wljphb	畀老師	30000
+wljrhs	畀客戶	30000
+wljro	畀客人	30000
+xlrm	拎咗	12000
+yksf	交緊	12000
+
+# Additional authored daily words and productive request/action vocabulary.
+mebrjn	覆同事	30000
+mejpvw	覆老細	30000
+mermbrjn	覆咗同事	30000
+mermjpvw	覆咗老細	30000
+meyebrjn	覆返同事	30000
+meyejpvw	覆返老細	30000
+ykithh	送禮物	30000
+ykmthh	送禮物	30000
+ykrmithh	送咗禮物	30000
+ykrmmthh	送咗禮物	30000

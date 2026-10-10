@@ -1,0 +1,320 @@
+{
+  "release": "0.6.33",
+  "baseline_commit": "ba3bc3e0f7d4ecaf228552542b803c3c2bbd49f0",
+  "accepted_changes": [
+    "Authored short daily action, recipient and reply phrases; authored priorities are not measured corpus frequencies",
+    "Bounded handover relation evidence across 12 transient Han characters, requiring action + status before 畀/俾 and a supported recipient; 2 points without an explicit sender, 3 with a pronoun sender; plural recipient counted once",
+    "Completion question evidence 3 points with a handover relation, otherwise 1.5; continuation after 未 withdraws tentative question preference",
+    "Pronoun + action + 咗/返/緊 grammatical preference (1.5) kept independent of the capped lexical phrase preference",
+    "Unchanged model, 48-path beam, 24 character option cap, confidence filter, local learning storage, Single mode and Fold7 layout"
+  ],
+  "authored_development_cases": {
+    "source": "tools/hk_handover_cases.tsv",
+    "case_sha256": "a40c8ef85a205164c03fbf3db5749565382ab9d862e05f2c407497a3b215f387",
+    "before": {
+      "cases": 30,
+      "top1": 3,
+      "top5": 13,
+      "top20": 18,
+      "mrr": 0.21885352120646237,
+      "displayed_candidates": 600
+    },
+    "after": {
+      "cases": 30,
+      "top1": 24,
+      "top5": 26,
+      "top20": 28,
+      "mrr": 0.8380952380952381,
+      "displayed_candidates": 600
+    },
+    "first_candidate_changes": 22,
+    "target_rank_changes": [
+      {
+        "context": "",
+        "target": "你交返功課畀老師",
+        "before_rank": 14,
+        "after_rank": 1
+      },
+      {
+        "context": "",
+        "target": "我交咗功課畀老師",
+        "before_rank": 0,
+        "after_rank": 1
+      },
+      {
+        "context": "",
+        "target": "你交咗文件畀同事未",
+        "before_rank": 5,
+        "after_rank": 1
+      },
+      {
+        "context": "",
+        "target": "你寫咗報告畀同事未",
+        "before_rank": 3,
+        "after_rank": 1
+      },
+      {
+        "context": "",
+        "target": "佢交咗功課畀老師未",
+        "before_rank": 3,
+        "after_rank": 1
+      },
+      {
+        "context": "",
+        "target": "我交咗文件畀老細",
+        "before_rank": 3,
+        "after_rank": 1
+      },
+      {
+        "context": "",
+        "target": "你寄咗文件畀同事未",
+        "before_rank": 9,
+        "after_rank": 1
+      },
+      {
+        "context": "",
+        "target": "佢送咗文件畀同事",
+        "before_rank": 11,
+        "after_rank": 2
+      },
+      {
+        "context": "",
+        "target": "你交返文件畀老細",
+        "before_rank": 3,
+        "after_rank": 1
+      },
+      {
+        "context": "",
+        "target": "我交齊功課畀老師",
+        "before_rank": 0,
+        "after_rank": 6
+      },
+      {
+        "context": "",
+        "target": "你交咗報告畀老師未",
+        "before_rank": 5,
+        "after_rank": 1
+      },
+      {
+        "context": "",
+        "target": "你傳咗文件畀同事未",
+        "before_rank": 0,
+        "after_rank": 1
+      },
+      {
+        "context": "",
+        "target": "我傳咗文件畀你",
+        "before_rank": 0,
+        "after_rank": 1
+      },
+      {
+        "context": "",
+        "target": "我帶咗文件畀同事",
+        "before_rank": 6,
+        "after_rank": 1
+      },
+      {
+        "context": "",
+        "target": "你留咗資料畀同事未",
+        "before_rank": 17,
+        "after_rank": 1
+      },
+      {
+        "context": "",
+        "target": "佢買咗嘢畀朋友",
+        "before_rank": 3,
+        "after_rank": 1
+      },
+      {
+        "context": "",
+        "target": "你送咗禮物畀朋友未",
+        "before_rank": 0,
+        "after_rank": 1
+      },
+      {
+        "context": "",
+        "target": "我寄咗文件畀客戶",
+        "before_rank": 3,
+        "after_rank": 1
+      },
+      {
+        "context": "",
+        "target": "你交緊文件畀同事",
+        "before_rank": 0,
+        "after_rank": 1
+      },
+      {
+        "context": "",
+        "target": "你覆返老細未",
+        "before_rank": 0,
+        "after_rank": 1
+      },
+      {
+        "context": "",
+        "target": "你交返功課畀老師未",
+        "before_rank": 0,
+        "after_rank": 1
+      },
+      {
+        "context": "",
+        "target": "我寄咗文件畀老師",
+        "before_rank": 3,
+        "after_rank": 1
+      },
+      {
+        "context": "",
+        "target": "你傳咗報告畀老細未",
+        "before_rank": 0,
+        "after_rank": 7
+      },
+      {
+        "context": "",
+        "target": "你帶咗文件畀老師未",
+        "before_rank": 0,
+        "after_rank": 1
+      }
+    ]
+  },
+  "previous_completion_cases": {
+    "source": "tools/hk_completion_cases.tsv",
+    "case_sha256": "2762c747d770efaf45c2541bd30473f7b227473953c26ed311c017902107c192",
+    "before": {
+      "cases": 16,
+      "top1": 10,
+      "top5": 14,
+      "top20": 15,
+      "mrr": 0.7044642857142858,
+      "displayed_candidates": 313
+    },
+    "after": {
+      "cases": 16,
+      "top1": 16,
+      "top5": 16,
+      "top20": 16,
+      "mrr": 1.0,
+      "displayed_candidates": 313
+    }
+  },
+  "validation_conversations": {
+    "source": "HKCanCor validation split via tools/build_ranking_cases.py (240 cases)",
+    "case_sha256": "70e4db560eeedd4f44619cd4c631624c102124ced01aa4c75f698cadc9371710",
+    "before": {
+      "cases": 240,
+      "top1": 122,
+      "top5": 166,
+      "top20": 186,
+      "mrr": 0.5917313473563474,
+      "displayed_candidates": 4438
+    },
+    "after": {
+      "cases": 240,
+      "top1": 122,
+      "top5": 166,
+      "top20": 186,
+      "mrr": 0.5910369029119029,
+      "displayed_candidates": 4437
+    },
+    "first_candidate_changes": 0,
+    "target_rank_changes": [
+      {
+        "context": "噉我唔想",
+        "target": "冇咗一班同事",
+        "before_rank": 2,
+        "after_rank": 3
+      }
+    ]
+  },
+  "additional_heldout_conversations": {
+    "source": "HKCanCor held-out split via tools/build_ranking_cases.py (240 cases, excluding tools/lm_heldout_cases.tsv pairs)",
+    "case_sha256": "3649889c21fd1dc454e025d59a0c4cf0c775f8f31b33d4bacdbed899bb656476",
+    "before": {
+      "cases": 240,
+      "top1": 100,
+      "top5": 151,
+      "top20": 171,
+      "mrr": 0.510736065405183,
+      "displayed_candidates": 4551
+    },
+    "after": {
+      "cases": 240,
+      "top1": 100,
+      "top5": 151,
+      "top20": 171,
+      "mrr": 0.510736065405183,
+      "displayed_candidates": 4551
+    },
+    "first_candidate_changes": 0,
+    "target_rank_changes": []
+  },
+  "previous_heldout_conversations": {
+    "source": "tools/lm_heldout_cases.tsv",
+    "case_sha256": "bae16312e7f843fa503a61b54b7a734086aab3ff3d0b7d3576f095107bb8d392",
+    "before": {
+      "cases": 120,
+      "top1": 61,
+      "top5": 97,
+      "top20": 108,
+      "mrr": 0.6434118230625584,
+      "displayed_candidates": 2203
+    },
+    "after": {
+      "cases": 120,
+      "top1": 61,
+      "top5": 97,
+      "top20": 108,
+      "mrr": 0.6434118230625584,
+      "displayed_candidates": 2203
+    },
+    "first_candidate_changes": 0,
+    "target_rank_changes": []
+  },
+  "previous_request_cases": {
+    "cases": 8,
+    "top1": 8,
+    "top5": 8,
+    "top20": 8,
+    "mrr": 1.0,
+    "displayed_candidates": 160
+  },
+  "previous_plural_cases": {
+    "cases": 18,
+    "top1": 15,
+    "top5": 18,
+    "top20": 18,
+    "mrr": 0.9027777777777778,
+    "displayed_candidates": 359
+  },
+  "evaluation": {
+    "personal_history": false,
+    "source": "HKCanCor at 39aeadf920e0b5ca93d0ad7792c59e740e7bdd65",
+    "source_zip_sha256": "09223963b8756254e15353cad843f8a4b0cbc4b9223dc8a8fa27fb1cf846057e",
+    "split_manifest": "app/src/main/assets/MODEL_REPORT.json",
+    "case_generator": "tools/build_ranking_cases.py",
+    "heldout_use": "Regression checks only; not added to training or vocabulary. Additional 240 pairs exclude the previous 120.",
+    "authored_case_use": "Fixed 30 cases written before this change; used for development. These are not an unbiased estimate of real user accuracy.",
+    "rank_zero": "Target absent from first 20; not a measured rank beyond 20",
+    "exact_code_check": "All displayed candidates match the complete typed Quick codes"
+  },
+  "limits": [
+    "No improvement to overall held-out first-choice accuracy measured in this release; targeted authored handover/reply patterns improved.",
+    "Some intended replies remain absent from first 20, e.g. 我覆咗同事 and 你覆咗同事未.",
+    "New vocabulary causes one validation target 冇咗一班同事 to move from rank 2 to 3; all 600 conversational first candidates unchanged.",
+    "Confidence filtering is not a proof of grammatical impossibility; unwanted alternatives can remain.",
+    "Editor context and local learning affect actual rankings.",
+    "No Fold7 device or device latency measurement."
+  ],
+  "validation": {
+    "unit_tests": {
+      "tests": 134,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "lint": {
+      "Error": 0,
+      "Warning": 25
+    },
+    "signed_release_apk": "0.6.33 (40), pinned persistent certificate verified",
+    "device_test": false
+  }
+}

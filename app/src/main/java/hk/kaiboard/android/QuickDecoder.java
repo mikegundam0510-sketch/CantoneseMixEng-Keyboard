@@ -14,10 +14,13 @@ public final class QuickDecoder {
     // Particles and nouns must not receive the A-not-A grammar preference.
     private static final String QUESTION_PREDICATES = "食飲去做睇買返係得知要想試用踩搭打踢聽講問答寫讀開關拎攞畀揀改整洗煮玩行跑坐企瞓等記識明信收放賣換借還帶着著學幫肯敢好啱忙攰凍熱快慢靚貴平難易";
     // Productive request/action constructions. No complete typed sentence is stored.
-    private static final String ACTIONS = "交還送借收睇試改做查問諗學聽講寫讀用打幫去返買飲食整揀拎攞";
+    private static final String ACTIONS = "交還送借收寄傳發派覆帶留印睇試改做查問諗學聽講寫讀用打幫去返買飲食整揀拎攞";
     private static final Set<String> ACTION_WORDS = new HashSet<>(Arrays.asList(
         "繼續", "完善", "改善", "修改", "調整", "檢查", "研究", "練習", "試用", "更新",
         "確認", "提供", "處理", "解釋", "補充", "輸入", "打字", "安排", "完成", "幫手"));
+    private static final String HANDOVER_ACTIONS = "交送寄還傳發拎攞寫帶留印買做";
+    private static final String[] RECIPIENTS = {"我", "你", "佢", "我哋", "你哋", "佢哋",
+        "老細", "同事", "老師", "同學", "朋友", "家人", "客人", "客戶", "屋企人"};
     private final DictionaryEngine dictionary;
     private final OfflineLanguageModel model;
     private final Map<String, Double> pairCounts = new HashMap<>();
@@ -281,7 +284,7 @@ public final class QuickDecoder {
     }
 
     public double languageScore(String prefix, String text) {
-        if (model != null) return model.score(prefix, text) + phraseBonus(prefix, text) + completionBonus(prefix, text);
+        if (model != null) return model.score(prefix, text) + phraseBonus(prefix, text) + completionBonus(prefix, text) + handoverBonus(prefix, text);
         String previous = prefix.isEmpty() ? null : new String(Character.toChars(prefix.codePointBefore(prefix.length())));
         double score = 0;
         for (int cp : text.codePoints().toArray()) {
@@ -296,7 +299,7 @@ public final class QuickDecoder {
             score += Math.log(Math.max(1e-9, probability));
             previous = current;
         }
-        return score + phraseBonus(prefix, text) + completionBonus(prefix, text);
+        return score + phraseBonus(prefix, text) + completionBonus(prefix, text) + handoverBonus(prefix, text);
     }
 
     private static String sentenceContext(String text) {
@@ -307,10 +310,45 @@ public final class QuickDecoder {
         return text.substring(at);
     }
 
+    private static int handoverConfidence(String history) {
+        int confidence = 0;
+        for (int at = 0; at < history.length(); at++) {
+            char marker = history.charAt(at);
+            if (marker != '畀' && marker != '俾') continue;
+            int action = 0;
+            for (int i = 0; i + 1 < at; i++)
+                if (HANDOVER_ACTIONS.indexOf(history.charAt(i)) >= 0 && "咗返緊齊".indexOf(history.charAt(i + 1)) >= 0) {
+                    action = Math.max(action, 2);
+                    boolean sender = (i > 0 && "我你佢".indexOf(history.charAt(i - 1)) >= 0)
+                        || (i > 1 && history.charAt(i - 1) == '哋' && "我你佢".indexOf(history.charAt(i - 2)) >= 0);
+                    if (sender) action = 3;
+                }
+            if (action == 0) continue;
+            for (String recipient : RECIPIENTS) if (history.startsWith(recipient, at + 1)) confidence = Math.max(confidence, action);
+        }
+        return confidence;
+    }
+
+    private static double handoverBonus(String prefix, String text) {
+        String history = sentenceContext(prefix);
+        int established = handoverConfidence(history);
+        double bonus = 0;
+        for (int cp : text.codePoints().toArray()) {
+            if (!OfflineLanguageModel.han(cp)) { history = ""; established = 0; continue; }
+            history = sentenceContext(history + new String(Character.toChars(cp)));
+            int current = handoverConfidence(history);
+            // One bounded relation bonus, including a plural recipient, across tokens.
+            bonus += Math.max(0, current - established);
+            established = current;
+        }
+        return bonus;
+    }
+
     private static double pendingQuestion(String history) {
         if (!history.endsWith("未")) return 0;
         int at = history.lastIndexOf('咗');
-        return at > 0 && ACTIONS.indexOf(history.codePointBefore(at)) >= 0 ? 1.5 : 0;
+        if (at <= 0 || ACTIONS.indexOf(history.codePointBefore(at)) < 0) return 0;
+        return handoverConfidence(history) > 0 ? 3 : 1.5;
     }
 
     private static double completionBonus(String prefix, String text) {
@@ -348,7 +386,8 @@ public final class QuickDecoder {
             history += new String(Character.toChars(cp));
             int count = history.codePointCount(0, history.length());
             if (count > 5) { history = history.substring(history.offsetByCodePoints(0, count - 5)); count = 5; }
-            double matched = 0;
+            // A frequent short word must not consume the subject/action grammar preference.
+            double matched = 0, structural = 0;
             for (int length = 2; length <= count; length++) {
                 String suffix = history.substring(history.offsetByCodePoints(0, count - length));
                 // Completion supplies right-hand evidence for earlier ambiguous codes,
@@ -358,7 +397,7 @@ public final class QuickDecoder {
             if (count >= 3) {
                 String lastThree = history.substring(history.offsetByCodePoints(0, count - 3));
                 int[] action = lastThree.codePoints().toArray();
-                if ("你我佢".indexOf(action[0]) >= 0 && ACTIONS.indexOf(action[1]) >= 0 && action[2] == '咗') matched += 1.5;
+                if ("你我佢".indexOf(action[0]) >= 0 && ACTIONS.indexOf(action[1]) >= 0 && "咗返緊".indexOf(action[2]) >= 0) structural += 1.5;
                 if ("下吓".indexOf(action[2]) >= 0 && (ACTIONS.indexOf(action[1]) >= 0
                         || ACTION_WORDS.contains(new String(action, 0, 2)))) matched += 1.5;
                 if (action[0] == '想' && "你我佢".indexOf(action[1]) >= 0
@@ -394,7 +433,7 @@ public final class QuickDecoder {
                 }
             }
             // A bounded local preference, so Chinese codes and statistical context still determine choices.
-            bonus += Math.min(4, matched);
+            bonus += Math.min(4, matched) + structural;
         }
         return bonus;
     }
