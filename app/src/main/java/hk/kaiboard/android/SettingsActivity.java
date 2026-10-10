@@ -35,6 +35,7 @@ public final class SettingsActivity extends Activity {
         setContentView(scroll);
         text(page, "粵", 38, accent, true);
         text(page, getString(R.string.app_name), 28, ink, true);
+        text(page, getString(R.string.app_version, BuildConfig.VERSION_NAME), 15, accent, false).setTextIsSelectable(true);
         text(page, "速成・倉頡・English\n一個鍵盤，自然混合輸入。", 16, Color.DKGRAY, false);
 
         LinearLayout start = card("開始使用");

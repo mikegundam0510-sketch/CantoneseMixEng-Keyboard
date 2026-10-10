@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">cantonesemixeng keyboard</string>
+    <string name="app_version">版本 %1$s</string>
     <string name="subtype_name">速成・倉頡・English</string>
     <style name="AppTheme" parent="android:style/Theme.Material.Light.NoActionBar">
         <item name="android:fontFamily">sans</item>

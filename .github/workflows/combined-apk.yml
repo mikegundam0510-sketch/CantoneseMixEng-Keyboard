@@ -2,7 +2,7 @@ name: Combined signed APK
 on:
   workflow_dispatch:
   push:
-    branches: [codex/cangjie-space-predictions, codex/hk-personal-learning, codex/cangjie-compatible-codes, codex/windows-ime-code-compat, codex/fold7-reference-layout, codex/fold7-key-size, codex/fold-cover-size-correction, codex/fold-key-label-fixes, codex/hide-missing-glyph-candidates, codex/hk-recency-ranking, codex/single-character-selection, codex/continuous-clause-ranking, codex/hk-correction-preferences, codex/continuous-search-coverage]
+    branches: [codex/cangjie-space-predictions, codex/hk-personal-learning, codex/cangjie-compatible-codes, codex/windows-ime-code-compat, codex/fold7-reference-layout, codex/fold7-key-size, codex/fold-cover-size-correction, codex/fold-key-label-fixes, codex/hide-missing-glyph-candidates, codex/hk-recency-ranking, codex/single-character-selection, codex/continuous-clause-ranking, codex/hk-correction-preferences, codex/continuous-search-coverage, codex/visible-app-version]
 permissions:
   contents: read
 env:
@@ -34,7 +34,7 @@ jobs:
           mkdir -p device-test apk
           cp app/build/outputs/apk/debug/app-debug.apk apk/
           python3 tools/verify_apk_signing.py app/build/outputs/apk/debug/app-debug.apk
-          cp app/build/outputs/apk/debug/app-debug.apk device-test/cantonesemixeng-keyboard-0.6.31.apk
+          cp app/build/outputs/apk/debug/app-debug.apk device-test/cantonesemixeng-keyboard-0.6.32.apk
           "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose --print-certs device-test/*.apk > device-test/APK-verification.txt
           "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging device-test/*.apk >> device-test/APK-verification.txt
           sha256sum device-test/*.apk >> device-test/APK-verification.txt
@@ -43,7 +43,7 @@ jobs:
           if grep -q FakeVoiceService device-test/manifest.txt; then exit 1; fi
       - uses: actions/upload-artifact@v4
         with:
-          name: cantonesemixeng-keyboard-0.6.31
+          name: cantonesemixeng-keyboard-0.6.32
           path: device-test/
           retention-days: 14
       - name: Free space for emulator
@@ -77,7 +77,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: combined-0.6.31-verification
+          name: combined-0.6.32-verification
           path: |
             app/build/reports/tests/
             app/build/reports/androidTests/
