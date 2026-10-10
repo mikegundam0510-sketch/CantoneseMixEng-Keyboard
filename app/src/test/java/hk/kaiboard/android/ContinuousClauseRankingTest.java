@@ -71,11 +71,41 @@ public class ContinuousClauseRankingTest {
             assertEquals(result.size(),new HashSet<>(result).size());
             for(String candidate:result) assertFalse(dictionary.matchQuickCodes(fields[1],candidate).isEmpty());
         }
-        assertTrue(first>=24);assertTrue(top5>=26);
+        assertTrue(first>=29);assertEquals(30,top5);
+    }
+    @Test public void previouslyMissingAndLowRankedRepliesRankFirst() {
+        String[][] examples={{"himermbrjn","我覆咗同事"},{"ofmermbrjnjd","你覆咗同事未"},
+            {"hiykyxmsydwljphb","我交齊功課畀老師"},{"ofoirmgehrwljpvwjd","你傳咗報告畀老細未"},
+            {"gbhiykyeykoq","幫我交返文件"}};
+        for(String[] example:examples) {
+            assertEquals(example[1],decoder.decode(example[0],(c,w)->0).get(0));
+            assertFalse(decoder.knownWord(example[1]));
+        }
+    }
+    @Test public void repeatedExplicitCorrectionsCanChooseAnotherValidHandover() {
+        String code="osykrmykoqwlbrjn", wanted="佢送咗文件畀同事";
+        InputCandidate previous=InputCandidate.chinese(dictionary,code,"佢交咗文件畀同事");
+        InputCandidate replacement=InputCandidate.chinese(dictionary,code,wanted);
+        Set<String> rejected=CorrectionLearning.rejectedKeys(previous,replacement,decoder::knownWord,true,false,true,false);
+        long now=123456789;
+        String positive=null,negative=null;
+        for(int i=0;i<5;i++) {
+            positive=RecentLearning.update(positive,now,1);
+            negative=CorrectionLearning.update(negative,now,1);
+        }
+        final int chosenWeight=RecentLearning.weight(5,positive,now);
+        final String rejectedState=negative;
+        List<String> result=decoder.decode(code,(c,w)->{
+            int weight=c.equals("yk") && w.equals("送") ? chosenWeight : 0;
+            String key=decoder.knownWord(w) ? PhraseLearning.key(w) : LearningRanker.key(c,true,false,w);
+            return CorrectionLearning.adjust(weight,rejected.contains(key) ? rejectedState : null,now);
+        });
+        assertEquals(wanted,result.get(0));
+        assertFalse(decoder.knownWord(wanted));
     }
     @Test public void recipientEvidenceIsIndependentOfLatticeTokenBoundaries() {
         for(String text:new String[]{"我交咗功課畀老師", "你傳咗文件畀同事未", "佢買咗嘢畀朋友",
-                "我哋寄咗文件畀你哋", "你帶咗文件俾老師未"}) {
+                "我哋寄咗文件畀你哋", "你帶咗文件俾老師未", "你覆咗同事未", "我交齊功課畀老師"}) {
             for(int at=1;at<text.length();at++) assertEquals(text,
                 decoder.languageScore("",text),decoder.languageScore("",text.substring(0,at))+
                 decoder.languageScore(text.substring(0,at),text.substring(at)),1e-9);
@@ -93,6 +123,8 @@ public class ContinuousClauseRankingTest {
         assertEquals(lexical,uniform.languageScore("你交咗功課界","你"),1e-9);
         assertEquals(lexical,uniform.languageScore("你交咗功課，畀","你"),1e-9);
         assertEquals(uniform.languageScore("","哋"),uniform.languageScore("你交咗功課畀你","哋"),1e-9);
+        assertEquals(3,uniform.languageScore("你覆咗同","事")-uniform.languageScore("","事"),1e-9);
+        assertEquals(uniform.languageScore("","事"),uniform.languageScore("你覆咗，同","事"),1e-9);
         assertEquals(1.5,uniform.languageScore("你睇咗文件","未")-uniform.languageScore("","未"),1e-9);
     }
     @Test public void questionEvidenceSpansTheRecipientButResetsAtPunctuation() {

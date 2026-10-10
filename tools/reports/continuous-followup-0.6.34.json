@@ -1,0 +1,195 @@
+{
+  "release": "0.6.34",
+  "baseline_commit": "313fdbb75db6a9f1881bb2922c8a1436e1f68a87",
+  "accepted_changes": [
+    "Bounded subject + action + status grammatical backoff only for existing authored action/status phrases; compare the same pronoun + 做 + status transition, cap at 6 and retain the real object likelihood",
+    "Compute immutable grammatical backoff table once during decoder construction, instead of calling the model repeatedly per search path",
+    "Include 齊 as a productive action status; reply + 咗/返/緊 can take a known recipient directly without a 畀/俾 marker",
+    "Unchanged model, vocabulary, 48-path beam, code matching, local learning storage, Single mode and Fold7 layout"
+  ],
+  "authored_development_cases": {
+    "case_sha256": "a40c8ef85a205164c03fbf3db5749565382ab9d862e05f2c407497a3b215f387",
+    "before": {
+      "cases": 30,
+      "top1": 24,
+      "top5": 26,
+      "top20": 28,
+      "mrr": 0.8380952380952381,
+      "displayed_candidates": 600
+    },
+    "after": {
+      "cases": 30,
+      "top1": 29,
+      "top5": 30,
+      "top20": 30,
+      "mrr": 0.9833333333333333,
+      "displayed_candidates": 600
+    },
+    "first_candidate_changes": 5,
+    "target_rank_changes": [
+      {
+        "target": "我交齊功課畀老師",
+        "before_rank": 6,
+        "after_rank": 1
+      },
+      {
+        "target": "你覆咗同事未",
+        "before_rank": 0,
+        "after_rank": 1
+      },
+      {
+        "target": "我覆咗同事",
+        "before_rank": 0,
+        "after_rank": 1
+      },
+      {
+        "target": "幫我交返文件",
+        "before_rank": 3,
+        "after_rank": 1
+      },
+      {
+        "target": "你傳咗報告畀老細未",
+        "before_rank": 7,
+        "after_rank": 1
+      }
+    ]
+  },
+  "previous_completion_cases": {
+    "before": {
+      "cases": 16,
+      "top1": 16,
+      "top5": 16,
+      "top20": 16,
+      "mrr": 1.0,
+      "displayed_candidates": 313
+    },
+    "after": {
+      "cases": 16,
+      "top1": 16,
+      "top5": 16,
+      "top20": 16,
+      "mrr": 1.0,
+      "displayed_candidates": 313
+    }
+  },
+  "validation_conversations": {
+    "case_sha256": "70e4db560eeedd4f44619cd4c631624c102124ced01aa4c75f698cadc9371710",
+    "before": {
+      "cases": 240,
+      "top1": 122,
+      "top5": 166,
+      "top20": 186,
+      "mrr": 0.5910369029119029,
+      "displayed_candidates": 4437
+    },
+    "after": {
+      "cases": 240,
+      "top1": 122,
+      "top5": 166,
+      "top20": 186,
+      "mrr": 0.5910369029119029,
+      "displayed_candidates": 4437
+    },
+    "first_candidate_changes": 0,
+    "target_rank_changes": []
+  },
+  "additional_heldout_conversations": {
+    "case_sha256": "3649889c21fd1dc454e025d59a0c4cf0c775f8f31b33d4bacdbed899bb656476",
+    "before": {
+      "cases": 240,
+      "top1": 100,
+      "top5": 151,
+      "top20": 171,
+      "mrr": 0.510736065405183,
+      "displayed_candidates": 4551
+    },
+    "after": {
+      "cases": 240,
+      "top1": 100,
+      "top5": 151,
+      "top20": 171,
+      "mrr": 0.510736065405183,
+      "displayed_candidates": 4551
+    },
+    "first_candidate_changes": 0,
+    "target_rank_changes": []
+  },
+  "previous_heldout_conversations": {
+    "case_sha256": "bae16312e7f843fa503a61b54b7a734086aab3ff3d0b7d3576f095107bb8d392",
+    "before": {
+      "cases": 120,
+      "top1": 61,
+      "top5": 97,
+      "top20": 108,
+      "mrr": 0.6434118230625584,
+      "displayed_candidates": 2203
+    },
+    "after": {
+      "cases": 120,
+      "top1": 61,
+      "top5": 97,
+      "top20": 108,
+      "mrr": 0.6434118230625584,
+      "displayed_candidates": 2203
+    },
+    "first_candidate_changes": 0,
+    "target_rank_changes": []
+  },
+  "previous_request_cases": {
+    "cases": 8,
+    "top1": 8,
+    "top5": 8,
+    "top20": 8,
+    "mrr": 1.0,
+    "displayed_candidates": 160
+  },
+  "previous_plural_cases": {
+    "cases": 18,
+    "top1": 15,
+    "top5": 18,
+    "top20": 18,
+    "mrr": 0.9027777777777778,
+    "displayed_candidates": 359
+  },
+  "evaluation": {
+    "source": "HKCanCor 39aeadf920e0b5ca93d0ad7792c59e740e7bdd65, checksum-pinned ZIP, separate validation/heldout conversation files in MODEL_REPORT.json",
+    "generator": "tools/build_ranking_cases.py",
+    "personal_history": false,
+    "exact_codes": "Every displayed candidate checked against all typed codes",
+    "rank_zero": "Absent from first 20, not a measured rank beyond 20",
+    "authored_cases": "Fixed before 0.6.33 development; reused for targeted follow-up, not an unbiased estimate of real-user accuracy",
+    "heldout_use": "Regression checks only; no addition to model training or vocabulary"
+  },
+  "personal_correction_regression": {
+    "scenario": "Five explicit replacements of 佢交咗文件畀同事 with 佢送咗文件畀同事, using existing RecentLearning and CorrectionLearning weights",
+    "test": "ContinuousClauseRankingTest.repeatedExplicitCorrectionsCanChooseAnotherValidHandover",
+    "note": "Synthetic local-learning test, not device usage or proof a single character choice always promotes a sentence"
+  },
+  "experiment_not_shipped": {
+    "authored_送咗_priority": {
+      "development_top1": 25,
+      "development_top5": 30,
+      "reason": "Raises an equally valid 送 interpretation above several intended 交 sentences sharing identical Quick codes; final change retains existing vocabulary and priorities"
+    }
+  },
+  "limits": [
+    "One intended authored sentence, 佢送咗文件畀同事, remains second behind equally valid 佢交咗文件畀同事, with identical codes.",
+    "All 600 conversational target ranks and first candidates unchanged; no overall conversational accuracy gain measured.",
+    "Confidence filtering is not proof of grammatical impossibility; unwanted alternatives may remain.",
+    "No Fold7 device or device latency measurement; actual ranking depends on context and local learning."
+  ],
+  "validation": {
+    "unit_tests": {
+      "tests": 136,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "lint": {
+      "Error": 0,
+      "Warning": 25
+    },
+    "signed_release_apk": "0.6.34 (41), pinned persistent certificate verified",
+    "device_test": false
+  }
+}

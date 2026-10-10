@@ -29,6 +29,7 @@ public final class QuickDecoder {
     private final Set<String> knownPhrases = new HashSet<>();
     private final Map<Integer, List<Token>> continuations = new HashMap<>();
     private final Map<String, Double> phraseEvidence = new HashMap<>();
+    private final Map<String, Double> predicateBackoff = new HashMap<>();
     private static final class Token {
         final String text; final double score;
         Token(String text, double score) { this.text = text; this.score = score; }
@@ -52,6 +53,16 @@ public final class QuickDecoder {
         if (hkInput != null) readVocabulary(hkInput, wordCounts, true);
         if (cantoneseInput != null) readVocabulary(cantoneseInput, wordCounts, false);
         addPredicateQuestions();
+        if (model != null) for (int subject : "我你佢".codePoints().toArray())
+            for (int verb : ACTIONS.codePoints().toArray())
+                for (int status : "咗返緊齊".codePoints().toArray()) {
+                    String predicate = new String(new int[]{verb, status}, 0, 2);
+                    if (phraseEvidence.getOrDefault(predicate, 0.0) < 2) continue;
+                    String sender = new String(Character.toChars(subject));
+                    double evidence = Math.min(6, Math.max(0,
+                        model.score(sender, "做" + new String(Character.toChars(status))) - model.score(sender, predicate)));
+                    predicateBackoff.put(sender + predicate, evidence);
+                }
         if (wordCounts != null) for (Map.Entry<String, Double> entry : wordCounts.entrySet()) {
             String previous = null;
             for (int cp : entry.getKey().codePoints().toArray()) {
@@ -310,18 +321,26 @@ public final class QuickDecoder {
         return text.substring(at);
     }
 
+    private static int actionConfidence(String history, int at) {
+        boolean sender = (at > 0 && "我你佢".indexOf(history.charAt(at - 1)) >= 0)
+            || (at > 1 && history.charAt(at - 1) == '哋' && "我你佢".indexOf(history.charAt(at - 2)) >= 0);
+        return sender ? 3 : 2;
+    }
+
     private static int handoverConfidence(String history) {
         int confidence = 0;
+        // A reply takes a person directly, unlike a handover's 畀/俾 marker.
+        for (int i = 0; i + 2 < history.length(); i++)
+            if (history.charAt(i) == '覆' && "咗返緊".indexOf(history.charAt(i + 1)) >= 0)
+                for (String recipient : RECIPIENTS)
+                    if (history.startsWith(recipient, i + 2)) confidence = Math.max(confidence, actionConfidence(history, i));
         for (int at = 0; at < history.length(); at++) {
             char marker = history.charAt(at);
             if (marker != '畀' && marker != '俾') continue;
             int action = 0;
             for (int i = 0; i + 1 < at; i++)
                 if (HANDOVER_ACTIONS.indexOf(history.charAt(i)) >= 0 && "咗返緊齊".indexOf(history.charAt(i + 1)) >= 0) {
-                    action = Math.max(action, 2);
-                    boolean sender = (i > 0 && "我你佢".indexOf(history.charAt(i - 1)) >= 0)
-                        || (i > 1 && history.charAt(i - 1) == '哋' && "我你佢".indexOf(history.charAt(i - 2)) >= 0);
-                    if (sender) action = 3;
+                    action = Math.max(action, actionConfidence(history, i));
                 }
             if (action == 0) continue;
             for (String recipient : RECIPIENTS) if (history.startsWith(recipient, at + 1)) confidence = Math.max(confidence, action);
@@ -397,7 +416,13 @@ public final class QuickDecoder {
             if (count >= 3) {
                 String lastThree = history.substring(history.offsetByCodePoints(0, count - 3));
                 int[] action = lastThree.codePoints().toArray();
-                if ("你我佢".indexOf(action[0]) >= 0 && ACTIONS.indexOf(action[1]) >= 0 && "咗返緊".indexOf(action[2]) >= 0) structural += 1.5;
+                if ("你我佢".indexOf(action[0]) >= 0 && ACTIONS.indexOf(action[1]) >= 0 && "咗返緊齊".indexOf(action[2]) >= 0) {
+                    structural += 1.5;
+                    // Modern authored action/status phrases can be sparse in the older corpus.
+                    // Back off only their productive subject/predicate transition, with a cap;
+                    // keep the actual object's likelihood and all typed-code constraints.
+                    structural += predicateBackoff.getOrDefault(lastThree, 0.0);
+                }
                 if ("下吓".indexOf(action[2]) >= 0 && (ACTIONS.indexOf(action[1]) >= 0
                         || ACTION_WORDS.contains(new String(action, 0, 2)))) matched += 1.5;
                 if (action[0] == '想' && "你我佢".indexOf(action[1]) >= 0
