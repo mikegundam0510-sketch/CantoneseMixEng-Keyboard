@@ -382,7 +382,8 @@
     "diagnostic_verification": "Temporary diagnostic driver returned the same32 candidate lists/ranks; production files uninstrumented.",
     "ci": "Commit skips CI to avoid automatic APK artifacts; required local unit/lint checks run.",
     "android_physical": "Not run; no Fold7 or on-device speed claim.",
-    "apk_build": "Not run."
+    "apk_build": "Not run.",
+    "historical_loading_tool": "Historical CI baseline0279ea5 compiled and loaded with the revised tool; optional phrase-model loading avoids requiring new API on archived engines."
   },
   "performance": {
     "method": "Java17, Xmx1g,3 full warm passes then9 measurements per code; before/after sequential, final run without concurrent builds or evaluations. Desktop only.",

@@ -18,12 +18,13 @@ public final class LoadingBenchmark {
         QuickDecoder decoder;
         try {
             // The archived baseline has only the original five-argument constructor.
+            Class<?> phraseClass = Class.forName("hk.cantonesemixeng.keyboard.PhraseLanguageModel");
             var constructor = QuickDecoder.class.getConstructor(DictionaryEngine.class, Reader.class,
-                Reader.class, Reader.class, OfflineLanguageModel.class, PhraseLanguageModel.class, Reader.class);
+                Reader.class, Reader.class, OfflineLanguageModel.class, phraseClass, Reader.class);
             decoder = constructor.newInstance(dictionary, asset("quick_phrases.tsv"), asset("hk_phrases.tsv"), asset("cantonese_phrases.tsv"),
                 OfflineLanguageModel.load(new FileInputStream(assets + "language_model.b64")),
-                PhraseLanguageModel.load(new FileInputStream(assets + "phrase_model.b64")), asset("hk_chat_phrases.tsv"));
-        } catch (NoSuchMethodException legacy) {
+                phraseClass.getMethod("load", InputStream.class).invoke(null, new FileInputStream(assets + "phrase_model.b64")), asset("hk_chat_phrases.tsv"));
+        } catch (ClassNotFoundException | NoSuchMethodException legacy) {
             decoder = new QuickDecoder(dictionary, asset("quick_phrases.tsv"), asset("hk_phrases.tsv"), asset("cantonese_phrases.tsv"),
                 OfflineLanguageModel.load(new FileInputStream(assets + "language_model.b64")));
         }
