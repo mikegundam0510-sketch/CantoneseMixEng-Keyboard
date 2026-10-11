@@ -52,7 +52,7 @@ jobs:
           profile: pixel_2
           disk-size: 2048M
           disable-animations: true
-          script: python3 tools/verify_selection.py 'hk.kaiboard.android.SwipeSelectionTest#systemVoiceStartsDirectlyAndCancelPreventsInsertion,hk.kaiboard.android.SwipeSelectionTest#voiceRecoveryAndCancel'
+          script: python3 tools/verify_selection.py 'hk.cantonesemixeng.keyboard.SwipeSelectionTest#systemVoiceStartsDirectlyAndCancelPreventsInsertion,hk.cantonesemixeng.keyboard.SwipeSelectionTest#voiceRecoveryAndCancel'
       - uses: actions/upload-artifact@v4
         if: always()
         with:

@@ -3,7 +3,7 @@ on:
   push:
     branches: [codex/reference-keyboard-emoji]
     paths:
-      - 'app/src/main/java/hk/kaiboard/android/KaiboardService.java'
+      - 'app/src/main/java/hk/cantonesemixeng/keyboard/CantoneseMixEngKeyboardService.java'
       - 'tools/navigation_smoke.py'
       - '.github/workflows/navigation.yml'
 permissions:

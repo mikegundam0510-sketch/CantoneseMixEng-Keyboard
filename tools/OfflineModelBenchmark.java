@@ -1,4 +1,4 @@
-import hk.kaiboard.android.*;
+import hk.cantonesemixeng.keyboard.*;
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;

@@ -23,10 +23,10 @@ def dismiss_system_prompt():
   if node.get('text') in ('GOT IT','Got it'):
    b=bounds(node);adb('shell','input','tap',str((b[0]+b[2])//2),str((b[1]+b[3])//2));time.sleep(1);return
 def reset(kind='normal'):
- adb('shell','am','start','--activity-single-top','-n','hk.kaiboard.android/.KeyboardPreviewActivity','--es','test_text','__EMPTY__','--es','test_input_type',kind);time.sleep(2);dismiss_system_prompt()
+ adb('shell','am','start','--activity-single-top','-n','hk.kaiboard.android/hk.cantonesemixeng.keyboard.KeyboardPreviewActivity','--es','test_text','__EMPTY__','--es','test_input_type',kind);time.sleep(2);dismiss_system_prompt()
  n=next(n for n in tree().iter('node') if n.get('class')=='android.widget.EditText');b=bounds(n)
  adb('shell','input','tap',str((b[0]+b[2])//2),str(b[1]+40));time.sleep(.5)
- adb('shell','am','start','--activity-single-top','-n','hk.kaiboard.android/.KeyboardPreviewActivity','--es','test_text','__EMPTY__','--es','test_input_type',kind);time.sleep(1)
+ adb('shell','am','start','--activity-single-top','-n','hk.kaiboard.android/hk.cantonesemixeng.keyboard.KeyboardPreviewActivity','--es','test_text','__EMPTY__','--es','test_input_type',kind);time.sleep(1)
 def editor():return next(n.get('text') for n in tree().iter('node') if n.get('class')=='android.widget.EditText')
 def code(value):
  names={'h':'筆劃：橫','s':'筆劃：豎','p':'筆劃：撇','n':'筆劃：點捺','z':'筆劃：折','*':'筆劃：萬用一筆'}

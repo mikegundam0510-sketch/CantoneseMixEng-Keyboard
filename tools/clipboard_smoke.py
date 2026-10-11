@@ -28,16 +28,16 @@ def tap_text(label):
     n=next(n for n in tree().iter('node') if n.get('text')==label)
     b=list(map(int,re.findall(r'\d+',n.get('bounds'))));adb('shell','input','tap',str((b[0]+b[2])//2),str((b[1]+b[3])//2));time.sleep(.4)
 def reset(kind='normal'):
-    adb('shell','am','start','--activity-single-top','-n','hk.kaiboard.android/.KeyboardPreviewActivity','--es','test_text','__EMPTY__','--es','test_input_type',kind);time.sleep(2)
+    adb('shell','am','start','--activity-single-top','-n','hk.kaiboard.android/hk.cantonesemixeng.keyboard.KeyboardPreviewActivity','--es','test_text','__EMPTY__','--es','test_input_type',kind);time.sleep(2)
     for node in tree().iter('node'):
         if node.get('text') in ('GOT IT','Got it'):
             tap_text(node.get('text'));time.sleep(.7);break
     node=next(n for n in tree().iter('node') if n.get('class')=='android.widget.EditText')
     b=list(map(int,re.findall(r'\d+',node.get('bounds'))))
     adb('shell','input','tap',str((b[0]+b[2])//2),str(b[1]+40));time.sleep(.5)
-    adb('shell','am','start','--activity-single-top','-n','hk.kaiboard.android/.KeyboardPreviewActivity','--es','test_text','__EMPTY__','--es','test_input_type',kind);time.sleep(1)
+    adb('shell','am','start','--activity-single-top','-n','hk.kaiboard.android/hk.cantonesemixeng.keyboard.KeyboardPreviewActivity','--es','test_text','__EMPTY__','--es','test_input_type',kind);time.sleep(1)
 def copy(text,sensitive=False):
-    adb('shell','am','start','--activity-single-top','-n','hk.kaiboard.android/.KeyboardPreviewActivity','--es','test_clipboard',text,'--ez','test_sensitive_clip',str(sensitive).lower());time.sleep(.4)
+    adb('shell','am','start','--activity-single-top','-n','hk.kaiboard.android/hk.cantonesemixeng.keyboard.KeyboardPreviewActivity','--es','test_clipboard',text,'--ez','test_sensitive_clip',str(sensitive).lower());time.sleep(.4)
 def editor():return next(n.get('text','') for n in tree().iter('node') if n.get('class')=='android.widget.EditText')
 def shot(name):
     with (out/(name+'.png')).open('wb') as f:subprocess.run(['adb','exec-out','screencap','-p'],stdout=f,check=True)

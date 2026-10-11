@@ -27,7 +27,7 @@ def shot(name):
 
 def reset():
     adb("shell", "am", "start", "--activity-single-top", "-n",
-        "hk.kaiboard.android/.KeyboardPreviewActivity", "--es", "test_text", "__EMPTY__",
+        "hk.kaiboard.android/hk.cantonesemixeng.keyboard.KeyboardPreviewActivity", "--es", "test_text", "__EMPTY__",
         "--es", "test_input_type", "normal")
     time.sleep(1)
 

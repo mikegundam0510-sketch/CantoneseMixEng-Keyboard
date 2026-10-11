@@ -42,7 +42,7 @@ for _ in range(20):
     time.sleep(1)
 assert ime, "Editor smoke input method registration timed out"
 adb("shell","ime","enable",ime);adb("shell","ime","set",ime)
-adb("shell","am","start","--activity-single-top","-n","hk.kaiboard.android/.KeyboardPreviewActivity","--es","test_text","__EMPTY__","--es","test_input_type","normal")
+adb("shell","am","start","--activity-single-top","-n","hk.kaiboard.android/hk.cantonesemixeng.keyboard.KeyboardPreviewActivity","--es","test_text","__EMPTY__","--es","test_input_type","normal")
 time.sleep(3)
 for _ in range(15):
     if find("文字編輯") is not None: break
@@ -56,7 +56,7 @@ assert adb("shell","settings","get","secure","default_input_method").strip() == 
 assert find("文字編輯") is not None, "Editor smoke keyboard did not open"
 radicals=dict(zip("abcdefghijklmnopqrstuvwxyz", "日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜重"))
 def reset_field(value="__EMPTY__"):
-    adb("shell","am","start","--activity-single-top","-n","hk.kaiboard.android/.KeyboardPreviewActivity","--es","test_text",value)
+    adb("shell","am","start","--activity-single-top","-n","hk.kaiboard.android/hk.cantonesemixeng.keyboard.KeyboardPreviewActivity","--es","test_text",value)
     time.sleep(1)
 def type_code(code):
     nodes=tree()
@@ -82,7 +82,7 @@ assert editor_text()=="o", "Direct English globe mode failed"
 tap("切換中英文，長按選擇系統鍵盤")
 assert find("O，人") is not None, "Globe did not return to mixed input"
 # Edit panel: switch the fixture back to multiline before testing vertical arrows.
-adb("shell","am","start","--activity-single-top","-n","hk.kaiboard.android/.KeyboardPreviewActivity","--es","test_text","__EMPTY__","--es","test_input_type","normal")
+adb("shell","am","start","--activity-single-top","-n","hk.kaiboard.android/hk.cantonesemixeng.keyboard.KeyboardPreviewActivity","--es","test_text","__EMPTY__","--es","test_input_type","normal")
 time.sleep(1)
 # Select with keyboard arrows, copy/paste and delete.
 reset_field("香港Hello");tap("文字編輯");shot("17-text-editor")

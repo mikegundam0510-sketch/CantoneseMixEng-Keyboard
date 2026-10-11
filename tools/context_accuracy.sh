@@ -5,16 +5,25 @@ out=${2:-context-evidence}
 mkdir -p "$out"
 tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"' EXIT
-git archive "$base" app/src/main/assets app/src/main/java/hk/kaiboard/android | tar -x -C "$tmp"
+git archive "$base" app/src/main/assets app/src/main/java | tar -x -C "$tmp"
 for variant in before after; do
   root=.
   if [ "$variant" = before ]; then root="$tmp"; fi
   mkdir -p "$tmp/$variant-classes"
-  java com.sun.tools.javac.Main -d "$tmp/$variant-classes" "$root"/app/src/main/java/hk/kaiboard/android/{DictionaryEngine,OfflineLanguageModel,QuickDecoder,SemanticPrompt}.java tools/ContextAccuracy.java
+  source_package=hk.cantonesemixeng.keyboard
+  source_path=hk/cantonesemixeng/keyboard
+  if [ ! -f "$root/app/src/main/java/$source_path/QuickDecoder.java" ]; then
+    source_package=hk.kaiboard.android
+    source_path=hk/kaiboard/android
+  fi
+  runner="$tmp/$variant-runner/ContextAccuracy.java"
+  mkdir -p "$tmp/$variant-runner"
+  sed "s/package hk.cantonesemixeng.keyboard;/package $source_package;/" tools/ContextAccuracy.java > "$runner"
+  java com.sun.tools.javac.Main -sourcepath "$root/app/src/main/java" -d "$tmp/$variant-classes" "$root"/app/src/main/java/"$source_path"/{DictionaryEngine,OfflineLanguageModel,QuickDecoder,SemanticPrompt}.java "$runner"
   for suite in development heldout; do
     cases=tools/semantic_cases.tsv
     if [ "$suite" = heldout ]; then cases=tools/lm_heldout_cases.tsv; fi
-    java -cp "$tmp/$variant-classes" hk.kaiboard.android.ContextAccuracy "$root/app/src/main/assets" "$cases" "$suite" > "$out/$variant-$suite.jsonl"
+    java -cp "$tmp/$variant-classes" "$source_package.ContextAccuracy" "$root/app/src/main/assets" "$cases" "$suite" > "$out/$variant-$suite.jsonl"
   done
 done
 python3 - "$out" <<'PY'

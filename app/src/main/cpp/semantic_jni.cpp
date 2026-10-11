@@ -15,14 +15,14 @@ static std::string bytes(JNIEnv *env,jbyteArray array) {
     std::string value(env->GetArrayLength(array),'\0');
     env->GetByteArrayRegion(array,0,value.size(),reinterpret_cast<jbyte*>(value.data())); return value;
 }
-extern "C" JNIEXPORT jlong JNICALL Java_hk_kaiboard_android_SemanticNative_nativeLoad(JNIEnv *env,jclass,jbyteArray path,jint threads) {
+extern "C" JNIEXPORT jlong JNICALL Java_hk_cantonesemixeng_keyboard_SemanticNative_nativeLoad(JNIEnv *env,jclass,jbyteArray path,jint threads) {
     try {
         auto model=std::make_shared<SemanticCore>(bytes(env,path),std::max(1,std::min(4,threads)));
         std::lock_guard<std::mutex> lock(handles_mutex);
         jlong id=next_handle++;handles.emplace(id,model);return id;
     } catch (...) { return 0; }
 }
-extern "C" JNIEXPORT jfloatArray JNICALL Java_hk_kaiboard_android_SemanticNative_nativeRank(JNIEnv *env,jclass,jlong handle,jbyteArray prompt,jint count,jint budget) {
+extern "C" JNIEXPORT jfloatArray JNICALL Java_hk_cantonesemixeng_keyboard_SemanticNative_nativeRank(JNIEnv *env,jclass,jlong handle,jbyteArray prompt,jint count,jint budget) {
     auto model=get(handle); if(!model)return nullptr;
     try {
         auto result=model->rank(bytes(env,prompt),count,std::max(1,std::min(60000,budget)));
@@ -31,18 +31,18 @@ extern "C" JNIEXPORT jfloatArray JNICALL Java_hk_kaiboard_android_SemanticNative
         if(array)env->SetFloatArrayRegion(array,0,result.size(),result.data());return array;
     } catch (...) { return nullptr; }
 }
-extern "C" JNIEXPORT void JNICALL Java_hk_kaiboard_android_SemanticNative_nativeCancel(JNIEnv*,jclass,jlong handle) {
+extern "C" JNIEXPORT void JNICALL Java_hk_cantonesemixeng_keyboard_SemanticNative_nativeCancel(JNIEnv*,jclass,jlong handle) {
     auto model=get(handle); if(model)model->cancel();
 }
-extern "C" JNIEXPORT void JNICALL Java_hk_kaiboard_android_SemanticNative_nativeClose(JNIEnv*,jclass,jlong handle) {
+extern "C" JNIEXPORT void JNICALL Java_hk_cantonesemixeng_keyboard_SemanticNative_nativeClose(JNIEnv*,jclass,jlong handle) {
     auto model=get(handle); if(model)model->cancel();
     std::lock_guard<std::mutex> lock(handles_mutex);handles.erase(handle);
 }
 
-extern "C" JNIEXPORT void JNICALL Java_hk_kaiboard_android_SemanticNative_nativeArm(JNIEnv*,jclass,jlong handle) {
+extern "C" JNIEXPORT void JNICALL Java_hk_cantonesemixeng_keyboard_SemanticNative_nativeArm(JNIEnv*,jclass,jlong handle) {
     auto model=get(handle); if(model)model->arm();
 }
 
-extern "C" JNIEXPORT jint JNICALL Java_hk_kaiboard_android_SemanticNative_nativeModelCount(JNIEnv*,jclass) {
+extern "C" JNIEXPORT jint JNICALL Java_hk_cantonesemixeng_keyboard_SemanticNative_nativeModelCount(JNIEnv*,jclass) {
     std::lock_guard<std::mutex> lock(handles_mutex);return handles.size();
 }

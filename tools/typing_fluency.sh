@@ -11,7 +11,7 @@ adb shell ime enable hk.kaiboard.android/.KaiboardService
 adb shell ime set hk.kaiboard.android/.KaiboardService
 adb shell dumpsys gfxinfo hk.kaiboard.android reset > fluency-evidence/frames-reset.txt
 status=0
-adb shell am instrument -w -r -e class hk.kaiboard.android.TypingFluencyTest hk.kaiboard.android.test/androidx.test.runner.AndroidJUnitRunner > fluency-evidence/instrumentation.txt || status=$?
+adb shell am instrument -w -r -e class hk.cantonesemixeng.keyboard.TypingFluencyTest hk.kaiboard.android.test/androidx.test.runner.AndroidJUnitRunner > fluency-evidence/instrumentation.txt || status=$?
 adb pull /sdcard/Android/data/hk.kaiboard.android/files fluency-evidence/metrics || true
 adb shell dumpsys gfxinfo hk.kaiboard.android framestats > fluency-evidence/frames.txt
 adb shell dumpsys meminfo hk.kaiboard.android > fluency-evidence/memory.txt

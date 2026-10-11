@@ -37,8 +37,8 @@ jobs:
       - name: Export exact decoder candidates and evaluate full context
         run: |
           mkdir -p /tmp/semantic-java semantic-evidence
-          javac -d /tmp/semantic-java app/src/main/java/hk/kaiboard/android/{DictionaryEngine,OfflineLanguageModel,QuickDecoder,SemanticPrompt}.java tools/ExportSemanticCases.java
-          java -cp /tmp/semantic-java hk.kaiboard.android.ExportSemanticCases tools/semantic_cases.tsv semantic-evidence
+          javac -encoding UTF-8 -sourcepath app/src/main/java -d /tmp/semantic-java app/src/main/java/hk/cantonesemixeng/keyboard/{DictionaryEngine,OfflineLanguageModel,QuickDecoder,SemanticPrompt}.java tools/ExportSemanticCases.java
+          java -cp /tmp/semantic-java hk.cantonesemixeng.keyboard.ExportSemanticCases tools/semantic_cases.tsv semantic-evidence
           /tmp/semantic-build/semantic-probe /tmp/semantic-model.gguf semantic-evidence/manifest.txt > semantic-evidence/scores.tsv
           python3 tools/semantic_report.py semantic-evidence/cases.json semantic-evidence/scores.tsv semantic-evidence/report.json
           /tmp/semantic-build/semantic-likelihood /tmp/semantic-model.gguf semantic-evidence/likelihood-manifest.txt > semantic-evidence/likelihood-scores.tsv

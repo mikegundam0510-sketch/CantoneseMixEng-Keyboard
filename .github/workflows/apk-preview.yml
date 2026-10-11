@@ -61,7 +61,7 @@ jobs:
           disk-size: 2048M
           emulator-boot-timeout: 300
           disable-animations: true
-          script: adb shell wm size 720x1600 && adb shell wm density 320 && python3 tools/verify_selection.py 'hk.kaiboard.android.SwipeSelectionTest#voiceRecoveryAndCancel'
+          script: adb shell wm size 720x1600 && adb shell wm density 320 && python3 tools/verify_selection.py 'hk.cantonesemixeng.keyboard.SwipeSelectionTest#voiceRecoveryAndCancel'
       - name: Include device acceptance evidence
         if: always()
         run: |

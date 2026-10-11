@@ -9,9 +9,11 @@ with tempfile.TemporaryDirectory() as tmp:
         directory=pathlib.Path(tmp)/revision;directory.mkdir()
         sources=[]
         for name in classes:
-            source='app/src/main/java/hk/kaiboard/android/'+name+'.java'
+            legacy_source='app/src/main/java/hk/kaiboard/android/'+name+'.java'
+            source='app/src/main/java/hk/cantonesemixeng/keyboard/'+name+'.java'
             path=directory/(name+'.java')
-            path.write_text(subprocess.check_output(['git','show',baseline+':'+source],cwd=root,text=True) if revision=='before' else (root/source).read_text())
+            content=subprocess.check_output(['git','show',baseline+':'+legacy_source],cwd=root,text=True) if revision=='before' else (root/source).read_text()
+            path.write_text(content.replace('package hk.kaiboard.android;', 'package hk.cantonesemixeng.keyboard;'))
             sources.append(str(path))
         subprocess.run(['javac','-encoding','UTF-8','-sourcepath',str(root/'app/src/main/java'),
             '-d',str(directory),*sources,str(root/'tools/LoadingBenchmark.java')],check=True)

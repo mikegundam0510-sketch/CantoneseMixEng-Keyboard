@@ -27,14 +27,14 @@ gradle.taskGraph.whenReady { graph ->
 }
 
 android {
-    namespace 'hk.kaiboard.android'
+    namespace 'hk.cantonesemixeng.keyboard'
     compileSdk 35
     defaultConfig {
         applicationId 'hk.kaiboard.android'
         minSdk 26
         targetSdk 35
-        versionCode 45
-        versionName '0.6.38'
+        versionCode 46
+        versionName '0.6.39'
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         buildConfigField 'boolean', 'SEMANTIC_MODEL', semanticEnabled.toString()
         if (semanticEnabled) {

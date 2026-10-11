@@ -57,7 +57,7 @@ for mode in ("threebutton","gestural"):
     adb("shell","cmd","overlay","enable-exclusive","--category","com.android.internal.systemui.navbar."+mode)
     time.sleep(2)
     adb("shell","ime","set",ime)
-    adb("shell","am","start","--activity-single-top","-n","hk.kaiboard.android/.KeyboardPreviewActivity","--es","test_text","__EMPTY__")
+    adb("shell","am","start","--activity-single-top","-n","hk.kaiboard.android/hk.cantonesemixeng.keyboard.KeyboardPreviewActivity","--es","test_text","__EMPTY__")
     time.sleep(4)
     for _ in range(15):
         nodes = tree()

@@ -17,7 +17,7 @@ def tap(label): tap_node(node(label))
 def text():
     return next(n.get('text','') for n in tree().iter('node') if n.get('class') == 'android.widget.EditText')
 def reset(value='__EMPTY__', kind='normal'):
-    adb('shell','am','start','--activity-single-top','-n','hk.kaiboard.android/.KeyboardPreviewActivity',
+    adb('shell','am','start','--activity-single-top','-n','hk.kaiboard.android/hk.cantonesemixeng.keyboard.KeyboardPreviewActivity',
         '--es','test_text',value,'--es','test_input_type',kind)
     time.sleep(1)
 def shot(name):

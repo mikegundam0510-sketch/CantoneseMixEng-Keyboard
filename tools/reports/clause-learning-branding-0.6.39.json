@@ -1,0 +1,570 @@
+{
+  "version": "0.6.39",
+  "version_code": 46,
+  "baseline_commit": "646e09ac3bea8cd717dde3e309f5b687252202cb",
+  "baseline_version": "0.6.38",
+  "scope": [
+    "Authored bounded action/object relations supplement existing completion and recipient scoring; no corpus or model assets changed.",
+    "Single confirmation context expands from two to four characters; an explicit longer context can outweigh broad habits from unrelated clauses.",
+    "Rename application branding, source namespace, service implementation, JNI symbols and helper references while preserving Android update identity."
+  ],
+  "clause_relations": {
+    "source": "Authored word categories, not measured corpus frequencies or a general grammar parser.",
+    "score": {
+      "compatible": 2.5,
+      "clear_literal_clash": -2.5,
+      "unknown": 0
+    },
+    "literal_actions": [
+      "食",
+      "飲",
+      "搭",
+      "揸"
+    ],
+    "max_han_context": 8,
+    "boundary_behavior": "Additive across lattice token boundaries; punctuation and non-Han reset context. Longest object supersedes overlapping shorter objects. Bare one-character objects require a subject, classifier or action status anchor.",
+    "hard_candidate_deletion": false
+  },
+  "context_learning": {
+    "max_context": 4,
+    "max_records": 512,
+    "record": "S:code:up-to-four-Han-context:selected-character",
+    "default_enabled": false,
+    "compatibility": "Existing one/two-character keys still work; unchanged files, no migration reset. Explicit negative weights retain their full effect.",
+    "specific_context_priority": "When a positive three/four-character context exists for the same code, positive candidates relying on shorter contexts are capped at min(2, weight/4). Unknown longer contexts fall back to established shorter habits.",
+    "privacy": "Local only; existing protected/password-field gates remain. Stores bounded short sequences, not full sentences.",
+    "controlled_test": {
+      "name": "ContextLearningTest.singleCorrectionsWithDifferentLongContextsGuideTheNextWholeDecode",
+      "before": "One selected JUnit test against the pinned baseline fails: expected 你好, got 係好.",
+      "after": "Passes within final full unit suite.",
+      "fixture": "Equal-prior toy dictionary, same last two context characters 覺得, different three-character contexts 我覺得 / 你覺得 and unequal confirmation counts.",
+      "limits": "Isolates interference between local contexts; not a real-chat accuracy measurement."
+    }
+  },
+  "branding": {
+    "display_name": "CantoneseMixEng Keyboard",
+    "source_namespace": "hk.cantonesemixeng.keyboard",
+    "service_implementation": "hk.cantonesemixeng.keyboard.CantoneseMixEngKeyboardService",
+    "application_id": "hk.kaiboard.android",
+    "compatible_ime_component": "hk.kaiboard.android/.KaiboardService",
+    "legacy_launcher_alias": "hk.kaiboard.android.SettingsActivity",
+    "why_legacy_identifiers_remain": "Preserve in-place updates, persisted app data, selected IME and existing launcher shortcuts. Old baseline paths and historical evidence remain intentionally unchanged.",
+    "jni_bindings": "All six declaration/symbol names match the new namespace; library target and loadLibrary use cantonesemixeng_semantic.",
+    "optional_semantic_runtime": "Not built or exercised; default SEMANTIC_MODEL is false."
+  },
+  "suites": {
+    "validation": {
+      "before": {
+        "cases": 240,
+        "top1": 122,
+        "top5": 174,
+        "top20": 195,
+        "mrr": 0.6027171187121846
+      },
+      "after": {
+        "cases": 240,
+        "top1": 122,
+        "top5": 174,
+        "top20": 195,
+        "mrr": 0.6027171187121846
+      },
+      "input_sha256": "70e4db560eeedd4f44619cd4c631624c102124ced01aa4c75f698cadc9371710",
+      "target_rank_changes": [],
+      "first_candidate_changes": 0
+    },
+    "old": {
+      "before": {
+        "cases": 120,
+        "top1": 60,
+        "top5": 98,
+        "top20": 111,
+        "mrr": 0.6406761593526299
+      },
+      "after": {
+        "cases": 120,
+        "top1": 60,
+        "top5": 98,
+        "top20": 111,
+        "mrr": 0.6415748521630874
+      },
+      "input_sha256": "bae16312e7f843fa503a61b54b7a734086aab3ff3d0b7d3576f095107bb8d392",
+      "target_rank_changes": [
+        {
+          "context": "即係即刻",
+          "code": "qrhijmgibhro",
+          "target": "搭的士去睇跌",
+          "before": 17,
+          "after": 6
+        }
+      ],
+      "first_candidate_changes": 0
+    },
+    "fresh": {
+      "before": {
+        "cases": 240,
+        "top1": 99,
+        "top5": 155,
+        "top20": 173,
+        "mrr": 0.5139412572041249
+      },
+      "after": {
+        "cases": 240,
+        "top1": 99,
+        "top5": 155,
+        "top20": 173,
+        "mrr": 0.5139412572041249
+      },
+      "input_sha256": "3649889c21fd1dc454e025d59a0c4cf0c775f8f31b33d4bacdbed899bb656476",
+      "target_rank_changes": [],
+      "first_candidate_changes": 0
+    },
+    "long_validation": {
+      "before": {
+        "cases": 120,
+        "top1": 44,
+        "top5": 79,
+        "top20": 92,
+        "mrr": 0.4952056277056277
+      },
+      "after": {
+        "cases": 120,
+        "top1": 44,
+        "top5": 79,
+        "top20": 92,
+        "mrr": 0.4952056277056277
+      },
+      "input_sha256": "e4a0a6a0a88d87f28c6b1afdd80106ed33cf9cb5973f1e641abb4964a941d23a",
+      "target_rank_changes": [],
+      "first_candidate_changes": 0
+    },
+    "long_heldout": {
+      "before": {
+        "cases": 120,
+        "top1": 32,
+        "top5": 63,
+        "top20": 76,
+        "mrr": 0.37518380108453636
+      },
+      "after": {
+        "cases": 120,
+        "top1": 33,
+        "top5": 64,
+        "top20": 76,
+        "mrr": 0.38212824552898084
+      },
+      "input_sha256": "ac83cad03f791d0db9b903261b97c8cc1924982710f8cfb676e6033affd4d258",
+      "target_rank_changes": [
+        {
+          "context": "佢係用乜",
+          "code": "rnyseiofqgmnororprp",
+          "target": "嘢方法係攞到個信心呢",
+          "before": 6,
+          "after": 1
+        }
+      ],
+      "first_candidate_changes": 1
+    },
+    "daily": {
+      "before": {
+        "cases": 32,
+        "top1": 15,
+        "top5": 23,
+        "top20": 30,
+        "mrr": 0.5737467393717394
+      },
+      "after": {
+        "cases": 32,
+        "top1": 16,
+        "top5": 25,
+        "top20": 31,
+        "mrr": 0.6335395781119465
+      },
+      "input_sha256": "d29faa28d581c87e6b480ce3924c778e4794fa830d6067249a3369daad6528af",
+      "target_rank_changes": [
+        {
+          "context": "",
+          "code": "gbhimeyeoryjhp",
+          "target": "幫我覆返個訊息",
+          "before": 5,
+          "after": 1
+        },
+        {
+          "context": "",
+          "code": "ofmermoryjhpjd",
+          "target": "你覆咗個訊息未",
+          "before": 14,
+          "after": 3
+        },
+        {
+          "context": "",
+          "code": "hisuvmmermmuhl",
+          "target": "我已經覆咗電郵",
+          "before": 11,
+          "after": 3
+        },
+        {
+          "context": "",
+          "code": "gbhimgypohykoq",
+          "target": "幫我確認份文件",
+          "before": 3,
+          "after": 2
+        },
+        {
+          "context": "",
+          "code": "ofvkmnoqocjd",
+          "target": "你收到件貨未",
+          "before": 0,
+          "after": 19
+        },
+        {
+          "context": "",
+          "code": "ofjirmciwlhijd",
+          "target": "你轉咗錢畀我未",
+          "before": 13,
+          "after": 6
+        },
+        {
+          "context": "",
+          "code": "gbhidmmynvynrj",
+          "target": "幫我查下張訂單",
+          "before": 5,
+          "after": 2
+        }
+      ],
+      "first_candidate_changes": 1
+    },
+    "handover": {
+      "before": {
+        "cases": 30,
+        "top1": 29,
+        "top5": 30,
+        "top20": 30,
+        "mrr": 0.9777777777777777
+      },
+      "after": {
+        "cases": 30,
+        "top1": 29,
+        "top5": 30,
+        "top20": 30,
+        "mrr": 0.9833333333333333
+      },
+      "input_sha256": "a40c8ef85a205164c03fbf3db5749565382ab9d862e05f2c407497a3b215f387",
+      "target_rank_changes": [
+        {
+          "context": "",
+          "code": "osykrmykoqwlbrjn",
+          "target": "佢送咗文件畀同事",
+          "before": 3,
+          "after": 2
+        }
+      ],
+      "first_candidate_changes": 0
+    },
+    "completion": {
+      "before": {
+        "cases": 16,
+        "top1": 16,
+        "top5": 16,
+        "top20": 16,
+        "mrr": 1.0
+      },
+      "after": {
+        "cases": 16,
+        "top1": 16,
+        "top5": 16,
+        "top20": 16,
+        "mrr": 1.0
+      },
+      "input_sha256": "2762c747d770efaf45c2541bd30473f7b227473953c26ed311c017902107c192",
+      "target_rank_changes": [],
+      "first_candidate_changes": 0
+    },
+    "requests": {
+      "before": {
+        "cases": 8,
+        "top1": 8,
+        "top5": 8,
+        "top20": 8,
+        "mrr": 1.0
+      },
+      "after": {
+        "cases": 8,
+        "top1": 8,
+        "top5": 8,
+        "top20": 8,
+        "mrr": 1.0
+      },
+      "input_sha256": "8389c751a4206863cda675a3a8afb16eadcdb35e037607893395426fe38a6565",
+      "target_rank_changes": [],
+      "first_candidate_changes": 0
+    },
+    "plural": {
+      "before": {
+        "cases": 18,
+        "top1": 15,
+        "top5": 18,
+        "top20": 18,
+        "mrr": 0.9027777777777778
+      },
+      "after": {
+        "cases": 18,
+        "top1": 15,
+        "top5": 18,
+        "top20": 18,
+        "mrr": 0.9027777777777778
+      },
+      "input_sha256": "aad06feb12df01de8cdb400e6fb5de89e0613f42950be15fe38537744ed6adf9",
+      "target_rank_changes": [],
+      "first_candidate_changes": 0
+    }
+  },
+  "aggregate_600": {
+    "before": {
+      "cases": 600,
+      "top1": 281,
+      "top5": 427,
+      "top20": 479,
+      "mrr": 0.5747985822370498
+    },
+    "after": {
+      "cases": 600,
+      "top1": 281,
+      "top5": 427,
+      "top20": 479,
+      "mrr": 0.5749783207991412
+    }
+  },
+  "additional_long_240": {
+    "before": {
+      "cases": 240,
+      "top1": 76,
+      "top5": 142,
+      "top20": 168,
+      "mrr": 0.435194714395082
+    },
+    "after": {
+      "cases": 240,
+      "top1": 77,
+      "top5": 143,
+      "top20": 168,
+      "mrr": 0.43866693661730427
+    }
+  },
+  "personal_learning_simulation": {
+    "method": "The same 32 known daily targets are explicitly confirmed using Single choices three times. Existing character/known-word history is shared within each arm. This is a simulation of known choices, not unseen-sentence generalization.",
+    "before": {
+      "sequence_records": 294,
+      "legacy_only": {
+        "cases": 32,
+        "top1": 26,
+        "top5": 32,
+        "top20": 32,
+        "mrr": 0.8932291666666666
+      },
+      "legacy_plus_contextual": {
+        "cases": 32,
+        "top1": 32,
+        "top5": 32,
+        "top20": 32,
+        "mrr": 1.0
+      }
+    },
+    "after": {
+      "sequence_records": 489,
+      "legacy_only": {
+        "cases": 32,
+        "top1": 29,
+        "top5": 32,
+        "top20": 32,
+        "mrr": 0.9479166666666666
+      },
+      "legacy_plus_contextual": {
+        "cases": 32,
+        "top1": 32,
+        "top5": 32,
+        "top20": 32,
+        "mrr": 1.0
+      }
+    },
+    "limits": "Both versions already place all 32 confirmed targets first with contextual learning; no 32-to-32 accuracy improvement is claimed."
+  },
+  "experiments_not_shipped": {
+    "max_overlapping_phrase_bonus": "Using only the maximum overlapping suffix did not improve validation top1 and reduced top5 from 174 to 173 and top20 from 195 to 194; existing summed phrase bonus retained.",
+    "unanchored_single_character_objects": "Boosted an overlapping lexical fragment 日借款錯啊; bare one-character object scoring now requires an explicit anchor.",
+    "initial_weight_1_25": "No validation target-count improvement. Final 2.5 weight and boundary safeguards were calibrated on validation/daily development cases; held-out cases were evaluated after freezing rules."
+  },
+  "validation": {
+    "unit_tests": {
+      "tests": 163,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "lint": {
+      "Error": 0,
+      "Warning": 25
+    },
+    "build": "testDebugUnitTest lintDebug assembleRelease passed on final source.",
+    "all_emitted_candidates_match_exact_input_codes": true,
+    "final_optimization_equivalence": "BitSet ending lookup produces byte-identical complete candidate outputs on all 240 validation cases compared with the evaluated scoring implementation.",
+    "packaged_assets_match_source": true,
+    "packaged_asset_files": 33,
+    "helper_checks": "Modified Python scripts compile, shell helper syntax passes; semantic candidate-exporter JVM helper compiles with the new source namespace.",
+    "android_update": {
+      "old_version": "0.6.36 (43), persistent-signed debug APK",
+      "new_version": "0.6.39 (46), persistent-signed debug APK",
+      "preference_files_unchanged": [
+        "english_learned.xml",
+        "keyboard.xml",
+        "learned.xml",
+        "recent_learned.xml",
+        "rejected_learned.xml"
+      ],
+      "sha256": {
+        "english_learned.xml": "3325d2a819fdd8062c2cdc48a09b995c9b012915bcdf88b1cf9742a7f057c793",
+        "keyboard.xml": "8c75fd80b98f444b90e5b4a88e9554753678b64de758ff3ee9599aa8a87e6914",
+        "learned.xml": "a85602c7eb0438900881a21904cc8639b99d6b519bc92d56f3fe4c42a34671f4",
+        "recent_learned.xml": "3325d2a819fdd8062c2cdc48a09b995c9b012915bcdf88b1cf9742a7f057c793",
+        "rejected_learned.xml": "3325d2a819fdd8062c2cdc48a09b995c9b012915bcdf88b1cf9742a7f057c793"
+      },
+      "legacy_learning_record_retained": "S:of:測試:你",
+      "ime_before": "hk.kaiboard.android/.KaiboardService",
+      "ime_after": "hk.kaiboard.android/.KaiboardService",
+      "instrumentation": "OK (6 tests)",
+      "device": "Android 12 / API 31 software emulator; not Fold7",
+      "legacy_launcher_resolves": true,
+      "cold_start_wait": "am start -W reached renamed SettingsActivity but its 21-second UI wait timed out under software emulation; this is not a startup speed pass.",
+      "new_numeric_view_rendered": false,
+      "new_brand_visible": false,
+      "software_emulator_system_launcher_anr_observed": true
+    }
+  },
+  "limits": [
+    "600 includes 240 development validation cases; fixed daily cases also informed calibration. Gains remain small and these sets are not a representative measurement of current HK chat.",
+    "Long cases are additional contiguous snippets from the same pinned corpus; overlap with shorter snippets is possible.",
+    "No new corpus, model training or evaluation sentences were added to production assets. Authored categories cannot resolve all incoherent combinations or figurative language.",
+    "Additional scoring adds work; host timings fluctuate and are not Android key-to-candidate latency. No physical Fold7 performance or UI validation.",
+    "Actual Android update/instrumentation checks used fixed-signed debug APKs. Final release signature, identity and assets were verified separately. Software-emulator system UI/launcher ANR prevented visual rendering acceptance."
+  ],
+  "reproduce": {
+    "ranking": "Compile tools/RankingEvaluation.java with javac -encoding UTF-8 -sourcepath app/src/main/java and run identical inputs/assets in separate baseline/final JVMs; use legacy namespace for pinned 0.6.38.",
+    "long_cases": "python3 tools/build_ranking_cases.py /path/to/hkcancor-utf8.zip /tmp/long-cases --count 120 --target-length 10",
+    "learning": "Compile tools/ContextLearningEvaluation.java with the actual corresponding engine and run tools/hk_daily_context_cases.tsv; confirms known targets three times.",
+    "performance": "Separate sequential Java 17 JVMs, -Xmx1g; SearchPerformanceEvaluation uses three warmup and nine measured passes per code."
+  },
+  "apk": {
+    "file": "CantoneseMixEng-Keyboard-0.6.39.apk",
+    "bytes": 9864401,
+    "sha256": "6d0670b82313508bb8e3aabc163f531d2ce6018347a2d5da9f72c0fa3fc885cf",
+    "application_id": "hk.kaiboard.android",
+    "version_name": "0.6.39",
+    "version_code": 46,
+    "certificate_sha256": "78c3bd69b5625c63b3dff5357681154f063020a49c5b862fdfa9fed575fccb63",
+    "signature_verified": true
+  },
+  "performance": {
+    "environment": "Sequential desktop Java 17 JVMs, -Xmx1g, release assets; no concurrent emulator/evaluation/build during timed passes. Three warmup/nine measured passes per code.",
+    "units": "milliseconds",
+    "initial_pair": [
+      {
+        "code": "ofonaovrmrq",
+        "length": 11,
+        "before_median_ms": 65.896,
+        "before_max_ms": 75.12,
+        "after_median_ms": 70.084,
+        "after_max_ms": 105.536
+      },
+      {
+        "code": "hmerrrysmlrp",
+        "length": 12,
+        "before_median_ms": 73.906,
+        "before_max_ms": 78.242,
+        "after_median_ms": 105.53,
+        "after_max_ms": 165.466
+      },
+      {
+        "code": "dpofvivcjutrmyyjvcqnjd",
+        "length": 22,
+        "before_median_ms": 120.379,
+        "before_max_ms": 126.766,
+        "after_median_ms": 215.017,
+        "after_max_ms": 328.224
+      },
+      {
+        "code": "ofykrmmsydwljpvwjd",
+        "length": 18,
+        "before_median_ms": 102.618,
+        "before_max_ms": 105.887,
+        "after_median_ms": 155.582,
+        "after_max_ms": 315.664
+      },
+      {
+        "code": "vkmmnkmrvordrjjj",
+        "length": 16,
+        "before_median_ms": 120.345,
+        "before_max_ms": 154.572,
+        "after_median_ms": 130.817,
+        "after_max_ms": 248.862
+      },
+      {
+        "code": "hihihihihihihihihihihihihihihihihihihihihihihihi",
+        "length": 48,
+        "before_median_ms": 450.466,
+        "before_max_ms": 492.528,
+        "after_median_ms": 674.202,
+        "after_max_ms": 808.586
+      }
+    ],
+    "repeat_pair": [
+      {
+        "code": "ofonaovrmrq",
+        "length": 11,
+        "before_median_ms": 206.256,
+        "before_max_ms": 444.286,
+        "after_median_ms": 75.633,
+        "after_max_ms": 110.864
+      },
+      {
+        "code": "hmerrrysmlrp",
+        "length": 12,
+        "before_median_ms": 178.493,
+        "before_max_ms": 300.831,
+        "after_median_ms": 85.203,
+        "after_max_ms": 120.49
+      },
+      {
+        "code": "dpofvivcjutrmyyjvcqnjd",
+        "length": 22,
+        "before_median_ms": 147.048,
+        "before_max_ms": 282.705,
+        "after_median_ms": 137.255,
+        "after_max_ms": 180.081
+      },
+      {
+        "code": "ofykrmmsydwljpvwjd",
+        "length": 18,
+        "before_median_ms": 107.498,
+        "before_max_ms": 163.532,
+        "after_median_ms": 109.757,
+        "after_max_ms": 271.061
+      },
+      {
+        "code": "vkmmnkmrvordrjjj",
+        "length": 16,
+        "before_median_ms": 133.581,
+        "before_max_ms": 163.815,
+        "after_median_ms": 167.593,
+        "after_max_ms": 244.617
+      },
+      {
+        "code": "hihihihihihihihihihihihihihihihihihihihihihihihi",
+        "length": 48,
+        "before_median_ms": 830.588,
+        "before_max_ms": 1022.054,
+        "after_median_ms": 733.385,
+        "after_max_ms": 1100.038
+      }
+    ],
+    "note": "Initial pair showed substantial timing variation after the ending-lookup optimization. Repeated both arms sequentially without scoring changes to assess the unresolved runtime concern. Report both pairs; no Android latency or unchanged-speed claim. 48-code repeated hi is a stress case."
+  }
+}

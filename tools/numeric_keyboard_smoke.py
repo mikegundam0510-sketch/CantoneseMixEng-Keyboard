@@ -16,7 +16,7 @@ if not args.collect_only:
     log = args.output / 'instrumentation.txt'
     with log.open('w', encoding='utf-8') as out:
         result = subprocess.run(['adb', 'shell', 'am', 'instrument', '-w', '-e', 'class',
-            'hk.kaiboard.android.NumericKeyboardTest',
+            'hk.cantonesemixeng.keyboard.NumericKeyboardTest',
             'hk.kaiboard.android.test/androidx.test.runner.AndroidJUnitRunner'],
             stdout=out, stderr=subprocess.STDOUT, text=True, timeout=900)
     output = log.read_text(encoding='utf-8')

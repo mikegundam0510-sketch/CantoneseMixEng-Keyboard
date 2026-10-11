@@ -60,7 +60,7 @@ for _ in range(10):
 assert setting is not None,"Prediction preference missing"
 if setting.get("checked")=="true":adb("shell","input","tap",*center(setting));time.sleep(.5)
 adb("shell","input","keyevent","4")
-adb("shell","am","start","-n","hk.kaiboard.android/.KeyboardPreviewActivity")
+adb("shell","am","start","-n","hk.kaiboard.android/hk.cantonesemixeng.keyboard.KeyboardPreviewActivity")
 time.sleep(3)
 for _ in range(10):
     if find("Emoji") is not None: break
@@ -123,7 +123,7 @@ assert find("空白鍵，左右滑動移動游標") is not None, "Space icon los
 assert not any(n.get("text") in ("空格","空白") for n in tree().iter("node")), "Space key still has a word label"
 shot("08-sentence-commit")
 def reset_field(value="__EMPTY__"):
-    adb("shell","am","start","--activity-single-top","-n","hk.kaiboard.android/.KeyboardPreviewActivity","--es","test_text",value)
+    adb("shell","am","start","--activity-single-top","-n","hk.kaiboard.android/hk.cantonesemixeng.keyboard.KeyboardPreviewActivity","--es","test_text",value)
     time.sleep(1)
 def type_code(code):
     nodes=tree()
@@ -282,7 +282,7 @@ assert editor_text()=="你onaovrmrq", "Expanded prefix selection lost remaining 
 shot("14-expanded-prefix")
 # URI editors start in mixed mode without a language-switch gesture.
 reset_field()
-adb("shell","am","start","--activity-single-top","-n","hk.kaiboard.android/.KeyboardPreviewActivity","--es","test_text","__EMPTY__","--es","test_input_type","uri")
+adb("shell","am","start","--activity-single-top","-n","hk.kaiboard.android/hk.cantonesemixeng.keyboard.KeyboardPreviewActivity","--es","test_text","__EMPTY__","--es","test_input_type","uri")
 time.sleep(1)
 assert find("指定英文段或返回自動判斷") is None, "URI toolbar regained language switch"
 assert find("O，人") is not None, "URI did not default to mixed input"
@@ -298,7 +298,7 @@ assert editor_text()=="www.example.com你好", "URI could not mix English and Ch
 shot("15-uri-chinese")
 # Numeric/password fields retain their restrictions.
 for kind in ("number","password"):
-    adb("shell","am","start","--activity-single-top","-n","hk.kaiboard.android/.KeyboardPreviewActivity","--es","test_text","__EMPTY__","--es","test_input_type",kind)
+    adb("shell","am","start","--activity-single-top","-n","hk.kaiboard.android/hk.cantonesemixeng.keyboard.KeyboardPreviewActivity","--es","test_text","__EMPTY__","--es","test_input_type",kind)
     time.sleep(1)
     mode=find("指定英文段或返回自動判斷")
     assert mode is None or mode.get("enabled")=="false", "Restricted editor enabled Chinese mode"
@@ -306,7 +306,7 @@ for kind in ("number","password"):
 # Inspect actual narrow cover-sized and wide unfolded-sized layouts.
 for name,size,density in (("cover","720x1600","320"),("unfolded","1440x1800","320")):
     adb("shell","wm","size",size);adb("shell","wm","density",density);time.sleep(2)
-    adb("shell","am","start","--activity-single-top","-n","hk.kaiboard.android/.KeyboardPreviewActivity","--es","test_text","__EMPTY__","--es","test_input_type","normal")
+    adb("shell","am","start","--activity-single-top","-n","hk.kaiboard.android/hk.cantonesemixeng.keyboard.KeyboardPreviewActivity","--es","test_text","__EMPTY__","--es","test_input_type","normal")
     time.sleep(1)
     if find("O，人") is None:
         tap("切換中英文，長按選擇系統鍵盤")

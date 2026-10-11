@@ -1,4 +1,4 @@
-package hk.kaiboard.android;
+package hk.cantonesemixeng.keyboard;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;

@@ -3,11 +3,11 @@ on:
   push:
     branches: [codex/reference-keyboard-emoji]
     paths:
-      - 'app/src/main/java/hk/kaiboard/android/SessionClipboard.java'
-      - 'app/src/main/java/hk/kaiboard/android/QuickTexts.java'
-      - 'app/src/main/java/hk/kaiboard/android/KaiboardService.java'
-      - 'app/src/main/java/hk/kaiboard/android/SettingsActivity.java'
-      - 'app/src/debug/java/hk/kaiboard/android/KeyboardPreviewActivity.java'
+      - 'app/src/main/java/hk/cantonesemixeng/keyboard/SessionClipboard.java'
+      - 'app/src/main/java/hk/cantonesemixeng/keyboard/QuickTexts.java'
+      - 'app/src/main/java/hk/cantonesemixeng/keyboard/CantoneseMixEngKeyboardService.java'
+      - 'app/src/main/java/hk/cantonesemixeng/keyboard/SettingsActivity.java'
+      - 'app/src/debug/java/hk/cantonesemixeng/keyboard/KeyboardPreviewActivity.java'
       - 'tools/clipboard_smoke.py'
       - '.github/workflows/clipboard.yml'
 permissions:
