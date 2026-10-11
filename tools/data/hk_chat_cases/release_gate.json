@@ -1,0 +1,9 @@
+{
+  "authored_heldout_min_cases": 100,
+  "authored_top1_gain_percentage_points": 10,
+  "authored_top5_gain_percentage_points": 5,
+  "natural_heldout_top1_gain_percentage_points": 5,
+  "old_top1_max_regression_percentage_points": 1,
+  "median_latency_max_ratio": 1.2,
+  "note": "Synthetic gains alone do not establish a major real-world improvement."
+}

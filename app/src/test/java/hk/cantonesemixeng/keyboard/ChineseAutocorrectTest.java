@@ -38,7 +38,8 @@ public class ChineseAutocorrectTest {
         repairs=ChineseAutocorrect.cangjieRepairs(dictionary,"omf");
         check(repairs.stream().anyMatch(r->r.text.equals("你")&&r.effectiveCode().equals("onf")),"Cangjie adjacent typo reaches 你");
         for(var r:repairs)check(r.source.equals("omf")&&r.corrected&&!r.englishOnly(),"mapping preserved");
-        QuickDecoder decoder=new QuickDecoder(dictionary,asset("quick_phrases.tsv"),asset("hk_phrases.tsv"),asset("cantonese_phrases.tsv"),OfflineLanguageModel.load(Files.newInputStream(Path.of("src/main/assets/language_model.b64"))));
+        QuickDecoder decoder=new QuickDecoder(dictionary,asset("quick_phrases.tsv"),asset("hk_phrases.tsv"),asset("cantonese_phrases.tsv"),OfflineLanguageModel.load(Files.newInputStream(Path.of("src/main/assets/language_model.b64"))),
+            PhraseLanguageModel.load(Files.newInputStream(Path.of("src/main/assets/phrase_model.b64"))), asset("hk_chat_phrases.tsv"));
         QuickTypos typos=new QuickTypos(dictionary,decoder);
         var quickRepairs=typos.suggest("od",Collections.<InputCandidate>emptyList(),"我想見");
         check(quickRepairs.stream().anyMatch(r->r.text.equals("你")),"Quick adjacent typo reaches 你");

@@ -15,8 +15,18 @@ public final class LoadingBenchmark {
         DictionaryEngine dictionary = new DictionaryEngine(asset("cangjie5.base.dict.yaml"), asset("english.txt"), asset("character_frequencies.tsv"));
         EnglishEngine english = new EnglishEngine(asset("english.txt"));
         double basicMs = (System.nanoTime()-start)/1e6;
-        QuickDecoder decoder = new QuickDecoder(dictionary, asset("quick_phrases.tsv"), asset("hk_phrases.tsv"), asset("cantonese_phrases.tsv"),
-            OfflineLanguageModel.load(new FileInputStream(assets + "language_model.b64")));
+        QuickDecoder decoder;
+        try {
+            // The archived baseline has only the original five-argument constructor.
+            var constructor = QuickDecoder.class.getConstructor(DictionaryEngine.class, Reader.class,
+                Reader.class, Reader.class, OfflineLanguageModel.class, PhraseLanguageModel.class, Reader.class);
+            decoder = constructor.newInstance(dictionary, asset("quick_phrases.tsv"), asset("hk_phrases.tsv"), asset("cantonese_phrases.tsv"),
+                OfflineLanguageModel.load(new FileInputStream(assets + "language_model.b64")),
+                PhraseLanguageModel.load(new FileInputStream(assets + "phrase_model.b64")), asset("hk_chat_phrases.tsv"));
+        } catch (NoSuchMethodException legacy) {
+            decoder = new QuickDecoder(dictionary, asset("quick_phrases.tsv"), asset("hk_phrases.tsv"), asset("cantonese_phrases.tsv"),
+                OfflineLanguageModel.load(new FileInputStream(assets + "language_model.b64")));
+        }
         double fullMs = (System.nanoTime()-start)/1e6;
         System.gc(); Thread.sleep(100);
         long heap = Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();

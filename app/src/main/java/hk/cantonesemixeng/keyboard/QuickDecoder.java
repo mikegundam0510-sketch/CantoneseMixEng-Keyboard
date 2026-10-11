@@ -24,6 +24,7 @@ public final class QuickDecoder {
         "老細", "同事", "老師", "同學", "朋友", "家人", "客人", "客戶", "屋企人"};
     private final DictionaryEngine dictionary;
     private final OfflineLanguageModel model;
+    private final PhraseLanguageModel phraseModel;
     private final Map<String, Double> pairCounts = new HashMap<>();
     private final Map<String, Double> outgoing = new HashMap<>();
     private final Map<String, List<Token>> vocabulary = new HashMap<>();
@@ -48,13 +49,18 @@ public final class QuickDecoder {
     }
     public QuickDecoder(DictionaryEngine dictionary, Reader input, Reader hkInput, Reader cantoneseInput,
                         OfflineLanguageModel model) throws IOException {
-        this.dictionary = dictionary; this.model = model;
+        this(dictionary, input, hkInput, cantoneseInput, model, null, null);
+    }
+    public QuickDecoder(DictionaryEngine dictionary, Reader input, Reader hkInput, Reader cantoneseInput,
+                        OfflineLanguageModel model, PhraseLanguageModel phraseModel, Reader chatInput) throws IOException {
+        this.dictionary = dictionary; this.model = model; this.phraseModel = phraseModel;
         // Merge duplicate code variants and sources before creating prediction tails.
         // The trained model still replaces fallback pair statistics entirely.
         Map<String, Double> wordCounts = new HashMap<>();
         readVocabulary(input, wordCounts, false);
         if (hkInput != null) readVocabulary(hkInput, wordCounts, true);
         if (cantoneseInput != null) readVocabulary(cantoneseInput, wordCounts, false);
+        if (chatInput != null) readVocabulary(chatInput, wordCounts, false);
         addPredicateQuestions();
         if (model != null) for (int subject : "我你佢".codePoints().toArray())
             for (int verb : ACTIONS.codePoints().toArray())
@@ -397,7 +403,8 @@ public final class QuickDecoder {
 
     public double languageScore(String prefix, String text) {
         if (model != null) return model.score(prefix, text) + phraseBonus(prefix, text) + completionBonus(prefix, text)
-            + handoverBonus(prefix, text) + ClauseRelations.score(prefix, text);
+            + handoverBonus(prefix, text) + ClauseRelations.score(prefix, text)
+            + (phraseModel == null ? 0 : phraseModel.score(prefix, text));
         String previous = prefix.isEmpty() ? null : new String(Character.toChars(prefix.codePointBefore(prefix.length())));
         double score = 0;
         for (int cp : text.codePoints().toArray()) {

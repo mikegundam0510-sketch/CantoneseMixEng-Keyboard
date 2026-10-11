@@ -69,7 +69,11 @@ android {
     testOptions {
         unitTests.returnDefaultValues = true
         // Tests load several independent copies of the complete offline dictionary/model.
-        unitTests.all { maxHeapSize = '1g' }
+        unitTests.all {
+            maxHeapSize = '1g'
+            // JVM fixtures read bundled data directly; a changed model must rerun them.
+            inputs.files(fileTree('src/main/assets')).withPropertyName('offlineAssets')
+        }
     }
     buildFeatures { buildConfig true }
     if (semanticEnabled) {

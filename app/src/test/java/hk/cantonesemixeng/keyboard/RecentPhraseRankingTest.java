@@ -16,7 +16,8 @@ public class RecentPhraseRankingTest {
     }
     private static QuickDecoder decoder() throws IOException {
         return new QuickDecoder(dictionary, asset("quick_phrases.tsv"), asset("hk_phrases.tsv"),
-            asset("cantonese_phrases.tsv"), model);
+            asset("cantonese_phrases.tsv"), model,
+            PhraseLanguageModel.load(new FileInputStream("src/main/assets/phrase_model.b64")), asset("hk_chat_phrases.tsv"));
     }
     @BeforeClass public static void load() throws Exception {
         dictionary = new DictionaryEngine(asset("cangjie5.base.dict.yaml"), asset("english.txt"), asset("character_frequencies.tsv"));

@@ -25,7 +25,7 @@ public final class DecoderDiagnostics {
  public static void main(String[] args)throws Exception {
   Path assets=Path.of(args[0]);
   DictionaryEngine dictionary=new DictionaryEngine(Files.newBufferedReader(assets.resolve("cangjie5.base.dict.yaml")),Files.newBufferedReader(assets.resolve("english.txt")),Files.newBufferedReader(assets.resolve("character_frequencies.tsv")));
-  QuickDecoder decoder=new QuickDecoder(dictionary,Files.newBufferedReader(assets.resolve("quick_phrases.tsv")),Files.newBufferedReader(assets.resolve("hk_phrases.tsv")),Files.newBufferedReader(assets.resolve("cantonese_phrases.tsv")),OfflineLanguageModel.load(Files.newInputStream(assets.resolve("language_model.b64"))));
+  QuickDecoder decoder=new QuickDecoder(dictionary,Files.newBufferedReader(assets.resolve("quick_phrases.tsv")),Files.newBufferedReader(assets.resolve("hk_phrases.tsv")),Files.newBufferedReader(assets.resolve("cantonese_phrases.tsv")),OfflineLanguageModel.load(Files.newInputStream(assets.resolve("language_model.b64")))__PHRASE_ARGS__);
   try(BufferedWriter out=Files.newBufferedWriter(Path.of(args[2]))) {
    out.write("# context\tcode\ttarget\tdisplayed_rank\traw_final_rank\treason\tcandidates\n");
    for(String line:Files.readAllLines(Path.of(args[1]))) {
@@ -85,7 +85,10 @@ def main():
         engine = work / SOURCE
         engine.write_text(instrument(engine.read_text()), encoding='utf-8')
         driver = work / 'DecoderDiagnostics.java'
-        driver.write_text(DRIVER, encoding='utf-8')
+        phrase_args = ''
+        if (work / 'app/src/main/java/hk/cantonesemixeng/keyboard/PhraseLanguageModel.java').exists():
+            phrase_args = ',PhraseLanguageModel.load(Files.newInputStream(assets.resolve("phrase_model.b64"))),Files.newBufferedReader(assets.resolve("hk_chat_phrases.tsv"))'
+        driver.write_text(DRIVER.replace('__PHRASE_ARGS__', phrase_args), encoding='utf-8')
         classes = work / 'classes'
         subprocess.run(['javac', '-encoding', 'UTF-8', '-sourcepath', str(work/'app/src/main/java'), '-d', str(classes), str(driver)], check=True)
         subprocess.run(['java', '-Xmx1g', '-cp', str(classes), PACKAGE+'.DecoderDiagnostics', str(work/'app/src/main/assets'), str(cases), str(output)], check=True)

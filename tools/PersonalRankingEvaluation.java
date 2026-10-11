@@ -17,7 +17,8 @@ public final class PersonalRankingEvaluation {
             asset("english.txt"), asset("character_frequencies.tsv"));
         QuickDecoder decoder = new QuickDecoder(dictionary, asset("quick_phrases.tsv"),
             asset("hk_phrases.tsv"), asset("cantonese_phrases.tsv"),
-            OfflineLanguageModel.load(Files.newInputStream(assets.resolve("language_model.b64"))));
+            OfflineLanguageModel.load(Files.newInputStream(assets.resolve("language_model.b64"))),
+            PhraseLanguageModel.load(Files.newInputStream(assets.resolve("phrase_model.b64"))), asset("hk_chat_phrases.tsv"));
         Set<String> codes = new TreeSet<>();
         for (String line : Files.readAllLines(assets.resolve("hk_phrases.tsv"), StandardCharsets.UTF_8)) {
             String[] fields = line.split("\t");

@@ -10,7 +10,8 @@ public class ExportSemanticCases {
     public static void main(String[] args) throws Exception {
         var dictionary = new DictionaryEngine(asset("cangjie5.base.dict.yaml"),asset("english.txt"),asset("character_frequencies.tsv"));
         var model = OfflineLanguageModel.load(Files.newInputStream(assets.resolve("language_model.b64")));
-        var decoder = new QuickDecoder(dictionary,asset("quick_phrases.tsv"),asset("hk_phrases.tsv"),asset("cantonese_phrases.tsv"),model);
+        var decoder = new QuickDecoder(dictionary,asset("quick_phrases.tsv"),asset("hk_phrases.tsv"),asset("cantonese_phrases.tsv"),model,
+            PhraseLanguageModel.load(Files.newInputStream(assets.resolve("phrase_model.b64"))),asset("hk_chat_phrases.tsv"));
         var out = Path.of(args[1]); Files.createDirectories(out);
         StringBuilder cases = new StringBuilder("["), manifest = new StringBuilder(), likelihood = new StringBuilder(); int i = 0;
         for (String line : Files.readAllLines(Path.of(args[0]))) {

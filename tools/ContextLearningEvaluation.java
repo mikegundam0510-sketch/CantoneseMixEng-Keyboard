@@ -15,7 +15,8 @@ public final class ContextLearningEvaluation {
         assets=Path.of(args[0]);
         DictionaryEngine dictionary=new DictionaryEngine(asset("cangjie5.base.dict.yaml"),asset("english.txt"),asset("character_frequencies.tsv"));
         QuickDecoder decoder=new QuickDecoder(dictionary,asset("quick_phrases.tsv"),asset("hk_phrases.tsv"),asset("cantonese_phrases.tsv"),
-            OfflineLanguageModel.load(Files.newInputStream(assets.resolve("language_model.b64"))));
+            OfflineLanguageModel.load(Files.newInputStream(assets.resolve("language_model.b64"))),
+            PhraseLanguageModel.load(Files.newInputStream(assets.resolve("phrase_model.b64"))), asset("hk_chat_phrases.tsv"));
         List<String[]> cases=new ArrayList<>();
         for(String line:Files.readAllLines(Path.of(args[1]),StandardCharsets.UTF_8))
             if(!line.isEmpty() && !line.startsWith("#")) cases.add(line.split("\t",-1));

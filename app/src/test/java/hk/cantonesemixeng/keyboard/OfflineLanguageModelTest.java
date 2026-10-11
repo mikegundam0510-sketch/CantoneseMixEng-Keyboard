@@ -16,7 +16,8 @@ public class OfflineLanguageModelTest {
     @BeforeClass public static void load() throws Exception {
         model = OfflineLanguageModel.load(new FileInputStream("src/main/assets/language_model.b64"));
         dictionary = new DictionaryEngine(asset("cangjie5.base.dict.yaml"), asset("english.txt"), asset("character_frequencies.tsv"));
-        decoder = new QuickDecoder(dictionary, asset("quick_phrases.tsv"), asset("hk_phrases.tsv"), asset("cantonese_phrases.tsv"), model);
+        decoder = new QuickDecoder(dictionary, asset("quick_phrases.tsv"), asset("hk_phrases.tsv"), asset("cantonese_phrases.tsv"), model,
+            PhraseLanguageModel.load(new FileInputStream("src/main/assets/phrase_model.b64")), asset("hk_chat_phrases.tsv"));
     }
     @Test public void boundedMemoryAndFiniteScores() {
         assertTrue(model.entryCount()>400000); assertTrue(model.arrayBytes()<9*1024*1024);

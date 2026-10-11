@@ -5,7 +5,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.*;
 
-/** Fixed held-out conversation evaluation; excludes UI and personal history. */
+/** Exact-code ranking evaluation; excludes UI and personal history. */
 public final class RankingEvaluation {
     private static Path assets;
     private static Reader asset(String name) throws IOException {
@@ -15,9 +15,15 @@ public final class RankingEvaluation {
         assets = Path.of(args[0]);
         DictionaryEngine dictionary = new DictionaryEngine(asset("cangjie5.base.dict.yaml"),
             asset("english.txt"), asset("character_frequencies.tsv"));
+        String variant = args.length > 3 ? args[3] : "full";
+        if (!Arrays.asList("full", "baseline", "words-only", "model-only").contains(variant))
+            throw new IllegalArgumentException("Unknown model ablation: " + variant);
         QuickDecoder decoder = new QuickDecoder(dictionary, asset("quick_phrases.tsv"),
             asset("hk_phrases.tsv"), asset("cantonese_phrases.tsv"),
-            OfflineLanguageModel.load(Files.newInputStream(assets.resolve("language_model.b64"))));
+            OfflineLanguageModel.load(Files.newInputStream(assets.resolve("language_model.b64"))),
+            variant.equals("full") || variant.equals("model-only")
+                ? PhraseLanguageModel.load(Files.newInputStream(assets.resolve("phrase_model.b64"))) : null,
+            variant.equals("full") || variant.equals("words-only") ? asset("hk_chat_phrases.tsv") : null);
         int count = 0, top1 = 0, top5 = 0, reachable = 0;
         double reciprocalRank = 0;
         long started = System.nanoTime();

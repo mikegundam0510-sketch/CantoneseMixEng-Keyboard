@@ -1,0 +1,19 @@
+{
+  "source_sha256": "09223963b8756254e15353cad843f8a4b0cbc4b9223dc8a8fa27fb1cf846057e",
+  "selection": "Full Han utterance chunks, 6..16 characters; held-out conversations only; exclude any earlier regression target substring >=4 Han in either direction; SHA256(word-model-v1:+filename+text) first180",
+  "exclusion_sha256": "aa3daac8d72a14d67b94ebcaab13002fa0edaac7c72eeb2564186573f65d502e",
+  "case_sha256": "11080bcc6eb9e722e40d9fa4780addf4f2bfc694557f0208f5a1cf1a36d68fe2",
+  "cases": 180,
+  "conversation_files": [
+    "utf8/FC-005b_v2",
+    "utf8/FC-009b_v",
+    "utf8/FC-013_v",
+    "utf8/FC-028_v2",
+    "utf8/FC-045_v2",
+    "utf8/FC-056_v2",
+    "utf8/FC-103_v2",
+    "utf8/FC-R009_v",
+    "utf8/FC-R010a_v"
+  ],
+  "limitation": "New full utterances, but conversation files were also used in historical evaluations; not independently collected modern chat."
+}

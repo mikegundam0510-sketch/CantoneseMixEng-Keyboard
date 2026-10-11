@@ -149,7 +149,9 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
                 QuickDecoder phrases = new QuickDecoder(loaded, new InputStreamReader(getAssets().open("quick_phrases.tsv"), StandardCharsets.UTF_8),
                     new InputStreamReader(getAssets().open("hk_phrases.tsv"), StandardCharsets.UTF_8),
                     new InputStreamReader(getAssets().open("cantonese_phrases.tsv"), StandardCharsets.UTF_8),
-                    OfflineLanguageModel.load(getAssets().open("language_model.b64")));
+                    OfflineLanguageModel.load(getAssets().open("language_model.b64")),
+                    PhraseLanguageModel.load(getAssets().open("phrase_model.b64")),
+                    new InputStreamReader(getAssets().open("hk_chat_phrases.tsv"), StandardCharsets.UTF_8));
                 EmojiCatalog emojis = new EmojiCatalog(new InputStreamReader(getAssets().open("emoji.tsv"), StandardCharsets.UTF_8));
                 CandidateEngine mixed = new CandidateEngine(loaded, phrases, englishWords);
                 QuickTypos repairs = new QuickTypos(loaded, phrases);

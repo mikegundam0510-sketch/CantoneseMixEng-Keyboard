@@ -1,0 +1,40 @@
+{
+  "provenance": "Project-authored synthetic Hong Kong chat scenarios, not collected messages or measured usage frequencies. Spaces mark authored word boundaries. Families are split before expansion; held-out families never enter training.",
+  "variants": [["我", "今日"], ["你", "聽日"], ["佢", "今晚"], ["我哋", "而家"], ["你哋", "遲啲"], ["佢哋", "下晝"]],
+  "train": {
+    "work": ["{s} {t} 要 交 份 報告", "{s} {t} 開完 會 先 覆 你", "{s} {t} 放工 之後 再 處理", "{s} {t} 幫 同事 檢查 文件"],
+    "meet": ["{s} {t} 約咗 朋友 食飯", "{s} {t} 喺 門口 等 你", "{s} {t} 有冇 時間 出嚟", "{s} {t} 改 約 另外 一日"],
+    "delivery": ["{s} {t} 想 約 時間 交收", "{s} {t} 收到 件 貨 先 確認", "{s} {t} 可唔可以 安排 送貨", "{s} {t} 帶 埋 個 包裹 出嚟"],
+    "transport": ["{s} {t} 搭 巴士 返 屋企", "{s} {t} 去 車站 等 車", "{s} {t} 塞車 可能 會 遲到", "{s} {t} 搭 地鐵 定 巴士"],
+    "payment": ["{s} {t} 轉 錢 畀 你", "{s} {t} 收到 錢 會 通知 你", "{s} {t} 用 轉數快 畀 錢", "{s} {t} 想 查下 筆 付款"],
+    "food": ["{s} {t} 想 食 早餐", "{s} {t} 飲 咖啡 定 奶茶", "{s} {t} 訂咗 餐廳 食飯", "{s} {t} 買 餸 返 屋企 煮飯"],
+    "messages": ["{s} {t} 覆返 個 訊息", "{s} {t} 睇完 個 電郵 先 答", "{s} {t} 幫 你 改返 份 文件", "{s} {t} 記得 打 電話 畀 我"],
+    "shopping": ["{s} {t} 想 買 對 鞋", "{s} {t} 問下 件 衫 幾多 錢", "{s} {t} 確認 張 訂單", "{s} {t} 睇下 間 舖 有冇 貨"],
+    "home": ["{s} {t} 返到 屋企 先 食飯", "{s} {t} 記得 帶 鎖匙", "{s} {t} 幫手 收返 啲 衫", "{s} {t} 買 埋 牛奶 同 麵包"],
+    "plans": ["{s} {t} 有啲 攰 想 休息", "{s} {t} 落雨 記得 帶 遮", "{s} {t} 想 去 睇 電影", "{s} {t} 唔得閒 遲啲 再 傾"]
+  },
+  "validation": {
+    "work": ["{s} {t} 仲未 做完 份 報告"],
+    "meet": ["{s} {t} 會 喺 車站 等 你"],
+    "delivery": ["{s} {t} 想 知 件 貨 幾時 到"],
+    "transport": ["{s} {t} 會 搭 地鐵 返工"],
+    "payment": ["{s} {t} 轉咗 錢 記得 確認"],
+    "food": ["{s} {t} 想 約 你 飲 咖啡"],
+    "messages": ["{s} {t} 睇返 個 訊息 先 覆"],
+    "shopping": ["{s} {t} 想 問 張 訂單 送咗 未"],
+    "home": ["{s} {t} 返 屋企 記得 買 牛奶"],
+    "plans": ["{s} {t} 放工 想 去 睇 電影"]
+  },
+  "heldout": {
+    "work": ["{s} {t} 交完 份 報告 就 放工", "{s} {t} 仲要 幫 同事 改 文件"],
+    "meet": ["{s} {t} 食完 飯 再 出嚟", "{s} {t} 到 門口 先 通知 你"],
+    "delivery": ["{s} {t} 收咗 件 貨 未", "{s} {t} 幾時 可以 出嚟 交收"],
+    "transport": ["{s} {t} 喺 車站 等 巴士", "{s} {t} 搭 地鐵 會 唔會 快啲"],
+    "payment": ["{s} {t} 轉完 錢 再 通知 我", "{s} {t} 可唔可以 用 轉數快 付款"],
+    "food": ["{s} {t} 想 飲 杯 咖啡", "{s} {t} 買完 餸 先 返 屋企"],
+    "messages": ["{s} {t} 記得 覆 個 訊息", "{s} {t} 改好 份 文件 先 傳 畀 我"],
+    "shopping": ["{s} {t} 買咗 對 鞋 未", "{s} {t} 想 查 張 訂單 嘅 進度"],
+    "home": ["{s} {t} 可唔可以 幫手 收 衫", "{s} {t} 買 麵包 嗰陣 買 埋 牛奶"],
+    "plans": ["{s} {t} 有冇 時間 睇 電影", "{s} {t} 落雨 就 遲啲 再 出門口"]
+  }
+}
