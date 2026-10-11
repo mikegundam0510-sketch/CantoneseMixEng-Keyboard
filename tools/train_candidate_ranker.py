@@ -115,21 +115,26 @@ def learn(pairs, epochs=80, rate=.3, l2=.02, min_count=2, maximum_features=50000
         raise ValueError('Invalid training hyperparameters')
     if not 1 <= min_count <= 100 or not 1 <= maximum_features <= 50000:
         raise ValueError('Invalid ranker feature bounds')
-    differences, support = [], Counter()
+    differences, support = [], defaultdict(set)
     target_pairs, family_targets = Counter(), defaultdict(set)
     for source, context, code, positive, negative, offset in pairs:
         left, right = features(context, positive), features(context, negative)
         delta = {feature: left[feature] - right[feature] for feature in left.keys() | right.keys()
                  if left[feature] != right[feature]}
-        support.update(delta.keys())
         identity = (source, context, code, positive)
+        # Ten wrong candidates from one gold utterance are one observation,
+        # not ten independent reasons to generalize its short relations.
+        # Authored subject/time variants likewise count as one family.
+        observation = source if source.startswith('train:') else identity
+        for feature in delta:
+            support[feature].add(observation)
         target_pairs[identity] += 1
         if source.startswith('train:'):
             family_targets[source].add(identity)
         differences.append((identity, delta, offset))
-    # Select by distinct-pair support, then lexical tie; not by held-out performance.
-    vocabulary = sorted(sorted((f for f, count in support.items() if count >= min_count),
-                               key=lambda f: (-support[f], f))[:maximum_features])
+    # Select by independent positive-target/family support, not competitor count.
+    vocabulary = sorted(sorted((f for f, targets in support.items() if len(targets) >= min_count),
+                               key=lambda f: (-len(support[f]), f))[:maximum_features])
     if not vocabulary:
         raise ValueError('No supported candidate features')
     indices = {feature: at for at, feature in enumerate(vocabulary)}
@@ -164,7 +169,8 @@ def learn(pairs, epochs=80, rate=.3, l2=.02, min_count=2, maximum_features=50000
             weights[index] = max(-ENDPOINT_LIMIT, min(ENDPOINT_LIMIT,
                 weights[index] - rate * value / math.sqrt(accumulated[index] + 1e-8)))
     learned = {feature: weight for feature, weight in zip(vocabulary, weights) if abs(weight) >= 1e-4}
-    return learned, {'epochs': epochs, 'rate': rate, 'l2': l2, 'minimum_pair_support': min_count,
+    return learned, {'epochs': epochs, 'rate': rate, 'l2': l2, 'minimum_independent_target_support': min_count,
+                     'feature_support_unit': 'Distinct (source,context,code,positive); authored variants collapsed to family',
                      'features_considered': len(support), 'features_supported': len(vocabulary),
                      'features_exported': len(learned), 'training_examples': len(examples),
                      'initial_logistic_objective': losses[0], 'final_logistic_objective': losses[-1],
@@ -242,7 +248,8 @@ if __name__ == '__main__':
     parser.add_argument('--epochs', type=int, default=80)
     parser.add_argument('--rate', type=float, default=.3)
     parser.add_argument('--l2', type=float, default=.02)
-    parser.add_argument('--min-count', type=int, default=2)
+    parser.add_argument('--min-count', type=int, default=2,
+                        help='Minimum independent positive utterances/families supporting a feature')
     parser.add_argument('--maximum-features', type=int, default=50000)
     arguments = parser.parse_args()
     train(arguments.pairs, arguments.manifest, arguments.output, arguments.strength, arguments.ignore_offsets,

@@ -15,6 +15,19 @@ import train_candidate_ranker as training
 
 
 class CandidateTrainingTest(unittest.TestCase):
+    def test_competitors_and_authored_variants_do_not_multiply_feature_support(self):
+        pairs = [('utf8/train', '', 'abcd', '你交咗錢', wrong, 0)
+                 for wrong in ('係交咗錢', '係交咗表')]
+        pairs += [('train:messages:0', '', 'abcd', text, text.replace('睇下', '辛德'), 0)
+                  for text in ('你睇下', '佢睇下')]
+        pairs += [('utf8/' + str(i), '', 'abcd', text, text.replace('食飯', '身反'), 0)
+                  for i, text in enumerate(('我食飯', '你食飯'))]
+        weights, report = training.learn(pairs, min_count=2)
+        self.assertNotIn('你交', weights)
+        self.assertNotIn('睇下', weights)
+        self.assertIn('食飯', weights)
+        self.assertEqual(2, report['minimum_independent_target_support'])
+
     def pairs(self):
         return [(f'train:messages:{at}', '', 'ofqm', positive, negative, 0)
                 for at, (positive, negative) in enumerate((

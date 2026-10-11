@@ -1,0 +1,36 @@
+{
+  "fitting_grid": {
+    "l2": [
+      0.02,
+      0.002
+    ],
+    "ignore_offset": [
+      false,
+      true
+    ],
+    "strength": 1
+  },
+  "winning_fit_strength_grid": [
+    0.5,
+    1,
+    1.5,
+    2
+  ],
+  "admissibility": {
+    "natural_top1_min": 76,
+    "natural_top5_min": 113,
+    "authored_top1_min": 20,
+    "authored_top5_min": 39
+  },
+  "selection": [
+    "maximize mean(natural_top5_fraction,authored_top5_fraction)",
+    "maximize mean(natural_mrr,authored_mrr)",
+    "prefer smaller strength",
+    "prefer larger l2",
+    "prefer used approximate baseline margin"
+  ],
+  "heldout_policy": "New heldout not read until fit and strength frozen",
+  "repair": "Minimum support counts independent positive utterances; authored variants onefamily. No data/split changes.",
+  "legacy_compatibility_guard": "All16 fixed completion cases retain first choice before final model acceptance",
+  "heldout_status": "Initial model was evaluated before this training correctness repair; subsequent heldout evaluations are reused regression observations, not blind tests."
+}

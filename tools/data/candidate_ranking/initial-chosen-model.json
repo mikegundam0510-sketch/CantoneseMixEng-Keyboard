@@ -1,0 +1,8 @@
+{
+  "fit": "l2-0.002-zero",
+  "strength": 1,
+  "l2": 0.002,
+  "ignore_offset": true,
+  "model_sha256": "b3d4547262eec5ed29b459bd071a8f3df04db5e6f5811bb1cb8d91e9cc9fc456",
+  "selection": "Frozen before opening new heldout results"
+}

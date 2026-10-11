@@ -1,8 +1,9 @@
 {
-  "fit": "l2-0.002-zero",
-  "strength": 1,
+  "fit": "l2-0.002-zero-s1.5",
+  "strength": 1.5,
   "l2": 0.002,
   "ignore_offset": true,
-  "model_sha256": "b3d4547262eec5ed29b459bd071a8f3df04db5e6f5811bb1cb8d91e9cc9fc456",
-  "selection": "Frozen before opening new heldout results"
+  "model_sha256": "0fe065437c4b87ac3852440c69cf8140cd159241f723d4927b959fb7772d3f62",
+  "selection": "Validation plus existing16 completion compatibility cases; no heldout tuning",
+  "heldout_status": "Previously inspected before support-count repair; final repeat is regression evidence"
 }
