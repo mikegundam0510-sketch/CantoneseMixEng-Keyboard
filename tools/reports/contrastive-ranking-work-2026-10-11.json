@@ -1,0 +1,848 @@
+{
+  "date_utc": "2026-10-11",
+  "baseline_commit": "ba77b772d751b15ec702bc7e5479122b70822d64",
+  "initial_model_commit": "0eda5a026b575e8dafc95346a56c3a3b0f181df0",
+  "final_code_commit": "fa3565d",
+  "delivery": "Unreleased source only; version0.6.39/code46; no APK built",
+  "baseline_diagnosis": {
+    "cases": 180,
+    "valid_exact_target_codes": 180,
+    "missing_cases": 60,
+    "terminal_blockers": {
+      "prefix_pruned": 18,
+      "choice_cutoff": 31,
+      "outside_twenty": 5,
+      "completed_path_pruned": 6
+    },
+    "choice_cutoff_characters": {
+      "𡃉": 18,
+      "𠻺": 7,
+      "𡁵": 2,
+      "㗎": 1,
+      "𠸏": 3
+    },
+    "interpretation": "Observed terminal frontiers only; an earlier loss can be bypassed by another word tokenization. Gold text is used only for diagnostics, never production search."
+  },
+  "diagnostic_equivalence": {
+    "baseline180_full_lists": true,
+    "initial_ranker180_full_lists": true,
+    "note": "Gold-aware observers exist only in temporary archived sources, never production",
+    "final5_full_lists": true
+  },
+  "data": {
+    "training_cases": 1740,
+    "natural_training": 1500,
+    "authored_training": 240,
+    "actual_pairs": 4422,
+    "validation_natural": 200,
+    "validation_authored": 60,
+    "natural_test": 200,
+    "authored_test": 120,
+    "pairs_sha256": "b6e9810e72f011d363669784287b82554b2db03a080124e398e451a46f60830d",
+    "source_sha256": {
+      "hkcancor_zip": "09223963b8756254e15353cad843f8a4b0cbc4b9223dc8a8fa27fb1cf846057e",
+      "authored_scenarios": "86394195a5ef74fef4553a3b1c5a14af809bf08815ac3d906513e224e3e1e2ed"
+    },
+    "case_sha256": {
+      "train": "7ca7364d6248e1d380aa68ca2e78396a47f590fcee5c77cadc645d33eb0a9180",
+      "validation": "d9854e8cf4c6117caef79cdc5153da754149aa3d063e9e368d96f3367ce6d53a",
+      "heldout": "93472678449749e468d2d060c8df03dc176dcc1475384cc0494883d958c5329b"
+    },
+    "no_validation_or_test_relations_in_training": true,
+    "limitations": "Public historical speech, not modern real-user chats. Conversation files were used before; new utterances only. Authored variants are correlated and are not measured use frequencies."
+  },
+  "initial_selection": {
+    "protocol": {
+      "fitting_grid": {
+        "l2": [
+          0.02,
+          0.002
+        ],
+        "ignore_offset": [
+          false,
+          true
+        ],
+        "strength": 1
+      },
+      "winning_fit_strength_grid": [
+        0.5,
+        1,
+        1.5,
+        2
+      ],
+      "admissibility": {
+        "natural_top1_min": 76,
+        "natural_top5_min": 113,
+        "authored_top1_min": 20,
+        "authored_top5_min": 39
+      },
+      "selection": [
+        "maximize mean(natural_top5_fraction,authored_top5_fraction)",
+        "maximize mean(natural_mrr,authored_mrr)",
+        "prefer smaller strength",
+        "prefer larger l2",
+        "prefer used approximate baseline margin"
+      ],
+      "heldout_policy": "New heldout not read until fit and strength frozen"
+    },
+    "fit_results": {
+      "l2-0.02-offset": {
+        "natural": {
+          "cases": 200,
+          "top1": 78,
+          "top5": 116,
+          "top20": 135,
+          "mrr": 0.47217296102590217
+        },
+        "authored": {
+          "cases": 60,
+          "top1": 20,
+          "top5": 39,
+          "top20": 53,
+          "mrr": 0.46082725825372883
+        },
+        "mean_top5": 0.615,
+        "mean_mrr": 0.4665001096398155
+      },
+      "l2-0.02-zero": {
+        "natural": {
+          "cases": 200,
+          "top1": 78,
+          "top5": 116,
+          "top20": 135,
+          "mrr": 0.47223149277193394
+        },
+        "authored": {
+          "cases": 60,
+          "top1": 20,
+          "top5": 39,
+          "top20": 53,
+          "mrr": 0.4611248773013479
+        },
+        "mean_top5": 0.615,
+        "mean_mrr": 0.46667818503664094
+      },
+      "l2-0.002-offset": {
+        "natural": {
+          "cases": 200,
+          "top1": 77,
+          "top5": 116,
+          "top20": 135,
+          "mrr": 0.46853998493336724
+        },
+        "authored": {
+          "cases": 60,
+          "top1": 21,
+          "top5": 39,
+          "top20": 53,
+          "mrr": 0.46951948514448516
+        },
+        "mean_top5": 0.615,
+        "mean_mrr": 0.4690297350389262
+      },
+      "l2-0.002-zero": {
+        "natural": {
+          "cases": 200,
+          "top1": 77,
+          "top5": 116,
+          "top20": 135,
+          "mrr": 0.4694216241275065
+        },
+        "authored": {
+          "cases": 60,
+          "top1": 21,
+          "top5": 40,
+          "top20": 53,
+          "mrr": 0.4732496438746439
+        },
+        "mean_top5": 0.6233333333333333,
+        "mean_mrr": 0.4713356340010752
+      }
+    },
+    "strength_results": {
+      "l2-0.002-zero": {
+        "natural": {
+          "cases": 200,
+          "top1": 77,
+          "top5": 116,
+          "top20": 135,
+          "mrr": 0.4694216241275065
+        },
+        "authored": {
+          "cases": 60,
+          "top1": 21,
+          "top5": 40,
+          "top20": 53,
+          "mrr": 0.4732496438746439
+        },
+        "strength": 1,
+        "mean_top5": 0.6233333333333333,
+        "mean_mrr": 0.4713356340010752
+      },
+      "l2-0.002-zero-s0.5": {
+        "natural": {
+          "cases": 200,
+          "top1": 79,
+          "top5": 116,
+          "top20": 135,
+          "mrr": 0.474720274823216
+        },
+        "authored": {
+          "cases": 60,
+          "top1": 21,
+          "top5": 39,
+          "top20": 53,
+          "mrr": 0.4726940883190883
+        },
+        "strength": 0.5,
+        "mean_top5": 0.615,
+        "mean_mrr": 0.47370718157115216
+      },
+      "l2-0.002-zero-s1.5": {
+        "natural": {
+          "cases": 200,
+          "top1": 76,
+          "top5": 116,
+          "top20": 136,
+          "mrr": 0.46734071922229814
+        },
+        "authored": {
+          "cases": 60,
+          "top1": 21,
+          "top5": 40,
+          "top20": 53,
+          "mrr": 0.4733190883190883
+        },
+        "strength": 1.5,
+        "mean_top5": 0.6233333333333333,
+        "mean_mrr": 0.4703299037706932
+      },
+      "l2-0.002-zero-s2": {
+        "natural": {
+          "cases": 200,
+          "top1": 76,
+          "top5": 115,
+          "top20": 135,
+          "mrr": 0.4668362653428443
+        },
+        "authored": {
+          "cases": 60,
+          "top1": 21,
+          "top5": 40,
+          "top20": 53,
+          "mrr": 0.47361631832220064
+        },
+        "strength": 2,
+        "mean_top5": 0.6208333333333333,
+        "mean_mrr": 0.47022629183252246
+      }
+    },
+    "chosen": {
+      "fit": "l2-0.002-zero",
+      "strength": 1,
+      "l2": 0.002,
+      "ignore_offset": true,
+      "model_sha256": "b3d4547262eec5ed29b459bd071a8f3df04db5e6f5811bb1cb8d91e9cc9fc456",
+      "selection": "Frozen before opening new heldout results"
+    },
+    "blind_natural_result": {
+      "before": {
+        "cases": 200,
+        "top1": 70,
+        "top5": 110,
+        "top20": 132,
+        "mrr": 0.44048418604958856,
+        "sha256": "39ae3dc0e0ad72a8a659fe3312f6a1be4e596548c2486f9c0e7f2fde65997455"
+      },
+      "after": {
+        "cases": 200,
+        "top1": 70,
+        "top5": 113,
+        "top20": 133,
+        "mrr": 0.44215534618030744,
+        "sha256": "193e852aba1e3b2f7012471f64292b1dc42fc66ccb0f7c63d5c685fe36b2d48a"
+      }
+    },
+    "known_completion_before_after": [
+      16,
+      14
+    ],
+    "rejected_reason": "Two competitors from one gold utterance falsely met minimum support2 for negative relation你交"
+  },
+  "repair": {
+    "support_unit": "Distinct (source,context,code,positive); authored variants collapsed to family",
+    "no_sentence_exceptions_added": true,
+    "test_status": "New200 test was already inspected before this correctness repair; final repeats are reused regression evidence",
+    "protocol": {
+      "fitting_grid": {
+        "l2": [
+          0.02,
+          0.002
+        ],
+        "ignore_offset": [
+          false,
+          true
+        ],
+        "strength": 1
+      },
+      "winning_fit_strength_grid": [
+        0.5,
+        1,
+        1.5,
+        2
+      ],
+      "admissibility": {
+        "natural_top1_min": 76,
+        "natural_top5_min": 113,
+        "authored_top1_min": 20,
+        "authored_top5_min": 39
+      },
+      "selection": [
+        "maximize mean(natural_top5_fraction,authored_top5_fraction)",
+        "maximize mean(natural_mrr,authored_mrr)",
+        "prefer smaller strength",
+        "prefer larger l2",
+        "prefer used approximate baseline margin"
+      ],
+      "heldout_policy": "New heldout not read until fit and strength frozen",
+      "repair": "Minimum support counts independent positive utterances; authored variants onefamily. No data/split changes.",
+      "legacy_compatibility_guard": "All16 fixed completion cases retain first choice before final model acceptance",
+      "heldout_status": "Initial model was evaluated before this training correctness repair; subsequent heldout evaluations are reused regression observations, not blind tests."
+    },
+    "fit_results": {
+      "l2-0.02-offset": {
+        "natural": {
+          "cases": 200,
+          "top1": 78,
+          "top5": 116,
+          "top20": 135,
+          "mrr": 0.47217296102590217
+        },
+        "authored": {
+          "cases": 60,
+          "top1": 20,
+          "top5": 39,
+          "top20": 53,
+          "mrr": 0.46082725825372883
+        },
+        "completion": {
+          "cases": 16,
+          "top1": 16,
+          "top5": 16,
+          "top20": 16,
+          "mrr": 1.0
+        },
+        "mean_top5": 0.615,
+        "mean_mrr": 0.4665001096398155
+      },
+      "l2-0.02-zero": {
+        "natural": {
+          "cases": 200,
+          "top1": 78,
+          "top5": 116,
+          "top20": 135,
+          "mrr": 0.4722589652994065
+        },
+        "authored": {
+          "cases": 60,
+          "top1": 20,
+          "top5": 39,
+          "top20": 53,
+          "mrr": 0.4611248773013479
+        },
+        "completion": {
+          "cases": 16,
+          "top1": 16,
+          "top5": 16,
+          "top20": 16,
+          "mrr": 1.0
+        },
+        "mean_top5": 0.615,
+        "mean_mrr": 0.4666919213003772
+      },
+      "l2-0.002-offset": {
+        "natural": {
+          "cases": 200,
+          "top1": 77,
+          "top5": 116,
+          "top20": 135,
+          "mrr": 0.4686887944571768
+        },
+        "authored": {
+          "cases": 60,
+          "top1": 21,
+          "top5": 39,
+          "top20": 53,
+          "mrr": 0.4692218660968661
+        },
+        "completion": {
+          "cases": 16,
+          "top1": 16,
+          "top5": 16,
+          "top20": 16,
+          "mrr": 1.0
+        },
+        "mean_top5": 0.615,
+        "mean_mrr": 0.46895533027702146
+      },
+      "l2-0.002-zero": {
+        "natural": {
+          "cases": 200,
+          "top1": 77,
+          "top5": 116,
+          "top20": 136,
+          "mrr": 0.4695885960444784
+        },
+        "authored": {
+          "cases": 60,
+          "top1": 21,
+          "top5": 40,
+          "top20": 53,
+          "mrr": 0.4732496438746439
+        },
+        "completion": {
+          "cases": 16,
+          "top1": 16,
+          "top5": 16,
+          "top20": 16,
+          "mrr": 1.0
+        },
+        "mean_top5": 0.6233333333333333,
+        "mean_mrr": 0.47141911995956115
+      }
+    },
+    "strength_results": {
+      "l2-0.002-zero": {
+        "natural": {
+          "cases": 200,
+          "top1": 77,
+          "top5": 116,
+          "top20": 136,
+          "mrr": 0.4695885960444784
+        },
+        "authored": {
+          "cases": 60,
+          "top1": 21,
+          "top5": 40,
+          "top20": 53,
+          "mrr": 0.4732496438746439
+        },
+        "completion": {
+          "cases": 16,
+          "top1": 16,
+          "top5": 16,
+          "top20": 16,
+          "mrr": 1.0
+        },
+        "strength": 1,
+        "mean_top5": 0.6233333333333333,
+        "mean_mrr": 0.47141911995956115
+      },
+      "l2-0.002-zero-s0.5": {
+        "natural": {
+          "cases": 200,
+          "top1": 79,
+          "top5": 116,
+          "top20": 135,
+          "mrr": 0.4743356594386006
+        },
+        "authored": {
+          "cases": 60,
+          "top1": 21,
+          "top5": 39,
+          "top20": 53,
+          "mrr": 0.4726940883190883
+        },
+        "completion": {
+          "cases": 16,
+          "top1": 16,
+          "top5": 16,
+          "top20": 16,
+          "mrr": 1.0
+        },
+        "strength": 0.5,
+        "mean_top5": 0.615,
+        "mean_mrr": 0.4735148738788445
+      },
+      "l2-0.002-zero-s1.5": {
+        "natural": {
+          "cases": 200,
+          "top1": 77,
+          "top5": 116,
+          "top20": 136,
+          "mrr": 0.46968138315932434
+        },
+        "authored": {
+          "cases": 60,
+          "top1": 21,
+          "top5": 40,
+          "top20": 53,
+          "mrr": 0.4732496438746439
+        },
+        "completion": {
+          "cases": 16,
+          "top1": 16,
+          "top5": 16,
+          "top20": 16,
+          "mrr": 1.0
+        },
+        "strength": 1.5,
+        "mean_top5": 0.6233333333333333,
+        "mean_mrr": 0.4714655135169841
+      },
+      "l2-0.002-zero-s2": {
+        "natural": {
+          "cases": 200,
+          "top1": 77,
+          "top5": 115,
+          "top20": 135,
+          "mrr": 0.4696912850221674
+        },
+        "authored": {
+          "cases": 60,
+          "top1": 21,
+          "top5": 40,
+          "top20": 53,
+          "mrr": 0.4732275132275132
+        },
+        "completion": {
+          "cases": 16,
+          "top1": 16,
+          "top5": 16,
+          "top20": 16,
+          "mrr": 1.0
+        },
+        "strength": 2,
+        "mean_top5": 0.6208333333333333,
+        "mean_mrr": 0.4714593991248403
+      }
+    },
+    "chosen": {
+      "fit": "l2-0.002-zero-s1.5",
+      "strength": 1.5,
+      "l2": 0.002,
+      "ignore_offset": true,
+      "model_sha256": "0fe065437c4b87ac3852440c69cf8140cd159241f723d4927b959fb7772d3f62",
+      "selection": "Validation plus existing16 completion compatibility cases; no heldout tuning",
+      "heldout_status": "Previously inspected before support-count repair; final repeat is regression evidence"
+    },
+    "note": "Selected strength1.5 has only a tiny validation MRR advantage over1; this is not statistical evidence of broad improvement"
+  },
+  "model": {
+    "algorithm": "Signed character bigram/trigram pairwise logistic ranker; regularized full-batch AdaGrad",
+    "strength": 1.5,
+    "actual_candidate_pairs": 4422,
+    "maximum_feature_characters": 3,
+    "unknown_feature_score": 0,
+    "endpoint_weight_limit": 1.5,
+    "ignored_baseline_margins": true,
+    "primitive_array_bytes": 294916,
+    "encoded_bytes": 19202,
+    "training": {
+      "epochs": 80,
+      "rate": 0.3,
+      "l2": 0.002,
+      "minimum_independent_target_support": 2,
+      "feature_support_unit": "Distinct (source,context,code,positive); authored variants collapsed to family",
+      "features_considered": 14738,
+      "features_supported": 1428,
+      "features_exported": 1402,
+      "training_examples": 2976,
+      "initial_logistic_objective": 0.6931471805599431,
+      "final_logistic_objective": 0.5051251813170505,
+      "positive_features": 521,
+      "negative_features": 881
+    },
+    "limitations": "Short local relations only; a competing negative is evidence from decoding, not proof that its wording is impossible. Training uses older public conversations and authored scenarios. The linear fitting objective approximates the runtime endpoint cap. Optional language-score margins may omit decoder vocabulary priors. Model fitting accuracy is not held-out accuracy."
+  },
+  "model_sha256": "0fe065437c4b87ac3852440c69cf8140cd159241f723d4927b959fb7772d3f62",
+  "results": {
+    "new_natural200_reused_after_repair": {
+      "before": {
+        "cases": 200,
+        "top1": 70,
+        "top5": 110,
+        "top20": 132,
+        "mrr": 0.44048418604958856,
+        "sha256": "39ae3dc0e0ad72a8a659fe3312f6a1be4e596548c2486f9c0e7f2fde65997455"
+      },
+      "after": {
+        "cases": 200,
+        "top1": 71,
+        "top5": 114,
+        "top20": 134,
+        "mrr": 0.4471184340470331,
+        "sha256": "1f0fe6cc972e4d5ceb08dca28ace9b1c815ff4de92d92e4a109172b8044b8f6f"
+      }
+    },
+    "authored120": {
+      "before": {
+        "cases": 120,
+        "top1": 51,
+        "top5": 76,
+        "top20": 96,
+        "mrr": 0.5331818181818182,
+        "sha256": "95203a5b7021e2c8d49acf6095e1266031e440e0e6d4ec75654f906fb2135877"
+      },
+      "after": {
+        "cases": 120,
+        "top1": 51,
+        "top5": 76,
+        "top20": 96,
+        "mrr": 0.536257215007215,
+        "sha256": "21446967aefe3393a367b6f848afd035c8ffad96993523962c6e6711da277c12"
+      }
+    },
+    "old600": {
+      "before": {
+        "cases": 600,
+        "top1": 280,
+        "top5": 426,
+        "top20": 480,
+        "mrr": 0.5739548197903461,
+        "sha256": "0708f22bce469e3a300fef2e10b6d74f069a6a1888fb8113873de6cd64bfb53d"
+      },
+      "after": {
+        "cases": 600,
+        "top1": 281,
+        "top5": 422,
+        "top20": 479,
+        "mrr": 0.5746731824462088,
+        "sha256": "ecae73e737258094038bbdd47964be303d51374327b473e9e85ccee0cda11bfd"
+      }
+    },
+    "daily32": {
+      "before": {
+        "cases": 32,
+        "top1": 22,
+        "top5": 29,
+        "top20": 32,
+        "mrr": 0.7947916666666667,
+        "sha256": "505f80dd9996a25c6bf8ad62e5092e781a4f4aa201bb1b47eb801f0dff11e23c"
+      },
+      "after": {
+        "cases": 32,
+        "top1": 20,
+        "top5": 29,
+        "top20": 32,
+        "mrr": 0.7648809523809523,
+        "sha256": "6b8e359f6bff6d0ff26be8d39cd1cca3d5341d95cfcf324740685def7dc8fd24"
+      }
+    },
+    "diagnostic_natural180": {
+      "before": {
+        "cases": 180,
+        "top1": 60,
+        "top5": 100,
+        "top20": 120,
+        "mrr": 0.43216393628158334,
+        "sha256": "5d9ec60cd4112d2b4f488ea6ef568a89695a64321b69a2f2e4fe6d1e1158971d"
+      },
+      "after": {
+        "cases": 180,
+        "top1": 63,
+        "top5": 98,
+        "top20": 119,
+        "mrr": 0.4398243522998425,
+        "sha256": "bc4cd80a51255a67bc868b812b781a5ba21eb95f718060dc4e4533d8963e30c9"
+      }
+    }
+  },
+  "search_only_ablation": {
+    "new_natural200": {
+      "before": {
+        "cases": 200,
+        "top1": 70,
+        "top5": 110,
+        "top20": 132,
+        "mrr": 0.44048418604958856,
+        "sha256": "39ae3dc0e0ad72a8a659fe3312f6a1be4e596548c2486f9c0e7f2fde65997455"
+      },
+      "after": {
+        "cases": 200,
+        "top1": 70,
+        "top5": 110,
+        "top20": 132,
+        "mrr": 0.44048418604958856,
+        "sha256": "1f707b9739644b576d02cf0fdb5174ba164c3ef712f28fad4303c9a78adc9b1e"
+      }
+    },
+    "old600": {
+      "before": {
+        "cases": 600,
+        "top1": 280,
+        "top5": 426,
+        "top20": 480,
+        "mrr": 0.5739548197903461,
+        "sha256": "0708f22bce469e3a300fef2e10b6d74f069a6a1888fb8113873de6cd64bfb53d"
+      },
+      "after": {
+        "cases": 600,
+        "top1": 280,
+        "top5": 426,
+        "top20": 480,
+        "mrr": 0.5739548197903461,
+        "sha256": "5701c1bffa9753cf76100b3edb2928e64a7b5976a713cfb97694a29ce5394ac8"
+      }
+    },
+    "old_natural180": {
+      "before": {
+        "cases": 180,
+        "top1": 60,
+        "top5": 100,
+        "top20": 120,
+        "mrr": 0.43216393628158334,
+        "sha256": "5d9ec60cd4112d2b4f488ea6ef568a89695a64321b69a2f2e4fe6d1e1158971d"
+      },
+      "after": {
+        "cases": 180,
+        "top1": 60,
+        "top5": 100,
+        "top20": 121,
+        "mrr": 0.432456333942402,
+        "sha256": "0a922edeb5fcc05b5304661395b95cc4b5cbfa90c08cbc71a2d000b5b39cbf25"
+      }
+    }
+  },
+  "personal_learning": {
+    "cases": 32,
+    "explicit_single_repetitions": 3,
+    "records": 489,
+    "legacy_top1_top5_top20": [
+      30,
+      32,
+      32
+    ],
+    "contextual_top1_top5_top20": [
+      32,
+      32,
+      32
+    ],
+    "limitation": "Same known cases after simulated confirmation; not unseen sentence accuracy"
+  },
+  "completion_compatibility": {
+    "final_top1_top5_top20": [
+      16,
+      16,
+      16
+    ],
+    "bundled_model_JUnit": true
+  },
+  "release_gate": {
+    "authored_heldout_min_cases": 100,
+    "authored_top1_gain_percentage_points": 10,
+    "authored_top5_gain_percentage_points": 5,
+    "natural_heldout_top1_gain_percentage_points": 5,
+    "old_top1_max_regression_percentage_points": 1,
+    "median_latency_max_ratio": 1.2,
+    "note": "Synthetic gains alone do not establish a major real-world improvement."
+  },
+  "release_gate_passed": false,
+  "release_reason": "Authored120 has no top1/top5 gain; natural200 top1 gains only0.5percentage points and was reused after repair. Old600 top5 drops4, daily32 top1 drops2. No broad improvement supporting1.0.",
+  "performance": {
+    "method": "Java17/Xmx1g, sequential isolated before/after,3warm passes+9samples/code; no concurrent training/build/evaluation",
+    "desktop_only": true,
+    "timings": [
+      {
+        "code": "ofonaovrmrq",
+        "letters": 11,
+        "baseline_median_ms": 79.645,
+        "final_median_ms": 72.395,
+        "ratio": 0.9089710590746437,
+        "baseline_max_ms": 229.255,
+        "final_max_ms": 89.669
+      },
+      {
+        "code": "hmerrrysmlrp",
+        "letters": 12,
+        "baseline_median_ms": 87.76,
+        "final_median_ms": 83.168,
+        "ratio": 0.9476754785779399,
+        "baseline_max_ms": 134.966,
+        "final_max_ms": 102.395
+      },
+      {
+        "code": "dpofvivcjutrmyyjvcqnjd",
+        "letters": 22,
+        "baseline_median_ms": 144.509,
+        "final_median_ms": 131.521,
+        "ratio": 0.9101232449190015,
+        "baseline_max_ms": 205.873,
+        "final_max_ms": 147.681
+      },
+      {
+        "code": "ofykrmmsydwljpvwjd",
+        "letters": 18,
+        "baseline_median_ms": 116.633,
+        "final_median_ms": 105.456,
+        "ratio": 0.9041694889096569,
+        "baseline_max_ms": 174.431,
+        "final_max_ms": 129.471
+      },
+      {
+        "code": "vkmmnkmrvordrjjj",
+        "letters": 16,
+        "baseline_median_ms": 145.643,
+        "final_median_ms": 124.455,
+        "ratio": 0.8545209862471934,
+        "baseline_max_ms": 189.227,
+        "final_max_ms": 141.78
+      },
+      {
+        "code": "hihihihihihihihihihihihihihihihihihihihihihihihi",
+        "letters": 48,
+        "baseline_median_ms": 548.203,
+        "final_median_ms": 469.642,
+        "ratio": 0.8566935970799139,
+        "baseline_max_ms": 710.751,
+        "final_max_ms": 478.023
+      }
+    ],
+    "median_ratio_gate_passed": true,
+    "loading_single_observations": {
+      "baseline": {
+        "basic_ms": 820.8,
+        "full_ms": 2110.2,
+        "heap_bytes": 131789440,
+        "english_alloc_bytes": 3908008,
+        "candidates": "[你好, 係好, 係樂, 無好, 煲好, 伙好, 繁好, 焦好, 僞好, 鶴好, 鴿好, 氮好, 僚好, 你樂, 無樂, 黛好, 鷦好, 鴒好, 絛好, 伙樂] / [你今日食咗咩, 係今日食咗咩, 你今日食咗嗱, 係今日食咗嗱, 無今日食咗咩, 伙今日食咗咩, 煲今日食咗咩, 繁今日食咗咩, 焦今日食咗咩, 你今日食啲咩, 僞今日食咗咩, 鶴今日食咗咩] / [我已經完成報告, 得已經完成報告, 我已經完成報答, 特已經完成報告, 的已經完成報告, 風已經完成報告, 我已經完成趣管, 鬼已經完成報告, 等已經完成報告, 我已經完成趣和, 射已經完成報告, 待已經完成報告, 我已經完成趣向, 私已經完成報告, 籌已經完成報告, 我已經完成趣各] / [明錚源, 明銖源, 明鑠源, 明錚淡, 閒錚源, 明錚涼, 明鎳源, 明銖淡, 閒銖源, 明鑠淡, 閒鑠源, 明銖涼, 明錚滅, 明鑠涼, 閒錚淡, 明鍒源, 明鍦源, 明錁源, 明釨源, 明鏁源]"
+      },
+      "final": {
+        "basic_ms": 914.2,
+        "full_ms": 2370.2,
+        "heap_bytes": 132152344,
+        "english_alloc_bytes": 3908008,
+        "candidates": "[你好, 係好, 係樂, 無好, 煲好, 伙好, 繁好, 焦好, 僞好, 鶴好, 鴿好, 氮好, 僚好, 你樂, 無樂, 黛好, 鷦好, 鴒好, 絛好, 伙樂] / [你今日食咗咩, 係今日食咗咩, 你今日食咗嗱, 係今日食咗嗱, 無今日食咗咩, 伙今日食咗咩, 煲今日食咗咩, 繁今日食咗咩, 焦今日食咗咩, 你今日食啲咩, 僞今日食咗咩, 鶴今日食咗咩] / [我已經完成報告, 得已經完成報告, 我已經完成報答, 特已經完成報告, 的已經完成報告, 風已經完成報告, 我已經完成趣管, 鬼已經完成報告, 等已經完成報告, 我已經完成趣和, 射已經完成報告, 待已經完成報告, 我已經完成趣向, 私已經完成報告, 籌已經完成報告, 我已經完成趣各] / [明錚源, 明銖源, 明鑠源, 明錚淡, 閒錚源, 明錚涼, 明鎳源, 明銖淡, 閒銖源, 明鑠淡, 閒鑠源, 明銖涼, 明錚滅, 明鑠涼, 閒錚淡, 明鍒源, 明鍦源, 明錁源, 明釨源, 明鏁源]"
+      }
+    }
+  },
+  "verification": {
+    "junit": {
+      "tests": 186,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "python_candidate_tests": 12,
+    "python_phrase_tests": 4,
+    "lint": {
+      "Warning": 25
+    },
+    "model_reproduced_byte_for_byte": true,
+    "all_evaluated_candidates_complete_code_checked": true,
+    "persistent_signer_and_identity_unchanged": true,
+    "preserved_artifact_hashes": {
+      "app/src/main/assets/stroke.tsv": "208b02adc69498f143da3040c7d65885f551af824246ba8bd5cedcbb94e8cc5c",
+      "dist/CantoneseMixEng-Keyboard-0.6.39.apk": "6d0670b82313508bb8e3aabc163f531d2ce6018347a2d5da9f72c0fa3fc885cf",
+      "app/src/main/assets/licenses/stroke/AUTHORS": "f0cbba217e049471ccb40751b7d2e1c98144bb2ad4ec15b9f5af057121ec99d6",
+      "app/src/main/assets/licenses/stroke/LICENSE": "da7eabb7bafdf7d3ae5e9f223aa5bdc1eece45ac569dc21b3b037520b4464768",
+      "app/src/main/assets/licenses/stroke/README.md": "024c5ff587a9d3340d1239946f02141ca98489a125d51b9aa5fe4620c0377545",
+      "app/src/main/assets/licenses/stroke/SOURCE.json": "9aaac1786b2e8fb74dca8c3f139a8312cd96108d145ee6ca67d4179b2a2e79d6"
+    },
+    "not_run": [
+      "Fold7 device acceptance",
+      "emulator UI acceptance",
+      "optional native semantic model"
+    ]
+  }
+}

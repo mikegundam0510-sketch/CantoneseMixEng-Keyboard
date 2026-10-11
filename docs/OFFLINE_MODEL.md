@@ -1,5 +1,27 @@
 # Offline model and compact candidates: 0.6.0 source preview
 
+## Unreleased competing-candidate model (2026-10-11)
+
+`CandidateRanker` adds immutable signed Han bigram/trigram weights to the incremental sentence score. Positive and negative training texts must both match the complete typed Quick code. Unknown relations are neutral. Scoring resets on punctuation/Latin, remains additive across decoder token boundaries, and caps the sum of relations at each character. The public model does not write user preferences or retain editor text. Personal/contextual learning supplies its existing separate weights.
+
+The 4,422 pairs come from 1,500 full utterances in the existing training conversations plus 240 authored training variants. Negatives are actual baseline candidates above gold (up to ten when gold was absent), with one easier competitor for calibration. Baseline revision, source hashes and excluded sources are pinned in `tools/data/candidate_ranking/manifest.json`. Unreachable exact-code gold answers remain teacher positives; ranking alone cannot make them searchable. Authored variants are not measured use frequencies.
+
+Feature admission requires at least two independent positive targets; authored variants collapse to one family. The initial implementation counted competing pairs, so two negatives from one utterance incorrectly supported a penalty for `你交`. Production checks detected two first-choice regressions. Repairing support counts removed the unsupported relation without adding sentence exceptions; all 16 completion examples retained their first choices. A bundled-model JUnit check covers those examples. Initial results and the repair are retained in the work report. Subsequent evaluations of the new 200 utterances are reused regression observations, not another blind test.
+
+Search remains bounded. Reserve paths now use histories absent from the original 48 paths. Common HK particles beyond the ordinary character scan can compete for the same four contextual reserve slots, still requiring context support. Other characters remain available through direct single lookup. Diagnostics observe gold paths only in temporary archived source; complete candidate lists are checked against the plain engine.
+
+Reproduce the bundled model:
+
+```sh
+python3 tools/train_candidate_ranker.py \
+  --pairs tools/data/candidate_ranking/pairs.tsv \
+  --manifest tools/data/candidate_ranking/manifest.json \
+  --output /tmp/candidate-ranker-reproduction \
+  --ignore-offset --l2 .002 --strength 1.5
+```
+
+Approximate baseline language margins omit segmentation/vocabulary priors; validation selected the zero-margin fit. The linear training objective also approximates the runtime cap. Fitting loss is not test accuracy. To rebuild pairs, freeze data with `prepare_candidate_training.py`, evaluate using the pinned archived baseline, extract pairs with `--evaluation`, then optionally add margins with `ExportCandidateMargins`. Keep the corpus split and hashes. Results, speed and release decision are in [the work report](../tools/reports/contrastive-ranking-work-2026-10-11.json).
+
 ## Unreleased segmented-word model (2026-10-11)
 
 Production now combines the existing character five-gram with bounded word-transition evidence. HKCanCor's original word boundaries are retained while counting word bigrams/trigrams from its 46 training conversation files. Validation and held-out conversation files never contribute counts. The project also supplies 40 authored training scenario families expanded into 240 examples, with 10 different validation families (60 examples) and 20 held-out families (120 examples). These are synthetic Hong Kong chat situations, not collected messages or measured frequencies. Each training family contributes a transition at most once with an authored prior of three, so subject/time expansion cannot inflate a phrase's apparent frequency sixfold. No full authored sentence is added as a vocabulary token.
