@@ -8,7 +8,7 @@ import java.util.function.ToIntFunction;
 /** Bounded offline word-lattice decoder, including one-code Quick characters. */
 public final class QuickDecoder {
     private static final int BEAM = 48;
-    private static final int LOOKAHEAD_WORDS = 4, PATH_RESERVE = 8;
+    private static final int LOOKAHEAD_WORDS = 4, EXTRA_LOOKAHEAD_WORDS = 2, PATH_RESERVE = 8;
     // Selected on separate validation conversations, before held-out evaluation.
     private static final double SENTENCE_SCORE_MARGIN = 10;
     // Productive Cantonese predicate questions, rather than memorized full sentences.
@@ -205,6 +205,8 @@ public final class QuickDecoder {
                 LinkedHashMap<String, Double> options = new LinkedHashMap<>();
                 List<Token> known = personalizedTokens(part, learned);
                 for (int j = 0; j < Math.min(24, known.size()); j++) options.put(known.get(j).text, known.get(j).score);
+                for (Token token : contextWords(known, paths, histories, boundaryScores))
+                    options.putIfAbsent(token.text, token.score);
                 if (length <= 2) {
                     List<String> letters = new ArrayList<>();
                     for (String word : dictionary.quickCandidates(part)) if (hanText(word)) letters.add(word);
@@ -320,6 +322,37 @@ public final class QuickDecoder {
     private static double personalBonus(int weight, double cap, double scale) {
         double value = Math.min(cap, Math.log1p(Math.abs((double) weight)) * scale);
         return weight < 0 ? -value : value;
+    }
+
+    /** Protect a few attested words excluded by frequency, only with actual left-context support. */
+    private List<Token> contextWords(List<Token> known, List<Path> paths, Map<Path, String> histories,
+            Map<String, Map<String, Double>> boundaryScores) {
+        if (model == null || known.size() <= 24) return Collections.emptyList();
+        Set<String> contexts = new LinkedHashSet<>();
+        for (Path path : paths) {
+            contexts.add(histories.get(path));
+            if (contexts.size() == 4) break;
+        }
+        contexts.remove("");
+        if (contexts.isEmpty()) return Collections.emptyList();
+        Map<Token, Double> scores = new IdentityHashMap<>();
+        for (int i = 24; i < Math.min(64, known.size()); i++) {
+            Token token = known.get(i);
+            int size = token.text.codePointCount(0, token.text.length());
+            if (size < 2 || size > 8) continue;
+            double independent = languageScore("", token.text);
+            for (String context : contexts) {
+                if (context.isEmpty()) continue;
+                double conditional = boundaryScores.computeIfAbsent(context, key -> new HashMap<>())
+                    .computeIfAbsent(token.text, text -> languageScore(context, text));
+                double lift = conditional - independent;
+                if (lift > .25) scores.merge(token, lift + Math.min(2, Math.log1p(token.score) / 10), Math::max);
+            }
+        }
+        List<Token> result = new ArrayList<>(scores.keySet());
+        result.sort(Comparator.comparingDouble((Token token) -> scores.get(token)).reversed()
+            .thenComparing(token -> token.text));
+        return result.subList(0, Math.min(4, result.size()));
     }
 
     /** A frequency cutoff must not hide a character that fits an active context. */
@@ -546,15 +579,25 @@ public final class QuickDecoder {
     private List<Token> followingWords(String code, int pos) {
         if (model == null) return Collections.emptyList();
         List<Token> result = new ArrayList<>(); Set<String> seen = new HashSet<>();
-        for (int length = 2; length <= Math.min(8, code.length() - pos); length++) {
+        List<Token> alternatives = new ArrayList<>();
+        for (int length = 2; length <= Math.min(16, code.length() - pos); length++) {
             List<Token> tokens = vocabulary.getOrDefault(code.substring(pos, pos + length), Collections.emptyList());
             for (int i = 0; i < Math.min(2, tokens.size()); i++) {
                 String text = tokens.get(i).text;
                 int characters = text.codePointCount(0, text.length());
-                if (characters >= 2 && characters <= 4 && seen.add(text))
+                if (characters < 2 || characters > 8 || !seen.add(text)) continue;
+                if (length <= 8 && characters <= 4 && result.size() < LOOKAHEAD_WORDS)
                     result.add(new Token(text, languageScore("", text)));
-                if (result.size() == LOOKAHEAD_WORDS) return result;
+                else alternatives.add(tokens.get(i));
             }
+        }
+        alternatives.sort(Comparator.comparingDouble((Token token) ->
+            (token.text.codePointCount(0, token.text.length()) - 1)
+                * Math.min(1, Math.log1p(token.score) / Math.log1p(3000))).reversed()
+            .thenComparing(token -> token.text));
+        for (int i = 0; i < Math.min(EXTRA_LOOKAHEAD_WORDS, alternatives.size()); i++) {
+            Token token = alternatives.get(i);
+            result.add(new Token(token.text, languageScore("", token.text)));
         }
         return result;
     }

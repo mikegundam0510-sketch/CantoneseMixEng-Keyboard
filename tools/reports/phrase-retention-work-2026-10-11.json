@@ -1,0 +1,562 @@
+{
+  "status": "Unreleased source improvements; version and versionCode unchanged. No update APK built or published.",
+  "date_hong_kong": "2026-10-11",
+  "baseline_commit": "21ff17a4e8dbdaa2b6f1c365e6876343aec82911",
+  "version_name": "0.6.39",
+  "version_code": 46,
+  "baseline_diagnosis": {
+    "cases": 600,
+    "counts": {
+      "first": 281,
+      "ranked_later": 198,
+      "not_generated": 80,
+      "completed_path_pruned": 26,
+      "outside_twenty": 15
+    },
+    "meaning": {
+      "not_generated": "The completed target was never observed during bounded expansion; this alone cannot distinguish a missing token from an earlier prefix or character being excluded.",
+      "completed_path_pruned": "The full target was observed in expansion, but was absent from the final lattice after intermediate pruning.",
+      "outside_twenty": "The target remains in the final lattice but ranks below the displayed twenty.",
+      "confidence_filtered": "The final raw target ranks within twenty but is absent from displayed results. No such case in this dataset."
+    },
+    "candidate_outputs_match_uninstrumented_baseline": true,
+    "tool": "tools/decoder_diagnostics.py archives a requested commit and instruments only a temporary host JVM copy; no diagnostic logging added to the app."
+  },
+  "implementation": {
+    "ranking": {
+      "source": "Authored HK classifier/object metadata, booking actions and compatible alternatives; no new corpus/model training.",
+      "compatible_classifier_bonus": 1.5,
+      "compatible_alternative_bonus": 2,
+      "max_han_context": 8,
+      "existing_action_bonus": 2.5,
+      "unknown_combinations": "Neutral; no hard candidate deletion added. Existing confidence gate remains.",
+      "boundaries": "Object overlap adjustments telescope across lattice token boundaries; punctuation/non-Han reset context. Booking venues remain places as well as bookable objects.",
+      "false_support_fix": "Signal from 個信 was spuriously carried into 個信心 during pair review; classifier for letters 信 is restricted to 封, so 個信心 receives no classifier reward. This was diagnosed during regression review, so these reused sets are not an untouched accuracy benchmark."
+    },
+    "word_entry": {
+      "preserved_frequency_words": 24,
+      "scan_limit": 64,
+      "extra_context_supported_words": 4,
+      "max_contexts": 4,
+      "word_characters": [
+        2,
+        8
+      ],
+      "minimum_conditional_lift": 0.25,
+      "ranking": "Left-context lift plus a bounded existing frequency prior selects only a few extra attested words. Their actual sentence scores, exact codes and learning weights still determine final order. No-context and model-free paths retain the old entry behavior."
+    },
+    "lookahead": {
+      "original_hints": 4,
+      "extra_hints": 2,
+      "max_input_code_span": 16,
+      "word_characters": [
+        2,
+        8
+      ],
+      "selection": "Preserve original short-word hints; fill at most two additional slots using length and existing frequency evidence. Allows longer words to help an ambiguous prefix survive, without adding their hint score to final sentence ranking."
+    },
+    "unchanged": {
+      "base_beam_paths": 48,
+      "reserved_paths": 8,
+      "max_displayed_candidates": 20,
+      "confidence_margin": 10,
+      "context_learning_max_records": 512,
+      "learning_default": "off",
+      "production_assets": "unchanged",
+      "android_identity_and_signer_configuration": "unchanged"
+    }
+  },
+  "evaluation": {
+    "validation": {
+      "before": {
+        "cases": 240,
+        "top1": 122,
+        "top5": 174,
+        "top20": 195,
+        "mrr": 0.6027171187121846
+      },
+      "after": {
+        "cases": 240,
+        "top1": 122,
+        "top5": 174,
+        "top20": 195,
+        "mrr": 0.6027171187121846
+      },
+      "input_sha256": "70e4db560eeedd4f44619cd4c631624c102124ced01aa4c75f698cadc9371710",
+      "rank_changes": [],
+      "first_candidate_changes": 0
+    },
+    "old": {
+      "before": {
+        "cases": 120,
+        "top1": 60,
+        "top5": 98,
+        "top20": 111,
+        "mrr": 0.6415748521630874
+      },
+      "after": {
+        "cases": 120,
+        "top1": 60,
+        "top5": 99,
+        "top20": 111,
+        "mrr": 0.6433109632741986
+      },
+      "input_sha256": "bae16312e7f843fa503a61b54b7a734086aab3ff3d0b7d3576f095107bb8d392",
+      "rank_changes": [
+        {
+          "context": "咗成一百",
+          "code": "giorgijlkbrr",
+          "target": "封信去都有啊",
+          "before": 8,
+          "after": 3
+        }
+      ],
+      "first_candidate_changes": 0
+    },
+    "fresh": {
+      "before": {
+        "cases": 240,
+        "top1": 99,
+        "top5": 155,
+        "top20": 173,
+        "mrr": 0.5139412572041249
+      },
+      "after": {
+        "cases": 240,
+        "top1": 99,
+        "top5": 155,
+        "top20": 173,
+        "mrr": 0.5139412572041249
+      },
+      "input_sha256": "3649889c21fd1dc454e025d59a0c4cf0c775f8f31b33d4bacdbed899bb656476",
+      "rank_changes": [],
+      "first_candidate_changes": 0
+    },
+    "long-validation": {
+      "before": {
+        "cases": 120,
+        "top1": 44,
+        "top5": 79,
+        "top20": 92,
+        "mrr": 0.4952056277056277
+      },
+      "after": {
+        "cases": 120,
+        "top1": 44,
+        "top5": 79,
+        "top20": 92,
+        "mrr": 0.4952056277056277
+      },
+      "input_sha256": "e4a0a6a0a88d87f28c6b1afdd80106ed33cf9cb5973f1e641abb4964a941d23a",
+      "rank_changes": [],
+      "first_candidate_changes": 0
+    },
+    "long-heldout": {
+      "before": {
+        "cases": 120,
+        "top1": 33,
+        "top5": 64,
+        "top20": 76,
+        "mrr": 0.38212824552898084
+      },
+      "after": {
+        "cases": 120,
+        "top1": 33,
+        "top5": 64,
+        "top20": 77,
+        "mrr": 0.3828226899734253
+      },
+      "input_sha256": "ac83cad03f791d0db9b903261b97c8cc1924982710f8cfb676e6033affd4d258",
+      "rank_changes": [
+        {
+          "context": "噉如果你",
+          "code": "rrvcnvdimfrojlkbhlyb",
+          "target": "唔嫌張機票嘥都冇所謂",
+          "before": 0,
+          "after": 12
+        }
+      ],
+      "first_candidate_changes": 0
+    },
+    "daily": {
+      "before": {
+        "cases": 32,
+        "top1": 16,
+        "top5": 25,
+        "top20": 31,
+        "mrr": 0.6335395781119465
+      },
+      "after": {
+        "cases": 32,
+        "top1": 18,
+        "top5": 28,
+        "top20": 32,
+        "mrr": 0.7006944444444444
+      },
+      "input_sha256": "d29faa28d581c87e6b480ce3924c778e4794fa830d6067249a3369daad6528af",
+      "rank_changes": [
+        {
+          "context": "",
+          "code": "ofmermoryjhpjd",
+          "target": "你覆咗個訊息未",
+          "before": 3,
+          "after": 2
+        },
+        {
+          "context": "",
+          "code": "gbhimgypohykoq",
+          "target": "幫我確認份文件",
+          "before": 2,
+          "after": 1
+        },
+        {
+          "context": "",
+          "code": "ofqrgdcgjoaujm",
+          "target": "你搭地鐵定巴士",
+          "before": 7,
+          "after": 3
+        },
+        {
+          "context": "",
+          "code": "ofynrmyvipjd",
+          "target": "你訂咗餐廳未",
+          "before": 0,
+          "after": 3
+        },
+        {
+          "context": "",
+          "code": "ofvkmnoqocjd",
+          "target": "你收到件貨未",
+          "before": 19,
+          "after": 9
+        },
+        {
+          "context": "",
+          "code": "ofdpykocjohuse",
+          "target": "你想送貨定自取",
+          "before": 10,
+          "after": 4
+        },
+        {
+          "context": "",
+          "code": "gbhidmmynvynrj",
+          "target": "幫我查下張訂單",
+          "before": 2,
+          "after": 1
+        },
+        {
+          "context": "",
+          "code": "higbofqtyeohykoq",
+          "target": "我幫你搵返份文件",
+          "before": 4,
+          "after": 2
+        }
+      ],
+      "first_candidate_changes": 3
+    },
+    "handover": {
+      "before": {
+        "cases": 30,
+        "top1": 29,
+        "top5": 30,
+        "top20": 30,
+        "mrr": 0.9833333333333333
+      },
+      "after": {
+        "cases": 30,
+        "top1": 29,
+        "top5": 30,
+        "top20": 30,
+        "mrr": 0.9833333333333333
+      },
+      "input_sha256": "a40c8ef85a205164c03fbf3db5749565382ab9d862e05f2c407497a3b215f387",
+      "rank_changes": [],
+      "first_candidate_changes": 0
+    },
+    "completion": {
+      "before": {
+        "cases": 16,
+        "top1": 16,
+        "top5": 16,
+        "top20": 16,
+        "mrr": 1.0
+      },
+      "after": {
+        "cases": 16,
+        "top1": 16,
+        "top5": 16,
+        "top20": 16,
+        "mrr": 1.0
+      },
+      "input_sha256": "2762c747d770efaf45c2541bd30473f7b227473953c26ed311c017902107c192",
+      "rank_changes": [],
+      "first_candidate_changes": 0
+    },
+    "requests": {
+      "before": {
+        "cases": 8,
+        "top1": 8,
+        "top5": 8,
+        "top20": 8,
+        "mrr": 1.0
+      },
+      "after": {
+        "cases": 8,
+        "top1": 8,
+        "top5": 8,
+        "top20": 8,
+        "mrr": 1.0
+      },
+      "input_sha256": "8389c751a4206863cda675a3a8afb16eadcdb35e037607893395426fe38a6565",
+      "rank_changes": [],
+      "first_candidate_changes": 0
+    },
+    "plural": {
+      "before": {
+        "cases": 18,
+        "top1": 15,
+        "top5": 18,
+        "top20": 18,
+        "mrr": 0.9027777777777778
+      },
+      "after": {
+        "cases": 18,
+        "top1": 15,
+        "top5": 18,
+        "top20": 18,
+        "mrr": 0.9027777777777778
+      },
+      "input_sha256": "aad06feb12df01de8cdb400e6fb5de89e0613f42950be15fe38537744ed6adf9",
+      "rank_changes": [],
+      "first_candidate_changes": 0
+    },
+    "twelve-heldout": {
+      "before": {
+        "cases": 107,
+        "top1": 27,
+        "top5": 56,
+        "top20": 73,
+        "mrr": 0.37562989969532024
+      },
+      "after": {
+        "cases": 107,
+        "top1": 27,
+        "top5": 56,
+        "top20": 73,
+        "mrr": 0.37562989969532024
+      },
+      "input_sha256": "23404c85fb0c3a38fcb75b1f9bf4e837426185660f89c6b1e7da4850ab90dd4b",
+      "rank_changes": []
+    }
+  },
+  "aggregate_600": {
+    "before": {
+      "cases": 600,
+      "top1": 281,
+      "top5": 427,
+      "top20": 479,
+      "mrr": 0.5749783207991412
+    },
+    "after": {
+      "cases": 600,
+      "top1": 281,
+      "top5": 428,
+      "top20": 479,
+      "mrr": 0.5753255430213635
+    }
+  },
+  "additional_long_240": {
+    "before": {
+      "cases": 240,
+      "top1": 77,
+      "top5": 143,
+      "top20": 168,
+      "mrr": 0.43866693661730427
+    },
+    "after": {
+      "cases": 240,
+      "top1": 77,
+      "top5": 143,
+      "top20": 169,
+      "mrr": 0.43901415883952655
+    }
+  },
+  "controlled_search_regressions": {
+    "word_cutoff": {
+      "test": "SearchRetentionTest.contextCanAdmitAnAttestedWordBelowTheFrequencyCutoff",
+      "before": "1 failures=1\nexpected:<甲[恆]乙> but was:<甲[怀]乙>",
+      "after": "Passes in the full final unit suite.",
+      "fixture": "Attested word is 25th by frequency, its leading character is beyond the existing 64-character scan, and an actual left-context model transition supports it."
+    },
+    "longer_hint": {
+      "test": "SearchRetentionTest.aLongerFollowingWordCanRescueAnAmbiguousPrefix",
+      "before": "1 failures=1\nexpected:<一[串]乢乣乢乣乢> but was:<一[丰]乢乣乢乣乢>",
+      "after": "Passes in the full final unit suite.",
+      "fixture": "The desired prefix initially ranks beyond 48. A five-character word spanning ten codes supplies later context that the old four-character/eight-code hints never considered."
+    },
+    "limits": "Controlled artificial ambiguity verifies mechanisms, not representative chat accuracy."
+  },
+  "ablation": {
+    "ranking-only": {
+      "daily": {
+        "cases": 32,
+        "top1": 18,
+        "top5": 28,
+        "top20": 32,
+        "mrr": 0.7006944444444444
+      },
+      "old": {
+        "cases": 120,
+        "top1": 60,
+        "top5": 99,
+        "top20": 111,
+        "mrr": 0.6433109632741986
+      }
+    },
+    "search-only": {
+      "daily": {
+        "cases": 32,
+        "top1": 16,
+        "top5": 25,
+        "top20": 31,
+        "mrr": 0.6335395781119465
+      },
+      "old": {
+        "cases": 120,
+        "top1": 60,
+        "top5": 98,
+        "top20": 111,
+        "mrr": 0.6415748521630874
+      }
+    }
+  },
+  "personal_learning_compatibility": {
+    "cases": 32,
+    "method": "Same known daily targets confirmed through Single choices three times; legacy-only and legacy-plus-context histories compared within each version. Not unseen-sentence accuracy.",
+    "before": {
+      "legacy_only": {
+        "cases": 32,
+        "top1": 29,
+        "top5": 32,
+        "top20": 32,
+        "mrr": 0.9479166666666666
+      },
+      "legacy_plus_context": {
+        "cases": 32,
+        "top1": 32,
+        "top5": 32,
+        "top20": 32,
+        "mrr": 1.0
+      }
+    },
+    "after": {
+      "legacy_only": {
+        "cases": 32,
+        "top1": 30,
+        "top5": 32,
+        "top20": 32,
+        "mrr": 0.96875
+      },
+      "legacy_plus_context": {
+        "cases": 32,
+        "top1": 32,
+        "top5": 32,
+        "top20": 32,
+        "mrr": 1.0
+      }
+    },
+    "sequence_records": 489,
+    "max_sequence_records": 512
+  },
+  "validation": {
+    "unit_tests": {
+      "tests": 168,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "lint": {
+      "Error": 0,
+      "Warning": 25
+    },
+    "commands": [
+      "./gradlew testDebugUnitTest lintDebug",
+      "python3 -m py_compile tools/decoder_diagnostics.py"
+    ],
+    "exact_codes": "RankingEvaluation asserts every emitted candidate matches the full typed code in each evaluated suite.",
+    "android_device_test": false,
+    "apk_built": false,
+    "apk_published": false,
+    "previous_release_apk_unchanged": true,
+    "ci": "Push workflows skipped for this source-only commit to avoid generating APK artifacts; local unit and Lint checks completed."
+  },
+  "limits": [
+    "The 600 regression cases include 240 development cases and reused held-out conversations; existing sets informed debugging, so these gains are not an independent modern-chat accuracy estimate.",
+    "The 107 twelve-character snippets were generated with the pinned existing corpus splitter, requested count 120 but only 107 eligible cases available. Conversations are held out from model training; overlap with earlier snippets is possible.",
+    "Classifier preferences cannot parse arbitrary sentences or resolve all noun-prefix ambiguity. Unknown combinations and Single mode remain available.",
+    "Search reserves have controlled-test evidence; separate ranking-only/search-only arms are reported to avoid attributing ranking gains to the new search mechanism.",
+    "No corpus/model assets, full-sentence templates or phone learning records were added. Existing bounded local learning and privacy gates remain.",
+    "No physical Fold7, Android UI, packaged runtime or on-device latency checks in this source-only task. Host timings fluctuate and do not establish mobile fluency."
+  ],
+  "reproduce": {
+    "baseline_diagnosis": "python3 tools/decoder_diagnostics.py --revision 21ff17a --cases tools/lm_heldout_cases.tsv --output /tmp/diagnosis.tsv",
+    "ranking": "Compile tools/RankingEvaluation.java with Java 17 and the corresponding actual engine using -encoding UTF-8 -sourcepath app/src/main/java; compare identical inputs/assets on baseline and final source.",
+    "twelve_cases": "python3 tools/build_ranking_cases.py /tmp/hkcancor-utf8.zip /tmp/twelve-cases --count 120 --target-length 12",
+    "learning": "Run tools/ContextLearningEvaluation.java on tools/hk_daily_context_cases.tsv; records simulate explicit confirmations three times."
+  },
+  "performance": {
+    "environment": "Separate sequential warm Java 17 JVMs (-Xmx1g), no parallel emulator, build or evaluation during timed passes. Three warmup and nine measured passes per code.",
+    "units": "milliseconds",
+    "cases": [
+      {
+        "code": "ofonaovrmrq",
+        "length": 11,
+        "before_median_ms": 71.476,
+        "before_max_ms": 76.102,
+        "after_median_ms": 70.596,
+        "after_max_ms": 76.449
+      },
+      {
+        "code": "hmerrrysmlrp",
+        "length": 12,
+        "before_median_ms": 83.436,
+        "before_max_ms": 93.444,
+        "after_median_ms": 80.374,
+        "after_max_ms": 84.667
+      },
+      {
+        "code": "dpofvivcjutrmyyjvcqnjd",
+        "length": 22,
+        "before_median_ms": 129.701,
+        "before_max_ms": 136.951,
+        "after_median_ms": 130.18,
+        "after_max_ms": 138.538
+      },
+      {
+        "code": "ofykrmmsydwljpvwjd",
+        "length": 18,
+        "before_median_ms": 106.378,
+        "before_max_ms": 116.11,
+        "after_median_ms": 104.868,
+        "after_max_ms": 151.381
+      },
+      {
+        "code": "vkmmnkmrvordrjjj",
+        "length": 16,
+        "before_median_ms": 122.5,
+        "before_max_ms": 132.953,
+        "after_median_ms": 120.5,
+        "after_max_ms": 124.502
+      },
+      {
+        "code": "hihihihihihihihihihihihihihihihihihihihihihihihi",
+        "length": 48,
+        "before_median_ms": 451.946,
+        "before_max_ms": 526.993,
+        "after_median_ms": 452.995,
+        "after_max_ms": 465.953
+      }
+    ],
+    "limits": "Extra word/hint support adds work. Shared host timings vary; 48-code repeated hi is a stress case, and these are not Android key-to-candidate latency."
+  }
+}
