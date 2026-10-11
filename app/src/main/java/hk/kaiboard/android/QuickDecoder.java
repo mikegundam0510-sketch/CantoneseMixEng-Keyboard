@@ -8,6 +8,7 @@ import java.util.function.ToIntFunction;
 /** Bounded offline word-lattice decoder, including one-code Quick characters. */
 public final class QuickDecoder {
     private static final int BEAM = 48;
+    private static final int LOOKAHEAD_WORDS = 4, PATH_RESERVE = 8;
     // Selected on separate validation conversations, before held-out evaluation.
     private static final double SENTENCE_SCORE_MARGIN = 10;
     // Productive Cantonese predicate questions, rather than memorized full sentences.
@@ -212,6 +213,8 @@ public final class QuickDecoder {
                         String word = letters.get(j);
                         options.putIfAbsent(word, (double) dictionary.frequency(word));
                     }
+                    for (String character : contextCharacters(letters, paths, histories, boundaryScores))
+                        options.putIfAbsent(character, (double) dictionary.frequency(character));
                     if(contextual!=null) {
                         Map<String,Integer> favored=new LinkedHashMap<>();
                         for(String history:new LinkedHashSet<>(histories.values()))
@@ -317,6 +320,32 @@ public final class QuickDecoder {
     private static double personalBonus(int weight, double cap, double scale) {
         double value = Math.min(cap, Math.log1p(Math.abs((double) weight)) * scale);
         return weight < 0 ? -value : value;
+    }
+
+    /** A frequency cutoff must not hide a character that fits an active context. */
+    private List<String> contextCharacters(List<String> letters, List<Path> paths, Map<Path, String> histories,
+            Map<String, Map<String, Double>> boundaryScores) {
+        if (model == null || letters.size() <= 24) return Collections.emptyList();
+        Set<String> contexts = new LinkedHashSet<>();
+        for (Path path : paths) {
+            contexts.add(histories.get(path));
+            if (contexts.size() == 4) break;
+        }
+        Map<String, Double> scores = new HashMap<>();
+        for (String context : contexts) {
+            Map<String, Double> conditional = boundaryScores.computeIfAbsent(context, key -> new HashMap<>());
+            double floor = Double.POSITIVE_INFINITY;
+            for (int i = 0; i < 24; i++) floor = Math.min(floor,
+                conditional.computeIfAbsent(letters.get(i), text -> languageScore(context, text)));
+            for (int i = 24; i < Math.min(64, letters.size()); i++) {
+                String character = letters.get(i);
+                double score = conditional.computeIfAbsent(character, text -> languageScore(context, text));
+                if (score > floor) scores.merge(character, score, Math::max);
+            }
+        }
+        List<String> result = new ArrayList<>(scores.keySet());
+        result.sort(Comparator.comparingDouble((String text) -> scores.get(text)).reversed().thenComparing(text -> text));
+        return result.subList(0, Math.min(4, result.size()));
     }
 
     private List<Token> personalizedTokens(String code, ToIntBiFunction<String, String> learned) {
@@ -523,7 +552,7 @@ public final class QuickDecoder {
                 int characters = text.codePointCount(0, text.length());
                 if (characters >= 2 && characters <= 4 && seen.add(text))
                     result.add(new Token(text, languageScore("", text)));
-                if (result.size() == 1) return result;
+                if (result.size() == LOOKAHEAD_WORDS) return result;
             }
         }
         return result;
@@ -531,21 +560,53 @@ public final class QuickDecoder {
 
     private List<Path> prune(List<Path> input, String context, List<Token> following) {
         if (following.isEmpty() || input.size() <= BEAM) return prune(input);
-        Map<String, Double> cached = new HashMap<>();
+        Map<String, double[]> cached = new HashMap<>();
         Map<Path, Double> scores = new IdentityHashMap<>();
+        Map<Path, Double> alternatives = new IdentityHashMap<>();
         for (Path path : input) {
             String tail = OfflineLanguageModel.contextTail(context + path.text);
-            double evidence = cached.computeIfAbsent(tail, key -> {
-                double best = 0;
-                for (Token next : following)
-                    best = Math.max(best, languageScore(key, next.text) - next.score);
-                return Math.min(2, best);
+            double[] evidence = cached.computeIfAbsent(tail, key -> {
+                double first = Math.max(0, languageScore(key, following.get(0).text) - following.get(0).score);
+                return new double[]{Math.min(2, first), Double.NaN};
             });
-            scores.put(path, path.score + evidence);
+            scores.put(path, path.score + evidence[0]);
         }
-        // The hint only protects search paths; final ordering uses the complete sentence score.
+        // Keep the original 48 paths. A bounded reserve protects alternative
+        // histories supported by other matching words in the remaining codes.
+        // Hints affect survival only; completed sentences retain their real scores.
         input.sort(Comparator.comparingDouble((Path p) -> scores.get(p)).reversed());
-        return distinctPaths(input);
+        List<Path> result = distinctPaths(input);
+        Set<String> seen = new HashSet<>();
+        for (Path path : result) seen.add(path.text);
+        double floor = result.get(result.size() - 1).score - 4;
+        // Only paths outside the original beam and close enough to its raw
+        // score floor can enter the reserve. Defer extra model scores until
+        // eligibility is known, without changing the surviving paths.
+        for (Path path : input) {
+            if (path.score < floor || seen.contains(path.text)) continue;
+            String tail = OfflineLanguageModel.contextTail(context + path.text);
+            double[] evidence = cached.get(tail);
+            if (Double.isNaN(evidence[1])) {
+                double best = evidence[0];
+                for (int i = 1; best < 2 && i < following.size(); i++) {
+                    Token next = following.get(i);
+                    best = Math.max(best, languageScore(tail, next.text) - next.score);
+                }
+                evidence[1] = Math.min(2, best);
+            }
+            if (evidence[1] > .25) alternatives.put(path, path.score + evidence[1]);
+        }
+        List<Path> protectedPaths = new ArrayList<>(alternatives.keySet());
+        protectedPaths.sort(Comparator.comparingDouble((Path p) -> alternatives.get(p)).reversed()
+            .thenComparing(p -> p.text));
+        Set<String> histories = new HashSet<>();
+        for (Path path : protectedPaths) {
+            if (path.score < floor || !seen.add(path.text)) continue;
+            if (!histories.add(OfflineLanguageModel.contextTail(context + path.text))) continue;
+            result.add(path);
+            if (result.size() == BEAM + PATH_RESERVE) break;
+        }
+        return result;
     }
 
     private static List<Path> prune(List<Path> input) {

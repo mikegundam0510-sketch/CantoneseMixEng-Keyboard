@@ -1,0 +1,605 @@
+{
+  "release": "0.6.38",
+  "version_code": 45,
+  "baseline_commit": "64727cd04c4c908320ec8f274288d5cda1f5fba2",
+  "scope": "Search survival and candidate entry only. Dictionary, language model, sentence likelihood, phrase evidence, personal learning rules and final 20-candidate limit are unchanged.",
+  "search_bounds": {
+    "base_paths": 48,
+    "reserved_paths": 8,
+    "maximum_intermediate_paths": 56,
+    "lookahead_words": 4,
+    "maximum_lookahead_word_characters": 4,
+    "maximum_lookahead_code_length": 8,
+    "reserve_score_floor_below_original_border": 4,
+    "reserve_minimum_positive_hint": 0.25,
+    "reserve_hint_cap": 2,
+    "diversity": "At most one added path per last-four-Han-character context",
+    "characters_base": 24,
+    "characters_inspected_maximum": 64,
+    "context_histories_maximum": 4,
+    "extra_characters_maximum": 4,
+    "character_entry_rule": "Only characters with language score better than the worst of the original 24 for an active context; max four selected by best contextual score, then text for deterministic ties. Cached scores reused during expansion."
+  },
+  "controlled_regression": {
+    "test": "SearchRetentionTest.secondFollowingWordRescuesAnInitiallyLowerRankedPrefix",
+    "method": "Toy immutable language model and 24x24 character combinations. At least 48 prefixes initially score above wanted prefix; second following word supplies disambiguation. Whole target is absent from toy vocabulary. No toy data enters production assets.",
+    "baseline": "Fails: target absent from candidate list",
+    "after": "Passes: target ranks first, all returned texts match exact codes and remain distinct/bounded"
+  },
+  "real_character_gate_regression": {
+    "context": "下你女性",
+    "code": "hmerrrysmlrp",
+    "target": "生活嗰方面呢",
+    "original_character_rank": 36,
+    "original_sentence_rank": 0,
+    "after_sentence_rank": 3,
+    "meaning": "Rank 0 means absent from displayed list, not proof of complete lattice absence."
+  },
+  "evaluation": {
+    "validation": {
+      "before": {
+        "cases": 240,
+        "top1": 122,
+        "top5": 169,
+        "top20": 187,
+        "mrr": 0.5935430115693273
+      },
+      "after": {
+        "cases": 240,
+        "top1": 122,
+        "top5": 174,
+        "top20": 195,
+        "mrr": 0.6027171187121846
+      },
+      "input_sha256": "70e4db560eeedd4f44619cd4c631624c102124ced01aa4c75f698cadc9371710",
+      "target_rank_changes": [
+        {
+          "target": "行做電視囖",
+          "before": 0,
+          "after": 4
+        },
+        {
+          "target": "生活嗰方面呢",
+          "before": 0,
+          "after": 3
+        },
+        {
+          "target": "學係傾偈啊",
+          "before": 7,
+          "after": 8
+        },
+        {
+          "target": "咗哩件事之後",
+          "before": 1,
+          "after": 2
+        },
+        {
+          "target": "有快樂啊",
+          "before": 15,
+          "after": 16
+        },
+        {
+          "target": "搞得通囖",
+          "before": 0,
+          "after": 20
+        },
+        {
+          "target": "叫藝術家囖",
+          "before": 0,
+          "after": 6
+        },
+        {
+          "target": "佢嘅範疇嚹",
+          "before": 0,
+          "after": 5
+        },
+        {
+          "target": "喱不知幾好玩",
+          "before": 7,
+          "after": 10
+        },
+        {
+          "target": "日會走錯路",
+          "before": 11,
+          "after": 15
+        },
+        {
+          "target": "犀利過頭嚹",
+          "before": 0,
+          "after": 2
+        },
+        {
+          "target": "我哋好唔同囖",
+          "before": 0,
+          "after": 3
+        },
+        {
+          "target": "嘢要靈感啊",
+          "before": 10,
+          "after": 11
+        },
+        {
+          "target": "有哩隻樂趣囖",
+          "before": 0,
+          "after": 1
+        },
+        {
+          "target": "議性嘅節目啊",
+          "before": 5,
+          "after": 6
+        }
+      ],
+      "first_candidate_changes": 6
+    },
+    "old": {
+      "before": {
+        "cases": 120,
+        "top1": 62,
+        "top5": 98,
+        "top20": 109,
+        "mrr": 0.6497303921568628
+      },
+      "after": {
+        "cases": 120,
+        "top1": 60,
+        "top5": 98,
+        "top20": 111,
+        "mrr": 0.6406761593526299
+      },
+      "input_sha256": "bae16312e7f843fa503a61b54b7a734086aab3ff3d0b7d3576f095107bb8d392",
+      "target_rank_changes": [
+        {
+          "target": "去完日本啊",
+          "before": 1,
+          "after": 2
+        },
+        {
+          "target": "啲同學啊",
+          "before": 2,
+          "after": 3
+        },
+        {
+          "target": "唔游水喎",
+          "before": 14,
+          "after": 15
+        },
+        {
+          "target": "越來越癲嚹",
+          "before": 0,
+          "after": 10
+        },
+        {
+          "target": "犯咗彌天大罪",
+          "before": 6,
+          "after": 9
+        },
+        {
+          "target": "企得埋少少呢",
+          "before": 7,
+          "after": 12
+        },
+        {
+          "target": "媽喺大陸落咗",
+          "before": 1,
+          "after": 2
+        },
+        {
+          "target": "褪返裏邊囖",
+          "before": 0,
+          "after": 10
+        }
+      ],
+      "first_candidate_changes": 3
+    },
+    "fresh": {
+      "before": {
+        "cases": 240,
+        "top1": 100,
+        "top5": 152,
+        "top20": 170,
+        "mrr": 0.5112130826009502
+      },
+      "after": {
+        "cases": 240,
+        "top1": 99,
+        "top5": 155,
+        "top20": 173,
+        "mrr": 0.5139412572041249
+      },
+      "input_sha256": "3649889c21fd1dc454e025d59a0c4cf0c775f8f31b33d4bacdbed899bb656476",
+      "target_rank_changes": [
+        {
+          "target": "定分開放啊",
+          "before": 12,
+          "after": 14
+        },
+        {
+          "target": "咗我哋個信心",
+          "before": 10,
+          "after": 14
+        },
+        {
+          "target": "二份功課嚹",
+          "before": 0,
+          "after": 5
+        },
+        {
+          "target": "好唔同囖",
+          "before": 0,
+          "after": 2
+        },
+        {
+          "target": "咁先進嘞",
+          "before": 14,
+          "after": 15
+        },
+        {
+          "target": "個叫梁詠琪啊",
+          "before": 1,
+          "after": 2
+        },
+        {
+          "target": "嗰鋼線嘅",
+          "before": 0,
+          "after": 2
+        }
+      ],
+      "first_candidate_changes": 3
+    },
+    "long_validation": {
+      "before": {
+        "cases": 120,
+        "top1": 44,
+        "top5": 79,
+        "top20": 92,
+        "mrr": 0.49709054834054833
+      },
+      "after": {
+        "cases": 120,
+        "top1": 44,
+        "top5": 79,
+        "top20": 92,
+        "mrr": 0.4952056277056277
+      },
+      "input_sha256": "e4a0a6a0a88d87f28c6b1afdd80106ed33cf9cb5973f1e641abb4964a941d23a",
+      "target_rank_changes": [
+        {
+          "target": "口罩抌咗落地下就發脾",
+          "before": 7,
+          "after": 6
+        },
+        {
+          "target": "一個傳媒嘅即係中層啊",
+          "before": 1,
+          "after": 3
+        },
+        {
+          "target": "名嘅女性要做哩一行呢",
+          "before": 3,
+          "after": 4
+        },
+        {
+          "target": "會重蹈覆轍噉樣去做囖",
+          "before": 2,
+          "after": 1
+        }
+      ],
+      "first_candidate_changes": 4
+    },
+    "long_heldout": {
+      "before": {
+        "cases": 120,
+        "top1": 31,
+        "top5": 63,
+        "top20": 76,
+        "mrr": 0.36783591748665273
+      },
+      "after": {
+        "cases": 120,
+        "top1": 32,
+        "top5": 63,
+        "top20": 76,
+        "mrr": 0.37518380108453636
+      },
+      "input_sha256": "ac83cad03f791d0db9b903261b97c8cc1924982710f8cfb676e6033affd4d258",
+      "target_rank_changes": [
+        {
+          "target": "知邊個叫郭富城囖可能",
+          "before": 0,
+          "after": 1
+        },
+        {
+          "target": "覺後面有啲經文就唔係",
+          "before": 20,
+          "after": 18
+        },
+        {
+          "target": "即係大家執行哩一方面",
+          "before": 6,
+          "after": 7
+        },
+        {
+          "target": "一個異性企得埋少少呢",
+          "before": 15,
+          "after": 0
+        },
+        {
+          "target": "嘢方法係攞到個信心呢",
+          "before": 5,
+          "after": 6
+        }
+      ],
+      "first_candidate_changes": 5
+    },
+    "daily": {
+      "before": {
+        "cases": 32,
+        "top1": 15,
+        "top5": 23,
+        "top20": 30,
+        "mrr": 0.5749887265512266
+      },
+      "after": {
+        "cases": 32,
+        "top1": 15,
+        "top5": 23,
+        "top20": 30,
+        "mrr": 0.5737467393717394
+      },
+      "input_sha256": "d29faa28d581c87e6b480ce3924c778e4794fa830d6067249a3369daad6528af",
+      "target_rank_changes": [
+        {
+          "target": "我已經覆咗電郵",
+          "before": 10,
+          "after": 11
+        },
+        {
+          "target": "我已經落咗單",
+          "before": 10,
+          "after": 12
+        },
+        {
+          "target": "你轉咗錢畀我未",
+          "before": 11,
+          "after": 13
+        }
+      ],
+      "first_candidate_changes": 1
+    },
+    "handover": {
+      "before": {
+        "cases": 30,
+        "top1": 29,
+        "top5": 30,
+        "top20": 30,
+        "mrr": 0.9833333333333333
+      },
+      "after": {
+        "cases": 30,
+        "top1": 29,
+        "top5": 30,
+        "top20": 30,
+        "mrr": 0.9777777777777777
+      },
+      "input_sha256": "a40c8ef85a205164c03fbf3db5749565382ab9d862e05f2c407497a3b215f387",
+      "target_rank_changes": [
+        {
+          "target": "佢送咗文件畀同事",
+          "before": 2,
+          "after": 3
+        }
+      ],
+      "first_candidate_changes": 0
+    },
+    "completion": {
+      "before": {
+        "cases": 16,
+        "top1": 16,
+        "top5": 16,
+        "top20": 16,
+        "mrr": 1.0
+      },
+      "after": {
+        "cases": 16,
+        "top1": 16,
+        "top5": 16,
+        "top20": 16,
+        "mrr": 1.0
+      },
+      "input_sha256": "2762c747d770efaf45c2541bd30473f7b227473953c26ed311c017902107c192",
+      "target_rank_changes": [],
+      "first_candidate_changes": 0
+    },
+    "requests": {
+      "before": {
+        "cases": 8,
+        "top1": 8,
+        "top5": 8,
+        "top20": 8,
+        "mrr": 1.0
+      },
+      "after": {
+        "cases": 8,
+        "top1": 8,
+        "top5": 8,
+        "top20": 8,
+        "mrr": 1.0
+      },
+      "input_sha256": "8389c751a4206863cda675a3a8afb16eadcdb35e037607893395426fe38a6565",
+      "target_rank_changes": [],
+      "first_candidate_changes": 0
+    },
+    "plural": {
+      "before": {
+        "cases": 18,
+        "top1": 15,
+        "top5": 18,
+        "top20": 18,
+        "mrr": 0.9027777777777778
+      },
+      "after": {
+        "cases": 18,
+        "top1": 15,
+        "top5": 18,
+        "top20": 18,
+        "mrr": 0.9027777777777778
+      },
+      "input_sha256": "aad06feb12df01de8cdb400e6fb5de89e0613f42950be15fe38537744ed6adf9",
+      "target_rank_changes": [],
+      "first_candidate_changes": 0
+    }
+  },
+  "experiments_not_shipped": {
+    "reserve_only": {
+      "validation_240": "Target ranks unchanged; three displayed lists changed.",
+      "long_validation_120": "Target ranks unchanged; three displayed lists changed.",
+      "reason": "This alone cannot rescue a character excluded before reaching the beam."
+    },
+    "beam_96": {
+      "validation_240": "Target ranks unchanged.",
+      "reason": "More work without measured target-ranking gain; 48+8 bounded reserve retained instead."
+    }
+  },
+  "validation": {
+    "all_emitted_candidates_match_exact_input_codes": true,
+    "device_test": false,
+    "unit_tests": {
+      "tests": 156,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "lint": {
+      "Error": 0,
+      "Warning": 25
+    },
+    "optimization_equivalence": "Final lazy reserve scoring and reused boundary cache produce byte-identical complete candidate outputs to the evaluated implementation on all 240 validation cases.",
+    "packaged_assets_match_source": true,
+    "default_case_generator_outputs_unchanged": true
+  },
+  "limits": [
+    "Greater candidate availability does not imply a more accurate first choice; some newly admitted high model-score alternatives displace previous first choices.",
+    "240 validation cases appear in aggregate 600 and are reported separately; target scores were not tuned on held-out results.",
+    "10-character cases are additional contiguous snippets from the same pinned corpus conversations, not an independent modern chat corpus; overlap with earlier six-character snippets is possible.",
+    "No extra corpus, sentence training or evaluation examples were added to production assets.",
+    "No physical Fold7 or Android key-latency measurement in this release."
+  ],
+  "aggregate_600": {
+    "before": {
+      "cases": 600,
+      "top1": 284,
+      "top5": 419,
+      "top20": 466,
+      "mrr": 0.5718485160994836
+    },
+    "after": {
+      "cases": 600,
+      "top1": 281,
+      "top5": 427,
+      "top20": 479,
+      "mrr": 0.5747985822370497
+    }
+  },
+  "additional_long_240": {
+    "before": {
+      "cases": 240,
+      "top1": 75,
+      "top5": 142,
+      "top20": 168,
+      "mrr": 0.43246323291360056
+    },
+    "after": {
+      "cases": 240,
+      "top1": 76,
+      "top5": 142,
+      "top20": 168,
+      "mrr": 0.435194714395082
+    }
+  },
+  "reproduce": {
+    "long_cases": "python3 tools/build_ranking_cases.py /path/to/hkcancor-utf8.zip /tmp/long-cases --count 120 --target-length 10",
+    "ranking": "Compile actual plain Java engine classes with tools/RankingEvaluation.java; run identical inputs on baseline commit and final source/assets.",
+    "performance": "Compile tools/SearchPerformanceEvaluation.java alongside each arm; run sequentially in separate Java 17 JVMs with -Xmx1g after all other evaluations/unit suites finish. Three warmup passes and nine measured passes per code; median/max reported, no assertion relaxation."
+  },
+  "performance": {
+    "environment": "Sequential warm desktop Java 17 JVMs, -Xmx1g, actual release assets, no parallel evaluation or Gradle workload. Three warm-up passes and nine measured passes per input.",
+    "units": "milliseconds",
+    "cases": [
+      {
+        "code": "ofonaovrmrq",
+        "length": 11,
+        "before_median_ms": 99.96,
+        "before_max_ms": 176.14,
+        "after_median_ms": 113.573,
+        "after_max_ms": 145.857
+      },
+      {
+        "code": "hmerrrysmlrp",
+        "length": 12,
+        "before_median_ms": 95.89,
+        "before_max_ms": 112.188,
+        "after_median_ms": 84.35,
+        "after_max_ms": 93.702
+      },
+      {
+        "code": "dpofvivcjutrmyyjvcqnjd",
+        "length": 22,
+        "before_median_ms": 121.026,
+        "before_max_ms": 133.822,
+        "after_median_ms": 125.495,
+        "after_max_ms": 133.069
+      },
+      {
+        "code": "ofykrmmsydwljpvwjd",
+        "length": 18,
+        "before_median_ms": 85.728,
+        "before_max_ms": 96.216,
+        "after_median_ms": 99.873,
+        "after_max_ms": 112.793
+      },
+      {
+        "code": "vkmmnkmrvordrjjj",
+        "length": 16,
+        "before_median_ms": 93.332,
+        "before_max_ms": 157.177,
+        "after_median_ms": 117.662,
+        "after_max_ms": 121.561
+      },
+      {
+        "code": "hihihihihihihihihihihihihihihihihihihihihihihihi",
+        "length": 48,
+        "before_median_ms": 337.448,
+        "before_max_ms": 535.33,
+        "after_median_ms": 436.634,
+        "after_max_ms": 562.843
+      }
+    ],
+    "limits": "Extra search can increase work; these timings are not Android key-to-candidate latency and no Fold7 was measured. The 48-code repeated hi case is a stress input."
+  },
+  "personal_learning_compatibility": {
+    "cases": 32,
+    "method": "Existing simulation confirms each known daily target using Single choices three times. Both arms have identical legacy character and known-word history; one arm also applies contextual short-sequence learning. This is compatibility evidence for existing learning, not a newly changed learning algorithm or unseen-sentence accuracy.",
+    "sequence_records": 294,
+    "legacy_only": {
+      "top1": 26,
+      "top5": 32,
+      "top20": 32
+    },
+    "legacy_plus_contextual": {
+      "top1": 32,
+      "top5": 32,
+      "top20": 32
+    },
+    "learning_default": "off; enable explicitly in settings"
+  },
+  "apk": {
+    "file": "CantoneseMixEng-Keyboard-0.6.38.apk",
+    "bytes": 9861393,
+    "sha256": "4fec56e19a347bd678845c2a67a90a29788a24671718ed435ac723b427276b9e",
+    "application_id": "hk.kaiboard.android",
+    "version_name": "0.6.38",
+    "version_code": 45,
+    "certificate_sha256": "78c3bd69b5625c63b3dff5357681154f063020a49c5b862fdfa9fed575fccb63",
+    "signature_verified": true
+  }
+}

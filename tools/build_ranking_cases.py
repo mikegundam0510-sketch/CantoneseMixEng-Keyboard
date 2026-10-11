@@ -6,7 +6,7 @@ from train_language_model import corpus
 
 ROOT = Path(__file__).resolve().parent.parent
 
-def generate(source, output, count):
+def generate(source, output, count, target_length=6):
     report = json.loads((ROOT / 'app/src/main/assets/MODEL_REPORT.json').read_text())
     if hashlib.sha256(source.read_bytes()).hexdigest() != report['source_sha256']['hkcancor_zip']:
         raise ValueError('HKCanCor checksum differs from the pinned training source')
@@ -24,7 +24,8 @@ def generate(source, output, count):
         for name, text in corpus(source):
             if name not in names or len(text) < 8: continue
             for at in range(4, len(text)-3, 4):
-                context, target = text[max(0,at-4):at], text[at:at+6]
+                context, target = text[max(0,at-4):at], text[at:at+target_length]
+                if target_length != 6 and len(target) < target_length: continue
                 if not all(c in reverse for c in target) or target in seen: continue
                 seen.add(target)
                 if split == 'heldout' and (context, target) in existing: continue
@@ -38,4 +39,5 @@ def generate(source, output, count):
 if __name__ == '__main__':
     parser=argparse.ArgumentParser();parser.add_argument('source',type=Path);parser.add_argument('output',type=Path)
     parser.add_argument('--count',type=int,default=240)
-    args=parser.parse_args();generate(args.source,args.output,args.count)
+    parser.add_argument('--target-length',type=int,default=6,choices=range(4,17))
+    args=parser.parse_args();generate(args.source,args.output,args.count,args.target_length)
