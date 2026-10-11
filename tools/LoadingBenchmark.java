@@ -5,16 +5,18 @@ import java.lang.management.ManagementFactory;
 
 /** Separate JVM per measurement, same assets and heap limits for both revisions. */
 public final class LoadingBenchmark {
+    private static String assets = "app/src/main/assets/";
     private static Reader asset(String name) throws Exception {
-        return new InputStreamReader(new FileInputStream("app/src/main/assets/" + name), java.nio.charset.StandardCharsets.UTF_8);
+        return new InputStreamReader(new FileInputStream(assets + name), java.nio.charset.StandardCharsets.UTF_8);
     }
     public static void main(String[] args) throws Exception {
+        if (args.length > 0) assets = args[0] + "/";
         long start = System.nanoTime();
         DictionaryEngine dictionary = new DictionaryEngine(asset("cangjie5.base.dict.yaml"), asset("english.txt"), asset("character_frequencies.tsv"));
         EnglishEngine english = new EnglishEngine(asset("english.txt"));
         double basicMs = (System.nanoTime()-start)/1e6;
         QuickDecoder decoder = new QuickDecoder(dictionary, asset("quick_phrases.tsv"), asset("hk_phrases.tsv"), asset("cantonese_phrases.tsv"),
-            OfflineLanguageModel.load(new FileInputStream("app/src/main/assets/language_model.b64")));
+            OfflineLanguageModel.load(new FileInputStream(assets + "language_model.b64")));
         double fullMs = (System.nanoTime()-start)/1e6;
         System.gc(); Thread.sleep(100);
         long heap = Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();

@@ -2,6 +2,16 @@
 
 原生 Android 離線鍵盤，目標裝置為 Samsung Galaxy Z Fold7／One UI 8.5。
 
+## 0.6.37 更新
+
+- 正式匯入用戶提供嘅 words.hk 粵典公開詞表、詞頻及字頻。對照 53,961 個符合現有字碼嘅中文短詞，新增 5,163 個內置詞組；產生 63,604 組補充碼詞資料，其中 43,873 組新增／提高詞權重，其餘保留獨立語料頻次作排序證據。只取 2–8 字純中文詞，拆碼沿用現有字庫；粵拼唔會當作倉頡／速成碼。
+- 常見 2–4 字詞嘅語料頻次可跨逐字／詞組邊界參與連打評分，同現有詞組證據取較強值，避免重複加分。5,324 個單字權重作有限調整，每字最多約 30%；冇語料紀錄嘅字保留原權重，唔刪除冷門字或 Windows 補充拆碼。
+- 詞組聯想改為合併各來源最高權重後先建立，修正較後匯入嘅詞頻未反映喺聯想排序嘅問題。新增詞組亦可沿用本機選字／短字序學習；密碼欄位及關閉學習時嘅保護規則保留。
+- 600 個固定對話例子，首選由 283 增至 284，前五位由 414 增至 419，前 20 位由 465 增至 466，整體改善幅度仍小，個別候選亦會退後。原有 32 句人工日常例子嘅首選維持 15/32；模擬逐字確認三次後，短字序學習仍達 32/32，唔代表未見過句子嘅實際用家準確率。
+- 呢三項匯出嘅介紹頁明確標示公有領域；本次冇匯入文章、完整詞典釋義或例句。來源 SHA-256、篩選方法及限制見 [來源記錄](app/src/main/assets/licenses/wordshk/SOURCE.json)，完整比較見 [測試報告](tools/reports/wordshk-ranking-0.6.37.json)。設定顯示版本 0.6.37，版本碼 44；沿用固定簽名。
+
+重現匯入：`python3 tools/import_wordshk.py /path/to/charcount.json /path/to/existingwordcount.json /path/to/wordslist.json`。工具核對固定快照 SHA-256，重跑結果一致。唔需要 App 連網，資料會隨 APK 離線提供。
+
 ## 0.6.36 更新
 
 - 數字／PIN 鍵盤改為參考圖嘅三欄四行：`123`、`456`、`789`，最底一行係刪除、`0`、藍色動作掣。窄屏按鍵較窄，展開大屏按鍵較闊；整組置中，使用膠囊形圓角，按鍵高度設定仍生效。
@@ -21,7 +31,7 @@
 
 ### 公開語料及重現
 
-[粵典 words.hk](https://words.hk/) 嘅詞語／例句適合做後續香港用語補充；完整 CSV 需要經 [官方入口申請](https://words.hk/faiman/request_data/) 並確認資料授權。今次冇匯入網站資料，亦冇將開源解析工具嘅 MIT 授權當作字典資料授權。
+0.6.35 當時冇匯入 [粵典 words.hk](https://words.hk/) 資料。0.6.37 已匯入數據頁明確標示公有領域嘅詞表及頻率匯出；完整詞典釋義／例句仍需要經 [官方入口申請](https://words.hk/faiman/request_data/) 並確認相關資料授權。
 
 補充詞表可用 `python3 tools/supplement_hk_usage.py /path/to/essay-cantonese.txt` 重現；工具檢查固定版本 SHA-256，重跑不重複加入。`tools/ContextLearningEvaluation.java` 同 `tools/RankingEvaluation.java` 位於實際 decoder 同一個 Java package；以 Gradle debug 編譯類別作 classpath 編譯及執行，輸入 `app/src/main/assets`、測試 TSV 同輸出 TSV 路徑。人工例句唔加入語料模型／整句字典。
 

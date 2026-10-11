@@ -1,0 +1,577 @@
+{
+  "release": "0.6.37",
+  "version_code": 44,
+  "baseline_commit": "1a51acebdbfc66331fb233222ef970b6b6686767",
+  "source": {
+    "source_page": "https://words.hk/faiman/analysis/",
+    "license": "Public domain, explicitly stated for these three datasets on the supplied source page",
+    "credit": "words.hk 粵典",
+    "snapshot_received": "2026-10-11",
+    "exports": {
+      "charcount.json": {
+        "url": "https://words.hk/faiman/analysis/charcount.json",
+        "sha256": "c0bf3bfebcf77b152626d132208b9262cb103510a9fb30b246c4e6eafecadba3",
+        "entries": 6301
+      },
+      "existingwordcount.json": {
+        "url": "https://words.hk/faiman/analysis/existingwordcount.json",
+        "sha256": "9067db92fa1f1002e498ea59dcb831f559d62fa6d4855191976f1a4159d46bbd",
+        "entries": 36602
+      },
+      "wordslist.json": {
+        "url": "https://words.hk/faiman/analysis/wordslist.json",
+        "sha256": "0ea376604451f43401b4b6e574cea28c63d4dedd4aaf5b32e86f920382969886",
+        "entries": 62635
+      }
+    },
+    "selected_words": 53961,
+    "new_vocabulary_words": 5163,
+    "observed_selected_words": 31589,
+    "supplemental_exact_code_rows": 63604,
+    "additional_or_increased_exact_code_rows": 43873,
+    "usable_character_counts": 5593,
+    "adjusted_character_weights": 5324,
+    "excluded_words": {
+      "mixed_text_or_variant_marker": 3563,
+      "outside_2_to_8_characters": 5111
+    },
+    "word_transform": "Pure Han 2-8 characters with existing codes; at most eight exact Quick code variants, two-code roots first; weight=max(10,min(3000,30*observed_count)); existing stronger weights retained; fourth column preserves observed corpus count for independent bounded phrase evidence",
+    "corpus_evidence_transform": "For observed 2-4 character words, evidence=.75*(length-1)*min(1,log(1+count)/log(301)) at the completed suffix across token boundaries; fuse with existing phrase evidence using max, not sum, to avoid double-counting overlapping corpora; duplicate code variants use max; existing combined lexical evidence cap of 4 per character retained",
+    "character_transform": "Normalize corpus counts to existing overlapping character total; 15% log blend, per-character ratio limited to [1/1.3,1.3]; absent counts leave original weights unchanged; HK-common runtime floor retained",
+    "limitations": [
+      "Word occurrences are counted without segmentation; overlapping words may be double-counted.",
+      "Words missing from the corpus have no measured frequency, not zero validity.",
+      "No article bodies, full dictionary definitions/examples, personal text, or evaluation sentences imported.",
+      "Jyutping is not a Cangjie/Quick code source; existing character codes alone supply every imported code."
+    ]
+  },
+  "evaluation": {
+    "validation": {
+      "before": {
+        "cases": 240,
+        "top1": 122,
+        "top5": 166,
+        "top20": 186,
+        "mrr": 0.5910369029119029
+      },
+      "after": {
+        "cases": 240,
+        "top1": 122,
+        "top5": 169,
+        "top20": 187,
+        "mrr": 0.5935430115693273
+      },
+      "target_rank_changes": [
+        {
+          "target": "冇咗一班同事",
+          "before": 3,
+          "after": 4
+        },
+        {
+          "target": "學係傾偈啊",
+          "before": 9,
+          "after": 7
+        },
+        {
+          "target": "就會獎個禮物",
+          "before": 20,
+          "after": 19
+        },
+        {
+          "target": "五零呢我最初",
+          "before": 13,
+          "after": 14
+        },
+        {
+          "target": "機都打得電話",
+          "before": 1,
+          "after": 2
+        },
+        {
+          "target": "同學落去小息",
+          "before": 6,
+          "after": 5
+        },
+        {
+          "target": "有快樂啊",
+          "before": 14,
+          "after": 15
+        },
+        {
+          "target": "話佢傾偈啊",
+          "before": 15,
+          "after": 9
+        },
+        {
+          "target": "各個電子傳媒",
+          "before": 11,
+          "after": 10
+        },
+        {
+          "target": "嗰日呢特別開",
+          "before": 7,
+          "after": 3
+        },
+        {
+          "target": "咗攞嗰啲禮物",
+          "before": 3,
+          "after": 2
+        },
+        {
+          "target": "間歇性噉傾偈",
+          "before": 4,
+          "after": 3
+        },
+        {
+          "target": "機又好快教得",
+          "before": 6,
+          "after": 5
+        },
+        {
+          "target": "學生傾偈",
+          "before": 2,
+          "after": 1
+        },
+        {
+          "target": "嘢要靈感啊",
+          "before": 0,
+          "after": 10
+        }
+      ],
+      "first_candidate_changes": 3,
+      "before_output_sha256": "3ec4918f977f6d605694568550da4de8fa5fbf124308d1b6e74db55e62ce2003",
+      "after_output_sha256": "8b746eca646a47275ba4be42bc9664fd65e6564798559407647c5d0776da4cdf",
+      "input_sha256": "70e4db560eeedd4f44619cd4c631624c102124ced01aa4c75f698cadc9371710",
+      "input_source": "Reproduced with tools/build_ranking_cases.py and the pinned HKCanCor ZIP; validation.tsv"
+    },
+    "old": {
+      "before": {
+        "cases": 120,
+        "top1": 61,
+        "top5": 97,
+        "top20": 108,
+        "mrr": 0.6434118230625584
+      },
+      "after": {
+        "cases": 120,
+        "top1": 62,
+        "top5": 98,
+        "top20": 109,
+        "mrr": 0.6497303921568628
+      },
+      "target_rank_changes": [
+        {
+          "target": "去睇跌打嘅",
+          "before": 4,
+          "after": 3
+        },
+        {
+          "target": "你就噉放兩個",
+          "before": 2,
+          "after": 3
+        },
+        {
+          "target": "踢波真係",
+          "before": 7,
+          "after": 3
+        },
+        {
+          "target": "唔游水喎",
+          "before": 16,
+          "after": 14
+        },
+        {
+          "target": "蘭波衫七號",
+          "before": 2,
+          "after": 1
+        },
+        {
+          "target": "搭的士去睇跌",
+          "before": 0,
+          "after": 17
+        },
+        {
+          "target": "去到唔好食魚",
+          "before": 4,
+          "after": 3
+        }
+      ],
+      "first_candidate_changes": 4,
+      "before_output_sha256": "ca77b8be84987e8c7dc14a6a8fd29eb4f89465001a84787dea4373e94accf3b1",
+      "after_output_sha256": "b30de7d6eb18adf3f2bf19e37501987b3ad5c81d4db26f82d7e40daaaeef8d0d",
+      "input_sha256": "bae16312e7f843fa503a61b54b7a734086aab3ff3d0b7d3576f095107bb8d392",
+      "input_source": "tools/lm_heldout_cases.tsv"
+    },
+    "fresh": {
+      "before": {
+        "cases": 240,
+        "top1": 100,
+        "top5": 151,
+        "top20": 171,
+        "mrr": 0.510736065405183
+      },
+      "after": {
+        "cases": 240,
+        "top1": 100,
+        "top5": 152,
+        "top20": 170,
+        "mrr": 0.5112130826009502
+      },
+      "target_rank_changes": [
+        {
+          "target": "剝奪我啲權",
+          "before": 7,
+          "after": 8
+        },
+        {
+          "target": "我可以即係孭",
+          "before": 17,
+          "after": 16
+        },
+        {
+          "target": "北海道滑雪呀",
+          "before": 4,
+          "after": 5
+        },
+        {
+          "target": "個人物呢",
+          "before": 2,
+          "after": 1
+        },
+        {
+          "target": "人好勁啊踢波",
+          "before": 5,
+          "after": 3
+        },
+        {
+          "target": "返呢頭先個手",
+          "before": 9,
+          "after": 8
+        },
+        {
+          "target": "人話佢乜嘢喎",
+          "before": 7,
+          "after": 4
+        },
+        {
+          "target": "覺後面有啲經",
+          "before": 18,
+          "after": 17
+        },
+        {
+          "target": "咗我哋個信心",
+          "before": 9,
+          "after": 10
+        },
+        {
+          "target": "穩固啲囖個信",
+          "before": 7,
+          "after": 8
+        },
+        {
+          "target": "過嘅十蚊紙",
+          "before": 20,
+          "after": 0
+        },
+        {
+          "target": "話你喺倫敦",
+          "before": 1,
+          "after": 2
+        }
+      ],
+      "first_candidate_changes": 4,
+      "before_output_sha256": "e7150136d87e18c2cf3a03c8ac97cfb21e435e63582add83c38ae7effa924ae5",
+      "after_output_sha256": "12b9bc3d6eb7c19b611375a03f5ca3e24be1dcf0c8c288c1d8303dcb91310b63",
+      "input_sha256": "3649889c21fd1dc454e025d59a0c4cf0c775f8f31b33d4bacdbed899bb656476",
+      "input_source": "Reproduced with tools/build_ranking_cases.py and the pinned HKCanCor ZIP; heldout.tsv"
+    },
+    "daily": {
+      "before": {
+        "cases": 32,
+        "top1": 15,
+        "top5": 23,
+        "top20": 30,
+        "mrr": 0.5771836670274171
+      },
+      "after": {
+        "cases": 32,
+        "top1": 15,
+        "top5": 23,
+        "top20": 30,
+        "mrr": 0.5749887265512266
+      },
+      "target_rank_changes": [
+        {
+          "target": "幫我覆返個訊息",
+          "before": 4,
+          "after": 5
+        },
+        {
+          "target": "你覆咗個訊息未",
+          "before": 15,
+          "after": 14
+        },
+        {
+          "target": "你想送貨定自取",
+          "before": 8,
+          "after": 10
+        }
+      ],
+      "first_candidate_changes": 1,
+      "before_output_sha256": "eedb99bcac22ff7e06f607925e3bd4e317e45890584ee134c97bc3bfcf0d171d",
+      "after_output_sha256": "6c63a6209d8b4f35caffee83f710905713093da69474a0c2be3bb58f5e802654",
+      "input_sha256": "d29faa28d581c87e6b480ce3924c778e4794fa830d6067249a3369daad6528af",
+      "input_source": "tools/hk_daily_context_cases.tsv"
+    },
+    "handover": {
+      "before": {
+        "cases": 30,
+        "top1": 29,
+        "top5": 30,
+        "top20": 30,
+        "mrr": 0.9833333333333333
+      },
+      "after": {
+        "cases": 30,
+        "top1": 29,
+        "top5": 30,
+        "top20": 30,
+        "mrr": 0.9833333333333333
+      },
+      "target_rank_changes": [],
+      "first_candidate_changes": 0,
+      "before_output_sha256": "21edce13d174d3b097d5d92712ea8678cd23e763c4e34b9dae87a1f4725ce73e",
+      "after_output_sha256": "9ab819beec867b09574226b71165e25b6a9698b03bb70bd49e783518e31de6f0",
+      "input_sha256": "a40c8ef85a205164c03fbf3db5749565382ab9d862e05f2c407497a3b215f387",
+      "input_source": "tools/hk_handover_cases.tsv"
+    },
+    "completion": {
+      "before": {
+        "cases": 16,
+        "top1": 16,
+        "top5": 16,
+        "top20": 16,
+        "mrr": 1.0
+      },
+      "after": {
+        "cases": 16,
+        "top1": 16,
+        "top5": 16,
+        "top20": 16,
+        "mrr": 1.0
+      },
+      "target_rank_changes": [],
+      "first_candidate_changes": 0,
+      "before_output_sha256": "e6bb0d1a2c48bdec158cf9a2a621c29b806ede01a22cd70e94e510760d2b0611",
+      "after_output_sha256": "d52dfa9f592e7d794e6cbf7f932f852e04fbde53094b51255a986ef414b0b9d2",
+      "input_sha256": "2762c747d770efaf45c2541bd30473f7b227473953c26ed311c017902107c192",
+      "input_source": "tools/hk_completion_cases.tsv"
+    },
+    "requests": {
+      "before": {
+        "cases": 8,
+        "top1": 8,
+        "top5": 8,
+        "top20": 8,
+        "mrr": 1.0
+      },
+      "after": {
+        "cases": 8,
+        "top1": 8,
+        "top5": 8,
+        "top20": 8,
+        "mrr": 1.0
+      },
+      "target_rank_changes": [],
+      "first_candidate_changes": 0,
+      "before_output_sha256": "544ab5a19922ed9ac1960327d8afa1fb424bac47370e70cbeffb6a4f87e536f7",
+      "after_output_sha256": "221ab67490ab53eaf1f19f521be7f0b7dda67f804a796151ffd19d8d04c36f0e",
+      "input_sha256": "8389c751a4206863cda675a3a8afb16eadcdb35e037607893395426fe38a6565",
+      "input_source": "tools/continuous_clause_cases.tsv"
+    },
+    "plural": {
+      "before": {
+        "cases": 18,
+        "top1": 15,
+        "top5": 18,
+        "top20": 18,
+        "mrr": 0.9027777777777778
+      },
+      "after": {
+        "cases": 18,
+        "top1": 15,
+        "top5": 18,
+        "top20": 18,
+        "mrr": 0.9027777777777778
+      },
+      "target_rank_changes": [],
+      "first_candidate_changes": 0,
+      "before_output_sha256": "b4b72ff445cb94d73b32f134ae2f16771c5f039fa6b6148b249c3927bc8fa04d",
+      "after_output_sha256": "8ef19c0ac2dfdf2f5a36da44461c8a3c2294d8c54b761993cd341a84756aebcd",
+      "input_sha256": "aad06feb12df01de8cdb400e6fb5de89e0613f42950be15fe38537744ed6adf9",
+      "input_source": "tools/hk_plural_assistance_cases.tsv"
+    }
+  },
+  "experiments_not_shipped": {
+    "additive_corpus_evidence": {
+      "note": "Same suffix evidence must not be double-counted across overlapping corpora. Additive .75 model failed existing bicycle sentence regression; weight 1.5 also lowered validation top1 from 122 to 119. Replaced by max evidence fusion, preserving stronger existing priors.",
+      "validation_high_weight": {
+        "cases": 240,
+        "top1": 119,
+        "top5": 169,
+        "top20": 187,
+        "mrr": 0.5868331222834899
+      }
+    }
+  },
+  "learning_simulation": {
+    "method": "Actual SingleSelectionHistory and PhraseLearning, three explicit selection passes over 32 authored daily cases; legacy and contextual arms share identical legacy records within this release.",
+    "sequence_records": 294,
+    "legacy": {
+      "cases": 32,
+      "top1": 26,
+      "top5": 32,
+      "top20": 32,
+      "mrr": 0.8932291666666666
+    },
+    "legacy_plus_short_sequences": {
+      "cases": 32,
+      "top1": 32,
+      "top5": 32,
+      "top20": 32,
+      "mrr": 1.0
+    },
+    "limitation": "Replayed selected sentences measure personalization, not unseen sentence generalization."
+  },
+  "validation": {
+    "all_emitted_candidates_match_exact_codes": true,
+    "cp950_characters": 13070,
+    "big5hkscs_characters": 17618,
+    "missing_codec_characters": 0,
+    "full_import_integrity_and_idempotence_tests": 2,
+    "device_test": false,
+    "lint": {
+      "Warning": 25,
+      "Error": 0
+    },
+    "packaged_assets_match_sources": true,
+    "signer_sha256": "78c3bd69b5625c63b3dff5357681154f063020a49c5b862fdfa9fed575fccb63",
+    "apk_identity": "hk.kaiboard.android 0.6.37 (44)",
+    "latency_rerun_note": "An initial run overlapped eight JVM ranking evaluations and exceeded the existing five-second assertion. Full suite rerun without ranking workload passed with the original assertion unchanged.",
+    "unit_tests": {
+      "tests": 154,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "full_snapshot_import_byte_identical_on_repeat": true,
+    "existing_loading_benchmark_script": "Passed; javac sourcepath resolves the contextual learning engine dependencies."
+  },
+  "limits": [
+    "Small aggregate ranking gain; no universal sentence correctness classifier or guarantee of first-place user intent.",
+    "Validation cases (240) participate in the 600-case aggregate and are reported separately; old held-out 120 and additional held-out 240 were evaluated only after max evidence fusion was chosen on validation and regressions.",
+    "Authored daily cases did not gain top1 or top5; some wanted sentences moved down.",
+    "Written corpus frequency is counted without segmentation and is not contemporary HK chat frequency.",
+    "No article bodies, definitions/examples, full private sentences or evaluation sentences were imported into vocabulary/model.",
+    "No Fold7 device measurement or Android latency measurement in this release."
+  ],
+  "aggregate_600": {
+    "before": {
+      "cases": 600,
+      "top1": 283,
+      "top5": 414,
+      "top20": 465,
+      "mrr": 0.5693915519393461
+    },
+    "after": {
+      "cases": 600,
+      "top1": 284,
+      "top5": 419,
+      "top20": 466,
+      "mrr": 0.5718485160994836
+    }
+  },
+  "apk": {
+    "path": "dist/CantoneseMixEng-Keyboard-0.6.37.apk",
+    "bytes": 9859929,
+    "sha256": "aae8197da28ebef41fc57e2361efaaba8cd4162a1717e57846c194c6719f1207",
+    "version_name": "0.6.37",
+    "version_code": 44
+  },
+  "evaluation_method": "Actual DictionaryEngine, QuickDecoder and OfflineLanguageModel on fixed cases with empty personal history. Each emitted candidate is checked against every typed Quick code. Identical cases in both arms, before any data/code changes versus final max evidence fusion. No language-model retraining.",
+  "reproduce": {
+    "data": "python3 tools/import_wordshk.py /path/to/charcount.json /path/to/existingwordcount.json /path/to/wordslist.json",
+    "cases": "python3 tools/build_ranking_cases.py /path/to/hkcancor-utf8.zip /tmp/wordshk-cases --count 240",
+    "ranking": "Compile actual plain Java engine classes and tools/RankingEvaluation.java, then java -Xmx1g -cp <classes> hk.kaiboard.android.RankingEvaluation <assets> <cases.tsv> <output.tsv>",
+    "baseline": "Use baseline commit for both engine classes and assets; keep generated evaluation inputs identical.",
+    "learning": "java -Xmx1g -cp <classes> hk.kaiboard.android.ContextLearningEvaluation app/src/main/assets tools/hk_daily_context_cases.tsv <output.tsv>"
+  },
+  "loading_and_heap": {
+    "method": "Three separate JVMs per arm, Java 17 -Xms256m -Xmx512m, baseline commit engine plus baseline character/phrase assets vs final engine/assets. No concurrent ranking jobs or unit suite. LoadingBenchmark accepts an asset directory.",
+    "results": {
+      "before": {
+        "runs": [
+          {
+            "basic_ms": 1400.4,
+            "full_ms": 2476.7,
+            "heap_bytes": 123131840,
+            "english_alloc_bytes": 3907568,
+            "candidates": "[你好, 係好, 係樂, 無好, 煲好, 伙好, 繁好, 焦好, 僞好, 鶴好, 鴿好, 氮好, 僚好, 你樂, 無樂, 黛好, 鷦好, 鴒好, 絛好, 伙樂] / [你今日食咗咩, 係今日食咗咩, 你今日食咗嗱, 係今日食咗嗱, 無今日食咗咩, 伙今日食咗咩, 煲今日食咗咩, 繁今日食咗咩, 焦今日食咗咩, 你今日食啲咩, 僞今日食咗咩, 鶴今日食咗咩] / [我已經完成報告, 得已經完成報告, 我已經完成報答, 特已經完成報告, 我已經完成趣管, 的已經完成報告, 我已經完成趣和, 我已經完成趣向, 我已經完成趣各, 我已經完成趣告, 我已經完成趣答, 我已經完成趣船, 風已經完成報告, 鬼已經完成報告, 等已經完成報告, 射已經完成報告, 待已經完成報告, 我已經完成趣啓, 私已經完成報告, 得已經完成報答] / [明錚源, 明銖源, 明鑠源, 明錚淡, 閒錚源, 明錚涼, 明鎳源, 明銖淡, 閒銖源, 明鑠淡, 閒鑠源, 明銖涼, 明錚滅, 明鑠涼, 閒錚淡, 明鍒源, 明鍦源, 明錁源, 明釨源, 明鏁源]"
+          },
+          {
+            "basic_ms": 1306.4,
+            "full_ms": 2511.5,
+            "heap_bytes": 123090040,
+            "english_alloc_bytes": 3907664,
+            "candidates": "[你好, 係好, 係樂, 無好, 煲好, 伙好, 繁好, 焦好, 僞好, 鶴好, 鴿好, 氮好, 僚好, 你樂, 無樂, 黛好, 鷦好, 鴒好, 絛好, 伙樂] / [你今日食咗咩, 係今日食咗咩, 你今日食咗嗱, 係今日食咗嗱, 無今日食咗咩, 伙今日食咗咩, 煲今日食咗咩, 繁今日食咗咩, 焦今日食咗咩, 你今日食啲咩, 僞今日食咗咩, 鶴今日食咗咩] / [我已經完成報告, 得已經完成報告, 我已經完成報答, 特已經完成報告, 我已經完成趣管, 的已經完成報告, 我已經完成趣和, 我已經完成趣向, 我已經完成趣各, 我已經完成趣告, 我已經完成趣答, 我已經完成趣船, 風已經完成報告, 鬼已經完成報告, 等已經完成報告, 射已經完成報告, 待已經完成報告, 我已經完成趣啓, 私已經完成報告, 得已經完成報答] / [明錚源, 明銖源, 明鑠源, 明錚淡, 閒錚源, 明錚涼, 明鎳源, 明銖淡, 閒銖源, 明鑠淡, 閒鑠源, 明銖涼, 明錚滅, 明鑠涼, 閒錚淡, 明鍒源, 明鍦源, 明錁源, 明釨源, 明鏁源]"
+          },
+          {
+            "basic_ms": 1278.1,
+            "full_ms": 3357.2,
+            "heap_bytes": 123308392,
+            "english_alloc_bytes": 3907664,
+            "candidates": "[你好, 係好, 係樂, 無好, 煲好, 伙好, 繁好, 焦好, 僞好, 鶴好, 鴿好, 氮好, 僚好, 你樂, 無樂, 黛好, 鷦好, 鴒好, 絛好, 伙樂] / [你今日食咗咩, 係今日食咗咩, 你今日食咗嗱, 係今日食咗嗱, 無今日食咗咩, 伙今日食咗咩, 煲今日食咗咩, 繁今日食咗咩, 焦今日食咗咩, 你今日食啲咩, 僞今日食咗咩, 鶴今日食咗咩] / [我已經完成報告, 得已經完成報告, 我已經完成報答, 特已經完成報告, 我已經完成趣管, 的已經完成報告, 我已經完成趣和, 我已經完成趣向, 我已經完成趣各, 我已經完成趣告, 我已經完成趣答, 我已經完成趣船, 風已經完成報告, 鬼已經完成報告, 等已經完成報告, 射已經完成報告, 待已經完成報告, 我已經完成趣啓, 私已經完成報告, 得已經完成報答] / [明錚源, 明銖源, 明鑠源, 明錚淡, 閒錚源, 明錚涼, 明鎳源, 明銖淡, 閒銖源, 明鑠淡, 閒鑠源, 明銖涼, 明錚滅, 明鑠涼, 閒錚淡, 明鍒源, 明鍦源, 明錁源, 明釨源, 明鏁源]"
+          }
+        ],
+        "median": {
+          "basic_ms": 1306.4,
+          "full_ms": 2511.5,
+          "heap_bytes": 123131840,
+          "english_alloc_bytes": 3907664
+        }
+      },
+      "after": {
+        "runs": [
+          {
+            "basic_ms": 1033.6,
+            "full_ms": 2768.7,
+            "heap_bytes": 131289752,
+            "english_alloc_bytes": 3907568,
+            "candidates": "[你好, 係好, 係樂, 無好, 煲好, 伙好, 繁好, 焦好, 僞好, 鶴好, 鴿好, 氮好, 僚好, 你樂, 無樂, 黛好, 鷦好, 鴒好, 絛好, 伙樂] / [你今日食咗咩, 係今日食咗咩, 你今日食咗嗱, 係今日食咗嗱, 無今日食咗咩, 伙今日食咗咩, 煲今日食咗咩, 繁今日食咗咩, 焦今日食咗咩, 你今日食啲咩, 僞今日食咗咩, 鶴今日食咗咩] / [我已經完成報告, 得已經完成報告, 我已經完成報答, 特已經完成報告, 我已經完成趣管, 的已經完成報告, 我已經完成趣和, 我已經完成趣向, 我已經完成趣各, 我已經完成趣告, 我已經完成趣答, 我已經完成趣船, 風已經完成報告, 鬼已經完成報告, 等已經完成報告, 射已經完成報告, 待已經完成報告, 我已經完成趣啓, 私已經完成報告, 得已經完成報答] / [明錚源, 明銖源, 明鑠源, 明錚淡, 閒錚源, 明錚涼, 明鎳源, 明銖淡, 閒銖源, 明鑠淡, 閒鑠源, 明銖涼, 明錚滅, 明鑠涼, 閒錚淡, 明鍒源, 明鍦源, 明錁源, 明釨源, 明鏁源]"
+          },
+          {
+            "basic_ms": 1061.0,
+            "full_ms": 2219.7,
+            "heap_bytes": 131336384,
+            "english_alloc_bytes": 3907568,
+            "candidates": "[你好, 係好, 係樂, 無好, 煲好, 伙好, 繁好, 焦好, 僞好, 鶴好, 鴿好, 氮好, 僚好, 你樂, 無樂, 黛好, 鷦好, 鴒好, 絛好, 伙樂] / [你今日食咗咩, 係今日食咗咩, 你今日食咗嗱, 係今日食咗嗱, 無今日食咗咩, 伙今日食咗咩, 煲今日食咗咩, 繁今日食咗咩, 焦今日食咗咩, 你今日食啲咩, 僞今日食咗咩, 鶴今日食咗咩] / [我已經完成報告, 得已經完成報告, 我已經完成報答, 特已經完成報告, 我已經完成趣管, 的已經完成報告, 我已經完成趣和, 我已經完成趣向, 我已經完成趣各, 我已經完成趣告, 我已經完成趣答, 我已經完成趣船, 風已經完成報告, 鬼已經完成報告, 等已經完成報告, 射已經完成報告, 待已經完成報告, 我已經完成趣啓, 私已經完成報告, 得已經完成報答] / [明錚源, 明銖源, 明鑠源, 明錚淡, 閒錚源, 明錚涼, 明鎳源, 明銖淡, 閒銖源, 明鑠淡, 閒鑠源, 明銖涼, 明錚滅, 明鑠涼, 閒錚淡, 明鍒源, 明鍦源, 明錁源, 明釨源, 明鏁源]"
+          },
+          {
+            "basic_ms": 994.6,
+            "full_ms": 3016.0,
+            "heap_bytes": 131242016,
+            "english_alloc_bytes": 3907568,
+            "candidates": "[你好, 係好, 係樂, 無好, 煲好, 伙好, 繁好, 焦好, 僞好, 鶴好, 鴿好, 氮好, 僚好, 你樂, 無樂, 黛好, 鷦好, 鴒好, 絛好, 伙樂] / [你今日食咗咩, 係今日食咗咩, 你今日食咗嗱, 係今日食咗嗱, 無今日食咗咩, 伙今日食咗咩, 煲今日食咗咩, 繁今日食咗咩, 焦今日食咗咩, 你今日食啲咩, 僞今日食咗咩, 鶴今日食咗咩] / [我已經完成報告, 得已經完成報告, 我已經完成報答, 特已經完成報告, 我已經完成趣管, 的已經完成報告, 我已經完成趣和, 我已經完成趣向, 我已經完成趣各, 我已經完成趣告, 我已經完成趣答, 我已經完成趣船, 風已經完成報告, 鬼已經完成報告, 等已經完成報告, 射已經完成報告, 待已經完成報告, 我已經完成趣啓, 私已經完成報告, 得已經完成報答] / [明錚源, 明銖源, 明鑠源, 明錚淡, 閒錚源, 明錚涼, 明鎳源, 明銖淡, 閒銖源, 明鑠淡, 閒鑠源, 明銖涼, 明錚滅, 明鑠涼, 閒錚淡, 明鍒源, 明鍦源, 明錁源, 明釨源, 明鏁源]"
+          }
+        ],
+        "median": {
+          "basic_ms": 1033.6,
+          "full_ms": 2768.7,
+          "heap_bytes": 131289752,
+          "english_alloc_bytes": 3907568
+        }
+      }
+    },
+    "limit": "Desktop JVM cold loading/retained heap, not Android total PSS, Fold7 startup or key latency. Medians vary with JIT and shared cloud resources."
+  }
+}

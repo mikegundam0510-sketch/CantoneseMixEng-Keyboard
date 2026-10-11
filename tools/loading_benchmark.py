@@ -13,7 +13,8 @@ with tempfile.TemporaryDirectory() as tmp:
             path=directory/(name+'.java')
             path.write_text(subprocess.check_output(['git','show',baseline+':'+source],cwd=root,text=True) if revision=='before' else (root/source).read_text())
             sources.append(str(path))
-        subprocess.run(['javac','-encoding','UTF-8','-d',str(directory),*sources,str(root/'tools/LoadingBenchmark.java')],check=True)
+        subprocess.run(['javac','-encoding','UTF-8','-sourcepath',str(root/'app/src/main/java'),
+            '-d',str(directory),*sources,str(root/'tools/LoadingBenchmark.java')],check=True)
         runs=[json.loads(subprocess.check_output(['java','-Xms256m','-Xmx512m','-cp',str(directory),'LoadingBenchmark'],cwd=root,text=True)) for _ in range(3)]
         report[revision]={'runs':runs, 'median':{k:statistics.median(r[k] for r in runs) for k in ('basic_ms','full_ms','heap_bytes','english_alloc_bytes')}}
     # Ranking deliberately changes with the HK usage/symbol fix. Exact-code and

@@ -29,6 +29,7 @@ public final class QuickDecoder {
     private final Set<String> knownPhrases = new HashSet<>();
     private final Map<Integer, List<Token>> continuations = new HashMap<>();
     private final Map<String, Double> phraseEvidence = new HashMap<>();
+    private final Map<String, Double> corpusEvidence = new HashMap<>();
     private final Map<String, Double> predicateBackoff = new HashMap<>();
     private static final class Token {
         final String text; final double score;
@@ -47,8 +48,9 @@ public final class QuickDecoder {
     public QuickDecoder(DictionaryEngine dictionary, Reader input, Reader hkInput, Reader cantoneseInput,
                         OfflineLanguageModel model) throws IOException {
         this.dictionary = dictionary; this.model = model;
-        // The trained model replaces fallback pair statistics entirely.
-        Map<String, Double> wordCounts = model == null ? new HashMap<>() : null;
+        // Merge duplicate code variants and sources before creating prediction tails.
+        // The trained model still replaces fallback pair statistics entirely.
+        Map<String, Double> wordCounts = new HashMap<>();
         readVocabulary(input, wordCounts, false);
         if (hkInput != null) readVocabulary(hkInput, wordCounts, true);
         if (cantoneseInput != null) readVocabulary(cantoneseInput, wordCounts, false);
@@ -63,7 +65,10 @@ public final class QuickDecoder {
                         model.score(sender, "做" + new String(Character.toChars(status))) - model.score(sender, predicate)));
                     predicateBackoff.put(sender + predicate, evidence);
                 }
-        if (wordCounts != null) for (Map.Entry<String, Double> entry : wordCounts.entrySet()) {
+        for (Map.Entry<String, Double> entry : wordCounts.entrySet()) {
+            continuations.computeIfAbsent(entry.getKey().codePointAt(0), k -> new ArrayList<>())
+                .add(new Token(entry.getKey(), entry.getValue()));
+            if (model != null) continue;
             String previous = null;
             for (int cp : entry.getKey().codePoints().toArray()) {
                 String current = new String(Character.toChars(cp));
@@ -141,11 +146,16 @@ public final class QuickDecoder {
             while ((line = reader.readLine()) != null) {
                 if (line.startsWith("#")) continue;
                 String[] f = line.split("\\t");
-                if (f.length != 3) continue;
+                if (f.length != 3 && f.length != 4) continue;
                 if (!hanText(f[1])) continue;
-                boolean newPhrase = knownPhrases.add(f[1]);
+                knownPhrases.add(f[1]);
                 int characters = f[1].codePointCount(0, f[1].length());
                 double count = Double.parseDouble(f[2]);
+                if (f.length == 4 && characters >= 2 && characters <= 4) {
+                    double observed = Double.parseDouble(f[3]);
+                    if (observed > 0) corpusEvidence.merge(f[1],
+                        .75 * (characters - 1) * Math.min(1, Math.log1p(observed) / Math.log1p(300)), Math::max);
+                }
                 if (characters >= 2 && characters <= 4) {
                     // All bundled vocabulary supplies evidence, not just a small HK list.
                     // Corpus counts calibrate confidence; local authored priorities retain
@@ -154,8 +164,7 @@ public final class QuickDecoder {
                         : .45 * (characters - 1) * Math.min(1, Math.log1p(count) / Math.log1p(3000));
                     phraseEvidence.merge(f[1], evidence, Math::max);
                 }
-                if (newPhrase) continuations.computeIfAbsent(f[1].codePointAt(0), k -> new ArrayList<>()).add(new Token(f[1], count));
-                if (wordCounts != null) wordCounts.merge(f[1], count, Math::max);
+                wordCounts.merge(f[1], count, Math::max);
                 List<Token> tokens = vocabulary.computeIfAbsent(f[0], k -> new ArrayList<>());
                 Token existing = null;
                 for (Token token : tokens) if (token.text.equals(f[1])) { existing = token; break; }
@@ -441,7 +450,11 @@ public final class QuickDecoder {
                 String suffix = history.substring(history.offsetByCodePoints(0, count - length));
                 // Completion supplies right-hand evidence for earlier ambiguous codes,
                 // including when the phrase is split across lattice token boundaries.
-                matched += phraseEvidence.getOrDefault(suffix, 0.0);
+                // These corpora can overlap. Treat observed counts as another
+                // source of word evidence, not independent evidence to sum.
+                // Stronger authored HK usage priors remain effective.
+                matched += Math.max(phraseEvidence.getOrDefault(suffix, 0.0),
+                    corpusEvidence.getOrDefault(suffix, 0.0));
             }
             if (count >= 3) {
                 String lastThree = history.substring(history.offsetByCodePoints(0, count - 3));
