@@ -16,7 +16,9 @@ public class SearchPerformanceEvaluation {
             PhraseLanguageModel.load(Files.newInputStream(assets.resolve("phrase_model.b64"))),
             Files.newBufferedReader(assets.resolve("hk_chat_phrases.tsv")),
             Files.exists(assets.resolve("candidate_ranker.b64"))
-                ? CandidateRanker.load(Files.newInputStream(assets.resolve("candidate_ranker.b64"))) : null);
+                ? CandidateRanker.load(Files.newInputStream(assets.resolve("candidate_ranker.b64"))) : null,
+            Files.exists(assets.resolve("word_ranker.b64"))
+                ? CandidateRanker.loadWords(Files.newInputStream(assets.resolve("word_ranker.b64"))) : null);
         String[] codes = {"ofonaovrmrq", "hmerrrysmlrp", "dpofvivcjutrmyyjvcqnjd", "ofykrmmsydwljpvwjd",
             "vkmmnkmrvordrjjj", "hi".repeat(24)};
         for (int pass = 0; pass < 3; pass++) for (String code : codes) decoder.decode(code, (c,w) -> 0);

@@ -26,6 +26,7 @@ public final class QuickDecoder {
     private final OfflineLanguageModel model;
     private final PhraseLanguageModel phraseModel;
     private final CandidateRanker candidateRanker;
+    private final CandidateRanker wordRanker;
     // Common HK particles can have low character-only corpus counts. Admit
     // these into the same bounded contextual reserve, rather than promoting
     // every historical transcript variant beyond the frequency cutoff.
@@ -63,8 +64,14 @@ public final class QuickDecoder {
     public QuickDecoder(DictionaryEngine dictionary, Reader input, Reader hkInput, Reader cantoneseInput,
                         OfflineLanguageModel model, PhraseLanguageModel phraseModel, Reader chatInput,
                         CandidateRanker candidateRanker) throws IOException {
+        this(dictionary, input, hkInput, cantoneseInput, model, phraseModel, chatInput, candidateRanker, null);
+    }
+    public QuickDecoder(DictionaryEngine dictionary, Reader input, Reader hkInput, Reader cantoneseInput,
+                        OfflineLanguageModel model, PhraseLanguageModel phraseModel, Reader chatInput,
+                        CandidateRanker candidateRanker, CandidateRanker wordRanker) throws IOException {
         this.dictionary = dictionary; this.model = model; this.phraseModel = phraseModel;
         this.candidateRanker = candidateRanker;
+        this.wordRanker = wordRanker;
         // Merge duplicate code variants and sources before creating prediction tails.
         // The trained model still replaces fallback pair statistics entirely.
         Map<String, Double> wordCounts = new HashMap<>();
@@ -417,7 +424,8 @@ public final class QuickDecoder {
         if (model != null) return model.score(prefix, text) + phraseBonus(prefix, text) + completionBonus(prefix, text)
             + handoverBonus(prefix, text) + ClauseRelations.score(prefix, text)
             + (phraseModel == null ? 0 : phraseModel.score(prefix, text))
-            + (candidateRanker == null ? 0 : candidateRanker.score(prefix, text));
+            + (candidateRanker == null ? 0 : candidateRanker.score(prefix, text))
+            + (wordRanker == null ? 0 : wordRanker.score(prefix, text));
         String previous = prefix.isEmpty() ? null : new String(Character.toChars(prefix.codePointBefore(prefix.length())));
         double score = 0;
         for (int cp : text.codePoints().toArray()) {

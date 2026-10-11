@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.Base64;
 import java.util.zip.GZIPInputStream;
 
-/** Immutable, signed short-relation weights learned from competing exact-code candidates. */
+/** Immutable signed relations learned from exact-code competitors; distinct short/word formats. */
 public final class CandidateRanker {
     private final int maximumLength;
     private final float strength, endpointLimit;
@@ -22,12 +22,22 @@ public final class CandidateRanker {
     }
 
     public static CandidateRanker load(InputStream encoded) throws IOException {
+        return load(encoded, false);
+    }
+
+    /** Separate format for trained two/three-word relations of at most twelve Han characters. */
+    public static CandidateRanker loadWords(InputStream encoded) throws IOException {
+        return load(encoded, true);
+    }
+
+    private static CandidateRanker load(InputStream encoded, boolean wordRelations) throws IOException {
         try (DataInputStream data = new DataInputStream(new BufferedInputStream(
                 new GZIPInputStream(Base64.getMimeDecoder().wrap(new BufferedInputStream(encoded)))))) {
-            if (data.readInt() != 0x43524b31) throw new IOException("Unsupported candidate ranker");
+            if (data.readInt() != (wordRelations ? 0x57524b31 : 0x43524b31))
+                throw new IOException("Unsupported candidate ranker");
             int length = data.readInt(), nodes = data.readInt(), edges = data.readInt();
             float strength = data.readFloat(), endpointLimit = data.readFloat();
-            if (length < 2 || length > 3 || nodes < 1 || nodes > 150000 || edges != nodes - 1
+            if (length < 2 || length > (wordRelations ? 12 : 3) || nodes < 1 || nodes > 150000 || edges != nodes - 1
                     || !Float.isFinite(strength) || strength < 0 || strength > 2
                     || !Float.isFinite(endpointLimit) || endpointLimit <= 0 || endpointLimit > 1.5f)
                 throw new IOException("Invalid candidate ranker header");
@@ -75,12 +85,28 @@ public final class CandidateRanker {
     }
 
     /** Charges signed relations at character endpoints, including the editor/context boundary.
-     * Only the last two Han characters are consulted. Unknown text is neutral and punctuation
+     * Consults at most maximumLength - 1 preceding Han characters. Unknown text is neutral and punctuation
      * or Latin clears history. Splitting a sentence into decoder tokens preserves its score.
      */
     public double score(String preceding, String text) {
         if (strength == 0 || text.isEmpty()) return 0;
-        if (text.codePointCount(0, text.length()) == 1 && child(0, text.codePointAt(0)) < 0) return 0;
+        if (text.codePointCount(0, text.length()) == 1) {
+            int node = child(0, text.codePointAt(0));
+            if (node < 0) return 0;
+            // Most lattice edges add one character. Traverse only the matching
+            // suffix instead of copying up to eleven context characters first.
+            double endpoint = 0;
+            int at = preceding.length();
+            for (int depth = 1; at > 0 && depth < maximumLength; depth++) {
+                int cp = preceding.codePointBefore(at);
+                if (!OfflineLanguageModel.han(cp)) break;
+                at -= Character.charCount(cp);
+                node = child(node, cp);
+                if (node < 0) break;
+                endpoint += values[node];
+            }
+            return strength * Math.max(-endpointLimit, Math.min(endpointLimit, endpoint));
+        }
         int[] history = new int[maximumLength];
         int start = preceding.length(), used = 0;
         while (start > 0 && used < maximumLength - 1) {

@@ -25,7 +25,9 @@ public final class RankingEvaluation {
                 ? PhraseLanguageModel.load(Files.newInputStream(assets.resolve("phrase_model.b64"))) : null,
             variant.equals("full") || variant.equals("words-only") || variant.equals("unranked") ? asset("hk_chat_phrases.tsv") : null,
             variant.equals("full") && Files.exists(assets.resolve("candidate_ranker.b64"))
-                ? CandidateRanker.load(Files.newInputStream(assets.resolve("candidate_ranker.b64"))) : null);
+                ? CandidateRanker.load(Files.newInputStream(assets.resolve("candidate_ranker.b64"))) : null,
+            variant.equals("full") && Files.exists(assets.resolve("word_ranker.b64"))
+                ? CandidateRanker.loadWords(Files.newInputStream(assets.resolve("word_ranker.b64"))) : null);
         int count = 0, top1 = 0, top5 = 0, reachable = 0;
         double reciprocalRank = 0;
         long started = System.nanoTime();

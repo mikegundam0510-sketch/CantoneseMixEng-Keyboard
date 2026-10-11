@@ -1,0 +1,949 @@
+{
+  "date_utc": "2026-10-11",
+  "baseline_commit": "0f5aa98f15614dd74fd7c513e0955e1ed35cb734",
+  "delivery": "Unreleased source; version 0.6.39 / code46; no APK built",
+  "implementation": {
+    "incremental_before_beam_pruning": true,
+    "relations": "Two/three words, at least one multi-character word, at most12 Han",
+    "shared_features": "Exact surface plus majority coarse POS sequence and lexical first/last-word anchors",
+    "runtime": "Compiled signed reverse-trie surface weights; no runtime tagger, no hard rejection of unknown collocations",
+    "matching": "Bounded suffix evidence across decoder token boundaries; non-Han reset; exact input-code checks retained",
+    "optimization": "Single-character edges walk matching suffix only; eliminates context array and eager11-character copy",
+    "compatibility": "Old constructors retained; optional asset failure falls back to existing decoder; local preferences unchanged"
+  },
+  "model": {
+    "algorithm": "Signed two/three-word surface relations; pairwise logistic AdaGrad",
+    "role_backoff": true,
+    "role_features": "Coarse majority training POS sequence, lexical first/last word anchors; compiled to training-only surfaces",
+    "compiled_surface_relations": 49672,
+    "training_pair_sha256": "b6e9810e72f011d363669784287b82554b2db03a080124e398e451a46f60830d",
+    "manifest_sha256": "ffa93179b5277bfa1288797d5143260fad9aca9163d8cf6d5e655b14762c644c",
+    "baseline_decoder_revision_for_pairs": "ba77b772d751b15ec702bc7e5479122b70822d64",
+    "source_sha256": {
+      "hkcancor_zip": "09223963b8756254e15353cad843f8a4b0cbc4b9223dc8a8fa27fb1cf846057e",
+      "authored_scenarios": "86394195a5ef74fef4553a3b1c5a14af809bf08815ac3d906513e224e3e1e2ed"
+    },
+    "training_conversation_files": [
+      "utf8/FC-001_v2",
+      "utf8/FC-005a_v2",
+      "utf8/FC-011_v",
+      "utf8/FC-012_v",
+      "utf8/FC-018_v",
+      "utf8/FC-019_v",
+      "utf8/FC-020_v",
+      "utf8/FC-022a_v",
+      "utf8/FC-022b_v",
+      "utf8/FC-025_v",
+      "utf8/FC-026_v2",
+      "utf8/FC-027_v2",
+      "utf8/FC-029_v",
+      "utf8/FC-033_v2",
+      "utf8/FC-035_v2",
+      "utf8/FC-038a_v2",
+      "utf8/FC-038b_v2",
+      "utf8/FC-042_v",
+      "utf8/FC-044_v2",
+      "utf8/FC-048_v2",
+      "utf8/FC-049_v2",
+      "utf8/FC-052_v2",
+      "utf8/FC-055_v2",
+      "utf8/FC-101_v2",
+      "utf8/FC-104_v2",
+      "utf8/FC-105_v2",
+      "utf8/FC-106a_v2",
+      "utf8/FC-106b_v2",
+      "utf8/FC-107_v2",
+      "utf8/FC-108a_v2",
+      "utf8/FC-108c_v2",
+      "utf8/FC-108d_v2",
+      "utf8/FC-109a_v2",
+      "utf8/FC-R002a_v2",
+      "utf8/FC-R002b_v2",
+      "utf8/FC-R003_v2",
+      "utf8/FC-R004_v2",
+      "utf8/FC-R005_v2",
+      "utf8/FC-R006_v2",
+      "utf8/FC-R007_v2",
+      "utf8/FC-R010b_v",
+      "utf8/FC-R011_v",
+      "utf8/FC-R013a_v",
+      "utf8/FC-R016_v",
+      "utf8/FC-R017_v",
+      "utf8/FC-R018_v"
+    ],
+    "excluded_conversation_files": [
+      "utf8/FC-005b_v2",
+      "utf8/FC-009b_v",
+      "utf8/FC-013_v",
+      "utf8/FC-028_v2",
+      "utf8/FC-045_v2",
+      "utf8/FC-046_v2",
+      "utf8/FC-053_v2",
+      "utf8/FC-056_v2",
+      "utf8/FC-103_v2",
+      "utf8/FC-R009_v",
+      "utf8/FC-R010a_v",
+      "utf8/FC-R013b_v"
+    ],
+    "authored_split": "train only; family variants count as one observation",
+    "lexicon_words": 3201,
+    "minimum_word_occurrences": 2,
+    "lexicon_sha256": "efe2944d9b9c9414ebd9344d44d7d1b692aed4d9ff454326a481361cf911925c",
+    "maximum_word_characters": 8,
+    "maximum_relation_words": 3,
+    "maximum_relation_characters": 12,
+    "requires_multi_character_word": true,
+    "unknown_relation_score": 0,
+    "actual_candidate_pairs": 4422,
+    "complete_typed_code_checked": true,
+    "baseline_margin_mode": "zero",
+    "strength": 1.5,
+    "endpoint_limit": 1.5,
+    "training": {
+      "epochs": 80,
+      "rate": 0.3,
+      "l2": 0.002,
+      "minimum_independent_target_support": 2,
+      "feature_support_unit": "Distinct (source,context,code,positive); authored variants collapsed to family",
+      "features_considered": 18751,
+      "features_supported": 2714,
+      "features_exported": 2707,
+      "training_examples": 2971,
+      "initial_logistic_objective": 0.6931471805599558,
+      "final_logistic_objective": 0.4000440717138808,
+      "positive_features": 1375,
+      "negative_features": 1332
+    },
+    "trie_nodes": 81042,
+    "trie_edges": 81041,
+    "compiled_relations_at_weight_limit": 1361,
+    "encoded_bytes": 839572,
+    "primitive_array_bytes": 1882976,
+    "model_sha256": "58697234c7fe8fafd816c44c0d65e5bf152d08f7fbca52c801f63eb57b29a536",
+    "limitations": "Lexical and optional majority-POS relations, not a syntactic parser or grammatical proof. Compile-time weight clipping is another fitting approximation. Ambiguous segmentations share a surface weight. Negative candidates can be valid in other contexts. Old spoken corpus and synthetic training families; no new modern chat corpus. Linear fitting approximates the endpoint cap."
+  },
+  "selection_file": "tools/data/word_ranking/chosen-model.json",
+  "selection": {
+    "baseline_revision": "0f5aa98f15614dd74fd7c513e0955e1ed35cb734",
+    "selected": {
+      "strength": 1.5,
+      "metrics": {
+        "natural": {
+          "cases": 200,
+          "top1": 77,
+          "top5": 116,
+          "top20": 135,
+          "mrr": 0.4681642935238136
+        },
+        "authored": {
+          "cases": 60,
+          "top1": 22,
+          "top5": 41,
+          "top20": 53,
+          "mrr": 0.4862159137159137
+        }
+      },
+      "eligible": true,
+      "macro_mrr": 0.4771901036198637
+    },
+    "candidates": [
+      {
+        "strength": 0,
+        "metrics": {
+          "natural": {
+            "cases": 200,
+            "top1": 77,
+            "top5": 116,
+            "top20": 136,
+            "mrr": 0.46968138315932434
+          },
+          "authored": {
+            "cases": 60,
+            "top1": 21,
+            "top5": 40,
+            "top20": 53,
+            "mrr": 0.4732496438746439
+          }
+        },
+        "eligible": true,
+        "macro_mrr": 0.4714655135169841
+      },
+      {
+        "strength": 0.25,
+        "metrics": {
+          "natural": {
+            "cases": 200,
+            "top1": 77,
+            "top5": 117,
+            "top20": 135,
+            "mrr": 0.46946312919107036
+          },
+          "authored": {
+            "cases": 60,
+            "top1": 21,
+            "top5": 40,
+            "top20": 53,
+            "mrr": 0.47609686609686613
+          }
+        },
+        "eligible": true,
+        "macro_mrr": 0.4727799976439683
+      },
+      {
+        "strength": 0.5,
+        "metrics": {
+          "natural": {
+            "cases": 200,
+            "top1": 78,
+            "top5": 117,
+            "top20": 135,
+            "mrr": 0.47206725167677177
+          },
+          "authored": {
+            "cases": 60,
+            "top1": 21,
+            "top5": 40,
+            "top20": 53,
+            "mrr": 0.47609686609686613
+          }
+        },
+        "eligible": true,
+        "macro_mrr": 0.474082058886819
+      },
+      {
+        "strength": 1,
+        "metrics": {
+          "natural": {
+            "cases": 200,
+            "top1": 77,
+            "top5": 116,
+            "top20": 135,
+            "mrr": 0.4686864241709443
+          },
+          "authored": {
+            "cases": 60,
+            "top1": 22,
+            "top5": 40,
+            "top20": 53,
+            "mrr": 0.48443019943019944
+          }
+        },
+        "eligible": true,
+        "macro_mrr": 0.47655831180057184
+      },
+      {
+        "strength": 1.5,
+        "metrics": {
+          "natural": {
+            "cases": 200,
+            "top1": 77,
+            "top5": 116,
+            "top20": 135,
+            "mrr": 0.4681642935238136
+          },
+          "authored": {
+            "cases": 60,
+            "top1": 22,
+            "top5": 41,
+            "top20": 53,
+            "mrr": 0.4862159137159137
+          }
+        },
+        "eligible": true,
+        "macro_mrr": 0.4771901036198637
+      }
+    ],
+    "protocol_sha256": "e0dfb39a35e3dedb7ab89ea1f8c4e6b06cd2bc0adbd730cf46c7f8833faa8d38",
+    "heldout_used_for_selection": false,
+    "model_sha256": "58697234c7fe8fafd816c44c0d65e5bf152d08f7fbca52c801f63eb57b29a536",
+    "guard_passed": true,
+    "guard_results": {
+      "completion16": {
+        "before": [
+          16,
+          16,
+          16
+        ],
+        "after": [
+          16,
+          16,
+          16
+        ]
+      },
+      "daily32": {
+        "before": [
+          20,
+          29,
+          32
+        ],
+        "after": [
+          20,
+          29,
+          32
+        ]
+      },
+      "old600": {
+        "before": [
+          281,
+          422,
+          479
+        ],
+        "after": [
+          282,
+          423,
+          477
+        ]
+      }
+    },
+    "guard_scope": "Aggregate top1/top5 only. Per-case ranking and top20 may regress; this is not a no-regression guarantee."
+  },
+  "protocol_file": "tools/data/word_ranking/selection_protocol.json",
+  "training_data": "Reused 4,422 actual same-code pairs from1,740 training cases; no new modern chat corpus",
+  "comparisons": {
+    "natural200": {
+      "before": {
+        "cases": 200,
+        "top1": 71,
+        "top5": 114,
+        "top20": 134,
+        "mrr": 0.4471184340470331,
+        "result_sha256": "1f0fe6cc972e4d5ceb08dca28ace9b1c815ff4de92d92e4a109172b8044b8f6f"
+      },
+      "after": {
+        "cases": 200,
+        "top1": 72,
+        "top5": 112,
+        "top20": 133,
+        "mrr": 0.4439087273021097,
+        "result_sha256": "464b6e03d21bae13712e35afd8b4126868fe10ae39afed133fdf4aac7d43de22"
+      },
+      "case_file": "tools/data/candidate_ranking/heldout.tsv",
+      "case_sha256": "93472678449749e468d2d060c8df03dc176dcc1475384cc0494883d958c5329b",
+      "rank_changes": [
+        {
+          "target": "好彩即係頭先",
+          "before": 4,
+          "after": 5
+        },
+        {
+          "target": "你繼續講埋落去吖不如",
+          "before": 16,
+          "after": 15
+        },
+        {
+          "target": "韌帶即係係唔係",
+          "before": 2,
+          "after": 4
+        },
+        {
+          "target": "佢梗係收埋一",
+          "before": 7,
+          "after": 6
+        },
+        {
+          "target": "谷德昭嘅電話號碼來嘅",
+          "before": 16,
+          "after": 0
+        },
+        {
+          "target": "即係總之佢聖誕節嗰日會走嘅",
+          "before": 13,
+          "after": 11
+        },
+        {
+          "target": "事實係唔係噉呢",
+          "before": 2,
+          "after": 11
+        },
+        {
+          "target": "而家話啲銀仔呢又係",
+          "before": 3,
+          "after": 4
+        },
+        {
+          "target": "即係行山嗰陣時傾下偈噉樣囖",
+          "before": 4,
+          "after": 6
+        },
+        {
+          "target": "就有咗哩種嘢喎",
+          "before": 14,
+          "after": 17
+        },
+        {
+          "target": "陳慧君你肯定做阿媽喇",
+          "before": 19,
+          "after": 15
+        },
+        {
+          "target": "我就噉樣救咗返來嘅",
+          "before": 2,
+          "after": 4
+        },
+        {
+          "target": "噉即係冇講過嘢喎",
+          "before": 19,
+          "after": 18
+        },
+        {
+          "target": "噉即係幾多錢唧",
+          "before": 2,
+          "after": 1
+        }
+      ]
+    },
+    "authored120": {
+      "before": {
+        "cases": 120,
+        "top1": 51,
+        "top5": 76,
+        "top20": 96,
+        "mrr": 0.536257215007215,
+        "result_sha256": "21446967aefe3393a367b6f848afd035c8ffad96993523962c6e6711da277c12"
+      },
+      "after": {
+        "cases": 120,
+        "top1": 56,
+        "top5": 81,
+        "top20": 96,
+        "mrr": 0.5752615440115441,
+        "result_sha256": "1be6bd2ff65afe0942090b025fd980e63629de5042ae18b222f21d0cf4ecef65"
+      },
+      "case_file": "tools/data/hk_chat_cases/heldout.tsv",
+      "case_sha256": "2d7655049c219ac338d7fec8e44fc508427c3a9896b077cadad2ea70d7a7bc48",
+      "rank_changes": [
+        {
+          "target": "佢今晚交完份報告就放工",
+          "before": 11,
+          "after": 3
+        },
+        {
+          "target": "你哋遲啲交完份報告就放工",
+          "before": 2,
+          "after": 1
+        },
+        {
+          "target": "佢今晚收咗件貨未",
+          "before": 4,
+          "after": 2
+        },
+        {
+          "target": "我今日轉完錢再通知我",
+          "before": 6,
+          "after": 1
+        },
+        {
+          "target": "你聽日轉完錢再通知我",
+          "before": 6,
+          "after": 1
+        },
+        {
+          "target": "佢今晚轉完錢再通知我",
+          "before": 6,
+          "after": 1
+        },
+        {
+          "target": "你哋遲啲轉完錢再通知我",
+          "before": 20,
+          "after": 1
+        },
+        {
+          "target": "我今日可唔可以幫手收衫",
+          "before": 14,
+          "after": 9
+        },
+        {
+          "target": "你聽日可唔可以幫手收衫",
+          "before": 14,
+          "after": 9
+        },
+        {
+          "target": "佢今晚可唔可以幫手收衫",
+          "before": 14,
+          "after": 9
+        },
+        {
+          "target": "我哋而家可唔可以幫手收衫",
+          "before": 14,
+          "after": 9
+        },
+        {
+          "target": "你哋遲啲可唔可以幫手收衫",
+          "before": 14,
+          "after": 9
+        },
+        {
+          "target": "佢哋下晝可唔可以幫手收衫",
+          "before": 14,
+          "after": 9
+        }
+      ]
+    },
+    "old600": {
+      "before": {
+        "cases": 600,
+        "top1": 281,
+        "top5": 422,
+        "top20": 479,
+        "mrr": 0.5746731824462088,
+        "result_sha256": "ecae73e737258094038bbdd47964be303d51374327b473e9e85ccee0cda11bfd"
+      },
+      "after": {
+        "cases": 600,
+        "top1": 282,
+        "top5": 423,
+        "top20": 477,
+        "mrr": 0.5743814561628029,
+        "result_sha256": "154e96349ba9e51cf061aeb94c6f3aecec24e978066cb2b56aef584738a9ee43"
+      },
+      "case_file": "tools/data/word_ranking/old600.tsv",
+      "case_sha256": "2c48f84b8ecc5b057b472569d5ebffe1c82818a6770193ad74644ebe78c32d61",
+      "rank_changes": [
+        {
+          "target": "都唔做噉做乜",
+          "before": 14,
+          "after": 0
+        },
+        {
+          "target": "去完日本啊",
+          "before": 2,
+          "after": 1
+        },
+        {
+          "target": "你應該知哩個",
+          "before": 10,
+          "after": 17
+        },
+        {
+          "target": "呢如果係就",
+          "before": 6,
+          "after": 5
+        },
+        {
+          "target": "啲同學啊",
+          "before": 3,
+          "after": 2
+        },
+        {
+          "target": "耶穌係真係個",
+          "before": 4,
+          "after": 14
+        },
+        {
+          "target": "啲路啊噉樣",
+          "before": 6,
+          "after": 7
+        },
+        {
+          "target": "企得埋少少呢",
+          "before": 12,
+          "after": 16
+        },
+        {
+          "target": "唔到佢有乜嘢",
+          "before": 2,
+          "after": 1
+        },
+        {
+          "target": "我可以即係孭",
+          "before": 16,
+          "after": 14
+        },
+        {
+          "target": "覺後面有啲經",
+          "before": 18,
+          "after": 17
+        },
+        {
+          "target": "能係未經驗過",
+          "before": 2,
+          "after": 3
+        },
+        {
+          "target": "以得到個信心",
+          "before": 4,
+          "after": 3
+        },
+        {
+          "target": "穩固啲囖個信",
+          "before": 13,
+          "after": 15
+        },
+        {
+          "target": "係表現出來嗰",
+          "before": 2,
+          "after": 3
+        },
+        {
+          "target": "係個復活嗰個",
+          "before": 2,
+          "after": 4
+        },
+        {
+          "target": "咁先進嘞",
+          "before": 13,
+          "after": 11
+        },
+        {
+          "target": "嘅工作啊",
+          "before": 2,
+          "after": 1
+        },
+        {
+          "target": "本個台裏邊個",
+          "before": 9,
+          "after": 8
+        },
+        {
+          "target": "能係傳媒對你",
+          "before": 14,
+          "after": 16
+        },
+        {
+          "target": "學係傾偈啊",
+          "before": 8,
+          "after": 7
+        },
+        {
+          "target": "亦都冇帶同學",
+          "before": 7,
+          "after": 5
+        },
+        {
+          "target": "話係師奶睇喎",
+          "before": 20,
+          "after": 19
+        },
+        {
+          "target": "佢行出來",
+          "before": 1,
+          "after": 2
+        },
+        {
+          "target": "傳媒呢都唔係",
+          "before": 2,
+          "after": 1
+        },
+        {
+          "target": "識睇啊啲人",
+          "before": 7,
+          "after": 0
+        },
+        {
+          "target": "啲唔合格嘅同",
+          "before": 2,
+          "after": 1
+        },
+        {
+          "target": "講啲唔開心嘅",
+          "before": 1,
+          "after": 2
+        },
+        {
+          "target": "喱不知幾好玩",
+          "before": 9,
+          "after": 8
+        },
+        {
+          "target": "我可能死咗",
+          "before": 1,
+          "after": 2
+        },
+        {
+          "target": "過成日返工放",
+          "before": 7,
+          "after": 8
+        },
+        {
+          "target": "係可能有",
+          "before": 2,
+          "after": 3
+        },
+        {
+          "target": "我哋好唔同囖",
+          "before": 3,
+          "after": 2
+        },
+        {
+          "target": "嘢要靈感啊",
+          "before": 11,
+          "after": 8
+        },
+        {
+          "target": "會覺得有份成",
+          "before": 1,
+          "after": 2
+        },
+        {
+          "target": "我唔知吖",
+          "before": 6,
+          "after": 8
+        },
+        {
+          "target": "全班同學知嗰",
+          "before": 12,
+          "after": 10
+        }
+      ]
+    },
+    "daily32": {
+      "before": {
+        "cases": 32,
+        "top1": 20,
+        "top5": 29,
+        "top20": 32,
+        "mrr": 0.7648809523809523,
+        "result_sha256": "6b8e359f6bff6d0ff26be8d39cd1cca3d5341d95cfcf324740685def7dc8fd24"
+      },
+      "after": {
+        "cases": 32,
+        "top1": 20,
+        "top5": 29,
+        "top20": 32,
+        "mrr": 0.7641225961538461,
+        "result_sha256": "c716bedbb994e0e6eed20a325b69f94ba59bb3209907861be15101d35b74f071"
+      },
+      "case_file": "tools/hk_daily_context_cases.tsv",
+      "case_sha256": "d29faa28d581c87e6b480ce3924c778e4794fa830d6067249a3369daad6528af",
+      "rank_changes": [
+        {
+          "target": "我已經落咗單",
+          "before": 12,
+          "after": 13
+        },
+        {
+          "target": "我有時間再覆你",
+          "before": 7,
+          "after": 8
+        }
+      ]
+    },
+    "completion16": {
+      "before": {
+        "cases": 16,
+        "top1": 16,
+        "top5": 16,
+        "top20": 16,
+        "mrr": 1
+      },
+      "after": {
+        "cases": 16,
+        "top1": 16,
+        "top5": 16,
+        "top20": 16,
+        "mrr": 1.0,
+        "result_sha256": "6dfc5b44f7f69977e5b7d89f1e69ebc68c5be88f4508aac7a43d9afcf940a9e2"
+      },
+      "case_file": "tools/hk_completion_cases.tsv",
+      "case_sha256": "2762c747d770efaf45c2541bd30473f7b227473953c26ed311c017902107c192"
+    }
+  },
+  "learning": {
+    "cases": 32,
+    "single_confirmations_per_case": 3,
+    "sequence_records": 489,
+    "after": {
+      "legacy": {
+        "top1": 30,
+        "top5": 32,
+        "top20": 32
+      },
+      "contextual": {
+        "top1": 32,
+        "top5": 32,
+        "top20": 32
+      }
+    },
+    "before": {
+      "legacy": {
+        "top1": 30,
+        "top5": 32,
+        "top20": 32
+      },
+      "contextual": {
+        "top1": 32,
+        "top5": 32,
+        "top20": 32
+      }
+    },
+    "limitation": "Simulation on known cases, not generalization or a physical-device study"
+  },
+  "performance": {
+    "method": "Initial sequential Java17/Xmx1g runs drifted, including more than doubled unchanged basic dictionary load. Follow-up uses isolated historical/current class loaders in one JVM, alternating before/after order: three warm passes, nine samples per code, wall and thread CPU medians. No concurrent build/training/evaluation. Original sequential results retained.",
+    "initial_issue": "Unoptimized sequential48-letter median increased45%; matching allocation optimized with200/200 full candidate lists unchanged. Later unchanged basic dictionary loading also doubled, so paired comparison was added to distinguish host/JIT drift from model cost.",
+    "loading_before": {
+      "basic_ms": 1308.0,
+      "full_ms": 2453.2,
+      "heap_bytes": 132003616,
+      "english_alloc_bytes": 3908008,
+      "candidates": "[你好, 係好, 係樂, 無好, 煲好, 伙好, 繁好, 焦好, 僞好, 鶴好, 鴿好, 氮好, 僚好, 你樂, 無樂, 黛好, 鷦好, 鴒好, 絛好, 伙樂] / [你今日食咗咩, 係今日食咗咩, 你今日食咗嗱, 係今日食咗嗱, 無今日食咗咩, 伙今日食咗咩, 煲今日食咗咩, 繁今日食咗咩, 焦今日食咗咩, 你今日食啲咩, 僞今日食咗咩, 鶴今日食咗咩] / [我已經完成報告, 得已經完成報告, 我已經完成報答, 特已經完成報告, 的已經完成報告, 風已經完成報告, 我已經完成趣管, 鬼已經完成報告, 等已經完成報告, 我已經完成趣和, 射已經完成報告, 待已經完成報告, 我已經完成趣向, 私已經完成報告, 籌已經完成報告, 我已經完成趣各] / [明錚源, 明銖源, 明鑠源, 明錚淡, 閒錚源, 明錚涼, 明鎳源, 明銖淡, 閒銖源, 明鑠淡, 閒鑠源, 明銖涼, 明錚滅, 明鑠涼, 閒錚淡, 明鍒源, 明鍦源, 明錁源, 明釨源, 明鏁源]"
+    },
+    "loading_after": {
+      "basic_ms": 2745.0,
+      "full_ms": 4711.7,
+      "heap_bytes": 134021712,
+      "english_alloc_bytes": 3908056,
+      "candidates": "[你好, 係好, 係樂, 無好, 煲好, 伙好, 繁好, 焦好, 僞好, 鶴好, 鴿好, 氮好, 僚好, 你樂, 無樂, 黛好, 鷦好, 鴒好, 絛好, 伙樂] / [你今日食咗咩, 係今日食咗咩, 你今日食咗嗱, 係今日食咗嗱, 無今日食咗咩, 伙今日食咗咩, 煲今日食咗咩, 繁今日食咗咩, 焦今日食咗咩, 你今日食啲咩, 僞今日食咗咩, 鶴今日食咗咩] / [我已經完成報告, 得已經完成報告, 我已經完成報答, 我已經完成趣管, 我已經完成趣和, 特已經完成報告, 的已經完成報告, 我已經完成趣向, 我已經完成趣各] / [明錚源, 明銖源, 明鑠源, 明錚淡, 閒錚源, 明錚涼, 明鎳源, 明銖淡, 閒銖源, 明鑠淡, 閒鑠源, 明銖涼, 明錚滅, 明鑠涼, 閒錚淡, 明鍒源, 明鍦源, 明錁源, 明釨源, 明鏁源]"
+    },
+    "limitation": "Paired comparisons observed a maximum wall-median increase of12.7%; sequential runs were unstable and failed the20% bound. A single desktop comparison does not prove speedup or Fold7 latency. Two loaded engines share heap/JIT resources. Loading times are single, drift-sensitive observations.",
+    "sequential_measurements": [
+      {
+        "code": "ofonaovrmrq",
+        "letters": 11,
+        "before_median_ms": 88.8,
+        "unoptimized_word_median_ms": 72.184,
+        "after_median_ms": 85.257,
+        "after_to_before_ratio": 0.9601013513513514,
+        "before_max_ms": 125.131,
+        "after_max_ms": 167.363
+      },
+      {
+        "code": "hmerrrysmlrp",
+        "letters": 12,
+        "before_median_ms": 88.321,
+        "unoptimized_word_median_ms": 84.907,
+        "after_median_ms": 107.231,
+        "after_to_before_ratio": 1.2141053656548273,
+        "before_max_ms": 113.442,
+        "after_max_ms": 201.067
+      },
+      {
+        "code": "dpofvivcjutrmyyjvcqnjd",
+        "letters": 22,
+        "before_median_ms": 140.047,
+        "unoptimized_word_median_ms": 133.638,
+        "after_median_ms": 200.238,
+        "after_to_before_ratio": 1.429791427163738,
+        "before_max_ms": 165.33,
+        "after_max_ms": 360.129
+      },
+      {
+        "code": "ofykrmmsydwljpvwjd",
+        "letters": 18,
+        "before_median_ms": 113.393,
+        "unoptimized_word_median_ms": 114.909,
+        "after_median_ms": 205.733,
+        "after_to_before_ratio": 1.8143359819389204,
+        "before_max_ms": 126.96,
+        "after_max_ms": 307.292
+      },
+      {
+        "code": "vkmmnkmrvordrjjj",
+        "letters": 16,
+        "before_median_ms": 133.287,
+        "unoptimized_word_median_ms": 143.225,
+        "after_median_ms": 148.235,
+        "after_to_before_ratio": 1.1121489717676893,
+        "before_max_ms": 247.403,
+        "after_max_ms": 347.781
+      },
+      {
+        "code": "hihihihihihihihihihihihihihihihihihihihihihihihi",
+        "letters": 48,
+        "before_median_ms": 496.908,
+        "unoptimized_word_median_ms": 722.631,
+        "after_median_ms": 710.651,
+        "after_to_before_ratio": 1.4301460230062706,
+        "before_max_ms": 788.546,
+        "after_max_ms": 799.868
+      }
+    ],
+    "sequential_max_ratio": 1.8143359819389204,
+    "sequential_within_ratio_gate": false,
+    "paired_measurements": [
+      {
+        "code": "ofonaovrmrq",
+        "letters": 11,
+        "before_wall_median_ms": 72.487,
+        "after_wall_median_ms": 74.481,
+        "wall_ratio": 1.0275083808131114,
+        "before_cpu_median_ms": 71.991,
+        "after_cpu_median_ms": 74.459,
+        "cpu_ratio": 1.0342820630356573
+      },
+      {
+        "code": "hmerrrysmlrp",
+        "letters": 12,
+        "before_wall_median_ms": 91.365,
+        "after_wall_median_ms": 102.906,
+        "wall_ratio": 1.1263175176489904,
+        "before_cpu_median_ms": 91.119,
+        "after_cpu_median_ms": 102.9,
+        "cpu_ratio": 1.1292924637013138
+      },
+      {
+        "code": "dpofvivcjutrmyyjvcqnjd",
+        "letters": 22,
+        "before_wall_median_ms": 160.553,
+        "after_wall_median_ms": 168.339,
+        "wall_ratio": 1.0484948895380342,
+        "before_cpu_median_ms": 160.534,
+        "after_cpu_median_ms": 166.829,
+        "cpu_ratio": 1.039212877022936
+      },
+      {
+        "code": "ofykrmmsydwljpvwjd",
+        "letters": 18,
+        "before_wall_median_ms": 201.05,
+        "after_wall_median_ms": 201.203,
+        "wall_ratio": 1.0007610047251927,
+        "before_cpu_median_ms": 201.025,
+        "after_cpu_median_ms": 201.209,
+        "cpu_ratio": 1.000915309041164
+      },
+      {
+        "code": "vkmmnkmrvordrjjj",
+        "letters": 16,
+        "before_wall_median_ms": 133.7,
+        "after_wall_median_ms": 136.036,
+        "wall_ratio": 1.017471952131638,
+        "before_cpu_median_ms": 132.435,
+        "after_cpu_median_ms": 136.032,
+        "cpu_ratio": 1.0271604938271606
+      },
+      {
+        "code": "hihihihihihihihihihihihihihihihihihihihihihihihi",
+        "letters": 48,
+        "before_wall_median_ms": 626.074,
+        "after_wall_median_ms": 615.4,
+        "wall_ratio": 0.9829508971782889,
+        "before_cpu_median_ms": 624.648,
+        "after_cpu_median_ms": 614.002,
+        "cpu_ratio": 0.9829568012704755
+      }
+    ],
+    "paired_max_wall_ratio": 1.1263175176489904,
+    "paired_max_cpu_ratio": 1.1292924637013138,
+    "paired_within_1_2_ratio_gate": true
+  },
+  "verification": {
+    "junit": {
+      "tests": 189,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "python_word_tests": 8,
+    "python_candidate_tests": 12,
+    "python_phrase_tests": 4,
+    "lint_errors": 0,
+    "lint_warnings": 25,
+    "word_model_byte_for_byte_reproduced": true,
+    "optimized200_complete_candidate_lists_identical": true,
+    "existing_apk_and_stroke_files_preserved": true,
+    "fold7_tested": false
+  },
+  "release_gate": {
+    "passed": false,
+    "reason": "Authored gains4.17pp top1/top5 are below10pp/5pp thresholds; natural top1 gains0.5pp while top5/top20 decline. All datasets reused."
+  },
+  "limitations": [
+    "Reused old oral corpus and correlated authored templates; no fresh blind evaluation.",
+    "Four of five authored first-choice gains are variants of one transfer-money template.",
+    "Old600 gains five first choices but loses four; two targets drop from top20. Natural200 top5 loses two and top20 loses one.",
+    "Guard protects aggregate top1/top5 of existing daily/old sets, not every prior first choice or all candidate recall.",
+    "Majority word POS ignores context-sensitive tagging; compiled known surfaces limit generalization.",
+    "Independent support applies to learned parameters; compiled surface weights share those parameters, not independent observations.",
+    "Pairwise fitting approximates compile-time and endpoint clipping; a competing negative can be valid in another context."
+  ]
+}

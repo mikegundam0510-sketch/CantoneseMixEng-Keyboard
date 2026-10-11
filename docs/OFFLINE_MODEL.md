@@ -1,5 +1,51 @@
 # Offline model and compact candidates: 0.6.0 source preview
 
+## Signed word and POS collocations (unreleased, 2026-10-11)
+
+`word_ranker.b64` adds a separate incremental scorer to the existing character model, positive word evidence and signed short-character ranker. It learns exact two/three-word surface relations, coarse majority-POS sequences, and lexical first/last-word anchors. Shared POS/anchor evidence is compiled into 49,672 training-derived surfaces; the phone uses a bounded reverse trie, without running a tagger or greedily committing to a segmentation. This is lexical evidence, not full syntactic parsing or a proof that a candidate cannot form a sentence.
+
+The lexicon has 3,201 words occurring at least twice in training, with authored family variants collapsed for word support. Corpus word boundaries and coarse POS come only from the 46 original training conversations; validation and held-out conversation files are excluded. Relations have two or three words, at least one multi-character word, and at most twelve Han characters. Ambiguous surfaces use the most frequent original training segmentation (deterministic ties); candidate-only surfaces use a deterministic known-word segmentation. The same frozen 4,422 exact-code competing pairs supply signed training supervision. Features require two independent positive utterances/families, and multiple competitors do not multiply support. There are 2,707 learned lexical/POS parameters; the larger compiled surface count is not 49,672 independent observations.
+
+A lexical-only ablation learned 283 relations but did not improve validation MRR, so it was rejected before inspecting regression results. The POS extension used the same 0.25/0.5/1/1.5 strength grid, L2 0.002, 80 epochs, and zero approximate margins. Selection required both validation sets to retain aggregate top-1/top-5 counts, then maximized their mean MRR. Strength 1.5 won. The selection protocol, rejected ablation, selected metrics and subsequent guard results are in `tools/data/word_ranking/`. Existing short/positive models and word vocabulary were not retrained.
+
+Each compiled surface and each endpoint sum are capped at ±1.5 before strength multiplication. Training is a linear approximation to these caps. Unknown surfaces contribute zero, punctuation/Latin reset history, and splitting across decoder tokens preserves scores. Matching occurs through `QuickDecoder.languageScore`, including beam expansion and lookahead; it is not limited to reranking the final displayed candidates. Single-character scoring follows only matching suffix edges, avoiding a context array allocation per lattice edge. The old constructors delegate with a null word ranker, and an unavailable/malformed optional asset leaves sentence decoding usable. Local learning controls, storage and protected-editor rules are unchanged.
+
+The initial separate-process timing runs drifted substantially, including the unchanged basic dictionary loader. A follow-up `PairedRankingPerformance` run alternates historical and current engines in one JVM, recording both wall and thread CPU medians after warmup. The largest wall-median increase was 12.7%; the 48-letter pressure case measured 626.1 → 615.4 ms. This does not establish a device speedup, and the original slower measurements remain in the report. The paired harness takes four arguments: baseline compiled classes, baseline assets, current compiled classes, current assets.
+
+The bundled file is 839,572 bytes and uses 1,882,976 bytes of primitive arrays. These are model sizes, not total application memory. Output is deterministic and byte-for-byte reproduction was checked. Source and output hashes are in `WORD_RANKER_REPORT.json`; attribution is in `THIRD_PARTY_NOTICES.md`.
+
+Reused regression results (top-1 / top-5 / top-20):
+
+| Set | Previous `0f5aa98` | Word/POS scorer |
+| --- | --- | --- |
+| Authored chat, 120 | 51 / 76 / 96 | 56 / 81 / 96 |
+| Natural utterances, 200 | 71 / 114 / 134 | 72 / 112 / 133 |
+| Existing examples, 600 | 281 / 422 / 479 | 282 / 423 / 477 |
+| Daily examples, 32 | 20 / 29 / 32 | 20 / 29 / 32 |
+| Completion questions, 16 | 16 / 16 / 16 | 16 / 16 / 16 |
+
+The guard protects aggregate top-1/top-5 on old/daily examples, not every sentence or top-20 recall. Four old first choices move to second while five move to first; two old targets disappear from the displayed top 20. Four of the five authored first-choice gains are variants of one money-transfer template. No gains should be interpreted as independent modern-chat accuracy. These results do not meet the existing 1.0 gate; version 0.6.39/code 46 remains source-only, without a new APK. No Fold7 device measurements were made. See the work report for final desktop timings and their limits.
+
+Reproduce with the checksum-pinned public corpus already used by the project:
+
+```sh
+python3 tools/train_word_ranker.py /path/to/hkcancor-utf8.zip \
+  --pairs tools/data/candidate_ranking/pairs.tsv \
+  --manifest tools/data/candidate_ranking/manifest.json \
+  --output /tmp/word-ranker --role-backoff --l2 .002 --strength 1.5
+python3 -m unittest discover -s tools -p 'test_word_training.py'
+python3 -m unittest discover -s tools -p 'test_candidate*.py'
+HK_PHRASE_CORPUS=/path/to/hkcancor-utf8.zip python3 tools/test_phrase_training.py
+source /workspace/android-environment/activate.sh
+./gradlew testDebugUnitTest lintDebug --offline --no-daemon
+javac -encoding UTF-8 -sourcepath app/src/main/java -d /tmp/word-ranking-classes tools/RankingEvaluation.java
+java -Xmx1g -cp /tmp/word-ranking-classes hk.cantonesemixeng.keyboard.RankingEvaluation \
+  app/src/main/assets tools/data/word_ranking/old600.tsv /tmp/word-ranking-old600.tsv
+```
+
+For the prior baseline, archive `0f5aa98` and compile its own Java helpers/assets. The `baseline` argument of `RankingEvaluation` is a much older ablation that omits multiple models, and must not be used as the previous-version comparison.
+
+
 ## Unreleased competing-candidate model (2026-10-11)
 
 `CandidateRanker` adds immutable signed Han bigram/trigram weights to the incremental sentence score. Positive and negative training texts must both match the complete typed Quick code. Unknown relations are neutral. Scoring resets on punctuation/Latin, remains additive across decoder token boundaries, and caps the sum of relations at each character. The public model does not write user preferences or retain editor text. Personal/contextual learning supplies its existing separate weights.

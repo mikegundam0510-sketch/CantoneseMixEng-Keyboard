@@ -109,7 +109,8 @@ def read_pairs(path, manifest_path, reverse=None):
     return result, manifest
 
 
-def learn(pairs, epochs=80, rate=.3, l2=.02, min_count=2, maximum_features=50000):
+def learn(pairs, epochs=80, rate=.3, l2=.02, min_count=2, maximum_features=50000,
+          feature_extractor=features):
     """Deterministic full-batch pairwise logistic objective with L2 and bounded weights."""
     if not 1 <= epochs <= 1000 or not 0 < rate <= 2 or not 0 < l2 <= 2:
         raise ValueError('Invalid training hyperparameters')
@@ -118,7 +119,7 @@ def learn(pairs, epochs=80, rate=.3, l2=.02, min_count=2, maximum_features=50000
     differences, support = [], defaultdict(set)
     target_pairs, family_targets = Counter(), defaultdict(set)
     for source, context, code, positive, negative, offset in pairs:
-        left, right = features(context, positive), features(context, negative)
+        left, right = feature_extractor(context, positive), feature_extractor(context, negative)
         delta = {feature: left[feature] - right[feature] for feature in left.keys() | right.keys()
                  if left[feature] != right[feature]}
         identity = (source, context, code, positive)
@@ -178,12 +179,12 @@ def learn(pairs, epochs=80, rate=.3, l2=.02, min_count=2, maximum_features=50000
                      'negative_features': sum(w < 0 for w in learned.values())}
 
 
-def encode(weights, strength=1):
+def encode(weights, strength=1, *, word_relations=False):
     if not math.isfinite(strength) or not 0 <= strength <= 2:
         raise ValueError('Invalid candidate ranker strength')
     root = {'children': {}, 'value': 0}
     for text, value in sorted(weights.items()):
-        if not 2 <= len(text) <= MAX_LENGTH or not all(han(c) for c in text) or not math.isfinite(value) or abs(value) > ENDPOINT_LIMIT:
+        if not 2 <= len(text) <= (12 if word_relations else MAX_LENGTH) or not all(han(c) for c in text) or not math.isfinite(value) or abs(value) > ENDPOINT_LIMIT:
             raise ValueError('Invalid candidate feature')
         node = root
         for character in reversed(text):
@@ -202,7 +203,8 @@ def encode(weights, strength=1):
     for node in nodes:
         records.append((len(edges), len(node['children']), node['value']))
         edges.extend((character, child['id']) for character, child in sorted(node['children'].items()))
-    payload = struct.pack('>IIIIff', 0x43524b31, MAX_LENGTH, len(nodes), len(edges), strength, ENDPOINT_LIMIT)
+    payload = struct.pack('>IIIIff', 0x57524b31 if word_relations else 0x43524b31,
+                          12 if word_relations else MAX_LENGTH, len(nodes), len(edges), strength, ENDPOINT_LIMIT)
     payload += b''.join(struct.pack('>IIf', *record) for record in records)
     payload += b''.join(struct.pack('>II', *edge) for edge in edges)
     return base64.encodebytes(gzip.compress(payload, mtime=0)), len(nodes), len(edges)

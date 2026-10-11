@@ -1,0 +1,87 @@
+{
+  "baseline_revision": "0f5aa98f15614dd74fd7c513e0955e1ed35cb734",
+  "training_pairs": "tools/data/candidate_ranking/pairs.tsv",
+  "training": {
+    "l2": 0.002,
+    "epochs": 80,
+    "minimum_independent_target_support": 2,
+    "offset": "zero"
+  },
+  "strength_grid": [
+    0.25,
+    0.5,
+    1.0,
+    1.5
+  ],
+  "selection": "Require natural and authored validation top1 and top5 counts each >= current baseline; maximize mean of their MRR, tie lower strength. Zero-strength baseline is a candidate.",
+  "validation": [
+    "tools/data/candidate_ranking/validation.tsv",
+    "tools/data/hk_chat_cases/validation.tsv"
+  ],
+  "guards": "Selected model must retain completion16 first choices, daily32 aggregate top1/top5, and old600 aggregate top1/top5 versus current baseline; otherwise retain baseline production and report experimental model.",
+  "evaluation": "Freeze selection before running reused natural200 and authored120 regression; these and all old regression sets are not fresh blind tests.",
+  "release": "No APK/version bump in this task. Existing major release gate still applies.",
+  "refinement": "Exact lexical-only relations failed to improve validation MRR at every nonzero strength; no held-out/regression results inspected. Add shared training-only coarse POS and first/last-word anchors, compiled over training relation surfaces; repeat the same strength grid and selection/guard rules.",
+  "lexical_only_validation": {
+    "validation-authored-0.25": {
+      "cases": 60,
+      "top1": 21,
+      "top5": 40,
+      "mrr": 0.4732496438746439
+    },
+    "validation-authored-0.5": {
+      "cases": 60,
+      "top1": 21,
+      "top5": 40,
+      "mrr": 0.4732496438746439
+    },
+    "validation-authored-0": {
+      "cases": 60,
+      "top1": 21,
+      "top5": 40,
+      "mrr": 0.4732496438746439
+    },
+    "validation-authored-1.5": {
+      "cases": 60,
+      "top1": 21,
+      "top5": 40,
+      "mrr": 0.4732496438746439
+    },
+    "validation-authored-1": {
+      "cases": 60,
+      "top1": 21,
+      "top5": 40,
+      "mrr": 0.4732496438746439
+    },
+    "validation-natural-0.25": {
+      "cases": 200,
+      "top1": 77,
+      "top5": 116,
+      "mrr": 0.4695920974450386
+    },
+    "validation-natural-0.5": {
+      "cases": 200,
+      "top1": 77,
+      "top5": 116,
+      "mrr": 0.46952265300059415
+    },
+    "validation-natural-0": {
+      "cases": 200,
+      "top1": 77,
+      "top5": 116,
+      "mrr": 0.46968138315932434
+    },
+    "validation-natural-1.5": {
+      "cases": 200,
+      "top1": 77,
+      "top5": 116,
+      "mrr": 0.46952265300059415
+    },
+    "validation-natural-1": {
+      "cases": 200,
+      "top1": 77,
+      "top5": 116,
+      "mrr": 0.46952265300059415
+    }
+  }
+}

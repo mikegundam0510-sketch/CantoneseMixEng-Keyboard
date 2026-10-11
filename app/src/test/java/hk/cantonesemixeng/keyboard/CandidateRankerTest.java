@@ -16,12 +16,16 @@ public class CandidateRankerTest {
         for (Node child : node.children.values()) visit(child, nodes);
     }
     private static byte[] fixture(float strength, float endpointLimit, boolean invalidEdge, boolean invalidValue) throws Exception {
-        Node root = new Node();
         Map<String, Float> features = new TreeMap<>();
         features.put("訊息", .75f); features.put("辛德", -.75f);
         features.put("個訊", .5f); features.put("個辛", -.5f);
         features.put("個訊息", .5f); features.put("個辛德", -.5f);
         features.put("𠮩𠹌", .25f); features.put("𠹌香", -.25f);
+        return fixture(features, 0x43524b31, 3, strength, endpointLimit, invalidEdge, invalidValue);
+    }
+    private static byte[] fixture(Map<String, Float> features, int magic, int length,
+            float strength, float endpointLimit, boolean invalidEdge, boolean invalidValue) throws Exception {
+        Node root = new Node();
         for (Map.Entry<String, Float> entry : features.entrySet()) {
             Node node = root;
             int[] text = entry.getKey().codePoints().toArray();
@@ -32,7 +36,7 @@ public class CandidateRankerTest {
         List<Node> nodes = new ArrayList<>(); visit(root, nodes);
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         try (DataOutputStream data = new DataOutputStream(new GZIPOutputStream(bytes))) {
-            data.writeInt(0x43524b31); data.writeInt(3);
+            data.writeInt(magic); data.writeInt(length);
             data.writeInt(nodes.size()); data.writeInt(nodes.size() - 1);
             data.writeFloat(strength); data.writeFloat(endpointLimit);
             int first = 0;
@@ -85,6 +89,38 @@ public class CandidateRankerTest {
                 fixture(1, 1.5f, false, true), fixture(Float.NaN, 1.5f, false, false),
                 fixture(1, 2, false, false))) {
             try { CandidateRanker.load(new ByteArrayInputStream(encoded)); fail("Malformed ranker accepted"); }
+            catch (IOException expected) { }
+        }
+    }
+
+    @Test public void wordRelationsCrossTokenBoundariesAndRespectResets() throws Exception {
+        byte[] encoded = fixture(Map.of("研究一下", .75f, "研究訊息", -.5f, "𠮩𠹌訊息", .25f,
+            "一二三四五六七八九十甲乙", .5f), 0x57524b31, 12, 1, 1.5f, false, false);
+        CandidateRanker model = CandidateRanker.loadWords(new ByteArrayInputStream(encoded));
+        assertEquals(.75, model.score("研究", "一下"), 1e-9);
+        assertEquals(-.5, model.score("研究", "訊息"), 1e-9);
+        assertEquals(0, model.score("研究，", "一下"), 1e-9);
+        assertEquals(0, model.score("研究", "abc一下"), 1e-9);
+        assertEquals(.25, model.score("𠮩", "𠹌訊息"), 1e-9);
+        assertEquals(.5, model.score("一二三四五六七八九十甲", "乙"), 1e-9);
+        assertEquals(0, model.score("一二三四五六七八九十甲", "丙"), 1e-9);
+        String text = "研究一下再研究訊息𠮩𠹌訊息";
+        int[] points = text.codePoints().toArray();
+        for (int at = 0; at <= points.length; at++) {
+            String left = new String(points, 0, at), right = new String(points, at, points.length - at);
+            assertEquals(model.score("", text), model.score("", left) + model.score(left, right), 1e-9);
+        }
+        try { CandidateRanker.load(new ByteArrayInputStream(encoded)); fail("Word format accepted as short model"); }
+        catch (IOException expected) { }
+    }
+
+    @Test public void wordFormatRejectsExcessiveDepthAndInvalidWeights() throws Exception {
+        for (byte[] encoded : Arrays.asList(
+                fixture(Map.of("研究一下", .5f), 0x57524b31, 13, 1, 1.5f, false, false),
+                fixture(Map.of("研究一下", .5f), 0x57524b31, 12, 1, 1.5f, true, false),
+                fixture(Map.of("研究一下", .5f), 0x57524b31, 12, 1, 1.5f, false, true),
+                fixture(1, 1.5f, false, false))) {
+            try { CandidateRanker.loadWords(new ByteArrayInputStream(encoded)); fail("Invalid word model accepted"); }
             catch (IOException expected) { }
         }
     }

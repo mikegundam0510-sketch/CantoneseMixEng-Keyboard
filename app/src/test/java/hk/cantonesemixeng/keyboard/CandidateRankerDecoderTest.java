@@ -21,8 +21,13 @@ public class CandidateRankerDecoderTest {
     }
 
     private static CandidateRanker ranker() throws Exception {
+        return ranker(false);
+    }
+    private static CandidateRanker ranker(boolean words) throws Exception {
         Node root = new Node();
-        for (Map.Entry<String, Float> feature : Map.of("甲丙", -1.5f, "乙丙", 1.5f).entrySet()) {
+        Map<String, Float> features = words ? Map.of("甲丙甲丙", -1.5f, "乙丙乙丙", 1.5f)
+            : Map.of("甲丙", -1.5f, "乙丙", 1.5f);
+        for (Map.Entry<String, Float> feature : features.entrySet()) {
             Node node = root;
             int[] text = feature.getKey().codePoints().toArray();
             for (int i = text.length - 1; i >= 0; i--)
@@ -33,8 +38,8 @@ public class CandidateRankerDecoderTest {
         visit(root, nodes);
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         try (DataOutputStream data = new DataOutputStream(new GZIPOutputStream(bytes))) {
-            data.writeInt(0x43524b31);
-            data.writeInt(3);
+            data.writeInt(words ? 0x57524b31 : 0x43524b31);
+            data.writeInt(words ? 12 : 3);
             data.writeInt(nodes.size());
             data.writeInt(nodes.size() - 1);
             data.writeFloat(.5f);
@@ -51,7 +56,8 @@ public class CandidateRankerDecoderTest {
                 data.writeInt(edge.getValue().id);
             }
         }
-        return CandidateRanker.load(new ByteArrayInputStream(Base64.getEncoder().encode(bytes.toByteArray())));
+        InputStream encoded = new ByteArrayInputStream(Base64.getEncoder().encode(bytes.toByteArray()));
+        return words ? CandidateRanker.loadWords(encoded) : CandidateRanker.load(encoded);
     }
 
     private static OfflineLanguageModel neutralLanguageModel() throws Exception {
@@ -127,5 +133,18 @@ public class CandidateRankerDecoderTest {
         // Supplying no preference leaves the immutable public model unchanged.
         assertEquals("乙丙", ranked.decode("ofvm", (c, w) -> 0, "我", null).get(0));
         assertTrue(ranked.decode("of1", (c, w) -> 100, "我", personal).isEmpty());
+    }
+
+    @Test public void longerWordEvidenceIsAppliedDuringDecodingAndPersonalChoicesStillWin() throws Exception {
+        DictionaryEngine dictionary = dictionary();
+        QuickDecoder old = decoder(dictionary, null);
+        QuickDecoder ranked = new QuickDecoder(dictionary, new StringReader(""), null, null,
+            neutralLanguageModel(), null, null, null, ranker(true));
+        assertEquals("甲丙甲丙", old.decode("ofvmofvm", (c, w) -> 0).get(0));
+        assertEquals("乙丙乙丙", ranked.decode("ofvmofvm", (c, w) -> 0).get(0));
+        assertEquals(.75, ranked.languageScore("乙丙乙", "丙") - old.languageScore("乙丙乙", "丙"), 1e-9);
+        assertEquals("甲丙甲丙", ranked.decode("ofvmofvm", (c, w) -> w.equals("甲") ? 100 : 0).get(0));
+        for (String choice : ranked.decode("ofvmofvm", (c, w) -> 0))
+            assertFalse(dictionary.matchQuickCodes("ofvmofvm", choice).isEmpty());
     }
 }

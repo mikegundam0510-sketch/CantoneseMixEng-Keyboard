@@ -17,7 +17,8 @@ public class CandidateModelProductionTest {
             OfflineLanguageModel.load(Files.newInputStream(assets.resolve("language_model.b64"))),
             PhraseLanguageModel.load(Files.newInputStream(assets.resolve("phrase_model.b64"))),
             Files.newBufferedReader(assets.resolve("hk_chat_phrases.tsv")),
-            CandidateRanker.load(Files.newInputStream(assets.resolve("candidate_ranker.b64"))));
+            CandidateRanker.load(Files.newInputStream(assets.resolve("candidate_ranker.b64"))),
+            CandidateRanker.loadWords(Files.newInputStream(assets.resolve("word_ranker.b64"))));
         for (String line : Files.readAllLines(Path.of("../tools/hk_completion_cases.tsv"))) {
             if (line.isEmpty() || line.startsWith("#")) continue;
             String[] fields = line.split("\t", -1);

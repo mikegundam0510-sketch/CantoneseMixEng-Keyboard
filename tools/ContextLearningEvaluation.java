@@ -18,7 +18,9 @@ public final class ContextLearningEvaluation {
             OfflineLanguageModel.load(Files.newInputStream(assets.resolve("language_model.b64"))),
             PhraseLanguageModel.load(Files.newInputStream(assets.resolve("phrase_model.b64"))), asset("hk_chat_phrases.tsv"),
             Files.exists(assets.resolve("candidate_ranker.b64"))
-                ? CandidateRanker.load(Files.newInputStream(assets.resolve("candidate_ranker.b64"))) : null);
+                ? CandidateRanker.load(Files.newInputStream(assets.resolve("candidate_ranker.b64"))) : null,
+            Files.exists(assets.resolve("word_ranker.b64"))
+                ? CandidateRanker.loadWords(Files.newInputStream(assets.resolve("word_ranker.b64"))) : null);
         List<String[]> cases=new ArrayList<>();
         for(String line:Files.readAllLines(Path.of(args[1]),StandardCharsets.UTF_8))
             if(!line.isEmpty() && !line.startsWith("#")) cases.add(line.split("\t",-1));

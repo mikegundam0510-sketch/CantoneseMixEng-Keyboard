@@ -21,11 +21,19 @@ public final class LoadingBenchmark {
             Class<?> phraseClass = Class.forName("hk.cantonesemixeng.keyboard.PhraseLanguageModel");
             java.lang.reflect.Constructor<QuickDecoder> constructor;
             Class<?> rankerClass = null;
+            boolean wordRanker = false;
             try {
                 if (!new File(assets + "candidate_ranker.b64").isFile()) throw new ClassNotFoundException();
                 rankerClass = Class.forName("hk.cantonesemixeng.keyboard.CandidateRanker");
                 constructor = QuickDecoder.class.getConstructor(DictionaryEngine.class, Reader.class,
                     Reader.class, Reader.class, OfflineLanguageModel.class, phraseClass, Reader.class, rankerClass);
+                if (new File(assets + "word_ranker.b64").isFile()) {
+                    try {
+                        constructor = QuickDecoder.class.getConstructor(DictionaryEngine.class, Reader.class,
+                            Reader.class, Reader.class, OfflineLanguageModel.class, phraseClass, Reader.class, rankerClass, rankerClass);
+                        wordRanker = true;
+                    } catch (NoSuchMethodException historical) { /* Earlier eight-argument decoder. */ }
+                }
             } catch (ClassNotFoundException | NoSuchMethodException unranked) {
                 rankerClass = null;
                 constructor = QuickDecoder.class.getConstructor(DictionaryEngine.class, Reader.class,
@@ -38,6 +46,8 @@ public final class LoadingBenchmark {
                 asset("hk_chat_phrases.tsv")));
             if (rankerClass != null) arguments.add(rankerClass.getMethod("load", InputStream.class)
                 .invoke(null, new FileInputStream(assets + "candidate_ranker.b64")));
+            if (wordRanker) arguments.add(rankerClass.getMethod("loadWords", InputStream.class)
+                .invoke(null, new FileInputStream(assets + "word_ranker.b64")));
             decoder = constructor.newInstance(arguments.toArray());
         } catch (ClassNotFoundException | NoSuchMethodException legacy) {
             decoder = new QuickDecoder(dictionary, asset("quick_phrases.tsv"), asset("hk_phrases.tsv"), asset("cantonese_phrases.tsv"),

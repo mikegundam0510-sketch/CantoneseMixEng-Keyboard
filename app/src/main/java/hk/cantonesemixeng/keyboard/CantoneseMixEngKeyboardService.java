@@ -153,13 +153,19 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
                     // Retain sentence decoding when the optional ranking asset cannot load.
                     candidateRanker = null;
                 }
+                CandidateRanker wordRanker;
+                try {
+                    wordRanker = CandidateRanker.loadWords(getAssets().open("word_ranker.b64"));
+                } catch (IOException optionalModelUnavailable) {
+                    wordRanker = null;
+                }
                 QuickDecoder phrases = new QuickDecoder(loaded, new InputStreamReader(getAssets().open("quick_phrases.tsv"), StandardCharsets.UTF_8),
                     new InputStreamReader(getAssets().open("hk_phrases.tsv"), StandardCharsets.UTF_8),
                     new InputStreamReader(getAssets().open("cantonese_phrases.tsv"), StandardCharsets.UTF_8),
                     OfflineLanguageModel.load(getAssets().open("language_model.b64")),
                     PhraseLanguageModel.load(getAssets().open("phrase_model.b64")),
                     new InputStreamReader(getAssets().open("hk_chat_phrases.tsv"), StandardCharsets.UTF_8),
-                    candidateRanker);
+                    candidateRanker, wordRanker);
                 EmojiCatalog emojis = new EmojiCatalog(new InputStreamReader(getAssets().open("emoji.tsv"), StandardCharsets.UTF_8));
                 CandidateEngine mixed = new CandidateEngine(loaded, phrases, englishWords);
                 QuickTypos repairs = new QuickTypos(loaded, phrases);

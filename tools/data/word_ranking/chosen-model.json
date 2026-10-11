@@ -1,0 +1,174 @@
+{
+  "baseline_revision": "0f5aa98f15614dd74fd7c513e0955e1ed35cb734",
+  "selected": {
+    "strength": 1.5,
+    "metrics": {
+      "natural": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 116,
+        "top20": 135,
+        "mrr": 0.4681642935238136
+      },
+      "authored": {
+        "cases": 60,
+        "top1": 22,
+        "top5": 41,
+        "top20": 53,
+        "mrr": 0.4862159137159137
+      }
+    },
+    "eligible": true,
+    "macro_mrr": 0.4771901036198637
+  },
+  "candidates": [
+    {
+      "strength": 0,
+      "metrics": {
+        "natural": {
+          "cases": 200,
+          "top1": 77,
+          "top5": 116,
+          "top20": 136,
+          "mrr": 0.46968138315932434
+        },
+        "authored": {
+          "cases": 60,
+          "top1": 21,
+          "top5": 40,
+          "top20": 53,
+          "mrr": 0.4732496438746439
+        }
+      },
+      "eligible": true,
+      "macro_mrr": 0.4714655135169841
+    },
+    {
+      "strength": 0.25,
+      "metrics": {
+        "natural": {
+          "cases": 200,
+          "top1": 77,
+          "top5": 117,
+          "top20": 135,
+          "mrr": 0.46946312919107036
+        },
+        "authored": {
+          "cases": 60,
+          "top1": 21,
+          "top5": 40,
+          "top20": 53,
+          "mrr": 0.47609686609686613
+        }
+      },
+      "eligible": true,
+      "macro_mrr": 0.4727799976439683
+    },
+    {
+      "strength": 0.5,
+      "metrics": {
+        "natural": {
+          "cases": 200,
+          "top1": 78,
+          "top5": 117,
+          "top20": 135,
+          "mrr": 0.47206725167677177
+        },
+        "authored": {
+          "cases": 60,
+          "top1": 21,
+          "top5": 40,
+          "top20": 53,
+          "mrr": 0.47609686609686613
+        }
+      },
+      "eligible": true,
+      "macro_mrr": 0.474082058886819
+    },
+    {
+      "strength": 1,
+      "metrics": {
+        "natural": {
+          "cases": 200,
+          "top1": 77,
+          "top5": 116,
+          "top20": 135,
+          "mrr": 0.4686864241709443
+        },
+        "authored": {
+          "cases": 60,
+          "top1": 22,
+          "top5": 40,
+          "top20": 53,
+          "mrr": 0.48443019943019944
+        }
+      },
+      "eligible": true,
+      "macro_mrr": 0.47655831180057184
+    },
+    {
+      "strength": 1.5,
+      "metrics": {
+        "natural": {
+          "cases": 200,
+          "top1": 77,
+          "top5": 116,
+          "top20": 135,
+          "mrr": 0.4681642935238136
+        },
+        "authored": {
+          "cases": 60,
+          "top1": 22,
+          "top5": 41,
+          "top20": 53,
+          "mrr": 0.4862159137159137
+        }
+      },
+      "eligible": true,
+      "macro_mrr": 0.4771901036198637
+    }
+  ],
+  "protocol_sha256": "e0dfb39a35e3dedb7ab89ea1f8c4e6b06cd2bc0adbd730cf46c7f8833faa8d38",
+  "heldout_used_for_selection": false,
+  "model_sha256": "58697234c7fe8fafd816c44c0d65e5bf152d08f7fbca52c801f63eb57b29a536",
+  "guard_passed": true,
+  "guard_results": {
+    "completion16": {
+      "before": [
+        16,
+        16,
+        16
+      ],
+      "after": [
+        16,
+        16,
+        16
+      ]
+    },
+    "daily32": {
+      "before": [
+        20,
+        29,
+        32
+      ],
+      "after": [
+        20,
+        29,
+        32
+      ]
+    },
+    "old600": {
+      "before": [
+        281,
+        422,
+        479
+      ],
+      "after": [
+        282,
+        423,
+        477
+      ]
+    }
+  },
+  "guard_scope": "Aggregate top1/top5 only. Per-case ranking and top20 may regress; this is not a no-regression guarantee."
+}
