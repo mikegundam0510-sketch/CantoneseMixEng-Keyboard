@@ -1,5 +1,13 @@
 # Offline model and compact candidates: 0.6.0 source preview
 
+## Community-sentence corpus trial (2026-10-11, not adopted)
+
+The [Tatoeba experiment](TATOEBA_EXPERIMENT.md) adds a licensed, frozen development
+corpus and an offline training/evaluation pipeline. The selected trial improves
+new heldout examples but drops two existing completion questions from first to
+second. It fails the predeclared acceptance guard, so **the bundled model below
+is unchanged**. This trial has no new APK or version bump.
+
 ## Signed word and POS collocations (unreleased, 2026-10-11)
 
 `word_ranker.b64` adds a separate incremental scorer to the existing character model, positive word evidence and signed short-character ranker. It learns exact two/three-word surface relations, coarse majority-POS sequences, and lexical first/last-word anchors. Shared POS/anchor evidence is compiled into 49,672 training-derived surfaces; the phone uses a bounded reverse trie, without running a tagger or greedily committing to a segmentation. This is lexical evidence, not full syntactic parsing or a proof that a candidate cannot form a sentence.

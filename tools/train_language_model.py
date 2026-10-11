@@ -18,6 +18,16 @@ def key(text):
  return h if h<1<<63 else h-(1<<64)
 def chunks(text):
  return re.findall(r'[\u3400-\u9fff\U00020000-\U0003134f]+',text)
+def add_family_counts(counts,rows,weight):
+ # Related translations must not multiply the apparent frequency of a template.
+ families=collections.defaultdict(set)
+ for row in rows:
+  for segment in chunks(row['text']):
+   for n in range(1,6):
+    for at in range(len(segment)-n+1):families[row['group']].add(segment[at:at+n])
+ for grams in families.values():
+  for gram in grams:counts[len(gram)][gram]+=weight
+ return len(families)
 def corpus(path):
  result=[]
  with zipfile.ZipFile(path) as z:
@@ -37,13 +47,22 @@ def corpus(path):
  return result
 
 def train(args):
+ output=getattr(args,'output',None) or ASSETS
+ training_assets=getattr(args,'training_assets',None) or ASSETS
+ extra=getattr(args,'extra_corpus',None)
+ extra_weight=getattr(args,'extra_weight',0)
+ if extra_weight not in (0,2,6,12) or bool(extra)!=bool(extra_weight):
+  raise ValueError('Additional corpus requires a predeclared weight: 2, 6 or 12')
+ if extra and output.resolve()==ASSETS.resolve():
+  raise ValueError('Corpus experiments require a separate --output directory')
+ output.mkdir(parents=True,exist_ok=True)
  expected={'corpus':'09223963b8756254e15353cad843f8a4b0cbc4b9223dc8a8fa27fb1cf846057e',
            'cantonese':'54d174ad2bb997e4a678b7b076b84e4dc5914481b32467cdea3b43e88b7d5474'}
  for name,digest in expected.items():
   if hashlib.sha256(getattr(args,name).read_bytes()).hexdigest()!=digest:
    raise ValueError('Source hash mismatch: '+name)
  reverse={}
- for line in (ASSETS/'cangjie5.base.dict.yaml').read_text().splitlines():
+ for line in (training_assets/'cangjie5.base.dict.yaml').read_text().splitlines():
   f=line.split('\t')
   if len(f)>=2 and len(f[0])==1 and re.fullmatch('[a-z]{1,5}',f[1]):
    c=f[1] if len(f[1])==1 else f[1][0]+f[1][-1];reverse.setdefault(f[0],set()).add(c)
@@ -55,7 +74,7 @@ def train(args):
  # Phrase counts are capped to stop famous written words overwhelming conversational data.
  written={}
  for asset in ['quick_phrases.tsv','hk_phrases.tsv']:
-  for line in (ASSETS/asset).read_text().splitlines():
+  for line in (training_assets/asset).read_text().splitlines():
    f=line.split('\t')
    if len(f)==3:written[f[1]]=max(written.get(f[1],0),int(f[2]))
  for text,count in written.items():add(text,min(12,max(1,int(math.log1p(count)))))
@@ -71,6 +90,15 @@ def train(args):
  test_data=[text for name,text in data if name in held]
  for text in words:add(text,2)
  for text in train_data:add(text,12)
+ extra_report=None
+ if extra:
+  from prepare_tatoeba_corpus import load_training,digest
+  rows,manifest=load_training(extra)
+  # A family contributes a gram once, regardless of sentence/translation variants.
+  family_count=add_family_counts(counts,rows,extra_weight)
+  extra_report={'manifest_sha256':digest(extra/'manifest.json'),'training_rows':len(rows),
+                'training_groups':family_count,'weight_per_family':extra_weight,
+                'source':manifest['source'],'license':manifest['license']}
  # Reachable, observed multi-character words expand the Quick lattice; do not memorize held-out utterances.
  observed=collections.Counter()
  for text in train_data:
@@ -84,7 +112,7 @@ def train(args):
  for word,count in words.items():
   options=[sorted(reverse[c],key=lambda x:(len(x),x)) for c in word]
   for parts in itertools.islice(itertools.product(*options),8):rows.add((''.join(parts),word,count))
- (ASSETS/'cantonese_phrases.tsv').write_text('# Derived from HKCanCor training conversations and Rime Cantonese (CC BY 4.0); see MODEL_REPORT.json.\n'+''.join(f'{c}\t{w}\t{v}\n' for c,w,v in sorted(rows)))
+ (output/'cantonese_phrases.tsv').write_text('# Derived from HKCanCor training conversations and Rime Cantonese (CC BY 4.0); see MODEL_REPORT.json.\n'+''.join(f'{c}\t{w}\t{v}\n' for c,w,v in sorted(rows)))
  # Additive interpolation strength is selected on separate validation conversations.
  thresholds=[0,1,2,2,3,3];kept=[{t:c for t,c in counts[n].items() if c>=thresholds[n]} for n in range(6)]
  totals=collections.Counter();retained=collections.Counter()
@@ -116,7 +144,7 @@ def train(args):
    items[h]=(probability_value,backoff)
  payload=struct.pack('>IIIf',0x4B4C4D32,5,len(items),unknown)+b''.join(struct.pack('>qff',h,p,b) for h,(p,b) in sorted(items.items()))
  compressed=gzip.compress(payload,compresslevel=9,mtime=0)
- (ASSETS/'language_model.b64').write_bytes(base64.encodebytes(compressed))
+ (output/'language_model.b64').write_bytes(base64.encodebytes(compressed))
  # Held-out decoding snippets with genuine preceding context. None is written into training data.
  cases=[];seen=set()
  for text in test_data:
@@ -127,13 +155,22 @@ def train(args):
    code=''.join(sorted(reverse[c],key=lambda x:(-len(x),x))[0] for c in target)
    cases.append({'context':context,'code':code,'text':target});seen.add(target)
  cases.sort(key=lambda x:hashlib.sha256((x['context']+x['text']).encode()).hexdigest())
- (ROOT/'tools/lm_heldout_cases.json').write_text(json.dumps(cases[:120],ensure_ascii=False,indent=2)+'\n')
+ case_output=ROOT/'tools/lm_heldout_cases.json' if output==ASSETS else output/'lm_heldout_cases.json'
+ case_output.write_text(json.dumps(cases[:120],ensure_ascii=False,indent=2)+'\n')
  report={'algorithm':'character 5-gram, count interpolation with validation-selected prior mass and pruning-aware backoff','context_characters':4,
  'source_revisions':{'hkcancor':'39aeadf920e0b5ca93d0ad7792c59e740e7bdd65','rime_cantonese':'259f0e48bba840c3a2e0d117539e96937f3d89bc','rime_essay':'054920de4f54c9e5994276a96a4fc2a35cb51aa3'},
  'source_sha256':{'hkcancor_zip':hashlib.sha256(args.corpus.read_bytes()).hexdigest(),'cantonese_words':hashlib.sha256(args.cantonese.read_bytes()).hexdigest()},
  'training_conversation_files':len({n for n,_ in data}-held-validation),'validation_conversation_files':sorted(validation),'validation_scores_nats':validation_scores,'prior_strength':strength,'heldout_conversation_files':sorted(held),'training_utterance_chunks':len(train_data),'heldout_utterance_chunks':len(test_data),
  'grams_by_order':[len(x) for x in kept[1:]],'entries':len(items),'model_primitive_array_bytes':len(items)*16,'compressed_model_bytes':len(compressed),'additional_quick_entries':len(rows),'additional_unique_words':len(words),
  'heldout_bigram':entropy(test_data,2,strength),'heldout_fivegram':entropy(test_data,5,strength),'note':'Held-out conversations are excluded from both n-gram training and learned corpus phrase additions; base external dictionaries can naturally contain their words. Perplexity measures next-character probability, not keyboard sentence accuracy.'}
- (ASSETS/'MODEL_REPORT.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n');print(json.dumps(report,ensure_ascii=False))
+ if extra_report:report['additional_corpus']=extra_report
+ report['training_asset_sha256']={n:hashlib.sha256((training_assets/n).read_bytes()).hexdigest()
+  for n in ['cangjie5.base.dict.yaml','quick_phrases.tsv','hk_phrases.tsv']}
+ (output/'MODEL_REPORT.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n');print(json.dumps(report,ensure_ascii=False))
 if __name__=='__main__':
- p=argparse.ArgumentParser();p.add_argument('corpus',type=Path);p.add_argument('cantonese',type=Path);train(p.parse_args())
+ p=argparse.ArgumentParser();p.add_argument('corpus',type=Path);p.add_argument('cantonese',type=Path)
+ p.add_argument('--output',type=Path)
+ p.add_argument('--training-assets',type=Path,help='Frozen original language-model training assets')
+ p.add_argument('--extra-corpus',type=Path)
+ p.add_argument('--extra-weight',type=int,default=0)
+ train(p.parse_args())

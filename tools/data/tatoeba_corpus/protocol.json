@@ -1,0 +1,11 @@
+{
+  "baseline_revision": "f6034031c4215a06d11ebec30fcdf43499f28182",
+  "frozen_before_decoding": true,
+  "intervention": "Additional character 1..5-gram counts; one occurrence per translation/near-duplicate family. Existing vocabulary and all other scorers stay frozen.",
+  "additional_family_weights": [2, 6, 12],
+  "selection_sets": ["tatoeba_corpus/validation.tsv", "candidate_ranking/validation.tsv", "hk_chat_cases/validation.tsv"],
+  "selection": "Require aggregate top1 and top5 on both existing validation sets to be no lower than baseline; require new Tatoeba top1/top5 no lower than baseline. Maximize mean MRR of the three sets, tie prefer lower weight. Baseline remains an option.",
+  "acceptance": "Selected setting must retain top1/top5 on old600, daily32, completion16 and natural200 regressions. Evaluate new heldout200 only after selection; require no lower top1/top5. If any guard fails, keep bundled model unchanged and retain experiment for review.",
+  "release": "No APK or version bump for an inconclusive or rejected experiment. Existing 1.0 gate still applies; Tatoeba community examples do not establish modern HK chat accuracy.",
+  "limits": "Heuristic family split does not establish independent authors; examples can be translated and unnatural. No private user text or uploaded conversations are used. There is no sentence-level correctness guarantee."
+}

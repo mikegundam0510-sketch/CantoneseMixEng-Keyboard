@@ -83,3 +83,17 @@ The upstream MIT notice is bundled in app/src/main/assets/licenses/cangjie-compl
 The user supplied Windows 10 22H2 build 19045.6466 Cangjie/Quick system dictionary files for comparison. The app retains only 4,808 previously missing character/code associations in tools/windows_cangjie_compat.tsv; no Microsoft binary, association-word database or ranking data is redistributed. Windows is a Microsoft product; these associations do not imply Microsoft endorsement or a license to the original dictionary files. Original file hashes, scope and the supplement checksum are recorded in tools/windows_ime_compat_source.json and the bundled SOURCE.json.
 
 The final combined dictionary contains 144,164 distinct character/code pairs and 103,976 distinct characters/symbols. Existing mappings and relative order remain intact. Quick derivation also covers all 1,725 previously missing Quick associations in the provided files. Other Windows builds and runtime candidate order are outside this verification.
+
+## Tatoeba community-sentence experiment (development data)
+
+`tools/data/tatoeba_corpus/` contains filtered Tatoeba Cantonese examples, © Tatoeba
+contributors, [CC BY 2.0 France](https://creativecommons.org/licenses/by/2.0/fr/),
+from the 2023-04-08 source snapshot redistributed in Aaron H. K. Tan's Jyut
+Dictionary v4.25.0623. NFC/whitespace normalization, filtering, grouping and Han
+chunk extraction are this project's modifications; the distributor may already
+have converted simplified text to traditional. This notice covers only rows
+linked to that database's Tatoeba Cantonese source, not the other dictionaries.
+The [data notice](tools/data/tatoeba_corpus/NOTICE.md) and manifest preserve source
+links, license, archive/database checksums and limitations. These are development
+experiment files, not a claim that the app bundles a new model or a contemporary
+Hong Kong chat corpus. No private user messages are included.

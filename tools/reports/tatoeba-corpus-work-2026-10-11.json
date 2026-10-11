@@ -1,0 +1,570 @@
+{
+  "validation": {
+    "0": {
+      "tatoeba": {
+        "cases": 200,
+        "top1": 50,
+        "top5": 96,
+        "top20": 121,
+        "mrr": 0.34766777615229627
+      },
+      "natural": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 116,
+        "top20": 135,
+        "mrr": 0.4681642935238136
+      },
+      "authored": {
+        "cases": 60,
+        "top1": 22,
+        "top5": 41,
+        "top20": 53,
+        "mrr": 0.4862159137159137
+      }
+    },
+    "2": {
+      "tatoeba": {
+        "cases": 200,
+        "top1": 71,
+        "top5": 130,
+        "top20": 147,
+        "mrr": 0.4775005634630248
+      },
+      "natural": {
+        "cases": 200,
+        "top1": 79,
+        "top5": 116,
+        "top20": 137,
+        "mrr": 0.4762527929586753
+      },
+      "authored": {
+        "cases": 60,
+        "top1": 27,
+        "top5": 48,
+        "top20": 59,
+        "mrr": 0.5591005291005291
+      }
+    },
+    "6": {
+      "tatoeba": {
+        "cases": 200,
+        "top1": 86,
+        "top5": 132,
+        "top20": 152,
+        "mrr": 0.5309327380136204
+      },
+      "natural": {
+        "cases": 200,
+        "top1": 79,
+        "top5": 114,
+        "top20": 137,
+        "mrr": 0.4741038539633741
+      },
+      "authored": {
+        "cases": 60,
+        "top1": 29,
+        "top5": 48,
+        "top20": 59,
+        "mrr": 0.5804415450390683
+      }
+    },
+    "12": {
+      "tatoeba": {
+        "cases": 200,
+        "top1": 89,
+        "top5": 133,
+        "top20": 158,
+        "mrr": 0.543203425229741
+      },
+      "natural": {
+        "cases": 200,
+        "top1": 78,
+        "top5": 113,
+        "top20": 135,
+        "mrr": 0.47038538003534136
+      },
+      "authored": {
+        "cases": 60,
+        "top1": 30,
+        "top5": 48,
+        "top20": 59,
+        "mrr": 0.5888020295837634
+      }
+    }
+  },
+  "eligible_weights": [
+    0,
+    2
+  ],
+  "selected_weight": 2,
+  "baseline_revision": "f6034031c4215a06d11ebec30fcdf43499f28182",
+  "corpus_manifest_sha256": "e6dc3b1d4f6097475b39c2e6d3122c7f016c5ed17ac7f2dd114ab2c767006a6c",
+  "protocol_sha256": "0b9140a0ed68b591f6d141b0ac724714cc73c2ca96b6228abd9e18f7bdde341f",
+  "guards": {
+    "0": {
+      "tatoeba_heldout": {
+        "cases": 200,
+        "top1": 64,
+        "top5": 105,
+        "top20": 124,
+        "mrr": 0.4101084956709957
+      },
+      "natural200": {
+        "cases": 200,
+        "top1": 72,
+        "top5": 112,
+        "top20": 133,
+        "mrr": 0.4439087273021097
+      },
+      "authored120": {
+        "cases": 120,
+        "top1": 56,
+        "top5": 81,
+        "top20": 96,
+        "mrr": 0.5752615440115441
+      },
+      "old600": {
+        "cases": 600,
+        "top1": 282,
+        "top5": 423,
+        "top20": 477,
+        "mrr": 0.5743814561628029
+      },
+      "daily32": {
+        "cases": 32,
+        "top1": 20,
+        "top5": 29,
+        "top20": 32,
+        "mrr": 0.7641225961538461
+      },
+      "completion16": {
+        "cases": 16,
+        "top1": 16,
+        "top5": 16,
+        "top20": 16,
+        "mrr": 1.0
+      }
+    },
+    "2": {
+      "tatoeba_heldout": {
+        "cases": 200,
+        "top1": 81,
+        "top5": 131,
+        "top20": 157,
+        "mrr": 0.51915097095457
+      },
+      "natural200": {
+        "cases": 200,
+        "top1": 72,
+        "top5": 114,
+        "top20": 137,
+        "mrr": 0.44870142561686677
+      },
+      "authored120": {
+        "cases": 120,
+        "top1": 73,
+        "top5": 83,
+        "top20": 98,
+        "mrr": 0.6520734126984127
+      },
+      "old600": {
+        "cases": 600,
+        "top1": 286,
+        "top5": 427,
+        "top20": 484,
+        "mrr": 0.5818378185640182
+      },
+      "daily32": {
+        "cases": 32,
+        "top1": 21,
+        "top5": 30,
+        "top20": 32,
+        "mrr": 0.7917906746031746
+      },
+      "completion16": {
+        "cases": 16,
+        "top1": 14,
+        "top5": 16,
+        "top20": 16,
+        "mrr": 0.9375
+      }
+    }
+  },
+  "guard_failures": [
+    "completion16:top1"
+  ],
+  "eligible_for_adoption": false,
+  "bundled_model_sha256": "b2c7cb41f4b57bc0ae484330af9b0d8c8625463e7d0a300875a8c0543c88bd4d",
+  "experimental_models": {
+    "2": {
+      "sha256": "be0afd4d26db314a1516d787099db96db864259147932f4221fc4ee7626cfbcd",
+      "report": {
+        "algorithm": "character 5-gram, count interpolation with validation-selected prior mass and pruning-aware backoff",
+        "context_characters": 4,
+        "source_revisions": {
+          "hkcancor": "39aeadf920e0b5ca93d0ad7792c59e740e7bdd65",
+          "rime_cantonese": "259f0e48bba840c3a2e0d117539e96937f3d89bc",
+          "rime_essay": "054920de4f54c9e5994276a96a4fc2a35cb51aa3"
+        },
+        "source_sha256": {
+          "hkcancor_zip": "09223963b8756254e15353cad843f8a4b0cbc4b9223dc8a8fa27fb1cf846057e",
+          "cantonese_words": "54d174ad2bb997e4a678b7b076b84e4dc5914481b32467cdea3b43e88b7d5474"
+        },
+        "training_conversation_files": 46,
+        "validation_conversation_files": [
+          "utf8/FC-046_v2",
+          "utf8/FC-053_v2",
+          "utf8/FC-R013b_v"
+        ],
+        "validation_scores_nats": {
+          "2": 5.083314666349133,
+          "4": 4.903994545351606,
+          "8": 4.75257062508647,
+          "16": 4.627756369010604,
+          "32": 4.532153762497895,
+          "64": 4.467223781774479,
+          "128": 4.433989315576211
+        },
+        "prior_strength": 128,
+        "heldout_conversation_files": [
+          "utf8/FC-005b_v2",
+          "utf8/FC-009b_v",
+          "utf8/FC-013_v",
+          "utf8/FC-028_v2",
+          "utf8/FC-045_v2",
+          "utf8/FC-056_v2",
+          "utf8/FC-103_v2",
+          "utf8/FC-R009_v",
+          "utf8/FC-R010a_v"
+        ],
+        "training_utterance_chunks": 25136,
+        "heldout_utterance_chunks": 4084,
+        "grams_by_order": [
+          20497,
+          176618,
+          189553,
+          80677,
+          59268
+        ],
+        "entries": 526613,
+        "model_primitive_array_bytes": 8425808,
+        "compressed_model_bytes": 5014177,
+        "additional_quick_entries": 122796,
+        "additional_unique_words": 111376,
+        "heldout_bigram": {
+          "characters": 21826,
+          "cross_entropy_nats": 4.764673337941719,
+          "perplexity": 117.2927959229438
+        },
+        "heldout_fivegram": {
+          "characters": 21826,
+          "cross_entropy_nats": 4.708342691631077,
+          "perplexity": 110.86826465935751
+        },
+        "note": "Held-out conversations are excluded from both n-gram training and learned corpus phrase additions; base external dictionaries can naturally contain their words. Perplexity measures next-character probability, not keyboard sentence accuracy.",
+        "additional_corpus": {
+          "manifest_sha256": "e6dc3b1d4f6097475b39c2e6d3122c7f016c5ed17ac7f2dd114ab2c767006a6c",
+          "training_rows": 3703,
+          "training_groups": 3529,
+          "weight_per_family": 2,
+          "source": "Tatoeba Cantonese via Jyut Dictionary",
+          "license": "CC-BY-2.0-FR"
+        },
+        "training_asset_sha256": {
+          "cangjie5.base.dict.yaml": "8690f2ad8aafd38780846881aa916b5779e6d9247a351a1da426d3f3257afca4",
+          "quick_phrases.tsv": "c11c72bd00c398af04ffea7a9eedac18dd2987d041294d5a9502b8e1bd1d12dd",
+          "hk_phrases.tsv": "c9d4f16e3f16002a5c224ae0f2d5f3a9e8a5170c7c439eaa28eefad810f476c5"
+        }
+      }
+    },
+    "6": {
+      "sha256": "f3e688f714d62533dc230f648adc07e98de049dde23705526d72433ff8d7a253",
+      "report": {
+        "algorithm": "character 5-gram, count interpolation with validation-selected prior mass and pruning-aware backoff",
+        "context_characters": 4,
+        "source_revisions": {
+          "hkcancor": "39aeadf920e0b5ca93d0ad7792c59e740e7bdd65",
+          "rime_cantonese": "259f0e48bba840c3a2e0d117539e96937f3d89bc",
+          "rime_essay": "054920de4f54c9e5994276a96a4fc2a35cb51aa3"
+        },
+        "source_sha256": {
+          "hkcancor_zip": "09223963b8756254e15353cad843f8a4b0cbc4b9223dc8a8fa27fb1cf846057e",
+          "cantonese_words": "54d174ad2bb997e4a678b7b076b84e4dc5914481b32467cdea3b43e88b7d5474"
+        },
+        "training_conversation_files": 46,
+        "validation_conversation_files": [
+          "utf8/FC-046_v2",
+          "utf8/FC-053_v2",
+          "utf8/FC-R013b_v"
+        ],
+        "validation_scores_nats": {
+          "2": 5.095975241890019,
+          "4": 4.911344587381713,
+          "8": 4.75595708701692,
+          "16": 4.628095666324935,
+          "32": 4.529816811108266,
+          "64": 4.4624698742794235,
+          "128": 4.427161767255958
+        },
+        "prior_strength": 128,
+        "heldout_conversation_files": [
+          "utf8/FC-005b_v2",
+          "utf8/FC-009b_v",
+          "utf8/FC-013_v",
+          "utf8/FC-028_v2",
+          "utf8/FC-045_v2",
+          "utf8/FC-056_v2",
+          "utf8/FC-103_v2",
+          "utf8/FC-R009_v",
+          "utf8/FC-R010a_v"
+        ],
+        "training_utterance_chunks": 25136,
+        "heldout_utterance_chunks": 4084,
+        "grams_by_order": [
+          20497,
+          176618,
+          189553,
+          103274,
+          80777
+        ],
+        "entries": 570719,
+        "model_primitive_array_bytes": 9131504,
+        "compressed_model_bytes": 5434889,
+        "additional_quick_entries": 122796,
+        "additional_unique_words": 111376,
+        "heldout_bigram": {
+          "characters": 21826,
+          "cross_entropy_nats": 4.7575262128995055,
+          "perplexity": 116.45747825958968
+        },
+        "heldout_fivegram": {
+          "characters": 21826,
+          "cross_entropy_nats": 4.70056120288468,
+          "perplexity": 110.00889243956367
+        },
+        "note": "Held-out conversations are excluded from both n-gram training and learned corpus phrase additions; base external dictionaries can naturally contain their words. Perplexity measures next-character probability, not keyboard sentence accuracy.",
+        "additional_corpus": {
+          "manifest_sha256": "e6dc3b1d4f6097475b39c2e6d3122c7f016c5ed17ac7f2dd114ab2c767006a6c",
+          "training_rows": 3703,
+          "training_groups": 3529,
+          "weight_per_family": 6,
+          "source": "Tatoeba Cantonese via Jyut Dictionary",
+          "license": "CC-BY-2.0-FR"
+        },
+        "training_asset_sha256": {
+          "cangjie5.base.dict.yaml": "8690f2ad8aafd38780846881aa916b5779e6d9247a351a1da426d3f3257afca4",
+          "quick_phrases.tsv": "c11c72bd00c398af04ffea7a9eedac18dd2987d041294d5a9502b8e1bd1d12dd",
+          "hk_phrases.tsv": "c9d4f16e3f16002a5c224ae0f2d5f3a9e8a5170c7c439eaa28eefad810f476c5"
+        }
+      }
+    },
+    "12": {
+      "sha256": "dda5ae7229e0729a079854f2d9e2015a6db56032683a5109ed700f18d423bd6f",
+      "report": {
+        "algorithm": "character 5-gram, count interpolation with validation-selected prior mass and pruning-aware backoff",
+        "context_characters": 4,
+        "source_revisions": {
+          "hkcancor": "39aeadf920e0b5ca93d0ad7792c59e740e7bdd65",
+          "rime_cantonese": "259f0e48bba840c3a2e0d117539e96937f3d89bc",
+          "rime_essay": "054920de4f54c9e5994276a96a4fc2a35cb51aa3"
+        },
+        "source_sha256": {
+          "hkcancor_zip": "09223963b8756254e15353cad843f8a4b0cbc4b9223dc8a8fa27fb1cf846057e",
+          "cantonese_words": "54d174ad2bb997e4a678b7b076b84e4dc5914481b32467cdea3b43e88b7d5474"
+        },
+        "training_conversation_files": 46,
+        "validation_conversation_files": [
+          "utf8/FC-046_v2",
+          "utf8/FC-053_v2",
+          "utf8/FC-R013b_v"
+        ],
+        "validation_scores_nats": {
+          "2": 5.1293395734919445,
+          "4": 4.939900199306754,
+          "8": 4.7796254761618195,
+          "16": 4.647357371580048,
+          "32": 4.544544358955667,
+          "64": 4.472697936774286,
+          "128": 4.433119860377383
+        },
+        "prior_strength": 128,
+        "heldout_conversation_files": [
+          "utf8/FC-005b_v2",
+          "utf8/FC-009b_v",
+          "utf8/FC-013_v",
+          "utf8/FC-028_v2",
+          "utf8/FC-045_v2",
+          "utf8/FC-056_v2",
+          "utf8/FC-103_v2",
+          "utf8/FC-R009_v",
+          "utf8/FC-R010a_v"
+        ],
+        "training_utterance_chunks": 25136,
+        "heldout_utterance_chunks": 4084,
+        "grams_by_order": [
+          20497,
+          176618,
+          189553,
+          103274,
+          80777
+        ],
+        "entries": 570719,
+        "model_primitive_array_bytes": 9131504,
+        "compressed_model_bytes": 5398637,
+        "additional_quick_entries": 122796,
+        "additional_unique_words": 111376,
+        "heldout_bigram": {
+          "characters": 21826,
+          "cross_entropy_nats": 4.760684798375592,
+          "perplexity": 116.82590069958393
+        },
+        "heldout_fivegram": {
+          "characters": 21826,
+          "cross_entropy_nats": 4.704946815956159,
+          "perplexity": 110.49240835811273
+        },
+        "note": "Held-out conversations are excluded from both n-gram training and learned corpus phrase additions; base external dictionaries can naturally contain their words. Perplexity measures next-character probability, not keyboard sentence accuracy.",
+        "additional_corpus": {
+          "manifest_sha256": "e6dc3b1d4f6097475b39c2e6d3122c7f016c5ed17ac7f2dd114ab2c767006a6c",
+          "training_rows": 3703,
+          "training_groups": 3529,
+          "weight_per_family": 12,
+          "source": "Tatoeba Cantonese via Jyut Dictionary",
+          "license": "CC-BY-2.0-FR"
+        },
+        "training_asset_sha256": {
+          "cangjie5.base.dict.yaml": "8690f2ad8aafd38780846881aa916b5779e6d9247a351a1da426d3f3257afca4",
+          "quick_phrases.tsv": "c11c72bd00c398af04ffea7a9eedac18dd2987d041294d5a9502b8e1bd1d12dd",
+          "hk_phrases.tsv": "c9d4f16e3f16002a5c224ae0f2d5f3a9e8a5170c7c439eaa28eefad810f476c5"
+        }
+      }
+    }
+  },
+  "note": "No experimental model is copied into app assets. No APK, release or real-device test.",
+  "decision": "Rejected by predeclared completion-question guard; keep every bundled app model unchanged.",
+  "verification": {
+    "python_tests": {
+      "tatoeba": 8,
+      "candidate": 12,
+      "word": 8,
+      "phrase": 4,
+      "failures": 0
+    },
+    "source_reproduction": "All seven generated corpus files byte-identical",
+    "model_reproduction": "Original bundled model and selected experimental model/report byte-identical",
+    "exact_code_checks": "RankingEvaluation checked every displayed candidate against complete typed code",
+    "local_single_learning": {
+      "cases": 32,
+      "confirmations": 3,
+      "legacy_top1_top5_top20": [
+        30,
+        32,
+        32
+      ],
+      "contextual_top1_top5_top20": [
+        32,
+        32,
+        32
+      ],
+      "sequence_records": 489
+    },
+    "android_checks": "Not rerun: no Android code or bundled asset changed",
+    "performance": "No paired performance run: adoption guard failed; evaluation wall times are not device latency evidence",
+    "fold7": "Not tested"
+  },
+  "completion_regressions": [
+    {
+      "code": "ofykrmcijd",
+      "target": "你交咗錢未",
+      "old_rank": 1,
+      "new_rank": 2,
+      "new_first": "係交咗錢未"
+    },
+    {
+      "code": "ofykrmqvjd",
+      "target": "你交咗表未",
+      "old_rank": 1,
+      "new_rank": 2,
+      "new_first": "係交咗表未"
+    }
+  ],
+  "per_case_changes": {
+    "tatoeba_heldout": {
+      "gained_top1": 17,
+      "lost_top1": 0,
+      "gained_top5": 27,
+      "lost_top5": 1
+    },
+    "natural200": {
+      "gained_top1": 0,
+      "lost_top1": 0,
+      "gained_top5": 2,
+      "lost_top5": 0
+    },
+    "authored120": {
+      "gained_top1": 17,
+      "lost_top1": 0,
+      "gained_top5": 2,
+      "lost_top5": 0
+    },
+    "old600": {
+      "gained_top1": 8,
+      "lost_top1": 4,
+      "gained_top5": 5,
+      "lost_top5": 1
+    },
+    "daily32": {
+      "gained_top1": 1,
+      "lost_top1": 0,
+      "gained_top5": 1,
+      "lost_top5": 0
+    },
+    "completion16": {
+      "gained_top1": 0,
+      "lost_top1": 2,
+      "gained_top5": 0,
+      "lost_top5": 0
+    }
+  },
+  "authored_limit": "17 first-choice gains are second-to-first moves from four correlated template families; not 17 independent real-chat improvements.",
+  "release_gate": {
+    "version_unchanged": "0.6.39",
+    "apk_created": false,
+    "one_point_zero_eligible": false,
+    "reason": "Adoption guard failed. Also natural-heldout top1 gain is 0pp (requires 5pp), authored top5 gain 1.67pp (requires 5pp); performance gate not run."
+  },
+  "original_lm_training_assets_revision": "5885daec1c43d676a525c543c8ab092532cb3150",
+  "result_sha256": {
+    "authored120-0.tsv": "1be6bd2ff65afe0942090b025fd980e63629de5042ae18b222f21d0cf4ecef65",
+    "authored120-2.tsv": "71dd2676f3258dfdc091c29218a4970e70e5a8b0e08dc83dc74eddbe57fa8829",
+    "completion16-0.tsv": "6dfc5b44f7f69977e5b7d89f1e69ebc68c5be88f4508aac7a43d9afcf940a9e2",
+    "completion16-2.tsv": "b004a3f2f7cbc56d4e04916dde24f64f87df332e0354b26f24c6e1e0ffee57bc",
+    "daily32-0.tsv": "c716bedbb994e0e6eed20a325b69f94ba59bb3209907861be15101d35b74f071",
+    "daily32-2.tsv": "4003273a4236e600806fb69c4afcd2d8931acf4e094391d536e038d9165acf38",
+    "natural200-0.tsv": "464b6e03d21bae13712e35afd8b4126868fe10ae39afed133fdf4aac7d43de22",
+    "natural200-2.tsv": "508ff0607d073193ce95b98a992e95d3b90a6ba65785f37243ed21f329d55f77",
+    "old600-0.tsv": "154e96349ba9e51cf061aeb94c6f3aecec24e978066cb2b56aef584738a9ee43",
+    "old600-2.tsv": "dfecb913953c79af2c09427e43db2918fb54302453415b82c6befc82a7cc0093",
+    "tatoeba_heldout-0.tsv": "812e80f9da1f465dc8dba5391d7f1664709bc6cf302dd17fb87b36fd4b9a591e",
+    "tatoeba_heldout-2.tsv": "ac0228716d2edbf26aae30609d80fe41999d43d7eb207643017e50efdfff0f53",
+    "validation-authored-0.tsv": "cf2f06cb159a712e654235dc932e7564def99bcfbd88418bbba2c18641561315",
+    "validation-authored-12.tsv": "171d85efbc37c1d1e7fa06c41129f940057d8c7bc7b9dc7d4b11ad8a8edc76a7",
+    "validation-authored-2.tsv": "23deb51de63e7ba5088d0b4db88f41b459a0b4a0bd1482e7e93c0e712cb82110",
+    "validation-authored-6.tsv": "6bfa178ed64ab1b8c8015d12fa34371546d5bd3d8e9e0bd14f7d98027d11bc9b",
+    "validation-natural-0.tsv": "5df954ba68773b06035af49e0571b75bfe0eaf4ebef66bfdfbc8ca6f0a9192f3",
+    "validation-natural-12.tsv": "202c4dd4b9e84a592977f82e3ebfde9db54094d51138d64bb501736d203d45f3",
+    "validation-natural-2.tsv": "3650ba1ce0247bf1ff4a53c3dbb9fd275ff9b5186dee4ae06a7c43a6d3d6e7a4",
+    "validation-natural-6.tsv": "5ed606975f9e334eb1e9cb4990a08934abc336ce0c38b20970bdd0367a2c2c45",
+    "validation-tatoeba-0.tsv": "8c8e4e40c762f210d4a42ecb5b2f14a46b6af95a4f4b955e0bad522e599f0950",
+    "validation-tatoeba-12.tsv": "83669fc98af7fd566198c76f8cd9d20157a8ca1dcd260c8f886b3873dd75ca67",
+    "validation-tatoeba-2.tsv": "f94d02e18fd80226271af84aa76e930a8f843bee996ee5be15e67ad1661ecc7f",
+    "validation-tatoeba-6.tsv": "07dac8d7da3a15af626f175189781cab1b51e44ef3393d09367952e2397df09d"
+  },
+  "tools_sha256": {
+    "tools/prepare_tatoeba_corpus.py": "5b31e6af4e40458bdd68e49fdda935c31e35a47dc56269ce224d16a36fedfa50",
+    "tools/train_language_model.py": "562ce3e22b1e79befc57880c461d8f38c7696d26e3f59e42d32891369f8e15f9",
+    "tools/evaluate_tatoeba_experiment.py": "b601d73f6e3609e35ec5373d15cb97c79823ef9cf050a38966888123415da99b",
+    "tools/test_tatoeba_corpus.py": "89d00dfb2b31cfd5045ba099ed588c66510af69de58db9cd8d957241288cabc4"
+  }
+}
