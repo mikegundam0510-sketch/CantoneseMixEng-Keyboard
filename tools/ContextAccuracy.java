@@ -13,7 +13,9 @@ public final class ContextAccuracy {
         var q = new QuickDecoder(d, Files.newBufferedReader(assets.resolve("quick_phrases.tsv")),
             Files.newBufferedReader(assets.resolve("hk_phrases.tsv")), Files.newBufferedReader(assets.resolve("cantonese_phrases.tsv")),
             OfflineLanguageModel.load(Files.newInputStream(assets.resolve("language_model.b64"))),
-            PhraseLanguageModel.load(Files.newInputStream(assets.resolve("phrase_model.b64"))), Files.newBufferedReader(assets.resolve("hk_chat_phrases.tsv")));
+            PhraseLanguageModel.load(Files.newInputStream(assets.resolve("phrase_model.b64"))), Files.newBufferedReader(assets.resolve("hk_chat_phrases.tsv")),
+            Files.exists(assets.resolve("candidate_ranker.b64"))
+                ? CandidateRanker.load(Files.newInputStream(assets.resolve("candidate_ranker.b64"))) : null);
         List<String[]> cases = new ArrayList<>();
         for (String line : Files.readAllLines(Path.of(args[1]))) {
             if (line.isBlank() || line.startsWith("#")) continue;

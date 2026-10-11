@@ -25,6 +25,11 @@ public final class QuickDecoder {
     private final DictionaryEngine dictionary;
     private final OfflineLanguageModel model;
     private final PhraseLanguageModel phraseModel;
+    private final CandidateRanker candidateRanker;
+    // Common HK particles can have low character-only corpus counts. Admit
+    // these into the same bounded contextual reserve, rather than promoting
+    // every historical transcript variant beyond the frequency cutoff.
+    private static final String HK_PARTICLES = "嘅咗喺啲哋嚟冇㗎喎嗰咁吖囉啦喇咩咋噃啩嘞咧嗱";
     private final Map<String, Double> pairCounts = new HashMap<>();
     private final Map<String, Double> outgoing = new HashMap<>();
     private final Map<String, List<Token>> vocabulary = new HashMap<>();
@@ -53,7 +58,13 @@ public final class QuickDecoder {
     }
     public QuickDecoder(DictionaryEngine dictionary, Reader input, Reader hkInput, Reader cantoneseInput,
                         OfflineLanguageModel model, PhraseLanguageModel phraseModel, Reader chatInput) throws IOException {
+        this(dictionary, input, hkInput, cantoneseInput, model, phraseModel, chatInput, null);
+    }
+    public QuickDecoder(DictionaryEngine dictionary, Reader input, Reader hkInput, Reader cantoneseInput,
+                        OfflineLanguageModel model, PhraseLanguageModel phraseModel, Reader chatInput,
+                        CandidateRanker candidateRanker) throws IOException {
         this.dictionary = dictionary; this.model = model; this.phraseModel = phraseModel;
+        this.candidateRanker = candidateRanker;
         // Merge duplicate code variants and sources before creating prediction tails.
         // The trained model still replaces fallback pair statistics entirely.
         Map<String, Double> wordCounts = new HashMap<>();
@@ -376,8 +387,9 @@ public final class QuickDecoder {
             double floor = Double.POSITIVE_INFINITY;
             for (int i = 0; i < 24; i++) floor = Math.min(floor,
                 conditional.computeIfAbsent(letters.get(i), text -> languageScore(context, text)));
-            for (int i = 24; i < Math.min(64, letters.size()); i++) {
+            for (int i = 24; i < letters.size(); i++) {
                 String character = letters.get(i);
+                if (i >= 64 && !HK_PARTICLES.contains(character)) continue;
                 double score = conditional.computeIfAbsent(character, text -> languageScore(context, text));
                 if (score > floor) scores.merge(character, score, Math::max);
             }
@@ -404,7 +416,8 @@ public final class QuickDecoder {
     public double languageScore(String prefix, String text) {
         if (model != null) return model.score(prefix, text) + phraseBonus(prefix, text) + completionBonus(prefix, text)
             + handoverBonus(prefix, text) + ClauseRelations.score(prefix, text)
-            + (phraseModel == null ? 0 : phraseModel.score(prefix, text));
+            + (phraseModel == null ? 0 : phraseModel.score(prefix, text))
+            + (candidateRanker == null ? 0 : candidateRanker.score(prefix, text));
         String previous = prefix.isEmpty() ? null : new String(Character.toChars(prefix.codePointBefore(prefix.length())));
         double score = 0;
         for (int cp : text.codePoints().toArray()) {
@@ -651,6 +664,7 @@ public final class QuickDecoder {
         protectedPaths.sort(Comparator.comparingDouble((Path p) -> alternatives.get(p)).reversed()
             .thenComparing(p -> p.text));
         Set<String> histories = new HashSet<>();
+        for (Path path : result) histories.add(OfflineLanguageModel.contextTail(context + path.text));
         for (Path path : protectedPaths) {
             if (path.score < floor || !seen.add(path.text)) continue;
             if (!histories.add(OfflineLanguageModel.contextTail(context + path.text))) continue;

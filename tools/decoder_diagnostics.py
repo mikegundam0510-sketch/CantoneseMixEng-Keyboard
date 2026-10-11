@@ -3,8 +3,9 @@
 Activate the Android environment first, then:
   python3 tools/decoder_diagnostics.py --revision 21ff17a --cases tools/lm_heldout_cases.tsv --output /tmp/decoder.tsv
 The archived engine and assets belong to the requested commit. Instrumentation
-only observes completed target paths and their final raw ranks; it cannot prove
-why an earlier prefix was lost or that an unfamiliar sentence is invalid.
+observes option eligibility and prefix survival without changing search decisions.
+Prefix events explain observed path losses, not sentence validity; alternative
+tokenizations can bypass an individual lost prefix.
 Requires the hk.cantonesemixeng.keyboard namespace (0.6.39 onward).
 """
 import argparse
@@ -27,17 +28,20 @@ public final class DecoderDiagnostics {
   DictionaryEngine dictionary=new DictionaryEngine(Files.newBufferedReader(assets.resolve("cangjie5.base.dict.yaml")),Files.newBufferedReader(assets.resolve("english.txt")),Files.newBufferedReader(assets.resolve("character_frequencies.tsv")));
   QuickDecoder decoder=new QuickDecoder(dictionary,Files.newBufferedReader(assets.resolve("quick_phrases.tsv")),Files.newBufferedReader(assets.resolve("hk_phrases.tsv")),Files.newBufferedReader(assets.resolve("cantonese_phrases.tsv")),OfflineLanguageModel.load(Files.newInputStream(assets.resolve("language_model.b64")))__PHRASE_ARGS__);
   try(BufferedWriter out=Files.newBufferedWriter(Path.of(args[2]))) {
-   out.write("# context\tcode\ttarget\tdisplayed_rank\traw_final_rank\treason\tcandidates\n");
+   out.write("# context\tcode\ttarget\tdisplayed_rank\traw_final_rank\treason\tcandidates\texact_code\tprefix_events\n");
    for(String line:Files.readAllLines(Path.of(args[1]))) {
     if(line.isEmpty()||line.startsWith("#"))continue;
     String[] fields=line.split("\t",-1);
     if(fields.length!=3)throw new IllegalArgumentException("Expected context, code and target");
     if(!fields[1].matches("[a-zA-Z]{3,48}"))throw new IllegalArgumentException("Expected 3 to 48 code letters");
-    QuickDecoder.diagnosticTarget=fields[2];QuickDecoder.diagnosticGenerated=false;QuickDecoder.diagnosticRawRank=0;
+    QuickDecoder.diagnosticTarget=fields[2];QuickDecoder.diagnosticGenerated=false;QuickDecoder.diagnosticRawRank=0;QuickDecoder.diagnosticEvents.clear();
+    boolean exact=!dictionary.matchQuickCodes(fields[1],fields[2]).isEmpty();
     List<String> candidates=decoder.decode(fields[1],(code,word)->0,fields[0]);
+    for(String candidate:candidates) if(dictionary.matchQuickCodes(fields[1],candidate).isEmpty())
+        throw new AssertionError("Inexact candidate: "+fields[1]+" / "+candidate);
     int rank=candidates.indexOf(fields[2])+1;
     String reason=rank==1?"first":rank>0?"ranked_later":QuickDecoder.diagnosticRawRank>20?"outside_twenty":QuickDecoder.diagnosticRawRank>0?"confidence_filtered":QuickDecoder.diagnosticGenerated?"completed_path_pruned":"not_generated";
-    out.write(line+"\t"+rank+"\t"+QuickDecoder.diagnosticRawRank+"\t"+reason+"\t"+String.join("|",candidates)+"\n");
+    out.write(line+"\t"+rank+"\t"+QuickDecoder.diagnosticRawRank+"\t"+reason+"\t"+String.join("|",candidates)+"\t"+exact+"\t"+String.join(";",QuickDecoder.diagnosticEvents)+"\n");
    }
   }
  }
@@ -50,8 +54,44 @@ def instrument(source):
         '    private static final int BEAM = 48;': '''    static String diagnosticTarget = "";
     static boolean diagnosticGenerated;
     static int diagnosticRawRank;
+    static List<String> diagnosticEvents = new ArrayList<>();
+    private static boolean diagnosticGold(String text) {
+        return diagnosticTarget.startsWith(text);
+    }
+    private static void diagnosticBoundary(String phase,int pos,List<Path> before,List<Path> after) {
+        Set<String> seen=new HashSet<>(),kept=new HashSet<>();
+        for(Path path:after)kept.add(path.text);
+        List<Path> sorted=new ArrayList<>(before);
+        sorted.sort(Comparator.comparingDouble((Path path)->path.score).reversed());
+        int rank=0;double floor=Double.NEGATIVE_INFINITY;
+        for(Path path:sorted) if(seen.add(path.text) && ++rank==48) {floor=path.score;break;}
+        seen.clear();rank=0;
+        for(Path path:sorted) if(seen.add(path.text)) {
+            rank++;
+            if(diagnosticGold(path.text)) diagnosticEvents.add(phase+","+pos+","+path.text+","+rank+","+kept.contains(path.text)+","+(path.score-floor));
+        }
+    }
+    private static void diagnosticHints(int pos,List<Token> hints) {
+        for(Token token:hints)diagnosticEvents.add("H,"+pos+","+token.text);
+    }
+    private void diagnosticOptions(int pos,int length,String part,List<Path> paths,Map<String,Double> options,List<Token> known) {
+        Set<String> seen=new HashSet<>();
+        for(Path path:paths) if(diagnosticGold(path.text) && seen.add(path.text)) {
+            String remaining=diagnosticTarget.substring(path.text.length());
+            int characters=remaining.codePointCount(0,remaining.length());
+            for(int size=1;size<=Math.min(8,characters);size++) {
+                String word=remaining.substring(0,remaining.offsetByCodePoints(0,size));
+                if(dictionary.matchQuickCodes(part,word).isEmpty())continue;
+                int wordRank=0;for(Token token:known) {wordRank++;if(token.text.equals(word))break;}
+                if(wordRank==0 || !known.get(wordRank-1).text.equals(word))wordRank=0;
+                int characterRank=size==1?dictionary.quickCandidates(part).indexOf(word)+1:0;
+                diagnosticEvents.add("O,"+pos+","+path.text+","+length+","+word+","+options.containsKey(word)+","+wordRank+","+characterRank);
+            }
+        }
+    }
     private static final int BEAM = 48;''',
         'target.add(new Path(prefix.text + choice.getKey(), prefix.score + score + wordBonus + bonus));': '''String joined=prefix.text+choice.getKey();
+                        if(diagnosticGold(joined)) diagnosticEvents.add("G,"+(pos+length)+","+joined+","+prefix.text+","+choice.getKey());
                         if(pos+length==code.length() && joined.equals(diagnosticTarget)) diagnosticGenerated=true;
                         target.add(new Path(joined,prefix.score+score+wordBonus+bonus));''',
         '        List<Path> completed = prune(lattice.get(code.length()));': '''        List<Path> diagnosticPaths=lattice.get(code.length());
@@ -61,7 +101,23 @@ def instrument(source):
             diagnosticRawRank=diagnosticSeen.size();break;
         }
         List<Path> completed = prune(lattice.get(code.length()));''',
+        '            List<Path> paths = prune(lattice.get(pos), context, following.get(pos));': '''            List<Path> paths = prune(lattice.get(pos), context, following.get(pos));
+            diagnosticBoundary("B",pos,lattice.get(pos),paths);
+            diagnosticHints(pos,following.get(pos));''',
+        '                if (options.isEmpty()) continue;': '''                diagnosticOptions(pos,length,part,paths,options,known);
+                if (options.isEmpty()) continue;''',
+        '''                if (target.size() > 1024) lattice.set(pos + length,
+                    prune(target, context, following.get(pos + length)));''': '''                if (target.size() > 1024) {
+                    List<Path> reduced=prune(target,context,following.get(pos+length));
+                    diagnosticBoundary("I",pos+length,target,reduced);
+                    lattice.set(pos+length,reduced);
+                }''',
+        '        double bestScore = completed.isEmpty() ? Double.NEGATIVE_INFINITY : completed.get(0).score;': '''        diagnosticBoundary("F",code.length(),lattice.get(code.length()),completed);
+        double bestScore = completed.isEmpty() ? Double.NEGATIVE_INFINITY : completed.get(0).score;''',
     }
+    # B = boundary pruning, I = intermediate compaction, F = final pruning.
+    # O = exact gold extension and option membership, G = observed generation,
+    # H = existing suffix hints. All observers are temporary archive-only hooks.
     for before, after in hooks.items():
         if source.count(before) != 1:
             raise ValueError('Decoder structure changed; update the diagnostic hook: ' + before)
@@ -88,6 +144,8 @@ def main():
         phrase_args = ''
         if (work / 'app/src/main/java/hk/cantonesemixeng/keyboard/PhraseLanguageModel.java').exists():
             phrase_args = ',PhraseLanguageModel.load(Files.newInputStream(assets.resolve("phrase_model.b64"))),Files.newBufferedReader(assets.resolve("hk_chat_phrases.tsv"))'
+        if (work / 'app/src/main/java/hk/cantonesemixeng/keyboard/CandidateRanker.java').exists():
+            phrase_args += ',CandidateRanker.load(Files.newInputStream(assets.resolve("candidate_ranker.b64")))'
         driver.write_text(DRIVER.replace('__PHRASE_ARGS__', phrase_args), encoding='utf-8')
         classes = work / 'classes'
         subprocess.run(['javac', '-encoding', 'UTF-8', '-sourcepath', str(work/'app/src/main/java'), '-d', str(classes), str(driver)], check=True)

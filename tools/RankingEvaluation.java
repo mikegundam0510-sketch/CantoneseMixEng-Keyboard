@@ -16,14 +16,16 @@ public final class RankingEvaluation {
         DictionaryEngine dictionary = new DictionaryEngine(asset("cangjie5.base.dict.yaml"),
             asset("english.txt"), asset("character_frequencies.tsv"));
         String variant = args.length > 3 ? args[3] : "full";
-        if (!Arrays.asList("full", "baseline", "words-only", "model-only").contains(variant))
+        if (!Arrays.asList("full", "baseline", "words-only", "model-only", "unranked").contains(variant))
             throw new IllegalArgumentException("Unknown model ablation: " + variant);
         QuickDecoder decoder = new QuickDecoder(dictionary, asset("quick_phrases.tsv"),
             asset("hk_phrases.tsv"), asset("cantonese_phrases.tsv"),
             OfflineLanguageModel.load(Files.newInputStream(assets.resolve("language_model.b64"))),
-            variant.equals("full") || variant.equals("model-only")
+            variant.equals("full") || variant.equals("model-only") || variant.equals("unranked")
                 ? PhraseLanguageModel.load(Files.newInputStream(assets.resolve("phrase_model.b64"))) : null,
-            variant.equals("full") || variant.equals("words-only") ? asset("hk_chat_phrases.tsv") : null);
+            variant.equals("full") || variant.equals("words-only") || variant.equals("unranked") ? asset("hk_chat_phrases.tsv") : null,
+            variant.equals("full") && Files.exists(assets.resolve("candidate_ranker.b64"))
+                ? CandidateRanker.load(Files.newInputStream(assets.resolve("candidate_ranker.b64"))) : null);
         int count = 0, top1 = 0, top5 = 0, reachable = 0;
         double reciprocalRank = 0;
         long started = System.nanoTime();

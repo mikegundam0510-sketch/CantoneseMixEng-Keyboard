@@ -17,13 +17,28 @@ public final class LoadingBenchmark {
         double basicMs = (System.nanoTime()-start)/1e6;
         QuickDecoder decoder;
         try {
-            // The archived baseline has only the original five-argument constructor.
+            // Reflection keeps this helper compilable against archived decoder revisions.
             Class<?> phraseClass = Class.forName("hk.cantonesemixeng.keyboard.PhraseLanguageModel");
-            var constructor = QuickDecoder.class.getConstructor(DictionaryEngine.class, Reader.class,
-                Reader.class, Reader.class, OfflineLanguageModel.class, phraseClass, Reader.class);
-            decoder = constructor.newInstance(dictionary, asset("quick_phrases.tsv"), asset("hk_phrases.tsv"), asset("cantonese_phrases.tsv"),
+            java.lang.reflect.Constructor<QuickDecoder> constructor;
+            Class<?> rankerClass = null;
+            try {
+                if (!new File(assets + "candidate_ranker.b64").isFile()) throw new ClassNotFoundException();
+                rankerClass = Class.forName("hk.cantonesemixeng.keyboard.CandidateRanker");
+                constructor = QuickDecoder.class.getConstructor(DictionaryEngine.class, Reader.class,
+                    Reader.class, Reader.class, OfflineLanguageModel.class, phraseClass, Reader.class, rankerClass);
+            } catch (ClassNotFoundException | NoSuchMethodException unranked) {
+                rankerClass = null;
+                constructor = QuickDecoder.class.getConstructor(DictionaryEngine.class, Reader.class,
+                    Reader.class, Reader.class, OfflineLanguageModel.class, phraseClass, Reader.class);
+            }
+            List<Object> arguments = new ArrayList<>(Arrays.asList(dictionary, asset("quick_phrases.tsv"),
+                asset("hk_phrases.tsv"), asset("cantonese_phrases.tsv"),
                 OfflineLanguageModel.load(new FileInputStream(assets + "language_model.b64")),
-                phraseClass.getMethod("load", InputStream.class).invoke(null, new FileInputStream(assets + "phrase_model.b64")), asset("hk_chat_phrases.tsv"));
+                phraseClass.getMethod("load", InputStream.class).invoke(null, new FileInputStream(assets + "phrase_model.b64")),
+                asset("hk_chat_phrases.tsv")));
+            if (rankerClass != null) arguments.add(rankerClass.getMethod("load", InputStream.class)
+                .invoke(null, new FileInputStream(assets + "candidate_ranker.b64")));
+            decoder = constructor.newInstance(arguments.toArray());
         } catch (ClassNotFoundException | NoSuchMethodException legacy) {
             decoder = new QuickDecoder(dictionary, asset("quick_phrases.tsv"), asset("hk_phrases.tsv"), asset("cantonese_phrases.tsv"),
                 OfflineLanguageModel.load(new FileInputStream(assets + "language_model.b64")));
