@@ -1,9 +1,10 @@
 # Cantonese community-sentence experiment
 
-**Outcome: useful gains, but not adopted.** The selected model fails the
-predeclared completion-question guard. All bundled app models remain unchanged;
-source version stays 0.6.39 and no APK or 1.0 release was created. The attributed
-corpus, reproducible importer/trainer and results are retained for further work.
+**October 11 outcome: useful gains, but not adopted at that time.** The selected
+model failed the predeclared completion-question guard. This document and its
+report preserve that experiment. The separate [October 12 clause-cue comparison](CLAUSE_START_RANKING.md)
+restores the two first-choice regressions and adopts the combined model in source.
+Version stays 0.6.39; no new APK or 1.0 release was created.
 
 This experiment supplements existing HKCanCor training with attributed Tatoeba
 examples. It does not collect private chats or establish current Hong Kong usage

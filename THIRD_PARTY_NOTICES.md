@@ -84,7 +84,7 @@ The user supplied Windows 10 22H2 build 19045.6466 Cangjie/Quick system dictiona
 
 The final combined dictionary contains 144,164 distinct character/code pairs and 103,976 distinct characters/symbols. Existing mappings and relative order remain intact. Quick derivation also covers all 1,725 previously missing Quick associations in the provided files. Other Windows builds and runtime candidate order are outside this verification.
 
-## Tatoeba community-sentence experiment (development data)
+## Tatoeba community sentences and model contribution
 
 `tools/data/tatoeba_corpus/` contains filtered Tatoeba Cantonese examples, © Tatoeba
 contributors, [CC BY 2.0 France](https://creativecommons.org/licenses/by/2.0/fr/),
@@ -94,6 +94,14 @@ chunk extraction are this project's modifications; the distributor may already
 have converted simplified text to traditional. This notice covers only rows
 linked to that database's Tatoeba Cantonese source, not the other dictionaries.
 The [data notice](tools/data/tatoeba_corpus/NOTICE.md) and manifest preserve source
-links, license, archive/database checksums and limitations. These are development
-experiment files, not a claim that the app bundles a new model or a contemporary
-Hong Kong chat corpus. No private user messages are included.
+links, license, archive/database checksums and limitations. The offline character
+model includes n-gram counts from the 3,703 training rows / 3,529 families, with
+weight 2 per family's unique grams. Validation and heldout data do not contribute
+training counts. The generated trial vocabulary and original database are not
+bundled. Attribution and source/model checksums are also bundled in
+`app/src/main/assets/licenses/tatoeba/` and readable in app settings.
+
+The October 11 model trial was rejected because of two first-choice regressions.
+The [October 12 clause-cue comparison](docs/CLAUSE_START_RANKING.md) restores those
+choices and records adoption of the combined model. These examples are not a
+contemporary Hong Kong chat-frequency corpus. No private user messages are included.

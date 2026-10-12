@@ -1,12 +1,33 @@
 # Offline model and compact candidates: 0.6.0 source preview
 
-## Community-sentence corpus trial (2026-10-11, not adopted)
+## Clause-start cues and community model (unreleased, 2026-10-12)
+
+The [clause-start comparison](CLAUSE_START_RANKING.md) adds bounded subject/action
+evidence across editor and lattice boundaries. The selected strength 1.5 restores
+all sixteen completion-question first choices with the previously rejected
+Tatoeba weight-2 model, which is now bundled in source with attribution. Only the
+character model and its report change; the existing runtime vocabulary and other
+trained scorers stay unchanged. New authored probes improve 5 → 14 first choices
+out of 70, and 100 previously undecoded public families improve 28 → 46, mostly
+from the added corpus. Existing natural-heldout first choices remain 72/200.
+
+Per-decode caches reuse character transitions and five-character phrase evidence;
+personal weights are evaluated separately. Five hundred full candidate lists
+remain byte-identical after these speed changes. A paired desktop run on one CPU,
+after 12 warmup passes with 15 alternating samples, measures the 48-letter pressure
+case at 374.9 → 357.6 ms; ordinary cases are 4.0–13.9% slower than the previous
+source engine. This does not establish a general speedup or Fold7 latency. The
+earlier slower measurements are retained in the work report. Version 0.6.39/code46
+is retained without an APK because the predefined 1.0 improvement gate is not met.
+
+## Community-sentence corpus trial (2026-10-11, historical)
 
 The [Tatoeba experiment](TATOEBA_EXPERIMENT.md) adds a licensed, frozen development
 corpus and an offline training/evaluation pipeline. The selected trial improves
 new heldout examples but drops two existing completion questions from first to
-second. It fails the predeclared acceptance guard, so **the bundled model below
-is unchanged**. This trial has no new APK or version bump.
+second. It failed the predeclared acceptance guard at that time; its raw results
+remain available. The separate October 12 change above resolves that guard before
+adoption. Neither experiment creates a new APK or version bump.
 
 ## Signed word and POS collocations (unreleased, 2026-10-11)
 

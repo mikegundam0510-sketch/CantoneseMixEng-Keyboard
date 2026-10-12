@@ -56,6 +56,10 @@ public final class OfflineLanguageModel {
         return text.substring(start);
     }
     public double score(String preceding,String text) {
+        return score(preceding,text,null);
+    }
+    /** Optional per-decode transition cache; punctuation still resets history. */
+    double score(String preceding,String text,Map<String,Double> transitions) {
         int[] history=new int[5];int used=0;
         for(int cp:contextTail(preceding).codePoints().toArray())history[used++]=cp;
         double score=0;
@@ -63,20 +67,33 @@ public final class OfflineLanguageModel {
             int cp=text.codePointAt(at);at+=Character.charCount(cp);
             if(!han(cp)){used=0;continue;}
             history[used]=cp;
-            int one=index(history,used,1);
-            double p=one<0?unknown:probabilities[one];
-            for(int n=2;n<=Math.min(5,used+1);n++) {
-                int start=used+1-n;
-                int context=index(history,start,n-1);
-                if(context>=0) {
-                    int gram=index(history,start,n);
-                    p=(gram<0?0:probabilities[gram])+backoffs[context]*p;
+            if(transitions==null) score+=transitionScore(history,used);
+            else {
+                String window=new String(history,0,used+1);
+                Double value=transitions.get(window);
+                if(value==null) {
+                    value=transitionScore(history,used);
+                    if(transitions.size()>=8192)transitions.clear();
+                    transitions.put(window,value);
                 }
+                score+=value;
             }
-            score+=Math.log(Math.max(unknown,p));
             if(used==4)System.arraycopy(history,1,history,0,4);else used++;
         }
         return score;
+    }
+    private double transitionScore(int[] history,int used) {
+        int one=index(history,used,1);
+        double p=one<0?unknown:probabilities[one];
+        for(int n=2;n<=Math.min(5,used+1);n++) {
+            int start=used+1-n;
+            int context=index(history,start,n-1);
+            if(context>=0) {
+                int gram=index(history,start,n);
+                p=(gram<0?0:probabilities[gram])+backoffs[context]*p;
+            }
+        }
+        return Math.log(Math.max(unknown,p));
     }
     public int entryCount() { return keys.length; }
     public long arrayBytes() { return 16L*keys.length; }

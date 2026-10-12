@@ -1,0 +1,11 @@
+{
+  "baseline_revision": "e4387bfef96be601b264feb5617e15e0ad0fea81",
+  "intervention": "Bounded authored subject/predicate priors anchored to clause start or explicit complement cues; no new pairwise corpus training.",
+  "strength_grid": [0.5, 1.0, 1.5],
+  "models": ["bundled", "previous_tatoeba_weight2_trial"],
+  "selection": "Use new authored validation70 and the previously frozen natural validation200. Require no top1/top5 loss versus the same model without clause priors in each set/model arm; choose highest mean MRR, ties lower strength. No valid weight means reject.",
+  "after_selection": "Freeze strength, then evaluate authored heldout70, prospective public100 and old regression sets. Report feature-only and feature+Tatoeba arms separately against unchanged bundled model and previous trial.",
+  "adoption": "Feature alone must retain old600, natural200, daily32, completion16 top1/top5 and new protective copula identities. Corpus model may be adopted only if the combined arm also meets those guards and prospective public top1/top5 does not regress.",
+  "release": "Keep 0.6.39 and no APK unless the existing independent 1.0 gate is met. Measured authored gains do not imply real-user accuracy.",
+  "limits": "Synthetic tests share constructions across splits. Existing public/regression sets were observed before and are not fresh heldout. Freeze prospective selection before candidate results are inspected."
+}

@@ -1,0 +1,25 @@
+Tatoeba Cantonese contribution to the offline character model
+
+Text: © Tatoeba contributors. Licensed under Creative Commons Attribution
+2.0 France: https://creativecommons.org/licenses/by/2.0/fr/
+Legal code: https://creativecommons.org/licenses/by/2.0/fr/legalcode
+Source: https://tatoeba.org/eng/downloads (2023-04-08 snapshot).
+
+Redistributed by Aaron H. K. Tan in Jyut Dictionary v4.25.0623:
+https://github.com/aaronhktan/jyut-dict/releases/tag/v4.25.0623-release
+Only rows linked to that database's Tatoeba Cantonese source were used.
+Other dictionary examples and the original database are not bundled.
+Original contributor usernames are unavailable in the redistribution.
+
+This project normalized, filtered and grouped the examples, and derived
+bounded character n-gram counts from 3,703 training rows / 3,529 families.
+Each family contributes each gram once, with weight 2 in the combined model.
+Validation and heldout examples do not contribute training counts.
+The distributor may already have converted simplified text to traditional.
+The model retains existing HKCanCor, Rime and authored contributions under
+their respective notices. The model does not contain a sentence database.
+The generated vocabulary accompanying the trial was not installed.
+
+These community examples are not measured Hong Kong chat frequency.
+Neither Tatoeba nor Jyut Dictionary endorses this app or its modifications.
+Source checksums and the model checksum are in SOURCE.json.

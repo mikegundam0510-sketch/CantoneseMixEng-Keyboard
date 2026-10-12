@@ -54,6 +54,10 @@ public final class PairedRankingPerformance {
         public void close() throws IOException { classes.close(); }
     }
     public static void main(String[] args) throws Exception {
+        int warmup = args.length > 4 ? Integer.parseInt(args[4]) : 3;
+        int samples = args.length > 5 ? Integer.parseInt(args[5]) : 9;
+        if (warmup < 3 || warmup > 50 || samples < 3 || samples > 101 || samples % 2 == 0)
+            throw new IllegalArgumentException("Invalid warmup/sample count");
         String[] codes = {"ofonaovrmrq", "hmerrrysmlrp", "dpofvivcjutrmyyjvcqnjd", "ofykrmmsydwljpvwjd",
             "vkmmnkmrvordrjjj", "hi".repeat(24)};
         ThreadMXBean cpu = ManagementFactory.getThreadMXBean();
@@ -62,12 +66,13 @@ public final class PairedRankingPerformance {
         try (Engine before = new Engine(Path.of(args[0]), Path.of(args[1]));
              Engine after = new Engine(Path.of(args[2]), Path.of(args[3]))) {
             Engine[] engines = {before, after};
-            for (int pass = 0; pass < 3; pass++) for (String code : codes)
+            for (int pass = 0; pass < warmup; pass++) for (String code : codes)
                 for (int order = 0; order < 2; order++) engines[(pass + order) % 2].run(code);
+            System.out.printf("# warmup=%d samples=%d%n", warmup, samples);
             System.out.println("# code\tletters\tbefore_wall_median_ms\tafter_wall_median_ms\tbefore_cpu_median_ms\tafter_cpu_median_ms");
             for (String code : codes) {
-                double[][] walls = new double[2][9], cpus = new double[2][9];
-                for (int pass = 0; pass < 9; pass++) for (int order = 0; order < 2; order++) {
+                double[][] walls = new double[2][samples], cpus = new double[2][samples];
+                for (int pass = 0; pass < samples; pass++) for (int order = 0; order < 2; order++) {
                     int index = (pass + order) % 2;
                     long start = System.nanoTime(), cpuStart = cpu.getCurrentThreadCpuTime();
                     List<String> results = engines[index].run(code);
@@ -78,7 +83,7 @@ public final class PairedRankingPerformance {
                 for (double[] values : walls) Arrays.sort(values);
                 for (double[] values : cpus) Arrays.sort(values);
                 System.out.printf(Locale.ROOT, "%s\t%d\t%.3f\t%.3f\t%.3f\t%.3f%n",
-                    code, code.length(), walls[0][4], walls[1][4], cpus[0][4], cpus[1][4]);
+                    code, code.length(), walls[0][samples / 2], walls[1][samples / 2], cpus[0][samples / 2], cpus[1][samples / 2]);
             }
         }
     }

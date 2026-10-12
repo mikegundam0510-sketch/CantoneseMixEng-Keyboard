@@ -38,6 +38,19 @@ public class OfflineLanguageModelTest {
     @Test public void punctuationClearsHistory() {
         assertEquals(model.score("", "香港"), model.score("你好", "，香港"),1e-9);
     }
+    @Test public void cachedTransitionsPreserveExactScoresAndBoundMemory() {
+        Map<String,Double> cache=new HashMap<>();
+        for(String context:new String[]{"","我今日","佢聽日","我唔記得係","hello𠮩𠹌"})
+            for(String text:new String[]{"食咗咩嘢","係我交咗錢","abc，香港","𠮩𠹌"}) {
+                assertEquals(model.score(context,text),model.score(context,text,cache),0);
+                assertEquals(model.score(context,text),model.score(context,text,cache),0);
+            }
+        for(int cp=0x20000;cp<0x20000+8500;cp++) {
+            String text=new String(Character.toChars(cp));
+            assertEquals(model.score("我你佢今日",text),model.score("我你佢今日",text,cache),0);
+            assertTrue(cache.size()<=8192);
+        }
+    }
     @Test public void malformedModelIsRejected() throws Exception {
         try { OfflineLanguageModel.load(new ByteArrayInputStream("broken".getBytes(StandardCharsets.UTF_8))); fail(); }
         catch (IOException expected) { }

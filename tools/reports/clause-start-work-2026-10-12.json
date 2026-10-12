@@ -1,0 +1,2080 @@
+{
+  "date": "2026-10-12",
+  "baseline_revision": "e4387bfef96be601b264feb5617e15e0ad0fea81",
+  "delivery": "Unreleased source; version0.6.39 / code46; no APK built",
+  "intervention": "Bounded authored clause-start/complement cue and restored adoption of previous licensed Tatoeba weight-2 character model; per-decode exact score caches",
+  "protocol_sha256": "ccd88033522f31f4a1efe15df8ef87af3c56502539968d22d92c34d80004653e",
+  "manifest_sha256": "3f4b442453dc77eec7780897b780392452d876107a1883de439242ee9c848b7d",
+  "selection": {
+    "scores": {
+      "bundled": {
+        "0": {
+          "authored": {
+            "cases": 70,
+            "top1": 14,
+            "top5": 22,
+            "top20": 43,
+            "mrr": 0.27175933193790336
+          },
+          "natural": {
+            "cases": 200,
+            "top1": 77,
+            "top5": 116,
+            "top20": 135,
+            "mrr": 0.4681642935238136
+          }
+        },
+        "0.5": {
+          "authored": {
+            "cases": 70,
+            "top1": 14,
+            "top5": 26,
+            "top20": 44,
+            "mrr": 0.2820381727712555
+          },
+          "natural": {
+            "cases": 200,
+            "top1": 77,
+            "top5": 116,
+            "top20": 135,
+            "mrr": 0.4681642935238136
+          }
+        },
+        "1.0": {
+          "authored": {
+            "cases": 70,
+            "top1": 14,
+            "top5": 27,
+            "top20": 47,
+            "mrr": 0.29477780009071475
+          },
+          "natural": {
+            "cases": 200,
+            "top1": 77,
+            "top5": 116,
+            "top20": 135,
+            "mrr": 0.4681642935238136
+          }
+        },
+        "1.5": {
+          "authored": {
+            "cases": 70,
+            "top1": 14,
+            "top5": 28,
+            "top20": 49,
+            "mrr": 0.30156553033432737
+          },
+          "natural": {
+            "cases": 200,
+            "top1": 77,
+            "top5": 116,
+            "top20": 135,
+            "mrr": 0.4681642935238136
+          }
+        }
+      },
+      "trial": {
+        "0": {
+          "authored": {
+            "cases": 70,
+            "top1": 16,
+            "top5": 26,
+            "top20": 44,
+            "mrr": 0.3126396456018305
+          },
+          "natural": {
+            "cases": 200,
+            "top1": 79,
+            "top5": 116,
+            "top20": 137,
+            "mrr": 0.4762527929586753
+          }
+        },
+        "0.5": {
+          "authored": {
+            "cases": 70,
+            "top1": 16,
+            "top5": 29,
+            "top20": 45,
+            "mrr": 0.3208363263720407
+          },
+          "natural": {
+            "cases": 200,
+            "top1": 79,
+            "top5": 116,
+            "top20": 137,
+            "mrr": 0.4762527929586753
+          }
+        },
+        "1.0": {
+          "authored": {
+            "cases": 70,
+            "top1": 17,
+            "top5": 30,
+            "top20": 48,
+            "mrr": 0.33752231017545037
+          },
+          "natural": {
+            "cases": 200,
+            "top1": 79,
+            "top5": 116,
+            "top20": 137,
+            "mrr": 0.4762527929586753
+          }
+        },
+        "1.5": {
+          "authored": {
+            "cases": 70,
+            "top1": 18,
+            "top5": 33,
+            "top20": 51,
+            "mrr": 0.35402233123650634
+          },
+          "natural": {
+            "cases": 200,
+            "top1": 79,
+            "top5": 116,
+            "top20": 137,
+            "mrr": 0.4762527929586753
+          }
+        }
+      }
+    },
+    "eligible_strengths": [
+      0.5,
+      1.0,
+      1.5
+    ],
+    "selected_strength": 1.5
+  },
+  "guards": {
+    "bundled": {
+      "0": {
+        "authored70": {
+          "cases": 70,
+          "top1": 5,
+          "top5": 24,
+          "top20": 37,
+          "mrr": 0.17650809507952364
+        },
+        "prospective100": {
+          "cases": 100,
+          "top1": 28,
+          "top5": 50,
+          "top20": 64,
+          "mrr": 0.3835520590520591
+        },
+        "old600": {
+          "cases": 600,
+          "top1": 282,
+          "top5": 423,
+          "top20": 477,
+          "mrr": 0.5743814561628029
+        },
+        "natural200": {
+          "cases": 200,
+          "top1": 72,
+          "top5": 112,
+          "top20": 133,
+          "mrr": 0.4439087273021097
+        },
+        "authored120": {
+          "cases": 120,
+          "top1": 56,
+          "top5": 81,
+          "top20": 96,
+          "mrr": 0.5752615440115441
+        },
+        "daily32": {
+          "cases": 32,
+          "top1": 20,
+          "top5": 29,
+          "top20": 32,
+          "mrr": 0.7641225961538461
+        },
+        "completion16": {
+          "cases": 16,
+          "top1": 16,
+          "top5": 16,
+          "top20": 16,
+          "mrr": 1.0
+        },
+        "tatoeba200": {
+          "cases": 200,
+          "top1": 64,
+          "top5": 105,
+          "top20": 124,
+          "mrr": 0.4101084956709957
+        }
+      },
+      "1.5": {
+        "authored70": {
+          "cases": 70,
+          "top1": 13,
+          "top5": 33,
+          "top20": 42,
+          "mrr": 0.29927465244470997
+        },
+        "prospective100": {
+          "cases": 100,
+          "top1": 28,
+          "top5": 50,
+          "top20": 64,
+          "mrr": 0.3835520590520591
+        },
+        "old600": {
+          "cases": 600,
+          "top1": 282,
+          "top5": 423,
+          "top20": 477,
+          "mrr": 0.5743814561628029
+        },
+        "natural200": {
+          "cases": 200,
+          "top1": 72,
+          "top5": 112,
+          "top20": 133,
+          "mrr": 0.4439087273021097
+        },
+        "authored120": {
+          "cases": 120,
+          "top1": 56,
+          "top5": 81,
+          "top20": 98,
+          "mrr": 0.5762147030529384
+        },
+        "daily32": {
+          "cases": 32,
+          "top1": 21,
+          "top5": 30,
+          "top20": 32,
+          "mrr": 0.7901642628205128
+        },
+        "completion16": {
+          "cases": 16,
+          "top1": 16,
+          "top5": 16,
+          "top20": 16,
+          "mrr": 1.0
+        },
+        "tatoeba200": {
+          "cases": 200,
+          "top1": 64,
+          "top5": 105,
+          "top20": 124,
+          "mrr": 0.4101084956709957
+        }
+      }
+    },
+    "trial": {
+      "0": {
+        "authored70": {
+          "cases": 70,
+          "top1": 12,
+          "top5": 25,
+          "top20": 41,
+          "mrr": 0.25257385471671184
+        },
+        "prospective100": {
+          "cases": 100,
+          "top1": 46,
+          "top5": 70,
+          "top20": 81,
+          "mrr": 0.5631158008658008
+        },
+        "old600": {
+          "cases": 600,
+          "top1": 286,
+          "top5": 427,
+          "top20": 484,
+          "mrr": 0.5818378185640182
+        },
+        "natural200": {
+          "cases": 200,
+          "top1": 72,
+          "top5": 114,
+          "top20": 137,
+          "mrr": 0.44870142561686677
+        },
+        "authored120": {
+          "cases": 120,
+          "top1": 73,
+          "top5": 83,
+          "top20": 98,
+          "mrr": 0.6520734126984127
+        },
+        "daily32": {
+          "cases": 32,
+          "top1": 21,
+          "top5": 30,
+          "top20": 32,
+          "mrr": 0.7917906746031746
+        },
+        "completion16": {
+          "cases": 16,
+          "top1": 14,
+          "top5": 16,
+          "top20": 16,
+          "mrr": 0.9375
+        },
+        "tatoeba200": {
+          "cases": 200,
+          "top1": 81,
+          "top5": 131,
+          "top20": 157,
+          "mrr": 0.51915097095457
+        }
+      },
+      "1.5": {
+        "authored70": {
+          "cases": 70,
+          "top1": 14,
+          "top5": 36,
+          "top20": 45,
+          "mrr": 0.3215163136779678
+        },
+        "prospective100": {
+          "cases": 100,
+          "top1": 46,
+          "top5": 71,
+          "top20": 81,
+          "mrr": 0.5638658008658008
+        },
+        "old600": {
+          "cases": 600,
+          "top1": 286,
+          "top5": 427,
+          "top20": 484,
+          "mrr": 0.5818378185640182
+        },
+        "natural200": {
+          "cases": 200,
+          "top1": 72,
+          "top5": 114,
+          "top20": 137,
+          "mrr": 0.44870142561686677
+        },
+        "authored120": {
+          "cases": 120,
+          "top1": 74,
+          "top5": 85,
+          "top20": 98,
+          "mrr": 0.6606150793650793
+        },
+        "daily32": {
+          "cases": 32,
+          "top1": 22,
+          "top5": 31,
+          "top20": 32,
+          "mrr": 0.8133680555555556
+        },
+        "completion16": {
+          "cases": 16,
+          "top1": 16,
+          "top5": 16,
+          "top20": 16,
+          "mrr": 1.0
+        },
+        "tatoeba200": {
+          "cases": 200,
+          "top1": 81,
+          "top5": 131,
+          "top20": 157,
+          "mrr": 0.51915097095457
+        }
+      }
+    }
+  },
+  "adoption_guard_passed": true,
+  "protective_copula_identity_ranks": {
+    "bundled": {
+      "validation": [
+        {
+          "target": "你係老師",
+          "without_cue_rank": 2,
+          "with_cue_rank": 2
+        },
+        {
+          "target": "佢係同事",
+          "without_cue_rank": 1,
+          "with_cue_rank": 1
+        },
+        {
+          "target": "我係學生",
+          "without_cue_rank": 1,
+          "with_cue_rank": 1
+        },
+        {
+          "target": "你哋係朋友",
+          "without_cue_rank": 4,
+          "with_cue_rank": 4
+        },
+        {
+          "target": "我係香港人",
+          "without_cue_rank": 1,
+          "with_cue_rank": 1
+        },
+        {
+          "target": "佢係醫生",
+          "without_cue_rank": 1,
+          "with_cue_rank": 1
+        }
+      ],
+      "guard": [
+        {
+          "target": "你係司機",
+          "without_cue_rank": 4,
+          "with_cue_rank": 4
+        },
+        {
+          "target": "佢係護士",
+          "without_cue_rank": 3,
+          "with_cue_rank": 3
+        },
+        {
+          "target": "我係工程師",
+          "without_cue_rank": 1,
+          "with_cue_rank": 1
+        },
+        {
+          "target": "你哋係同學",
+          "without_cue_rank": 1,
+          "with_cue_rank": 1
+        },
+        {
+          "target": "我係負責人",
+          "without_cue_rank": 1,
+          "with_cue_rank": 1
+        },
+        {
+          "target": "佢係警察",
+          "without_cue_rank": 1,
+          "with_cue_rank": 1
+        }
+      ]
+    },
+    "trial": {
+      "validation": [
+        {
+          "target": "你係老師",
+          "without_cue_rank": 2,
+          "with_cue_rank": 2
+        },
+        {
+          "target": "佢係同事",
+          "without_cue_rank": 1,
+          "with_cue_rank": 1
+        },
+        {
+          "target": "我係學生",
+          "without_cue_rank": 1,
+          "with_cue_rank": 1
+        },
+        {
+          "target": "你哋係朋友",
+          "without_cue_rank": 5,
+          "with_cue_rank": 5
+        },
+        {
+          "target": "我係香港人",
+          "without_cue_rank": 1,
+          "with_cue_rank": 1
+        },
+        {
+          "target": "佢係醫生",
+          "without_cue_rank": 1,
+          "with_cue_rank": 1
+        }
+      ],
+      "guard": [
+        {
+          "target": "你係司機",
+          "without_cue_rank": 5,
+          "with_cue_rank": 5
+        },
+        {
+          "target": "佢係護士",
+          "without_cue_rank": 1,
+          "with_cue_rank": 1
+        },
+        {
+          "target": "我係工程師",
+          "without_cue_rank": 1,
+          "with_cue_rank": 1
+        },
+        {
+          "target": "你哋係同學",
+          "without_cue_rank": 1,
+          "with_cue_rank": 1
+        },
+        {
+          "target": "我係負責人",
+          "without_cue_rank": 1,
+          "with_cue_rank": 1
+        },
+        {
+          "target": "佢係警察",
+          "without_cue_rank": 1,
+          "with_cue_rank": 1
+        }
+      ]
+    }
+  },
+  "combined_per_case_changes": {
+    "authored70": {
+      "top1": {
+        "gains": 9,
+        "losses": 0
+      },
+      "first_choice_changes": {
+        "gains": [
+          {
+            "context": "",
+            "code": "ofhioarmla",
+            "target": "係我借咗書",
+            "before_rank": 3,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "ofhiqermsg",
+            "target": "係我搬咗屋",
+            "before_rank": 4,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "ofqkrmmuedjd",
+            "target": "你換咗電池未",
+            "before_rank": 5,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "ofhiqkrmmued",
+            "target": "係我換咗電池",
+            "before_rank": 3,
+            "after_rank": 1
+          },
+          {
+            "context": "你話",
+            "code": "ofosqkrmmued",
+            "target": "係佢換咗電池",
+            "before_rank": 2,
+            "after_rank": 1
+          },
+          {
+            "context": "我想問",
+            "code": "ofqkrmmuedjd",
+            "target": "你換咗電池未",
+            "before_rank": 3,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "ofrrrrqkrmmuedjd",
+            "target": "你啱啱換咗電池未",
+            "before_rank": 13,
+            "after_rank": 1
+          },
+          {
+            "context": "你今日",
+            "code": "qkrmmuedjd",
+            "target": "換咗電池未",
+            "before_rank": 3,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "osofyejm",
+            "target": "佢係護士",
+            "before_rank": 3,
+            "after_rank": 1
+          }
+        ],
+        "losses": []
+      },
+      "top5": {
+        "gains": 12,
+        "losses": 0
+      },
+      "top20": {
+        "gains": 8,
+        "losses": 0
+      }
+    },
+    "prospective100": {
+      "top1": {
+        "gains": 20,
+        "losses": 2
+      },
+      "first_choice_changes": {
+        "gains": [
+          {
+            "context": "",
+            "code": "rpaahsvwhiexrn",
+            "target": "呢間房細得濟喇",
+            "before_rank": 0,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "dktiipksyuoajkbfaavdrmvdni",
+            "target": "校對能力就會突然間好咗好多",
+            "before_rank": 2,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "hirilaogyljlofmundlareru",
+            "target": "我啲書全部都係電子書嚟嘅",
+            "before_rank": 2,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "ofmrrrmrvooaojosrdbq",
+            "target": "你可唔可以借俾佢哋用",
+            "before_rank": 3,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "osoloarroarmismsrlrq",
+            "target": "佢仲會唔會咁成功吖嗱",
+            "before_rank": 11,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "rrignqhdhhoarfmoqioobguju",
+            "target": "嗰座建築物會喺一年之內起完",
+            "before_rank": 0,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "ysorrfienjvrodrh",
+            "target": "邊個喺度彈結他呀",
+            "before_rank": 4,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "oforcvpubrhirrorvdoode",
+            "target": "你個銀包同我嗰個好似樣",
+            "before_rank": 2,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "ofrermymejvimirn",
+            "target": "你嚟咗上海幾耐喇",
+            "before_rank": 2,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "oforrrorosyaybtkykrd",
+            "target": "你知唔知佢識講英文㗎",
+            "before_rank": 7,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "osogrmrfosnbhg",
+            "target": "佢坐咗喺佢隔籬",
+            "before_rank": 8,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "hiyphiqbhiqrrdrn",
+            "target": "我諗我搞得掂㗎喇",
+            "before_rank": 0,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "imjarpdmlakbyxawofmlmvorrurnrp",
+            "target": "或者呢本書有齊晒你需要知嘅嘢呢",
+            "before_rank": 13,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "ovfgtioqierrvd",
+            "target": "食煙對健康唔好",
+            "before_rank": 0,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "ofokrqrrgbbsnr",
+            "target": "你做咩唔幫助阿",
+            "before_rank": 3,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "oryjlnyuismsrrmnrdrn",
+            "target": "個計劃就成功唔到㗎喇",
+            "before_rank": 0,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "hivoifrpieojovfgruep",
+            "target": "我以為呢度俾食煙嘅添",
+            "before_rank": 0,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "rpieedevdnunord",
+            "target": "呢度游水好危險㗎",
+            "before_rank": 7,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "hirroalwhiofhusumorrfrpmn",
+            "target": "我唔會由得你自己一個喺呢到",
+            "before_rank": 2,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "rrorovdyaqfjpvwtgrd",
+            "target": "嗰個人好識擦老細鞋㗎",
+            "before_rank": 0,
+            "after_rank": 1
+          }
+        ],
+        "losses": [
+          {
+            "context": "",
+            "code": "ermnknjviyhjlrrhtofvdbjkbrujn",
+            "target": "活到九十幾歲都唔算係好罕有嘅事",
+            "before_rank": 1,
+            "after_rank": 6
+          },
+          {
+            "context": "",
+            "code": "rioisarlhinrvfrrvdoormni",
+            "target": "啲人成日叫我阿媽唔好飲咁多",
+            "before_rank": 1,
+            "after_rank": 2
+          }
+        ]
+      },
+      "top5": {
+        "gains": 22,
+        "losses": 1
+      },
+      "top20": {
+        "gains": 17,
+        "losses": 0
+      }
+    },
+    "old600": {
+      "top1": {
+        "gains": 8,
+        "losses": 4
+      },
+      "first_choice_changes": {
+        "gains": [
+          {
+            "context": "溫暖熟識",
+            "code": "rugjyayrojos",
+            "target": "嘅聲音話俾佢",
+            "before_rank": 2,
+            "after_rank": 1
+          },
+          {
+            "context": "日本唔係",
+            "code": "gimnrrvdovnf",
+            "target": "去到唔好食魚",
+            "before_rank": 2,
+            "after_rank": 1
+          },
+          {
+            "context": "如果係發",
+            "code": "hmrkderujnrf",
+            "target": "生噉樣嘅事喺",
+            "before_rank": 2,
+            "after_rank": 1
+          },
+          {
+            "context": "好彩我唔",
+            "code": "ofqqtkdrtwru",
+            "target": "係捧英格蘭嘅",
+            "before_rank": 0,
+            "after_rank": 1
+          },
+          {
+            "context": "因為佢重",
+            "code": "kborrkrumgyb",
+            "target": "有個噉嘅理論",
+            "before_rank": 2,
+            "after_rank": 1
+          },
+          {
+            "context": "佢即係當",
+            "code": "oshnuudo",
+            "target": "佢行出來",
+            "before_rank": 2,
+            "after_rank": 1
+          },
+          {
+            "context": "做個三流",
+            "code": "rutihnjo",
+            "target": "嘅藝術家",
+            "before_rank": 2,
+            "after_rank": 1
+          },
+          {
+            "context": "即係成日",
+            "code": "ogrfieypritu",
+            "target": "坐喺度諗啲觀",
+            "before_rank": 5,
+            "after_rank": 1
+          }
+        ],
+        "losses": [
+          {
+            "context": "其實我不",
+            "code": "wsjlkbhwypoq",
+            "target": "嬲都冇留意年",
+            "before_rank": 1,
+            "after_rank": 2
+          },
+          {
+            "context": "我真係諗",
+            "code": "rrmnoskbpnrn",
+            "target": "唔到佢有乜嘢",
+            "before_rank": 1,
+            "after_rank": 2
+          },
+          {
+            "context": "噉即係你",
+            "code": "ypwpofogkibe",
+            "target": "意思係全套服",
+            "before_rank": 1,
+            "after_rank": 2
+          },
+          {
+            "context": "巴西中場",
+            "code": "rummmirf",
+            "target": "嘅靈魂嗎",
+            "before_rank": 1,
+            "after_rank": 2
+          }
+        ]
+      },
+      "top5": {
+        "gains": 5,
+        "losses": 1
+      },
+      "top20": {
+        "gains": 7,
+        "losses": 0
+      }
+    },
+    "natural200": {
+      "top1": {
+        "gains": 0,
+        "losses": 0
+      },
+      "first_choice_changes": {
+        "gains": [],
+        "losses": []
+      },
+      "top5": {
+        "gains": 2,
+        "losses": 0
+      },
+      "top20": {
+        "gains": 4,
+        "losses": 0
+      }
+    },
+    "authored120": {
+      "top1": {
+        "gains": 18,
+        "losses": 0
+      },
+      "first_choice_changes": {
+        "gains": [
+          {
+            "context": "",
+            "code": "hionavkrmoqocjd",
+            "target": "我今日收咗件貨未",
+            "before_rank": 2,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "ofspavkrmoqocjd",
+            "target": "你聽日收咗件貨未",
+            "before_rank": 2,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "osonauvkrmoqocjd",
+            "target": "佢今晚收咗件貨未",
+            "before_rank": 2,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "ofrdyqrivkrmoqocjd",
+            "target": "你哋遲啲收咗件貨未",
+            "before_rank": 0,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "osonaurfjjyrhiaujm",
+            "target": "佢今晚喺車站等巴士",
+            "before_rank": 2,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "ofrdyqrirfjjyrhiaujm",
+            "target": "你哋遲啲喺車站等巴士",
+            "before_rank": 2,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "hionaqrgdcgoarroapkri",
+            "target": "我今日搭地鐵會唔會快啲",
+            "before_rank": 2,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "ofspaqrgdcgoarroapkri",
+            "target": "你聽日搭地鐵會唔會快啲",
+            "before_rank": 2,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "osonauqrgdcgoarroapkri",
+            "target": "佢今晚搭地鐵會唔會快啲",
+            "before_rank": 2,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "hirdmljoqrgdcgoarroapkri",
+            "target": "我哋而家搭地鐵會唔會快啲",
+            "before_rank": 2,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "ofrdyqriqrgdcgoarroapkri",
+            "target": "你哋遲啲搭地鐵會唔會快啲",
+            "before_rank": 2,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "osrdmylmqrgdcgoarroapkri",
+            "target": "佢哋下晝搭地鐵會唔會快啲",
+            "before_rank": 2,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "hionawcdlpurrnjwcgghqvs",
+            "target": "我今日買麵包嗰陣買埋牛奶",
+            "before_rank": 2,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "ofspawcdlpurrnjwcgghqvs",
+            "target": "你聽日買麵包嗰陣買埋牛奶",
+            "before_rank": 2,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "osonauwcdlpurrnjwcgghqvs",
+            "target": "佢今晚買麵包嗰陣買埋牛奶",
+            "before_rank": 2,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "hirdmljowcdlpurrnjwcgghqvs",
+            "target": "我哋而家買麵包嗰陣買埋牛奶",
+            "before_rank": 2,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "ofrdyqriwcdlpurrnjwcgghqvs",
+            "target": "你哋遲啲買麵包嗰陣買埋牛奶",
+            "before_rank": 2,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "osrdmylmwcdlpurrnjwcgghqvs",
+            "target": "佢哋下晝買麵包嗰陣買埋牛奶",
+            "before_rank": 2,
+            "after_rank": 1
+          }
+        ],
+        "losses": []
+      },
+      "top5": {
+        "gains": 4,
+        "losses": 0
+      },
+      "top20": {
+        "gains": 2,
+        "losses": 0
+      }
+    },
+    "daily32": {
+      "top1": {
+        "gains": 2,
+        "losses": 0
+      },
+      "first_choice_changes": {
+        "gains": [
+          {
+            "context": "",
+            "code": "hisuvmmermmuhl",
+            "target": "我已經覆咗電郵",
+            "before_rank": 3,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "hirfjjyrhiof",
+            "target": "我喺車站等你",
+            "before_rank": 2,
+            "after_rank": 1
+          }
+        ],
+        "losses": []
+      },
+      "top5": {
+        "gains": 2,
+        "losses": 0
+      },
+      "top20": {
+        "gains": 0,
+        "losses": 0
+      }
+    },
+    "completion16": {
+      "top1": {
+        "gains": 0,
+        "losses": 0
+      },
+      "first_choice_changes": {
+        "gains": [],
+        "losses": []
+      },
+      "top5": {
+        "gains": 0,
+        "losses": 0
+      },
+      "top20": {
+        "gains": 0,
+        "losses": 0
+      }
+    },
+    "tatoeba200": {
+      "top1": {
+        "gains": 17,
+        "losses": 0
+      },
+      "first_choice_changes": {
+        "gains": [
+          {
+            "context": "",
+            "code": "hlvoyuamggrmorje",
+            "target": "所以就閂埋咗個窗",
+            "before_rank": 0,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "rirdyaopreopkgj",
+            "target": "啲噪音愈嚟愈大聲",
+            "before_rank": 0,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "mljorivwrrrrcgypbhlardrn",
+            "target": "而家啲細路唔鍾意睇書㗎喇",
+            "before_rank": 0,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "osmnareqdhird",
+            "target": "佢琴日嚟探我哋",
+            "before_rank": 2,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "orwsodrfddddyvmlthhormrr",
+            "target": "個男仔喺森林裏面蕩失咗路",
+            "before_rank": 3,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "ostarqjlrmqu",
+            "target": "佢著咩都咁靚",
+            "before_rank": 4,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "ofrrvdrmrurt",
+            "target": "你唔好咁嘅啦",
+            "before_rank": 11,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "rrierihiafjcofqumnrrorwrmhjr",
+            "target": "嗰度啲風景真係靚到唔知點形容",
+            "before_rank": 4,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "yrojhiorysorycrm",
+            "target": "話俾我知邊個贏咗",
+            "before_rank": 11,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "osvdpkyuoarerdrn",
+            "target": "佢好快就會嚟㗎喇",
+            "before_rank": 0,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "ofaecgypysorostwjorh",
+            "target": "你最鍾意邊個作曲家呀",
+            "before_rank": 2,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "mripebrmrffjjmn",
+            "target": "可能漏咗喺火車到",
+            "before_rank": 5,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "osgbhidmvdrmoecv",
+            "target": "佢幫我整好咗隻錶",
+            "before_rank": 3,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "ofkbkbrfniylbuyrmorrynucvpu",
+            "target": "你有冇喺附近見過一個啡色銀包",
+            "before_rank": 4,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "ofritkykygyhrmvdni",
+            "target": "你啲英文進步咗好多",
+            "before_rank": 3,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "ofrdofrrofhdhmrerd",
+            "target": "你哋係唔係學生嚟㗎",
+            "before_rank": 0,
+            "after_rank": 1
+          },
+          {
+            "context": "",
+            "code": "osqpabybkyr",
+            "target": "佢擺明講大話",
+            "before_rank": 3,
+            "after_rank": 1
+          }
+        ],
+        "losses": []
+      },
+      "top5": {
+        "gains": 27,
+        "losses": 1
+      },
+      "top20": {
+        "gains": 33,
+        "losses": 0
+      }
+    }
+  },
+  "attribution_of_gains": {
+    "new_public100": "Original28/50/64; corpus trial alone46/70/81; clause plus corpus46/71/81. First-choice improvement comes from the previous corpus model, not the new cue alone.",
+    "completion16": "Original16/16/16; previous corpus trial14/16/16; clause plus corpus16/16/16.",
+    "authored70": "Correlated construction probes across eight verb/object families; original5/24/37; cue alone13/33/42; combined14/36/45. Not measured real-user chat accuracy."
+  },
+  "model": {
+    "baseline_sha256": "b2c7cb41f4b57bc0ae484330af9b0d8c8625463e7d0a300875a8c0543c88bd4d",
+    "adopted_sha256": "be0afd4d26db314a1516d787099db96db864259147932f4221fc4ee7626cfbcd",
+    "bytes": 6773541,
+    "primitive_array_bytes": 8425808,
+    "trial_reproduced_byte_for_byte": true,
+    "original_training_asset_revision": "5885daec1c43d676a525c543c8ab092532cb3150",
+    "runtime_vocabulary_unchanged": true,
+    "other_models_unchanged": true,
+    "generated_trial_vocabulary_installed": false,
+    "license_notice": "app/src/main/assets/licenses/tatoeba/NOTICE.txt"
+  },
+  "performance": {
+    "method": "Historical/current classes isolated within one JVM; alternating engine order; wall and current-thread CPU medians; identical six inputs; no concurrent benchmarks/builds/training. Later runs fixed CPU0 and12 warmups/15 samples before viewing controlled outcomes. Shared host drift remains.",
+    "stages": {
+      "initial": "Clause cue before cache/prefix optimizations",
+      "optimized": "Allocate only at aspect endpoints; conservative pending gate and suffix lookahead cache sharing",
+      "pinned": "Same optimized code, fixedCPU0 and12/15 sampling",
+      "speed": "Independent word-score reuse and skip exact self-subtraction",
+      "final": "Add per-character transition and original five-character phraseBonus caches"
+    },
+    "all_attempts": {
+      "performance-combined-final": {
+        "warmup": 12,
+        "samples": 15,
+        "cpu0_pinned": true,
+        "rows": [
+          {
+            "code": "ofonaovrmrq",
+            "letters": 11,
+            "before_wall_median_ms": 52.265,
+            "after_wall_median_ms": 58.461,
+            "wall_ratio": 1.118549698651105,
+            "before_cpu_median_ms": 51.441,
+            "after_cpu_median_ms": 56.974,
+            "cpu_ratio": 1.1075601174160687
+          },
+          {
+            "code": "hmerrrysmlrp",
+            "letters": 12,
+            "before_wall_median_ms": 63.735,
+            "after_wall_median_ms": 68.786,
+            "wall_ratio": 1.079250019612458,
+            "before_cpu_median_ms": 63.094,
+            "after_cpu_median_ms": 67.394,
+            "cpu_ratio": 1.0681522807239991
+          },
+          {
+            "code": "dpofvivcjutrmyyjvcqnjd",
+            "letters": 22,
+            "before_wall_median_ms": 102.632,
+            "after_wall_median_ms": 106.689,
+            "wall_ratio": 1.0395295814171017,
+            "before_cpu_median_ms": 101.904,
+            "after_cpu_median_ms": 104.494,
+            "cpu_ratio": 1.025416077877218
+          },
+          {
+            "code": "ofykrmmsydwljpvwjd",
+            "letters": 18,
+            "before_wall_median_ms": 78.852,
+            "after_wall_median_ms": 89.789,
+            "wall_ratio": 1.1387028864201287,
+            "before_cpu_median_ms": 78.512,
+            "after_cpu_median_ms": 88.848,
+            "cpu_ratio": 1.1316486651722029
+          },
+          {
+            "code": "vkmmnkmrvordrjjj",
+            "letters": 16,
+            "before_wall_median_ms": 98.593,
+            "after_wall_median_ms": 103.853,
+            "wall_ratio": 1.0533506435548161,
+            "before_cpu_median_ms": 98.187,
+            "after_cpu_median_ms": 101.545,
+            "cpu_ratio": 1.0342000468493793
+          },
+          {
+            "code": "hihihihihihihihihihihihihihihihihihihihihihihihi",
+            "letters": 48,
+            "before_wall_median_ms": 374.877,
+            "after_wall_median_ms": 357.555,
+            "wall_ratio": 0.9537928440528494,
+            "before_cpu_median_ms": 371.573,
+            "after_cpu_median_ms": 352.117,
+            "cpu_ratio": 0.9476388219811451
+          }
+        ],
+        "raw_sha256": "ee75555b353aedbaf2315948f52917260b65e04590d6c03457ce2d0afcf6e7ea"
+      },
+      "performance-combined-optimized": {
+        "warmup": 3,
+        "samples": 9,
+        "cpu0_pinned": false,
+        "rows": [
+          {
+            "code": "ofonaovrmrq",
+            "letters": 11,
+            "before_wall_median_ms": 74.792,
+            "after_wall_median_ms": 78.464,
+            "wall_ratio": 1.049096160017114,
+            "before_cpu_median_ms": 74.79,
+            "after_cpu_median_ms": 78.464,
+            "cpu_ratio": 1.0491242144671746
+          },
+          {
+            "code": "hmerrrysmlrp",
+            "letters": 12,
+            "before_wall_median_ms": 92.847,
+            "after_wall_median_ms": 96.042,
+            "wall_ratio": 1.034411451096966,
+            "before_cpu_median_ms": 92.758,
+            "after_cpu_median_ms": 94.289,
+            "cpu_ratio": 1.016505314905453
+          },
+          {
+            "code": "dpofvivcjutrmyyjvcqnjd",
+            "letters": 22,
+            "before_wall_median_ms": 245.241,
+            "after_wall_median_ms": 323.569,
+            "wall_ratio": 1.3193919450662817,
+            "before_cpu_median_ms": 245.23,
+            "after_cpu_median_ms": 323.572,
+            "cpu_ratio": 1.3194633609264772
+          },
+          {
+            "code": "ofykrmmsydwljpvwjd",
+            "letters": 18,
+            "before_wall_median_ms": 254.985,
+            "after_wall_median_ms": 250.343,
+            "wall_ratio": 0.9817950075494636,
+            "before_cpu_median_ms": 254.991,
+            "after_cpu_median_ms": 248.963,
+            "cpu_ratio": 0.9763599499590181
+          },
+          {
+            "code": "vkmmnkmrvordrjjj",
+            "letters": 16,
+            "before_wall_median_ms": 140.453,
+            "after_wall_median_ms": 144.316,
+            "wall_ratio": 1.027503862502047,
+            "before_cpu_median_ms": 140.451,
+            "after_cpu_median_ms": 142.916,
+            "cpu_ratio": 1.0175506048372742
+          },
+          {
+            "code": "hihihihihihihihihihihihihihihihihihihihihihihihi",
+            "letters": 48,
+            "before_wall_median_ms": 775.979,
+            "after_wall_median_ms": 779.683,
+            "wall_ratio": 1.0047733250513222,
+            "before_cpu_median_ms": 774.506,
+            "after_cpu_median_ms": 776.061,
+            "cpu_ratio": 1.002007731379744
+          }
+        ],
+        "raw_sha256": "bb0eda1c52da04d4ead28ccc050b04ea477392c527276037df317b4ddf81dda5"
+      },
+      "performance-combined-pinned": {
+        "warmup": 12,
+        "samples": 15,
+        "cpu0_pinned": true,
+        "rows": [
+          {
+            "code": "ofonaovrmrq",
+            "letters": 11,
+            "before_wall_median_ms": 81.364,
+            "after_wall_median_ms": 82.321,
+            "wall_ratio": 1.0117619586057716,
+            "before_cpu_median_ms": 81.314,
+            "after_cpu_median_ms": 81.283,
+            "cpu_ratio": 0.9996187618368302
+          },
+          {
+            "code": "hmerrrysmlrp",
+            "letters": 12,
+            "before_wall_median_ms": 93.112,
+            "after_wall_median_ms": 90.581,
+            "wall_ratio": 0.9728176819314375,
+            "before_cpu_median_ms": 92.608,
+            "after_cpu_median_ms": 89.866,
+            "cpu_ratio": 0.9703913268832066
+          },
+          {
+            "code": "dpofvivcjutrmyyjvcqnjd",
+            "letters": 22,
+            "before_wall_median_ms": 164.018,
+            "after_wall_median_ms": 209.59,
+            "wall_ratio": 1.2778475533173188,
+            "before_cpu_median_ms": 161.362,
+            "after_cpu_median_ms": 207.374,
+            "cpu_ratio": 1.2851476803708433
+          },
+          {
+            "code": "ofykrmmsydwljpvwjd",
+            "letters": 18,
+            "before_wall_median_ms": 122.092,
+            "after_wall_median_ms": 168.795,
+            "wall_ratio": 1.3825230154309864,
+            "before_cpu_median_ms": 122.036,
+            "after_cpu_median_ms": 166.197,
+            "cpu_ratio": 1.3618686289291684
+          },
+          {
+            "code": "vkmmnkmrvordrjjj",
+            "letters": 16,
+            "before_wall_median_ms": 155.864,
+            "after_wall_median_ms": 197.408,
+            "wall_ratio": 1.2665400605656212,
+            "before_cpu_median_ms": 155.316,
+            "after_cpu_median_ms": 193.677,
+            "cpu_ratio": 1.2469867882252954
+          },
+          {
+            "code": "hihihihihihihihihihihihihihihihihihihihihihihihi",
+            "letters": 48,
+            "before_wall_median_ms": 635.217,
+            "after_wall_median_ms": 657.449,
+            "wall_ratio": 1.0349990633122224,
+            "before_cpu_median_ms": 632.816,
+            "after_cpu_median_ms": 649.499,
+            "cpu_ratio": 1.026363113448459
+          }
+        ],
+        "raw_sha256": "551f4e7f863dc11def8c7d3f5875d8c028f50ff53cacdb3db35e0b0f4d544b69"
+      },
+      "performance-combined-speed": {
+        "warmup": 12,
+        "samples": 15,
+        "cpu0_pinned": true,
+        "rows": [
+          {
+            "code": "ofonaovrmrq",
+            "letters": 11,
+            "before_wall_median_ms": 70.817,
+            "after_wall_median_ms": 75.243,
+            "wall_ratio": 1.0624991174435516,
+            "before_cpu_median_ms": 69.973,
+            "after_cpu_median_ms": 75.212,
+            "cpu_ratio": 1.0748717362411215
+          },
+          {
+            "code": "hmerrrysmlrp",
+            "letters": 12,
+            "before_wall_median_ms": 82.77,
+            "after_wall_median_ms": 84.637,
+            "wall_ratio": 1.0225564818170836,
+            "before_cpu_median_ms": 82.361,
+            "after_cpu_median_ms": 83.97,
+            "cpu_ratio": 1.0195359454110562
+          },
+          {
+            "code": "dpofvivcjutrmyyjvcqnjd",
+            "letters": 22,
+            "before_wall_median_ms": 195.278,
+            "after_wall_median_ms": 244.997,
+            "wall_ratio": 1.2546062536486446,
+            "before_cpu_median_ms": 194.629,
+            "after_cpu_median_ms": 243.979,
+            "cpu_ratio": 1.2535593359674049
+          },
+          {
+            "code": "ofykrmmsydwljpvwjd",
+            "letters": 18,
+            "before_wall_median_ms": 107.765,
+            "after_wall_median_ms": 117.75,
+            "wall_ratio": 1.0926553148053635,
+            "before_cpu_median_ms": 107.053,
+            "after_cpu_median_ms": 116.244,
+            "cpu_ratio": 1.0858546701166711
+          },
+          {
+            "code": "vkmmnkmrvordrjjj",
+            "letters": 16,
+            "before_wall_median_ms": 152.787,
+            "after_wall_median_ms": 169.708,
+            "wall_ratio": 1.1107489511542212,
+            "before_cpu_median_ms": 152.195,
+            "after_cpu_median_ms": 169.261,
+            "cpu_ratio": 1.1121324616446007
+          },
+          {
+            "code": "hihihihihihihihihihihihihihihihihihihihihihihihi",
+            "letters": 48,
+            "before_wall_median_ms": 536.115,
+            "after_wall_median_ms": 634.524,
+            "wall_ratio": 1.183559497495873,
+            "before_cpu_median_ms": 533.535,
+            "after_cpu_median_ms": 629.936,
+            "cpu_ratio": 1.180683554031132
+          }
+        ],
+        "raw_sha256": "6cd5ffe85818f10464ef6c7ba1f68fd70521f6fb3f8374c4e9a62c621fdd5dfd"
+      },
+      "performance-combined": {
+        "warmup": 3,
+        "samples": 9,
+        "cpu0_pinned": false,
+        "rows": [
+          {
+            "code": "ofonaovrmrq",
+            "letters": 11,
+            "before_wall_median_ms": 69.572,
+            "after_wall_median_ms": 70.806,
+            "wall_ratio": 1.0177370206404874,
+            "before_cpu_median_ms": 69.562,
+            "after_cpu_median_ms": 70.71,
+            "cpu_ratio": 1.0165032632759265
+          },
+          {
+            "code": "hmerrrysmlrp",
+            "letters": 12,
+            "before_wall_median_ms": 83.969,
+            "after_wall_median_ms": 88.961,
+            "wall_ratio": 1.059450511498291,
+            "before_cpu_median_ms": 83.969,
+            "after_cpu_median_ms": 88.961,
+            "cpu_ratio": 1.059450511498291
+          },
+          {
+            "code": "dpofvivcjutrmyyjvcqnjd",
+            "letters": 22,
+            "before_wall_median_ms": 140.824,
+            "after_wall_median_ms": 165.274,
+            "wall_ratio": 1.173620973697665,
+            "before_cpu_median_ms": 140.156,
+            "after_cpu_median_ms": 162.967,
+            "cpu_ratio": 1.1627543594280658
+          },
+          {
+            "code": "ofykrmmsydwljpvwjd",
+            "letters": 18,
+            "before_wall_median_ms": 113.764,
+            "after_wall_median_ms": 142.168,
+            "wall_ratio": 1.249674765303611,
+            "before_cpu_median_ms": 113.756,
+            "after_cpu_median_ms": 142.156,
+            "cpu_ratio": 1.2496571609409615
+          },
+          {
+            "code": "vkmmnkmrvordrjjj",
+            "letters": 16,
+            "before_wall_median_ms": 174.644,
+            "after_wall_median_ms": 180.955,
+            "wall_ratio": 1.0361363688417582,
+            "before_cpu_median_ms": 172.283,
+            "after_cpu_median_ms": 180.947,
+            "cpu_ratio": 1.0502893495005312
+          },
+          {
+            "code": "hihihihihihihihihihihihihihihihihihihihihihihihi",
+            "letters": 48,
+            "before_wall_median_ms": 588.761,
+            "after_wall_median_ms": 682.757,
+            "wall_ratio": 1.1596505203299812,
+            "before_cpu_median_ms": 587.468,
+            "after_cpu_median_ms": 678.287,
+            "cpu_ratio": 1.1545939523514475
+          }
+        ],
+        "raw_sha256": "5437233c83d9fb2cabd4d7b948ec6ab81ae0fb86fb625bf1494506e0fd1b7783"
+      },
+      "performance-feature-final": {
+        "warmup": 12,
+        "samples": 15,
+        "cpu0_pinned": true,
+        "rows": [
+          {
+            "code": "ofonaovrmrq",
+            "letters": 11,
+            "before_wall_median_ms": 54.06,
+            "after_wall_median_ms": 63.363,
+            "wall_ratio": 1.1720865704772474,
+            "before_cpu_median_ms": 52.941,
+            "after_cpu_median_ms": 63.231,
+            "cpu_ratio": 1.1943673145577152
+          },
+          {
+            "code": "hmerrrysmlrp",
+            "letters": 12,
+            "before_wall_median_ms": 66.176,
+            "after_wall_median_ms": 75.103,
+            "wall_ratio": 1.1348978481624756,
+            "before_cpu_median_ms": 66.023,
+            "after_cpu_median_ms": 73.704,
+            "cpu_ratio": 1.1163382457628401
+          },
+          {
+            "code": "dpofvivcjutrmyyjvcqnjd",
+            "letters": 22,
+            "before_wall_median_ms": 102.728,
+            "after_wall_median_ms": 109.621,
+            "wall_ratio": 1.0670995249591153,
+            "before_cpu_median_ms": 101.603,
+            "after_cpu_median_ms": 108.535,
+            "cpu_ratio": 1.0682263318996486
+          },
+          {
+            "code": "ofykrmmsydwljpvwjd",
+            "letters": 18,
+            "before_wall_median_ms": 80.022,
+            "after_wall_median_ms": 92.191,
+            "wall_ratio": 1.1520706805628451,
+            "before_cpu_median_ms": 79.256,
+            "after_cpu_median_ms": 91.075,
+            "cpu_ratio": 1.149124356515595
+          },
+          {
+            "code": "vkmmnkmrvordrjjj",
+            "letters": 16,
+            "before_wall_median_ms": 142.76,
+            "after_wall_median_ms": 124.259,
+            "wall_ratio": 0.8704048753152144,
+            "before_cpu_median_ms": 142.022,
+            "after_cpu_median_ms": 119.769,
+            "cpu_ratio": 0.8433130078438553
+          },
+          {
+            "code": "hihihihihihihihihihihihihihihihihihihihihihihihi",
+            "letters": 48,
+            "before_wall_median_ms": 504.867,
+            "after_wall_median_ms": 475.723,
+            "wall_ratio": 0.9422739058009337,
+            "before_cpu_median_ms": 500.635,
+            "after_cpu_median_ms": 468.386,
+            "cpu_ratio": 0.9355838085631248
+          }
+        ],
+        "raw_sha256": "c4d37f9213e8f173b802fc876d8c7e0b5460820c8619ce0ca07cda9302dee14b"
+      },
+      "performance-feature-optimized": {
+        "warmup": 3,
+        "samples": 9,
+        "cpu0_pinned": false,
+        "rows": [
+          {
+            "code": "ofonaovrmrq",
+            "letters": 11,
+            "before_wall_median_ms": 86.472,
+            "after_wall_median_ms": 148.669,
+            "wall_ratio": 1.7192732907762052,
+            "before_cpu_median_ms": 82.396,
+            "after_cpu_median_ms": 148.67,
+            "cpu_ratio": 1.804335161901063
+          },
+          {
+            "code": "hmerrrysmlrp",
+            "letters": 12,
+            "before_wall_median_ms": 96.107,
+            "after_wall_median_ms": 96.386,
+            "wall_ratio": 1.0029030143485906,
+            "before_cpu_median_ms": 96.107,
+            "after_cpu_median_ms": 93.846,
+            "cpu_ratio": 0.9764741382001312
+          },
+          {
+            "code": "dpofvivcjutrmyyjvcqnjd",
+            "letters": 22,
+            "before_wall_median_ms": 137.623,
+            "after_wall_median_ms": 146.84,
+            "wall_ratio": 1.0669728170436628,
+            "before_cpu_median_ms": 137.196,
+            "after_cpu_median_ms": 146.841,
+            "cpu_ratio": 1.0703008834076797
+          },
+          {
+            "code": "ofykrmmsydwljpvwjd",
+            "letters": 18,
+            "before_wall_median_ms": 195.848,
+            "after_wall_median_ms": 161.806,
+            "wall_ratio": 0.8261815285323312,
+            "before_cpu_median_ms": 195.449,
+            "after_cpu_median_ms": 156.713,
+            "cpu_ratio": 0.801810190893788
+          },
+          {
+            "code": "vkmmnkmrvordrjjj",
+            "letters": 16,
+            "before_wall_median_ms": 294.011,
+            "after_wall_median_ms": 225.35,
+            "wall_ratio": 0.7664679212682518,
+            "before_cpu_median_ms": 292.266,
+            "after_cpu_median_ms": 225.341,
+            "cpu_ratio": 0.7710133919101093
+          },
+          {
+            "code": "hihihihihihihihihihihihihihihihihihihihihihihihi",
+            "letters": 48,
+            "before_wall_median_ms": 928.549,
+            "after_wall_median_ms": 696.306,
+            "wall_ratio": 0.7498861126337976,
+            "before_cpu_median_ms": 928.576,
+            "after_cpu_median_ms": 691.26,
+            "cpu_ratio": 0.7444301812667999
+          }
+        ],
+        "raw_sha256": "77ef6b24c4c6912382169a2ef80e80ef11c460820fc9e227d8fc0852378cca30"
+      },
+      "performance-feature-pinned": {
+        "warmup": 12,
+        "samples": 15,
+        "cpu0_pinned": true,
+        "rows": [
+          {
+            "code": "ofonaovrmrq",
+            "letters": 11,
+            "before_wall_median_ms": 72.562,
+            "after_wall_median_ms": 73.826,
+            "wall_ratio": 1.017419586009206,
+            "before_cpu_median_ms": 70.6,
+            "after_cpu_median_ms": 72.801,
+            "cpu_ratio": 1.0311756373937677
+          },
+          {
+            "code": "hmerrrysmlrp",
+            "letters": 12,
+            "before_wall_median_ms": 83.147,
+            "after_wall_median_ms": 89.691,
+            "wall_ratio": 1.0787039821039845,
+            "before_cpu_median_ms": 82.259,
+            "after_cpu_median_ms": 85.74,
+            "cpu_ratio": 1.042317557957184
+          },
+          {
+            "code": "dpofvivcjutrmyyjvcqnjd",
+            "letters": 22,
+            "before_wall_median_ms": 136.948,
+            "after_wall_median_ms": 137.22,
+            "wall_ratio": 1.00198615532903,
+            "before_cpu_median_ms": 135.352,
+            "after_cpu_median_ms": 136.538,
+            "cpu_ratio": 1.0087623381996573
+          },
+          {
+            "code": "ofykrmmsydwljpvwjd",
+            "letters": 18,
+            "before_wall_median_ms": 151.787,
+            "after_wall_median_ms": 156.716,
+            "wall_ratio": 1.0324731366981361,
+            "before_cpu_median_ms": 149.949,
+            "after_cpu_median_ms": 155.559,
+            "cpu_ratio": 1.0374127203249104
+          },
+          {
+            "code": "vkmmnkmrvordrjjj",
+            "letters": 16,
+            "before_wall_median_ms": 131.008,
+            "after_wall_median_ms": 135.154,
+            "wall_ratio": 1.0316469223253542,
+            "before_cpu_median_ms": 130.296,
+            "after_cpu_median_ms": 131.635,
+            "cpu_ratio": 1.0102766009700987
+          },
+          {
+            "code": "hihihihihihihihihihihihihihihihihihihihihihihihi",
+            "letters": 48,
+            "before_wall_median_ms": 518.175,
+            "after_wall_median_ms": 522.689,
+            "wall_ratio": 1.0087113426931056,
+            "before_cpu_median_ms": 510.263,
+            "after_cpu_median_ms": 518.767,
+            "cpu_ratio": 1.0166659154200874
+          }
+        ],
+        "raw_sha256": "cf970725621bded8ddcb3cf46637d66c4f6db3e38c93aab9566c176d4cd35a4e"
+      },
+      "performance-feature-speed": {
+        "warmup": 12,
+        "samples": 15,
+        "cpu0_pinned": true,
+        "rows": [
+          {
+            "code": "ofonaovrmrq",
+            "letters": 11,
+            "before_wall_median_ms": 67.673,
+            "after_wall_median_ms": 70.942,
+            "wall_ratio": 1.0483058235928655,
+            "before_cpu_median_ms": 67.542,
+            "after_cpu_median_ms": 70.561,
+            "cpu_ratio": 1.0446981137662492
+          },
+          {
+            "code": "hmerrrysmlrp",
+            "letters": 12,
+            "before_wall_median_ms": 82.19,
+            "after_wall_median_ms": 84.048,
+            "wall_ratio": 1.0226061564667235,
+            "before_cpu_median_ms": 81.012,
+            "after_cpu_median_ms": 83.897,
+            "cpu_ratio": 1.035612008097566
+          },
+          {
+            "code": "dpofvivcjutrmyyjvcqnjd",
+            "letters": 22,
+            "before_wall_median_ms": 133.351,
+            "after_wall_median_ms": 136.058,
+            "wall_ratio": 1.0202998102751384,
+            "before_cpu_median_ms": 132.576,
+            "after_cpu_median_ms": 135.527,
+            "cpu_ratio": 1.0222589307265266
+          },
+          {
+            "code": "ofykrmmsydwljpvwjd",
+            "letters": 18,
+            "before_wall_median_ms": 109.059,
+            "after_wall_median_ms": 113.716,
+            "wall_ratio": 1.0427016569013103,
+            "before_cpu_median_ms": 108.425,
+            "after_cpu_median_ms": 113.662,
+            "cpu_ratio": 1.0483006686649758
+          },
+          {
+            "code": "vkmmnkmrvordrjjj",
+            "letters": 16,
+            "before_wall_median_ms": 187.358,
+            "after_wall_median_ms": 181.912,
+            "wall_ratio": 0.9709326529958688,
+            "before_cpu_median_ms": 186.451,
+            "after_cpu_median_ms": 181.204,
+            "cpu_ratio": 0.971858558012561
+          },
+          {
+            "code": "hihihihihihihihihihihihihihihihihihihihihihihihi",
+            "letters": 48,
+            "before_wall_median_ms": 496.367,
+            "after_wall_median_ms": 529.935,
+            "wall_ratio": 1.0676273805470549,
+            "before_cpu_median_ms": 492.494,
+            "after_cpu_median_ms": 526.416,
+            "cpu_ratio": 1.068877996483206
+          }
+        ],
+        "raw_sha256": "3f072282e0a1d07db9926bc7ca568875106ad84710cdc5db62810d051c02cadf"
+      },
+      "performance-feature": {
+        "warmup": 3,
+        "samples": 9,
+        "cpu0_pinned": false,
+        "rows": [
+          {
+            "code": "ofonaovrmrq",
+            "letters": 11,
+            "before_wall_median_ms": 106.54,
+            "after_wall_median_ms": 84.305,
+            "wall_ratio": 0.7912990426131031,
+            "before_cpu_median_ms": 106.54,
+            "after_cpu_median_ms": 84.305,
+            "cpu_ratio": 0.7912990426131031
+          },
+          {
+            "code": "hmerrrysmlrp",
+            "letters": 12,
+            "before_wall_median_ms": 88.366,
+            "after_wall_median_ms": 93.8,
+            "wall_ratio": 1.0614942398660119,
+            "before_cpu_median_ms": 88.366,
+            "after_cpu_median_ms": 93.793,
+            "cpu_ratio": 1.0614150238779623
+          },
+          {
+            "code": "dpofvivcjutrmyyjvcqnjd",
+            "letters": 22,
+            "before_wall_median_ms": 149.576,
+            "after_wall_median_ms": 190.881,
+            "wall_ratio": 1.2761472428731884,
+            "before_cpu_median_ms": 149.57,
+            "after_cpu_median_ms": 190.885,
+            "cpu_ratio": 1.2762251788460253
+          },
+          {
+            "code": "ofykrmmsydwljpvwjd",
+            "letters": 18,
+            "before_wall_median_ms": 118.048,
+            "after_wall_median_ms": 146.436,
+            "wall_ratio": 1.240478449444294,
+            "before_cpu_median_ms": 118.049,
+            "after_cpu_median_ms": 145.024,
+            "cpu_ratio": 1.2285068064956077
+          },
+          {
+            "code": "vkmmnkmrvordrjjj",
+            "letters": 16,
+            "before_wall_median_ms": 132.598,
+            "after_wall_median_ms": 166.727,
+            "wall_ratio": 1.25738698924569,
+            "before_cpu_median_ms": 132.309,
+            "after_cpu_median_ms": 164.916,
+            "cpu_ratio": 1.2464458200122441
+          },
+          {
+            "code": "hihihihihihihihihihihihihihihihihihihihihihihihi",
+            "letters": 48,
+            "before_wall_median_ms": 587.066,
+            "after_wall_median_ms": 681.118,
+            "wall_ratio": 1.1602068591947072,
+            "before_cpu_median_ms": 585.687,
+            "after_cpu_median_ms": 677.398,
+            "cpu_ratio": 1.1565870507626088
+          }
+        ],
+        "raw_sha256": "fa7138724f064420e734dc326380ecb41afd304ab43ddc402ab72c1ffb215562"
+      }
+    },
+    "final_selected_measurement": "performance-combined-final",
+    "interpretation": "48-letter pressure wall median374.877→357.555ms (4.62% faster); ordinary cases4.0–13.9% slower than old source. No general speedup claim; no physical Fold7/Android ART measurement. Earlier slower measurements retained."
+  },
+  "verification": {
+    "java_unit": {
+      "tests": 195,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "lint_errors": 0,
+    "lint_warnings": 25,
+    "python_preparation_tests": {
+      "tests": 3,
+      "failures": 0
+    },
+    "full_candidate_cache_equivalence": {
+      "bundled": {
+        "cases": 250,
+        "identical_all_candidates": true,
+        "expected_sha256": "02f0b54df5c44054d0566dc9f69eab3ff83c0247b9b310d13bf0a580a6b13062",
+        "actual_sha256": "02f0b54df5c44054d0566dc9f69eab3ff83c0247b9b310d13bf0a580a6b13062"
+      },
+      "trial": {
+        "cases": 250,
+        "identical_all_candidates": true,
+        "expected_sha256": "118ead31ba5e2928791aef2d9a502fe755e49b5a5f2431890296bf4681c6256e",
+        "actual_sha256": "118ead31ba5e2928791aef2d9a502fe755e49b5a5f2431890296bf4681c6256e"
+      }
+    },
+    "clause_gate": {
+      "texts": 27727,
+      "continuations": 280597,
+      "lost_cues": 0
+    },
+    "single_learning_simulation": {
+      "cases": 32,
+      "confirmations_per_case": 3,
+      "sequence_records": 489,
+      "legacy_top1_top5_top20": [
+        30,
+        32,
+        32
+      ],
+      "contextual_top1_top5_top20": [
+        32,
+        32,
+        32
+      ],
+      "mrr": [
+        0.96875,
+        1.0
+      ],
+      "case_sha256": "d29faa28d581c87e6b480ce3924c778e4794fa830d6067249a3369daad6528af",
+      "note": "Simulation, not real-user/device learning evidence."
+    },
+    "apk_0_6_39_unchanged_sha256": "6d0670b82313508bb8e3aabc163f531d2ce6018347a2d5da9f72c0fa3fc885cf",
+    "app_id_unchanged": "hk.kaiboard.android",
+    "fold7_tested": false
+  },
+  "source_sha256": {
+    "app/src/main/java/hk/cantonesemixeng/keyboard/QuickDecoder.java": "ea6087a8547ba97e10b522f99a0f9c591223f474efbf7c885fc762d5319ecb2c",
+    "app/src/main/java/hk/cantonesemixeng/keyboard/ClauseStartRelations.java": "5a38e28dada179ea98f6576873b06b5a8c9e3e358be0fa88025ef2050ff08177",
+    "app/src/main/java/hk/cantonesemixeng/keyboard/OfflineLanguageModel.java": "74accfc0376c971dfcfff829f9d812b1b346bad85bdc3c7d5267bc0eec7c5277",
+    "tools/prepare_clause_start_cases.py": "69012ecaa30d2646a5330f2b85168cae5e31050ff6fec2dbd98cabb8be38b285",
+    "tools/evaluate_clause_start.py": "447f0131b554cb77fc0358ab6e540cab85473fe60168ecd206188578b0cc1622",
+    "tools/RankingEvaluation.java": "7d4333d76a0848ea52e393d74143adbff9a71fb096afb716c35e155fbf87bdf5",
+    "tools/PairedRankingPerformance.java": "34085cb2d5355376dcccad6587748f783ab97057aec2ae65d062562481aa95dc",
+    "tools/ClauseStartGateEvaluation.java": "d7800c30c8460dee3bebef2bc8a9c5226391f3070604b94cd15aaf589183fa4c"
+  },
+  "raw_ranking_sha256": {
+    "guard-bundled-authored120-0.tsv": "1be6bd2ff65afe0942090b025fd980e63629de5042ae18b222f21d0cf4ecef65",
+    "guard-bundled-authored120-1.5.tsv": "ff4a6725b4ea3eb9371fbdcd74b13d5c5ed133e474bdc70223fb7e8fc9cb4aad",
+    "guard-bundled-authored70-0.tsv": "09675666593d08ba962c0b8c445edd19b13439ff666dfcc2f66681ad8fc68f9d",
+    "guard-bundled-authored70-1.5.tsv": "439f6a841709f8aebd9675288f7afe78df5098f692f63dc105760dd4a23ddd8e",
+    "guard-bundled-completion16-0.tsv": "6dfc5b44f7f69977e5b7d89f1e69ebc68c5be88f4508aac7a43d9afcf940a9e2",
+    "guard-bundled-completion16-1.5.tsv": "36fb5fe6734e3035fc76fa9df7076e67e460c52387dffaf05ad88228bc04cf1c",
+    "guard-bundled-daily32-0.tsv": "c716bedbb994e0e6eed20a325b69f94ba59bb3209907861be15101d35b74f071",
+    "guard-bundled-daily32-1.5.tsv": "430fc20d89eb0b9a75b12df8e681bac71f4e0efda26e23aa2b1f700d341857cc",
+    "guard-bundled-natural200-0.tsv": "464b6e03d21bae13712e35afd8b4126868fe10ae39afed133fdf4aac7d43de22",
+    "guard-bundled-natural200-1.5.tsv": "464b6e03d21bae13712e35afd8b4126868fe10ae39afed133fdf4aac7d43de22",
+    "guard-bundled-old600-0.tsv": "154e96349ba9e51cf061aeb94c6f3aecec24e978066cb2b56aef584738a9ee43",
+    "guard-bundled-old600-1.5.tsv": "154e96349ba9e51cf061aeb94c6f3aecec24e978066cb2b56aef584738a9ee43",
+    "guard-bundled-prospective100-0.tsv": "64dfdc38d95f44a6769c0bef13809a62e80fb96bebbd80fc6a357f3cf82ef029",
+    "guard-bundled-prospective100-1.5.tsv": "64dfdc38d95f44a6769c0bef13809a62e80fb96bebbd80fc6a357f3cf82ef029",
+    "guard-bundled-tatoeba200-0.tsv": "812e80f9da1f465dc8dba5391d7f1664709bc6cf302dd17fb87b36fd4b9a591e",
+    "guard-bundled-tatoeba200-1.5.tsv": "b050223fd2ae566cddafaf5b7829dce1f6b696b7f8f7d36eb2b93b30d6b125cc",
+    "guard-trial-authored120-0.tsv": "71dd2676f3258dfdc091c29218a4970e70e5a8b0e08dc83dc74eddbe57fa8829",
+    "guard-trial-authored120-1.5.tsv": "9605cd06d2eb2ed06d8fc7853b6a2c2da5fb93b710f137e794dd894c36d25995",
+    "guard-trial-authored70-0.tsv": "ecdc1d0b9b1e4b07c66e9645863a686ad5f25d957df70595fc0df9a40db619ce",
+    "guard-trial-authored70-1.5.tsv": "95c0078cc51217fe3277e6ad08d0299045ea2168552bd88dfee1e6617cae03bb",
+    "guard-trial-completion16-0.tsv": "b004a3f2f7cbc56d4e04916dde24f64f87df332e0354b26f24c6e1e0ffee57bc",
+    "guard-trial-completion16-1.5.tsv": "08f8d86d4c43be114b53d28dd763104caf11a2ea3d28cd0e06e31913fbe7502f",
+    "guard-trial-daily32-0.tsv": "4003273a4236e600806fb69c4afcd2d8931acf4e094391d536e038d9165acf38",
+    "guard-trial-daily32-1.5.tsv": "a8b4a2455ba22a1329e0150be0dd9d4c51b0cb2dd745b75e5435bad9f54c482a",
+    "guard-trial-natural200-0.tsv": "508ff0607d073193ce95b98a992e95d3b90a6ba65785f37243ed21f329d55f77",
+    "guard-trial-natural200-1.5.tsv": "508ff0607d073193ce95b98a992e95d3b90a6ba65785f37243ed21f329d55f77",
+    "guard-trial-old600-0.tsv": "dfecb913953c79af2c09427e43db2918fb54302453415b82c6befc82a7cc0093",
+    "guard-trial-old600-1.5.tsv": "dfecb913953c79af2c09427e43db2918fb54302453415b82c6befc82a7cc0093",
+    "guard-trial-prospective100-0.tsv": "581e2beeffe430a3b1b4dd7bafe21f445f5ffab07646ae2dc94dac59f25c04d3",
+    "guard-trial-prospective100-1.5.tsv": "dae07d2964bb2887838ae7c07e53fd56df137d2d2dcfbd5b744855672689b2ad",
+    "guard-trial-tatoeba200-0.tsv": "ac0228716d2edbf26aae30609d80fe41999d43d7eb207643017e50efdfff0f53",
+    "guard-trial-tatoeba200-1.5.tsv": "ebd5f01f7989b9bcddbb54762cd2f30098873362a0e850b2bfb743a86dbc6045",
+    "validation-bundled-authored-0.5.tsv": "a4233c5c3d24cdf9b1bbda4247f0049354199dcc85d3dca4352c253d81b9fcc0",
+    "validation-bundled-authored-0.tsv": "9afcb9060f073d6a658be8a0afeb8ce7e06ec99bda557164c7ca71b533ad0fea",
+    "validation-bundled-authored-1.5.tsv": "eabdb387203b4533942929e1aac3d909f125f89ae12bbdd1d464641fed570bc7",
+    "validation-bundled-authored-1.tsv": "6967ba7f1832e781537a84c5078868476c13d1c536d6d4dd2e9c8fc1b259f786",
+    "validation-bundled-natural-0.5.tsv": "e198ef732034b5c38fba65ebfb308513b977e29c78b8d0f2eb074e82b5298b65",
+    "validation-bundled-natural-0.tsv": "5df954ba68773b06035af49e0571b75bfe0eaf4ebef66bfdfbc8ca6f0a9192f3",
+    "validation-bundled-natural-1.5.tsv": "e4bb96dc3259dadf1dccc67d40c803138fab4fff3cc469161eb57bf4d0e92f0c",
+    "validation-bundled-natural-1.tsv": "72e505cc455724971b4b81bce9500c96a5e132d8cc7881e16431f14fefbfa7f3",
+    "validation-trial-authored-0.5.tsv": "84735a1cd59214fd72f0be7e9efef2b99874b7ddde4c1fb367b0bf24cccd2386",
+    "validation-trial-authored-0.tsv": "84bab65006260e014f56a4248cdb051e100e59808b07a05f62d8dcd05b0a5189",
+    "validation-trial-authored-1.5.tsv": "0fb53575498849d9c4c18d1f3c5401689f3c9052856481dc5f6f2578d7606134",
+    "validation-trial-authored-1.tsv": "f95e68abf017d1d31734388eb8d2c3e7e4dbbd406a4222e8107591d0521cca9c",
+    "validation-trial-natural-0.5.tsv": "e4e803f5255e5256ca67d25a26271e73f9d25a75040ffd8cfe3bed141c92739b",
+    "validation-trial-natural-0.tsv": "3650ba1ce0247bf1ff4a53c3dbb9fd275ff9b5186dee4ae06a7c43a6d3d6e7a4",
+    "validation-trial-natural-1.5.tsv": "2ca7615d3852c6b1f198908da174ae988d7804d380ec33fc4d0f11afe6339325",
+    "validation-trial-natural-1.tsv": "f5a21000cdf972d749567257d87de00478e4e81848a3064b9ff22f84f992732a"
+  },
+  "release_gate": {
+    "passed": false,
+    "version_name": "0.6.39",
+    "version_code": 46,
+    "apk_created": false,
+    "reason": "Existing natural-heldout top1 gain0pp; previous authored top5 gain3.33pp below5pp threshold. New authored probes are correlated and public examples are not current HK message-frequency measurements."
+  },
+  "limitations": [
+    "Natural200 first-choice aggregate remains72/200; no broad real-user accuracy claim.",
+    "Old600 gains8 first choices and loses4; public100 gains20 and loses2. Aggregate guards do not preserve every previous first choice.",
+    "New authored validation/heldout share constructions with different verb/object families; correlated variants.",
+    "Public probe excluded all previously decoded heldout families before selection, but author identities and sentence dates are unavailable; external dictionaries may contain words.",
+    "Clause cues are bounded authored linguistic priors, not a learned grammar or universal sentence-validity filter. Unknown constructions remain neutral.",
+    "Desktop JVM timings vary even for the unchanged baseline, and do not establish Fold7 latency or Android allocation cost."
+  ]
+}

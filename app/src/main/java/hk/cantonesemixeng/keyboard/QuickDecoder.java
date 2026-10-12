@@ -11,6 +11,8 @@ public final class QuickDecoder {
     private static final int LOOKAHEAD_WORDS = 4, EXTRA_LOOKAHEAD_WORDS = 2, PATH_RESERVE = 8;
     // Selected on separate validation conversations, before held-out evaluation.
     private static final double SENTENCE_SCORE_MARGIN = 10;
+    // Frozen on clause/public validation sets before post-selection guard decoding.
+    static final double CLAUSE_START_STRENGTH = 1.5;
     // Productive Cantonese predicate questions, rather than memorized full sentences.
     // Particles and nouns must not receive the A-not-A grammar preference.
     private static final String QUESTION_PREDICATES = "食飲去做睇買返係得知要想試用踩搭打踢聽講問答寫讀開關拎攞畀揀改整洗煮玩行跑坐企瞓等記識明信收放賣換借還帶着著學幫肯敢好啱忙攰凍熱快慢靚貴平難易";
@@ -27,6 +29,7 @@ public final class QuickDecoder {
     private final PhraseLanguageModel phraseModel;
     private final CandidateRanker candidateRanker;
     private final CandidateRanker wordRanker;
+    private final double clauseStartStrength;
     // Common HK particles can have low character-only corpus counts. Admit
     // these into the same bounded contextual reserve, rather than promoting
     // every historical transcript variant beyond the frequency cutoff.
@@ -46,6 +49,28 @@ public final class QuickDecoder {
     private static final class Path {
         final String text; final double score;
         Path(String text, double score) { this.text = text; this.score = score; }
+    }
+    /** Per-decode caches with each scorer's own context bound, never personal weights. */
+    private final class ModelScoreCache {
+        private final Map<String, Double> transitions = new HashMap<>();
+        private final Map<String, Map<String, Double>> phrases = new HashMap<>();
+        double score(String prefix, String text) {
+            return model.score(prefix, text, transitions);
+        }
+        double phraseScore(String prefix, String text) {
+            String history = clauseContext(prefix);
+            Map<String, Double> words = phrases.get(history);
+            if (words == null) {
+                if (phrases.size() >= 256) phrases.clear();
+                words = new HashMap<>(); phrases.put(history, words);
+            }
+            Double score = words.get(text);
+            if (score == null) {
+                if (words.size() >= 256) words.clear();
+                score = phraseBonus(history, text); words.put(text, score);
+            }
+            return score;
+        }
     }
     public QuickDecoder(DictionaryEngine dictionary, Reader input) throws IOException {
         this(dictionary, input, null);
@@ -69,9 +94,17 @@ public final class QuickDecoder {
     public QuickDecoder(DictionaryEngine dictionary, Reader input, Reader hkInput, Reader cantoneseInput,
                         OfflineLanguageModel model, PhraseLanguageModel phraseModel, Reader chatInput,
                         CandidateRanker candidateRanker, CandidateRanker wordRanker) throws IOException {
+        this(dictionary, input, hkInput, cantoneseInput, model, phraseModel, chatInput, candidateRanker, wordRanker, CLAUSE_START_STRENGTH);
+    }
+    public QuickDecoder(DictionaryEngine dictionary, Reader input, Reader hkInput, Reader cantoneseInput,
+                        OfflineLanguageModel model, PhraseLanguageModel phraseModel, Reader chatInput,
+                        CandidateRanker candidateRanker, CandidateRanker wordRanker, double clauseStartStrength) throws IOException {
+        if (!Double.isFinite(clauseStartStrength) || clauseStartStrength < 0 || clauseStartStrength > 2)
+            throw new IllegalArgumentException("Invalid clause-start strength");
         this.dictionary = dictionary; this.model = model; this.phraseModel = phraseModel;
         this.candidateRanker = candidateRanker;
         this.wordRanker = wordRanker;
+        this.clauseStartStrength = clauseStartStrength;
         // Merge duplicate code variants and sources before creating prediction tails.
         // The trained model still replaces fallback pair statistics entirely.
         Map<String, Double> wordCounts = new HashMap<>();
@@ -214,22 +247,27 @@ public final class QuickDecoder {
         if (code.length() < 3 || code.length() > 48 || !code.matches("[a-z]+")) return Collections.emptyList();
         List<List<Path>> lattice = new ArrayList<>();
         for (int i = 0; i <= code.length(); i++) lattice.add(new ArrayList<>());
+        // Independent word scores are immutable within this decode. Repeated
+        // suffix codes must not run every scorer again for the same word.
+        Map<String, Double> independentScores = new HashMap<>();
+        ModelScoreCache modelScores = model == null ? null : new ModelScoreCache();
         List<List<Token>> following = new ArrayList<>();
-        for (int i = 0; i <= code.length(); i++) following.add(followingWords(code, i));
+        for (int i = 0; i <= code.length(); i++) following.add(followingWords(code, i, independentScores, modelScores));
         lattice.get(0).add(new Path("", 0));
         for (int pos = 0; pos < code.length(); pos++) {
             if (Thread.currentThread().isInterrupted()) return Collections.emptyList();
-            List<Path> paths = prune(lattice.get(pos), context, following.get(pos));
+            List<Path> paths = prune(lattice.get(pos), context, following.get(pos), modelScores);
             if (paths.isEmpty()) continue;
             Map<Path, String> histories = new IdentityHashMap<>();
             for (Path path : paths) histories.put(path, sentenceContext(context + path.text));
             Map<String, Map<String, Double>> boundaryScores = new HashMap<>();
+            boundaryScores.put("", independentScores);
             for (int length = 1; length <= Math.min(16, code.length() - pos); length++) {
                 String part = code.substring(pos, pos + length);
                 LinkedHashMap<String, Double> options = new LinkedHashMap<>();
                 List<Token> known = personalizedTokens(part, learned);
                 for (int j = 0; j < Math.min(24, known.size()); j++) options.put(known.get(j).text, known.get(j).score);
-                for (Token token : contextWords(known, paths, histories, boundaryScores))
+                for (Token token : contextWords(known, paths, histories, boundaryScores, independentScores, modelScores))
                     options.putIfAbsent(token.text, token.score);
                 if (length <= 2) {
                     List<String> letters = new ArrayList<>();
@@ -239,7 +277,7 @@ public final class QuickDecoder {
                         String word = letters.get(j);
                         options.putIfAbsent(word, (double) dictionary.frequency(word));
                     }
-                    for (String character : contextCharacters(letters, paths, histories, boundaryScores))
+                    for (String character : contextCharacters(letters, paths, histories, boundaryScores, modelScores))
                         options.putIfAbsent(character, (double) dictionary.frequency(character));
                     if(contextual!=null) {
                         Map<String,Integer> favored=new LinkedHashMap<>();
@@ -268,22 +306,27 @@ public final class QuickDecoder {
                         bonus += personalBonus(learned.applyAsInt(c, character), 2.5, .65);
                     }
                     String word = choice.getKey();
-                    int boundaryLength = Math.min(12, word.codePointCount(0, word.length()));
-                    String first = word.substring(0, word.offsetByCodePoints(0, boundaryLength));
-                    double internalScore = languageScore("", word) - languageScore("", first);
+                    int characters = word.codePointCount(0, word.length());
+                    int boundaryLength = Math.min(12, characters);
+                    String first = boundaryLength == characters ? word
+                        : word.substring(0, word.offsetByCodePoints(0, boundaryLength));
+                    // The common <=12-character case subtracts a score from
+                    // itself. Its exact result is zero; avoid both full calls.
+                    double internalScore = boundaryLength == characters ? 0
+                        : independentScores.computeIfAbsent(word, text -> languageScore("", text, modelScores))
+                            - independentScores.computeIfAbsent(first, text -> languageScore("", text, modelScores));
                     for (Path prefix : paths) {
                         String history = histories.get(prefix);
                         Map<String, Double> cached = boundaryScores.computeIfAbsent(history, h -> new HashMap<>());
-                        double score = cached.computeIfAbsent(first, wordStart -> languageScore(history, wordStart)) + internalScore;
+                        double score = cached.computeIfAbsent(first, wordStart -> languageScore(history, wordStart, modelScores)) + internalScore;
                         if(contextual!=null) score+=contextualScore(history,word,codes,contextual);
-                        int characters = choice.getKey().codePointCount(0, choice.getKey().length());
                         // A modest word bonus, with character likelihood applied across token boundaries.
                         double wordBonus = characters > 1 ? Math.min(1.5, Math.log1p(choice.getValue()) / 10) * (characters - 1) : 0;
                         target.add(new Path(prefix.text + choice.getKey(), prefix.score + score + wordBonus + bonus));
                     }
                 }
                 if (target.size() > 1024) lattice.set(pos + length,
-                    prune(target, context, following.get(pos + length)));
+                    prune(target, context, following.get(pos + length), modelScores));
             }
         }
         List<String> result = new ArrayList<>();
@@ -295,7 +338,7 @@ public final class QuickDecoder {
         if (model != null) for (Token token : wholeWords)
             if (!dictionary.matchQuickCodes(code, token.text).isEmpty())
                 lattice.get(code.length()).add(new Path(token.text,
-                    languageScore(context, token.text) + Math.min(8, Math.log1p(token.score) * .7)
+                    languageScore(context, token.text, modelScores) + Math.min(8, Math.log1p(token.score) * .7)
                     + (contextual==null ? 0 : contextualScore(context,token.text,dictionary.matchQuickCodes(code,token.text),contextual))
                     + personalBonus(learned.applyAsInt(code, token.text), 6, 1.5)));
         for (Token token : model == null ? wholeWords : Collections.<Token>emptyList()) {
@@ -350,7 +393,8 @@ public final class QuickDecoder {
 
     /** Protect a few attested words excluded by frequency, only with actual left-context support. */
     private List<Token> contextWords(List<Token> known, List<Path> paths, Map<Path, String> histories,
-            Map<String, Map<String, Double>> boundaryScores) {
+            Map<String, Map<String, Double>> boundaryScores, Map<String, Double> independentScores,
+            ModelScoreCache modelScores) {
         if (model == null || known.size() <= 24) return Collections.emptyList();
         Set<String> contexts = new LinkedHashSet<>();
         for (Path path : paths) {
@@ -364,11 +408,11 @@ public final class QuickDecoder {
             Token token = known.get(i);
             int size = token.text.codePointCount(0, token.text.length());
             if (size < 2 || size > 8) continue;
-            double independent = languageScore("", token.text);
+            double independent = independentScores.computeIfAbsent(token.text, text -> languageScore("", text, modelScores));
             for (String context : contexts) {
                 if (context.isEmpty()) continue;
                 double conditional = boundaryScores.computeIfAbsent(context, key -> new HashMap<>())
-                    .computeIfAbsent(token.text, text -> languageScore(context, text));
+                    .computeIfAbsent(token.text, text -> languageScore(context, text, modelScores));
                 double lift = conditional - independent;
                 if (lift > .25) scores.merge(token, lift + Math.min(2, Math.log1p(token.score) / 10), Math::max);
             }
@@ -381,7 +425,7 @@ public final class QuickDecoder {
 
     /** A frequency cutoff must not hide a character that fits an active context. */
     private List<String> contextCharacters(List<String> letters, List<Path> paths, Map<Path, String> histories,
-            Map<String, Map<String, Double>> boundaryScores) {
+            Map<String, Map<String, Double>> boundaryScores, ModelScoreCache modelScores) {
         if (model == null || letters.size() <= 24) return Collections.emptyList();
         Set<String> contexts = new LinkedHashSet<>();
         for (Path path : paths) {
@@ -393,11 +437,11 @@ public final class QuickDecoder {
             Map<String, Double> conditional = boundaryScores.computeIfAbsent(context, key -> new HashMap<>());
             double floor = Double.POSITIVE_INFINITY;
             for (int i = 0; i < 24; i++) floor = Math.min(floor,
-                conditional.computeIfAbsent(letters.get(i), text -> languageScore(context, text)));
+                conditional.computeIfAbsent(letters.get(i), text -> languageScore(context, text, modelScores)));
             for (int i = 24; i < letters.size(); i++) {
                 String character = letters.get(i);
                 if (i >= 64 && !HK_PARTICLES.contains(character)) continue;
-                double score = conditional.computeIfAbsent(character, text -> languageScore(context, text));
+                double score = conditional.computeIfAbsent(character, text -> languageScore(context, text, modelScores));
                 if (score > floor) scores.merge(character, score, Math::max);
             }
         }
@@ -421,11 +465,18 @@ public final class QuickDecoder {
     }
 
     public double languageScore(String prefix, String text) {
-        if (model != null) return model.score(prefix, text) + phraseBonus(prefix, text) + completionBonus(prefix, text)
+        return languageScore(prefix, text, null);
+    }
+
+    private double languageScore(String prefix, String text, ModelScoreCache modelScores) {
+        if (model != null) return (modelScores == null ? model.score(prefix, text) : modelScores.score(prefix, text))
+            + (modelScores == null ? phraseBonus(prefix, text) : modelScores.phraseScore(prefix, text))
+            + completionBonus(prefix, text)
             + handoverBonus(prefix, text) + ClauseRelations.score(prefix, text)
             + (phraseModel == null ? 0 : phraseModel.score(prefix, text))
             + (candidateRanker == null ? 0 : candidateRanker.score(prefix, text))
-            + (wordRanker == null ? 0 : wordRanker.score(prefix, text));
+            + (wordRanker == null ? 0 : wordRanker.score(prefix, text))
+            + (clauseStartStrength == 0 ? 0 : clauseStartStrength * ClauseStartRelations.score(prefix, text));
         String previous = prefix.isEmpty() ? null : new String(Character.toChars(prefix.codePointBefore(prefix.length())));
         double score = 0;
         for (int cp : text.codePoints().toArray()) {
@@ -604,7 +655,7 @@ public final class QuickDecoder {
     }
 
     /** Bounded lexical lookahead keeps an earlier ambiguity alive until later codes are scored. */
-    private List<Token> followingWords(String code, int pos) {
+    private List<Token> followingWords(String code, int pos, Map<String, Double> independentScores, ModelScoreCache modelScores) {
         if (model == null) return Collections.emptyList();
         List<Token> result = new ArrayList<>(); Set<String> seen = new HashSet<>();
         List<Token> alternatives = new ArrayList<>();
@@ -615,7 +666,7 @@ public final class QuickDecoder {
                 int characters = text.codePointCount(0, text.length());
                 if (characters < 2 || characters > 8 || !seen.add(text)) continue;
                 if (length <= 8 && characters <= 4 && result.size() < LOOKAHEAD_WORDS)
-                    result.add(new Token(text, languageScore("", text)));
+                    result.add(new Token(text, independentScores.computeIfAbsent(text, word -> languageScore("", word, modelScores))));
                 else alternatives.add(tokens.get(i));
             }
         }
@@ -625,20 +676,20 @@ public final class QuickDecoder {
             .thenComparing(token -> token.text));
         for (int i = 0; i < Math.min(EXTRA_LOOKAHEAD_WORDS, alternatives.size()); i++) {
             Token token = alternatives.get(i);
-            result.add(new Token(token.text, languageScore("", token.text)));
+            result.add(new Token(token.text, independentScores.computeIfAbsent(token.text, word -> languageScore("", word, modelScores))));
         }
         return result;
     }
 
-    private List<Path> prune(List<Path> input, String context, List<Token> following) {
+    private List<Path> prune(List<Path> input, String context, List<Token> following, ModelScoreCache modelScores) {
         if (following.isEmpty() || input.size() <= BEAM) return prune(input);
         Map<String, double[]> cached = new HashMap<>();
         Map<Path, Double> scores = new IdentityHashMap<>();
         Map<Path, Double> alternatives = new IdentityHashMap<>();
         for (Path path : input) {
-            String tail = OfflineLanguageModel.contextTail(context + path.text);
+            String tail = lookaheadContext(context + path.text);
             double[] evidence = cached.computeIfAbsent(tail, key -> {
-                double first = Math.max(0, languageScore(key, following.get(0).text) - following.get(0).score);
+                double first = Math.max(0, lookaheadScore(key, following.get(0).text, modelScores) - following.get(0).score);
                 return new double[]{Math.min(2, first), Double.NaN};
             });
             scores.put(path, path.score + evidence[0]);
@@ -656,13 +707,13 @@ public final class QuickDecoder {
         // eligibility is known, without changing the surviving paths.
         for (Path path : input) {
             if (path.score < floor || seen.contains(path.text)) continue;
-            String tail = OfflineLanguageModel.contextTail(context + path.text);
+            String tail = lookaheadContext(context + path.text);
             double[] evidence = cached.get(tail);
             if (Double.isNaN(evidence[1])) {
                 double best = evidence[0];
                 for (int i = 1; best < 2 && i < following.size(); i++) {
                     Token next = following.get(i);
-                    best = Math.max(best, languageScore(tail, next.text) - next.score);
+                    best = Math.max(best, lookaheadScore(tail, next.text, modelScores) - next.score);
                 }
                 evidence[1] = Math.min(2, best);
             }
@@ -680,6 +731,24 @@ public final class QuickDecoder {
             if (result.size() == BEAM + PATH_RESERVE) break;
         }
         return result;
+    }
+
+    private String lookaheadContext(String text) {
+        if (model == null || clauseStartStrength == 0) return OfflineLanguageModel.contextTail(text);
+        String history = sentenceContext(text);
+        // All following tokens are Han. Once the head is outside the 12-character
+        // bound its prior is zero; retain the old four-character cache sharing.
+        return !ClauseStartRelations.pending(history)
+            ? "#" + OfflineLanguageModel.contextTail(history) : history;
+    }
+
+    private double lookaheadScore(String context, String text, ModelScoreCache modelScores) {
+        String tail = OfflineLanguageModel.contextTail(context);
+        double score = languageScore(tail, text, modelScores);
+        if (model != null && clauseStartStrength != 0)
+            score += clauseStartStrength * ((context.startsWith("#") ? 0 : ClauseStartRelations.score(context, text))
+                - ClauseStartRelations.score(tail, text));
+        return score;
     }
 
     private static List<Path> prune(List<Path> input) {

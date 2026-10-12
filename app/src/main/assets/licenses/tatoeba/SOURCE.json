@@ -1,0 +1,21 @@
+{
+  "source": "Tatoeba Cantonese via Jyut Dictionary",
+  "release": "https://github.com/aaronhktan/jyut-dict/releases/tag/v4.25.0623-release",
+  "zip_sha256": "74649c089f4a31b44c32c9aa1632f31a4f5d769e980baf9a86fdb1518272409e",
+  "database_sha256": "e03a9259bb2ca8b58a6a2b4324a4e473490b00334491c16f340a1f097b007718",
+  "snapshot": "2023-04-08",
+  "license": "CC-BY-2.0-FR",
+  "license_url": "https://creativecommons.org/licenses/by/2.0/fr/",
+  "credit": "Tatoeba contributors; redistributed by Aaron H. K. Tan / Jyut Dictionary",
+  "source_rows": 6149,
+  "training_rows": 3703,
+  "training_families": 3529,
+  "training_sha256": "6d86dac2d75517f33e010c17ddd7c947f1bad2d754a1406cf66cb96a4a1a48fe",
+  "manifest_sha256": "e6dc3b1d4f6097475b39c2e6d3122c7f016c5ed17ac7f2dd114ab2c767006a6c",
+  "weight_per_family": 2,
+  "output_sha256": "be0afd4d26db314a1516d787099db96db864259147932f4221fc4ee7626cfbcd",
+  "modifications": "NFC/whitespace normalization, filtering, family grouping, bounded character n-gram counts; no original database or generated trial vocabulary bundled",
+  "original_training_asset_revision": "5885daec1c43d676a525c543c8ab092532cb3150",
+  "runtime_vocabulary_unchanged_from": "e4387bfef96be601b264feb5617e15e0ad0fea81",
+  "validation_and_heldout_excluded": true
+}
