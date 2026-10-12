@@ -1,5 +1,21 @@
 # Offline model and compact candidates: 0.6.0 source preview
 
+## Whole-candidate correction (unreleased, 2026-10-12)
+
+The [sentence-ranking comparison](SENTENCE_RANKING.md) trains a small residual
+scorer on separate HKCanCor/Tatoeba training examples and actual same-code
+competitors. It reranks the existing twenty candidates while protecting an
+original first choice with positive structural evidence. It cannot recover a
+missing search path. New followup100 improves36→40 first choices and56→61 top-five;
+existing natural200 improves72→76 and114→119. Completion/handover first choices
+are preserved, and all vocabulary and other trained assets stay unchanged.
+
+The added asset is 36,336 bytes. The final desktop benchmark's largest ordinary
+wall-median increase is 2.3%; no physical Fold7 latency was measured. All 202 Java
+unit tests and eight Python tests pass; Lint has zero errors. Version 0.6.39/code46
+is retained without a new APK; the existing 1.0 gate remains unmet. Rejected
+policies, individual regressions and detailed limits are recorded in the report.
+
 ## Clause-start cues and community model (unreleased, 2026-10-12)
 
 The [clause-start comparison](CLAUSE_START_RANKING.md) adds bounded subject/action

@@ -1,0 +1,187 @@
+{
+  "status": "rejected before heldout evaluation",
+  "reason": "Authored validation top5 48→42 at every positive strength; O/O role skip features conflated ordering words先再就都又 and determiner啲 with open-class characters. Natural/public gains do not compensate this guard failure.",
+  "selection": {
+    "validation": {
+      "0": {
+        "authored60": {
+          "cases": 60,
+          "top1": 27,
+          "top5": 48,
+          "top20": 59,
+          "mrr": 0.5603296703296703,
+          "output_sha256": "fdda26ef6572b6f1a96d50bf01d30a578943581f95ab76aa535b8a64fe91e373"
+        },
+        "natural200": {
+          "cases": 200,
+          "top1": 79,
+          "top5": 116,
+          "top20": 137,
+          "mrr": 0.4762527929586753,
+          "output_sha256": "2ca7615d3852c6b1f198908da174ae988d7804d380ec33fc4d0f11afe6339325"
+        },
+        "public200": {
+          "cases": 200,
+          "top1": 71,
+          "top5": 130,
+          "top20": 147,
+          "mrr": 0.4775005634630248,
+          "output_sha256": "6b625809da523d249214a0f728ddfaaa54109ab9205a5bbe4d17e4c31b962681"
+        }
+      },
+      "0.25": {
+        "authored60": {
+          "cases": 60,
+          "top1": 27,
+          "top5": 42,
+          "top20": 59,
+          "mrr": 0.556996336996337,
+          "output_sha256": "fbaec41e58be7d53e0506305900431767e152aec017a7f1c601931047c48a426"
+        },
+        "natural200": {
+          "cases": 200,
+          "top1": 78,
+          "top5": 117,
+          "top20": 137,
+          "mrr": 0.4765161088911089,
+          "output_sha256": "9d8c5e0b2a603c4bda94e5eabd38d859183c813e0e537deeebe9c86a350e50bd"
+        },
+        "public200": {
+          "cases": 200,
+          "top1": 73,
+          "top5": 131,
+          "top20": 147,
+          "mrr": 0.489422354906875,
+          "output_sha256": "cbbc894901523a32fcb2395c6362b295b9bb3e298119cd3d29d231cc911c4317"
+        }
+      },
+      "0.5": {
+        "authored60": {
+          "cases": 60,
+          "top1": 27,
+          "top5": 42,
+          "top20": 59,
+          "mrr": 0.5547069597069597,
+          "output_sha256": "96a4ba8e35acd0ba984d433a65d84063fcbdf4eb7a9a2e82a0d95e78dc6e25ef"
+        },
+        "natural200": {
+          "cases": 200,
+          "top1": 80,
+          "top5": 118,
+          "top20": 137,
+          "mrr": 0.48153244876039,
+          "output_sha256": "f61b8b030f77852b0429764e833d24f744931ac3269e4ba20f8fcf377e2c6cad"
+        },
+        "public200": {
+          "cases": 200,
+          "top1": 73,
+          "top5": 131,
+          "top20": 147,
+          "mrr": 0.49609126984126983,
+          "output_sha256": "ab359499c96029435675b439c82df0e0b6bd10a13913be0add7b8f18d8e5b28e"
+        }
+      },
+      "1": {
+        "authored60": {
+          "cases": 60,
+          "top1": 27,
+          "top5": 42,
+          "top20": 59,
+          "mrr": 0.5584935897435898,
+          "output_sha256": "157af06b1e060149e72e7bd17abc2d38e29d013d3f4e015adb507b27e54c92f0"
+        },
+        "natural200": {
+          "cases": 200,
+          "top1": 82,
+          "top5": 118,
+          "top20": 137,
+          "mrr": 0.4873043137418137,
+          "output_sha256": "97e718c2611b4781cd36f153bc02ca3ac645a99598e6e7f24ac1b099a33d9bea"
+        },
+        "public200": {
+          "cases": 200,
+          "top1": 77,
+          "top5": 132,
+          "top20": 147,
+          "mrr": 0.5042239010989011,
+          "output_sha256": "76a2fd61f7e10bc883368912d1e6e7a58d29a43d7e96d66338bb2a085ae81976"
+        }
+      },
+      "1.5": {
+        "authored60": {
+          "cases": 60,
+          "top1": 27,
+          "top5": 42,
+          "top20": 59,
+          "mrr": 0.565148508898509,
+          "output_sha256": "2b463462c2e76540eda158c99eb398682d4330ec7ec57385e008b83e418a6d72"
+        },
+        "natural200": {
+          "cases": 200,
+          "top1": 81,
+          "top5": 117,
+          "top20": 137,
+          "mrr": 0.48409264346764347,
+          "output_sha256": "aa3711b4f9869899263fc916a8ebc4cb07954bcd4a394a2ad15125db97ff82a9"
+        },
+        "public200": {
+          "cases": 200,
+          "top1": 78,
+          "top5": 130,
+          "top20": 147,
+          "mrr": 0.506257326007326,
+          "output_sha256": "13db59643a7d464793ac9506fdd859a45d1f0bde8bef4e5de8a452fdc8136b0f"
+        }
+      }
+    },
+    "eligible_strengths": [],
+    "selected_strength": 0,
+    "protocol_sha256": "a98df76009438ca34cf56e362e9a6069bd58245deb572497376c0bd12b12e628",
+    "weights_sha256": "385a5a5043c50b448f1b3d18e55c9221724d004a114651a3dc54cd12a9bc9eeb",
+    "validation_scored_sha256": "457295df4b1168b9e87ef73f238c2d34bcaaefea06dd9d4753b005f62612726f",
+    "note": "Written before any post-selection guard decoding."
+  },
+  "model": {
+    "cases": 1640,
+    "reachable": 1477,
+    "pairs": 3484,
+    "scored_sha256": "4896fad779830a34aa4749f9ba6ff0da88a2968c0f2b035ab143908b714e17b8",
+    "protocol_sha256": "a98df76009438ca34cf56e362e9a6069bd58245deb572497376c0bd12b12e628",
+    "manifest_sha256": "62f412b7b782042b1bb2b0f73429616cbf35c1351dcd9b418218e135977c380e",
+    "parameters": {
+      "epochs": 80,
+      "rate": 0.3,
+      "l2": 0.01,
+      "minimum_independent_support": 2,
+      "maximum_features": 16000,
+      "feature_weight_limit": 1.5,
+      "whole_candidate_correction_limit": 3
+    },
+    "algorithm": "Whole-candidate residual pairwise logistic ranker with actual decoder path margins",
+    "baseline_revision": "fac1e878eae03ff76fa3299e65f215299620b8f8",
+    "training": {
+      "epochs": 80,
+      "rate": 0.3,
+      "l2": 0.01,
+      "minimum_independent_target_support": 2,
+      "feature_support_unit": "Distinct (source,context,code,positive); authored variants collapsed to family",
+      "features_considered": 41069,
+      "features_supported": 3969,
+      "features_exported": 3763,
+      "training_examples": 3002,
+      "initial_logistic_objective": 0.2484959074959736,
+      "final_logistic_objective": 0.19496539247042097,
+      "positive_features": 1680,
+      "negative_features": 2083
+    },
+    "feature_count": 3763,
+    "candidate_correction_limit": 3,
+    "base_model_sha256": "be0afd4d26db314a1516d787099db96db864259147932f4221fc4ee7626cfbcd",
+    "limitations": "Local/skip/boundary evidence, not grammatical proof. Final correction clipping is a training approximation. Missing gold candidates do not train pairs. Repeated competitors and family variants are downweighted. This reranker preserves the existing displayed pool and cannot recover lost search paths."
+  },
+  "source_sha256": {
+    "sentence_features.py": "b18922a740c673dd81b39e271e6f75b0402a99bcc11610e891b99af1ce3576b6",
+    "train_sentence_ranker.py": "19654e10a531c6f322f2a063c8d0a163d81f0d7f1cee6cd7a97ce5c20ffa4b6a",
+    "evaluate_sentence_ranker.py": "c81d0e5cb3abc409c9f2975887a2ca52a3279dd29fc77c74d46142ef6c99a42e"
+  }
+}

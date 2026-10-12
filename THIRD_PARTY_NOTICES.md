@@ -105,3 +105,21 @@ The October 11 model trial was rejected because of two first-choice regressions.
 The [October 12 clause-cue comparison](docs/CLAUSE_START_RANKING.md) restores those
 choices and records adoption of the combined model. These examples are not a
 contemporary Hong Kong chat-frequency corpus. No private user messages are included.
+
+## Whole-candidate sentence correction
+
+`sentence_ranker.b64` derives bounded short, skipped and boundary relation weights
+from 800 previously unused pair-training utterances in the same HKCanCor training
+conversations (Luke & Wong, 2015; CC BY 4.0), 600 licensed Tatoeba training families
+(Tatoeba contributors; CC BY 2.0 France), and 240 project-authored scenario variants.
+Competing alternatives are produced by the existing attributed decoder and
+checked against their full Quick codes. Validation/heldout targets are excluded
+from this new pair-training set; family variants and repeated competitors are
+downweighted. These modifications are not endorsed by the original authors.
+
+The original source notices above remain applicable. Provenance, parameters and
+checksums are recorded in `SENTENCE_RANKER_REPORT.json`; the bundled Tatoeba notice
+also describes this contribution. Training/evaluation material in
+`tools/data/sentence_ranking/` retains those source credits and licenses. It is
+public corpus and authored development material, not collected private messages
+or measured contemporary Hong Kong typing frequency.

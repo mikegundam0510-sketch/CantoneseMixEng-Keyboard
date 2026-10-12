@@ -1,0 +1,352 @@
+{
+  "status": "Rejected; completion16 first-choice16\u219214; handover29\u219221",
+  "selection": {
+    "validation": {
+      "0": {
+        "authored60": {
+          "cases": 60,
+          "top1": 27,
+          "top5": 48,
+          "top20": 59,
+          "mrr": 0.5603296703296703,
+          "output_sha256": "fdda26ef6572b6f1a96d50bf01d30a578943581f95ab76aa535b8a64fe91e373"
+        },
+        "natural200": {
+          "cases": 200,
+          "top1": 79,
+          "top5": 116,
+          "top20": 137,
+          "mrr": 0.4762527929586753,
+          "output_sha256": "2ca7615d3852c6b1f198908da174ae988d7804d380ec33fc4d0f11afe6339325"
+        },
+        "public200": {
+          "cases": 200,
+          "top1": 71,
+          "top5": 130,
+          "top20": 147,
+          "mrr": 0.4775005634630248,
+          "output_sha256": "6b625809da523d249214a0f728ddfaaa54109ab9205a5bbe4d17e4c31b962681"
+        }
+      },
+      "0.25": {
+        "authored60": {
+          "cases": 60,
+          "top1": 27,
+          "top5": 48,
+          "top20": 59,
+          "mrr": 0.5653296703296704,
+          "output_sha256": "1087aa6290f1cf79c6c3eea9162faed25e1e7526bfe75e1da371edb6260f7731"
+        },
+        "natural200": {
+          "cases": 200,
+          "top1": 78,
+          "top5": 117,
+          "top20": 137,
+          "mrr": 0.47648436285936285,
+          "output_sha256": "a32a1a3ada73ea8231b8bad8726003295691acc2b6fd8eafea58472726c4368f"
+        },
+        "public200": {
+          "cases": 200,
+          "top1": 73,
+          "top5": 131,
+          "top20": 147,
+          "mrr": 0.4899223549068751,
+          "output_sha256": "eab0867c7ef5d26a586158b6d380331d1887e2b927de23b81376edc414a175d1"
+        }
+      },
+      "0.5": {
+        "authored60": {
+          "cases": 60,
+          "top1": 27,
+          "top5": 48,
+          "top20": 59,
+          "mrr": 0.5654212454212454,
+          "output_sha256": "486bfa13bc5bc3d93f897c3ab11b86112f24f1b9d505400e8f4bbc0d75c59291"
+        },
+        "natural200": {
+          "cases": 200,
+          "top1": 80,
+          "top5": 117,
+          "top20": 137,
+          "mrr": 0.48132063279857396,
+          "output_sha256": "6973a301caf3850a787e748b3053f715326126130392b17810ce486e0e6d6ade"
+        },
+        "public200": {
+          "cases": 200,
+          "top1": 72,
+          "top5": 131,
+          "top20": 147,
+          "mrr": 0.4940079365079365,
+          "output_sha256": "31944c1bbea4f478a9b0238d7cd74e13eb61eb7e752a3425d9de6d048e880927"
+        }
+      },
+      "1": {
+        "authored60": {
+          "cases": 60,
+          "top1": 27,
+          "top5": 48,
+          "top20": 59,
+          "mrr": 0.5706959706959707,
+          "output_sha256": "6a1e5e09d77a0719bc4ee80eae97b03e26da8e4e1571b1984716a0a6156ab4a7"
+        },
+        "natural200": {
+          "cases": 200,
+          "top1": 82,
+          "top5": 118,
+          "top20": 137,
+          "mrr": 0.48703663697413696,
+          "output_sha256": "2f786a32f2f76934e7cd1e7c498ba175fd4119e5ab7a457dbd7bb0daaf47cc24"
+        },
+        "public200": {
+          "cases": 200,
+          "top1": 76,
+          "top5": 132,
+          "top20": 147,
+          "mrr": 0.5050850122100122,
+          "output_sha256": "9f73310d29e99b247b801dac7e6d3223735f8b3d9e624a3e40cb76c797ab8a66"
+        }
+      },
+      "1.5": {
+        "authored60": {
+          "cases": 60,
+          "top1": 27,
+          "top5": 48,
+          "top20": 59,
+          "mrr": 0.579029304029304,
+          "output_sha256": "8bebc0a1303767e83bb0a4ee3f43a2babfeaca82e048130a4ac306c451d1d15c"
+        },
+        "natural200": {
+          "cases": 200,
+          "top1": 80,
+          "top5": 117,
+          "top20": 137,
+          "mrr": 0.48123934398934404,
+          "output_sha256": "f2db65eaf814d1d459e7f96d73a78703c0866006b629d0b8325b9cdc56a5dfdc"
+        },
+        "public200": {
+          "cases": 200,
+          "top1": 78,
+          "top5": 130,
+          "top20": 147,
+          "mrr": 0.509783424908425,
+          "output_sha256": "9b420ed4a9a5d8af6d16fc22130e9f577f46da442d3fcc4c2fb85cdb2bce3c19"
+        }
+      }
+    },
+    "eligible_strengths": [
+      0.5,
+      1,
+      1.5
+    ],
+    "selected_strength": 1.5,
+    "protocol_sha256": "b6b58cbc3953cb44b0cf32b96656af9701449665619a0d35c9715e6f66b6f881",
+    "weights_sha256": "d738a0d113c78db9713e9ac8f2e4402971ccf01ee32468b9f8df4b75d65eccdf",
+    "validation_scored_sha256": "457295df4b1168b9e87ef73f238c2d34bcaaefea06dd9d4753b005f62612726f",
+    "note": "Written before any post-selection guard decoding."
+  },
+  "guards": {
+    "before": {
+      "fresh100": {
+        "cases": 100,
+        "top1": 35,
+        "top5": 61,
+        "top20": 71,
+        "mrr": 0.46365613553113555,
+        "output_sha256": "b4e362e05dff7d01289e4177da2504092f77973199e6290291fa32529dfa2048"
+      },
+      "natural200": {
+        "cases": 200,
+        "top1": 72,
+        "top5": 114,
+        "top20": 137,
+        "mrr": 0.44870142561686677,
+        "output_sha256": "508ff0607d073193ce95b98a992e95d3b90a6ba65785f37243ed21f329d55f77"
+      },
+      "authored120": {
+        "cases": 120,
+        "top1": 74,
+        "top5": 85,
+        "top20": 98,
+        "mrr": 0.6606150793650793,
+        "output_sha256": "9605cd06d2eb2ed06d8fc7853b6a2c2da5fb93b710f137e794dd894c36d25995"
+      },
+      "old600": {
+        "cases": 600,
+        "top1": 286,
+        "top5": 427,
+        "top20": 484,
+        "mrr": 0.5818378185640182,
+        "output_sha256": "dfecb913953c79af2c09427e43db2918fb54302453415b82c6befc82a7cc0093"
+      },
+      "daily32": {
+        "cases": 32,
+        "top1": 22,
+        "top5": 31,
+        "top20": 32,
+        "mrr": 0.8133680555555556,
+        "output_sha256": "a8b4a2455ba22a1329e0150be0dd9d4c51b0cb2dd745b75e5435bad9f54c482a"
+      },
+      "completion16": {
+        "cases": 16,
+        "top1": 16,
+        "top5": 16,
+        "top20": 16,
+        "mrr": 1.0,
+        "output_sha256": "08f8d86d4c43be114b53d28dd763104caf11a2ea3d28cd0e06e31913fbe7502f"
+      },
+      "tatoeba200": {
+        "cases": 200,
+        "top1": 81,
+        "top5": 131,
+        "top20": 157,
+        "mrr": 0.51915097095457,
+        "output_sha256": "ebd5f01f7989b9bcddbb54762cd2f30098873362a0e850b2bfb743a86dbc6045"
+      },
+      "public100": {
+        "cases": 100,
+        "top1": 46,
+        "top5": 71,
+        "top20": 81,
+        "mrr": 0.5638658008658008,
+        "output_sha256": "dae07d2964bb2887838ae7c07e53fd56df137d2d2dcfbd5b744855672689b2ad"
+      },
+      "authored70": {
+        "cases": 70,
+        "top1": 14,
+        "top5": 36,
+        "top20": 45,
+        "mrr": 0.3215163136779678,
+        "output_sha256": "95c0078cc51217fe3277e6ad08d0299045ea2168552bd88dfee1e6617cae03bb"
+      },
+      "plural": {
+        "cases": 18,
+        "top1": 15,
+        "top5": 18,
+        "top20": 18,
+        "mrr": 0.9074074074074073,
+        "output_sha256": "b25cb0367de382b63ba8cedfe4da964a38febf2944b749d3efac223440f8a99c"
+      },
+      "handover": {
+        "cases": 30,
+        "top1": 29,
+        "top5": 30,
+        "top20": 30,
+        "mrr": 0.9833333333333333,
+        "output_sha256": "1e63e51e611c1801ef2fc2251ed1278bc47a2e939217eff45f654ab99d184776"
+      },
+      "continuous": {
+        "cases": 8,
+        "top1": 8,
+        "top5": 8,
+        "top20": 8,
+        "mrr": 1.0,
+        "output_sha256": "48fc391c5204e186cdc63a628cc4db7b744917f7412df49c4464ce58b2b0bfcd"
+      }
+    },
+    "after": {
+      "fresh100": {
+        "cases": 100,
+        "top1": 36,
+        "top5": 63,
+        "top20": 71,
+        "mrr": 0.47176680672268906,
+        "output_sha256": "c3c8da49b029e39ffd21f955b62bb32dc86ddbfb8ebcd7d58a699aeb2735450b"
+      },
+      "natural200": {
+        "cases": 200,
+        "top1": 76,
+        "top5": 119,
+        "top20": 137,
+        "mrr": 0.46380375180375183,
+        "output_sha256": "ef7587645c04cdc14b48af91d37ba8f28907511e4eea5792274195b1d79bc4e0"
+      },
+      "authored120": {
+        "cases": 120,
+        "top1": 73,
+        "top5": 85,
+        "top20": 98,
+        "mrr": 0.6576388888888889,
+        "output_sha256": "95bdc5c154536026e4b3ccb5200184cf2efe45ec084f06407f29a982af8f4806"
+      },
+      "old600": {
+        "cases": 600,
+        "top1": 291,
+        "top5": 432,
+        "top20": 484,
+        "mrr": 0.5903860564816448,
+        "output_sha256": "05030bd830d855a496dcc71f869a0a7577a5967ce214201592dd149c7ed8384f"
+      },
+      "daily32": {
+        "cases": 32,
+        "top1": 23,
+        "top5": 31,
+        "top20": 32,
+        "mrr": 0.8364583333333333,
+        "output_sha256": "3352e539d7f5148aa23ea3a0f7f29f447f55f92b9204208f8ffd2dc13f16906c"
+      },
+      "completion16": {
+        "cases": 16,
+        "top1": 14,
+        "top5": 16,
+        "top20": 16,
+        "mrr": 0.9375,
+        "output_sha256": "3689b40605ec8ca6efb6ac865e820f197ce4d28379cd877c9dd3ff2ff0a92f24"
+      },
+      "tatoeba200": {
+        "cases": 200,
+        "top1": 87,
+        "top5": 143,
+        "top20": 157,
+        "mrr": 0.5540644841269841,
+        "output_sha256": "90dc7e3d23c0494285222d5d3ca56edf7552e913c570080a2f81b941d03444ac"
+      },
+      "public100": {
+        "cases": 100,
+        "top1": 46,
+        "top5": 74,
+        "top20": 81,
+        "mrr": 0.5737265512265513,
+        "output_sha256": "08f3eeed144375b92d1b0c9c130e583f36e5a5efb347c2018a2bdf4ed5fe985e"
+      },
+      "authored70": {
+        "cases": 70,
+        "top1": 10,
+        "top5": 39,
+        "top20": 45,
+        "mrr": 0.31565759637188207,
+        "output_sha256": "9940b336f026ce4d70ed8f060f30dcc615acc326372a581c0b8c850c0e45af69"
+      },
+      "plural": {
+        "cases": 18,
+        "top1": 15,
+        "top5": 18,
+        "top20": 18,
+        "mrr": 0.8888888888888888,
+        "output_sha256": "24d90ea5486e276128dc8bea3b3fb33accb43dc748f105f0f868af826883ad9a"
+      },
+      "handover": {
+        "cases": 30,
+        "top1": 21,
+        "top5": 30,
+        "top20": 30,
+        "mrr": 0.85,
+        "output_sha256": "90b507a04693c52a1e597edc0f9c6aa05bb864adf9f94298a6c93b2a7b155c3f"
+      },
+      "continuous": {
+        "cases": 8,
+        "top1": 8,
+        "top5": 8,
+        "top20": 8,
+        "mrr": 1.0,
+        "output_sha256": "c1115fa418bccb4e67ea463dc17df5374d28b5daee91a1135edbb709df2571f5"
+      }
+    },
+    "guard_failures": [
+      "completion16"
+    ],
+    "guard_scored_sha256": "7a0c4c69714b418afadcf9e4216eb1904817d03bf60f4e0b7059c55bd1f9a79c",
+    "candidate_membership_unchanged": true
+  },
+  "role_schema": 2,
+  "next_intervention": "Preserve existing positive structural support before a weaker-supported statistical candidate can overtake the original winner; new100 utterances reserved before followup selection."
+}

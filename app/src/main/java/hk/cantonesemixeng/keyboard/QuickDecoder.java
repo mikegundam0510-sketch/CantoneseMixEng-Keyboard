@@ -29,6 +29,7 @@ public final class QuickDecoder {
     private final PhraseLanguageModel phraseModel;
     private final CandidateRanker candidateRanker;
     private final CandidateRanker wordRanker;
+    private final SentenceRanker sentenceRanker;
     private final double clauseStartStrength;
     // Common HK particles can have low character-only corpus counts. Admit
     // these into the same bounded contextual reserve, rather than promoting
@@ -99,11 +100,25 @@ public final class QuickDecoder {
     public QuickDecoder(DictionaryEngine dictionary, Reader input, Reader hkInput, Reader cantoneseInput,
                         OfflineLanguageModel model, PhraseLanguageModel phraseModel, Reader chatInput,
                         CandidateRanker candidateRanker, CandidateRanker wordRanker, double clauseStartStrength) throws IOException {
+        this(dictionary, input, hkInput, cantoneseInput, model, phraseModel, chatInput, candidateRanker,
+            wordRanker, clauseStartStrength, null);
+    }
+    public QuickDecoder(DictionaryEngine dictionary, Reader input, Reader hkInput, Reader cantoneseInput,
+                        OfflineLanguageModel model, PhraseLanguageModel phraseModel, Reader chatInput,
+                        CandidateRanker candidateRanker, CandidateRanker wordRanker, SentenceRanker sentenceRanker) throws IOException {
+        this(dictionary, input, hkInput, cantoneseInput, model, phraseModel, chatInput, candidateRanker,
+            wordRanker, CLAUSE_START_STRENGTH, sentenceRanker);
+    }
+    public QuickDecoder(DictionaryEngine dictionary, Reader input, Reader hkInput, Reader cantoneseInput,
+                        OfflineLanguageModel model, PhraseLanguageModel phraseModel, Reader chatInput,
+                        CandidateRanker candidateRanker, CandidateRanker wordRanker, double clauseStartStrength,
+                        SentenceRanker sentenceRanker) throws IOException {
         if (!Double.isFinite(clauseStartStrength) || clauseStartStrength < 0 || clauseStartStrength > 2)
             throw new IllegalArgumentException("Invalid clause-start strength");
         this.dictionary = dictionary; this.model = model; this.phraseModel = phraseModel;
         this.candidateRanker = candidateRanker;
         this.wordRanker = wordRanker;
+        this.sentenceRanker = sentenceRanker;
         this.clauseStartStrength = clauseStartStrength;
         // Merge duplicate code variants and sources before creating prediction tails.
         // The trained model still replaces fallback pair statistics entirely.
@@ -357,11 +372,31 @@ public final class QuickDecoder {
             if (path.text.codePointCount(0, path.text.length()) > 1 && !result.contains(path.text)) result.add(path.text);
             if (result.size() == 20) break;
         }
+        // Rescore only the existing displayed pool. Keep exact codes, confidence
+        // eligibility and personal bonuses from the original path scores.
+        if (model != null && sentenceRanker != null && result.size() > 1) {
+            Map<String, Double> scores = new HashMap<>();
+            for (Path path : completed) if (result.contains(path.text))
+                scores.put(path.text, path.score + sentenceRanker.score(context, path.text));
+            String original = result.get(0);
+            double support = structuralSupport(context, original);
+            Comparator<String> order = Comparator.comparingDouble((String text) -> scores.get(text)).reversed();
+            // Protect the established winner while preserving the residual
+            // model's full relative order for every remaining candidate.
+            if (support > 0) order = Comparator.comparingInt((String text) -> text.equals(original) ? 0 : 1).thenComparing(order);
+            result.sort(order);
+        }
         // Explicit repeated choices outrank statistical guesses. Zero counts preserve
         // the existing context order; only exact, bundled words can be personalized.
         result.sort(Comparator.comparingInt((String text) -> knownWord(text)
             ? learned.applyAsInt(code, text) : 0).reversed());
         return result;
+    }
+
+    /** Existing positive sentence relations outrank a less-supported statistical replacement. */
+    private double structuralSupport(String prefix, String text) {
+        return Math.max(0, completionBonus(prefix, text) + handoverBonus(prefix, text)
+            + ClauseRelations.score(prefix, text) + clauseStartStrength * ClauseStartRelations.score(prefix, text));
     }
 
     private static double contextualScore(String context,String word,List<String> codes,ContextLearning.Preferences preferences) {

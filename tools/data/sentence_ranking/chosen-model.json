@@ -1,0 +1,145 @@
+{
+  "validation": {
+    "0": {
+      "authored60": {
+        "cases": 60,
+        "top1": 27,
+        "top5": 48,
+        "top20": 59,
+        "mrr": 0.5603296703296703,
+        "output_sha256": "fdda26ef6572b6f1a96d50bf01d30a578943581f95ab76aa535b8a64fe91e373"
+      },
+      "natural200": {
+        "cases": 200,
+        "top1": 79,
+        "top5": 116,
+        "top20": 137,
+        "mrr": 0.4762527929586753,
+        "output_sha256": "2ca7615d3852c6b1f198908da174ae988d7804d380ec33fc4d0f11afe6339325"
+      },
+      "public200": {
+        "cases": 200,
+        "top1": 71,
+        "top5": 130,
+        "top20": 147,
+        "mrr": 0.4775005634630248,
+        "output_sha256": "6b625809da523d249214a0f728ddfaaa54109ab9205a5bbe4d17e4c31b962681"
+      }
+    },
+    "0.25": {
+      "authored60": {
+        "cases": 60,
+        "top1": 27,
+        "top5": 48,
+        "top20": 59,
+        "mrr": 0.5653296703296704,
+        "output_sha256": "1087aa6290f1cf79c6c3eea9162faed25e1e7526bfe75e1da371edb6260f7731"
+      },
+      "natural200": {
+        "cases": 200,
+        "top1": 78,
+        "top5": 117,
+        "top20": 137,
+        "mrr": 0.47648436285936285,
+        "output_sha256": "a32a1a3ada73ea8231b8bad8726003295691acc2b6fd8eafea58472726c4368f"
+      },
+      "public200": {
+        "cases": 200,
+        "top1": 73,
+        "top5": 131,
+        "top20": 147,
+        "mrr": 0.4899223549068751,
+        "output_sha256": "2b0dccf908f274e1d8ff4760eb51858ee21640d994db1b3f3c7f60c7f77cbb91"
+      }
+    },
+    "0.5": {
+      "authored60": {
+        "cases": 60,
+        "top1": 27,
+        "top5": 48,
+        "top20": 59,
+        "mrr": 0.5654212454212454,
+        "output_sha256": "486bfa13bc5bc3d93f897c3ab11b86112f24f1b9d505400e8f4bbc0d75c59291"
+      },
+      "natural200": {
+        "cases": 200,
+        "top1": 80,
+        "top5": 117,
+        "top20": 137,
+        "mrr": 0.48132063279857396,
+        "output_sha256": "6973a301caf3850a787e748b3053f715326126130392b17810ce486e0e6d6ade"
+      },
+      "public200": {
+        "cases": 200,
+        "top1": 72,
+        "top5": 131,
+        "top20": 147,
+        "mrr": 0.4940079365079365,
+        "output_sha256": "41c5a3e736a6d9c863361750fed492772b0a21046207bd014b196edc9e24378f"
+      }
+    },
+    "1": {
+      "authored60": {
+        "cases": 60,
+        "top1": 27,
+        "top5": 48,
+        "top20": 59,
+        "mrr": 0.5706959706959707,
+        "output_sha256": "6a1e5e09d77a0719bc4ee80eae97b03e26da8e4e1571b1984716a0a6156ab4a7"
+      },
+      "natural200": {
+        "cases": 200,
+        "top1": 82,
+        "top5": 118,
+        "top20": 137,
+        "mrr": 0.48703663697413696,
+        "output_sha256": "2f786a32f2f76934e7cd1e7c498ba175fd4119e5ab7a457dbd7bb0daaf47cc24"
+      },
+      "public200": {
+        "cases": 200,
+        "top1": 76,
+        "top5": 132,
+        "top20": 147,
+        "mrr": 0.5050850122100122,
+        "output_sha256": "2391991d51e2ec6ea1f4955ee5232b98a0bffefaab00d26e53da6e50a46f3b07"
+      }
+    },
+    "1.5": {
+      "authored60": {
+        "cases": 60,
+        "top1": 27,
+        "top5": 48,
+        "top20": 59,
+        "mrr": 0.579029304029304,
+        "output_sha256": "8bebc0a1303767e83bb0a4ee3f43a2babfeaca82e048130a4ac306c451d1d15c"
+      },
+      "natural200": {
+        "cases": 200,
+        "top1": 80,
+        "top5": 117,
+        "top20": 137,
+        "mrr": 0.48123934398934404,
+        "output_sha256": "f2db65eaf814d1d459e7f96d73a78703c0866006b629d0b8325b9cdc56a5dfdc"
+      },
+      "public200": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 130,
+        "top20": 147,
+        "mrr": 0.5072834249084249,
+        "output_sha256": "85e3fe2ee149b186c89f9fa8808826e1e5a5054bd222a216ef5b55a3b31b1297"
+      }
+    }
+  },
+  "eligible_strengths": [
+    0.5,
+    1,
+    1.5
+  ],
+  "selected_strength": 1.5,
+  "protocol_sha256": "22fa094605c4cb9299f2e693a6e5b5f3d6677ced5a1301d428c80e373dedde4d",
+  "weights_sha256": "d738a0d113c78db9713e9ac8f2e4402971ccf01ee32468b9f8df4b75d65eccdf",
+  "validation_scored_sha256": "a532de71535e13c004970ea335a69a25c4c8634ad05c1955db26c215f57a09d6",
+  "structural_gate": true,
+  "note": "Written before followup guard decoding; earlier observed guards are diagnostic regressions."
+}
