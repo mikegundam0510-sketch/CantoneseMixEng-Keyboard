@@ -1,0 +1,36 @@
+{
+  "baseline_revision": "b82a517095bee0113afc254546eea6eba86e0207",
+  "intervention": "Only completed candidate pool widened to96; rerank before top20. Ordinary beam48 plus8 lexical reserve stays. Longer marker/action/object relations use bounded12-Han context and schema3; no complete sentence features.",
+  "parameters": {
+    "epochs": 80,
+    "rate": 0.3,
+    "l2": 0.01,
+    "minimum_independent_support": 2,
+    "maximum_features": 16000,
+    "feature_weight_limit": 1.5,
+    "whole_candidate_correction_limit": 3
+  },
+  "strength_grid": [
+    0.25,
+    0.5,
+    1,
+    1.5
+  ],
+  "selection": "Existing authored60/natural200/public200 validation plus100 reserved new utterances. Require no top1/top5 loss in each validation set, top20 no lower; select mean MRR, tie lower strength. Guard heldout100 viewed only after selection is persisted. Existing guard cases are diagnostic/regression data.",
+  "guards": "Old600,natural200,authored120,daily32,completion16,handover top1/top5 nondecreasing; Single simulation32/32; paired15sample warmed desktop median latency<=1.2. Exact code and output<=20 always.",
+  "limits": "New utterances from previously observed excluded conversation sources; not current HK chat measurements. No APK unless prior major-release gates and useful independent improvement pass.",
+  "long_parameters": {
+    "epochs": 80,
+    "rate": 0.3,
+    "l2": 0.01,
+    "minimum_independent_support": 2,
+    "maximum_features": 12000,
+    "feature_weight_limit": 1.5,
+    "whole_long_correction_limit": 1.5
+  },
+  "amendment": "Replacement schema3 fails validation: no positive strength preserves every set top1/top5/top20. Keep all previous short weights/strength and fit only independent longer L/J relations using actual baseline path margin plus original correction delta. Freeze additive SRK3 separate caps3/1.5 and unchanged0.25/0.5/1/1.5 long-strength grid before reserved heldout outcomes.",
+  "search_amendment": "After the reserved first heldout100 showed no top1/top5 increase, treat it as diagnostic. Test a search-only reserve retaining original48+8, evaluating at most32 close discarded paths with two attested suffix hints, long-context lift>0.1, max4 additions. Selected long strength remains0.25 for this survival hint. Reserve another100 unused heldout utterances before selection; choose on the same four validation sets and keep the original no-loss rules. Earlier heldout outcomes are not an independent claim for the revised search.",
+  "positive_evidence_amendment": "Signed additive correction passes validation but fails natural200 top5 and old600 top1/top5 regression guards. Three lost first choices had only negative new evidence on both alternatives. Retain unchanged short correction; a longer correction must be positively supported above0.1 score before it can promote a candidate (max(0,strength*clippedLong-0.1)). Reuse frozen training/weights, select unchanged strength grid on the four validation sets. Search reserve uses signed future-token lift at fixed0.25. First heldout100 remains diagnostic; reserve2 is still unopened.",
+  "regression_calibration": "Previously inspected old600/natural200/authored120/daily32/completion16/handover are calibration/regression constraints, not independent test results. Intersect their no-top1/top5-loss strengths with the four validation sets eligible strengths, then select mean validation MRR, tie lower strength. Freeze final selection before viewing reserve2. Report per-case regressions and top20 changes even if aggregate top1/top5 passes.",
+  "search_rejection": "The bounded extra prefix reserve makes no metric change in any12 calibration sets at eligible0.25 strength. Revert the shipped prefix reserve; retain original48+8 search. Final96 pool and independently capped positive long correction remain. Select against pool-only validation and the already inspected calibration suites before opening reserve2."
+}

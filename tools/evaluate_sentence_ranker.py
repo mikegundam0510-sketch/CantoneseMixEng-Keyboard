@@ -12,7 +12,8 @@ from train_phrase_model import ROOT
 DATA = ROOT / 'tools/data/sentence_ranking'
 
 
-def evaluate(weights, scored, strength, output, gate='conservative'):
+def evaluate(weights, scored, strength, output, gate='conservative', role_schema=2, display_limit=20,
+             long_strength=None, corrections=None):
     grouped = defaultdict(list)
     for line in scored.read_text().splitlines():
         fields = line.split('\t')
@@ -21,7 +22,8 @@ def evaluate(weights, scored, strength, output, gate='conservative'):
         values = candidates.split('|') if candidates else []
         numbers = [float.fromhex(s) for s in scores.split('|')] if scores else []
         if len(values) != len(numbers): raise ValueError('Incomplete scores')
-        adjusted = {v: s + correction(weights, context, v, strength) for v, s in zip(values, numbers)}
+        adjusted = {v: s + (correction(weights,context,v,strength,role_schema,long_strength)
+                           if corrections is None else corrections[(context,v)]) for v, s in zip(values, numbers)}
         pin = False
         if gate != 'none' and values:
             support = [float.fromhex(s) for s in fields[7].split('|')]
@@ -35,13 +37,14 @@ def evaluate(weights, scored, strength, output, gate='conservative'):
         updated = ([values[0]] + sorted(values[1:],key=lambda v:-adjusted[v]) if pin else
                    sorted(values,key=lambda v:-adjusted[v])) if strength else list(values)
         if set(values) != set(updated) or len(values) != len(updated): raise AssertionError('Candidate pool changed')
+        updated = updated[:display_limit]
         new_rank = updated.index(gold) + 1 if gold in updated else 0
         name = source.split(':', 1)[-1]
         grouped[name].append((context, code, gold, new_rank, updated))
     output.mkdir(parents=True, exist_ok=True)
     result = {}
     for name, rows in grouped.items():
-        path = output / f'{name}-{strength:g}.tsv'
+        path = output / f'{name}-{(strength if long_strength is None else long_strength):g}.tsv'
         path.write_text(''.join('\t'.join((c, code, gold, str(rank), '|'.join(values))) + '\n'
                                 for c, code, gold, rank, values in rows))
         ranks = [r[3] for r in rows]

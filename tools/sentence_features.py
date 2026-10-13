@@ -22,6 +22,42 @@ def han(c):
     return any(start <= cp <= end for start, end in HAN_RANGES)
 
 MARKERS = frozenset('我你佢係唔冇未有咗緊過會可要想就先再都又嘅啊呀喎呢嗎啦喇囉啲')
+ACTIONS = frozenset('交還送借收寄傳發派覆帶留印睇試改做查問諗學聽講寫讀用打幫去返買飲食整揀拎攞玩行坐瞓等識知開關洗煮賣換記着著搵揾')
+ACTION_WORDS = frozenset(('繼續','完善','改善','修改','調整','檢查','研究','練習','試用',
+                          '更新','確認','提供','處理','解釋','補充','輸入','打字','安排',
+                          '完成','幫手','返工','收工','食飯','買嘢','搭車','收到','知道'))
+
+
+def unit_role(unit):
+    if unit in ACTION_WORDS or len(unit) == 1 and unit in ACTIONS: return 'X'
+    return role(unit) if len(unit) == 1 else 'O'
+
+
+def anchored(unit):
+    return unit in ACTION_WORDS or len(unit) == 1 and unit in MARKERS | ACTIONS
+
+
+def long_features(context, text):
+    """Relate short lexical units across up to12 Han positions, never a sentence."""
+    history = ''
+    for c in context:
+        history = (history + c)[-12:] if han(c) else ''
+    result = Counter()
+    for c in text:
+        if not han(c):
+            history = ''; continue
+        right_units = [c] + ([history[-1] + c] if history else [])
+        for distance in range(2, min(12, len(history)) + 1):
+            at = len(history) - distance
+            left_units = [history[at]] + ([history[at-1:at+1]] if at > 0 else [])
+            bucket = 's' if distance <= 3 else 'm' if distance <= 7 else 'l'
+            for left in left_units:
+                for right in right_units:
+                    if not (anchored(left) or anchored(right)): continue
+                    result[f'L|{left}|{bucket}|{right}'] += 1
+                    result[f'J|{unit_role(left)}|{bucket}|{unit_role(right)}'] += 1
+        history = (history + c)[-12:]
+    return result
 
 
 def role(c, schema=2):
@@ -72,5 +108,7 @@ def features(context, text, role_schema=2):
         result[f'D|{role(first[0], role_schema)}|{bucket}|{role(first[-1], role_schema)}'] += 1
         if first[0] in MARKERS:
             result[f'H|{first[0]}|{bucket}|{role(first[-1], role_schema)}'] += 1
+    if role_schema >= 3:
+        result.update(long_features(context, text))
     # Repetition is not treated as several independent observations of a relation.
     return Counter({f: min(2, count) for f, count in result.items()})

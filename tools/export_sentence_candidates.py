@@ -10,6 +10,7 @@ from pathlib import Path
 import subprocess
 import tarfile
 import tempfile
+import shutil
 
 from train_phrase_model import ROOT
 
@@ -26,7 +27,7 @@ public final class SentenceCandidateExport {
    OfflineLanguageModel.load(Files.newInputStream(assets.resolve("language_model.b64"))),
    PhraseLanguageModel.load(Files.newInputStream(assets.resolve("phrase_model.b64"))),asset("hk_chat_phrases.tsv"),
    CandidateRanker.load(Files.newInputStream(assets.resolve("candidate_ranker.b64"))),
-   CandidateRanker.loadWords(Files.newInputStream(assets.resolve("word_ranker.b64"))));
+   CandidateRanker.loadWords(Files.newInputStream(assets.resolve("word_ranker.b64")))__SEARCH_ARGS__);
   int total=0,found=0;
   try(BufferedWriter out=Files.newBufferedWriter(Path.of(args[2]))) {
    for(String line:Files.readAllLines(Path.of(args[1]))) {
@@ -62,17 +63,22 @@ public final class SentenceCandidateExport {
 '''
 
 
-def export(revision, cases, output):
+def export(revision, cases, output, working_tree=False, pool=20, search_model=False):
     revision = subprocess.check_output(['git', 'rev-parse', '--verify', revision + '^{commit}'], cwd=ROOT, text=True).strip()
     archive = subprocess.check_output(['git', 'archive', revision, 'app/src/main/java', 'app/src/main/assets'], cwd=ROOT)
     output = output.resolve(); output.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='sentence-export-') as directory:
         work = Path(directory)
-        with tarfile.open(fileobj=io.BytesIO(archive)) as data: data.extractall(work, filter='data')
+        if working_tree:
+            for name in subprocess.check_output(['git','ls-files','app/src/main/java','app/src/main/assets'],cwd=ROOT,text=True).splitlines():
+                target=work/name;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(ROOT/name,target)
+        else:
+            with tarfile.open(fileobj=io.BytesIO(archive)) as data: data.extractall(work, filter='data')
         source = work / 'app/src/main/java/hk/cantonesemixeng/keyboard/QuickDecoder.java'
         text = source.read_text()
         field = '    private static final int BEAM = 48;'
         hook = '        List<Path> completed = prune(lattice.get(code.length()));'
+        if hook not in text: hook = '        List<Path> completed = pruneFinal(lattice.get(code.length()));'
         if text.count(field) != 1 or text.count(hook) != 1:
             raise ValueError('Historical decoder structure changed; update observer')
         text = text.replace(field, '    static final Map<String, Double> exportedSentenceScores = new HashMap<>();\n' + field)
@@ -84,8 +90,18 @@ def export(revision, cases, output):
             '    }\n' + score_hook)
         text = text.replace(hook, hook + '\n        exportedSentenceScores.clear();\n'
                             '        for (Path p : completed) exportedSentenceScores.merge(p.text, p.score, Math::max);')
+        if pool != 20:
+            if pool != 96 or 'private List<Path> pruneFinal' not in text:
+                raise ValueError('Extended export requires completed-pool decoder and pool96')
+            text = text.replace('pos + length == code.length() && sentenceRanker != null', 'pos + length == code.length()')
+            text = text.replace('if (model == null || sentenceRanker == null) return prune(input);', 'if (model == null) return prune(input);')
+            text = text.replace('if (result.size() == (sentenceRanker == null ? 20 : FINAL_POOL)) break;', 'if (result.size() == FINAL_POOL) break;')
+            text = text.replace('        if (result.size() > 20) return new ArrayList<>(result.subList(0, 20));\n', '')
+        if search_model:
+            text=text.replace('if (model != null && sentenceRanker != null && result.size() > 1)', 'if (false)')
         source.write_text(text)
-        driver = work / 'SentenceCandidateExport.java'; driver.write_text(DRIVER)
+        driver = work / 'SentenceCandidateExport.java'; driver.write_text(DRIVER.replace('__SEARCH_ARGS__',
+            ',SentenceRanker.load(Files.newInputStream(assets.resolve("sentence_ranker.b64")))' if search_model else ''))
         classes = work / 'classes'
         subprocess.run(['javac', '-encoding', 'UTF-8', '-sourcepath', str(work / 'app/src/main/java'),
                         '-d', str(classes), str(driver)], check=True)
@@ -98,4 +114,7 @@ if __name__ == '__main__':
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('cases', type=Path); p.add_argument('output', type=Path)
     p.add_argument('--revision', default='fac1e878eae03ff76fa3299e65f215299620b8f8')
-    a = p.parse_args(); print('Exported', export(a.revision, a.cases, a.output))
+    p.add_argument('--working-tree', action='store_true')
+    p.add_argument('--pool', type=int, choices=(20,96), default=20)
+    p.add_argument('--search-model',action='store_true')
+    a = p.parse_args(); print('Exported', export(a.revision, a.cases, a.output, a.working_tree, a.pool,a.search_model))

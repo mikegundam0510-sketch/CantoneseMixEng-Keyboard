@@ -3,6 +3,7 @@
 import argparse
 import hashlib
 import json
+import subprocess
 from pathlib import Path
 
 from prepare_tatoeba_corpus import digest, load_training
@@ -11,6 +12,15 @@ from train_phrase_model import ROOT, ASSETS, reverse_codes, scenarios
 
 DATA = ROOT / 'tools/data/sentence_ranking'
 BASELINE = 'fac1e87'  # Resolved to the full revision in the frozen protocol.
+PRIOR_SNAPSHOT = 'b82a517095bee0113afc254546eea6eba86e0207'
+
+
+def prior_paths(patterns):
+    """Later experiments must not retroactively change this frozen exclusion set."""
+    tracked = set(subprocess.check_output(['git','ls-tree','-r','--name-only',PRIOR_SNAPSHOT],
+                                        cwd=ROOT,text=True).splitlines())
+    return [p for pattern in patterns for p in ROOT.glob(pattern)
+            if str(p.relative_to(ROOT)) in tracked]
 
 
 def prepare(source, output=DATA):
@@ -22,16 +32,15 @@ def prepare(source, output=DATA):
     public_train, public_manifest = load_training(public)
     prior = set()
     # Previously inspected validation/holdout/regression targets are not training.
-    for pattern in ('tools/data/**/*validation*.tsv', 'tools/data/**/*heldout*.tsv',
+    for path in prior_paths(('tools/data/**/*validation*.tsv', 'tools/data/**/*heldout*.tsv',
                     'tools/data/**/*prospective*.tsv', 'tools/hk_*cases.tsv',
                     'tools/data/word_ranking/old600.tsv', 'tools/lm_heldout_cases.tsv',
-                    'tools/continuous_clause_cases.tsv', 'tools/semantic_cases.tsv'):
-        for path in ROOT.glob(pattern):
-            if path.parent == output: continue
-            for line in path.read_text().splitlines():
-                if line and not line.startswith('#'):
-                    fields = line.split('\t')
-                    if len(fields) >= 3: prior.add(fields[2])
+                    'tools/continuous_clause_cases.tsv', 'tools/semantic_cases.tsv')):
+        if path.parent == output: continue
+        for line in path.read_text().splitlines():
+            if line and not line.startswith('#'):
+                fields = line.split('\t')
+                if len(fields) >= 3: prior.add(fields[2])
     prior.update((ROOT / 'tools/data/hk_chat_cases/prior_targets.txt').read_text().splitlines())
     old_train = {s.split('\t')[2] for s in (ROOT / 'tools/data/candidate_ranking/train.tsv').read_text().splitlines()}
 
@@ -103,16 +112,15 @@ def prepare_followup(source, output=DATA):
     if digest(source) != manifest['hkcancor_sha256']: raise ValueError('Pinned corpus required')
     report = json.loads((ASSETS / 'MODEL_REPORT.json').read_text()); reverse = reverse_codes()
     excluded = set((ROOT / 'tools/data/hk_chat_cases/prior_targets.txt').read_text().splitlines())
-    for pattern in ('tools/data/**/*validation*.tsv','tools/data/**/*heldout*.tsv',
+    for path in prior_paths(('tools/data/**/*validation*.tsv','tools/data/**/*heldout*.tsv',
                     'tools/data/**/*prospective*.tsv','tools/hk_*cases.tsv',
                     'tools/data/word_ranking/old600.tsv','tools/lm_heldout_cases.tsv',
                     'tools/continuous_clause_cases.tsv','tools/semantic_cases.tsv',
-                    'tools/data/candidate_ranking/train.tsv','tools/data/sentence_ranking/fresh_natural.tsv'):
-        for path in ROOT.glob(pattern):
-            for line in path.read_text().splitlines():
-                if line and not line.startswith('#'):
-                    fields = line.split('\t')
-                    if len(fields) >= 3: excluded.add(fields[2])
+                    'tools/data/candidate_ranking/train.tsv','tools/data/sentence_ranking/fresh_natural.tsv')):
+        for line in path.read_text().splitlines():
+            if line and not line.startswith('#'):
+                fields = line.split('\t')
+                if len(fields) >= 3: excluded.add(fields[2])
     excluded.update(s.split('\t')[3] for s in (DATA / 'train.tsv').read_text().splitlines())
     held = set(report['heldout_conversation_files']); pool = {}
     for name, text in corpus(source):

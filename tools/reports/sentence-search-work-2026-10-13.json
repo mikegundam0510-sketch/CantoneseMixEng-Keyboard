@@ -1,0 +1,1127 @@
+{
+  "date_hong_kong": "2026-10-13",
+  "baseline_revision": "b82a517095bee0113afc254546eea6eba86e0207",
+  "delivery": "Unreleased source;0.6.39/code46 retained;no APK built",
+  "intervention": "Completed confidence-eligible pool96 scored before display20; preserve ordinary beam48+8, old short weights/strength and local learning; separately capped positive longer relations with0.1 evidence floor.",
+  "diagnosis": {
+    "input": "/tmp/hk-coverage-long-20261012/natural200-before-diagnostics.tsv",
+    "cases": 200,
+    "valid_exact_target_codes": 200,
+    "coarse_reasons": {
+      "ranked_later": 61,
+      "first": 76,
+      "not_generated": 44,
+      "outside_twenty": 10,
+      "completed_path_pruned": 9
+    },
+    "missing_cases": 63,
+    "terminal_blockers": {
+      "choice_cutoff": 26,
+      "prefix_pruned": 18,
+      "outside_twenty": 10,
+      "completed_path_pruned": 9
+    },
+    "choice_cutoff_characters": {
+      "𡃉": 21,
+      "啋": 1,
+      "𠻺": 2,
+      "𡁵": 1,
+      "𠸏": 1
+    },
+    "choice_cutoff_dictionary_ranks": {
+      "𡃉": [
+        110
+      ],
+      "啋": [
+        32
+      ],
+      "𠻺": [
+        229
+      ],
+      "𡁵": [
+        199
+      ],
+      "𠸏": [
+        288
+      ]
+    },
+    "prefix_prune_stages": {
+      "I": 16,
+      "B": 1,
+      "B,I": 1
+    },
+    "interpretation": "Observed terminal frontiers only; an earlier loss can be bypassed by another word tokenization. Gold text is used only for diagnostics, never production search."
+  },
+  "training": {
+    "cases": 3140,
+    "reachable": 2822,
+    "pairs": 6765,
+    "scored_sha256": "eba353630adc34b2042e2164b3ee08336fe17c27ca88e56e9862368fc4caae0e",
+    "protocol_sha256": "29cdb566ba2ce9dd7e079bd09f55f40bac716abbc4a0b5c17141e9c8274de746",
+    "manifest_sha256": "a60bb63b280f9de876bab1856fd22e3d563d68c03b6cffa7f1efb11b1bca242f",
+    "parameters": {
+      "epochs": 80,
+      "rate": 0.3,
+      "l2": 0.01,
+      "minimum_independent_support": 2,
+      "maximum_features": 16000,
+      "feature_weight_limit": 1.5,
+      "whole_candidate_correction_limit": 3
+    },
+    "algorithm": "Pairwise long-relation residual over unchanged previous short correction",
+    "baseline_asset_sha256": "6bc9557135aaa3b1f28299eb5a54efebb8121ca7f3ae553d0bd9e367ab309953",
+    "baseline_strength": 1.5,
+    "baseline_feature_count": 3855,
+    "long_feature_count": 9216,
+    "feature_count": 13071,
+    "training": {
+      "epochs": 80,
+      "rate": 0.3,
+      "l2": 0.01,
+      "minimum_independent_target_support": 2,
+      "feature_support_unit": "Distinct (source,context,code,positive); authored variants collapsed to family",
+      "features_considered": 82186,
+      "features_supported": 10063,
+      "features_exported": 9216,
+      "training_examples": 6197,
+      "initial_logistic_objective": 0.17849561821417292,
+      "final_logistic_objective": 0.16687748349952786,
+      "positive_features": 4333,
+      "negative_features": 4883
+    },
+    "role_schema": 3,
+    "long_correction_limit": 1.5,
+    "baseline_revision": "b82a517095bee0113afc254546eea6eba86e0207",
+    "limitations": "Training objective approximates clipping. Long units have1..2 characters, shared action/marker roles and distance buckets through12 positions. They are statistical evidence, not a semantic parser. Earlier beam losses remain possible.",
+    "selected_long_strength": 0.25,
+    "baseline_short_strength": 1.5,
+    "final_pool_limit": 96,
+    "display_limit": 20,
+    "positive_promotion_floor": 0.1,
+    "maximum_long_bonus": 0.275,
+    "selection": {
+      "baseline": {
+        "authored60": {
+          "cases": 60,
+          "top1": 27,
+          "top5": 48,
+          "top20": 59,
+          "mrr": 0.579029304029304,
+          "output_sha256": "8bebc0a1303767e83bb0a4ee3f43a2babfeaca82e048130a4ac306c451d1d15c"
+        },
+        "natural200": {
+          "cases": 200,
+          "top1": 80,
+          "top5": 117,
+          "top20": 137,
+          "mrr": 0.48123934398934404,
+          "output_sha256": "f2db65eaf814d1d459e7f96d73a78703c0866006b629d0b8325b9cdc56a5dfdc"
+        },
+        "public200": {
+          "cases": 200,
+          "top1": 77,
+          "top5": 130,
+          "top20": 147,
+          "mrr": 0.5072834249084249,
+          "output_sha256": "85e3fe2ee149b186c89f9fa8808826e1e5a5054bd222a216ef5b55a3b31b1297"
+        },
+        "new100": {
+          "cases": 100,
+          "top1": 40,
+          "top5": 64,
+          "top20": 69,
+          "mrr": 0.48965151515151517,
+          "output_sha256": "8a4bb4d1c192ee3ca13be10f248a7fe13e32f236d96e7afcce60bbe9d471dc55"
+        }
+      },
+      "coverage_only": {
+        "authored60": {
+          "cases": 60,
+          "top1": 27,
+          "top5": 48,
+          "top20": 60,
+          "mrr": 0.5801404151404151,
+          "output_sha256": "53613069738e837bf68df1e937e9f17949c01a1869f13f581cc8f54229a4365d"
+        },
+        "natural200": {
+          "cases": 200,
+          "top1": 80,
+          "top5": 117,
+          "top20": 140,
+          "mrr": 0.4820882861978063,
+          "output_sha256": "4671445ead305b603259c29bb4677192ac281215cec6f47747997c101c5e80be"
+        },
+        "public200": {
+          "cases": 200,
+          "top1": 77,
+          "top5": 131,
+          "top20": 153,
+          "mrr": 0.5103817753883544,
+          "output_sha256": "7881a273a2488cec3b94728986c2f683e24437c185a5f58d4b76eb90f3965a8b"
+        },
+        "new100": {
+          "cases": 100,
+          "top1": 40,
+          "top5": 64,
+          "top20": 70,
+          "mrr": 0.4901778309409888,
+          "output_sha256": "ee6a12dff9124b9b5f32b0dd4dc209d1cd4aab6326d6935166fabd9e80393ed6"
+        }
+      },
+      "trials": {
+        "0.25": {
+          "authored60": {
+            "cases": 60,
+            "top1": 27,
+            "top5": 48,
+            "top20": 60,
+            "mrr": 0.5801404151404151,
+            "output_sha256": "39f38e6e62ebf5a14ef59b62041de20c09ccaa65ad8491948629f91a50dea6d1"
+          },
+          "natural200": {
+            "cases": 200,
+            "top1": 80,
+            "top5": 117,
+            "top20": 140,
+            "mrr": 0.4820719463285253,
+            "output_sha256": "d63c13ae8348c9eb942c16b84530393a78cce91ded12f330d65ac506a37397ad"
+          },
+          "public200": {
+            "cases": 200,
+            "top1": 77,
+            "top5": 131,
+            "top20": 153,
+            "mrr": 0.5102706642772432,
+            "output_sha256": "de7afaab355d54cfab0aace0927de5ef4686903ba9df14cfea48f6c6d4649ab1"
+          },
+          "new100": {
+            "cases": 100,
+            "top1": 40,
+            "top5": 64,
+            "top20": 70,
+            "mrr": 0.4901778309409888,
+            "output_sha256": "d4ae44c4eced12c12648a135f0788c0f26c5e48bfb5ef805871f8b6a68908129"
+          }
+        },
+        "0.5": {
+          "authored60": {
+            "cases": 60,
+            "top1": 27,
+            "top5": 48,
+            "top20": 60,
+            "mrr": 0.5801404151404151,
+            "output_sha256": "f62da1d2c864a9ab250f53fec6e2d93c89999774176431e6a748c030b3d8535a"
+          },
+          "natural200": {
+            "cases": 200,
+            "top1": 81,
+            "top5": 116,
+            "top20": 140,
+            "mrr": 0.4852797544517746,
+            "output_sha256": "152d1fd4bb2bac95e5218fb0ffbec9ef9418b1d62101bc70e4ebc8be772085df"
+          },
+          "public200": {
+            "cases": 200,
+            "top1": 77,
+            "top5": 131,
+            "top20": 154,
+            "mrr": 0.5104789976105766,
+            "output_sha256": "93b6f116206c4c6582df7b6533afcfd8c5366522a93331fe9e00291ba9562ac3"
+          },
+          "new100": {
+            "cases": 100,
+            "top1": 40,
+            "top5": 64,
+            "top20": 70,
+            "mrr": 0.4901778309409888,
+            "output_sha256": "093c6b9a796856f905484473128a3f9bbeeafe13f57f76e28c73ba80c0f1268b"
+          }
+        },
+        "1": {
+          "authored60": {
+            "cases": 60,
+            "top1": 27,
+            "top5": 48,
+            "top20": 60,
+            "mrr": 0.5801404151404151,
+            "output_sha256": "268a5ae0a9cecf929b40784f5e76de48940efe1211b459aa35ac644569d926f6"
+          },
+          "natural200": {
+            "cases": 200,
+            "top1": 81,
+            "top5": 117,
+            "top20": 140,
+            "mrr": 0.4858048425173038,
+            "output_sha256": "c4e87623abd61ea6815c55420f501ac75e4ce490512d9b45091fbc53ac830155"
+          },
+          "public200": {
+            "cases": 200,
+            "top1": 77,
+            "top5": 132,
+            "top20": 155,
+            "mrr": 0.5126386360672351,
+            "output_sha256": "07ad26512b979ea394a85a160763c5a233460804919a67048cdfa01b071ebbfc"
+          },
+          "new100": {
+            "cases": 100,
+            "top1": 40,
+            "top5": 64,
+            "top20": 71,
+            "mrr": 0.49003894205209997,
+            "output_sha256": "6b0f0af723c90dd20f8703f242a7366ff39507ff1e4c865a2d632fceac3e3266"
+          }
+        },
+        "1.5": {
+          "authored60": {
+            "cases": 60,
+            "top1": 27,
+            "top5": 48,
+            "top20": 60,
+            "mrr": 0.5802472527472528,
+            "output_sha256": "ebc0294c99bacb125aa36f658295821b62f47b2e67c3d9d3633e63a3ad24f7bb"
+          },
+          "natural200": {
+            "cases": 200,
+            "top1": 81,
+            "top5": 118,
+            "top20": 141,
+            "mrr": 0.48637580423532434,
+            "output_sha256": "e1078e39198b3e9e18e33245735db3f56244691a3f8ff40374fb6aadec88c39b"
+          },
+          "public200": {
+            "cases": 200,
+            "top1": 77,
+            "top5": 131,
+            "top20": 155,
+            "mrr": 0.5137646124300536,
+            "output_sha256": "033350c25c81a6ec785197b20cce6d751201fb54a2d1a1b0e355a00752e337d9"
+          },
+          "new100": {
+            "cases": 100,
+            "top1": 40,
+            "top5": 64,
+            "top20": 71,
+            "mrr": 0.4904492955874534,
+            "output_sha256": "c25f65bcdf36b573a7178a66e8d8eb5f4916d9bc7b5414dcb5b512851e21bd62"
+          }
+        }
+      },
+      "eligible_strengths": [
+        0.25
+      ],
+      "selected_strength": 0.25,
+      "role_schema": 3,
+      "validation_eligible_strengths": [
+        0.25,
+        1,
+        1.5
+      ],
+      "regression_calibration_sha256": "3da1cdcb494e230fa6b105b41b36e0e8fd5d309386fc9b5e910dc0a30f9d30fc",
+      "additive": true,
+      "baseline_strength": 1.5,
+      "weights_sha256": "012a0b8fa68e957b781331ea18cf41482c396fc7cea702ba93bcd43b47e706d2",
+      "baseline_asset_sha256": "6bc9557135aaa3b1f28299eb5a54efebb8121ca7f3ae553d0bd9e367ab309953",
+      "baseline_scored_sha256": "35a945f0983c0d625cb523aef00a58e6ad816d13f6b096e0a05b03728cc6f7f7",
+      "trial_scored_sha256": "3511a6b29c6751a5a885fa7a67e1646af24b39272f28ac3f2a447c98d93f8a0a",
+      "protocol_sha256": "29cdb566ba2ce9dd7e079bd09f55f40bac716abbc4a0b5c17141e9c8274de746",
+      "selection": "Written before viewing the reserved heldout100 outcomes. Existing evaluations are development/regression evidence."
+    },
+    "encoded_asset_bytes": 125754,
+    "asset_sha256": "3d6e6c3d73be95ab4366bda0eeb9fcf3ad01aca931f53cb651144f21bbbc28a8"
+  },
+  "selection": {
+    "baseline": {
+      "authored60": {
+        "cases": 60,
+        "top1": 27,
+        "top5": 48,
+        "top20": 59,
+        "mrr": 0.579029304029304,
+        "output_sha256": "8bebc0a1303767e83bb0a4ee3f43a2babfeaca82e048130a4ac306c451d1d15c"
+      },
+      "natural200": {
+        "cases": 200,
+        "top1": 80,
+        "top5": 117,
+        "top20": 137,
+        "mrr": 0.48123934398934404,
+        "output_sha256": "f2db65eaf814d1d459e7f96d73a78703c0866006b629d0b8325b9cdc56a5dfdc"
+      },
+      "public200": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 130,
+        "top20": 147,
+        "mrr": 0.5072834249084249,
+        "output_sha256": "85e3fe2ee149b186c89f9fa8808826e1e5a5054bd222a216ef5b55a3b31b1297"
+      },
+      "new100": {
+        "cases": 100,
+        "top1": 40,
+        "top5": 64,
+        "top20": 69,
+        "mrr": 0.48965151515151517,
+        "output_sha256": "8a4bb4d1c192ee3ca13be10f248a7fe13e32f236d96e7afcce60bbe9d471dc55"
+      }
+    },
+    "coverage_only": {
+      "authored60": {
+        "cases": 60,
+        "top1": 27,
+        "top5": 48,
+        "top20": 60,
+        "mrr": 0.5801404151404151,
+        "output_sha256": "53613069738e837bf68df1e937e9f17949c01a1869f13f581cc8f54229a4365d"
+      },
+      "natural200": {
+        "cases": 200,
+        "top1": 80,
+        "top5": 117,
+        "top20": 140,
+        "mrr": 0.4820882861978063,
+        "output_sha256": "4671445ead305b603259c29bb4677192ac281215cec6f47747997c101c5e80be"
+      },
+      "public200": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 131,
+        "top20": 153,
+        "mrr": 0.5103817753883544,
+        "output_sha256": "7881a273a2488cec3b94728986c2f683e24437c185a5f58d4b76eb90f3965a8b"
+      },
+      "new100": {
+        "cases": 100,
+        "top1": 40,
+        "top5": 64,
+        "top20": 70,
+        "mrr": 0.4901778309409888,
+        "output_sha256": "ee6a12dff9124b9b5f32b0dd4dc209d1cd4aab6326d6935166fabd9e80393ed6"
+      }
+    },
+    "trials": {
+      "0.25": {
+        "authored60": {
+          "cases": 60,
+          "top1": 27,
+          "top5": 48,
+          "top20": 60,
+          "mrr": 0.5801404151404151,
+          "output_sha256": "39f38e6e62ebf5a14ef59b62041de20c09ccaa65ad8491948629f91a50dea6d1"
+        },
+        "natural200": {
+          "cases": 200,
+          "top1": 80,
+          "top5": 117,
+          "top20": 140,
+          "mrr": 0.4820719463285253,
+          "output_sha256": "d63c13ae8348c9eb942c16b84530393a78cce91ded12f330d65ac506a37397ad"
+        },
+        "public200": {
+          "cases": 200,
+          "top1": 77,
+          "top5": 131,
+          "top20": 153,
+          "mrr": 0.5102706642772432,
+          "output_sha256": "de7afaab355d54cfab0aace0927de5ef4686903ba9df14cfea48f6c6d4649ab1"
+        },
+        "new100": {
+          "cases": 100,
+          "top1": 40,
+          "top5": 64,
+          "top20": 70,
+          "mrr": 0.4901778309409888,
+          "output_sha256": "d4ae44c4eced12c12648a135f0788c0f26c5e48bfb5ef805871f8b6a68908129"
+        }
+      },
+      "0.5": {
+        "authored60": {
+          "cases": 60,
+          "top1": 27,
+          "top5": 48,
+          "top20": 60,
+          "mrr": 0.5801404151404151,
+          "output_sha256": "f62da1d2c864a9ab250f53fec6e2d93c89999774176431e6a748c030b3d8535a"
+        },
+        "natural200": {
+          "cases": 200,
+          "top1": 81,
+          "top5": 116,
+          "top20": 140,
+          "mrr": 0.4852797544517746,
+          "output_sha256": "152d1fd4bb2bac95e5218fb0ffbec9ef9418b1d62101bc70e4ebc8be772085df"
+        },
+        "public200": {
+          "cases": 200,
+          "top1": 77,
+          "top5": 131,
+          "top20": 154,
+          "mrr": 0.5104789976105766,
+          "output_sha256": "93b6f116206c4c6582df7b6533afcfd8c5366522a93331fe9e00291ba9562ac3"
+        },
+        "new100": {
+          "cases": 100,
+          "top1": 40,
+          "top5": 64,
+          "top20": 70,
+          "mrr": 0.4901778309409888,
+          "output_sha256": "093c6b9a796856f905484473128a3f9bbeeafe13f57f76e28c73ba80c0f1268b"
+        }
+      },
+      "1": {
+        "authored60": {
+          "cases": 60,
+          "top1": 27,
+          "top5": 48,
+          "top20": 60,
+          "mrr": 0.5801404151404151,
+          "output_sha256": "268a5ae0a9cecf929b40784f5e76de48940efe1211b459aa35ac644569d926f6"
+        },
+        "natural200": {
+          "cases": 200,
+          "top1": 81,
+          "top5": 117,
+          "top20": 140,
+          "mrr": 0.4858048425173038,
+          "output_sha256": "c4e87623abd61ea6815c55420f501ac75e4ce490512d9b45091fbc53ac830155"
+        },
+        "public200": {
+          "cases": 200,
+          "top1": 77,
+          "top5": 132,
+          "top20": 155,
+          "mrr": 0.5126386360672351,
+          "output_sha256": "07ad26512b979ea394a85a160763c5a233460804919a67048cdfa01b071ebbfc"
+        },
+        "new100": {
+          "cases": 100,
+          "top1": 40,
+          "top5": 64,
+          "top20": 71,
+          "mrr": 0.49003894205209997,
+          "output_sha256": "6b0f0af723c90dd20f8703f242a7366ff39507ff1e4c865a2d632fceac3e3266"
+        }
+      },
+      "1.5": {
+        "authored60": {
+          "cases": 60,
+          "top1": 27,
+          "top5": 48,
+          "top20": 60,
+          "mrr": 0.5802472527472528,
+          "output_sha256": "ebc0294c99bacb125aa36f658295821b62f47b2e67c3d9d3633e63a3ad24f7bb"
+        },
+        "natural200": {
+          "cases": 200,
+          "top1": 81,
+          "top5": 118,
+          "top20": 141,
+          "mrr": 0.48637580423532434,
+          "output_sha256": "e1078e39198b3e9e18e33245735db3f56244691a3f8ff40374fb6aadec88c39b"
+        },
+        "public200": {
+          "cases": 200,
+          "top1": 77,
+          "top5": 131,
+          "top20": 155,
+          "mrr": 0.5137646124300536,
+          "output_sha256": "033350c25c81a6ec785197b20cce6d751201fb54a2d1a1b0e355a00752e337d9"
+        },
+        "new100": {
+          "cases": 100,
+          "top1": 40,
+          "top5": 64,
+          "top20": 71,
+          "mrr": 0.4904492955874534,
+          "output_sha256": "c25f65bcdf36b573a7178a66e8d8eb5f4916d9bc7b5414dcb5b512851e21bd62"
+        }
+      }
+    },
+    "eligible_strengths": [
+      0.25
+    ],
+    "selected_strength": 0.25,
+    "role_schema": 3,
+    "validation_eligible_strengths": [
+      0.25,
+      1,
+      1.5
+    ],
+    "regression_calibration_sha256": "3da1cdcb494e230fa6b105b41b36e0e8fd5d309386fc9b5e910dc0a30f9d30fc",
+    "additive": true,
+    "baseline_strength": 1.5,
+    "weights_sha256": "012a0b8fa68e957b781331ea18cf41482c396fc7cea702ba93bcd43b47e706d2",
+    "baseline_asset_sha256": "6bc9557135aaa3b1f28299eb5a54efebb8121ca7f3ae553d0bd9e367ab309953",
+    "baseline_scored_sha256": "35a945f0983c0d625cb523aef00a58e6ad816d13f6b096e0a05b03728cc6f7f7",
+    "trial_scored_sha256": "3511a6b29c6751a5a885fa7a67e1646af24b39272f28ac3f2a447c98d93f8a0a",
+    "protocol_sha256": "29cdb566ba2ce9dd7e079bd09f55f40bac716abbc4a0b5c17141e9c8274de746",
+    "selection": "Written before viewing the reserved heldout100 outcomes. Existing evaluations are development/regression evidence."
+  },
+  "calibration_before": {
+    "fresh100": {
+      "cases": 100,
+      "top1": 36,
+      "top5": 63,
+      "top20": 71,
+      "mrr": 0.47176680672268906,
+      "output_sha256": "c3c8da49b029e39ffd21f955b62bb32dc86ddbfb8ebcd7d58a699aeb2735450b"
+    },
+    "natural200": {
+      "cases": 200,
+      "top1": 76,
+      "top5": 119,
+      "top20": 137,
+      "mrr": 0.46380375180375183,
+      "output_sha256": "c286937584d27a3a521beae875795f9bc1b0c08ef727c8cf220282f70bd10bd2"
+    },
+    "authored120": {
+      "cases": 120,
+      "top1": 74,
+      "top5": 85,
+      "top20": 98,
+      "mrr": 0.6618055555555556,
+      "output_sha256": "613e3f5d42451291221a57b069a8fd0cd0b9b14e8af9e4112c75b1fce9409b41"
+    },
+    "old600": {
+      "cases": 600,
+      "top1": 291,
+      "top5": 432,
+      "top20": 484,
+      "mrr": 0.5903860564816448,
+      "output_sha256": "05030bd830d855a496dcc71f869a0a7577a5967ce214201592dd149c7ed8384f"
+    },
+    "daily32": {
+      "cases": 32,
+      "top1": 23,
+      "top5": 31,
+      "top20": 32,
+      "mrr": 0.8364583333333333,
+      "output_sha256": "d403e924395fe334c41f17cf1e791618650684104c2eca823b3dfd0d73baf2b3"
+    },
+    "completion16": {
+      "cases": 16,
+      "top1": 16,
+      "top5": 16,
+      "top20": 16,
+      "mrr": 1.0,
+      "output_sha256": "0956f50c75b4dd65e1a637904da72f7c0e6f1653953871af76f42f2f22fe0bba"
+    },
+    "tatoeba200": {
+      "cases": 200,
+      "top1": 87,
+      "top5": 143,
+      "top20": 157,
+      "mrr": 0.5540644841269841,
+      "output_sha256": "90dc7e3d23c0494285222d5d3ca56edf7552e913c570080a2f81b941d03444ac"
+    },
+    "public100": {
+      "cases": 100,
+      "top1": 46,
+      "top5": 74,
+      "top20": 81,
+      "mrr": 0.5737265512265513,
+      "output_sha256": "da12646afa9874d7e87c585d90e7b3071cd1a4c31a9b07d7912ccb5df1639eff"
+    },
+    "authored70": {
+      "cases": 70,
+      "top1": 15,
+      "top5": 39,
+      "top20": 45,
+      "mrr": 0.3556575963718821,
+      "output_sha256": "3704536eea9d1dfbb9cf1f19a3dd9d06dfa7e585c7b84d454595de70c8b7a8e7"
+    },
+    "plural": {
+      "cases": 18,
+      "top1": 15,
+      "top5": 18,
+      "top20": 18,
+      "mrr": 0.8888888888888888,
+      "output_sha256": "24d90ea5486e276128dc8bea3b3fb33accb43dc748f105f0f868af826883ad9a"
+    },
+    "handover": {
+      "cases": 30,
+      "top1": 29,
+      "top5": 30,
+      "top20": 30,
+      "mrr": 0.9833333333333333,
+      "output_sha256": "8bd4d89199aa5b494ad724edeb9fa512270a34c85bfcf3130fb772cf8865fce3"
+    },
+    "continuous": {
+      "cases": 8,
+      "top1": 8,
+      "top5": 8,
+      "top20": 8,
+      "mrr": 1.0,
+      "output_sha256": "c1115fa418bccb4e67ea463dc17df5374d28b5daee91a1135edbb709df2571f5"
+    },
+    "followup100": {
+      "cases": 100,
+      "top1": 40,
+      "top5": 61,
+      "top20": 69,
+      "mrr": 0.4781822523881348,
+      "output_sha256": "97845711d2ad6946f723cdb2ba78a297bdf5c9316c8006c814b04be893411e63"
+    }
+  },
+  "calibration_after": {
+    "fresh100": {
+      "cases": 100,
+      "top1": 36,
+      "top5": 63,
+      "top20": 73,
+      "mrr": 0.47307012840101076,
+      "output_sha256": "c31d0af351b46a4f20acd22e81d166101fc182aef0be5a92217506840ef17149"
+    },
+    "natural200": {
+      "cases": 200,
+      "top1": 77,
+      "top5": 119,
+      "top20": 138,
+      "mrr": 0.4663920423831414,
+      "output_sha256": "eb1637b78c6370eaa691c8a59bab67e11de3d2e878b34645898bff2315f91363"
+    },
+    "authored120": {
+      "cases": 120,
+      "top1": 74,
+      "top5": 85,
+      "top20": 98,
+      "mrr": 0.6618055555555556,
+      "output_sha256": "0052c6821e18a90584ed9d6685dca018d21881faf50470d6fca951a7c325814b"
+    },
+    "old600": {
+      "cases": 600,
+      "top1": 291,
+      "top5": 432,
+      "top20": 483,
+      "mrr": 0.5900685422964834,
+      "output_sha256": "19d6e37bfbdf2057719c184368935a9f97e91d7630c5feb71ca7ad83093123db"
+    },
+    "daily32": {
+      "cases": 32,
+      "top1": 23,
+      "top5": 31,
+      "top20": 32,
+      "mrr": 0.8364583333333333,
+      "output_sha256": "b1f180b67e4f51d272eed35708a0e2931b3cfccb5dc7f4e2206171b1cc390996"
+    },
+    "completion16": {
+      "cases": 16,
+      "top1": 16,
+      "top5": 16,
+      "top20": 16,
+      "mrr": 1.0,
+      "output_sha256": "425be3bf1387f665c21bb6ffcabf75d63b924bbfac4e1d570ba488748badc6c7"
+    },
+    "tatoeba200": {
+      "cases": 200,
+      "top1": 87,
+      "top5": 143,
+      "top20": 162,
+      "mrr": 0.5561884920634921,
+      "output_sha256": "bce08dc517df689adccef7e25677bb425b0d5f21659513cf928e33528ee5ccaf"
+    },
+    "public100": {
+      "cases": 100,
+      "top1": 46,
+      "top5": 74,
+      "top20": 85,
+      "mrr": 0.5772940115440115,
+      "output_sha256": "6c2f5c75a4235a6ff701c2aa29c8f5f5168b88f50be33e135562681236203d12"
+    },
+    "authored70": {
+      "cases": 70,
+      "top1": 15,
+      "top5": 39,
+      "top20": 48,
+      "mrr": 0.36362296433725005,
+      "output_sha256": "3f33ce3715f0e3185e9663eb12ffdcc595a577cfe8a7cb04a1af2fe91e68e796"
+    },
+    "plural": {
+      "cases": 18,
+      "top1": 15,
+      "top5": 18,
+      "top20": 18,
+      "mrr": 0.8888888888888888,
+      "output_sha256": "9cf8ce10be8df9d7020fce97bbec212173bfc84a7917fa694a776658ae683984"
+    },
+    "handover": {
+      "cases": 30,
+      "top1": 29,
+      "top5": 30,
+      "top20": 30,
+      "mrr": 0.9833333333333333,
+      "output_sha256": "8a7b5dfa0711772dc31458b1cfadf253970f4aa0ddf6d3e2e3ffe315c7a9361a"
+    },
+    "continuous": {
+      "cases": 8,
+      "top1": 8,
+      "top5": 8,
+      "top20": 8,
+      "mrr": 1.0,
+      "output_sha256": "20ec2d8e9eb1551218fe824eafc4f1f4d107e2e15b641d02d09ab4f76f1601d2"
+    },
+    "followup100": {
+      "cases": 100,
+      "top1": 41,
+      "top5": 61,
+      "top20": 72,
+      "mrr": 0.4862253302253302,
+      "output_sha256": "b7c3dfea03311779648e7d1e35c4262c3400c980472e0c5bc17d400b207ad818"
+    }
+  },
+  "per_case_changes": {
+    "fresh100": {
+      "first": {
+        "gains": [],
+        "losses": []
+      },
+      "top5": {
+        "gains": [],
+        "losses": []
+      },
+      "top20": {
+        "gains": [
+          "你兩個個嘴型永遠都係一樣",
+          "你睇哩課嘅時候"
+        ],
+        "losses": []
+      }
+    },
+    "natural200": {
+      "first": {
+        "gains": [
+          "噉另外一節聖經可以睇埋喇"
+        ],
+        "losses": []
+      },
+      "top5": {
+        "gains": [],
+        "losses": []
+      },
+      "top20": {
+        "gains": [
+          "去一個月抵喇",
+          "而家近排興乜嘢機啊"
+        ],
+        "losses": [
+          "谷德昭嘅電話號碼來嘅"
+        ]
+      }
+    },
+    "authored120": {
+      "first": {
+        "gains": [],
+        "losses": []
+      },
+      "top5": {
+        "gains": [],
+        "losses": []
+      },
+      "top20": {
+        "gains": [],
+        "losses": []
+      }
+    },
+    "old600": {
+      "first": {
+        "gains": [],
+        "losses": []
+      },
+      "top5": {
+        "gains": [],
+        "losses": []
+      },
+      "top20": {
+        "gains": [
+          "後飲醉咗",
+          "似你正話嗰個"
+        ],
+        "losses": [
+          "耶穌係真係個",
+          "擔埋張櫈喺鋼",
+          "話係師奶睇喎"
+        ]
+      }
+    },
+    "daily32": {
+      "first": {
+        "gains": [],
+        "losses": []
+      },
+      "top5": {
+        "gains": [],
+        "losses": []
+      },
+      "top20": {
+        "gains": [],
+        "losses": []
+      }
+    },
+    "completion16": {
+      "first": {
+        "gains": [],
+        "losses": []
+      },
+      "top5": {
+        "gains": [],
+        "losses": []
+      },
+      "top20": {
+        "gains": [],
+        "losses": []
+      }
+    },
+    "tatoeba200": {
+      "first": {
+        "gains": [],
+        "losses": []
+      },
+      "top5": {
+        "gains": [],
+        "losses": []
+      },
+      "top20": {
+        "gains": [
+          "你最鍾意邊個歌手呀",
+          "然後發現自己倒咗錢落海",
+          "呢個問題關你事多過關我事",
+          "可唔可以試著㗎",
+          "你應該要準備間房畀訪客"
+        ],
+        "losses": []
+      }
+    },
+    "public100": {
+      "first": {
+        "gains": [],
+        "losses": []
+      },
+      "top5": {
+        "gains": [],
+        "losses": []
+      },
+      "top20": {
+        "gains": [
+          "你係咪真係鍾意我㗎",
+          "因為冇得俾零粒星",
+          "佢唔認打爛咗度窗",
+          "你答啱咗幾多條呀"
+        ],
+        "losses": []
+      }
+    },
+    "authored70": {
+      "first": {
+        "gains": [],
+        "losses": []
+      },
+      "top5": {
+        "gains": [
+          "你啱啱借咗書未"
+        ],
+        "losses": [
+          "你哋取消咗預約未"
+        ]
+      },
+      "top20": {
+        "gains": [
+          "你啱啱借咗書未",
+          "你取消咗預約未",
+          "你啱啱取消咗預約未"
+        ],
+        "losses": []
+      }
+    },
+    "plural": {
+      "first": {
+        "gains": [],
+        "losses": []
+      },
+      "top5": {
+        "gains": [],
+        "losses": []
+      },
+      "top20": {
+        "gains": [],
+        "losses": []
+      }
+    },
+    "handover": {
+      "first": {
+        "gains": [],
+        "losses": []
+      },
+      "top5": {
+        "gains": [],
+        "losses": []
+      },
+      "top20": {
+        "gains": [],
+        "losses": []
+      }
+    },
+    "continuous": {
+      "first": {
+        "gains": [],
+        "losses": []
+      },
+      "top5": {
+        "gains": [],
+        "losses": []
+      },
+      "top20": {
+        "gains": [],
+        "losses": []
+      }
+    }
+  },
+  "new_reserve100": {
+    "before": {
+      "cases": 100,
+      "top1": 36,
+      "top5": 54,
+      "top20": 74,
+      "mrr": 0.4607342693855852,
+      "output_sha256": "bda67d25385abe1830b4610ca66329235e4ca813fd3eb4e8518cb7361beb2c69"
+    },
+    "after": {
+      "cases": 100,
+      "top1": 36,
+      "top5": 54,
+      "top20": 74,
+      "mrr": 0.4607635091516671,
+      "output_sha256": "b06331822b6d9720725b6cbe487e49b92634afd7e797fcc98a37c29ae5bfb225"
+    },
+    "interpretation": "Inspected only after final selection; no top1/top5/top20 change, tiny MRR change. New utterances from previously observed excluded conversation sources, not new speakers or real-device evidence."
+  },
+  "first_reserve100_diagnostic": {
+    "before": {
+      "cases": 100,
+      "top1": 29,
+      "top5": 55,
+      "top20": 66,
+      "mrr": 0.3988773448773449,
+      "output_sha256": "3b6588e890440a4b5c51d074f3e0da017e635d21449d9006668374909cbddb14"
+    },
+    "signed_trial_after": {
+      "cases": 100,
+      "top1": 29,
+      "top5": 55,
+      "top20": 66,
+      "mrr": 0.4007821067821068,
+      "output_sha256": "4d91da0e940250e14bd2ab0eb1456cab6509983da20afbc93b19caa92d040cf9"
+    },
+    "interpretation": "Became diagnostic before positive-floor and search-reserve development; not independent evidence for final policy."
+  },
+  "performance": {
+    "warmup_passes": 12,
+    "alternating_samples": 15,
+    "cpu": 0,
+    "rows": [
+      {
+        "code": "ofonaovrmrq",
+        "letters": 11,
+        "before_wall_ms": 77.771,
+        "after_wall_ms": 76.429,
+        "before_cpu_ms": 76.288,
+        "after_cpu_ms": 74.612
+      },
+      {
+        "code": "hmerrrysmlrp",
+        "letters": 12,
+        "before_wall_ms": 90.62,
+        "after_wall_ms": 91.052,
+        "before_cpu_ms": 89.375,
+        "after_cpu_ms": 90.015
+      },
+      {
+        "code": "dpofvivcjutrmyyjvcqnjd",
+        "letters": 22,
+        "before_wall_ms": 130.64,
+        "after_wall_ms": 133.787,
+        "before_cpu_ms": 129.08,
+        "after_cpu_ms": 132.811
+      },
+      {
+        "code": "ofykrmmsydwljpvwjd",
+        "letters": 18,
+        "before_wall_ms": 118.301,
+        "after_wall_ms": 120.559,
+        "before_cpu_ms": 116.468,
+        "after_cpu_ms": 118.754
+      },
+      {
+        "code": "vkmmnkmrvordrjjj",
+        "letters": 16,
+        "before_wall_ms": 136.255,
+        "after_wall_ms": 139.054,
+        "before_cpu_ms": 136.17,
+        "after_cpu_ms": 136.981
+      },
+      {
+        "code": "hihihihihihihihihihihihihihihihihihihihihihihihi",
+        "letters": 48,
+        "before_wall_ms": 488.916,
+        "after_wall_ms": 477.726,
+        "before_cpu_ms": 484.76,
+        "after_cpu_ms": 467.086
+      }
+    ],
+    "maximum_ordinary_wall_ratio": 1.0240890998162893,
+    "guard_maximum_ratio": 1.2,
+    "physical_fold7_measured": false
+  },
+  "verification": {
+    "java_unit": {
+      "tests": 204,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "python_tests": 13,
+    "python_failures": 0,
+    "lint_errors": 0,
+    "lint_existing_warnings": 25,
+    "feature_parity_vectors": 40568,
+    "serialized_candidate_parity_lists": 2054,
+    "full_production_decode_parity_cases": 284,
+    "single_learning_cases": 32,
+    "single_learning_first": 32,
+    "single_learning_sequence_keys": 489,
+    "weights_reproduced_byte_for_byte": true,
+    "followup100_evaluated_after_final_selection": true
+  },
+  "unchanged_asset_sha256": {
+    "language_model.b64": "be0afd4d26db314a1516d787099db96db864259147932f4221fc4ee7626cfbcd",
+    "phrase_model.b64": "6e2d2dcebc9d76f002100bde8d2d1f904332478cda9e46e4cd7a807a13cc2ea3",
+    "candidate_ranker.b64": "0fe065437c4b87ac3852440c69cf8140cd159241f723d4927b959fb7772d3f62",
+    "word_ranker.b64": "58697234c7fe8fafd816c44c0d65e5bf152d08f7fbca52c801f63eb57b29a536",
+    "cangjie5.base.dict.yaml": "98e3291003110e3a6f4ae10ce0c061a475793e44c006d3acc3b075a9fecd2b26",
+    "character_frequencies.tsv": "f489850c135e252ebda0b054a40f664996c7b107e4949718397b4ae4ef181dc7",
+    "hk_chat_phrases.tsv": "b501611d15c4f8f12a6ff410f479d6ca735bf2c596af880e4c367fcb2dd55bde"
+  },
+  "source_sha256": {
+    "app/src/main/java/hk/cantonesemixeng/keyboard/QuickDecoder.java": "5c3dfeef54371db6cac6a7b3eb3b053d2f5aad7b2e43bb09e2cd589ca890a5d4",
+    "app/src/main/java/hk/cantonesemixeng/keyboard/SentenceRanker.java": "c2ea19c698641670e597a4a3befd3d747bfbe8a661291b86e5ff7132ef6af0f4",
+    "tools/train_sentence_search.py": "3d0472497bb92d64e7e5fa68ccbfba33e2c603c6462a320c99bc9871993ef3e8",
+    "tools/select_sentence_search.py": "2d347ff5c9211de6fef020a5dea54d80caaf38a0be48c466e8a3681b511e8167",
+    "tools/sentence_features.py": "757b4b9a2efa068ca20da179bc814e1941e2805258d29365faf36ec08cfe07db"
+  },
+  "release_gate": {
+    "passed": false,
+    "natural200_top1": 77,
+    "natural200_target": 82,
+    "authored120_top5": 85,
+    "authored120_target": 87,
+    "version_name": "0.6.39",
+    "version_code": 46,
+    "apk_created": false,
+    "reason": "Natural first gains one/200, authored top5 unchanged; unused reserve100 has no aggregate hit gain. No major improvement established."
+  },
+  "limitations": [
+    "Long marker/action collocations are statistical evidence, not a semantic parser or grammar proof.",
+    "Cannot recover ordinary earlier beam/option-cutoff losses;26 of63 diagnosed missing cases have a character-option cutoff.",
+    "Previously inspected regression suites constrain selection; their improvements are not independent generalization evidence.",
+    "One old600 target falls out of display20; its old first/top5 aggregates remain unchanged.",
+    "No physical Fold7 latency or real typing-session accuracy measured."
+  ]
+}

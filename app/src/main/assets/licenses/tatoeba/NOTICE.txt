@@ -32,3 +32,9 @@ decoder; family variants and several competitors are downweighted. No
 validation or heldout sentence is added to its training pairs. It stores
 bounded feature weights, not full example sentences or personal messages.
 Its provenance, parameters and checksum are in SENTENCE_RANKER_REPORT.json.
+
+The longer-relation channel retains those short weights and trains independent
+relations on the earlier cases plus500 additional Tatoeba training families and
+1,000 additional HKCanCor training-conversation utterances. The same respective
+licenses apply. Its lexical units have one/two characters and relate across at
+most twelve Han positions. New evaluation reserves remain excluded from training.

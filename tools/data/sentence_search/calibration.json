@@ -1,0 +1,598 @@
+{
+  "before": {
+    "fresh100": {
+      "cases": 100,
+      "top1": 36,
+      "top5": 63,
+      "top20": 71,
+      "mrr": 0.47176680672268906,
+      "output_sha256": "c3c8da49b029e39ffd21f955b62bb32dc86ddbfb8ebcd7d58a699aeb2735450b"
+    },
+    "natural200": {
+      "cases": 200,
+      "top1": 76,
+      "top5": 119,
+      "top20": 137,
+      "mrr": 0.46380375180375183,
+      "output_sha256": "c286937584d27a3a521beae875795f9bc1b0c08ef727c8cf220282f70bd10bd2"
+    },
+    "authored120": {
+      "cases": 120,
+      "top1": 74,
+      "top5": 85,
+      "top20": 98,
+      "mrr": 0.6618055555555556,
+      "output_sha256": "613e3f5d42451291221a57b069a8fd0cd0b9b14e8af9e4112c75b1fce9409b41"
+    },
+    "old600": {
+      "cases": 600,
+      "top1": 291,
+      "top5": 432,
+      "top20": 484,
+      "mrr": 0.5903860564816448,
+      "output_sha256": "05030bd830d855a496dcc71f869a0a7577a5967ce214201592dd149c7ed8384f"
+    },
+    "daily32": {
+      "cases": 32,
+      "top1": 23,
+      "top5": 31,
+      "top20": 32,
+      "mrr": 0.8364583333333333,
+      "output_sha256": "d403e924395fe334c41f17cf1e791618650684104c2eca823b3dfd0d73baf2b3"
+    },
+    "completion16": {
+      "cases": 16,
+      "top1": 16,
+      "top5": 16,
+      "top20": 16,
+      "mrr": 1.0,
+      "output_sha256": "0956f50c75b4dd65e1a637904da72f7c0e6f1653953871af76f42f2f22fe0bba"
+    },
+    "tatoeba200": {
+      "cases": 200,
+      "top1": 87,
+      "top5": 143,
+      "top20": 157,
+      "mrr": 0.5540644841269841,
+      "output_sha256": "90dc7e3d23c0494285222d5d3ca56edf7552e913c570080a2f81b941d03444ac"
+    },
+    "public100": {
+      "cases": 100,
+      "top1": 46,
+      "top5": 74,
+      "top20": 81,
+      "mrr": 0.5737265512265513,
+      "output_sha256": "da12646afa9874d7e87c585d90e7b3071cd1a4c31a9b07d7912ccb5df1639eff"
+    },
+    "authored70": {
+      "cases": 70,
+      "top1": 15,
+      "top5": 39,
+      "top20": 45,
+      "mrr": 0.3556575963718821,
+      "output_sha256": "3704536eea9d1dfbb9cf1f19a3dd9d06dfa7e585c7b84d454595de70c8b7a8e7"
+    },
+    "plural": {
+      "cases": 18,
+      "top1": 15,
+      "top5": 18,
+      "top20": 18,
+      "mrr": 0.8888888888888888,
+      "output_sha256": "24d90ea5486e276128dc8bea3b3fb33accb43dc748f105f0f868af826883ad9a"
+    },
+    "handover": {
+      "cases": 30,
+      "top1": 29,
+      "top5": 30,
+      "top20": 30,
+      "mrr": 0.9833333333333333,
+      "output_sha256": "8bd4d89199aa5b494ad724edeb9fa512270a34c85bfcf3130fb772cf8865fce3"
+    },
+    "continuous": {
+      "cases": 8,
+      "top1": 8,
+      "top5": 8,
+      "top20": 8,
+      "mrr": 1.0,
+      "output_sha256": "c1115fa418bccb4e67ea463dc17df5374d28b5daee91a1135edbb709df2571f5"
+    }
+  },
+  "trials": {
+    "0": {
+      "fresh100": {
+        "cases": 100,
+        "top1": 36,
+        "top5": 63,
+        "top20": 73,
+        "mrr": 0.47289155697243934,
+        "output_sha256": "e1325a86774d92c6b7a29bbf9eb459a5d923ebf31d4cbac8a64431d90e58eafc"
+      },
+      "natural200": {
+        "cases": 200,
+        "top1": 76,
+        "top5": 119,
+        "top20": 138,
+        "mrr": 0.4638920423831414,
+        "output_sha256": "4ac733cffb04a5ff587cd3f448a376b2f8b64efa90b91f1cd76d10f0dc404296"
+      },
+      "authored120": {
+        "cases": 120,
+        "top1": 74,
+        "top5": 85,
+        "top20": 98,
+        "mrr": 0.6618055555555556,
+        "output_sha256": "0052c6821e18a90584ed9d6685dca018d21881faf50470d6fca951a7c325814b"
+      },
+      "old600": {
+        "cases": 600,
+        "top1": 291,
+        "top5": 432,
+        "top20": 483,
+        "mrr": 0.590327235672824,
+        "output_sha256": "d903af0a9a4e9526c16ed258e11b42ac219eeb632aefb3f73bb2c52d50d82932"
+      },
+      "daily32": {
+        "cases": 32,
+        "top1": 23,
+        "top5": 31,
+        "top20": 32,
+        "mrr": 0.8361742424242424,
+        "output_sha256": "e1d5ca733523b0199ffffbde8dc3678f130921c709ac8806f163d4f67ff8b8ff"
+      },
+      "completion16": {
+        "cases": 16,
+        "top1": 16,
+        "top5": 16,
+        "top20": 16,
+        "mrr": 1.0,
+        "output_sha256": "425be3bf1387f665c21bb6ffcabf75d63b924bbfac4e1d570ba488748badc6c7"
+      },
+      "tatoeba200": {
+        "cases": 200,
+        "top1": 87,
+        "top5": 143,
+        "top20": 162,
+        "mrr": 0.5560671550671551,
+        "output_sha256": "e8f13c6ce3b147af8f33e3606bff02f6b5dbb352a727f35bc3a9a588f3c73989"
+      },
+      "public100": {
+        "cases": 100,
+        "top1": 46,
+        "top5": 74,
+        "top20": 85,
+        "mrr": 0.5774051226551227,
+        "output_sha256": "1e599857d26a79e24718d889a6befa1f9f048b4f75e1de9fee8b19dadc37de74"
+      },
+      "authored70": {
+        "cases": 70,
+        "top1": 15,
+        "top5": 39,
+        "top20": 48,
+        "mrr": 0.36243248814677387,
+        "output_sha256": "e2a9cb994ca864149c62db3e5ec2e5bb01070238db2923d3aaf10cb7371b1fb8"
+      },
+      "plural": {
+        "cases": 18,
+        "top1": 15,
+        "top5": 18,
+        "top20": 18,
+        "mrr": 0.8888888888888888,
+        "output_sha256": "9cf8ce10be8df9d7020fce97bbec212173bfc84a7917fa694a776658ae683984"
+      },
+      "handover": {
+        "cases": 30,
+        "top1": 29,
+        "top5": 30,
+        "top20": 30,
+        "mrr": 0.9833333333333333,
+        "output_sha256": "8a7b5dfa0711772dc31458b1cfadf253970f4aa0ddf6d3e2e3ffe315c7a9361a"
+      },
+      "continuous": {
+        "cases": 8,
+        "top1": 8,
+        "top5": 8,
+        "top20": 8,
+        "mrr": 1.0,
+        "output_sha256": "20ec2d8e9eb1551218fe824eafc4f1f4d107e2e15b641d02d09ab4f76f1601d2"
+      }
+    },
+    "0.25": {
+      "fresh100": {
+        "cases": 100,
+        "top1": 36,
+        "top5": 63,
+        "top20": 73,
+        "mrr": 0.47307012840101076,
+        "output_sha256": "c31d0af351b46a4f20acd22e81d166101fc182aef0be5a92217506840ef17149"
+      },
+      "natural200": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 119,
+        "top20": 138,
+        "mrr": 0.4663920423831414,
+        "output_sha256": "eb1637b78c6370eaa691c8a59bab67e11de3d2e878b34645898bff2315f91363"
+      },
+      "authored120": {
+        "cases": 120,
+        "top1": 74,
+        "top5": 85,
+        "top20": 98,
+        "mrr": 0.6618055555555556,
+        "output_sha256": "0052c6821e18a90584ed9d6685dca018d21881faf50470d6fca951a7c325814b"
+      },
+      "old600": {
+        "cases": 600,
+        "top1": 291,
+        "top5": 432,
+        "top20": 483,
+        "mrr": 0.5900685422964834,
+        "output_sha256": "19d6e37bfbdf2057719c184368935a9f97e91d7630c5feb71ca7ad83093123db"
+      },
+      "daily32": {
+        "cases": 32,
+        "top1": 23,
+        "top5": 31,
+        "top20": 32,
+        "mrr": 0.8364583333333333,
+        "output_sha256": "b1f180b67e4f51d272eed35708a0e2931b3cfccb5dc7f4e2206171b1cc390996"
+      },
+      "completion16": {
+        "cases": 16,
+        "top1": 16,
+        "top5": 16,
+        "top20": 16,
+        "mrr": 1.0,
+        "output_sha256": "425be3bf1387f665c21bb6ffcabf75d63b924bbfac4e1d570ba488748badc6c7"
+      },
+      "tatoeba200": {
+        "cases": 200,
+        "top1": 87,
+        "top5": 143,
+        "top20": 162,
+        "mrr": 0.5561884920634921,
+        "output_sha256": "bce08dc517df689adccef7e25677bb425b0d5f21659513cf928e33528ee5ccaf"
+      },
+      "public100": {
+        "cases": 100,
+        "top1": 46,
+        "top5": 74,
+        "top20": 85,
+        "mrr": 0.5772940115440115,
+        "output_sha256": "6c2f5c75a4235a6ff701c2aa29c8f5f5168b88f50be33e135562681236203d12"
+      },
+      "authored70": {
+        "cases": 70,
+        "top1": 15,
+        "top5": 39,
+        "top20": 48,
+        "mrr": 0.36362296433725005,
+        "output_sha256": "3f33ce3715f0e3185e9663eb12ffdcc595a577cfe8a7cb04a1af2fe91e68e796"
+      },
+      "plural": {
+        "cases": 18,
+        "top1": 15,
+        "top5": 18,
+        "top20": 18,
+        "mrr": 0.8888888888888888,
+        "output_sha256": "9cf8ce10be8df9d7020fce97bbec212173bfc84a7917fa694a776658ae683984"
+      },
+      "handover": {
+        "cases": 30,
+        "top1": 29,
+        "top5": 30,
+        "top20": 30,
+        "mrr": 0.9833333333333333,
+        "output_sha256": "8a7b5dfa0711772dc31458b1cfadf253970f4aa0ddf6d3e2e3ffe315c7a9361a"
+      },
+      "continuous": {
+        "cases": 8,
+        "top1": 8,
+        "top5": 8,
+        "top20": 8,
+        "mrr": 1.0,
+        "output_sha256": "20ec2d8e9eb1551218fe824eafc4f1f4d107e2e15b641d02d09ab4f76f1601d2"
+      }
+    },
+    "0.5": {
+      "fresh100": {
+        "cases": 100,
+        "top1": 36,
+        "top5": 63,
+        "top20": 73,
+        "mrr": 0.47307012840101076,
+        "output_sha256": "e923fc74319d6f07265b242bcd32c67d010c431cfee4e195d6f443e5f33ca4ae"
+      },
+      "natural200": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 119,
+        "top20": 138,
+        "mrr": 0.4663059970000759,
+        "output_sha256": "47459abe585847cf56caef9b0eeb59786f3fe59935913c31ae74eb1ace9463f0"
+      },
+      "authored120": {
+        "cases": 120,
+        "top1": 74,
+        "top5": 85,
+        "top20": 98,
+        "mrr": 0.6618055555555556,
+        "output_sha256": "9441d41eb17df91e140a94fb9765557ce11592bd3ee0eecfb34fae605bbd5023"
+      },
+      "old600": {
+        "cases": 600,
+        "top1": 292,
+        "top5": 431,
+        "top20": 483,
+        "mrr": 0.5905852871257283,
+        "output_sha256": "18120252b249168d27734175a78b92ccb13f31243b1679bbb22fce36a6d7a90a"
+      },
+      "daily32": {
+        "cases": 32,
+        "top1": 23,
+        "top5": 31,
+        "top20": 32,
+        "mrr": 0.8368055555555556,
+        "output_sha256": "ea390626ed22f1d4ce5d875d526a5f54da9be02ebadc9a018c8ca5d94115d4c7"
+      },
+      "completion16": {
+        "cases": 16,
+        "top1": 16,
+        "top5": 16,
+        "top20": 16,
+        "mrr": 1.0,
+        "output_sha256": "5762b80d4e24cb1ee32b375892ddb86f61ec74bf4dbce656236e8d44e8ba12a2"
+      },
+      "tatoeba200": {
+        "cases": 200,
+        "top1": 87,
+        "top5": 144,
+        "top20": 162,
+        "mrr": 0.5564069264069265,
+        "output_sha256": "64be752f8ce225daf96da1ddc24943f36f35997b9593643e7de482fdef50ca75"
+      },
+      "public100": {
+        "cases": 100,
+        "top1": 45,
+        "top5": 74,
+        "top20": 87,
+        "mrr": 0.5733495670995671,
+        "output_sha256": "3a8b5fe113b75c62142f8df3119fbec8107ff638af18dc398b0daeeec0aa9e67"
+      },
+      "authored70": {
+        "cases": 70,
+        "top1": 16,
+        "top5": 39,
+        "top20": 48,
+        "mrr": 0.3707658214801072,
+        "output_sha256": "d9739a3129c7b15e6ba644e8206887b5fa840ccd112f541724f2055748b968e5"
+      },
+      "plural": {
+        "cases": 18,
+        "top1": 15,
+        "top5": 18,
+        "top20": 18,
+        "mrr": 0.8888888888888888,
+        "output_sha256": "889b7808c11828b639e63d254862ac707b61a972ebc5c4cd9b96af75e0a6e05d"
+      },
+      "handover": {
+        "cases": 30,
+        "top1": 29,
+        "top5": 30,
+        "top20": 30,
+        "mrr": 0.9833333333333333,
+        "output_sha256": "34adfaab3e4afa81d1f7320ed702038980587cede3bc529a65f6d538e743e021"
+      },
+      "continuous": {
+        "cases": 8,
+        "top1": 8,
+        "top5": 8,
+        "top20": 8,
+        "mrr": 1.0,
+        "output_sha256": "ea7a8f432722044772f74160861900a51605aa894a5b054b880f2ea537113f89"
+      }
+    },
+    "1": {
+      "fresh100": {
+        "cases": 100,
+        "top1": 37,
+        "top5": 63,
+        "top20": 73,
+        "mrr": 0.4776025641025641,
+        "output_sha256": "1c14b68292e140dd216eeece41eddd059ba6213a2d4c13367df9edb39d8ee0fe"
+      },
+      "natural200": {
+        "cases": 200,
+        "top1": 76,
+        "top5": 118,
+        "top20": 138,
+        "mrr": 0.4643198858889648,
+        "output_sha256": "067d5e34ea3167608842ae51d5c6fca9edbb110906f43165890b2431850a1cee"
+      },
+      "authored120": {
+        "cases": 120,
+        "top1": 74,
+        "top5": 85,
+        "top20": 98,
+        "mrr": 0.6620039682539682,
+        "output_sha256": "c5f46b6d60857e8e9cb4dd298364534d3f6dce437239148a261fae944db80af0"
+      },
+      "old600": {
+        "cases": 600,
+        "top1": 291,
+        "top5": 432,
+        "top20": 483,
+        "mrr": 0.5903962070065011,
+        "output_sha256": "c00f73fc0b10db66a9984896db8b24cba7489d790ca031722fd44ce36ee5b994"
+      },
+      "daily32": {
+        "cases": 32,
+        "top1": 23,
+        "top5": 31,
+        "top20": 32,
+        "mrr": 0.8377976190476191,
+        "output_sha256": "99ee328c91c09757d1c1a8f8909495fe65c3cb9e6e8cd73efe1781066f34c3c2"
+      },
+      "completion16": {
+        "cases": 16,
+        "top1": 16,
+        "top5": 16,
+        "top20": 16,
+        "mrr": 1.0,
+        "output_sha256": "60a056e78f8e194be1e6e46c4047ee99acad07ecc7a0f207ee65cffdd397caa2"
+      },
+      "tatoeba200": {
+        "cases": 200,
+        "top1": 88,
+        "top5": 143,
+        "top20": 164,
+        "mrr": 0.5594022525676937,
+        "output_sha256": "5eb7b295f3311425ac7ff229bedd0f28fcb652b693d62b54a4e229bf8303fefc"
+      },
+      "public100": {
+        "cases": 100,
+        "top1": 45,
+        "top5": 74,
+        "top20": 87,
+        "mrr": 0.5721457241588821,
+        "output_sha256": "4518a226ffae4f3b24d5bbf468c58bc7c4c368395d1e93629a1ca77224cd3842"
+      },
+      "authored70": {
+        "cases": 70,
+        "top1": 16,
+        "top5": 39,
+        "top20": 48,
+        "mrr": 0.3731467738610596,
+        "output_sha256": "6b36ff4af8528cc83f448716ae4a38e8653ed53b932a2daf016208ca21f634a9"
+      },
+      "plural": {
+        "cases": 18,
+        "top1": 15,
+        "top5": 18,
+        "top20": 18,
+        "mrr": 0.8888888888888888,
+        "output_sha256": "78e995a6bbb9b2265f3c41c9b95bf263f914dc66964cabab522163c92ef75708"
+      },
+      "handover": {
+        "cases": 30,
+        "top1": 29,
+        "top5": 30,
+        "top20": 30,
+        "mrr": 0.9833333333333333,
+        "output_sha256": "31884015748599d0825a379a57c41745736f1848eb0af4aad19429efe90374e8"
+      },
+      "continuous": {
+        "cases": 8,
+        "top1": 8,
+        "top5": 8,
+        "top20": 8,
+        "mrr": 1.0,
+        "output_sha256": "4bc29dcd16c565dadbddddf81f278c4144ef5bacb84124d0a6ddd595ae6583e4"
+      }
+    },
+    "1.5": {
+      "fresh100": {
+        "cases": 100,
+        "top1": 38,
+        "top5": 64,
+        "top20": 73,
+        "mrr": 0.4851442307692308,
+        "output_sha256": "ef5ca5a2a5fd203f315ed855ade02faa4a018fd34db14d447056c1f44efefd65"
+      },
+      "natural200": {
+        "cases": 200,
+        "top1": 74,
+        "top5": 119,
+        "top20": 139,
+        "mrr": 0.4600497393688183,
+        "output_sha256": "fc8ad527c47152b77477b17a92d340f1c9b6e1c60e57398bfb2307f523cb3eed"
+      },
+      "authored120": {
+        "cases": 120,
+        "top1": 74,
+        "top5": 85,
+        "top20": 98,
+        "mrr": 0.6615873015873016,
+        "output_sha256": "185fe8ae23353215af42cec527bd63dc2d869a00d5cfae9b72a5ebc55af29213"
+      },
+      "old600": {
+        "cases": 600,
+        "top1": 291,
+        "top5": 432,
+        "top20": 484,
+        "mrr": 0.5904144903299315,
+        "output_sha256": "2d7e39606635661bf173a4ff95b011c9fc21a5abba920cb3e56301fe73719ce8"
+      },
+      "daily32": {
+        "cases": 32,
+        "top1": 23,
+        "top5": 32,
+        "top20": 32,
+        "mrr": 0.8395833333333333,
+        "output_sha256": "4c28c445c41fcc3d71bbd66091b1433a62e82682cbcc43516fda588416cc647f"
+      },
+      "completion16": {
+        "cases": 16,
+        "top1": 16,
+        "top5": 16,
+        "top20": 16,
+        "mrr": 1.0,
+        "output_sha256": "4ed96ed471f7769d0deb6d854d71b661c8af2e831a8b7ff851a39ba37a3ab56b"
+      },
+      "tatoeba200": {
+        "cases": 200,
+        "top1": 88,
+        "top5": 143,
+        "top20": 165,
+        "mrr": 0.559844712885154,
+        "output_sha256": "f1a4a9203e429e1d5c00078c00d9082140dca4cfb7520648026073a29bda2b83"
+      },
+      "public100": {
+        "cases": 100,
+        "top1": 45,
+        "top5": 74,
+        "top20": 86,
+        "mrr": 0.572853896103896,
+        "output_sha256": "89eb5a9274c1924e757b8f51ed54891274fa8f08ee2dfcde1097e0e7bd56b95a"
+      },
+      "authored70": {
+        "cases": 70,
+        "top1": 16,
+        "top5": 40,
+        "top20": 48,
+        "mrr": 0.3754421768707483,
+        "output_sha256": "4d34fb41d8fda391436ee016be0a08cef4987128fdd7bf14a4dc5f3e72611b2e"
+      },
+      "plural": {
+        "cases": 18,
+        "top1": 15,
+        "top5": 18,
+        "top20": 18,
+        "mrr": 0.8888888888888888,
+        "output_sha256": "424936b700c0b4f31f6fabcd69328de24a38c35d2444e0c3508435f6037d5707"
+      },
+      "handover": {
+        "cases": 30,
+        "top1": 29,
+        "top5": 30,
+        "top20": 30,
+        "mrr": 0.9833333333333333,
+        "output_sha256": "dd5a2021cdb3fb446dcf43f1386845e4cc2f490ea42965d8a9730ac9ff21f838"
+      },
+      "continuous": {
+        "cases": 8,
+        "top1": 8,
+        "top5": 8,
+        "top20": 8,
+        "mrr": 1.0,
+        "output_sha256": "f0b5875e65ebf0e2714d6d8473f98fe47e355533e648dd8c55a4a246b42b94f9"
+      }
+    }
+  },
+  "eligible_strengths": [
+    0.25
+  ],
+  "trial_scored_sha256": "e0732688715c30969bd2c429b73bddfc4418398961f1c99a4c0f2561d69f72c8",
+  "protocol_sha256": "d8c37d5ca06d67364ad07cd060d7994c1b142619499d07d12d8a74dcdf6b60f5",
+  "use": "Previously inspected guards are now calibration/regression data; selection must precede the unused reserve2 outcomes."
+}

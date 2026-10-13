@@ -3,7 +3,7 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from sentence_features import features, role
+from sentence_features import features, role, long_features
 from train_sentence_ranker import encode, correction, stored_weights, read_pairs
 from prepare_sentence_ranking import DATA, prepare, prepare_followup
 from prepare_tatoeba_corpus import digest
@@ -34,6 +34,15 @@ class SentenceRankingTest(unittest.TestCase):
         self.assertEqual(encode(a), encode(dict(reversed(list(a.items())))))
         self.assertEqual(correction(a, '', '研究一下研究一下'), 3)
         self.assertEqual(correction(a, '', '研究一下', 0), 0)
+
+    def test_long_relations_use_short_units_and_reset_across_punctuation(self):
+        self.assertIn('L|交|m|功課', features('', '你交咗所有功課未', 3))
+        self.assertIn('L|你|l|未', features('', '你交咗所有嗰啲功課未', 3))
+        self.assertNotIn('L|交|m|功課', features('', '你交咗所有功課未', 2))
+        self.assertEqual(long_features('你交咗所有，', '功課'), {})
+        self.assertEqual(long_features('你交咗所有', 'abc功課'), {})
+        self.assertTrue(all(len(part)<=2 for f in long_features('', '你交咗所有功課未')
+                            if f.startswith('L|') for part in (f.split('|')[1],f.split('|')[3])))
 
     def test_frozen_cases_are_reachable_and_sources_disjoint(self):
         m = json.loads((DATA / 'manifest.json').read_text()); reverse = reverse_codes()

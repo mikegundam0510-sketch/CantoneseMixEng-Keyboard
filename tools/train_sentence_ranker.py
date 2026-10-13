@@ -20,7 +20,7 @@ DATA = ROOT / 'tools/data/sentence_ranking'
 def encode(weights, strength=1, role_schema=2):
     if not math.isfinite(strength) or not 0 <= strength <= 2: raise ValueError('Invalid strength')
     if len(weights) > 16000: raise ValueError('Too many features')
-    if role_schema not in (1, 2): raise ValueError('Invalid role schema')
+    if role_schema not in (1, 2, 3): raise ValueError('Invalid role schema')
     payload = struct.pack('>IIIff', 0x53524b32, len(weights), role_schema, strength, 3)
     for key, value in sorted(weights.items()):
         encoded = key.encode('utf-8')
@@ -32,9 +32,27 @@ def encode(weights, strength=1, role_schema=2):
 def stored_weights(weights): return {k: struct.unpack('>f', struct.pack('>f', v))[0] for k, v in weights.items()}
 
 
-def correction(weights, context, text, strength=1, role_schema=2):
-    total = sum(count * weights.get(key, 0) for key, count in features(context, text, role_schema).items())
-    return strength * max(-3, min(3, total))
+def correction(weights, context, text, strength=1, role_schema=2, long_strength=None):
+    values=features(context,text,role_schema)
+    if long_strength is None:
+        total = sum(count * weights.get(key, 0) for key, count in values.items())
+        return strength * max(-3, min(3, total))
+    local=sum(count*weights.get(key,0) for key,count in values.items() if not key.startswith(('L|','J|')))
+    longer=sum(count*weights.get(key,0) for key,count in values.items() if key.startswith(('L|','J|')))
+    return strength*max(-3,min(3,local))+max(0,long_strength*max(-1.5,min(1.5,longer))-.1)
+
+
+def encode_additive(weights, base_strength=1.5, long_strength=1):
+    if not 0<=base_strength<=2 or not 0<=long_strength<=2:raise ValueError('Invalid strengths')
+    # SRK3 retains SRK2 loading compatibility in the runtime and freezes the
+    # original short-feature correction independently of the added relations.
+    payload=struct.pack('>IIIffff',0x53524b33,len(weights),3,base_strength,3,long_strength,1.5)
+    if len(weights)>16000:raise ValueError('Too many features')
+    for key,value in sorted(weights.items()):
+        encoded=key.encode('utf-8')
+        if not 3<=len(encoded)<=64 or not math.isfinite(value) or abs(value)>1.5:raise ValueError('Invalid feature')
+        payload+=struct.pack('>H',len(encoded))+encoded+struct.pack('>f',value)
+    return base64.encodebytes(gzip.compress(payload,mtime=0))
 
 
 def read_pairs(scored, corpus_path, data=DATA):
@@ -80,7 +98,7 @@ def read_pairs(scored, corpus_path, data=DATA):
         if not valid: raise ValueError('Non-training or misattributed source: ' + source)
         values = candidates.split('|') if candidates else []
         numbers = [float.fromhex(s) for s in scores.split('|')] if scores else []
-        if len(values) != len(numbers) or len(values) > 20 or len(set(values)) != len(values) \
+        if len(values) != len(numbers) or len(values) > manifest.get('candidate_pool_limit',20) or len(set(values)) != len(values) \
                 or any(not math.isfinite(s) for s in numbers): raise ValueError('Invalid candidates/scores')
         if any(not matches(code, value, reverse) for value in [gold] + values): raise ValueError('Inexact candidate')
         position = values.index(gold) if gold in values else -1
@@ -98,8 +116,8 @@ def read_pairs(scored, corpus_path, data=DATA):
                    'manifest_sha256': digest(data / 'manifest.json'), 'parameters': protocol['parameters']}
 
 
-def train(scored, output, corpus_path, role_schema=2):
-    pairs, report = read_pairs(scored, corpus_path)
+def train(scored, output, corpus_path, role_schema=2, data=DATA):
+    pairs, report = read_pairs(scored, corpus_path, data)
     p = report['parameters']
     weights, metrics = learn(pairs, epochs=p['epochs'], rate=p['rate'], l2=p['l2'],
                             min_count=p['minimum_independent_support'], maximum_features=p['maximum_features'],
@@ -109,7 +127,7 @@ def train(scored, output, corpus_path, role_schema=2):
     (output / 'weights.json').write_text(json.dumps(weights, ensure_ascii=False, sort_keys=True) + '\n')
     (output / 'sentence_ranker.b64').write_bytes(encode(weights, role_schema=role_schema))
     report.update({'algorithm': 'Whole-candidate residual pairwise logistic ranker with actual decoder path margins',
-                   'baseline_revision': json.loads((DATA / 'protocol.json').read_text())['baseline_revision'],
+                   'baseline_revision': json.loads((data / 'protocol.json').read_text())['baseline_revision'],
                    'training': metrics, 'feature_count': len(weights), 'candidate_correction_limit': 3,
                    'base_model_sha256': digest(ROOT / 'app/src/main/assets/language_model.b64'),
                    'role_schema': role_schema,
@@ -122,5 +140,6 @@ def train(scored, output, corpus_path, role_schema=2):
 if __name__ == '__main__':
     p = argparse.ArgumentParser(description=__doc__); p.add_argument('scored', type=Path); p.add_argument('output', type=Path)
     p.add_argument('--corpus', type=Path, required=True)
-    p.add_argument('--role-schema', type=int, choices=(1,2), default=2)
-    a = p.parse_args(); train(a.scored, a.output, a.corpus, a.role_schema)
+    p.add_argument('--role-schema', type=int, choices=(1,2,3), default=2)
+    p.add_argument('--data', type=Path, default=DATA)
+    a = p.parse_args(); train(a.scored, a.output, a.corpus, a.role_schema, a.data)

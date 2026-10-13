@@ -1,0 +1,7 @@
+{
+  "reason": "All12 calibration sets have identical top1/top5/top20 and MRR to final-pool-only at eligible strength0.25; extra search work brings no measured benefit.",
+  "source_sha256": "a879f32ffceda79cd3965ef707ecdaa83623b557514cf19c77b330cc9ab3fbde",
+  "trial_scores_sha256": "2d6da589cc2340851d9fd9c19699e81c6028e250cf79f82f1db15df4bd3e0ef5",
+  "policy": "Original48+8 retained, at most32 discarded close paths examined, two attested suffix hints, signed long lift>0.1 at0.25strength, up to4 distinct12-Han histories added.",
+  "model_sha256": "3d6e6c3d73be95ab4366bda0eeb9fcf3ad01aca931f53cb651144f21bbbc28a8"
+}

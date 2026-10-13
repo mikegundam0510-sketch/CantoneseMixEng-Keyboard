@@ -8,6 +8,9 @@ import java.util.function.ToIntFunction;
 /** Bounded offline word-lattice decoder, including one-code Quick characters. */
 public final class QuickDecoder {
     private static final int BEAM = 48;
+    // Only the completed boundary receives this wider pool; ordinary beam
+    // widths and the confidence margin remain bounded as before.
+    private static final int FINAL_POOL = 96;
     private static final int LOOKAHEAD_WORDS = 4, EXTRA_LOOKAHEAD_WORDS = 2, PATH_RESERVE = 8;
     // Selected on separate validation conversations, before held-out evaluation.
     private static final double SENTENCE_SCORE_MARGIN = 10;
@@ -341,7 +344,8 @@ public final class QuickDecoder {
                     }
                 }
                 if (target.size() > 1024) lattice.set(pos + length,
-                    prune(target, context, following.get(pos + length), modelScores));
+                    pos + length == code.length() && sentenceRanker != null
+                        ? pruneFinal(target) : prune(target, context, following.get(pos + length), modelScores));
             }
         }
         List<String> result = new ArrayList<>();
@@ -360,7 +364,7 @@ public final class QuickDecoder {
             if (!dictionary.matchQuickCodes(code, token.text).isEmpty() && !result.contains(token.text)) result.add(token.text);
             if (result.size() == 5) break;
         }
-        List<Path> completed = prune(lattice.get(code.length()));
+        List<Path> completed = pruneFinal(lattice.get(code.length()));
         double bestScore = completed.isEmpty() ? Double.NEGATIVE_INFINITY : completed.get(0).score;
         for (Path path : completed) {
             // A score gap is uncertainty, not proof that unfamiliar Chinese is invalid.
@@ -370,10 +374,10 @@ public final class QuickDecoder {
                     && !learnedSequence(code, path.text, learned)
                     && (contextual==null || !ContextLearning.supports(context,InputCandidate.chinese(dictionary,code,path.text),contextual))) continue;
             if (path.text.codePointCount(0, path.text.length()) > 1 && !result.contains(path.text)) result.add(path.text);
-            if (result.size() == 20) break;
+            if (result.size() == (sentenceRanker == null ? 20 : FINAL_POOL)) break;
         }
-        // Rescore only the existing displayed pool. Keep exact codes, confidence
-        // eligibility and personal bonuses from the original path scores.
+        // Correct the bounded, confidence-eligible final pool before its display
+        // cutoff. Exact-code checks and original personal path bonuses still apply.
         if (model != null && sentenceRanker != null && result.size() > 1) {
             Map<String, Double> scores = new HashMap<>();
             for (Path path : completed) if (result.contains(path.text))
@@ -390,6 +394,7 @@ public final class QuickDecoder {
         // the existing context order; only exact, bundled words can be personalized.
         result.sort(Comparator.comparingInt((String text) -> knownWord(text)
             ? learned.applyAsInt(code, text) : 0).reversed());
+        if (result.size() > 20) return new ArrayList<>(result.subList(0, 20));
         return result;
     }
 
@@ -789,6 +794,16 @@ public final class QuickDecoder {
     private static List<Path> prune(List<Path> input) {
         input.sort(Comparator.comparingDouble((Path p) -> p.score).reversed());
         return distinctPaths(input);
+    }
+
+    private List<Path> pruneFinal(List<Path> input) {
+        if (model == null || sentenceRanker == null) return prune(input);
+        input.sort(Comparator.comparingDouble((Path p) -> p.score).reversed());
+        List<Path> result = new ArrayList<>(); Set<String> seen = new HashSet<>();
+        for (Path path : input) if (seen.add(path.text)) {
+            result.add(path); if (result.size() == FINAL_POOL) break;
+        }
+        return result;
     }
 
     private static List<Path> distinctPaths(List<Path> input) {

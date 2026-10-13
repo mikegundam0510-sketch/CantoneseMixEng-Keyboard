@@ -1,6 +1,22 @@
 # Offline model and compact candidates: 0.6.0 source preview
 
-## Whole-candidate correction (unreleased, 2026-10-12)
+## Completed-pool coverage and longer relations (unreleased, 2026-10-13)
+
+The [new comparison](SENTENCE_SEARCH.md) keeps up to96 confidence-eligible
+completed candidates for scoring before displaying20. Ordinary beam48 plus8
+lexical reserves remains unchanged. The previous short correction is frozen;
+a separately fitted, independently capped long-relation channel promotes only
+positively supported combinations above0.1 score. Unknown/negative new evidence
+does not demote an established candidate. This is statistical evidence rather
+than a semantic parser or proof of grammaticality.
+
+The final source improves natural200 first choices76→77 and top20 coverage137→138.
+Existing600 first/top-five remains291/432; top20 drops484→483. Public100 top20
+improves81→85. The final unused reserve100 has unchanged36 first,54 top-five and74
+top20 hits. This is a modest source change, without a demonstrated independent
+first-choice/top-five improvement. Version remains0.6.39/code46, with no new APK.
+
+## Whole-candidate correction (2026-10-12, historical source comparison)
 
 The [sentence-ranking comparison](SENTENCE_RANKING.md) trains a small residual
 scorer on separate HKCanCor/Tatoeba training examples and actual same-code

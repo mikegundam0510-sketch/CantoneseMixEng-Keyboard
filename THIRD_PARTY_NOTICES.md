@@ -108,7 +108,7 @@ contemporary Hong Kong chat-frequency corpus. No private user messages are inclu
 
 ## Whole-candidate sentence correction
 
-`sentence_ranker.b64` derives bounded short, skipped and boundary relation weights
+`sentence_ranker.b64` retains bounded short, skipped and boundary relation weights
 from 800 previously unused pair-training utterances in the same HKCanCor training
 conversations (Luke & Wong, 2015; CC BY 4.0), 600 licensed Tatoeba training families
 (Tatoeba contributors; CC BY 2.0 France), and 240 project-authored scenario variants.
@@ -117,9 +117,16 @@ checked against their full Quick codes. Validation/heldout targets are excluded
 from this new pair-training set; family variants and repeated competitors are
 downweighted. These modifications are not endorsed by the original authors.
 
+The October 13 longer-relation channel uses those training cases plus another
+1,000 HKCanCor training-conversation utterances and 500 Tatoeba training families,
+under the same CC BY 4.0 and CC BY 2.0 France licenses. It relates one/two-character
+units and shared action/marker roles across at most twelve Han positions.
+The prior short weights are retained unchanged. Additional validation/reserve
+utterances are from excluded conversations and do not train either new channel.
+
 The original source notices above remain applicable. Provenance, parameters and
 checksums are recorded in `SENTENCE_RANKER_REPORT.json`; the bundled Tatoeba notice
 also describes this contribution. Training/evaluation material in
-`tools/data/sentence_ranking/` retains those source credits and licenses. It is
+`tools/data/sentence_ranking/` and `tools/data/sentence_search/` retain those source credits and licenses. It is
 public corpus and authored development material, not collected private messages
 or measured contemporary Hong Kong typing frequency.

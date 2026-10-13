@@ -22,6 +22,7 @@ public final class SentenceRankingEvaluation {
                 String original = !values.isEmpty() && Double.valueOf(support[0]) > 0 ? values.remove(0) : null;
                 values.sort(Comparator.comparingDouble((String text) -> scores.get(text)).reversed());
                 if (original != null) values.add(0, original);
+                if(values.size()>20) values=new ArrayList<>(values.subList(0,20));
                 int rank = values.indexOf(f[3]) + 1;
                 out.write(String.join("\t", f[0], f[1], f[2], f[3], Integer.toString(rank), String.join("|", values)) + "\n");
             }

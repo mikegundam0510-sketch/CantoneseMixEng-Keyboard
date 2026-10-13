@@ -14,6 +14,7 @@ from pathlib import Path
 import subprocess
 import tarfile
 import tempfile
+import shutil
 
 ROOT = Path(__file__).resolve().parent.parent
 PACKAGE = 'hk.cantonesemixeng.keyboard'
@@ -27,6 +28,7 @@ public final class DecoderDiagnostics {
   Path assets=Path.of(args[0]);
   DictionaryEngine dictionary=new DictionaryEngine(Files.newBufferedReader(assets.resolve("cangjie5.base.dict.yaml")),Files.newBufferedReader(assets.resolve("english.txt")),Files.newBufferedReader(assets.resolve("character_frequencies.tsv")));
   QuickDecoder decoder=new QuickDecoder(dictionary,Files.newBufferedReader(assets.resolve("quick_phrases.tsv")),Files.newBufferedReader(assets.resolve("hk_phrases.tsv")),Files.newBufferedReader(assets.resolve("cantonese_phrases.tsv")),OfflineLanguageModel.load(Files.newInputStream(assets.resolve("language_model.b64")))__PHRASE_ARGS__);
+  int count=0;
   try(BufferedWriter out=Files.newBufferedWriter(Path.of(args[2]))) {
    out.write("# context\tcode\ttarget\tdisplayed_rank\traw_final_rank\treason\tcandidates\texact_code\tprefix_events\n");
    for(String line:Files.readAllLines(Path.of(args[1]))) {
@@ -42,6 +44,7 @@ public final class DecoderDiagnostics {
     int rank=candidates.indexOf(fields[2])+1;
     String reason=rank==1?"first":rank>0?"ranked_later":QuickDecoder.diagnosticRawRank>20?"outside_twenty":QuickDecoder.diagnosticRawRank>0?"confidence_filtered":QuickDecoder.diagnosticGenerated?"completed_path_pruned":"not_generated";
     out.write(line+"\t"+rank+"\t"+QuickDecoder.diagnosticRawRank+"\t"+reason+"\t"+String.join("|",candidates)+"\t"+exact+"\t"+String.join(";",QuickDecoder.diagnosticEvents)+"\n");
+    if(++count%50==0)System.out.println("diagnosed="+count);
    }
   }
  }
@@ -50,6 +53,7 @@ public final class DecoderDiagnostics {
 
 
 def instrument(source):
+    extended = 'private List<Path> pruneFinal' in source
     hooks = {
         '    private static final int BEAM = 48;': '''    static String diagnosticTarget = "";
     static boolean diagnosticGenerated;
@@ -58,6 +62,21 @@ def instrument(source):
     private static boolean diagnosticGold(String text) {
         return diagnosticTarget.startsWith(text);
     }
+    if extended:
+        before='        List<Path> completed = prune(lattice.get(code.length()));'
+        after=hooks.pop(before).replace(before,'        List<Path> completed = pruneFinal(lattice.get(code.length()));')
+        hooks['        List<Path> completed = pruneFinal(lattice.get(code.length()));']=after
+        before='''                if (target.size() > 1024) lattice.set(pos + length,
+                    prune(target, context, following.get(pos + length), modelScores));'''
+        hooks.pop(before)
+        hooks['''                if (target.size() > 1024) lattice.set(pos + length,
+                    pos + length == code.length() && sentenceRanker != null
+                        ? pruneFinal(target) : prune(target, context, following.get(pos + length), modelScores));''']='''                if(target.size()>1024) {
+                    List<Path> reduced=pos+length==code.length() && sentenceRanker!=null
+                        ? pruneFinal(target) : prune(target,context,following.get(pos+length),modelScores);
+                    diagnosticBoundary("I",pos+length,target,reduced);
+                    lattice.set(pos+length,reduced);
+                }'''
     private static void diagnosticBoundary(String phase,int pos,List<Path> before,List<Path> after) {
         Set<String> seen=new HashSet<>(),kept=new HashSet<>();
         for(Path path:after)kept.add(path.text);
@@ -101,14 +120,14 @@ def instrument(source):
             diagnosticRawRank=diagnosticSeen.size();break;
         }
         List<Path> completed = prune(lattice.get(code.length()));''',
-        '            List<Path> paths = prune(lattice.get(pos), context, following.get(pos));': '''            List<Path> paths = prune(lattice.get(pos), context, following.get(pos));
+        '            List<Path> paths = prune(lattice.get(pos), context, following.get(pos), modelScores);': '''            List<Path> paths = prune(lattice.get(pos), context, following.get(pos), modelScores);
             diagnosticBoundary("B",pos,lattice.get(pos),paths);
             diagnosticHints(pos,following.get(pos));''',
         '                if (options.isEmpty()) continue;': '''                diagnosticOptions(pos,length,part,paths,options,known);
                 if (options.isEmpty()) continue;''',
         '''                if (target.size() > 1024) lattice.set(pos + length,
-                    prune(target, context, following.get(pos + length)));''': '''                if (target.size() > 1024) {
-                    List<Path> reduced=prune(target,context,following.get(pos+length));
+                    prune(target, context, following.get(pos + length), modelScores));''': '''                if (target.size() > 1024) {
+                    List<Path> reduced=prune(target,context,following.get(pos+length),modelScores);
                     diagnosticBoundary("I",pos+length,target,reduced);
                     lattice.set(pos+length,reduced);
                 }''',
@@ -130,14 +149,19 @@ def main():
     parser.add_argument('--revision', default='HEAD')
     parser.add_argument('--cases', required=True, type=Path)
     parser.add_argument('--output', required=True, type=Path)
+    parser.add_argument('--working-tree', action='store_true', help='Observe tracked working files instead of an archive')
     args = parser.parse_args()
     cases, output = args.cases.resolve(), args.output.resolve()
     revision = subprocess.check_output(['git', 'rev-parse', '--verify', args.revision + '^{commit}'], cwd=ROOT, text=True).strip()
     archive = subprocess.check_output(['git', 'archive', revision, 'app/src/main/java', 'app/src/main/assets'], cwd=ROOT)
     with tempfile.TemporaryDirectory(prefix='decoder-diagnostics-') as directory:
         work = Path(directory)
-        with tarfile.open(fileobj=io.BytesIO(archive)) as data:
-            data.extractall(work, filter='data')
+        if args.working_tree:
+            for name in subprocess.check_output(['git','ls-files','app/src/main/java','app/src/main/assets'],cwd=ROOT,text=True).splitlines():
+                target=work/name;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(ROOT/name,target)
+        else:
+            with tarfile.open(fileobj=io.BytesIO(archive)) as data:
+                data.extractall(work, filter='data')
         engine = work / SOURCE
         engine.write_text(instrument(engine.read_text()), encoding='utf-8')
         driver = work / 'DecoderDiagnostics.java'
@@ -146,6 +170,10 @@ def main():
             phrase_args = ',PhraseLanguageModel.load(Files.newInputStream(assets.resolve("phrase_model.b64"))),Files.newBufferedReader(assets.resolve("hk_chat_phrases.tsv"))'
         if (work / 'app/src/main/java/hk/cantonesemixeng/keyboard/CandidateRanker.java').exists():
             phrase_args += ',CandidateRanker.load(Files.newInputStream(assets.resolve("candidate_ranker.b64")))'
+        if (work / 'app/src/main/assets/word_ranker.b64').exists():
+            phrase_args += ',CandidateRanker.loadWords(Files.newInputStream(assets.resolve("word_ranker.b64")))'
+        if (work / 'app/src/main/assets/sentence_ranker.b64').exists():
+            phrase_args += ',SentenceRanker.load(Files.newInputStream(assets.resolve("sentence_ranker.b64")))'
         driver.write_text(DRIVER.replace('__PHRASE_ARGS__', phrase_args), encoding='utf-8')
         classes = work / 'classes'
         subprocess.run(['javac', '-encoding', 'UTF-8', '-sourcepath', str(work/'app/src/main/java'), '-d', str(classes), str(driver)], check=True)
