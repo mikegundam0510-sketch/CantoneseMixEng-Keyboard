@@ -30,7 +30,9 @@ public final class RankingEvaluation {
                 ? CandidateRanker.loadWords(Files.newInputStream(assets.resolve("word_ranker.b64"))) : null,
             args.length > 4 ? Double.parseDouble(args[4]) : QuickDecoder.CLAUSE_START_STRENGTH,
             variant.equals("full") && Files.exists(assets.resolve("sentence_ranker.b64"))
-                ? SentenceRanker.load(Files.newInputStream(assets.resolve("sentence_ranker.b64"))) : null);
+                ? SentenceRanker.load(Files.newInputStream(assets.resolve("sentence_ranker.b64"))) : null,
+            variant.equals("full") && Files.exists(assets.resolve("prefix_ranker.b64"))
+                ? PrefixRanker.load(Files.newInputStream(assets.resolve("prefix_ranker.b64"))) : null);
         int count = 0, top1 = 0, top5 = 0, reachable = 0;
         double reciprocalRank = 0;
         long started = System.nanoTime();

@@ -1,0 +1,14 @@
+words.hk reviewed public dictionary examples — evaluation only
+
+Copyright (c) 2015-2022, Hong Kong Lexicography Limited.
+Source: https://words.hk/ and the public sample CSV in
+https://github.com/AlienKevin/wordshk-tools/blob/master/examples/wordshk.csv
+Data license: Non-Commercial Open Data License1.0; see LICENSE-EXAMPLES.txt.
+The parser/library MIT license is not the dictionary data license.
+
+This project selected public/OK-reviewed entries, removed pronunciation and
+markup, retained NFC glyphs and omitted internal commas for Han composition.
+Headword, duplicate and one-edit families are grouped before selection.
+Examples are held-out evaluation/development material, never model training,
+never bundled in the APK. They are dictionary usage examples, not private
+messages or measured Hong Kong chat/typing frequencies.

@@ -76,11 +76,11 @@ public final class SentenceRanker {
     }
 
     private static boolean roleKey(String text) { return text.length() == 1 && "PNATVOMBX".contains(text); }
-    private static boolean han(int cp) {
+    static boolean han(int cp) {
         for (int i = 0; i < HAN_RANGES.length; i += 2) if (cp >= HAN_RANGES[i] && cp <= HAN_RANGES[i + 1]) return true;
         return false;
     }
-    private static boolean hanText(String text) { return !text.isEmpty() && text.codePoints().allMatch(SentenceRanker::han); }
+    static boolean hanText(String text) { return !text.isEmpty() && text.codePoints().allMatch(SentenceRanker::han); }
     private static boolean oneHan(String text) { return text.codePointCount(0, text.length()) == 1 && hanText(text); }
     private static boolean validKey(String key) {
         String[] p = key.split("\\|", -1);
@@ -104,7 +104,7 @@ public final class SentenceRanker {
         return p[0].equals("D") ? roleKey(p[1]) : p[0].equals("H") && oneHan(p[1]) && MARKERS.contains(p[1]);
     }
 
-    private static String role(int cp, int schema) {
+    static String role(int cp, int schema) {
         if ("我你佢".indexOf(cp) >= 0) return "P";
         if ("唔冇未".indexOf(cp) >= 0) return "N";
         if ("咗緊過".indexOf(cp) >= 0) return "A";

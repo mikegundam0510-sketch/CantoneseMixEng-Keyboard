@@ -1,0 +1,15 @@
+{
+  "training_protocol_sha256": "8e10504bb3506678fdda49cef2beb1f04eee1b9761cd4fb68c027d967e7c9d1a",
+  "initial_selection_sha256": "f2c7e863cb5b9ed79d37a43299ee8a4cd771c8893224adb96f6d322ef4b5a549",
+  "before_heldout_decoding": true,
+  "reason": "Signed pairwise prefix evidence needs a same-code boundary comparison. Initial absolute gating and raw first32 inspection produce only two validation top20 recoveries and no top1/top5 gain. Validation200 and the previous460 now calibrate this revision; independent800 remains closed.",
+  "search": "Retain48+8, raw floor minus4. Cheap positive endpoint/ngram/hint lookup retrieves at most32 novel close histories for full score. Require candidate-minus-core-boundary evidence>0.25; unknown endpoints receive no proposal. Add at most4. Raw/final scores and personal learning unchanged.",
+  "strength_grid": [
+    0.25,
+    0.5,
+    1,
+    1.5
+  ],
+  "selection": "Same no top1/top5 drop per validation set and equal-set MRR objective; guard first/top5 checks before independent800. No test-driven retuning.",
+  "release": "Original five-percentage-point gates on800 and799, regressions and quiet warmed latency<=1.2 remain."
+}

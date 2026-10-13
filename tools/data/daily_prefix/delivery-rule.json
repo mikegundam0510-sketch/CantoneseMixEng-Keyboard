@@ -1,0 +1,6 @@
+{
+  "before_independent_test": true,
+  "candidate_policy": "Relative proposal reserve selected on calibration; initial absolute policy is a diagnostic comparison only.",
+  "include_app_asset": "Only if existing first/top5 guards pass, independent799 has a first or top-five gain with neither metric worse, and quiet warmed latency ratio<=1.2. Mere tail coverage without any independent first/top5 gain is not enough to activate added work on every keystroke.",
+  "release_major": "The existing protocol five-percentage-point first/top5 thresholds remain; no physical Fold7 claim without a device trial."
+}

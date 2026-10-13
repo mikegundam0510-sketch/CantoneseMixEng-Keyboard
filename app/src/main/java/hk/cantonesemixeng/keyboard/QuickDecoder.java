@@ -33,6 +33,7 @@ public final class QuickDecoder {
     private final CandidateRanker candidateRanker;
     private final CandidateRanker wordRanker;
     private final SentenceRanker sentenceRanker;
+    private final PrefixRanker prefixRanker;
     private final double clauseStartStrength;
     // Common HK particles can have low character-only corpus counts. Admit
     // these into the same bounded contextual reserve, rather than promoting
@@ -114,14 +115,29 @@ public final class QuickDecoder {
     }
     public QuickDecoder(DictionaryEngine dictionary, Reader input, Reader hkInput, Reader cantoneseInput,
                         OfflineLanguageModel model, PhraseLanguageModel phraseModel, Reader chatInput,
+                        CandidateRanker candidateRanker, CandidateRanker wordRanker, SentenceRanker sentenceRanker,
+                        PrefixRanker prefixRanker) throws IOException {
+        this(dictionary,input,hkInput,cantoneseInput,model,phraseModel,chatInput,candidateRanker,
+            wordRanker,CLAUSE_START_STRENGTH,sentenceRanker,prefixRanker);
+    }
+    public QuickDecoder(DictionaryEngine dictionary, Reader input, Reader hkInput, Reader cantoneseInput,
+                        OfflineLanguageModel model, PhraseLanguageModel phraseModel, Reader chatInput,
                         CandidateRanker candidateRanker, CandidateRanker wordRanker, double clauseStartStrength,
                         SentenceRanker sentenceRanker) throws IOException {
+        this(dictionary,input,hkInput,cantoneseInput,model,phraseModel,chatInput,candidateRanker,
+            wordRanker,clauseStartStrength,sentenceRanker,null);
+    }
+    public QuickDecoder(DictionaryEngine dictionary, Reader input, Reader hkInput, Reader cantoneseInput,
+                        OfflineLanguageModel model, PhraseLanguageModel phraseModel, Reader chatInput,
+                        CandidateRanker candidateRanker, CandidateRanker wordRanker, double clauseStartStrength,
+                        SentenceRanker sentenceRanker, PrefixRanker prefixRanker) throws IOException {
         if (!Double.isFinite(clauseStartStrength) || clauseStartStrength < 0 || clauseStartStrength > 2)
             throw new IllegalArgumentException("Invalid clause-start strength");
         this.dictionary = dictionary; this.model = model; this.phraseModel = phraseModel;
         this.candidateRanker = candidateRanker;
         this.wordRanker = wordRanker;
         this.sentenceRanker = sentenceRanker;
+        this.prefixRanker = prefixRanker;
         this.clauseStartStrength = clauseStartStrength;
         // Merge duplicate code variants and sources before creating prediction tails.
         // The trained model still replaces fallback pair statistics entirely.
@@ -722,7 +738,10 @@ public final class QuickDecoder {
     }
 
     private List<Path> prune(List<Path> input, String context, List<Token> following, ModelScoreCache modelScores) {
-        if (following.isEmpty() || input.size() <= BEAM) return prune(input);
+        if (following.isEmpty() || input.size() <= BEAM) {
+            List<Path> result=prune(input);
+            return reservePrefixes(input,result,context,following,null);
+        }
         Map<String, double[]> cached = new HashMap<>();
         Map<Path, Double> scores = new IdentityHashMap<>();
         Map<Path, Double> alternatives = new IdentityHashMap<>();
@@ -769,6 +788,45 @@ public final class QuickDecoder {
             if (!histories.add(OfflineLanguageModel.contextTail(context + path.text))) continue;
             result.add(path);
             if (result.size() == BEAM + PATH_RESERVE) break;
+        }
+        return reservePrefixes(input,result,context,following,scores);
+    }
+
+    /** Keep the existing beam/reserve intact; add at most four supported close histories. */
+    private List<Path> reservePrefixes(List<Path> input,List<Path> result,String context,
+            List<Token> following,Map<Path,Double> baselineScores) {
+        if(prefixRanker==null||result.size()<BEAM||input.size()<=result.size())return result;
+        double floor=result.get(BEAM-1).score-4;
+        Set<String> seen=new HashSet<>(),histories=new HashSet<>();
+        for(Path p:result){seen.add(p.text);histories.add(PrefixRanker.tail(context+p.text));}
+        List<String> hints=new ArrayList<>();for(Token t:following)hints.add(t.text);
+        Map<String,Double> cache=new HashMap<>();Map<Path,Double> proposals=new IdentityHashMap<>();
+        Set<String> proposed=new HashSet<>();
+        for(Path p:input) {
+            if(p.score<floor||seen.contains(p.text))continue;
+            String history=PrefixRanker.tail(context+p.text);
+            if(histories.contains(history)||!proposed.add(history))continue;
+            int count=history.codePointCount(0,history.length());
+            String endpoint=history.substring(history.offsetByCodePoints(0,Math.max(0,count-3)));
+            double evidence=cache.computeIfAbsent(endpoint,k->prefixRanker.proposal(k,hints));
+            // Unknown endpoints cannot be promoted just because another path has negative evidence.
+            if(evidence>0)proposals.put(p,(baselineScores==null?p.score:baselineScores.get(p))+evidence);
+        }
+        List<Path> candidates=new ArrayList<>(proposals.keySet());
+        candidates.sort(Comparator.comparingDouble((Path p)->proposals.get(p)).reversed().thenComparing(p->p.text));
+        Path boundary=result.get(BEAM-1);
+        double reference=prefixRanker.correction(context,boundary.text,hints);
+        Map<Path,Double> scores=new IdentityHashMap<>();
+        for(int i=0;i<Math.min(32,candidates.size());i++) {
+            Path p=candidates.get(i);
+            double evidence=prefixRanker.correction(context,p.text,hints)-reference;
+            if(evidence>.25)scores.put(p,(baselineScores==null?p.score:baselineScores.get(p))+evidence);
+        }
+        candidates=new ArrayList<>(scores.keySet());
+        candidates.sort(Comparator.comparingDouble((Path p)->scores.get(p)).reversed().thenComparing(p->p.text));
+        int added=0;
+        for(Path p:candidates)if(histories.add(PrefixRanker.tail(context+p.text))) {
+            result.add(p);if(++added==4)break;
         }
         return result;
     }

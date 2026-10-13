@@ -130,3 +130,25 @@ also describes this contribution. Training/evaluation material in
 `tools/data/sentence_ranking/` and `tools/data/sentence_search/` retain those source credits and licenses. It is
 public corpus and authored development material, not collected private messages
 or measured contemporary Hong Kong typing frequency.
+
+## Search-prefix experiment and dictionary-example evaluation
+
+The prefix experiment in `tools/data/daily_prefix/` reuses2,529 filtered cases from
+the attributed HKCanCor/Tatoeba/project-authored training sets above, plus552
+project-authored daily variants. Same-code prefix rivals and actual baseline
+score margins train bounded short/end/hint features, with independent support
+from conversation, translation and authored template families. Those original
+CC BY4.0 and CC BY2.0 France attributions remain applicable; source contributions
+and checksums are preserved in the training manifest and report. No private phone
+messages are included.
+
+The1,000 validation/reserved human dictionary examples are copyright2015–2022
+Hong Kong Lexicography Limited, from words.hk and the public sample CSV mirrored
+in AlienKevin/wordshk-tools. They use the **Non-Commercial Open Data License1.0**;
+the mirror parser's MIT license does not license this dictionary data. The full
+license, source link, transformations and evaluation-only scope are preserved in
+`tools/data/daily_prefix/LICENSE-EXAMPLES.txt` and `NOTICE.txt`. Only public,
+reviewed examples are used. They never train these weights or enter the APK.
+The separately imported words.hk public-domain frequency exports keep their
+existing, separate attribution and scope. This experiment establishes no measured
+current Hong Kong typing frequency or publisher endorsement.

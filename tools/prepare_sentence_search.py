@@ -15,6 +15,12 @@ from train_language_model import corpus, chunks
 from train_phrase_model import ROOT, ASSETS, reverse_codes
 
 DATA = ROOT / 'tools/data/sentence_search'
+PRIOR_SNAPSHOT = '241803b'
+
+def frozen_prior_paths():
+    tracked=set(subprocess.check_output(['git','ls-tree','-r','--name-only',PRIOR_SNAPSHOT],cwd=ROOT,text=True).splitlines())
+    return [p for p in list(ROOT.glob('tools/data/**/*.tsv'))+list(ROOT.glob('tools/*cases.tsv'))
+            if str(p.relative_to(ROOT)) in tracked]
 
 
 def hashed(text):
@@ -29,7 +35,7 @@ def prepare(source, output=DATA):
         raise ValueError('Pinned corpus required')
     reverse = reverse_codes()
     prior = set((ROOT / 'tools/data/hk_chat_cases/prior_targets.txt').read_text().splitlines())
-    inputs = list(ROOT.glob('tools/data/**/*.tsv')) + list(ROOT.glob('tools/*cases.tsv'))
+    inputs = frozen_prior_paths()
     excluded_hashes = {}
     for path in sorted(inputs):
         if path.parent == DATA or path.parent == output:
@@ -113,7 +119,7 @@ def prepare_reserve(source, output=DATA):
     old=json.loads((DATA/'manifest.json').read_text())
     if digest(source)!=old['hkcancor_sha256']:raise ValueError('Pinned corpus required')
     excluded=set((ROOT/'tools/data/hk_chat_cases/prior_targets.txt').read_text().splitlines())
-    for path in list(ROOT.glob('tools/data/**/*.tsv'))+list(ROOT.glob('tools/*cases.tsv')):
+    for path in frozen_prior_paths():
         if path.name=='reserve.tsv' and path.parent in (DATA,output):continue
         for line in path.read_text().splitlines():
             if not line or line.startswith('#'):continue

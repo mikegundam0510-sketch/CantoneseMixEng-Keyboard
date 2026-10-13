@@ -1,0 +1,38 @@
+{
+  "before": {
+    "written800": {
+      "cases": 800,
+      "top1": 178,
+      "top5": 316,
+      "top20": 399,
+      "mrr": 0.29971885143150623
+    },
+    "written799": {
+      "cases": 799,
+      "top1": 177,
+      "top5": 315,
+      "top20": 398,
+      "mrr": 0.29884240443705257
+    }
+  },
+  "after": {
+    "written800": {
+      "cases": 800,
+      "top1": 178,
+      "top5": 317,
+      "top20": 401,
+      "mrr": 0.300198559223714
+    },
+    "written799": {
+      "cases": 799,
+      "top1": 177,
+      "top5": 316,
+      "top20": 400,
+      "mrr": 0.2993227126144821
+    }
+  },
+  "selected_strength": 0.25,
+  "selection_sha256": "3b5dd4f45f9e74e686a44058953e201d2b856f606ff6c5d56f811dc445103f10",
+  "cases_sha256": "8e5f578671a64f4dbe685cb28024e2dd132e4b6f1e1987f9faf016e5521ce2de",
+  "exposure_audit_sha256": "c4f6e6abd80a0282f0e5634bb8553431fb979781c27e5a7146480b3f7a7dbba8"
+}

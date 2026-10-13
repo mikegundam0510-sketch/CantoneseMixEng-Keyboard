@@ -1,0 +1,171 @@
+{
+  "baseline": {
+    "written200": {
+      "cases": 200,
+      "top1": 46,
+      "top5": 78,
+      "top20": 106,
+      "mrr": 0.30639596952754844
+    },
+    "authored60": {
+      "cases": 60,
+      "top1": 27,
+      "top5": 48,
+      "top20": 60,
+      "mrr": 0.5801404151404151
+    },
+    "natural200": {
+      "cases": 200,
+      "top1": 80,
+      "top5": 117,
+      "top20": 140,
+      "mrr": 0.4820719463285253
+    },
+    "public200": {
+      "cases": 200,
+      "top1": 77,
+      "top5": 131,
+      "top20": 153,
+      "mrr": 0.5102706642772432
+    }
+  },
+  "trials": {
+    "0.25": {
+      "written200": {
+        "cases": 200,
+        "top1": 46,
+        "top5": 78,
+        "top20": 106,
+        "mrr": 0.30639596952754844
+      },
+      "authored60": {
+        "cases": 60,
+        "top1": 27,
+        "top5": 48,
+        "top20": 60,
+        "mrr": 0.5801404151404151
+      },
+      "natural200": {
+        "cases": 200,
+        "top1": 80,
+        "top5": 117,
+        "top20": 140,
+        "mrr": 0.4820719463285253
+      },
+      "public200": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 131,
+        "top20": 154,
+        "mrr": 0.5107252097317887
+      }
+    },
+    "0.5": {
+      "written200": {
+        "cases": 200,
+        "top1": 46,
+        "top5": 78,
+        "top20": 106,
+        "mrr": 0.30639596952754844
+      },
+      "authored60": {
+        "cases": 60,
+        "top1": 27,
+        "top5": 48,
+        "top20": 60,
+        "mrr": 0.5801404151404151
+      },
+      "natural200": {
+        "cases": 200,
+        "top1": 80,
+        "top5": 117,
+        "top20": 140,
+        "mrr": 0.4820719463285253
+      },
+      "public200": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 131,
+        "top20": 154,
+        "mrr": 0.5107252097317887
+      }
+    },
+    "1": {
+      "written200": {
+        "cases": 200,
+        "top1": 46,
+        "top5": 78,
+        "top20": 106,
+        "mrr": 0.30639596952754844
+      },
+      "authored60": {
+        "cases": 60,
+        "top1": 27,
+        "top5": 48,
+        "top20": 60,
+        "mrr": 0.5801404151404151
+      },
+      "natural200": {
+        "cases": 200,
+        "top1": 80,
+        "top5": 117,
+        "top20": 140,
+        "mrr": 0.4820719463285253
+      },
+      "public200": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 131,
+        "top20": 154,
+        "mrr": 0.5107252097317887
+      }
+    },
+    "1.5": {
+      "written200": {
+        "cases": 200,
+        "top1": 46,
+        "top5": 78,
+        "top20": 106,
+        "mrr": 0.30639596952754844
+      },
+      "authored60": {
+        "cases": 60,
+        "top1": 27,
+        "top5": 48,
+        "top20": 60,
+        "mrr": 0.5801404151404151
+      },
+      "natural200": {
+        "cases": 200,
+        "top1": 80,
+        "top5": 117,
+        "top20": 140,
+        "mrr": 0.4820719463285253
+      },
+      "public200": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 131,
+        "top20": 154,
+        "mrr": 0.5107252097317887
+      }
+    }
+  },
+  "eligible": [
+    0.25,
+    0.5,
+    1,
+    1.5
+  ],
+  "selected_strength": 0.25,
+  "protocol_sha256": "8e10504bb3506678fdda49cef2beb1f04eee1b9761cd4fb68c027d967e7c9d1a",
+  "weights_sha256": "19288d2c6a09879de7e2554462cfeef30afab3bfb471ca9b075238be05fef1f3",
+  "validation_cases_sha256": "34d0dd7a55f838afae86951023ecd0c4507a36a3628acaf58d0d6790859dd9a5",
+  "selection_before_heldout": true,
+  "search_policy_sha256": "1d4a73d2ce5e7b5dba1a30ef3849ce9742d817a5708e943fb6bce9700cba6e16",
+  "runtime_source_sha256": {
+    "QuickDecoder": "65818ea5189de5632dc50bfeeb8cb229bcb110dcf82f4e17e8a86232dda7bc49",
+    "PrefixRanker": "7a110b8e8c27a058540024ed070f0438025e82b7f6c6e599183b929cce08c787"
+  },
+  "validation_role": "Calibration after the first policy outcomes; independent800 remains unopened."
+}

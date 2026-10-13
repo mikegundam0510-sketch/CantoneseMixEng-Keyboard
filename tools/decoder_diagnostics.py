@@ -62,21 +62,6 @@ def instrument(source):
     private static boolean diagnosticGold(String text) {
         return diagnosticTarget.startsWith(text);
     }
-    if extended:
-        before='        List<Path> completed = prune(lattice.get(code.length()));'
-        after=hooks.pop(before).replace(before,'        List<Path> completed = pruneFinal(lattice.get(code.length()));')
-        hooks['        List<Path> completed = pruneFinal(lattice.get(code.length()));']=after
-        before='''                if (target.size() > 1024) lattice.set(pos + length,
-                    prune(target, context, following.get(pos + length), modelScores));'''
-        hooks.pop(before)
-        hooks['''                if (target.size() > 1024) lattice.set(pos + length,
-                    pos + length == code.length() && sentenceRanker != null
-                        ? pruneFinal(target) : prune(target, context, following.get(pos + length), modelScores));''']='''                if(target.size()>1024) {
-                    List<Path> reduced=pos+length==code.length() && sentenceRanker!=null
-                        ? pruneFinal(target) : prune(target,context,following.get(pos+length),modelScores);
-                    diagnosticBoundary("I",pos+length,target,reduced);
-                    lattice.set(pos+length,reduced);
-                }'''
     private static void diagnosticBoundary(String phase,int pos,List<Path> before,List<Path> after) {
         Set<String> seen=new HashSet<>(),kept=new HashSet<>();
         for(Path path:after)kept.add(path.text);
@@ -134,6 +119,21 @@ def instrument(source):
         '        double bestScore = completed.isEmpty() ? Double.NEGATIVE_INFINITY : completed.get(0).score;': '''        diagnosticBoundary("F",code.length(),lattice.get(code.length()),completed);
         double bestScore = completed.isEmpty() ? Double.NEGATIVE_INFINITY : completed.get(0).score;''',
     }
+    if extended:
+        before='        List<Path> completed = prune(lattice.get(code.length()));'
+        after=hooks.pop(before).replace(before,'        List<Path> completed = pruneFinal(lattice.get(code.length()));')
+        hooks['        List<Path> completed = pruneFinal(lattice.get(code.length()));']=after
+        before='''                if (target.size() > 1024) lattice.set(pos + length,
+                    prune(target, context, following.get(pos + length), modelScores));'''
+        hooks.pop(before)
+        hooks['''                if (target.size() > 1024) lattice.set(pos + length,
+                    pos + length == code.length() && sentenceRanker != null
+                        ? pruneFinal(target) : prune(target, context, following.get(pos + length), modelScores));''']='''                if(target.size()>1024) {
+                    List<Path> reduced=pos+length==code.length() && sentenceRanker!=null
+                        ? pruneFinal(target) : prune(target,context,following.get(pos+length),modelScores);
+                    diagnosticBoundary("I",pos+length,target,reduced);
+                    lattice.set(pos+length,reduced);
+                }'''
     # B = boundary pruning, I = intermediate compaction, F = final pruning.
     # O = exact gold extension and option membership, G = observed generation,
     # H = existing suffix hints. All observers are temporary archive-only hooks.

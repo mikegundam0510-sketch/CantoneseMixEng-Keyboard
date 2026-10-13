@@ -1,0 +1,131 @@
+{
+  "pairs_sha256": "d8a09bcaabdf2707432108298d3d6ae29006badf1219d1af7d6470e1e1e8f78d",
+  "training_sha256": "ed11415794ea8c52b6966d1c59804257d31e0f236f8d3448427e59a2c1ffbfa0",
+  "protocol_sha256": "8e10504bb3506678fdda49cef2beb1f04eee1b9761cd4fb68c027d967e7c9d1a",
+  "pairs": 7632,
+  "families": 721,
+  "model_bytes": 23429,
+  "training": {
+    "epochs": 80,
+    "rate": 0.3,
+    "l2": 0.01,
+    "minimum_independent_target_support": 3,
+    "feature_support_unit": "Distinct corpus conversation, Tatoeba translation-family or project-authored template; rival/checkpoint/slot variants never multiply independent support.",
+    "features_considered": 87804,
+    "features_supported": 2625,
+    "features_exported": 2403,
+    "training_examples": 6712,
+    "initial_logistic_objective": 0.7639920244257502,
+    "final_logistic_objective": 0.6090326049819982,
+    "positive_features": 1105,
+    "negative_features": 1298
+  },
+  "purpose": "Search survival only; actual baseline pruning margins; no words.hk dictionary examples in training; no full-sentence features.",
+  "selected_strength": 0.25,
+  "encoded_bytes": 23429,
+  "encoded_sha256": "0929d45aab58f6dc80dc1772d0717ddb24309707425680692cf9fb21d241c811",
+  "runtime_source_sha256": {
+    "QuickDecoder": "65818ea5189de5632dc50bfeeb8cb229bcb110dcf82f4e17e8a86232dda7bc49",
+    "PrefixRanker": "7a110b8e8c27a058540024ed070f0438025e82b7f6c6e599183b929cce08c787"
+  },
+  "selection_sha256": "3b5dd4f45f9e74e686a44058953e201d2b856f606ff6c5d56f811dc445103f10",
+  "search_policy_sha256": "1d4a73d2ce5e7b5dba1a30ef3849ce9742d817a5708e943fb6bce9700cba6e16",
+  "independent_evaluation": {
+    "before": {
+      "written800": {
+        "cases": 800,
+        "top1": 178,
+        "top5": 316,
+        "top20": 399,
+        "mrr": 0.29971885143150623
+      },
+      "written799": {
+        "cases": 799,
+        "top1": 177,
+        "top5": 315,
+        "top20": 398,
+        "mrr": 0.29884240443705257
+      }
+    },
+    "after": {
+      "written800": {
+        "cases": 800,
+        "top1": 178,
+        "top5": 317,
+        "top20": 401,
+        "mrr": 0.300198559223714
+      },
+      "written799": {
+        "cases": 799,
+        "top1": 177,
+        "top5": 316,
+        "top20": 400,
+        "mrr": 0.2993227126144821
+      }
+    },
+    "selected_strength": 0.25,
+    "selection_sha256": "3b5dd4f45f9e74e686a44058953e201d2b856f606ff6c5d56f811dc445103f10",
+    "cases_sha256": "8e5f578671a64f4dbe685cb28024e2dd132e4b6f1e1987f9faf016e5521ce2de",
+    "exposure_audit_sha256": "c4f6e6abd80a0282f0e5634bb8553431fb979781c27e5a7146480b3f7a7dbba8"
+  },
+  "guard_failures": [],
+  "performance": [
+    {
+      "code": "ofonaovrmrq",
+      "letters": 11,
+      "before_wall_ms": 78.921,
+      "after_wall_ms": 78.102,
+      "before_cpu_ms": 76.05,
+      "after_cpu_ms": 75.805,
+      "wall_ratio": 0.9896225339263314
+    },
+    {
+      "code": "hmerrrysmlrp",
+      "letters": 12,
+      "before_wall_ms": 162.634,
+      "after_wall_ms": 159.12,
+      "before_cpu_ms": 162.511,
+      "after_cpu_ms": 157.097,
+      "wall_ratio": 0.9783932019134991
+    },
+    {
+      "code": "dpofvivcjutrmyyjvcqnjd",
+      "letters": 22,
+      "before_wall_ms": 140.443,
+      "after_wall_ms": 149.11,
+      "before_cpu_ms": 139.73,
+      "after_cpu_ms": 147.306,
+      "wall_ratio": 1.061711868872069
+    },
+    {
+      "code": "ofykrmmsydwljpvwjd",
+      "letters": 18,
+      "before_wall_ms": 227.335,
+      "after_wall_ms": 227.532,
+      "before_cpu_ms": 224.3,
+      "after_cpu_ms": 222.89,
+      "wall_ratio": 1.000866562561858
+    },
+    {
+      "code": "vkmmnkmrvordrjjj",
+      "letters": 16,
+      "before_wall_ms": 142.333,
+      "after_wall_ms": 143.12,
+      "before_cpu_ms": 139.309,
+      "after_cpu_ms": 142.052,
+      "wall_ratio": 1.0055292869538337
+    },
+    {
+      "code": "hihihihihihihihihihihihihihihihihihihihihihihihi",
+      "letters": 48,
+      "before_wall_ms": 551.104,
+      "after_wall_ms": 632.62,
+      "before_cpu_ms": 539.899,
+      "after_cpu_ms": 623.856,
+      "wall_ratio": 1.1479140053420043
+    }
+  ],
+  "delivery_rule_sha256": "e57714b3229947e19444e0abf3fe01c9400e2728f951035becd06edbf84aa3d7",
+  "dictionary_examples_used_for_training": false,
+  "limits": "One top-five gain and no first-choice gain on800 human dictionary examples; no measured contemporary chat frequency or physical Fold7 timing. Unreleased0.6.39; no APK."
+}

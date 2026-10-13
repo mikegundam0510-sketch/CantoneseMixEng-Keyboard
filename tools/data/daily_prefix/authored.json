@@ -1,0 +1,64 @@
+{
+  "provenance": "Project-authored HK daily complete-clause training scenarios. Not collected messages or frequency measurements. Each template family is one support observation; repeated subject/object variants are downweighted. Dictionary examples are evaluation-only and never train the prefix model.",
+  "slots": {
+    "s": ["我", "你", "佢", "我哋", "你哋", "佢哋"],
+    "t": ["今日", "聽日", "今晚", "下晝", "星期一", "收工之後"],
+    "doc": ["份報告", "份文件", "份合約", "張訂單"],
+    "recipient": ["同事", "老細", "客戶"],
+    "place": ["公司", "屋企", "車站", "地鐵站"],
+    "drink": ["奶茶", "咖啡", "凍檸茶", "熱檸水"],
+    "food": ["早餐", "午餐", "晚餐", "下午茶"],
+    "transport": ["巴士", "地鐵", "小巴", "的士"],
+    "item": ["鎖匙", "銀包", "電話", "雨遮"],
+    "goods": ["件衫", "對鞋", "個袋", "件貨"]
+  },
+  "train": {
+    "work": [
+      "{s}仲未整理好{doc}", "{s}已經交咗{doc}畀{recipient}",
+      "{s}可唔可以幫手睇下{doc}", "{s}睇完{doc}先再覆你",
+      "{s}唔使急住交{doc}", "{s}交咗{doc}仲要等{recipient}確認",
+      "{s}改好{doc}就傳返畀{recipient}", "{s}記住帶埋{doc}返公司",
+      "{s}如果做唔切就早啲話我知", "{s}仲有啲嘢未做完",
+      "{s}做完手頭啲嘢先再開會", "{s}開會之前要準備好{doc}"
+    ],
+    "questions": [
+      "{s}係咪唔記得帶{item}", "{s}知唔知{recipient}幾時返嚟",
+      "{s}有冇收到我頭先嗰個訊息", "{s}仲使唔使我幫你改{doc}",
+      "{s}可唔可以聽日先交{doc}", "{s}幾時得閒一齊食{food}",
+      "{s}係咪已經訂咗枱", "{s}頭先打咗電話畀{recipient}未",
+      "{s}有冇諗住今晚返{place}", "{s}想唔想飲返杯{drink}"
+    ],
+    "transport": [
+      "{s}搭緊{transport}過嚟可能遲啲到", "{s}去到{place}就打畀我",
+      "{s}唔好喺車站等我住", "{s}落車之後行過嚟就得",
+      "{s}如果趕時間就搭{transport}", "{s}頭先架車開走咗",
+      "{s}塞緊車所以仲未到", "{s}返到{place}先再聯絡你"
+    ],
+    "food": [
+      "{s}食咗{food}先出門口", "{s}買完餸就返屋企煮飯",
+      "{s}飲完{drink}先返公司", "{s}唔想食咁多嘢住",
+      "{s}食完飯記得埋單", "{s}落去買杯{drink}返嚟",
+      "{s}等埋我先一齊食{food}", "{s}想食清淡啲唔使落咁多鹽"
+    ],
+    "payment": [
+      "{s}收到錢就話返我知", "{s}未過數所以唔好寄件住",
+      "{s}用轉數快畀錢就得", "{s}過咗數記得留返張單",
+      "{s}唔好轉錯錢畀第二個人", "{s}等我確認咗先再付款"
+    ],
+    "home": [
+      "{s}出門口記住帶{item}", "{s}返到屋企記得收返啲衫",
+      "{s}唔記得帶{item}要返去拎", "{s}落雨之前要閂返啲窗",
+      "{s}如果落雨就帶埋把遮", "{s}今晚唔返屋企食飯"
+    ],
+    "shopping": [
+      "{s}買咗{goods}但係仲未到", "{s}收到{goods}先再確認",
+      "{s}想換返另一個款", "{s}唔使再幫我落單住",
+      "{s}幫我問下仲有冇貨", "{s}拎咗{goods}記得通知我"
+    ],
+    "messages": [
+      "{s}睇到訊息就覆返我", "{s}講清楚啲我先明你講乜",
+      "{s}聽唔清楚可唔可以再講一次", "{s}唔使急住覆我住",
+      "{s}傳咗相畀我但係我開唔到", "{s}等我做完嘢再同你傾"
+    ]
+  }
+}

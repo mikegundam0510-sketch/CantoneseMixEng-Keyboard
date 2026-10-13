@@ -1,0 +1,3252 @@
+{
+  "input": "tools/data/daily_prefix/validation.tsv",
+  "cases": 200,
+  "valid_exact_target_codes": 200,
+  "coarse_reasons": {
+    "ranked_later": 60,
+    "first": 46,
+    "not_generated": 66,
+    "outside_twenty": 19,
+    "completed_path_pruned": 7,
+    "confidence_filtered": 2
+  },
+  "missing_cases": 94,
+  "terminal_blockers": {
+    "prefix_pruned": 64,
+    "outside_twenty": 19,
+    "completed_path_pruned": 7,
+    "confidence_filtered": 2,
+    "choice_cutoff": 2
+  },
+  "choice_cutoff_characters": {
+    "冚": 1,
+    "㩒": 1
+  },
+  "choice_cutoff_dictionary_ranks": {
+    "冚": [
+      65
+    ],
+    "㩒": [
+      53
+    ]
+  },
+  "prefix_prune_stages": {
+    "I": 64
+  },
+  "interpretation": "Observed terminal frontiers only; an earlier loss can be bypassed by another word tokenization. Gold text is used only for diagnostics, never production search.",
+  "missing": [
+    {
+      "context": "",
+      "code": "osonguorbimcjfjd",
+      "target": "佢側起個膊頭寫字",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 6,
+        "text": "佢側起"
+      },
+      "furthest_consumed": {
+        "code_position": 4,
+        "text": "佢側"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "6",
+          "佢側起",
+          "65",
+          "false",
+          "-0.20989972377289945"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "人口",
+        "個月",
+        "含冤",
+        "個月底"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "6",
+        "佢側起",
+        "65",
+        "false",
+        "-0.20989972377289945"
+      ]
+    },
+    {
+      "context": "",
+      "code": "hibrosqormofrn",
+      "target": "我同佢掟咗煲喇",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 10,
+        "text": "我同佢掟咗"
+      },
+      "furthest_consumed": {
+        "code_position": 8,
+        "text": "我同佢掟"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "10",
+          "我同佢掟咗",
+          "208",
+          "false",
+          "-2.400235122589514"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "你別",
+        "係喇"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "10",
+        "我同佢掟咗",
+        "208",
+        "false",
+        "-2.400235122589514"
+      ]
+    },
+    {
+      "context": "",
+      "code": "mmmmysmhruobngogyljlofcung",
+      "target": "正五邊形嘅內角全部都係鈍角",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 4,
+        "text": "正五"
+      },
+      "furthest_consumed": {
+        "code_position": 2,
+        "text": "正"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "4",
+          "正五",
+          "57",
+          "false",
+          "-0.32673869161849467"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "邊一",
+        "方形"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "4",
+        "正五",
+        "57",
+        "false",
+        "-0.32673869161849467"
+      ]
+    },
+    {
+      "context": "",
+      "code": "rimsydmljorrokogyqrihuokrt",
+      "target": "啲功課而家唔做住遲啲先做啦",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 24,
+        "text": "啲功課而家唔做住遲啲先做"
+      },
+      "furthest_consumed": {
+        "code_position": 22,
+        "text": "啲功課而家唔做住遲啲先"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "24",
+          "啲功課而家唔做住遲啲先做",
+          "84",
+          "false",
+          "-1.2613125508411898"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": [
+        "I",
+        "24",
+        "啲功課而家唔做住遲啲先做",
+        "84",
+        "false",
+        "-1.2613125508411898"
+      ]
+    },
+    {
+      "context": "",
+      "code": "hiylqqomuyrkitxrnyjvvjlkbhiymhidpqkyryl",
+      "target": "我部手提電話太舊喇連網都冇得上我想換過部",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 19,
+        "text": "我部手提電話太舊喇連"
+      },
+      "furthest_consumed": {
+        "code_position": 17,
+        "text": "我部手提電話太舊喇"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "19",
+          "我部手提電話太舊喇連",
+          "225",
+          "false",
+          "-3.3376417567652297"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "女婢"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "19",
+        "我部手提電話太舊喇連",
+        "225",
+        "false",
+        "-3.3376417567652297"
+      ]
+    },
+    {
+      "context": "",
+      "code": "rmmijlkbosrdruebhpmppajluknigrfhrn",
+      "target": "咁耐都冇佢哋嘅消息恐怕都凶多吉少喇",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 32,
+        "text": "咁耐都冇佢哋嘅消息恐怕都凶多吉少"
+      },
+      "furthest_consumed": {
+        "code_position": 24,
+        "text": "咁耐都冇佢哋嘅消息恐怕都"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "32",
+          "咁耐都冇佢哋嘅消息恐怕都凶多吉少",
+          "56",
+          "false",
+          "-0.41587054017452374"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": [
+        "I",
+        "20",
+        "咁耐都冇佢哋嘅消息恐",
+        "92",
+        "false",
+        "-1.3481273042596698"
+      ]
+    },
+    {
+      "context": "",
+      "code": "wcbvodrfybojrrqchiyphiedeb",
+      "target": "四眼仔喺端午唔扒得龍舟游涌",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 16,
+        "text": "四眼仔喺端午唔扒"
+      },
+      "furthest_consumed": {
+        "code_position": 14,
+        "text": "四眼仔喺端午唔"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "16",
+          "四眼仔喺端午唔扒",
+          "180",
+          "false",
+          "-1.5745570024948705"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "我諗",
+        "特意",
+        "我諗我"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "16",
+        "四眼仔喺端午唔扒",
+        "180",
+        "false",
+        "-1.5745570024948705"
+      ]
+    },
+    {
+      "context": "",
+      "code": "modvfchshhipnrrfelbrnggdymhmer",
+      "target": "兩棲類動物能夠喺水中同陸地上生活",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 26,
+        "text": "兩棲類動物能夠喺水中同陸地上"
+      },
+      "furthest_consumed": {
+        "code_position": 24,
+        "text": "兩棲類動物能夠喺水中同陸地"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "26",
+          "兩棲類動物能夠喺水中同陸地上",
+          "171",
+          "false",
+          "-2.1483515418499337"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "甜水",
+        "生水",
+        "生活"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "22",
+        "兩棲類動物能夠喺水中同陸",
+        "128",
+        "false",
+        "-2.2636036734467453"
+      ]
+    },
+    {
+      "context": "",
+      "code": "nrdiaifbjlqyogrfqewmruvfvf",
+      "target": "阿松時常都掛住喺泰國嘅媽媽",
+      "raw_final_rank": 92,
+      "terminal_blocker": "outside_twenty",
+      "furthest_generated": {
+        "code_position": 26,
+        "text": "阿松時常都掛住喺泰國嘅媽媽"
+      },
+      "furthest_consumed": {
+        "code_position": 22,
+        "text": "阿松時常都掛住喺泰國嘅"
+      },
+      "terminal_prune_observations": [],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": [
+        "I",
+        "12",
+        "阿松時常都掛",
+        "181",
+        "false",
+        "-1.2953181604069002"
+      ]
+    },
+    {
+      "context": "",
+      "code": "vdfhbumnmojecrhrrummhgqk",
+      "target": "好少見到兩支銅管嘅二重奏",
+      "raw_final_rank": 0,
+      "terminal_blocker": "completed_path_pruned",
+      "furthest_generated": {
+        "code_position": 24,
+        "text": "好少見到兩支銅管嘅二重奏"
+      },
+      "furthest_consumed": {
+        "code_position": 18,
+        "text": "好少見到兩支銅管嘅"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "24",
+          "好少見到兩支銅管嘅二重奏",
+          "301",
+          "false",
+          "-2.636839991525399"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": [
+        "I",
+        "20",
+        "好少見到兩支銅管嘅二",
+        "260",
+        "false",
+        "-2.8553343155210484"
+      ]
+    },
+    {
+      "context": "",
+      "code": "ossuvmefyprmfwoqwlffuruyupp",
+      "target": "佢已經淡忘咗當年畀火燒嘅記憶",
+      "raw_final_rank": 92,
+      "terminal_blocker": "outside_twenty",
+      "furthest_generated": {
+        "code_position": 27,
+        "text": "佢已經淡忘咗當年畀火燒嘅記憶"
+      },
+      "furthest_consumed": {
+        "code_position": 23,
+        "text": "佢已經淡忘咗當年畀火燒嘅"
+      },
+      "terminal_prune_observations": [],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": [
+        "I",
+        "25",
+        "佢已經淡忘咗當年畀火燒嘅記",
+        "328",
+        "false",
+        "-3.46138308646492"
+      ]
+    },
+    {
+      "context": "",
+      "code": "rryohjmyrpodnfkbvihgrl",
+      "target": "唔該秤下呢條魚有幾重吖",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 20,
+        "text": "唔該秤下呢條魚有幾重"
+      },
+      "furthest_consumed": {
+        "code_position": 18,
+        "text": "唔該秤下呢條魚有幾"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "20",
+          "唔該秤下呢條魚有幾重",
+          "99",
+          "false",
+          "-4.539210174940585"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": [
+        "I",
+        "20",
+        "唔該秤下呢條魚有幾重",
+        "99",
+        "false",
+        "-4.539210174940585"
+      ]
+    },
+    {
+      "context": "",
+      "code": "osmhkripevkyumuawuure",
+      "target": "佢一笑啲皺紋就現晒出嚟",
+      "raw_final_rank": 17,
+      "terminal_blocker": "confidence_filtered",
+      "furthest_generated": {
+        "code_position": 21,
+        "text": "佢一笑啲皺紋就現晒出嚟"
+      },
+      "furthest_consumed": {
+        "code_position": 19,
+        "text": "佢一笑啲皺紋就現晒出"
+      },
+      "terminal_prune_observations": [],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": null
+    },
+    {
+      "context": "",
+      "code": "nrvfrfhnybgctdruosoijbmmwryumvgiajdw",
+      "target": "阿媽喺街市賣菜嘅佢每朝五點就要去開檔",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 22,
+        "text": "阿媽喺街市賣菜嘅佢每朝"
+      },
+      "furthest_consumed": {
+        "code_position": 20,
+        "text": "阿媽喺街市賣菜嘅佢每"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "22",
+          "阿媽喺街市賣菜嘅佢每朝",
+          "88",
+          "false",
+          "-0.7195670099426508"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "三點",
+        "五點"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "22",
+        "阿媽喺街市賣菜嘅佢每朝",
+        "88",
+        "false",
+        "-0.7195670099426508"
+      ]
+    },
+    {
+      "context": "",
+      "code": "osovjuritryuyrodbnvdqnhitfoslqhrh",
+      "target": "佢食完啲菇就話條脷好揦我驚佢中毒呀",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 16,
+        "text": "佢食完啲菇就話條"
+      },
+      "furthest_consumed": {
+        "code_position": 14,
+        "text": "佢食完啲菇就話"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "16",
+          "佢食完啲菇就話條",
+          "564",
+          "false",
+          "-4.238202567619872"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "剛好",
+        "鼎好"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "12",
+        "佢食完啲菇就",
+        "58",
+        "false",
+        "-0.33772219249771496"
+      ]
+    },
+    {
+      "context": "",
+      "code": "hinjaagiqvorodykhd",
+      "target": "我陣間去接個仔放學",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 14,
+        "text": "我陣間去接個仔"
+      },
+      "furthest_consumed": {
+        "code_position": 10,
+        "text": "我陣間去接"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "14",
+          "我陣間去接個仔",
+          "59",
+          "false",
+          "-0.308971769447389"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "文竹",
+        "文學",
+        "放學"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "12",
+        "我陣間去接個",
+        "75",
+        "false",
+        "-0.48301973816661103"
+      ]
+    },
+    {
+      "context": "",
+      "code": "rptumoofdpebrajomvmuvdrr",
+      "target": "呢首歌你想清唱定要配樂啊",
+      "raw_final_rank": 0,
+      "terminal_blocker": "completed_path_pruned",
+      "furthest_generated": {
+        "code_position": 24,
+        "text": "呢首歌你想清唱定要配樂啊"
+      },
+      "furthest_consumed": {
+        "code_position": 22,
+        "text": "呢首歌你想清唱定要配樂"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "24",
+          "呢首歌你想清唱定要配樂啊",
+          "238",
+          "false",
+          "-2.771638980876233"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": [
+        "I",
+        "24",
+        "呢首歌你想清唱定要配樂啊",
+        "238",
+        "false",
+        "-2.771638980876233"
+      ]
+    },
+    {
+      "context": "",
+      "code": "ybrfybfwruysdrohmllmymanrn",
+      "target": "請喺適當嘅方格入面畫上剔號",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 22,
+        "text": "請喺適當嘅方格入面畫上"
+      },
+      "furthest_consumed": {
+        "code_position": 20,
+        "text": "請喺適當嘅方格入面畫"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "22",
+          "請喺適當嘅方格入面畫上",
+          "114",
+          "false",
+          "-0.8387781368102907"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "門口",
+        "剔號"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "6",
+        "請喺適",
+        "419",
+        "false",
+        "-3.367120878025844"
+      ]
+    },
+    {
+      "context": "",
+      "code": "kmckofjrkbbvilyrohmlfbburuygac",
+      "target": "弒父係古希臘神話入面常見嘅主題",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 20,
+        "text": "弒父係古希臘神話入面"
+      },
+      "furthest_consumed": {
+        "code_position": 16,
+        "text": "弒父係古希臘神話"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "20",
+          "弒父係古希臘神話入面",
+          "145",
+          "false",
+          "-1.9431181300352733"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "常見"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "8",
+        "弒父係古",
+        "107",
+        "false",
+        "-1.3448320808441885"
+      ]
+    },
+    {
+      "context": "",
+      "code": "spybrporkbciopolofjdvaofkbdioarr",
+      "target": "聽講呢個有錢佬仲係未婚你有機會喎",
+      "raw_final_rank": 81,
+      "terminal_blocker": "outside_twenty",
+      "furthest_generated": {
+        "code_position": 32,
+        "text": "聽講呢個有錢佬仲係未婚你有機會喎"
+      },
+      "furthest_consumed": {
+        "code_position": 30,
+        "text": "聽講呢個有錢佬仲係未婚你有機會"
+      },
+      "terminal_prune_observations": [],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": null
+    },
+    {
+      "context": "",
+      "code": "hiaalhddkquvdrkmcsesvhiebjlmvyuyr",
+      "target": "我間中學校規好嚴頭髮長得滯都要記過",
+      "raw_final_rank": 0,
+      "terminal_blocker": "completed_path_pruned",
+      "furthest_generated": {
+        "code_position": 33,
+        "text": "我間中學校規好嚴頭髮長得滯都要記過"
+      },
+      "furthest_consumed": {
+        "code_position": 29,
+        "text": "我間中學校規好嚴頭髮長得滯都要"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "33",
+          "我間中學校規好嚴頭髮長得滯都要記過",
+          "243",
+          "false",
+          "-3.5919280479685654"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": [
+        "I",
+        "31",
+        "我間中學校規好嚴頭髮長得滯都要記",
+        "96",
+        "false",
+        "-0.7926394307079363"
+      ]
+    },
+    {
+      "context": "",
+      "code": "rpqyjlrrorofrdfwwfisaybrnrkmnodbn",
+      "target": "呢排都唔知係咪當黑成日講嘢咬到條脷",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 27,
+        "text": "呢排都唔知係咪當黑成日講嘢咬"
+      },
+      "furthest_consumed": {
+        "code_position": 25,
+        "text": "呢排都唔知係咪當黑成日講嘢"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "27",
+          "呢排都唔知係咪當黑成日講嘢咬",
+          "69",
+          "false",
+          "-0.8940643846697256"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "一隊",
+        "到人",
+        "到他"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "27",
+        "呢排都唔知係咪當黑成日講嘢咬",
+        "69",
+        "false",
+        "-0.8940643846697256"
+      ]
+    },
+    {
+      "context": "",
+      "code": "onarijrkbmjairmnikdncauhiisorjdkdjjjljdeb",
+      "target": "今日啲客冇平時咁多架小巴等成個字架車都未滿",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 25,
+        "text": "今日啲客冇平時咁多架小巴等"
+      },
+      "furthest_consumed": {
+        "code_position": 23,
+        "text": "今日啲客冇平時咁多架小巴"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "25",
+          "今日啲客冇平時咁多架小巴等",
+          "142",
+          "false",
+          "-2.042233059002598"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "成人",
+        "成倍",
+        "成個"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "25",
+        "今日啲客冇平時咁多架小巴等",
+        "142",
+        "false",
+        "-2.042233059002598"
+      ]
+    },
+    {
+      "context": "",
+      "code": "oskikikckcrkjlrrorofrdjcofoeru",
+      "target": "佢瘋瘋癲癲噉都唔知係咪真係傻嘅",
+      "raw_final_rank": 82,
+      "terminal_blocker": "outside_twenty",
+      "furthest_generated": {
+        "code_position": 30,
+        "text": "佢瘋瘋癲癲噉都唔知係咪真係傻嘅"
+      },
+      "furthest_consumed": {
+        "code_position": 26,
+        "text": "佢瘋瘋癲癲噉都唔知係咪真係"
+      },
+      "terminal_prune_observations": [],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": [
+        "I",
+        "28",
+        "佢瘋瘋癲癲噉都唔知係咪真係傻",
+        "138",
+        "false",
+        "-1.72693433762592"
+      ]
+    },
+    {
+      "context": "",
+      "code": "oskbvkodtxtgrupgoj",
+      "target": "佢有收集舊鞋嘅怪僻",
+      "raw_final_rank": 35,
+      "terminal_blocker": "outside_twenty",
+      "furthest_generated": {
+        "code_position": 18,
+        "text": "佢有收集舊鞋嘅怪僻"
+      },
+      "furthest_consumed": {
+        "code_position": 16,
+        "text": "佢有收集舊鞋嘅怪"
+      },
+      "terminal_prune_observations": [],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": null
+    },
+    {
+      "context": "",
+      "code": "nvtdhnkiovqbmnhiqirrryrrnjmvvnoiodbv",
+      "target": "張茶几太矮搞到我拎咖啡嗰陣要彎低條腰",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 18,
+        "text": "張茶几太矮搞到我拎"
+      },
+      "furthest_consumed": {
+        "code_position": 16,
+        "text": "張茶几太矮搞到我"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "18",
+          "張茶几太矮搞到我拎",
+          "49",
+          "false",
+          "-0.08189124531288172"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "路口",
+        "口啊",
+        "咖啡",
+        "咕咚"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "18",
+        "張茶几太矮搞到我拎",
+        "49",
+        "false",
+        "-0.08189124531288172"
+      ]
+    },
+    {
+      "context": "",
+      "code": "hirdhgetfwarullhe",
+      "target": "我哋重温當日嘅片段",
+      "raw_final_rank": 61,
+      "terminal_blocker": "outside_twenty",
+      "furthest_generated": {
+        "code_position": 17,
+        "text": "我哋重温當日嘅片段"
+      },
+      "furthest_consumed": {
+        "code_position": 13,
+        "text": "我哋重温當日嘅"
+      },
+      "terminal_prune_observations": [],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": [
+        "I",
+        "15",
+        "我哋重温當日嘅片",
+        "105",
+        "false",
+        "-1.3409100814151103"
+      ]
+    },
+    {
+      "context": "",
+      "code": "oiorojlkbnhwrtiorrmrvormtrierd",
+      "target": "每個人都有弱點對人唔可以咁苛求㗎",
+      "raw_final_rank": 0,
+      "terminal_blocker": "completed_path_pruned",
+      "furthest_generated": {
+        "code_position": 30,
+        "text": "每個人都有弱點對人唔可以咁苛求㗎"
+      },
+      "furthest_consumed": {
+        "code_position": 28,
+        "text": "每個人都有弱點對人唔可以咁苛求"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "30",
+          "每個人都有弱點對人唔可以咁苛求㗎",
+          "101",
+          "false",
+          "-1.397843131446983"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": [
+        "I",
+        "30",
+        "每個人都有弱點對人唔可以咁苛求㗎",
+        "101",
+        "false",
+        "-1.397843131446983"
+      ]
+    },
+    {
+      "context": "",
+      "code": "ofhirirmrummblbwmsqoyuuugijkorrpawlohkrq",
+      "target": "你得啲咁嘅三腳貓功夫就出去教人唔怕畀人笑咩",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 29,
+        "text": "你得啲咁嘅三腳貓功夫就出去教人"
+      },
+      "furthest_consumed": {
+        "code_position": 26,
+        "text": "你得啲咁嘅三腳貓功夫就出去"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "29",
+          "你得啲咁嘅三腳貓功夫就出去教人",
+          "99",
+          "false",
+          "-1.0307936125645512"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "嘔心"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "12",
+        "你得啲咁嘅三",
+        "83",
+        "false",
+        "-1.1058902281676488"
+      ]
+    },
+    {
+      "context": "",
+      "code": "uunvkijmyyrrpawlorvivlog",
+      "target": "出張太空卡唔怕畀合約綁住",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 20,
+        "text": "出張太空卡唔怕畀合約"
+      },
+      "furthest_consumed": {
+        "code_position": 16,
+        "text": "出張太空卡唔怕畀"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "20",
+          "出張太空卡唔怕畀合約",
+          "92",
+          "false",
+          "-1.020746813408664"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "鄉人",
+        "綁住"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "18",
+        "出張太空卡唔怕畀合",
+        "120",
+        "false",
+        "-1.652813478922674"
+      ]
+    },
+    {
+      "context": "",
+      "code": "tihhbtkbctrd",
+      "target": "對身體冇益㗎",
+      "raw_final_rank": 0,
+      "terminal_blocker": "completed_path_pruned",
+      "furthest_generated": {
+        "code_position": 12,
+        "text": "對身體冇益㗎"
+      },
+      "furthest_consumed": {
+        "code_position": 10,
+        "text": "對身體冇益"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "12",
+          "對身體冇益㗎",
+          "161",
+          "false",
+          "-1.8424688674265113"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": [
+        "I",
+        "12",
+        "對身體冇益㗎",
+        "161",
+        "false",
+        "-1.8424688674265113"
+      ]
+    },
+    {
+      "context": "",
+      "code": "hibqrmycrxvihuqomnnvnors",
+      "target": "我用咗六嚿幾先撲到張飛咋",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 18,
+        "text": "我用咗六嚿幾先撲到"
+      },
+      "furthest_consumed": {
+        "code_position": 16,
+        "text": "我用咗六嚿幾先撲"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "18",
+          "我用咗六嚿幾先撲到",
+          "71",
+          "false",
+          "-0.7688860607224868"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "弓弩",
+        "張飛"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "18",
+        "我用咗六嚿幾先撲到",
+        "71",
+        "false",
+        "-0.7688860607224868"
+      ]
+    },
+    {
+      "context": "",
+      "code": "osmmhjbuophlvomvbdmghgycmoq",
+      "target": "佢三科肥佬所以要冧班重讀一年",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 20,
+        "text": "佢三科肥佬所以要冧班"
+      },
+      "furthest_consumed": {
+        "code_position": 16,
+        "text": "佢三科肥佬所以要"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "20",
+          "佢三科肥佬所以要冧班",
+          "189",
+          "false",
+          "-2.0093557224053313"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "重讀"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "18",
+        "佢三科肥佬所以要冧",
+        "253",
+        "false",
+        "-2.455534628004763"
+      ]
+    },
+    {
+      "context": "",
+      "code": "mubwrrmbofmrkbmrofrukaonrr",
+      "target": "電腦唔再係可有可無嘅奢侈品",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 20,
+        "text": "電腦唔再係可有可無嘅"
+      },
+      "furthest_consumed": {
+        "code_position": 18,
+        "text": "電腦唔再係可有可無"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "20",
+          "電腦唔再係可有可無嘅",
+          "68",
+          "false",
+          "-0.529249199158869"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "奢侈",
+        "奢侈品"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "20",
+        "電腦唔再係可有可無嘅",
+        "68",
+        "false",
+        "-0.529249199158869"
+      ]
+    },
+    {
+      "context": "",
+      "code": "orerjgofbqomomjooferomrd",
+      "target": "個浴室係用企缸定係浴缸㗎",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 14,
+        "text": "個浴室係用企缸"
+      },
+      "furthest_consumed": {
+        "code_position": 10,
+        "text": "個浴室係用"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "14",
+          "個浴室係用企缸",
+          "214",
+          "false",
+          "-2.9973431296196082"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "家人",
+        "家伙",
+        "定係"
+      ],
+      "first_observed_prune_loss": [
+        "B",
+        "4",
+        "個浴",
+        "89",
+        "false",
+        "-0.8930274895561929"
+      ]
+    },
+    {
+      "context": "",
+      "code": "mmyrybsfajjeocmnygawacgormgiybjj",
+      "target": "正話講緊開支傾到離晒題走咗去講車",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 18,
+        "text": "正話講緊開支傾到離"
+      },
+      "furthest_consumed": {
+        "code_position": 16,
+        "text": "正話講緊開支傾到"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "18",
+          "正話講緊開支傾到離",
+          "292",
+          "false",
+          "-3.892863582584667"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": [
+        "I",
+        "18",
+        "正話講緊開支傾到離",
+        "292",
+        "false",
+        "-3.892863582584667"
+      ]
+    },
+    {
+      "context": "",
+      "code": "mlyuordwlkdyuhusuhiru",
+      "target": "面就人哋畀架就自己丟嘅",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 9,
+        "text": "面就人哋畀"
+      },
+      "furthest_consumed": {
+        "code_position": 7,
+        "text": "面就人哋"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "9",
+          "面就人哋畀",
+          "88",
+          "false",
+          "-0.6898129330696392"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": [
+        "I",
+        "9",
+        "面就人哋畀",
+        "88",
+        "false",
+        "-0.6898129330696392"
+      ]
+    },
+    {
+      "context": "",
+      "code": "ogrfobyvusrruvwrryeorhdjlmvdquehe",
+      "target": "住喺偏遠山區嘅細路返個學都要攀山涉水",
+      "raw_final_rank": 58,
+      "terminal_blocker": "outside_twenty",
+      "furthest_generated": {
+        "code_position": 33,
+        "text": "住喺偏遠山區嘅細路返個學都要攀山涉水"
+      },
+      "furthest_consumed": {
+        "code_position": 29,
+        "text": "住喺偏遠山區嘅細路返個學都要攀"
+      },
+      "terminal_prune_observations": [],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": [
+        "B",
+        "30",
+        "住喺偏遠山區嘅細路返個學都要攀山",
+        "64",
+        "false",
+        "-2.7926150273096795"
+      ]
+    },
+    {
+      "context": "",
+      "code": "hibrsgomohermmlsuvmkbyesgomisorb",
+      "target": "我同屋企人反咗面已經冇返屋企成個月",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 23,
+        "text": "我同屋企人反咗面已經冇返"
+      },
+      "furthest_consumed": {
+        "code_position": 19,
+        "text": "我同屋企人反咗面已經"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "23",
+          "我同屋企人反咗面已經冇返",
+          "53",
+          "false",
+          "-0.06514550182013323"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "聖人",
+        "屋企"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "17",
+        "我同屋企人反咗面已",
+        "88",
+        "false",
+        "-1.0145254268002617"
+      ]
+    },
+    {
+      "context": "",
+      "code": "timlorkeevdbrhiqjsfqrr",
+      "target": "對面個大波妹同我揮緊手啊",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 17,
+        "text": "對面個大波妹同我揮"
+      },
+      "furthest_consumed": {
+        "code_position": 15,
+        "text": "對面個大波妹同我"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "17",
+          "對面個大波妹同我揮",
+          "126",
+          "false",
+          "-1.0905012944183596"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "緊扣"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "17",
+        "對面個大波妹同我揮",
+        "126",
+        "false",
+        "-1.0905012944183596"
+      ]
+    },
+    {
+      "context": "",
+      "code": "rinfnimsylrr",
+      "target": "啲魚蛋勁辣啊",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 10,
+        "text": "啲魚蛋勁辣"
+      },
+      "furthest_consumed": {
+        "code_position": 8,
+        "text": "啲魚蛋勁"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "10",
+          "啲魚蛋勁辣",
+          "53",
+          "false",
+          "-0.21004325941464685"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": [
+        "I",
+        "10",
+        "啲魚蛋勁辣",
+        "53",
+        "false",
+        "-0.21004325941464685"
+      ]
+    },
+    {
+      "context": "",
+      "code": "ofrdpkrimgsfregbqd",
+      "target": "你哋快啲班馬嚟幫拖",
+      "raw_final_rank": 21,
+      "terminal_blocker": "outside_twenty",
+      "furthest_generated": {
+        "code_position": 18,
+        "text": "你哋快啲班馬嚟幫拖"
+      },
+      "furthest_consumed": {
+        "code_position": 16,
+        "text": "你哋快啲班馬嚟幫"
+      },
+      "terminal_prune_observations": [],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": null
+    },
+    {
+      "context": "",
+      "code": "pkriebmgvdrigtgertrrofspayuoanehkrdrn",
+      "target": "快啲清理好啲垃圾啦唔係聽日就會發臭㗎喇",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 33,
+        "text": "快啲清理好啲垃圾啦唔係聽日就會發臭"
+      },
+      "furthest_consumed": {
+        "code_position": 31,
+        "text": "快啲清理好啲垃圾啦唔係聽日就會發"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "33",
+          "快啲清理好啲垃圾啦唔係聽日就會發臭",
+          "171",
+          "false",
+          "-3.566995153858727"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "哋喇"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "33",
+        "快啲清理好啲垃圾啦唔係聽日就會發臭",
+        "171",
+        "false",
+        "-3.566995153858727"
+      ]
+    },
+    {
+      "context": "",
+      "code": "mgbrjnrrebyposisaqfeejmtghlvodftvos",
+      "target": "班同事唔滿意佢成日擦波士鞋所以杯葛佢",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 25,
+        "text": "班同事唔滿意佢成日擦波士鞋"
+      },
+      "furthest_consumed": {
+        "code_position": 23,
+        "text": "班同事唔滿意佢成日擦波士"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "25",
+          "班同事唔滿意佢成日擦波士鞋",
+          "30",
+          "false",
+          "0.28230410647833537"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "所以"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "25",
+        "班同事唔滿意佢成日擦波士鞋",
+        "30",
+        "false",
+        "0.28230410647833537"
+      ]
+    },
+    {
+      "context": "",
+      "code": "muiuruaekslmmltdqhqbfhoq",
+      "target": "電視嘅暴力畫面荼毒青少年",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 18,
+        "text": "電視嘅暴力畫面荼毒"
+      },
+      "furthest_consumed": {
+        "code_position": 14,
+        "text": "電視嘅暴力畫面"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "18",
+          "電視嘅暴力畫面荼毒",
+          "138",
+          "false",
+          "-1.3534107267815187"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "青少年"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "16",
+        "電視嘅暴力畫面荼",
+        "445",
+        "false",
+        "-4.596867049187509"
+      ]
+    },
+    {
+      "context": "",
+      "code": "okyjhstihhbtrmkbcthirdogyrguhnrt",
+      "target": "做運動對身體咁有益我哋坐言起行啦",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 30,
+        "text": "做運動對身體咁有益我哋坐言起行"
+      },
+      "furthest_consumed": {
+        "code_position": 24,
+        "text": "做運動對身體咁有益我哋坐"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "30",
+          "做運動對身體咁有益我哋坐言起行",
+          "65",
+          "false",
+          "-0.42303638049374115"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": [
+        "I",
+        "26",
+        "做運動對身體咁有益我哋坐言",
+        "79",
+        "false",
+        "-0.6888264189133153"
+      ]
+    },
+    {
+      "context": "",
+      "code": "oscuajyracfaymdmksquobhusukbwjtdrporjnjc",
+      "target": "佢岔開話題嘗試極力掩飾自己冇畢業呢個事實",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 22,
+        "text": "佢岔開話題嘗試極力掩飾"
+      },
+      "furthest_consumed": {
+        "code_position": 18,
+        "text": "佢岔開話題嘗試極力"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "22",
+          "佢岔開話題嘗試極力掩飾",
+          "209",
+          "false",
+          "-1.40395628179445"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "自己",
+        "自已",
+        "自己有"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "8",
+        "佢岔開話",
+        "117",
+        "false",
+        "-1.3033968253087664"
+      ]
+    },
+    {
+      "context": "",
+      "code": "mmiokriifrmyoyjabjhickwiyugotgrermhaeurs",
+      "target": "二次大戰為咗逃避日軍我父母就走難嚟咗香港嘞",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 32,
+        "text": "二次大戰為咗逃避日軍我父母就走難嚟"
+      },
+      "furthest_consumed": {
+        "code_position": 30,
+        "text": "二次大戰為咗逃避日軍我父母就走難"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "32",
+          "二次大戰為咗逃避日軍我父母就走難嚟",
+          "51",
+          "false",
+          "-0.10006809153962593"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": [
+        "I",
+        "32",
+        "二次大戰為咗逃避日軍我父母就走難嚟",
+        "51",
+        "false",
+        "-0.10006809153962593"
+      ]
+    },
+    {
+      "context": "",
+      "code": "osorovdhiyvrdjiqoojdniioiojljgogaw",
+      "target": "佢個人好鬼衰㗎專捉人字蝨次次都窒住晒",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 17,
+        "text": "佢個人好鬼衰㗎專捉"
+      },
+      "furthest_consumed": {
+        "code_position": 15,
+        "text": "佢個人好鬼衰㗎專"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "17",
+          "佢個人好鬼衰㗎專捉",
+          "171",
+          "false",
+          "-1.1452902429305567"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": [
+        "I",
+        "17",
+        "佢個人好鬼衰㗎專捉",
+        "171",
+        "false",
+        "-1.1452902429305567"
+      ]
+    },
+    {
+      "context": "",
+      "code": "osrfrpaacisrokqammaitltlk",
+      "target": "佢喺呢間公司做替工時薪廿蚊",
+      "raw_final_rank": 62,
+      "terminal_blocker": "outside_twenty",
+      "furthest_generated": {
+        "code_position": 25,
+        "text": "佢喺呢間公司做替工時薪廿蚊"
+      },
+      "furthest_consumed": {
+        "code_position": 22,
+        "text": "佢喺呢間公司做替工時薪"
+      },
+      "terminal_prune_observations": [],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": [
+        "B",
+        "23",
+        "佢喺呢間公司做替工時薪廿",
+        "54",
+        "false",
+        "-1.9797116903943603"
+      ]
+    },
+    {
+      "context": "",
+      "code": "bqrporybedmekbmrijkanru",
+      "target": "用呢個通渠泵有一啲竅門嘅",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 12,
+        "text": "用呢個通渠泵"
+      },
+      "furthest_consumed": {
+        "code_position": 10,
+        "text": "用呢個通渠"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "12",
+          "用呢個通渠泵",
+          "587",
+          "false",
+          "-3.2293664053108415"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "有一",
+        "冇一",
+        "有否",
+        "冇可",
+        "有一啲"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "12",
+        "用呢個通渠泵",
+        "587",
+        "false",
+        "-3.2293664053108415"
+      ]
+    },
+    {
+      "context": "",
+      "code": "ofkokvmvdprrvdbrvwrrbdrt",
+      "target": "你大人大姐好心唔好同細路爭啦",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 20,
+        "text": "你大人大姐好心唔好同細路"
+      },
+      "furthest_consumed": {
+        "code_position": 16,
+        "text": "你大人大姐好心唔好同"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "20",
+          "你大人大姐好心唔好同細路",
+          "67",
+          "false",
+          "-0.5751059826966269"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": [
+        "I",
+        "12",
+        "你大人大姐好心唔",
+        "121",
+        "false",
+        "-1.5473713761336825"
+      ]
+    },
+    {
+      "context": "",
+      "code": "ysoehqyuhivdri",
+      "target": "邊隻筆記簿好啲",
+      "raw_final_rank": 62,
+      "terminal_blocker": "outside_twenty",
+      "furthest_generated": {
+        "code_position": 14,
+        "text": "邊隻筆記簿好啲"
+      },
+      "furthest_consumed": {
+        "code_position": 10,
+        "text": "邊隻筆記簿"
+      },
+      "terminal_prune_observations": [],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": [
+        "I",
+        "12",
+        "邊隻筆記簿好",
+        "59",
+        "false",
+        "-1.142339533947652"
+      ]
+    },
+    {
+      "context": "",
+      "code": "rpiekbkkncncruirob",
+      "target": "呢度有大大小小嘅店舖",
+      "raw_final_rank": 82,
+      "terminal_blocker": "outside_twenty",
+      "furthest_generated": {
+        "code_position": 18,
+        "text": "呢度有大大小小嘅店舖"
+      },
+      "furthest_consumed": {
+        "code_position": 14,
+        "text": "呢度有大大小小嘅"
+      },
+      "terminal_prune_observations": [],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": [
+        "I",
+        "16",
+        "呢度有大大小小嘅店",
+        "63",
+        "false",
+        "-0.8645371236000017"
+      ]
+    },
+    {
+      "context": "",
+      "code": "ybhrymmlkbdicihlrumuyr",
+      "target": "通告上面有村公所嘅電話",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 16,
+        "text": "通告上面有村公所"
+      },
+      "furthest_consumed": {
+        "code_position": 10,
+        "text": "通告上面有"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "16",
+          "通告上面有村公所",
+          "362",
+          "false",
+          "-3.345211266004952"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "嘅一",
+        "嘅電",
+        "號砲",
+        "嘅電話"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "12",
+        "通告上面有村",
+        "150",
+        "false",
+        "-4.16450692721785"
+      ]
+    },
+    {
+      "context": "",
+      "code": "onaykhdrejkrcjgqthiqgyeylqdi",
+      "target": "今日放學嚟教員室揾我攞返部手機",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 25,
+        "text": "今日放學嚟教員室揾我攞返部"
+      },
+      "furthest_consumed": {
+        "code_position": 23,
+        "text": "今日放學嚟教員室揾我攞返"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "25",
+          "今日放學嚟教員室揾我攞返部",
+          "109",
+          "false",
+          "-1.1007895015136882"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "手機",
+        "探戈"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "11",
+        "今日放學嚟教",
+        "56",
+        "false",
+        "-0.10256514151544849"
+      ]
+    },
+    {
+      "context": "",
+      "code": "dmdocisrhtyukbosohomofosaehehyqftgqjot",
+      "target": "本來公司升遷冇佢份但係佢最後靠擦鞋攝位",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 24,
+        "text": "本來公司升遷冇佢份但係佢"
+      },
+      "furthest_consumed": {
+        "code_position": 18,
+        "text": "本來公司升遷冇佢份"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "24",
+          "本來公司升遷冇佢份但係佢",
+          "51",
+          "false",
+          "-0.2645684241521238"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "最後",
+        "㿺㿭"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "20",
+        "本來公司升遷冇佢份但",
+        "331",
+        "false",
+        "-3.2988213605231067"
+      ]
+    },
+    {
+      "context": "",
+      "code": "trjfyklpburmrporgcegodwi",
+      "target": "警察放蛇冚咗呢個賣淫集團",
+      "raw_final_rank": 0,
+      "terminal_blocker": "choice_cutoff",
+      "furthest_generated": {
+        "code_position": 8,
+        "text": "警察放蛇"
+      },
+      "furthest_consumed": {
+        "code_position": 8,
+        "text": "警察放蛇"
+      },
+      "terminal_prune_observations": [],
+      "omitted_next_characters": [
+        [
+          "O",
+          "8",
+          "警察放蛇",
+          "2",
+          "冚",
+          "false",
+          "63",
+          "65"
+        ]
+      ],
+      "existing_hints_at_frontier": [
+        "脫口",
+        "脱口",
+        "亂咁",
+        "亂噏"
+      ],
+      "first_observed_prune_loss": null
+    },
+    {
+      "context": "",
+      "code": "vfoebvybvmofrdrryrre",
+      "target": "妳雙眼通紅係咪喊過嚟",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 10,
+        "text": "妳雙眼通紅"
+      },
+      "furthest_consumed": {
+        "code_position": 6,
+        "text": "妳雙眼"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "10",
+          "妳雙眼通紅",
+          "134",
+          "false",
+          "-1.4517700997584626"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "你哋",
+        "係咪",
+        "你哋嗰",
+        "你哋唔"
+      ],
+      "first_observed_prune_loss": [
+        "B",
+        "4",
+        "妳雙",
+        "53",
+        "false",
+        "-0.21533281301947937"
+      ]
+    },
+    {
+      "context": "",
+      "code": "nwhbvsisawcokqnclmcoaoaggggjlrrfhcird",
+      "target": "陳師奶成日買餸打斧頭儲儲埋埋都唔少錢㗎",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 21,
+        "text": "陳師奶成日買餸打斧頭儲"
+      },
+      "furthest_consumed": {
+        "code_position": 19,
+        "text": "陳師奶成日買餸打斧頭"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "21",
+          "陳師奶成日買餸打斧頭儲",
+          "38",
+          "false",
+          "0.39263398918518533"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "人旺",
+        "借墊"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "21",
+        "陳師奶成日買餸打斧頭儲",
+        "38",
+        "false",
+        "0.39263398918518533"
+      ]
+    },
+    {
+      "context": "",
+      "code": "voopvvopvdmird",
+      "target": "女人化妝化好耐㗎",
+      "raw_final_rank": 84,
+      "terminal_blocker": "outside_twenty",
+      "furthest_generated": {
+        "code_position": 14,
+        "text": "女人化妝化好耐㗎"
+      },
+      "furthest_consumed": {
+        "code_position": 12,
+        "text": "女人化妝化好耐"
+      },
+      "terminal_prune_observations": [],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": null
+    },
+    {
+      "context": "",
+      "code": "onaukixnkvrsrrnpkriyegibhhu",
+      "target": "今晚套劇大結局喇快啲返去睇先",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 15,
+        "text": "今晚套劇大結局喇"
+      },
+      "furthest_consumed": {
+        "code_position": 13,
+        "text": "今晚套劇大結局"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "15",
+          "今晚套劇大結局喇",
+          "74",
+          "false",
+          "-0.834830118014267"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "快啲"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "11",
+        "今晚套劇大結",
+        "49",
+        "false",
+        "-0.003013024046282453"
+      ]
+    },
+    {
+      "context": "",
+      "code": "ygyjrjotkbkbjvqyjijjqvykrr",
+      "target": "主辦單位有冇安排專車接送啊",
+      "raw_final_rank": 75,
+      "terminal_blocker": "outside_twenty",
+      "furthest_generated": {
+        "code_position": 26,
+        "text": "主辦單位有冇安排專車接送啊"
+      },
+      "furthest_consumed": {
+        "code_position": 24,
+        "text": "主辦單位有冇安排專車接送"
+      },
+      "terminal_prune_observations": [],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": null
+    },
+    {
+      "context": "",
+      "code": "hlkbhdhmrfmmwrhephhcygajhddk",
+      "target": "所有學生喺五點後必須離開學校",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 20,
+        "text": "所有學生喺五點後必須"
+      },
+      "furthest_consumed": {
+        "code_position": 16,
+        "text": "所有學生喺五點後"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "20",
+          "所有學生喺五點後必須",
+          "58",
+          "false",
+          "-0.7680230791272464"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "主日",
+        "離開"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "18",
+        "所有學生喺五點後必",
+        "179",
+        "false",
+        "-2.9451251059188053"
+      ]
+    },
+    {
+      "context": "",
+      "code": "ykyjrrhiormviemvhgjf",
+      "target": "文章唔符合要求要重寫",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 14,
+        "text": "文章唔符合要求"
+      },
+      "furthest_consumed": {
+        "code_position": 6,
+        "text": "文章唔"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "14",
+          "文章唔符合要求",
+          "115",
+          "false",
+          "-2.2195768208121756"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": [
+        "I",
+        "8",
+        "文章唔符",
+        "559",
+        "false",
+        "-5.841135284679638"
+      ]
+    },
+    {
+      "context": "",
+      "code": "trjumbbrwqjlvdefrrmuhiebebdhogrn",
+      "target": "落完雨周圍都好濕唔玩得瀡滑梯住喇",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 16,
+        "text": "落完雨周圍都好濕"
+      },
+      "furthest_consumed": {
+        "code_position": 14,
+        "text": "落完雨周圍都好"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "16",
+          "落完雨周圍都好濕",
+          "675",
+          "false",
+          "-5.623281408233943"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "嗰一",
+        "唔一",
+        "嘔電"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "8",
+        "落完雨周",
+        "119",
+        "false",
+        "-3.2031995075351745"
+      ]
+    },
+    {
+      "context": "",
+      "code": "ncpbhjjyrsfrrrr",
+      "target": "小心睇車過馬路啊",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 13,
+        "text": "小心睇車過馬路"
+      },
+      "furthest_consumed": {
+        "code_position": 7,
+        "text": "小心睇車"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "13",
+          "小心睇車過馬路",
+          "162",
+          "false",
+          "-1.9726698480577838"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": [
+        "I",
+        "9",
+        "小心睇車過",
+        "273",
+        "false",
+        "-3.5232469623839684"
+      ]
+    },
+    {
+      "context": "",
+      "code": "yvhsrrnjyuhirrvdqiebrnrr",
+      "target": "退房嗰陣記得唔好拎漏嘢啊",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 18,
+        "text": "退房嗰陣記得唔好拎"
+      },
+      "furthest_consumed": {
+        "code_position": 16,
+        "text": "退房嗰陣記得唔好"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "18",
+          "退房嗰陣記得唔好拎",
+          "231",
+          "false",
+          "-4.352637289234174"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "滿口",
+        "水貼",
+        "清嘢"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "18",
+        "退房嗰陣記得唔好拎",
+        "231",
+        "false",
+        "-4.352637289234174"
+      ]
+    },
+    {
+      "context": "",
+      "code": "rpdmncxrofosyuhugihq",
+      "target": "呢本小説係佢親自執筆",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 8,
+        "text": "呢本小説"
+      },
+      "furthest_consumed": {
+        "code_position": 6,
+        "text": "呢本小"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "8",
+          "呢本小説",
+          "83",
+          "false",
+          "-3.150008260881478"
+        ]
+      ],
+      "omitted_next_characters": [
+        [
+          "O",
+          "6",
+          "呢本小",
+          "2",
+          "説",
+          "false",
+          "67",
+          "86"
+        ]
+      ],
+      "existing_hints_at_frontier": [
+        "無人",
+        "係人",
+        "焦作",
+        "係佢",
+        "係佢就"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "8",
+        "呢本小説",
+        "83",
+        "false",
+        "-3.150008260881478"
+      ]
+    },
+    {
+      "context": "",
+      "code": "ofrrvdybrmfwokrmrr",
+      "target": "你唔好講咗當做咗喎",
+      "raw_final_rank": 81,
+      "terminal_blocker": "outside_twenty",
+      "furthest_generated": {
+        "code_position": 18,
+        "text": "你唔好講咗當做咗喎"
+      },
+      "furthest_consumed": {
+        "code_position": 16,
+        "text": "你唔好講咗當做咗"
+      },
+      "terminal_prune_observations": [],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": null
+    },
+    {
+      "context": "",
+      "code": "rfciwvbumnkbtincpborrfieqntrjborvruvdoovdjf",
+      "target": "喺公園見到有對小情侶喺度打茄輪個女嘅好似好索",
+      "raw_final_rank": 48,
+      "terminal_blocker": "outside_twenty",
+      "furthest_generated": {
+        "code_position": 43,
+        "text": "喺公園見到有對小情侶喺度打茄輪個女嘅好似好索"
+      },
+      "furthest_consumed": {
+        "code_position": 41,
+        "text": "喺公園見到有對小情侶喺度打茄輪個女嘅好似好"
+      },
+      "terminal_prune_observations": [],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": null
+    },
+    {
+      "context": "",
+      "code": "ovjoofpnobhgevprigeqgrroambyboevgevprn",
+      "target": "依家無乜人睇報紙啲報攤唔會再請人派報紙喇",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 19,
+        "text": "依家無乜人睇報紙啲報"
+      },
+      "furthest_consumed": {
+        "code_position": 15,
+        "text": "依家無乜人睇報紙"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "19",
+          "依家無乜人睇報紙啲報",
+          "96",
+          "false",
+          "-1.3954521290711597"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "撞啱"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "13",
+        "依家無乜人睇報",
+        "59",
+        "false",
+        "-0.5808017917916786"
+      ]
+    },
+    {
+      "context": "",
+      "code": "ofrdmhttkehrkwrycppjc",
+      "target": "你哋一盤散沙噉點贏比賽",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 17,
+        "text": "你哋一盤散沙噉點贏"
+      },
+      "furthest_consumed": {
+        "code_position": 15,
+        "text": "你哋一盤散沙噉點"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "17",
+          "你哋一盤散沙噉點贏",
+          "65",
+          "false",
+          "-0.37807780312587624"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "比賽"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "17",
+        "你哋一盤散沙噉點贏",
+        "65",
+        "false",
+        "-0.37807780312587624"
+      ]
+    },
+    {
+      "context": "",
+      "code": "himljoykofhbmw",
+      "target": "我而家送你歸西",
+      "raw_final_rank": 0,
+      "terminal_blocker": "completed_path_pruned",
+      "furthest_generated": {
+        "code_position": 14,
+        "text": "我而家送你歸西"
+      },
+      "furthest_consumed": {
+        "code_position": 10,
+        "text": "我而家送你"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "14",
+          "我而家送你歸西",
+          "205",
+          "false",
+          "-3.409154083414119"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": [
+        "I",
+        "12",
+        "我而家送你歸",
+        "468",
+        "false",
+        "-4.208957996869508"
+      ]
+    },
+    {
+      "context": "",
+      "code": "huifrfehqrumpspymmlhtyo",
+      "target": "禿鷹喺水牛嘅死屍上面盤旋",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 9,
+        "text": "禿鷹喺水牛"
+      },
+      "furthest_consumed": {
+        "code_position": 7,
+        "text": "禿鷹喺水"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "9",
+          "禿鷹喺水牛",
+          "44",
+          "false",
+          "0.0228487818693921"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "嘅一"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "9",
+        "禿鷹喺水牛",
+        "44",
+        "false",
+        "0.0228487818693921"
+      ]
+    },
+    {
+      "context": "",
+      "code": "yvfhfhotwlhiomhirrhi",
+      "target": "讓少少位畀我企得唔得",
+      "raw_final_rank": 29,
+      "terminal_blocker": "outside_twenty",
+      "furthest_generated": {
+        "code_position": 20,
+        "text": "讓少少位畀我企得唔得"
+      },
+      "furthest_consumed": {
+        "code_position": 14,
+        "text": "讓少少位畀我企"
+      },
+      "terminal_prune_observations": [],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": [
+        "I",
+        "16",
+        "讓少少位畀我企得",
+        "75",
+        "false",
+        "-0.7018563979439634"
+      ]
+    },
+    {
+      "context": "",
+      "code": "rpaajmniofokhngshmyp",
+      "target": "呢間士多係做街坊生意",
+      "raw_final_rank": 17,
+      "terminal_blocker": "confidence_filtered",
+      "furthest_generated": {
+        "code_position": 20,
+        "text": "呢間士多係做街坊生意"
+      },
+      "furthest_consumed": {
+        "code_position": 18,
+        "text": "呢間士多係做街坊生"
+      },
+      "terminal_prune_observations": [],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": [
+        "I",
+        "14",
+        "呢間士多係做街",
+        "192",
+        "false",
+        "-2.1716819006118016"
+      ]
+    },
+    {
+      "context": "",
+      "code": "mljogiovoerrmmrrwc",
+      "target": "而家去食飯唔三唔四",
+      "raw_final_rank": 0,
+      "terminal_blocker": "completed_path_pruned",
+      "furthest_generated": {
+        "code_position": 18,
+        "text": "而家去食飯唔三唔四"
+      },
+      "furthest_consumed": {
+        "code_position": 12,
+        "text": "而家去食飯唔"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "18",
+          "而家去食飯唔三唔四",
+          "239",
+          "false",
+          "-4.084478787928653"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": [
+        "I",
+        "14",
+        "而家去食飯唔三",
+        "53",
+        "false",
+        "-0.27893389322241546"
+      ]
+    },
+    {
+      "context": "",
+      "code": "rrrrosqormorjpevevguhh",
+      "target": "啱啱佢扶咗個老婆婆起身",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 8,
+        "text": "啱啱佢扶"
+      },
+      "furthest_consumed": {
+        "code_position": 6,
+        "text": "啱啱佢"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "8",
+          "啱啱佢扶",
+          "85",
+          "false",
+          "-1.0903928281819653"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "啲人",
+        "咗人",
+        "咗個",
+        "噏個"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "8",
+        "啱啱佢扶",
+        "85",
+        "false",
+        "-1.0903928281819653"
+      ]
+    },
+    {
+      "context": "",
+      "code": "mljorudfejaiaaofmiaimmjchmmjhh",
+      "target": "而家嘅標準時間係零時二十分二十秒",
+      "raw_final_rank": 69,
+      "terminal_blocker": "outside_twenty",
+      "furthest_generated": {
+        "code_position": 30,
+        "text": "而家嘅標準時間係零時二十分二十秒"
+      },
+      "furthest_consumed": {
+        "code_position": 28,
+        "text": "而家嘅標準時間係零時二十分二十"
+      },
+      "terminal_prune_observations": [],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": null
+    },
+    {
+      "context": "",
+      "code": "ompmfiphehmofhlyvlcvkrt",
+      "target": "人死不能復生你節哀順變啦",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 21,
+        "text": "人死不能復生你節哀順變"
+      },
+      "furthest_consumed": {
+        "code_position": 13,
+        "text": "人死不能復生你"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "21",
+          "人死不能復生你節哀順變",
+          "181",
+          "false",
+          "-2.9949368800781215"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": [
+        "I",
+        "15",
+        "人死不能復生你節",
+        "276",
+        "false",
+        "-5.630016185890611"
+      ]
+    },
+    {
+      "context": "",
+      "code": "oshmrmaasgojmtioqjmqovb",
+      "target": "佢租咗間屋俾一對年輕夫婦",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 6,
+        "text": "佢租咗"
+      },
+      "furthest_consumed": {
+        "code_position": 4,
+        "text": "佢租"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "6",
+          "佢租咗",
+          "90",
+          "false",
+          "-0.6773624582354323"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "間屋",
+        "間壁"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "6",
+        "佢租咗",
+        "90",
+        "false",
+        "-0.6773624582354323"
+      ]
+    },
+    {
+      "context": "",
+      "code": "haeumkiiofehjmiohekrnirmdokeqayd",
+      "target": "香港政府係沙士之後加強咗檢疫措施",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 24,
+        "text": "香港政府係沙士之後加強咗"
+      },
+      "furthest_consumed": {
+        "code_position": 22,
+        "text": "香港政府係沙士之後加強"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "24",
+          "香港政府係沙士之後加強咗",
+          "140",
+          "false",
+          "-2.445538886089892"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "檢疫",
+        "檢獲"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "24",
+        "香港政府係沙士之後加強咗",
+        "140",
+        "false",
+        "-2.445538886089892"
+      ]
+    },
+    {
+      "context": "",
+      "code": "hibhordokyuvoifofqdebvbummqojcpbofahhdtgfb",
+      "target": "我睇人哋做就以為係手板眼見工夫實情係易學難精",
+      "raw_final_rank": 52,
+      "terminal_blocker": "outside_twenty",
+      "furthest_generated": {
+        "code_position": 42,
+        "text": "我睇人哋做就以為係手板眼見工夫實情係易學難精"
+      },
+      "furthest_consumed": {
+        "code_position": 34,
+        "text": "我睇人哋做就以為係手板眼見工夫實情係"
+      },
+      "terminal_prune_observations": [],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": [
+        "I",
+        "36",
+        "我睇人哋做就以為係手板眼見工夫實情係易",
+        "131",
+        "false",
+        "-3.785545373953937"
+      ]
+    },
+    {
+      "context": "",
+      "code": "osikyrofmolofyubfmvjrosofjcofmorypwphctiruo",
+      "target": "佢救過你一命你竟然要害佢你真係一個忘恩負義嘅人",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 13,
+        "text": "佢救過你一命你"
+      },
+      "furthest_consumed": {
+        "code_position": 11,
+        "text": "佢救過你一命"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "13",
+          "佢救過你一命你",
+          "51",
+          "false",
+          "-0.07957108269255997"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "竟然",
+        "就爲"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "13",
+        "佢救過你一命你",
+        "51",
+        "false",
+        "-0.07957108269255997"
+      ]
+    },
+    {
+      "context": "",
+      "code": "jkybofnimurudmdvymtiptwlymhrhgeuevrucihg",
+      "target": "教育係多元嘅植根於對世界上各種流派嘅尊重",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 18,
+        "text": "教育係多元嘅植根於"
+      },
+      "furthest_consumed": {
+        "code_position": 16,
+        "text": "教育係多元嘅植根"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "18",
+          "教育係多元嘅植根於",
+          "140",
+          "false",
+          "-1.4699195614413085"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "對心"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "14",
+        "教育係多元嘅植",
+        "86",
+        "false",
+        "-0.7594152356383077"
+      ]
+    },
+    {
+      "context": "",
+      "code": "ybmniiyriiyrrrvdkiypjc",
+      "target": "遇到冷言冷語唔好太認真",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 12,
+        "text": "遇到冷言冷語"
+      },
+      "furthest_consumed": {
+        "code_position": 6,
+        "text": "遇到冷"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "12",
+          "遇到冷言冷語",
+          "421",
+          "false",
+          "-5.050994221644864"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "路女",
+        "唔好",
+        "器樂"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "8",
+        "遇到冷言",
+        "322",
+        "false",
+        "-3.9285392961402152"
+      ]
+    },
+    {
+      "context": "",
+      "code": "okpnvihusupumnisoeyvtfferkru",
+      "target": "做乜將自己包到成隻裹蒸糭噉嘅",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 24,
+        "text": "做乜將自己包到成隻裹蒸糭"
+      },
+      "furthest_consumed": {
+        "code_position": 18,
+        "text": "做乜將自己包到成隻"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "24",
+          "做乜將自己包到成隻裹蒸糭",
+          "641",
+          "false",
+          "-8.041447087916481"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "咬口",
+        "口瘡",
+        "喫吧",
+        "蹊蹺"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "20",
+        "做乜將自己包到成隻裹",
+        "324",
+        "false",
+        "-2.8369174137285214"
+      ]
+    },
+    {
+      "context": "",
+      "code": "vdwfrrokrqrrajft",
+      "target": "好黑喎做咩唔開燈",
+      "raw_final_rank": 30,
+      "terminal_blocker": "outside_twenty",
+      "furthest_generated": {
+        "code_position": 16,
+        "text": "好黑喎做咩唔開燈"
+      },
+      "furthest_consumed": {
+        "code_position": 14,
+        "text": "好黑喎做咩唔開"
+      },
+      "terminal_prune_observations": [],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": null
+    },
+    {
+      "context": "",
+      "code": "osjrrmmmjgiiesaorjlxuofwrya",
+      "target": "佢寄咗三十封求職信都毫無回音",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 23,
+        "text": "佢寄咗三十封求職信都毫無"
+      },
+      "furthest_consumed": {
+        "code_position": 19,
+        "text": "佢寄咗三十封求職信都"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "23",
+          "佢寄咗三十封求職信都毫無",
+          "428",
+          "false",
+          "-6.481644246131097"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "回音"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "13",
+        "佢寄咗三十封求",
+        "57",
+        "false",
+        "-0.2308200938024072"
+      ]
+    },
+    {
+      "context": "",
+      "code": "ohjcsojgqfsfnphnoforvdvmtcruicdwyrnproi",
+      "target": "入實驗室㩒緊急制係個好經典嘅廣東話急口令",
+      "raw_final_rank": 0,
+      "terminal_blocker": "choice_cutoff",
+      "furthest_generated": {
+        "code_position": 8,
+        "text": "入實驗室"
+      },
+      "furthest_consumed": {
+        "code_position": 8,
+        "text": "入實驗室"
+      },
+      "terminal_prune_observations": [],
+      "omitted_next_characters": [
+        [
+          "O",
+          "8",
+          "入實驗室",
+          "2",
+          "㩒",
+          "false",
+          "0",
+          "53"
+        ]
+      ],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": null
+    },
+    {
+      "context": "",
+      "code": "loqwsjmnilkoamltimcsebutrrunudi",
+      "target": "中年男士多數會面對頭髮脱落嘅危機",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 25,
+        "text": "中年男士多數會面對頭髮脱落"
+      },
+      "furthest_consumed": {
+        "code_position": 21,
+        "text": "中年男士多數會面對頭髮"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "25",
+          "中年男士多數會面對頭髮脱落",
+          "421",
+          "false",
+          "-3.851625867474226"
+        ]
+      ],
+      "omitted_next_characters": [
+        [
+          "O",
+          "21",
+          "中年男士多數會面對頭髮",
+          "2",
+          "脱",
+          "false",
+          "66",
+          "69"
+        ]
+      ],
+      "existing_hints_at_frontier": [],
+      "first_observed_prune_loss": [
+        "I",
+        "25",
+        "中年男士多數會面對頭髮脱落",
+        "421",
+        "false",
+        "-3.851625867474226"
+      ]
+    },
+    {
+      "context": "",
+      "code": "ososrmvdniorkyrginpbboskuwyrujnjc",
+      "target": "佢作咗好多個大話去隱瞞佢犯罪嘅事實",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 23,
+        "text": "佢作咗好多個大話去隱瞞佢"
+      },
+      "furthest_consumed": {
+        "code_position": 21,
+        "text": "佢作咗好多個大話去隱瞞"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "23",
+          "佢作咗好多個大話去隱瞞佢",
+          "55",
+          "false",
+          "-0.1522412314940098"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "犯罪"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "19",
+        "佢作咗好多個大話去隱",
+        "200",
+        "false",
+        "-2.013603315567707"
+      ]
+    },
+    {
+      "context": "",
+      "code": "hievevororamtbjlgiigsrlphdhohecbhhbtvdoqie",
+      "target": "我婆婆個個星期都去社區中心學八段錦身體好健康",
+      "raw_final_rank": 0,
+      "terminal_blocker": "prefix_pruned",
+      "furthest_generated": {
+        "code_position": 32,
+        "text": "我婆婆個個星期都去社區中心學八段錦"
+      },
+      "furthest_consumed": {
+        "code_position": 26,
+        "text": "我婆婆個個星期都去社區中心學"
+      },
+      "terminal_prune_observations": [
+        [
+          "I",
+          "32",
+          "我婆婆個個星期都去社區中心學八段錦",
+          "141",
+          "false",
+          "-1.9186855393027429"
+        ]
+      ],
+      "omitted_next_characters": [],
+      "existing_hints_at_frontier": [
+        "竹篙",
+        "竹帛",
+        "身體",
+        "物體"
+      ],
+      "first_observed_prune_loss": [
+        "I",
+        "28",
+        "我婆婆個個星期都去社區中心學八",
+        "268",
+        "false",
+        "-3.6149142444904925"
+      ]
+    }
+  ]
+}

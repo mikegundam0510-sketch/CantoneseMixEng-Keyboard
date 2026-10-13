@@ -252,7 +252,7 @@ public final class SettingsActivity extends Activity {
     private void showLicenses() {
         StringBuilder content = new StringBuilder("Rime Cangjie dictionary\nhttps://github.com/rime/rime-cangjie\nCommit: 52d90a1b1312e74042b38c1cbc8142defbc53171\n\n");
         content.append("HKCanCor: Luke, Kang Kwong & Wong, May L. Y. (2015), The Hong Kong Cantonese Corpus\nhttps://github.com/fcbond/hkcancor\nRime Cantonese: CanCLID contributors\nhttps://github.com/rime/rime-cantonese\nThese derived vocabulary/model contributions: CC BY 4.0.\nTatoeba model contribution: CC BY 2.0 France; notice below.\n\n");
-        for (String name : new String[]{"AUTHORS", "GPL-3.0.txt", "LGPL-3.0.txt", "ESSAY-AUTHORS.txt", "UNICODE-LICENSE.txt", "HKCANCOR-CC-BY-4.0.txt", "RIME-CANTONESE-CC-BY-4.0.txt", "tatoeba/NOTICE.txt", "cangjie-completion/LICENSE.txt", "cangjie-completion/LICENSE-CJ3.txt"}) {
+        for (String name : new String[]{"AUTHORS", "GPL-3.0.txt", "LGPL-3.0.txt", "ESSAY-AUTHORS.txt", "UNICODE-LICENSE.txt", "HKCANCOR-CC-BY-4.0.txt", "RIME-CANTONESE-CC-BY-4.0.txt", "tatoeba/NOTICE.txt", "prefix/README.md", "cangjie-completion/LICENSE.txt", "cangjie-completion/LICENSE-CJ3.txt"}) {
             try (InputStream stream = getAssets().open("licenses/" + name)) {
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream(); byte[] buf = new byte[4096]; int n;
                 while ((n = stream.read(buf)) != -1) bytes.write(buf, 0, n);

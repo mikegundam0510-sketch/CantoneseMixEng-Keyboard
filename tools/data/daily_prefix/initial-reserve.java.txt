@@ -1,0 +1,26 @@
+    private List<Path> reservePrefixes(List<Path> input,List<Path> result,String context,
+            List<Token> following,Map<Path,Double> baselineScores) {
+        if(prefixRanker==null||result.size()<BEAM||input.size()<=result.size())return result;
+        double floor=result.get(BEAM-1).score-4;
+        Set<String> seen=new HashSet<>(),histories=new HashSet<>();
+        for(Path p:result){seen.add(p.text);histories.add(PrefixRanker.tail(context+p.text));}
+        List<String> hints=new ArrayList<>();for(Token t:following)hints.add(t.text);
+        Map<String,Double> cache=new HashMap<>();Map<Path,Double> scores=new IdentityHashMap<>();
+        int considered=0;
+        for(Path p:input) {
+            if(p.score<floor||seen.contains(p.text))continue;
+            String history=PrefixRanker.tail(context+p.text);
+            if(histories.contains(history)||cache.containsKey(history))continue;
+            double evidence=prefixRanker.correction("",history,hints);cache.put(history,evidence);
+            if(evidence>.25)scores.put(p,(baselineScores==null?p.score:baselineScores.get(p))+evidence);
+            if(++considered==32)break;
+        }
+        List<Path> candidates=new ArrayList<>(scores.keySet());
+        candidates.sort(Comparator.comparingDouble((Path p)->scores.get(p)).reversed().thenComparing(p->p.text));
+        int added=0;
+        for(Path p:candidates)if(histories.add(PrefixRanker.tail(context+p.text))) {
+            result.add(p);if(++added==4)break;
+        }
+        return result;
+    }
+

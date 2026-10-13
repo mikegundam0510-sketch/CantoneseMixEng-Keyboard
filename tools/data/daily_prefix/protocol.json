@@ -1,0 +1,25 @@
+{
+  "baseline_revision": "241803bed934657ab7578e50678ef186847eeac0",
+  "data": "Reviewed/public words.hk complete-sentence examples are evaluation-only;200 validation and800 unseen test, headword/duplicate/one-edit groups split before sampling. Training includes filtered licensed prior train cases plus552 independently authored daily variants; no dictionary example trains the asset.",
+  "objective": "Actual same-code prefix mistakes, baseline pruning-score margins; include non-leading viable prefixes from rank2 within the raw beam floor minus4, prioritizing discarded checkpoints; max2 checkpoints per target, max3 rivals each. Prefix residual controls a bounded survival reserve, never produces an inexact candidate.",
+  "parameters": {
+    "epochs": 80,
+    "rate": 0.3,
+    "l2": 0.01,
+    "minimum_independent_support": 3,
+    "maximum_features": 16000,
+    "weight_limit": 1.5,
+    "score_limit": 2
+  },
+  "strength_grid": [
+    0.25,
+    0.5,
+    1,
+    1.5
+  ],
+  "search": "Keep original48+8; evaluate at most32 close discarded histories and add at most4 paths with positive trained prefix support>0.25. Empty lookahead uses endpoint evidence only. Final96/display20, confidence and personal scores retained.",
+  "selection": "Written before any new evaluation decoding. Choose on new200 validation and existing authored60/natural200/public200 validation, require no top1/top5 drop per set; maximize equal-set mean MRR, tie lower strength. Existing regressions are guard/calibration data. Save decision before opening new800 outcomes.",
+  "release": "Source major gates plus new800 first/top5 >=5percentage-point gain against fixed baseline; required regressions and paired warmed median latency<=1.2; physical Fold7 evidence required for a real-device claim. Dictionary examples do not establish measured current chat frequency.",
+  "pre_evaluation_revision": "Training-only observer initially found few rank24+ close checkpoints; broadened supervision to non-leading close rank2+ prefixes before training or opening any new validation/heldout outcomes. Inference eligibility remains unchanged.",
+  "exposure_audit": "Before heldout decoding, one of800 reserved targets (點解你唔返學) was also found in baseline Tatoeba training. Retain the original800 without outcome-based replacement; report both full800 and the799 with no observed baseline training/vocabulary overlap. Major gain must hold on both."
+}

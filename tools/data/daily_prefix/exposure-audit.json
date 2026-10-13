@@ -1,0 +1,11 @@
+{
+  "known_training_or_vocabulary_overlap": {
+    "點解你唔返學": [
+      "Tatoeba training"
+    ]
+  },
+  "overlap_count": 1,
+  "target_count": 1000,
+  "performed_before_heldout_decoding": true,
+  "scope": "Raw HKCanCor training chunks, licensed Tatoeba training chunks and current baseline vocabulary. No outcome-based exclusions. Dictionary examples may contain previously known short words."
+}
