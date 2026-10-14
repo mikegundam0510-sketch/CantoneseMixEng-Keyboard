@@ -1,0 +1,67 @@
+{
+  "baseline_revision": "a65f43d3cc96d90e23b89dd3ff096ae165a2c46d",
+  "calibration_only": true,
+  "independent_reserve_opened": false,
+  "production_model_adopted": false,
+  "version": "0.6.39",
+  "version_code": 46,
+  "apk_produced": false,
+  "major_gate_reached": false,
+  "decision": "Retain the previous independently checked prefix model. Neither unbalanced nor source-balanced final residual preserves first/top5/top20 in every known calibration set. No new installed-phone accuracy improvement claimed.",
+  "python_tests": {
+    "executed": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "log_sha256": "3c9a1a046df4b3ebda4dc296edef6bed89df41110a35472f83e49ab46cfae6d7"
+  },
+  "functional_rejection_checks": {
+    "passed": [
+      "non_training_source",
+      "truncated_observer",
+      "mutated_model"
+    ]
+  },
+  "default_training_weights_byte_reproduced": true,
+  "native_observation": {
+    "calibration_targets": 660,
+    "native_top20_lists_unchanged": 660,
+    "training_targets": 3081,
+    "training_observer_sha256": "88b2673602dc6de079c83616fbdcdf37c3a15e106607692e90076e61f6c4dbd2",
+    "every_returned_candidate_exact_code_checked": true
+  },
+  "source_family_counts": {
+    "hkcancor": 46,
+    "tatoeba": 676,
+    "legacy_authored": 16,
+    "daily_authored": 54
+  },
+  "optional_training_mixture": {
+    "hkcancor": 0.5,
+    "tatoeba": 0.25,
+    "authored_combined": 0.25
+  },
+  "licenses": "Licensed previous HKCanCor/Tatoeba and project-authored training only; words.hk usage examples are evaluation-only, never training or APK assets. Existing source notices retain scope.",
+  "reports": {
+    "final-hard-balanced-model-training-report-2026-10-14.json": "824cce70d17dd9cc5d1a5d127d422e4437576544825370473ee26d65eb19cdee",
+    "final-hard-balanced-validation-report-2026-10-14.json": "0f3a69e13686f6bba5efcaea3284c4451f2adf0bd73f9ce7fd146c43f6fd522b",
+    "final-hard-model-training-report-2026-10-14.json": "9b448b331186d0554c9d3df380b65b5b75ff9d368d0e5624b62b98475861a7df",
+    "final-hard-validation-report-2026-10-14.json": "4930e27d2303ad13b71470031019bd4949016be58f9844fe9b19cdddb91291b6",
+    "final-priority-relative-score-report-2026-10-14.json": "1f04604b8afc73e607849b1c66d098c047af746af79545952cec6892ff88035f",
+    "final-priority-report-2026-10-14.json": "39490e067bcdfb4ef728fa7cd05f7dec93fec1fc629418e74851aaea8a1c0971",
+    "prefix-clipping-pilot-2026-10-14.json": "d5d7c13db46550940109832086f45a22fe367fb077a956a2143a1d5d9ab3b0d8"
+  },
+  "tool_sha256": {
+    "diagnose_prefix_clipping.py": "142805b75564952447bd060b232b9dce99402b62164b3b88c4894a19fe0973da",
+    "diagnose_sentence_priority.py": "098ca81ba95760d6a98a90bacb593650e4407f1b96677815b7007f1c96c65192",
+    "pilot_final_hard_negatives.py": "58bf8e79be820d8e495eb5a6455d76bc4d679df5bbdf7095d8e04865862258da",
+    "train_candidate_ranker.py": "86e9de3ea6b34fee8e7020f34671ca9100f4382489fbd74def2206d5754fe981",
+    "test_source_balancing.py": "4d46f87e8a13bda44e7e5309f9db14488c00d1aa8afe67041a77c209ef9d8888"
+  },
+  "unchanged_ranker_assets": {
+    "candidate_ranker.b64": "0fe065437c4b87ac3852440c69cf8140cd159241f723d4927b959fb7772d3f62",
+    "prefix_ranker.b64": "0929d45aab58f6dc80dc1772d0717ddb24309707425680692cf9fb21d241c811",
+    "sentence_ranker.b64": "3d6e6c3d73be95ab4366bda0eeb9fcf3ad01aca931f53cb651144f21bbbc28a8",
+    "word_ranker.b64": "58697234c7fe8fafd816c44c0d65e5bf152d08f7fbca52c801f63eb57b29a536"
+  }
+}

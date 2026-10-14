@@ -110,7 +110,7 @@ def read_pairs(path, manifest_path, reverse=None):
 
 
 def learn(pairs, epochs=80, rate=.3, l2=.02, min_count=2, maximum_features=50000,
-          feature_extractor=features):
+          feature_extractor=features, source_mix=None):
     """Deterministic full-batch pairwise logistic objective with L2 and bounded weights."""
     if not 1 <= epochs <= 1000 or not 0 < rate <= 2 or not 0 < l2 <= 2:
         raise ValueError('Invalid training hyperparameters')
@@ -140,6 +140,10 @@ def learn(pairs, epochs=80, rate=.3, l2=.02, min_count=2, maximum_features=50000
         raise ValueError('No supported candidate features')
     indices = {feature: at for at, feature in enumerate(vocabulary)}
     examples = []
+    example_groups = []
+    if source_mix is not None and (not source_mix or any(not all(prefix.split('|')) or not math.isfinite(value) or value <= 0
+            for prefix, value in source_mix.items()) or abs(sum(source_mix.values())-1)>1e-9):
+        raise ValueError('Source mix must contain positive prefix weights summing to one')
     for identity, delta, offset in differences:
         sparse = sorted((indices[f], count) for f, count in delta.items() if f in indices)
         if sparse:
@@ -148,8 +152,22 @@ def learn(pairs, epochs=80, rate=.3, l2=.02, min_count=2, maximum_features=50000
             if identity[0] in family_targets:
                 weight /= len(family_targets[identity[0]])
             examples.append((sparse, weight, offset))
+            if source_mix is not None:
+                groups=[prefix for prefix in source_mix if any(identity[0].startswith(part) for part in prefix.split('|'))]
+                if len(groups)!=1:raise ValueError('Training source must match exactly one mix group')
+                example_groups.append(groups[0])
     if not examples:
         raise ValueError('No supported competing differences')
+    source_balance = None
+    if source_mix is not None:
+        mass = defaultdict(float)
+        for group, (_, weight, _) in zip(example_groups, examples):mass[group] += weight
+        if any(mass[prefix] <= 0 for prefix in source_mix):raise ValueError('Empty supported source mix group')
+        # Keep target/family balancing within each corpus, then assign explicit
+        # corpus shares. Minimum feature support still counts real families.
+        examples = [(sparse, weight * source_mix[group] / mass[group], offset)
+            for group, (sparse, weight, offset) in zip(example_groups, examples)]
+        source_balance = {'desired_mix':dict(source_mix),'previous_weight_mass':dict(mass)}
     total_weight = sum(weight for _, weight, _ in examples)
     weights, accumulated = [0.0] * len(vocabulary), [0.0] * len(vocabulary)
     losses = []
@@ -170,13 +188,15 @@ def learn(pairs, epochs=80, rate=.3, l2=.02, min_count=2, maximum_features=50000
             weights[index] = max(-ENDPOINT_LIMIT, min(ENDPOINT_LIMIT,
                 weights[index] - rate * value / math.sqrt(accumulated[index] + 1e-8)))
     learned = {feature: weight for feature, weight in zip(vocabulary, weights) if abs(weight) >= 1e-4}
-    return learned, {'epochs': epochs, 'rate': rate, 'l2': l2, 'minimum_independent_target_support': min_count,
+    report = {'epochs': epochs, 'rate': rate, 'l2': l2, 'minimum_independent_target_support': min_count,
                      'feature_support_unit': 'Distinct (source,context,code,positive); authored variants collapsed to family',
                      'features_considered': len(support), 'features_supported': len(vocabulary),
                      'features_exported': len(learned), 'training_examples': len(examples),
                      'initial_logistic_objective': losses[0], 'final_logistic_objective': losses[-1],
                      'positive_features': sum(w > 0 for w in learned.values()),
                      'negative_features': sum(w < 0 for w in learned.values())}
+    if source_balance is not None:report['source_balance']=source_balance
+    return learned, report
 
 
 def encode(weights, strength=1, *, word_relations=False):

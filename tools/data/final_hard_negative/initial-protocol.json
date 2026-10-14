@@ -1,0 +1,32 @@
+{
+  "baseline_revision": "a65f43d3cc96d90e23b89dd3ff096ae165a2c46d",
+  "training_sha256": "ed11415794ea8c52b6966d1c59804257d31e0f236f8d3448427e59a2c1ffbfa0",
+  "model_sha256": {
+    "candidate_ranker.b64": "0fe065437c4b87ac3852440c69cf8140cd159241f723d4927b959fb7772d3f62",
+    "prefix_ranker.b64": "0929d45aab58f6dc80dc1772d0717ddb24309707425680692cf9fb21d241c811",
+    "sentence_ranker.b64": "3d6e6c3d73be95ab4366bda0eeb9fcf3ad01aca931f53cb651144f21bbbc28a8",
+    "word_ranker.b64": "58697234c7fe8fafd816c44c0d65e5bf152d08f7fbca52c801f63eb57b29a536"
+  },
+  "parameters": {
+    "epochs": 80,
+    "rate": 0.3,
+    "l2": 0.01,
+    "minimum_independent_support": 3,
+    "maximum_features": 12000
+  },
+  "maximum_rivals_per_target": 3,
+  "strength_grid": [
+    0.25,
+    0.5,
+    1,
+    1.5
+  ],
+  "purpose": "Learn current final-pool score mistakes over frozen native model offsets using licensed HKCanCor/Tatoeba and independently authored daily training. No dictionary usage example trains the model.",
+  "mining": "Gold must already exist in actual confidence-eligible pool96. At most3 higher adjusted-score rivals for nonleading targets; at most1 rival within3 score of a correct head. Preserve conversation/template/translation families.",
+  "features": "Existing schema3 bounded local2..4, skipped marker roles2..5, endpoints1..3 and anchored1..2 units through12 trailing Han. Counts<=2, weights<=1.5. No complete sentence feature.",
+  "runtime_simulation": "Keep candidate pools, raw scores, current SRK3 corrections and structural first-choice pin. Add max(0,strength*clip(residual(candidate)-residual(rawWinner),+-1.5)-0.1) to adjusted score. No personal or single-mode change.",
+  "selection": "Known660 calibration only: no top1/top5/top20 loss in each set, maximize equal-set MRR, lower strength tie. Require native parity/regressions/latency and a newly frozen untouched family reserve before adoption.",
+  "release": "Investigation only, no production model or APK from this tool. Previous800 is now known regression material. No major-release claim from calibration.",
+  "created_before_observation": true,
+  "feature_extractor_sha256": "757b4b9a2efa068ca20da179bc814e1941e2805258d29365faf36ec08cfe07db"
+}

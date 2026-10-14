@@ -1,0 +1,271 @@
+{
+  "cases": 660,
+  "verified_native_top20_lists": 660,
+  "calibration_only": true,
+  "baseline": {
+    "written200": {
+      "top1": 46,
+      "top5": 78,
+      "top20": 106
+    },
+    "authored60": {
+      "top1": 27,
+      "top5": 48,
+      "top20": 60
+    },
+    "natural200": {
+      "top1": 80,
+      "top5": 117,
+      "top20": 140
+    },
+    "public200": {
+      "top1": 77,
+      "top5": 131,
+      "top20": 154
+    }
+  },
+  "pinned_counts": {
+    "written200": 13,
+    "authored60": 42,
+    "natural200": 1,
+    "public200": 10
+  },
+  "unrestricted_unpin": {
+    "written200": {
+      "top1": 47,
+      "top5": 78,
+      "top20": 106
+    },
+    "authored60": {
+      "top1": 27,
+      "top5": 48,
+      "top20": 60
+    },
+    "natural200": {
+      "top1": 80,
+      "top5": 117,
+      "top20": 140
+    },
+    "public200": {
+      "top1": 78,
+      "top5": 131,
+      "top20": 154
+    }
+  },
+  "conservative_override_trials": {
+    "support0.25/score0.25": {
+      "written200": {
+        "top1": 46,
+        "top5": 78,
+        "top20": 106
+      },
+      "authored60": {
+        "top1": 27,
+        "top5": 48,
+        "top20": 60
+      },
+      "natural200": {
+        "top1": 80,
+        "top5": 117,
+        "top20": 140
+      },
+      "public200": {
+        "top1": 77,
+        "top5": 131,
+        "top20": 154
+      }
+    },
+    "support0.25/score0.5": {
+      "written200": {
+        "top1": 46,
+        "top5": 78,
+        "top20": 106
+      },
+      "authored60": {
+        "top1": 27,
+        "top5": 48,
+        "top20": 60
+      },
+      "natural200": {
+        "top1": 80,
+        "top5": 117,
+        "top20": 140
+      },
+      "public200": {
+        "top1": 77,
+        "top5": 131,
+        "top20": 154
+      }
+    },
+    "support0.25/score1": {
+      "written200": {
+        "top1": 46,
+        "top5": 78,
+        "top20": 106
+      },
+      "authored60": {
+        "top1": 27,
+        "top5": 48,
+        "top20": 60
+      },
+      "natural200": {
+        "top1": 80,
+        "top5": 117,
+        "top20": 140
+      },
+      "public200": {
+        "top1": 77,
+        "top5": 131,
+        "top20": 154
+      }
+    },
+    "support0.5/score0.25": {
+      "written200": {
+        "top1": 46,
+        "top5": 78,
+        "top20": 106
+      },
+      "authored60": {
+        "top1": 27,
+        "top5": 48,
+        "top20": 60
+      },
+      "natural200": {
+        "top1": 80,
+        "top5": 117,
+        "top20": 140
+      },
+      "public200": {
+        "top1": 77,
+        "top5": 131,
+        "top20": 154
+      }
+    },
+    "support0.5/score0.5": {
+      "written200": {
+        "top1": 46,
+        "top5": 78,
+        "top20": 106
+      },
+      "authored60": {
+        "top1": 27,
+        "top5": 48,
+        "top20": 60
+      },
+      "natural200": {
+        "top1": 80,
+        "top5": 117,
+        "top20": 140
+      },
+      "public200": {
+        "top1": 77,
+        "top5": 131,
+        "top20": 154
+      }
+    },
+    "support0.5/score1": {
+      "written200": {
+        "top1": 46,
+        "top5": 78,
+        "top20": 106
+      },
+      "authored60": {
+        "top1": 27,
+        "top5": 48,
+        "top20": 60
+      },
+      "natural200": {
+        "top1": 80,
+        "top5": 117,
+        "top20": 140
+      },
+      "public200": {
+        "top1": 77,
+        "top5": 131,
+        "top20": 154
+      }
+    },
+    "support1/score0.25": {
+      "written200": {
+        "top1": 46,
+        "top5": 78,
+        "top20": 106
+      },
+      "authored60": {
+        "top1": 27,
+        "top5": 48,
+        "top20": 60
+      },
+      "natural200": {
+        "top1": 80,
+        "top5": 117,
+        "top20": 140
+      },
+      "public200": {
+        "top1": 77,
+        "top5": 131,
+        "top20": 154
+      }
+    },
+    "support1/score0.5": {
+      "written200": {
+        "top1": 46,
+        "top5": 78,
+        "top20": 106
+      },
+      "authored60": {
+        "top1": 27,
+        "top5": 48,
+        "top20": 60
+      },
+      "natural200": {
+        "top1": 80,
+        "top5": 117,
+        "top20": 140
+      },
+      "public200": {
+        "top1": 77,
+        "top5": 131,
+        "top20": 154
+      }
+    },
+    "support1/score1": {
+      "written200": {
+        "top1": 46,
+        "top5": 78,
+        "top20": 106
+      },
+      "authored60": {
+        "top1": 27,
+        "top5": 48,
+        "top20": 60
+      },
+      "natural200": {
+        "top1": 80,
+        "top5": 117,
+        "top20": 140
+      },
+      "public200": {
+        "top1": 77,
+        "top5": 131,
+        "top20": 154
+      }
+    }
+  },
+  "first_choice_pin_blocks_gold": [
+    {
+      "source": "validation:written200",
+      "gold": "你趕唔切交功課就麻煩喇",
+      "original": "係趕唔切交功課就麻煩喇"
+    },
+    {
+      "source": "validation:public200",
+      "gold": "嗰份報告書係咪你寫㗎",
+      "original": "嗰份報告書你哋係寫嚹"
+    }
+  ],
+  "first_choice_pin_saves_gold": [],
+  "scored_sha256": "758562ede7990f2d1d3ec3e6f2fd23bdbb77a41ec5b76f56f0d47498a9aa627b",
+  "production_change": false,
+  "limits": "Previously inspected calibration data; no new accuracy claim. Gold labels only audit outcomes, never choose runtime candidates."
+}

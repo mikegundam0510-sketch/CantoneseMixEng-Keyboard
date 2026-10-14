@@ -1,0 +1,199 @@
+{
+  "cases": 660,
+  "calibration_only": true,
+  "baseline": {
+    "written200": {
+      "top1": 46,
+      "top5": 78,
+      "top20": 106,
+      "mrr": 0.30639596952754844
+    },
+    "authored60": {
+      "top1": 27,
+      "top5": 48,
+      "top20": 60,
+      "mrr": 0.5801404151404151
+    },
+    "natural200": {
+      "top1": 80,
+      "top5": 117,
+      "top20": 140,
+      "mrr": 0.4820719463285253
+    },
+    "public200": {
+      "top1": 77,
+      "top5": 131,
+      "top20": 154,
+      "mrr": 0.5107252097317887
+    }
+  },
+  "trials": {
+    "scale0.25/pinTrue": {
+      "written200": {
+        "top1": 44,
+        "top5": 79,
+        "top20": 104,
+        "mrr": 0.3002139154704944
+      },
+      "authored60": {
+        "top1": 27,
+        "top5": 48,
+        "top20": 60,
+        "mrr": 0.5661630036630036
+      },
+      "natural200": {
+        "top1": 79,
+        "top5": 117,
+        "top20": 137,
+        "mrr": 0.47926641414141413
+      },
+      "public200": {
+        "top1": 72,
+        "top5": 131,
+        "top20": 150,
+        "mrr": 0.49255184837092736
+      }
+    },
+    "scale0.25/pinFalse": {
+      "written200": {
+        "top1": 45,
+        "top5": 79,
+        "top20": 104,
+        "mrr": 0.3027139154704944
+      },
+      "authored60": {
+        "top1": 27,
+        "top5": 48,
+        "top20": 60,
+        "mrr": 0.5661630036630036
+      },
+      "natural200": {
+        "top1": 79,
+        "top5": 117,
+        "top20": 137,
+        "mrr": 0.47926641414141413
+      },
+      "public200": {
+        "top1": 72,
+        "top5": 131,
+        "top20": 150,
+        "mrr": 0.49255184837092736
+      }
+    },
+    "scale0.5/pinTrue": {
+      "written200": {
+        "top1": 44,
+        "top5": 78,
+        "top20": 103,
+        "mrr": 0.2975396131646132
+      },
+      "authored60": {
+        "top1": 27,
+        "top5": 48,
+        "top20": 60,
+        "mrr": 0.5691218966218966
+      },
+      "natural200": {
+        "top1": 81,
+        "top5": 118,
+        "top20": 137,
+        "mrr": 0.48492321771365887
+      },
+      "public200": {
+        "top1": 74,
+        "top5": 131,
+        "top20": 152,
+        "mrr": 0.5009120483274895
+      }
+    },
+    "scale0.5/pinFalse": {
+      "written200": {
+        "top1": 45,
+        "top5": 78,
+        "top20": 103,
+        "mrr": 0.3000396131646132
+      },
+      "authored60": {
+        "top1": 27,
+        "top5": 48,
+        "top20": 60,
+        "mrr": 0.5691218966218966
+      },
+      "natural200": {
+        "top1": 81,
+        "top5": 118,
+        "top20": 137,
+        "mrr": 0.48492321771365887
+      },
+      "public200": {
+        "top1": 74,
+        "top5": 131,
+        "top20": 152,
+        "mrr": 0.5009120483274895
+      }
+    },
+    "scale1/pinTrue": {
+      "written200": {
+        "top1": 46,
+        "top5": 78,
+        "top20": 106,
+        "mrr": 0.30633968297784087
+      },
+      "authored60": {
+        "top1": 27,
+        "top5": 48,
+        "top20": 60,
+        "mrr": 0.5801404151404151
+      },
+      "natural200": {
+        "top1": 80,
+        "top5": 117,
+        "top20": 141,
+        "mrr": 0.48235911953113964
+      },
+      "public200": {
+        "top1": 77,
+        "top5": 131,
+        "top20": 154,
+        "mrr": 0.5108363208428998
+      }
+    },
+    "scale1/pinFalse": {
+      "written200": {
+        "top1": 47,
+        "top5": 78,
+        "top20": 106,
+        "mrr": 0.30883968297784087
+      },
+      "authored60": {
+        "top1": 27,
+        "top5": 48,
+        "top20": 60,
+        "mrr": 0.5801404151404151
+      },
+      "natural200": {
+        "top1": 80,
+        "top5": 117,
+        "top20": 141,
+        "mrr": 0.48235911953113964
+      },
+      "public200": {
+        "top1": 78,
+        "top5": 131,
+        "top20": 154,
+        "mrr": 0.5133363208428998
+      }
+    }
+  },
+  "eligible": [
+    "scale1/pinTrue",
+    "scale1/pinFalse"
+  ],
+  "native_original_max_score_error": 1.4210854715202004e-14,
+  "gold_vs_raw_winner_comparisons": 285,
+  "short_difference_erased_by_individual_clipping": 0,
+  "model_sha256": "3d6e6c3d73be95ab4366bda0eeb9fcf3ad01aca931f53cb651144f21bbbc28a8",
+  "scored_sha256": "758562ede7990f2d1d3ec3e6f2fd23bdbb77a41ec5b76f56f0d47498a9aa627b",
+  "production_change": false,
+  "limits": "Fixed existing weights and observed native pool; known calibration data only. No selection or independent gain claimed."
+}

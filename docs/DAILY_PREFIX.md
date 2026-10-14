@@ -173,3 +173,7 @@ Version remains0.6.39/code46; no APK or release is produced. These dictionary
 examples support a narrow reproducible gain, not reliable population accuracy
 or measured contemporary Hong Kong chat frequency. See the [full report](../tools/reports/daily-prefix-work-2026-10-13.json).
 
+The subsequent [final ranking investigation](FINAL_RANKING_DIAGNOSTICS.md)
+checks candidate protection, score clipping and training on actual current
+final-pool competitors. Those pilots use known calibration cases and do not
+constitute another independent accuracy gain.

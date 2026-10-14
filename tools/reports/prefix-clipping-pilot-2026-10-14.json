@@ -1,0 +1,85 @@
+{
+  "protocol": {
+    "purpose": "Compare raw same-code difference before clipping, rather than difference of individually clipped scores.",
+    "training_audit": {
+      "pairs": 7632,
+      "both_scores_clip": 2143,
+      "learned_difference_erased": 1004,
+      "positive_difference_over1_lost_at_quarter": 585
+    },
+    "weights_sha256": "19288d2c6a09879de7e2554462cfeef30afab3bfb471ca9b075238be05fef1f3",
+    "cases_sha256": "34d0dd7a55f838afae86951023ecd0c4507a36a3628acaf58d0d6790859dd9a5",
+    "baseline_selection_sha256": "3b5dd4f45f9e74e686a44058953e201d2b856f606ff6c5d56f811dc445103f10",
+    "strength": 0.25,
+    "range": "New pair correction remains bounded to+-0.5 at quarter strength; former difference can span+-1. No raw/final score, beam or personal-learning change.",
+    "evaluation": "Previously inspected660 calibration cases only. Original800 is now regression material, not a fresh independent test.",
+    "decision": "Do not change shipped source on this pilot alone. A promising safe result needs a new untouched source-family reserve and original regression/latency checks."
+  },
+  "before": {
+    "written200": {
+      "cases": 200,
+      "top1": 46,
+      "top5": 78,
+      "top20": 106,
+      "mrr": 0.30639596952754844
+    },
+    "authored60": {
+      "cases": 60,
+      "top1": 27,
+      "top5": 48,
+      "top20": 60,
+      "mrr": 0.5801404151404151
+    },
+    "natural200": {
+      "cases": 200,
+      "top1": 80,
+      "top5": 117,
+      "top20": 140,
+      "mrr": 0.4820719463285253
+    },
+    "public200": {
+      "cases": 200,
+      "top1": 77,
+      "top5": 131,
+      "top20": 154,
+      "mrr": 0.5107252097317887
+    }
+  },
+  "after": {
+    "written200": {
+      "cases": 200,
+      "top1": 46,
+      "top5": 78,
+      "top20": 107,
+      "mrr": 0.3067084695275485
+    },
+    "authored60": {
+      "cases": 60,
+      "top1": 27,
+      "top5": 48,
+      "top20": 60,
+      "mrr": 0.5801404151404151
+    },
+    "natural200": {
+      "cases": 200,
+      "top1": 80,
+      "top5": 117,
+      "top20": 140,
+      "mrr": 0.4820719463285253
+    },
+    "public200": {
+      "cases": 200,
+      "top1": 77,
+      "top5": 131,
+      "top20": 154,
+      "mrr": 0.5107252097317887
+    }
+  },
+  "calibration_failures": [],
+  "production_source_changed": false,
+  "source_sha256": {
+    "PrefixRanker.java": "1762524b1c2c2c37d6fa369de495d341b012022417a26b5c71cccac49cd0874c",
+    "QuickDecoder.java": "b872fb0df1f9b2bde64435ec485694f4c3c3a48dd9941d56873cfbca8aa6d77d"
+  },
+  "candidate_input_codes_checked_by_native_decoder": true
+}

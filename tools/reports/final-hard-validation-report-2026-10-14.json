@@ -1,0 +1,2643 @@
+{
+  "calibration_only": true,
+  "baseline": {
+    "written200": {
+      "cases": 200,
+      "top1": 46,
+      "top5": 78,
+      "top20": 106,
+      "mrr": 0.30639596952754844
+    },
+    "authored60": {
+      "cases": 60,
+      "top1": 27,
+      "top5": 48,
+      "top20": 60,
+      "mrr": 0.5801404151404151
+    },
+    "natural200": {
+      "cases": 200,
+      "top1": 80,
+      "top5": 117,
+      "top20": 140,
+      "mrr": 0.4820719463285253
+    },
+    "public200": {
+      "cases": 200,
+      "top1": 77,
+      "top5": 131,
+      "top20": 154,
+      "mrr": 0.5107252097317887
+    }
+  },
+  "trials": {
+    "0.25": {
+      "written200": {
+        "cases": 200,
+        "top1": 45,
+        "top5": 78,
+        "top20": 105,
+        "mrr": 0.30429951940903954
+      },
+      "authored60": {
+        "cases": 60,
+        "top1": 27,
+        "top5": 48,
+        "top20": 60,
+        "mrr": 0.5802472527472528
+      },
+      "natural200": {
+        "cases": 200,
+        "top1": 80,
+        "top5": 117,
+        "top20": 140,
+        "mrr": 0.481955188086767
+      },
+      "public200": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 131,
+        "top20": 155,
+        "mrr": 0.5116988654620234
+      }
+    },
+    "0.5": {
+      "written200": {
+        "cases": 200,
+        "top1": 44,
+        "top5": 77,
+        "top20": 105,
+        "mrr": 0.30265014356558473
+      },
+      "authored60": {
+        "cases": 60,
+        "top1": 27,
+        "top5": 48,
+        "top20": 60,
+        "mrr": 0.604920634920635
+      },
+      "natural200": {
+        "cases": 200,
+        "top1": 79,
+        "top5": 117,
+        "top20": 140,
+        "mrr": 0.47915688222596114
+      },
+      "public200": {
+        "cases": 200,
+        "top1": 79,
+        "top5": 131,
+        "top20": 155,
+        "mrr": 0.5163505149820939
+      }
+    },
+    "1": {
+      "written200": {
+        "cases": 200,
+        "top1": 44,
+        "top5": 81,
+        "top20": 105,
+        "mrr": 0.3034353514132926
+      },
+      "authored60": {
+        "cases": 60,
+        "top1": 27,
+        "top5": 48,
+        "top20": 60,
+        "mrr": 0.6017857142857143
+      },
+      "natural200": {
+        "cases": 200,
+        "top1": 78,
+        "top5": 115,
+        "top20": 139,
+        "mrr": 0.4765105236825438
+      },
+      "public200": {
+        "cases": 200,
+        "top1": 83,
+        "top5": 133,
+        "top20": 156,
+        "mrr": 0.5294884925016504
+      }
+    },
+    "1.5": {
+      "written200": {
+        "cases": 200,
+        "top1": 45,
+        "top5": 80,
+        "top20": 105,
+        "mrr": 0.3044733363042187
+      },
+      "authored60": {
+        "cases": 60,
+        "top1": 26,
+        "top5": 48,
+        "top20": 60,
+        "mrr": 0.593015873015873
+      },
+      "natural200": {
+        "cases": 200,
+        "top1": 75,
+        "top5": 116,
+        "top20": 139,
+        "mrr": 0.46810604161919955
+      },
+      "public200": {
+        "cases": 200,
+        "top1": 84,
+        "top5": 133,
+        "top20": 157,
+        "mrr": 0.5334332421964001
+      }
+    }
+  },
+  "eligible": [],
+  "selected_for_further_testing": null,
+  "weights_sha256": "cf7e366eb6061547c307a3f755993ac0c38d2096ac216b3f42638fe7179505ac",
+  "protocol_sha256": "a3a46f9558153640a8c6fe6626e75c4f0ef79fcec265661ffa98d77e9692f005",
+  "scored_sha256": "758562ede7990f2d1d3ec3e6f2fd23bdbb77a41ec5b76f56f0d47498a9aa627b",
+  "case_changes_by_strength": {
+    "0.25": [
+      {
+        "source": "validation:written200",
+        "code": "osjsrmmmoqjjljyjiojljsmnrn",
+        "gold": "佢考咗三年車牌卒之都考到喇",
+        "before": 8,
+        "after": 7
+      },
+      {
+        "source": "validation:written200",
+        "code": "ossuvmefyprmfwoqwlffuruyupp",
+        "gold": "佢已經淡忘咗當年畀火燒嘅記憶",
+        "before": 49,
+        "after": 45
+      },
+      {
+        "source": "validation:written200",
+        "code": "ypaiypynosmlmvofruatp",
+        "gold": "此時此刻佢需要你嘅關心",
+        "before": 20,
+        "after": 24
+      },
+      {
+        "source": "validation:written200",
+        "code": "onorbrimibqvbvbsfrs",
+        "gold": "今個月啲零用繃繃緊咋",
+        "before": 8,
+        "after": 9
+      },
+      {
+        "source": "validation:written200",
+        "code": "ofyarryahijjlhrd",
+        "gold": "你識唔識得車衫㗎",
+        "before": 16,
+        "after": 14
+      },
+      {
+        "source": "validation:written200",
+        "code": "spybrporkbciopolofjdvaofkbdioarr",
+        "gold": "聽講呢個有錢佬仲係未婚你有機會喎",
+        "before": 60,
+        "after": 59
+      },
+      {
+        "source": "validation:written200",
+        "code": "amtbahimvgijkfgokithj",
+        "gold": "星期日我要去教堂做禮拜",
+        "before": 9,
+        "after": 7
+      },
+      {
+        "source": "validation:written200",
+        "code": "gitrtwwrmrvorrrktjrd",
+        "gold": "去荷蘭點可以唔咬草㗎",
+        "before": 5,
+        "after": 3
+      },
+      {
+        "source": "validation:written200",
+        "code": "ofrdpkrimgsfregbqd",
+        "gold": "你哋快啲班馬嚟幫拖",
+        "before": 24,
+        "after": 26
+      },
+      {
+        "source": "validation:written200",
+        "code": "mljoosoloftpbdajtpioheyuoavdqu",
+        "gold": "而家佢仲係花冧開花之後就會好靚",
+        "before": 19,
+        "after": 17
+      },
+      {
+        "source": "validation:written200",
+        "code": "nrcgvkmmrnpkriggsurt",
+        "gold": "夠鐘收工喇快啲埋尾啦",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:written200",
+        "code": "hiaeylqmcsfmrrrmrvobqmucvykah",
+        "gold": "我最近手頭緊可唔可以用現銀交易",
+        "before": 10,
+        "after": 9
+      },
+      {
+        "source": "validation:written200",
+        "code": "voopvvopvdmird",
+        "gold": "女人化妝化好耐㗎",
+        "before": 68,
+        "after": 57
+      },
+      {
+        "source": "validation:written200",
+        "code": "swhrsrsuvmqdsecheuqaydynmgnpkmjgrukbo",
+        "gold": "醫管局已經採取分流措施處理急症室嘅病人",
+        "before": 20,
+        "after": 19
+      },
+      {
+        "source": "validation:written200",
+        "code": "osyblavdaphisprrogbtbvbl",
+        "gold": "佢講書好悶我忍唔住瞌眼瞓",
+        "before": 3,
+        "after": 4
+      },
+      {
+        "source": "validation:written200",
+        "code": "rpaajmniofokhngshmyp",
+        "gold": "呢間士多係做街坊生意",
+        "before": 40,
+        "after": 39
+      },
+      {
+        "source": "validation:written200",
+        "code": "osoiiowklajlqimnmmach",
+        "gold": "佢每次默書都拎到一百分",
+        "before": 9,
+        "after": 8
+      },
+      {
+        "source": "validation:written200",
+        "code": "hobuuptruorrofkbndigyuofynvig",
+        "gold": "八月出世嘅人唔係獅子座就係處女座",
+        "before": 13,
+        "after": 12
+      },
+      {
+        "source": "validation:written200",
+        "code": "yuhtgimnmkegejnghitiofrubevrvmmfvk",
+        "gold": "就算去到天涯海角我對你嘅愛始終不變",
+        "before": 15,
+        "after": 16
+      },
+      {
+        "source": "validation:written200",
+        "code": "hibhordokyuvoifofqdebvbummqojcpbofahhdtgfb",
+        "gold": "我睇人哋做就以為係手板眼見工夫實情係易學難精",
+        "before": 70,
+        "after": 68
+      },
+      {
+        "source": "validation:written200",
+        "code": "vdwfrrokrqrrajft",
+        "gold": "好黑喎做咩唔開燈",
+        "before": 39,
+        "after": 41
+      },
+      {
+        "source": "validation:authored60",
+        "code": "ofspajirmciyuhimgyp",
+        "gold": "你聽日轉咗錢記得確認",
+        "before": 13,
+        "after": 12
+      },
+      {
+        "source": "validation:natural200",
+        "code": "rkrphlkbrnosjlqmhnawosrr",
+        "gold": "噉呢所有嘢佢都控制晒佢喎",
+        "before": 31,
+        "after": 28
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hirdmommoqjlhdrroa",
+        "gold": "我咪兩三年都學唔會",
+        "before": 46,
+        "after": 47
+      },
+      {
+        "source": "validation:natural200",
+        "code": "osogmmismgrulaa",
+        "gold": "佢坐正成班嘅中間",
+        "before": 13,
+        "after": 14
+      },
+      {
+        "source": "validation:natural200",
+        "code": "yekngqghimiri",
+        "gold": "返大陸捱得耐啲",
+        "before": 26,
+        "after": 27
+      },
+      {
+        "source": "validation:natural200",
+        "code": "imjarpmvajhihmojosrr",
+        "gold": "或者呢要開風扇俾佢啊",
+        "before": 15,
+        "after": 16
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hikbygosrkyprg",
+        "gold": "我希望佢噉諗囖",
+        "before": 7,
+        "after": 8
+      },
+      {
+        "source": "validation:natural200",
+        "code": "tcjcofvejlkbrn",
+        "gold": "其實無線都有喇",
+        "before": 16,
+        "after": 15
+      },
+      {
+        "source": "validation:public200",
+        "code": "osoaygogofoeqqa",
+        "gold": "佢會望住你隻手指",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofrrmgkbviniord",
+        "gold": "你嗰班有幾多人㗎",
+        "before": 22,
+        "after": 19
+      },
+      {
+        "source": "validation:public200",
+        "code": "hivichcgiotnbumnosgormohorinhlie",
+        "gold": "我幾分鐘之前見到佢走咗入個廁所度",
+        "before": 30,
+        "after": 31
+      },
+      {
+        "source": "validation:public200",
+        "code": "hirddporspaoarroaabmk",
+        "gold": "我哋想知聽日會唔會晴天",
+        "before": 10,
+        "after": 11
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofbhhirrhird",
+        "gold": "你睇得唔得㗎",
+        "before": 3,
+        "after": 2
+      },
+      {
+        "source": "validation:public200",
+        "code": "osojrmnvosrhvfhdhmaiopruduhibh",
+        "gold": "佢俾咗張佢呀媽學生時代嘅相我睇",
+        "before": 8,
+        "after": 7
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofkbkbygybyrjsymru",
+        "gold": "係有希望通過考試嘅",
+        "before": 12,
+        "after": 10
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofwrnqofjlmvqbmnrirnrmleygra",
+        "gold": "你點解係都要搞到啲嘢咁複雜啫",
+        "before": 32,
+        "after": 31
+      }
+    ],
+    "0.5": [
+      {
+        "source": "validation:written200",
+        "code": "osjsrmmmoqjjljyjiojljsmnrn",
+        "gold": "佢考咗三年車牌卒之都考到喇",
+        "before": 8,
+        "after": 6
+      },
+      {
+        "source": "validation:written200",
+        "code": "vmexoiydylnesvsrruyjlndiyhtghn",
+        "gold": "經濟低迷新發展區嘅計劃寸步難行",
+        "before": 5,
+        "after": 6
+      },
+      {
+        "source": "validation:written200",
+        "code": "ossuvmefyprmfwoqwlffuruyupp",
+        "gold": "佢已經淡忘咗當年畀火燒嘅記憶",
+        "before": 49,
+        "after": 35
+      },
+      {
+        "source": "validation:written200",
+        "code": "rpaacisrofjkjvrckbvdniogifsmmynqeyy",
+        "gold": "呢間公司無故裁員有好多人去勞工處投訴",
+        "before": 9,
+        "after": 8
+      },
+      {
+        "source": "validation:written200",
+        "code": "ypaiypynosmlmvofruatp",
+        "gold": "此時此刻佢需要你嘅關心",
+        "before": 20,
+        "after": 27
+      },
+      {
+        "source": "validation:written200",
+        "code": "onorbrimibqvbvbsfrs",
+        "gold": "今個月啲零用繃繃緊咋",
+        "before": 8,
+        "after": 10
+      },
+      {
+        "source": "validation:written200",
+        "code": "rdbuqugtgertofodgtgeli",
+        "gold": "咪亂抌垃圾啦你條垃圾蟲",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:written200",
+        "code": "ofyarryahijjlhrd",
+        "gold": "你識唔識得車衫㗎",
+        "before": 16,
+        "after": 13
+      },
+      {
+        "source": "validation:written200",
+        "code": "spybrporkbciopolofjdvaofkbdioarr",
+        "gold": "聽講呢個有錢佬仲係未婚你有機會喎",
+        "before": 60,
+        "after": 56
+      },
+      {
+        "source": "validation:written200",
+        "code": "amtbahimvgijkfgokithj",
+        "gold": "星期日我要去教堂做禮拜",
+        "before": 9,
+        "after": 7
+      },
+      {
+        "source": "validation:written200",
+        "code": "gitrtwwrmrvorrrktjrd",
+        "gold": "去荷蘭點可以唔咬草㗎",
+        "before": 5,
+        "after": 2
+      },
+      {
+        "source": "validation:written200",
+        "code": "ofrdpkrimgsfregbqd",
+        "gold": "你哋快啲班馬嚟幫拖",
+        "before": 24,
+        "after": 26
+      },
+      {
+        "source": "validation:written200",
+        "code": "mljoosoloftpbdajtpioheyuoavdqu",
+        "gold": "而家佢仲係花冧開花之後就會好靚",
+        "before": 19,
+        "after": 14
+      },
+      {
+        "source": "validation:written200",
+        "code": "nrcgvkmmrnpkriggsurt",
+        "gold": "夠鐘收工喇快啲埋尾啦",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:written200",
+        "code": "ajriblrnspamvyemmrd",
+        "gold": "早啲瞓喇聽日要返工㗎",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:written200",
+        "code": "hiaeylqmcsfmrrrmrvobqmucvykah",
+        "gold": "我最近手頭緊可唔可以用現銀交易",
+        "before": 10,
+        "after": 9
+      },
+      {
+        "source": "validation:written200",
+        "code": "ofrfrrysgbncbbkeqdgfhurt",
+        "gold": "你喺嗰邊幫小朋友探熱先啦",
+        "before": 6,
+        "after": 7
+      },
+      {
+        "source": "validation:written200",
+        "code": "voopvvopvdmird",
+        "gold": "女人化妝化好耐㗎",
+        "before": 68,
+        "after": 48
+      },
+      {
+        "source": "validation:written200",
+        "code": "swhrsrsuvmqdsecheuqaydynmgnpkmjgrukbo",
+        "gold": "醫管局已經採取分流措施處理急症室嘅病人",
+        "before": 20,
+        "after": 18
+      },
+      {
+        "source": "validation:written200",
+        "code": "hikbyjeirfnodiblhu",
+        "gold": "我冇辦法喺飛機瞓覺",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:written200",
+        "code": "osyblavdaphisprrogbtbvbl",
+        "gold": "佢講書好悶我忍唔住瞌眼瞓",
+        "before": 3,
+        "after": 4
+      },
+      {
+        "source": "validation:written200",
+        "code": "rpaajmniofokhngshmyp",
+        "gold": "呢間士多係做街坊生意",
+        "before": 40,
+        "after": 33
+      },
+      {
+        "source": "validation:written200",
+        "code": "osoiiowklajlqimnmmach",
+        "gold": "佢每次默書都拎到一百分",
+        "before": 9,
+        "after": 8
+      },
+      {
+        "source": "validation:written200",
+        "code": "hobuuptruorrofkbndigyuofynvig",
+        "gold": "八月出世嘅人唔係獅子座就係處女座",
+        "before": 13,
+        "after": 10
+      },
+      {
+        "source": "validation:written200",
+        "code": "yuhtgimnmkegejnghitiofrubevrvmmfvk",
+        "gold": "就算去到天涯海角我對你嘅愛始終不變",
+        "before": 15,
+        "after": 16
+      },
+      {
+        "source": "validation:written200",
+        "code": "hibhordokyuvoifofqdebvbummqojcpbofahhdtgfb",
+        "gold": "我睇人哋做就以為係手板眼見工夫實情係易學難精",
+        "before": 70,
+        "after": 67
+      },
+      {
+        "source": "validation:written200",
+        "code": "vdwfrrokrqrrajft",
+        "gold": "好黑喎做咩唔開燈",
+        "before": 39,
+        "after": 44
+      },
+      {
+        "source": "validation:written200",
+        "code": "osmrodrurmmmhjfd",
+        "gold": "佢一口氣跑咗五千米",
+        "before": 16,
+        "after": 17
+      },
+      {
+        "source": "validation:authored60",
+        "code": "hionajirmciyuhimgyp",
+        "gold": "我今日轉咗錢記得確認",
+        "before": 13,
+        "after": 12
+      },
+      {
+        "source": "validation:authored60",
+        "code": "ofspajirmciyuhimgyp",
+        "gold": "你聽日轉咗錢記得確認",
+        "before": 13,
+        "after": 12
+      },
+      {
+        "source": "validation:authored60",
+        "code": "osonaujirmciyuhimgyp",
+        "gold": "佢今晚轉咗錢記得確認",
+        "before": 13,
+        "after": 12
+      },
+      {
+        "source": "validation:authored60",
+        "code": "hirdmljojirmciyuhimgyp",
+        "gold": "我哋而家轉咗錢記得確認",
+        "before": 13,
+        "after": 12
+      },
+      {
+        "source": "validation:authored60",
+        "code": "ofrdyqrijirmciyuhimgyp",
+        "gold": "你哋遲啲轉咗錢記得確認",
+        "before": 15,
+        "after": 14
+      },
+      {
+        "source": "validation:authored60",
+        "code": "osrdmylmjirmciyuhimgyp",
+        "gold": "佢哋下晝轉咗錢記得確認",
+        "before": 13,
+        "after": 12
+      },
+      {
+        "source": "validation:authored60",
+        "code": "osonaudpviofoorrry",
+        "gold": "佢今晚想約你飲咖啡",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:authored60",
+        "code": "hionabhyeoryjhphume",
+        "gold": "我今日睇返個訊息先覆",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:authored60",
+        "code": "ofspabhyeoryjhphume",
+        "gold": "你聽日睇返個訊息先覆",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:authored60",
+        "code": "osonaubhyeoryjhphume",
+        "gold": "佢今晚睇返個訊息先覆",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:authored60",
+        "code": "hirdmljobhyeoryjhphume",
+        "gold": "我哋而家睇返個訊息先覆",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:authored60",
+        "code": "ofrdyqribhyeoryjhphume",
+        "gold": "你哋遲啲睇返個訊息先覆",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:authored60",
+        "code": "osrdmylmbhyeoryjhphume",
+        "gold": "佢哋下晝睇返個訊息先覆",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:natural200",
+        "code": "rkrphlkbrnosjlqmhnawosrr",
+        "gold": "噉呢所有嘢佢都控制晒佢喎",
+        "before": 31,
+        "after": 27
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hirdmommoqjlhdrroa",
+        "gold": "我咪兩三年都學唔會",
+        "before": 46,
+        "after": 47
+      },
+      {
+        "source": "validation:natural200",
+        "code": "osogmmismgrulaa",
+        "gold": "佢坐正成班嘅中間",
+        "before": 13,
+        "after": 15
+      },
+      {
+        "source": "validation:natural200",
+        "code": "yuvkrmofgvtggiqghnrgmdern",
+        "gold": "就變咗係越難去推行哩一樣嘢",
+        "before": 71,
+        "after": 70
+      },
+      {
+        "source": "validation:natural200",
+        "code": "yekngqghimiri",
+        "gold": "返大陸捱得耐啲",
+        "before": 26,
+        "after": 36
+      },
+      {
+        "source": "validation:natural200",
+        "code": "imjarpmvajhihmojosrr",
+        "gold": "或者呢要開風扇俾佢啊",
+        "before": 15,
+        "after": 16
+      },
+      {
+        "source": "validation:natural200",
+        "code": "abacruvdjirg",
+        "gold": "明顯嘅好轉囖",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hijlyrvdnipht",
+        "gold": "我都話好多心血",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hiogvibjekrmyvrp",
+        "gold": "我住將軍澳咁遠呢",
+        "before": 15,
+        "after": 14
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hikbygosrkyprg",
+        "gold": "我希望佢噉諗囖",
+        "before": 7,
+        "after": 8
+      },
+      {
+        "source": "validation:natural200",
+        "code": "rrorwidinkmrvorsnyok",
+        "gold": "嗰個母機又可以另外做",
+        "before": 54,
+        "after": 52
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hirrhikbkbciodrr",
+        "gold": "得唔得有冇公仔啊",
+        "before": 13,
+        "after": 16
+      },
+      {
+        "source": "validation:natural200",
+        "code": "tcjcofvejlkbrn",
+        "gold": "其實無線都有喇",
+        "before": 16,
+        "after": 14
+      },
+      {
+        "source": "validation:public200",
+        "code": "hinetnbumnruofmorkbribdru",
+        "gold": "我發夢見到嘅係一個冇戰爭嘅",
+        "before": 11,
+        "after": 12
+      },
+      {
+        "source": "validation:public200",
+        "code": "osoaygogofoeqqa",
+        "gold": "佢會望住你隻手指",
+        "before": 4,
+        "after": 6
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofrrmgkbviniord",
+        "gold": "你嗰班有幾多人㗎",
+        "before": 22,
+        "after": 18
+      },
+      {
+        "source": "validation:public200",
+        "code": "rryojrdmbuceojhi",
+        "gold": "唔該寄本目錄俾我",
+        "before": 35,
+        "after": 34
+      },
+      {
+        "source": "validation:public200",
+        "code": "ddtkrrdpymmuiu",
+        "gold": "森美唔想上電視",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:public200",
+        "code": "osqrgoawhinrvdrimubc",
+        "gold": "佢搶走晒我阿妹啲玩具",
+        "before": 2,
+        "after": 3
+      },
+      {
+        "source": "validation:public200",
+        "code": "hivichcgiotnbumnosgormohorinhlie",
+        "gold": "我幾分鐘之前見到佢走咗入個廁所度",
+        "before": 30,
+        "after": 31
+      },
+      {
+        "source": "validation:public200",
+        "code": "hirddporspaoarroaabmk",
+        "gold": "我哋想知聽日會唔會晴天",
+        "before": 10,
+        "after": 14
+      },
+      {
+        "source": "validation:public200",
+        "code": "rpgiorofojofrd",
+        "gold": "呢封信係俾你㗎",
+        "before": 38,
+        "after": 33
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofbhhirrhird",
+        "gold": "你睇得唔得㗎",
+        "before": 3,
+        "after": 1
+      },
+      {
+        "source": "validation:public200",
+        "code": "rrotncvmrfmorbiotnqermrerpie",
+        "gold": "嗰位小姐喺一個月之前搬咗嚟呢度",
+        "before": 4,
+        "after": 3
+      },
+      {
+        "source": "validation:public200",
+        "code": "hirroamfyfof",
+        "gold": "我唔會原諒你",
+        "before": 13,
+        "after": 11
+      },
+      {
+        "source": "validation:public200",
+        "code": "rgbfhibrosoghivdyl",
+        "gold": "雖然我同佢住得好近",
+        "before": 30,
+        "after": 32
+      },
+      {
+        "source": "validation:public200",
+        "code": "osojrmnvosrhvfhdhmaiopruduhibh",
+        "gold": "佢俾咗張佢呀媽學生時代嘅相我睇",
+        "before": 8,
+        "after": 5
+      },
+      {
+        "source": "validation:public200",
+        "code": "osoctvrmrrornohu",
+        "gold": "佢領養咗嗰個孤兒",
+        "before": 31,
+        "after": 30
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofkbkbygybyrjsymru",
+        "gold": "係有希望通過考試嘅",
+        "before": 12,
+        "after": 10
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofwrnqofjlmvqbmnrirnrmleygra",
+        "gold": "你點解係都要搞到啲嘢咁複雜啫",
+        "before": 32,
+        "after": 28
+      }
+    ],
+    "1": [
+      {
+        "source": "validation:written200",
+        "code": "osjsrmmmoqjjljyjiojljsmnrn",
+        "gold": "佢考咗三年車牌卒之都考到喇",
+        "before": 8,
+        "after": 5
+      },
+      {
+        "source": "validation:written200",
+        "code": "osckwiqrposoaojosrimabbkrkekbgv",
+        "gold": "佢父母擔心佢會俾佢啲豬朋狗友帶壞",
+        "before": 6,
+        "after": 5
+      },
+      {
+        "source": "validation:written200",
+        "code": "vmexoiydylnesvsrruyjlndiyhtghn",
+        "gold": "經濟低迷新發展區嘅計劃寸步難行",
+        "before": 5,
+        "after": 10
+      },
+      {
+        "source": "validation:written200",
+        "code": "ossuvmefyprmfwoqwlffuruyupp",
+        "gold": "佢已經淡忘咗當年畀火燒嘅記憶",
+        "before": 49,
+        "after": 27
+      },
+      {
+        "source": "validation:written200",
+        "code": "rpaacisrofjkjvrckbvdniogifsmmynqeyy",
+        "gold": "呢間公司無故裁員有好多人去勞工處投訴",
+        "before": 9,
+        "after": 4
+      },
+      {
+        "source": "validation:written200",
+        "code": "duybmynhihuhiaiaaqdymrm",
+        "gold": "相遇一刻我覺得時間靜止咗",
+        "before": 9,
+        "after": 10
+      },
+      {
+        "source": "validation:written200",
+        "code": "ypaiypynosmlmvofruatp",
+        "gold": "此時此刻佢需要你嘅關心",
+        "before": 20,
+        "after": 30
+      },
+      {
+        "source": "validation:written200",
+        "code": "onorbrimibqvbvbsfrs",
+        "gold": "今個月啲零用繃繃緊咋",
+        "before": 8,
+        "after": 15
+      },
+      {
+        "source": "validation:written200",
+        "code": "rdbuqugtgertofodgtgeli",
+        "gold": "咪亂抌垃圾啦你條垃圾蟲",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:written200",
+        "code": "kbawytqoaacisrjlrrypcampbgqhoett",
+        "gold": "有晒證據間公司都唔認錯死雞撐飯蓋",
+        "before": 4,
+        "after": 3
+      },
+      {
+        "source": "validation:written200",
+        "code": "ofyarryahijjlhrd",
+        "gold": "你識唔識得車衫㗎",
+        "before": 16,
+        "after": 9
+      },
+      {
+        "source": "validation:written200",
+        "code": "spybrporkbciopolofjdvaofkbdioarr",
+        "gold": "聽講呢個有錢佬仲係未婚你有機會喎",
+        "before": 60,
+        "after": 48
+      },
+      {
+        "source": "validation:written200",
+        "code": "oskbvkodtxtgrupgoj",
+        "gold": "佢有收集舊鞋嘅怪僻",
+        "before": 28,
+        "after": 29
+      },
+      {
+        "source": "validation:written200",
+        "code": "amtbahimvgijkfgokithj",
+        "gold": "星期日我要去教堂做禮拜",
+        "before": 9,
+        "after": 3
+      },
+      {
+        "source": "validation:written200",
+        "code": "gitrtwwrmrvorrrktjrd",
+        "gold": "去荷蘭點可以唔咬草㗎",
+        "before": 5,
+        "after": 1
+      },
+      {
+        "source": "validation:written200",
+        "code": "ogrfobyvusrruvwrryeorhdjlmvdquehe",
+        "gold": "住喺偏遠山區嘅細路返個學都要攀山涉水",
+        "before": 70,
+        "after": 74
+      },
+      {
+        "source": "validation:written200",
+        "code": "ofrdpkrimgsfregbqd",
+        "gold": "你哋快啲班馬嚟幫拖",
+        "before": 24,
+        "after": 27
+      },
+      {
+        "source": "validation:written200",
+        "code": "mljoosoloftpbdajtpioheyuoavdqu",
+        "gold": "而家佢仲係花冧開花之後就會好靚",
+        "before": 19,
+        "after": 11
+      },
+      {
+        "source": "validation:written200",
+        "code": "nrcgvkmmrnpkriggsurt",
+        "gold": "夠鐘收工喇快啲埋尾啦",
+        "before": 1,
+        "after": 5
+      },
+      {
+        "source": "validation:written200",
+        "code": "ajriblrnspamvyemmrd",
+        "gold": "早啲瞓喇聽日要返工㗎",
+        "before": 1,
+        "after": 3
+      },
+      {
+        "source": "validation:written200",
+        "code": "hiaeylqmcsfmrrrmrvobqmucvykah",
+        "gold": "我最近手頭緊可唔可以用現銀交易",
+        "before": 10,
+        "after": 7
+      },
+      {
+        "source": "validation:written200",
+        "code": "osrfrpaacisrokqammaitltlk",
+        "gold": "佢喺呢間公司做替工時薪廿蚊",
+        "before": 64,
+        "after": 60
+      },
+      {
+        "source": "validation:written200",
+        "code": "ysoehqyuhivdri",
+        "gold": "邊隻筆記簿好啲",
+        "before": 63,
+        "after": 64
+      },
+      {
+        "source": "validation:written200",
+        "code": "ofrfrrysgbncbbkeqdgfhurt",
+        "gold": "你喺嗰邊幫小朋友探熱先啦",
+        "before": 6,
+        "after": 7
+      },
+      {
+        "source": "validation:written200",
+        "code": "voopvvopvdmird",
+        "gold": "女人化妝化好耐㗎",
+        "before": 68,
+        "after": 40
+      },
+      {
+        "source": "validation:written200",
+        "code": "ygyjrjotkbkbjvqyjijjqvykrr",
+        "gold": "主辦單位有冇安排專車接送啊",
+        "before": 40,
+        "after": 39
+      },
+      {
+        "source": "validation:written200",
+        "code": "swhrsrsuvmqdsecheuqaydynmgnpkmjgrukbo",
+        "gold": "醫管局已經採取分流措施處理急症室嘅病人",
+        "before": 20,
+        "after": 18
+      },
+      {
+        "source": "validation:written200",
+        "code": "hikbyjeirfnodiblhu",
+        "gold": "我冇辦法喺飛機瞓覺",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:written200",
+        "code": "ofrrvdybrmfwokrmrr",
+        "gold": "你唔好講咗當做咗喎",
+        "before": 23,
+        "after": 24
+      },
+      {
+        "source": "validation:written200",
+        "code": "osyblavdaphisprrogbtbvbl",
+        "gold": "佢講書好悶我忍唔住瞌眼瞓",
+        "before": 3,
+        "after": 4
+      },
+      {
+        "source": "validation:written200",
+        "code": "rpaajmniofokhngshmyp",
+        "gold": "呢間士多係做街坊生意",
+        "before": 40,
+        "after": 22
+      },
+      {
+        "source": "validation:written200",
+        "code": "osoiiowklajlqimnmmach",
+        "gold": "佢每次默書都拎到一百分",
+        "before": 9,
+        "after": 7
+      },
+      {
+        "source": "validation:written200",
+        "code": "onorbajvrertlofmvpgrirn",
+        "gold": "今個月開始減薪你要慳啲喇",
+        "before": 3,
+        "after": 2
+      },
+      {
+        "source": "validation:written200",
+        "code": "hobuuptruorrofkbndigyuofynvig",
+        "gold": "八月出世嘅人唔係獅子座就係處女座",
+        "before": 13,
+        "after": 9
+      },
+      {
+        "source": "validation:written200",
+        "code": "yuhtgimnmkegejnghitiofrubevrvmmfvk",
+        "gold": "就算去到天涯海角我對你嘅愛始終不變",
+        "before": 15,
+        "after": 18
+      },
+      {
+        "source": "validation:written200",
+        "code": "hibhordokyuvoifofqdebvbummqojcpbofahhdtgfb",
+        "gold": "我睇人哋做就以為係手板眼見工夫實情係易學難精",
+        "before": 70,
+        "after": 65
+      },
+      {
+        "source": "validation:written200",
+        "code": "mljoichnridimfvdmj",
+        "gold": "而家廉航啲機票好平",
+        "before": 14,
+        "after": 15
+      },
+      {
+        "source": "validation:written200",
+        "code": "vdwfrrokrqrrajft",
+        "gold": "好黑喎做咩唔開燈",
+        "before": 39,
+        "after": 47
+      },
+      {
+        "source": "validation:written200",
+        "code": "rrvdrmkfrtspamjooavdmkru",
+        "gold": "唔好咁灰啦聽日一定會好天嘅",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:written200",
+        "code": "osmrodrurmmmhjfd",
+        "gold": "佢一口氣跑咗五千米",
+        "before": 16,
+        "after": 17
+      },
+      {
+        "source": "validation:authored60",
+        "code": "hionajirmciyuhimgyp",
+        "gold": "我今日轉咗錢記得確認",
+        "before": 13,
+        "after": 12
+      },
+      {
+        "source": "validation:authored60",
+        "code": "ofspajirmciyuhimgyp",
+        "gold": "你聽日轉咗錢記得確認",
+        "before": 13,
+        "after": 12
+      },
+      {
+        "source": "validation:authored60",
+        "code": "osonaujirmciyuhimgyp",
+        "gold": "佢今晚轉咗錢記得確認",
+        "before": 13,
+        "after": 12
+      },
+      {
+        "source": "validation:authored60",
+        "code": "hirdmljojirmciyuhimgyp",
+        "gold": "我哋而家轉咗錢記得確認",
+        "before": 13,
+        "after": 12
+      },
+      {
+        "source": "validation:authored60",
+        "code": "ofrdyqrijirmciyuhimgyp",
+        "gold": "你哋遲啲轉咗錢記得確認",
+        "before": 15,
+        "after": 12
+      },
+      {
+        "source": "validation:authored60",
+        "code": "osrdmylmjirmciyuhimgyp",
+        "gold": "佢哋下晝轉咗錢記得確認",
+        "before": 13,
+        "after": 12
+      },
+      {
+        "source": "validation:authored60",
+        "code": "hionadpviofoorrry",
+        "gold": "我今日想約你飲咖啡",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:authored60",
+        "code": "ofspadpviofoorrry",
+        "gold": "你聽日想約你飲咖啡",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:authored60",
+        "code": "osonaudpviofoorrry",
+        "gold": "佢今晚想約你飲咖啡",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:authored60",
+        "code": "ofrdyqridpviofoorrry",
+        "gold": "你哋遲啲想約你飲咖啡",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:authored60",
+        "code": "osrdmylmdpviofoorrry",
+        "gold": "佢哋下晝想約你飲咖啡",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:authored60",
+        "code": "hionabhyeoryjhphume",
+        "gold": "我今日睇返個訊息先覆",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:authored60",
+        "code": "ofspabhyeoryjhphume",
+        "gold": "你聽日睇返個訊息先覆",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:authored60",
+        "code": "osonaubhyeoryjhphume",
+        "gold": "佢今晚睇返個訊息先覆",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:authored60",
+        "code": "hirdmljobhyeoryjhphume",
+        "gold": "我哋而家睇返個訊息先覆",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:authored60",
+        "code": "ofrdyqribhyeoryjhphume",
+        "gold": "你哋遲啲睇返個訊息先覆",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:authored60",
+        "code": "osrdmylmbhyeoryjhphume",
+        "gold": "佢哋下晝睇返個訊息先覆",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:natural200",
+        "code": "tkykwklajlofrr",
+        "gold": "英文默書都係喎",
+        "before": 4,
+        "after": 3
+      },
+      {
+        "source": "validation:natural200",
+        "code": "rkrphlkbrnosjlqmhnawosrr",
+        "gold": "噉呢所有嘢佢都控制晒佢喎",
+        "before": 31,
+        "after": 24
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hirdmommoqjlhdrroa",
+        "gold": "我咪兩三年都學唔會",
+        "before": 46,
+        "after": 49
+      },
+      {
+        "source": "validation:natural200",
+        "code": "alofmriposofhirdmorrk",
+        "gold": "即係可能佢係我哋一倍噉",
+        "before": 16,
+        "after": 15
+      },
+      {
+        "source": "validation:natural200",
+        "code": "osogmmismgrulaa",
+        "gold": "佢坐正成班嘅中間",
+        "before": 13,
+        "after": 22
+      },
+      {
+        "source": "validation:natural200",
+        "code": "yuvkrmofgvtggiqghnrgmdern",
+        "gold": "就變咗係越難去推行哩一樣嘢",
+        "before": 71,
+        "after": 66
+      },
+      {
+        "source": "validation:natural200",
+        "code": "yekngqghimiri",
+        "gold": "返大陸捱得耐啲",
+        "before": 26,
+        "after": 48
+      },
+      {
+        "source": "validation:natural200",
+        "code": "imjarpmvajhihmojosrr",
+        "gold": "或者呢要開風扇俾佢啊",
+        "before": 15,
+        "after": 16
+      },
+      {
+        "source": "validation:natural200",
+        "code": "alofmvetebrrjcofuudo",
+        "gold": "即係要澄清啊真係出來",
+        "before": 5,
+        "after": 6
+      },
+      {
+        "source": "validation:natural200",
+        "code": "abacruvdjirg",
+        "gold": "明顯嘅好轉囖",
+        "before": 4,
+        "after": 7
+      },
+      {
+        "source": "validation:natural200",
+        "code": "mvmommahumgmrvoyaawosri",
+        "gold": "要兩三日先至可以識晒佢啲",
+        "before": 45,
+        "after": 49
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hijlyrvdnipht",
+        "gold": "我都話好多心血",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:natural200",
+        "code": "alofrrofedofyrdudirr",
+        "gold": "即係唔係淨係話相機啊",
+        "before": 10,
+        "after": 8
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hiogvibjekrmyvrp",
+        "gold": "我住將軍澳咁遠呢",
+        "before": 15,
+        "after": 14
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hikbygosrkyprg",
+        "gold": "我希望佢噉諗囖",
+        "before": 7,
+        "after": 8
+      },
+      {
+        "source": "validation:natural200",
+        "code": "rrorwidinkmrvorsnyok",
+        "gold": "嗰個母機又可以另外做",
+        "before": 54,
+        "after": 49
+      },
+      {
+        "source": "validation:natural200",
+        "code": "etebmyhuhirr",
+        "gold": "澄清下先得啊",
+        "before": 14,
+        "after": 15
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hirrhikbkbciodrr",
+        "gold": "得唔得有冇公仔啊",
+        "before": 13,
+        "after": 17
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hihuhirroarg",
+        "gold": "我覺得唔會囖",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:natural200",
+        "code": "tcjcofvejlkbrn",
+        "gold": "其實無線都有喇",
+        "before": 16,
+        "after": 14
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hiviaikbycyrrr",
+        "gold": "我幾時有讀過啊",
+        "before": 7,
+        "after": 6
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofyarryaosrdrd",
+        "gold": "你識唔識佢哋㗎",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:public200",
+        "code": "wrnqofviaiaaevlcrf",
+        "gold": "點解你將時間浪費喺",
+        "before": 82,
+        "after": 87
+      },
+      {
+        "source": "validation:public200",
+        "code": "hinetnbumnruofmorkbribdru",
+        "gold": "我發夢見到嘅係一個冇戰爭嘅",
+        "before": 11,
+        "after": 12
+      },
+      {
+        "source": "validation:public200",
+        "code": "osoaygogofoeqqa",
+        "gold": "佢會望住你隻手指",
+        "before": 4,
+        "after": 6
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofrrmgkbviniord",
+        "gold": "你嗰班有幾多人㗎",
+        "before": 22,
+        "after": 10
+      },
+      {
+        "source": "validation:public200",
+        "code": "rryojrdmbuceojhi",
+        "gold": "唔該寄本目錄俾我",
+        "before": 35,
+        "after": 29
+      },
+      {
+        "source": "validation:public200",
+        "code": "ribvekyumrrehuure",
+        "gold": "啲眼淚就一路滮出嚟",
+        "before": 37,
+        "after": 38
+      },
+      {
+        "source": "validation:public200",
+        "code": "ddtkrrdpymmuiu",
+        "gold": "森美唔想上電視",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofybfbviwrguhhrd",
+        "gold": "你通常幾點起身㗎",
+        "before": 4,
+        "after": 3
+      },
+      {
+        "source": "validation:public200",
+        "code": "osqrgoawhinrvdrimubc",
+        "gold": "佢搶走晒我阿妹啲玩具",
+        "before": 2,
+        "after": 3
+      },
+      {
+        "source": "validation:public200",
+        "code": "hivichcgiotnbumnosgormohorinhlie",
+        "gold": "我幾分鐘之前見到佢走咗入個廁所度",
+        "before": 30,
+        "after": 33
+      },
+      {
+        "source": "validation:public200",
+        "code": "hirddporspaoarroaabmk",
+        "gold": "我哋想知聽日會唔會晴天",
+        "before": 10,
+        "after": 19
+      },
+      {
+        "source": "validation:public200",
+        "code": "hirlrmosrdqnri",
+        "gold": "我叫咗佢哋打呔",
+        "before": 3,
+        "after": 1
+      },
+      {
+        "source": "validation:public200",
+        "code": "rpgiorofojofrd",
+        "gold": "呢封信係俾你㗎",
+        "before": 38,
+        "after": 18
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofbhhirrhird",
+        "gold": "你睇得唔得㗎",
+        "before": 3,
+        "after": 1
+      },
+      {
+        "source": "validation:public200",
+        "code": "rrotncvmrfmorbiotnqermrerpie",
+        "gold": "嗰位小姐喺一個月之前搬咗嚟呢度",
+        "before": 4,
+        "after": 3
+      },
+      {
+        "source": "validation:public200",
+        "code": "hirroamfyfof",
+        "gold": "我唔會原諒你",
+        "before": 13,
+        "after": 9
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofspjcriyuspmnrdrn",
+        "gold": "你聽真啲就聽到㗎喇",
+        "before": 6,
+        "after": 5
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofsiauviwrblrh",
+        "gold": "你尋晚幾點瞓呀",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:public200",
+        "code": "rrvdlmtpwwlaorrilarh",
+        "gold": "唔好畫花圖書館啲書呀",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:public200",
+        "code": "rgbfhibrosoghivdyl",
+        "gold": "雖然我同佢住得好近",
+        "before": 30,
+        "after": 32
+      },
+      {
+        "source": "validation:public200",
+        "code": "osojrmnvosrhvfhdhmaiopruduhibh",
+        "gold": "佢俾咗張佢呀媽學生時代嘅相我睇",
+        "before": 8,
+        "after": 5
+      },
+      {
+        "source": "validation:public200",
+        "code": "orjphbrfwfdeiejfrmrieiykjd",
+        "gold": "個老師喺黑板度寫咗啲法文字",
+        "before": 3,
+        "after": 1
+      },
+      {
+        "source": "validation:public200",
+        "code": "osoctvrmrrornohu",
+        "gold": "佢領養咗嗰個孤兒",
+        "before": 31,
+        "after": 30
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofkbkbygybyrjsymru",
+        "gold": "係有希望通過考試嘅",
+        "before": 12,
+        "after": 7
+      },
+      {
+        "source": "validation:public200",
+        "code": "osofviaigord",
+        "gold": "佢係幾時走㗎",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:public200",
+        "code": "osrdfwbfkbritcybwr",
+        "gold": "佢哋當然有啲共通點",
+        "before": 41,
+        "after": 42
+      },
+      {
+        "source": "validation:public200",
+        "code": "hirdrfgdmyqurmorjm",
+        "gold": "我哋喺地下掘咗個窿",
+        "before": 37,
+        "after": 34
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofwrnqofjlmvqbmnrirnrmleygra",
+        "gold": "你點解係都要搞到啲嘢咁複雜啫",
+        "before": 32,
+        "after": 24
+      },
+      {
+        "source": "validation:public200",
+        "code": "hirrncpqicarmofquyf",
+        "gold": "我唔小心拎錯咗你把遮",
+        "before": 6,
+        "after": 5
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofcgypybrqrdybrqrg",
+        "gold": "你鍾意講咩咪講咩囉",
+        "before": 27,
+        "after": 28
+      }
+    ],
+    "1.5": [
+      {
+        "source": "validation:written200",
+        "code": "osjsrmmmoqjjljyjiojljsmnrn",
+        "gold": "佢考咗三年車牌卒之都考到喇",
+        "before": 8,
+        "after": 5
+      },
+      {
+        "source": "validation:written200",
+        "code": "osckwiqrposoaojosrimabbkrkekbgv",
+        "gold": "佢父母擔心佢會俾佢啲豬朋狗友帶壞",
+        "before": 6,
+        "after": 4
+      },
+      {
+        "source": "validation:written200",
+        "code": "vmexoiydylnesvsrruyjlndiyhtghn",
+        "gold": "經濟低迷新發展區嘅計劃寸步難行",
+        "before": 5,
+        "after": 18
+      },
+      {
+        "source": "validation:written200",
+        "code": "ossuvmefyprmfwoqwlffuruyupp",
+        "gold": "佢已經淡忘咗當年畀火燒嘅記憶",
+        "before": 49,
+        "after": 22
+      },
+      {
+        "source": "validation:written200",
+        "code": "rpaacisrofjkjvrckbvdniogifsmmynqeyy",
+        "gold": "呢間公司無故裁員有好多人去勞工處投訴",
+        "before": 9,
+        "after": 5
+      },
+      {
+        "source": "validation:written200",
+        "code": "giyuewdvhijloarleifumd",
+        "gold": "去親酒樓我都會叫叉燒酥",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:written200",
+        "code": "duybmynhihuhiaiaaqdymrm",
+        "gold": "相遇一刻我覺得時間靜止咗",
+        "before": 9,
+        "after": 10
+      },
+      {
+        "source": "validation:written200",
+        "code": "ypaiypynosmlmvofruatp",
+        "gold": "此時此刻佢需要你嘅關心",
+        "before": 20,
+        "after": 35
+      },
+      {
+        "source": "validation:written200",
+        "code": "onorbrimibqvbvbsfrs",
+        "gold": "今個月啲零用繃繃緊咋",
+        "before": 8,
+        "after": 15
+      },
+      {
+        "source": "validation:written200",
+        "code": "rdbuqugtgertofodgtgeli",
+        "gold": "咪亂抌垃圾啦你條垃圾蟲",
+        "before": 1,
+        "after": 3
+      },
+      {
+        "source": "validation:written200",
+        "code": "kbawytqoaacisrjlrrypcampbgqhoett",
+        "gold": "有晒證據間公司都唔認錯死雞撐飯蓋",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:written200",
+        "code": "ofyarryahijjlhrd",
+        "gold": "你識唔識得車衫㗎",
+        "before": 16,
+        "after": 6
+      },
+      {
+        "source": "validation:written200",
+        "code": "spybrporkbciopolofjdvaofkbdioarr",
+        "gold": "聽講呢個有錢佬仲係未婚你有機會喎",
+        "before": 60,
+        "after": 43
+      },
+      {
+        "source": "validation:written200",
+        "code": "oskikikckcrkjlrrorofrdjcofoeru",
+        "gold": "佢瘋瘋癲癲噉都唔知係咪真係傻嘅",
+        "before": 43,
+        "after": 44
+      },
+      {
+        "source": "validation:written200",
+        "code": "oskbvkodtxtgrupgoj",
+        "gold": "佢有收集舊鞋嘅怪僻",
+        "before": 28,
+        "after": 30
+      },
+      {
+        "source": "validation:written200",
+        "code": "amtbahimvgijkfgokithj",
+        "gold": "星期日我要去教堂做禮拜",
+        "before": 9,
+        "after": 1
+      },
+      {
+        "source": "validation:written200",
+        "code": "gitrtwwrmrvorrrktjrd",
+        "gold": "去荷蘭點可以唔咬草㗎",
+        "before": 5,
+        "after": 1
+      },
+      {
+        "source": "validation:written200",
+        "code": "ogrfobyvusrruvwrryeorhdjlmvdquehe",
+        "gold": "住喺偏遠山區嘅細路返個學都要攀山涉水",
+        "before": 70,
+        "after": 79
+      },
+      {
+        "source": "validation:written200",
+        "code": "rpqyisajljskckcblvinijlrrnr",
+        "gold": "呢排成日都攰癩癩瞓幾多都唔夠",
+        "before": 8,
+        "after": 7
+      },
+      {
+        "source": "validation:written200",
+        "code": "ofrdpkrimgsfregbqd",
+        "gold": "你哋快啲班馬嚟幫拖",
+        "before": 24,
+        "after": 26
+      },
+      {
+        "source": "validation:written200",
+        "code": "mljoosoloftpbdajtpioheyuoavdqu",
+        "gold": "而家佢仲係花冧開花之後就會好靚",
+        "before": 19,
+        "after": 7
+      },
+      {
+        "source": "validation:written200",
+        "code": "nrcgvkmmrnpkriggsurt",
+        "gold": "夠鐘收工喇快啲埋尾啦",
+        "before": 1,
+        "after": 7
+      },
+      {
+        "source": "validation:written200",
+        "code": "ajriblrnspamvyemmrd",
+        "gold": "早啲瞓喇聽日要返工㗎",
+        "before": 1,
+        "after": 3
+      },
+      {
+        "source": "validation:written200",
+        "code": "hiaeylqmcsfmrrrmrvobqmucvykah",
+        "gold": "我最近手頭緊可唔可以用現銀交易",
+        "before": 10,
+        "after": 7
+      },
+      {
+        "source": "validation:written200",
+        "code": "osrfrpaacisrokqammaitltlk",
+        "gold": "佢喺呢間公司做替工時薪廿蚊",
+        "before": 64,
+        "after": 59
+      },
+      {
+        "source": "validation:written200",
+        "code": "ysoehqyuhivdri",
+        "gold": "邊隻筆記簿好啲",
+        "before": 63,
+        "after": 64
+      },
+      {
+        "source": "validation:written200",
+        "code": "ofrfrrysgbncbbkeqdgfhurt",
+        "gold": "你喺嗰邊幫小朋友探熱先啦",
+        "before": 6,
+        "after": 7
+      },
+      {
+        "source": "validation:written200",
+        "code": "voopvvopvdmird",
+        "gold": "女人化妝化好耐㗎",
+        "before": 68,
+        "after": 35
+      },
+      {
+        "source": "validation:written200",
+        "code": "ygyjrjotkbkbjvqyjijjqvykrr",
+        "gold": "主辦單位有冇安排專車接送啊",
+        "before": 40,
+        "after": 38
+      },
+      {
+        "source": "validation:written200",
+        "code": "hikbyjeirfnodiblhu",
+        "gold": "我冇辦法喺飛機瞓覺",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:written200",
+        "code": "ofrrvdybrmfwokrmrr",
+        "gold": "你唔好講咗當做咗喎",
+        "before": 23,
+        "after": 28
+      },
+      {
+        "source": "validation:written200",
+        "code": "osyblavdaphisprrogbtbvbl",
+        "gold": "佢講書好悶我忍唔住瞌眼瞓",
+        "before": 3,
+        "after": 4
+      },
+      {
+        "source": "validation:written200",
+        "code": "cveryvmlkboflkruamam",
+        "gold": "銀河裏面有無數嘅星星",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:written200",
+        "code": "hisprrebdorryoofybkgjri",
+        "gold": "我聽唔清楚唔該你講大聲啲",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:written200",
+        "code": "yvfhfhotwlhiomhirrhi",
+        "gold": "讓少少位畀我企得唔得",
+        "before": 27,
+        "after": 29
+      },
+      {
+        "source": "validation:written200",
+        "code": "tnaarofoarmmmjlkmljoyvyewlof",
+        "gold": "前日問你借咗三十蚊而家還返畀你",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:written200",
+        "code": "rpaajmniofokhngshmyp",
+        "gold": "呢間士多係做街坊生意",
+        "before": 40,
+        "after": 17
+      },
+      {
+        "source": "validation:written200",
+        "code": "osoiiowklajlqimnmmach",
+        "gold": "佢每次默書都拎到一百分",
+        "before": 9,
+        "after": 7
+      },
+      {
+        "source": "validation:written200",
+        "code": "osyrrroavoorr",
+        "gold": "佢話唔會嫁人喎",
+        "before": 2,
+        "after": 3
+      },
+      {
+        "source": "validation:written200",
+        "code": "hobuuptruorrofkbndigyuofynvig",
+        "gold": "八月出世嘅人唔係獅子座就係處女座",
+        "before": 13,
+        "after": 6
+      },
+      {
+        "source": "validation:written200",
+        "code": "yuhtgimnmkegejnghitiofrubevrvmmfvk",
+        "gold": "就算去到天涯海角我對你嘅愛始終不變",
+        "before": 15,
+        "after": 20
+      },
+      {
+        "source": "validation:written200",
+        "code": "hibhordokyuvoifofqdebvbummqojcpbofahhdtgfb",
+        "gold": "我睇人哋做就以為係手板眼見工夫實情係易學難精",
+        "before": 70,
+        "after": 63
+      },
+      {
+        "source": "validation:written200",
+        "code": "wcdviotnipyobhebdoordvlahu",
+        "gold": "買樓之前應該睇清楚售樓書先",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:written200",
+        "code": "mljoichnridimfvdmj",
+        "gold": "而家廉航啲機票好平",
+        "before": 14,
+        "after": 21
+      },
+      {
+        "source": "validation:written200",
+        "code": "vdwfrrokrqrrajft",
+        "gold": "好黑喎做咩唔開燈",
+        "before": 39,
+        "after": 51
+      },
+      {
+        "source": "validation:written200",
+        "code": "rrvdrmkfrtspamjooavdmkru",
+        "gold": "唔好咁灰啦聽日一定會好天嘅",
+        "before": 1,
+        "after": 3
+      },
+      {
+        "source": "validation:written200",
+        "code": "osmrodrurmmmhjfd",
+        "gold": "佢一口氣跑咗五千米",
+        "before": 16,
+        "after": 17
+      },
+      {
+        "source": "validation:written200",
+        "code": "osajyuncbukbbvoameym",
+        "gold": "佢早就預見希臘會破產",
+        "before": 8,
+        "after": 6
+      },
+      {
+        "source": "validation:written200",
+        "code": "ofababhimtiblwrnqmvwcrmnititg",
+        "gold": "你明明得一對腳點解要買咁多對鞋",
+        "before": 9,
+        "after": 10
+      },
+      {
+        "source": "validation:authored60",
+        "code": "hirdmljodporoqocviaimn",
+        "gold": "我哋而家想知件貨幾時到",
+        "before": 7,
+        "after": 6
+      },
+      {
+        "source": "validation:authored60",
+        "code": "hionajirmciyuhimgyp",
+        "gold": "我今日轉咗錢記得確認",
+        "before": 13,
+        "after": 12
+      },
+      {
+        "source": "validation:authored60",
+        "code": "ofspajirmciyuhimgyp",
+        "gold": "你聽日轉咗錢記得確認",
+        "before": 13,
+        "after": 12
+      },
+      {
+        "source": "validation:authored60",
+        "code": "osonaujirmciyuhimgyp",
+        "gold": "佢今晚轉咗錢記得確認",
+        "before": 13,
+        "after": 12
+      },
+      {
+        "source": "validation:authored60",
+        "code": "hirdmljojirmciyuhimgyp",
+        "gold": "我哋而家轉咗錢記得確認",
+        "before": 13,
+        "after": 12
+      },
+      {
+        "source": "validation:authored60",
+        "code": "ofrdyqrijirmciyuhimgyp",
+        "gold": "你哋遲啲轉咗錢記得確認",
+        "before": 15,
+        "after": 12
+      },
+      {
+        "source": "validation:authored60",
+        "code": "osrdmylmjirmciyuhimgyp",
+        "gold": "佢哋下晝轉咗錢記得確認",
+        "before": 13,
+        "after": 12
+      },
+      {
+        "source": "validation:authored60",
+        "code": "hionadpviofoorrry",
+        "gold": "我今日想約你飲咖啡",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:authored60",
+        "code": "ofspadpviofoorrry",
+        "gold": "你聽日想約你飲咖啡",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:authored60",
+        "code": "osonaudpviofoorrry",
+        "gold": "佢今晚想約你飲咖啡",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:authored60",
+        "code": "hirdmljodpviofoorrry",
+        "gold": "我哋而家想約你飲咖啡",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:authored60",
+        "code": "ofrdyqridpviofoorrry",
+        "gold": "你哋遲啲想約你飲咖啡",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:authored60",
+        "code": "osrdmylmdpviofoorrry",
+        "gold": "佢哋下晝想約你飲咖啡",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:authored60",
+        "code": "hionabhyeoryjhphume",
+        "gold": "我今日睇返個訊息先覆",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:authored60",
+        "code": "ofspabhyeoryjhphume",
+        "gold": "你聽日睇返個訊息先覆",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:authored60",
+        "code": "osonaubhyeoryjhphume",
+        "gold": "佢今晚睇返個訊息先覆",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:authored60",
+        "code": "hirdmljobhyeoryjhphume",
+        "gold": "我哋而家睇返個訊息先覆",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:authored60",
+        "code": "ofrdyqribhyeoryjhphume",
+        "gold": "你哋遲啲睇返個訊息先覆",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:authored60",
+        "code": "osrdmylmbhyeoryjhphume",
+        "gold": "佢哋下晝睇返個訊息先覆",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:authored60",
+        "code": "osrdmylmykmmdpgibhmuah",
+        "gold": "佢哋下晝放工想去睇電影",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:natural200",
+        "code": "tkykwklajlofrr",
+        "gold": "英文默書都係喎",
+        "before": 4,
+        "after": 3
+      },
+      {
+        "source": "validation:natural200",
+        "code": "rkrphlkbrnosjlqmhnawosrr",
+        "gold": "噉呢所有嘢佢都控制晒佢喎",
+        "before": 31,
+        "after": 22
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hirdmommoqjlhdrroa",
+        "gold": "我咪兩三年都學唔會",
+        "before": 46,
+        "after": 35
+      },
+      {
+        "source": "validation:natural200",
+        "code": "alofmriposofhirdmorrk",
+        "gold": "即係可能佢係我哋一倍噉",
+        "before": 16,
+        "after": 15
+      },
+      {
+        "source": "validation:natural200",
+        "code": "osogmmismgrulaa",
+        "gold": "佢坐正成班嘅中間",
+        "before": 13,
+        "after": 25
+      },
+      {
+        "source": "validation:natural200",
+        "code": "nikbrmmnvyklykruqdoshgin",
+        "gold": "附帶咗一張誒中文嘅操作程序",
+        "before": 13,
+        "after": 15
+      },
+      {
+        "source": "validation:natural200",
+        "code": "yuvkrmofgvtggiqghnrgmdern",
+        "gold": "就變咗係越難去推行哩一樣嘢",
+        "before": 71,
+        "after": 54
+      },
+      {
+        "source": "validation:natural200",
+        "code": "yekngqghimiri",
+        "gold": "返大陸捱得耐啲",
+        "before": 26,
+        "after": 64
+      },
+      {
+        "source": "validation:natural200",
+        "code": "rkhlvorposyuvdwsrg",
+        "gold": "噉所以呢佢就好嬲囖",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:natural200",
+        "code": "imjarpmvajhihmojosrr",
+        "gold": "或者呢要開風扇俾佢啊",
+        "before": 15,
+        "after": 18
+      },
+      {
+        "source": "validation:natural200",
+        "code": "alofmvetebrrjcofuudo",
+        "gold": "即係要澄清啊真係出來",
+        "before": 5,
+        "after": 6
+      },
+      {
+        "source": "validation:natural200",
+        "code": "abacruvdjirg",
+        "gold": "明顯嘅好轉囖",
+        "before": 4,
+        "after": 9
+      },
+      {
+        "source": "validation:natural200",
+        "code": "mvmommahumgmrvoyaawosri",
+        "gold": "要兩三日先至可以識晒佢啲",
+        "before": 45,
+        "after": 52
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hijlyrvdnipht",
+        "gold": "我都話好多心血",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:natural200",
+        "code": "alofrrofedofyrdudirr",
+        "gold": "即係唔係淨係話相機啊",
+        "before": 10,
+        "after": 8
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hijlhuhiosrrabharg",
+        "gold": "我都覺得佢唔明白囖",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hiogvibjekrmyvrp",
+        "gold": "我住將軍澳咁遠呢",
+        "before": 15,
+        "after": 14
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hikbygosrkyprg",
+        "gold": "我希望佢噉諗囖",
+        "before": 7,
+        "after": 8
+      },
+      {
+        "source": "validation:natural200",
+        "code": "rkrroroylohhnrn",
+        "gold": "噉嗰個人新入行喇",
+        "before": 30,
+        "after": 31
+      },
+      {
+        "source": "validation:natural200",
+        "code": "rrorwidinkmrvorsnyok",
+        "gold": "嗰個母機又可以另外做",
+        "before": 54,
+        "after": 46
+      },
+      {
+        "source": "validation:natural200",
+        "code": "alofrkdeokeiof",
+        "gold": "即係噉樣做法係",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hirrhikbkbciodrr",
+        "gold": "得唔得有冇公仔啊",
+        "before": 13,
+        "after": 18
+      },
+      {
+        "source": "validation:natural200",
+        "code": "rkmljorrorhdhmrpkbkbhpyerp",
+        "gold": "噉而家嗰個學生呢有冇乖返呢",
+        "before": 10,
+        "after": 11
+      },
+      {
+        "source": "validation:natural200",
+        "code": "kbrihgmvruvkyuwrbf",
+        "gold": "有啲重要嘅變遷固然",
+        "before": 18,
+        "after": 19
+      },
+      {
+        "source": "validation:natural200",
+        "code": "rkvrphybwrjlvdrn",
+        "gold": "噉姑勿論點都好喇",
+        "before": 2,
+        "after": 3
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hihuhirroarg",
+        "gold": "我覺得唔會囖",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:natural200",
+        "code": "tcjcofvejlkbrn",
+        "gold": "其實無線都有喇",
+        "before": 16,
+        "after": 12
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hiviaikbycyrrr",
+        "gold": "我幾時有讀過啊",
+        "before": 7,
+        "after": 5
+      },
+      {
+        "source": "validation:public200",
+        "code": "hirrncpqyrmofgior",
+        "gold": "我唔小心拆咗你封信",
+        "before": 22,
+        "after": 24
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofyarryaosrdrd",
+        "gold": "你識唔識佢哋㗎",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:public200",
+        "code": "wrnqofviaiaaevlcrf",
+        "gold": "點解你將時間浪費喺",
+        "before": 82,
+        "after": 95
+      },
+      {
+        "source": "validation:public200",
+        "code": "wkifkboybosgi",
+        "gold": "因為冇人請佢去",
+        "before": 2,
+        "after": 3
+      },
+      {
+        "source": "validation:public200",
+        "code": "hinetnbumnruofmorkbribdru",
+        "gold": "我發夢見到嘅係一個冇戰爭嘅",
+        "before": 11,
+        "after": 12
+      },
+      {
+        "source": "validation:public200",
+        "code": "hirdyuojorknjuqlof",
+        "gold": "我哋就俾個九七折你",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:public200",
+        "code": "osoaygogofoeqqa",
+        "gold": "佢會望住你隻手指",
+        "before": 4,
+        "after": 7
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofrrmgkbviniord",
+        "gold": "你嗰班有幾多人㗎",
+        "before": 22,
+        "after": 8
+      },
+      {
+        "source": "validation:public200",
+        "code": "hirrvdcgypovkbkinibbrunf",
+        "gold": "我唔好鍾意食有太多骨嘅魚",
+        "before": 2,
+        "after": 3
+      },
+      {
+        "source": "validation:public200",
+        "code": "rryojrdmbuceojhi",
+        "gold": "唔該寄本目錄俾我",
+        "before": 35,
+        "after": 21
+      },
+      {
+        "source": "validation:public200",
+        "code": "ribvekyumrrehuure",
+        "gold": "啲眼淚就一路滮出嚟",
+        "before": 37,
+        "after": 38
+      },
+      {
+        "source": "validation:public200",
+        "code": "ddtkrrdpymmuiu",
+        "gold": "森美唔想上電視",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofybfbviwrguhhrd",
+        "gold": "你通常幾點起身㗎",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:public200",
+        "code": "osqrgoawhinrvdrimubc",
+        "gold": "佢搶走晒我阿妹啲玩具",
+        "before": 2,
+        "after": 5
+      },
+      {
+        "source": "validation:public200",
+        "code": "hivichcgiotnbumnosgormohorinhlie",
+        "gold": "我幾分鐘之前見到佢走咗入個廁所度",
+        "before": 30,
+        "after": 35
+      },
+      {
+        "source": "validation:public200",
+        "code": "hirddporspaoarroaabmk",
+        "gold": "我哋想知聽日會唔會晴天",
+        "before": 10,
+        "after": 19
+      },
+      {
+        "source": "validation:public200",
+        "code": "rfiedmsftpwv",
+        "gold": "喺度整緊花園",
+        "before": 3,
+        "after": 2
+      },
+      {
+        "source": "validation:public200",
+        "code": "hirlrmosrdqnri",
+        "gold": "我叫咗佢哋打呔",
+        "before": 3,
+        "after": 1
+      },
+      {
+        "source": "validation:public200",
+        "code": "rpgiorofojofrd",
+        "gold": "呢封信係俾你㗎",
+        "before": 38,
+        "after": 15
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofbhhirrhird",
+        "gold": "你睇得唔得㗎",
+        "before": 3,
+        "after": 1
+      },
+      {
+        "source": "validation:public200",
+        "code": "rrotncvmrfmorbiotnqermrerpie",
+        "gold": "嗰位小姐喺一個月之前搬咗嚟呢度",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:public200",
+        "code": "hirroamfyfof",
+        "gold": "我唔會原諒你",
+        "before": 13,
+        "after": 8
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofspjcriyuspmnrdrn",
+        "gold": "你聽真啲就聽到㗎喇",
+        "before": 6,
+        "after": 5
+      },
+      {
+        "source": "validation:public200",
+        "code": "hioackogrfmwmgmhrutujlsfhpwg",
+        "gold": "我伯父住喺西班牙嘅首都馬德里",
+        "before": 9,
+        "after": 14
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofsiauviwrblrh",
+        "gold": "你尋晚幾點瞓呀",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:public200",
+        "code": "rrvdlmtpwwlaorrilarh",
+        "gold": "唔好畫花圖書館啲書呀",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:public200",
+        "code": "rgbfhibrosoghivdyl",
+        "gold": "雖然我同佢住得好近",
+        "before": 30,
+        "after": 32
+      },
+      {
+        "source": "validation:public200",
+        "code": "osojrmnvosrhvfhdhmaiopruduhibh",
+        "gold": "佢俾咗張佢呀媽學生時代嘅相我睇",
+        "before": 8,
+        "after": 3
+      },
+      {
+        "source": "validation:public200",
+        "code": "orjphbrfwfdeiejfrmrieiykjd",
+        "gold": "個老師喺黑板度寫咗啲法文字",
+        "before": 3,
+        "after": 1
+      },
+      {
+        "source": "validation:public200",
+        "code": "osoctvrmrrornohu",
+        "gold": "佢領養咗嗰個孤兒",
+        "before": 31,
+        "after": 28
+      },
+      {
+        "source": "validation:public200",
+        "code": "ysmoqoktlpcfhnmeyvaevdbh",
+        "gold": "邊一件侯斯頓火箭球衣最好睇",
+        "before": 21,
+        "after": 22
+      },
+      {
+        "source": "validation:public200",
+        "code": "hirrojofbqhijecuhq",
+        "gold": "我唔俾你用我支鋼筆",
+        "before": 13,
+        "after": 12
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofkbkbygybyrjsymru",
+        "gold": "係有希望通過考試嘅",
+        "before": 12,
+        "after": 6
+      },
+      {
+        "source": "validation:public200",
+        "code": "osofviaigord",
+        "gold": "佢係幾時走㗎",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:public200",
+        "code": "osrdfwbfkbritcybwr",
+        "gold": "佢哋當然有啲共通點",
+        "before": 41,
+        "after": 43
+      },
+      {
+        "source": "validation:public200",
+        "code": "hirdrfgdmyqurmorjm",
+        "gold": "我哋喺地下掘咗個窿",
+        "before": 37,
+        "after": 32
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofwrnqofjlmvqbmnrirnrmleygra",
+        "gold": "你點解係都要搞到啲嘢咁複雜啫",
+        "before": 32,
+        "after": 18
+      },
+      {
+        "source": "validation:public200",
+        "code": "hirrncpqicarmofquyf",
+        "gold": "我唔小心拎錯咗你把遮",
+        "before": 6,
+        "after": 4
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofcgypybrqrdybrqrg",
+        "gold": "你鍾意講咩咪講咩囉",
+        "before": 27,
+        "after": 29
+      }
+    ]
+  },
+  "production_change": false,
+  "limits": "Known calibration pools only, simulated score change. Any candidate needs native parity, existing regression and latency checks plus a newly frozen unopened family reserve before adoption."
+}

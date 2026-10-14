@@ -1,0 +1,35 @@
+{
+  "protocol_sha256": "a3a46f9558153640a8c6fe6626e75c4f0ef79fcec265661ffa98d77e9692f005",
+  "training_observer_sha256": "88b2673602dc6de079c83616fbdcdf37c3a15e106607692e90076e61f6c4dbd2",
+  "weights_sha256": "cf7e366eb6061547c307a3f755993ac0c38d2096ac216b3f42638fe7179505ac",
+  "pairs_sha256": "afd6b0908342e4188cb0afddfbbba97c649d1026dea16b2073a1acebd7eefaab",
+  "counts": {
+    "observed_targets": 3081,
+    "gold_rank1": 2380,
+    "correct_head_pairs": 956,
+    "no_close_score_rival": 1457,
+    "gold_nonleading": 616,
+    "error_pairs": 1093,
+    "gold_missing_from_pool": 85
+  },
+  "pairs": 2049,
+  "targets": 1539,
+  "families": 792,
+  "training": {
+    "epochs": 80,
+    "rate": 0.3,
+    "l2": 0.01,
+    "minimum_independent_target_support": 3,
+    "feature_support_unit": "Distinct (source,context,code,positive); authored variants collapsed to family",
+    "features_considered": 58065,
+    "features_supported": 2233,
+    "features_exported": 2230,
+    "training_examples": 1776,
+    "initial_logistic_objective": 0.8822534282375117,
+    "final_logistic_objective": 0.6476524612519635,
+    "positive_features": 1108,
+    "negative_features": 1122
+  },
+  "production_change": false,
+  "limits": "Objective fits unclipped comparative evidence; bounded runtime correction is separately calibrated. Existing source family grouping and all fixed model offsets are retained. No words.hk evaluation examples train it."
+}
