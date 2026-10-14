@@ -9,9 +9,12 @@ import java.util.zip.GZIPOutputStream;
 
 public class PhraseRelationRankerTest {
     private static PhraseRelationRanker model(Map<String,String> lexicon,Map<String,Float> weights,float strength)throws IOException {
+        return model(lexicon,weights,strength,false);
+    }
+    private static PhraseRelationRanker model(Map<String,String> lexicon,Map<String,Float> weights,float strength,boolean aligned)throws IOException {
         ByteArrayOutputStream bytes=new ByteArrayOutputStream();
         try(DataOutputStream out=new DataOutputStream(new GZIPOutputStream(bytes))) {
-            out.writeInt(0x50525231);out.writeInt(lexicon.size());out.writeInt(weights.size());out.writeFloat(strength);out.writeFloat(2);
+            out.writeInt(aligned?0x50525232:0x50525231);out.writeInt(lexicon.size());out.writeInt(weights.size());out.writeFloat(strength);out.writeFloat(2);
             for(Map.Entry<String,String> e:lexicon.entrySet()) {
                 byte[] key=e.getKey().getBytes(StandardCharsets.UTF_8);out.writeShort(key.length);out.write(key);
                 out.writeByte(e.getValue().charAt(0));out.writeShort(2);
@@ -25,6 +28,40 @@ public class PhraseRelationRankerTest {
     private static Map<String,String> lexicon() {
         Map<String,String> result=new HashMap<>();for(String verb:Arrays.asList("交","食","買","見","用"))result.put(verb,"V");
         result.put("錢包","N");result.put("𠮷哥","N");return result;
+    }
+    @Test public void alignedTailsCanReceiveNegativeEvidenceWithinTheRealLimit()throws Exception {
+        PhraseRelationRanker m=model(lexicon(),Collections.singletonMap("VO|食|F",1f),.5f,true);
+        assertTrue(m.aligned());assertFalse(model(lexicon(),Collections.emptyMap(),.5f).aligned());
+        assertEquals(-1,m.alignedCorrection(-100,100),0);
+        assertEquals(1,m.alignedCorrection(100,-100),0);
+        assertEquals(.5,m.alignedCorrection(m.rawScore("","我食飯"),m.rawScore("","我食錢包")),0);
+        assertEquals(-.5,m.alignedCorrection(m.rawScore("","我食錢包"),m.rawScore("","我食飯")),0);
+        assertEquals(0,m.correction(-100,100),0);
+        assertEquals(m.evidence("","你交咗功課未").raw,m.rawScore("","你交咗功課未"),0);
+    }
+
+    private static Reader asset(String name)throws IOException {
+        return new InputStreamReader(new FileInputStream("src/main/assets/"+name),StandardCharsets.UTF_8);
+    }
+    private static QuickDecoder decoder(DictionaryEngine d,PhraseRelationRanker relation)throws Exception {
+        return new QuickDecoder(d,asset("quick_phrases.tsv"),asset("hk_phrases.tsv"),asset("cantonese_phrases.tsv"),
+            OfflineLanguageModel.load(new FileInputStream("src/main/assets/language_model.b64")),
+            PhraseLanguageModel.load(new FileInputStream("src/main/assets/phrase_model.b64")),asset("hk_chat_phrases.tsv"),
+            CandidateRanker.load(new FileInputStream("src/main/assets/candidate_ranker.b64")),
+            CandidateRanker.loadWords(new FileInputStream("src/main/assets/word_ranker.b64")),
+            SentenceRanker.load(new FileInputStream("src/main/assets/sentence_ranker.b64")),
+            PrefixRanker.load(new FileInputStream("src/main/assets/prefix_ranker.b64")),relation);
+    }
+    @Test public void alignedCorrectionPreservesLegacyFirstEvenWithOpposingWeights()throws Exception {
+        DictionaryEngine d=new DictionaryEngine(asset("cangjie5.base.dict.yaml"),asset("english.txt"),asset("character_frequencies.tsv"));
+        Map<String,Float> weights=new LinkedHashMap<>();weights.put("G|PV",-1.5f);weights.put("G|OO",1.5f);weights.put("G|VV",1.5f);
+        QuickDecoder before=decoder(d,null),after=decoder(d,model(lexicon(),weights,1.5f,true));
+        for(String code:Arrays.asList("ofonaovrmrq","ofykrmmsydwljpvwjd","dpofvivcjutrmyyjvcqnjd")) {
+            List<String> old=before.decode(code,(c,w)->0),updated=after.decode(code,(c,w)->0);
+            assertEquals(old.get(0),updated.get(0));assertTrue(updated.size()<=20);
+            assertEquals("Reranking must keep every existing visible candidate",new HashSet<>(old),new HashSet<>(updated));
+            for(String value:updated)assertFalse(d.matchQuickCodes(code,value).isEmpty());
+        }
     }
     @Test public void classifierAndObjectCategoriesDoNotConfuseWalletsDriversOrPeanuts()throws Exception {
         PhraseRelationRanker m=model(lexicon(),new LinkedHashMap<String,Float>(){{put("VO|食|F",1f);put("VO|用|E",1f);}},1);

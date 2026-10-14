@@ -1,0 +1,164 @@
+{
+  "before": {
+    "guard:fresh100": {
+      "cases": 100,
+      "top1": 36,
+      "top5": 63,
+      "top20": 73
+    },
+    "guard:natural200": {
+      "cases": 200,
+      "top1": 77,
+      "top5": 119,
+      "top20": 138
+    },
+    "guard:authored120": {
+      "cases": 120,
+      "top1": 74,
+      "top5": 85,
+      "top20": 98
+    },
+    "guard:old600": {
+      "cases": 600,
+      "top1": 291,
+      "top5": 432,
+      "top20": 483
+    },
+    "guard:daily32": {
+      "cases": 32,
+      "top1": 23,
+      "top5": 31,
+      "top20": 32
+    },
+    "guard:completion16": {
+      "cases": 16,
+      "top1": 16,
+      "top5": 16,
+      "top20": 16
+    },
+    "guard:tatoeba200": {
+      "cases": 200,
+      "top1": 87,
+      "top5": 143,
+      "top20": 162
+    },
+    "guard:public100": {
+      "cases": 100,
+      "top1": 46,
+      "top5": 74,
+      "top20": 85
+    },
+    "guard:authored70": {
+      "cases": 70,
+      "top1": 15,
+      "top5": 39,
+      "top20": 48
+    },
+    "guard:plural": {
+      "cases": 18,
+      "top1": 15,
+      "top5": 18,
+      "top20": 18
+    },
+    "guard:handover": {
+      "cases": 30,
+      "top1": 29,
+      "top5": 30,
+      "top20": 30
+    },
+    "guard:continuous": {
+      "cases": 8,
+      "top1": 8,
+      "top5": 8,
+      "top20": 8
+    },
+    "guard:followup100": {
+      "cases": 100,
+      "top1": 41,
+      "top5": 61,
+      "top20": 72
+    }
+  },
+  "after": {
+    "guard:fresh100": {
+      "cases": 100,
+      "top1": 36,
+      "top5": 63,
+      "top20": 73
+    },
+    "guard:natural200": {
+      "cases": 200,
+      "top1": 77,
+      "top5": 119,
+      "top20": 138
+    },
+    "guard:authored120": {
+      "cases": 120,
+      "top1": 74,
+      "top5": 85,
+      "top20": 98
+    },
+    "guard:old600": {
+      "cases": 600,
+      "top1": 291,
+      "top5": 432,
+      "top20": 483
+    },
+    "guard:daily32": {
+      "cases": 32,
+      "top1": 23,
+      "top5": 31,
+      "top20": 32
+    },
+    "guard:completion16": {
+      "cases": 16,
+      "top1": 16,
+      "top5": 16,
+      "top20": 16
+    },
+    "guard:tatoeba200": {
+      "cases": 200,
+      "top1": 87,
+      "top5": 143,
+      "top20": 162
+    },
+    "guard:public100": {
+      "cases": 100,
+      "top1": 46,
+      "top5": 74,
+      "top20": 85
+    },
+    "guard:authored70": {
+      "cases": 70,
+      "top1": 15,
+      "top5": 39,
+      "top20": 48
+    },
+    "guard:plural": {
+      "cases": 18,
+      "top1": 15,
+      "top5": 18,
+      "top20": 18
+    },
+    "guard:handover": {
+      "cases": 30,
+      "top1": 29,
+      "top5": 30,
+      "top20": 30
+    },
+    "guard:continuous": {
+      "cases": 8,
+      "top1": 8,
+      "top5": 8,
+      "top20": 8
+    },
+    "guard:followup100": {
+      "cases": 100,
+      "top1": 41,
+      "top5": 61,
+      "top20": 72
+    }
+  },
+  "failed": [],
+  "calibration_only": true
+}

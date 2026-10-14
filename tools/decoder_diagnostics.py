@@ -36,13 +36,13 @@ public final class DecoderDiagnostics {
     String[] fields=line.split("\t",-1);
     if(fields.length!=3)throw new IllegalArgumentException("Expected context, code and target");
     if(!fields[1].matches("[a-zA-Z]{3,48}"))throw new IllegalArgumentException("Expected 3 to 48 code letters");
-    QuickDecoder.diagnosticTarget=fields[2];QuickDecoder.diagnosticGenerated=false;QuickDecoder.diagnosticRawRank=0;QuickDecoder.diagnosticEvents.clear();
+    QuickDecoder.diagnosticTarget=fields[2];QuickDecoder.diagnosticGenerated=false;QuickDecoder.diagnosticRawRank=0;QuickDecoder.diagnosticPoolRank=0;QuickDecoder.diagnosticCompleted=false;QuickDecoder.diagnosticEvents.clear();
     boolean exact=!dictionary.matchQuickCodes(fields[1],fields[2]).isEmpty();
     List<String> candidates=decoder.decode(fields[1],(code,word)->0,fields[0]);
     for(String candidate:candidates) if(dictionary.matchQuickCodes(fields[1],candidate).isEmpty())
         throw new AssertionError("Inexact candidate: "+fields[1]+" / "+candidate);
     int rank=candidates.indexOf(fields[2])+1;
-    String reason=rank==1?"first":rank>0?"ranked_later":QuickDecoder.diagnosticRawRank>20?"outside_twenty":QuickDecoder.diagnosticRawRank>0?"confidence_filtered":QuickDecoder.diagnosticGenerated?"completed_path_pruned":"not_generated";
+    String reason=rank==1?"first":rank>0?"ranked_later":QuickDecoder.diagnosticPoolRank>20?"outside_twenty":QuickDecoder.diagnosticCompleted?"confidence_filtered":QuickDecoder.diagnosticGenerated?"completed_path_pruned":"not_generated";
     out.write(line+"\t"+rank+"\t"+QuickDecoder.diagnosticRawRank+"\t"+reason+"\t"+String.join("|",candidates)+"\t"+exact+"\t"+String.join(";",QuickDecoder.diagnosticEvents)+"\n");
     if(++count%50==0)System.out.println("diagnosed="+count);
    }
@@ -58,6 +58,8 @@ def instrument(source):
         '    private static final int BEAM = 48;': '''    static String diagnosticTarget = "";
     static boolean diagnosticGenerated;
     static int diagnosticRawRank;
+    static int diagnosticPoolRank;
+    static boolean diagnosticCompleted;
     static List<String> diagnosticEvents = new ArrayList<>();
     private static boolean diagnosticGold(String text) {
         return diagnosticTarget.startsWith(text);
@@ -117,7 +119,11 @@ def instrument(source):
                     lattice.set(pos+length,reduced);
                 }''',
         '        double bestScore = completed.isEmpty() ? Double.NEGATIVE_INFINITY : completed.get(0).score;': '''        diagnosticBoundary("F",code.length(),lattice.get(code.length()),completed);
+        for(Path p:completed)if(p.text.equals(diagnosticTarget))diagnosticCompleted=true;
         double bestScore = completed.isEmpty() ? Double.NEGATIVE_INFINITY : completed.get(0).score;''',
+        '        if (result.size() > 20) return new ArrayList<>(result.subList(0, 20));': '''        diagnosticPoolRank=result.indexOf(diagnosticTarget)+1;
+        diagnosticEvents.add("R,"+code.length()+","+diagnosticTarget+","+diagnosticPoolRank+","+diagnosticCompleted);
+        if (result.size() > 20) return new ArrayList<>(result.subList(0, 20));''',
     }
     if extended:
         before='        List<Path> completed = prune(lattice.get(code.length()));'
@@ -174,6 +180,10 @@ def main():
             phrase_args += ',CandidateRanker.loadWords(Files.newInputStream(assets.resolve("word_ranker.b64")))'
         if (work / 'app/src/main/assets/sentence_ranker.b64').exists():
             phrase_args += ',SentenceRanker.load(Files.newInputStream(assets.resolve("sentence_ranker.b64")))'
+        if (work / 'app/src/main/assets/prefix_ranker.b64').exists():
+            phrase_args += ',PrefixRanker.load(Files.newInputStream(assets.resolve("prefix_ranker.b64")))'
+        if (work / 'app/src/main/assets/relation_ranker.b64').exists():
+            phrase_args += ',PhraseRelationRanker.load(Files.newInputStream(assets.resolve("relation_ranker.b64")))'
         driver.write_text(DRIVER.replace('__PHRASE_ARGS__', phrase_args), encoding='utf-8')
         classes = work / 'classes'
         subprocess.run(['javac', '-encoding', 'UTF-8', '-sourcepath', str(work/'app/src/main/java'), '-d', str(classes), str(driver)], check=True)

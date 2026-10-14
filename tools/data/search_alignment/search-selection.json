@@ -1,0 +1,11 @@
+{
+  "stage1_complete": true,
+  "selected": true,
+  "desktop_maximum_ratio": 1.0511867412915417,
+  "known796_coverage_before": 442,
+  "known796_coverage_after": 443,
+  "calibration903_no_loss": true,
+  "regression1594_no_loss": true,
+  "independent500_unopened": true,
+  "decoder_sha256": "78067b9edfb56bcea49a54359a945bb6fc030dee80385720714c221acd161402"
+}

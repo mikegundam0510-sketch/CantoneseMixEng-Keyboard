@@ -1,0 +1,310 @@
+{
+  "java": {
+    "tests": 219,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "java_suites": [
+    {
+      "suite": "hk.cantonesemixeng.keyboard.CandidateGlyphFilterTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "hk.cantonesemixeng.keyboard.CandidateModelProductionTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "hk.cantonesemixeng.keyboard.CandidateRankerDecoderTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "hk.cantonesemixeng.keyboard.CandidateRankerTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "hk.cantonesemixeng.keyboard.ChineseAutocorrectTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "hk.cantonesemixeng.keyboard.ClauseRelationsTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "hk.cantonesemixeng.keyboard.ClauseStartRelationsTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "hk.cantonesemixeng.keyboard.CommonParticleSearchTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "hk.cantonesemixeng.keyboard.ContextLearningTest",
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "hk.cantonesemixeng.keyboard.ContinuousClauseRankingTest",
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "hk.cantonesemixeng.keyboard.CorrectionLearningTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "hk.cantonesemixeng.keyboard.DictionaryEngineTest",
+      "tests": 15,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "hk.cantonesemixeng.keyboard.EmojiBrowserTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "hk.cantonesemixeng.keyboard.EmojiCatalogTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "hk.cantonesemixeng.keyboard.EnglishChineseEngineTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "hk.cantonesemixeng.keyboard.InputPolicyTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "hk.cantonesemixeng.keyboard.MixedAutocorrectBoundaryTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "hk.cantonesemixeng.keyboard.MixedInputTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "hk.cantonesemixeng.keyboard.NextSuggestionsTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "hk.cantonesemixeng.keyboard.OfflineLanguageModelTest",
+      "tests": 18,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "hk.cantonesemixeng.keyboard.PhraseLanguageModelTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "hk.cantonesemixeng.keyboard.PhraseLearningTest",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "hk.cantonesemixeng.keyboard.PhraseRelationRankerTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "hk.cantonesemixeng.keyboard.PrefixRankerTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "hk.cantonesemixeng.keyboard.QuickDecoderTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "hk.cantonesemixeng.keyboard.RecentLearningTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "hk.cantonesemixeng.keyboard.RecentPhraseRankingTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "hk.cantonesemixeng.keyboard.SearchRetentionTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "hk.cantonesemixeng.keyboard.SemanticPolicyTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "hk.cantonesemixeng.keyboard.SentenceRankerTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "hk.cantonesemixeng.keyboard.SessionClipboardTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "hk.cantonesemixeng.keyboard.SingleSelectionHistoryTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "hk.cantonesemixeng.keyboard.StrokeEngineTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "hk.cantonesemixeng.keyboard.TypingOptimizationTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "hk.cantonesemixeng.keyboard.VoicePolicyTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "suite": "hk.cantonesemixeng.keyboard.WordsHkImportTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "lint": {
+    "Error": 0,
+    "Warning": 25
+  },
+  "python_unique_tests": 33,
+  "python_passed": 33,
+  "python_failed": 0,
+  "python_remaining_skipped": 0,
+  "python_run_history": [
+    {
+      "tests": 33,
+      "passed": 27,
+      "skipped": 6
+    },
+    {
+      "previously_skipped_only": 6,
+      "passed": 6,
+      "skipped": 0
+    }
+  ],
+  "restored_test_source_sha256": {
+    "hkcancor-utf8.zip": "09223963b8756254e15353cad843f8a4b0cbc4b9223dc8a8fa27fb1cf846057e",
+    "wordshk.csv": "31c55697f459564312e958bc87d077855b85c6965bab1a683c54d6ce6b6d5ddb"
+  },
+  "raw_log_sha256": {
+    "final-gradle.log": "be4a559c892747625efaa904e9fddd03be26eb10d116e43e497e875a7528a581",
+    "final-python.log": "01c25664fbb4b9dac02f8cde7829a556817e4340a0a7aebf54be2c7f9843170a",
+    "restored-python.log": "0104b6042b53856b6ac4750e1ad38534f9d920a302ede154680db0df637b1bd6"
+  },
+  "prior_native_evidence": {
+    "java_tests": 219,
+    "java_failures": 0,
+    "python_tests": 33,
+    "python_failures": 0,
+    "lint_errors": 0,
+    "lint_existing_warnings": 25,
+    "native_calibration_cases": 3293,
+    "native_candidate_list_differences": 0,
+    "raw_feature_parity_cases": 2245,
+    "raw_feature_maximum_error": 0,
+    "simulated_single_cases": 32,
+    "simulated_single_first": 32,
+    "sequence_records": 489,
+    "verified_before_environment_restart": true,
+    "raw_native_logs_in_tmp_lost": true,
+    "limits": "Workspace code/model/data/calibration files persist; /tmp compiled snapshots and raw logs were removed by environment restart. Final timing and500 reserve remain outstanding. No production model asset or APK produced."
+  },
+  "note": "Final Gradle checks after asset and license integration. Six Python source-dependent checks restored from original checksum-pinned public inputs and rerun alone; all33 unique checks pass. No model retuning, APK assembly or phone verification."
+}

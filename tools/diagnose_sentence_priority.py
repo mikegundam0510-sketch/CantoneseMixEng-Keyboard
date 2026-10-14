@@ -14,6 +14,7 @@ import struct
 import subprocess
 import tarfile
 import tempfile
+import shutil
 from train_phrase_model import ROOT
 from prepare_tatoeba_corpus import digest
 from sentence_features import features
@@ -60,11 +61,14 @@ public class PriorityObserve {
 }
 '''
 
-def observe(cases,output,revision='a65f43d'):
+def observe(cases,output,revision='a65f43d',working_tree=False):
     archive=subprocess.check_output(['git','archive',revision,'app/src/main/java','app/src/main/assets'],cwd=ROOT)
     with tempfile.TemporaryDirectory(prefix='priority-observe-') as directory:
         work=Path(directory)
         with tarfile.open(fileobj=io.BytesIO(archive)) as data:data.extractall(work,filter='data')
+        if working_tree:
+            names=subprocess.check_output(['git','ls-tree','-r','--name-only',revision,'app/src/main/java','app/src/main/assets'],cwd=ROOT,text=True).splitlines()
+            for name in names:shutil.copyfile(ROOT/name,work/name)
         java=work/'app/src/main/java/hk/cantonesemixeng/keyboard/QuickDecoder.java';text=java.read_text()
         hooks={
             '    private static final int BEAM = 48;':'''    static final Map<String,Double> observedRaw=new HashMap<>(),observedAdjusted=new HashMap<>();

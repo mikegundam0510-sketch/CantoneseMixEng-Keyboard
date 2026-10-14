@@ -48,9 +48,12 @@ public final class QuickDecoder {
     private final Map<String, Double> phraseEvidence = new HashMap<>();
     private final Map<String, Double> corpusEvidence = new HashMap<>();
     private final Map<String, Double> predicateBackoff = new HashMap<>();
-    private static final class Token {
+    private static class Token {
         final String text; final double score;
         Token(String text, double score) { this.text = text; this.score = score; }
+    }
+    private static final class CharacterHint extends Token {
+        CharacterHint(String text,double score){super(text,score);}
     }
     private static final class Path {
         final String text; final double score;
@@ -417,25 +420,39 @@ public final class QuickDecoder {
             String original = result.get(0);
             double support = structuralSupport(context, original);
             String protectedWinner=original;
+            Set<String> alignedVisible=new HashSet<>();
             if(relationRanker!=null) {
                 String legacyWinner=support>0?original:Collections.max(result,Comparator.comparingDouble(scores::get));
-                boolean explicit=knownWord(legacyWinner)&&learned.applyAsInt(code,legacyWinner)>0
-                    ||learnedSequence(code,legacyWinner,learned)
-                    ||contextual!=null&&ContextLearning.supports(context,InputCandidate.chinese(dictionary,code,legacyWinner),contextual);
                 protectedWinner=legacyWinner;support=1;
-                Map<String,PhraseRelationRanker.Evidence> evidence=new HashMap<>();Map<String,Double> lifts=new HashMap<>();
-                for(String value:result)evidence.put(value,relationRanker.evidence(context,value));
-                PhraseRelationRanker.Evidence reference=evidence.get(legacyWinner);String best=legacyWinner;
-                for(String value:result) {
-                    PhraseRelationRanker.Evidence candidate=evidence.get(value);
-                    double lift=candidate.supportedOver(reference)?relationRanker.correction(candidate.raw,reference.raw):0;lifts.put(value,lift);
-                    scores.put(value,scores.get(value)+lift);
-                    if(scores.get(value)>scores.get(best))best=value;
-                }
-                if(!explicit&&!best.equals(legacyWinner)&&scores.get(best)>=scores.get(legacyWinner)+.25
+                if(relationRanker.aligned()) {
+                    List<String> legacy=new ArrayList<>(result);
+                    legacy.sort(Comparator.comparingInt((String v)->v.equals(legacyWinner)?0:1)
+                        .thenComparing(Comparator.comparingDouble((String v)->scores.get(v)).reversed()));
+                    legacy.sort(Comparator.comparingInt((String v)->knownWord(v)?learned.applyAsInt(code,v):0).reversed());
+                    protectedWinner=legacy.get(0);
+                    alignedVisible.addAll(legacy.subList(0,Math.min(20,legacy.size())));
+                    double reference=relationRanker.rawScore(context,protectedWinner);
+                    for(String value:legacy.subList(0,Math.min(20,legacy.size())))if(!value.equals(protectedWinner))
+                        scores.put(value,scores.get(value)+relationRanker.alignedCorrection(relationRanker.rawScore(context,value),reference));
+                } else {
+                    boolean explicit=knownWord(legacyWinner)&&learned.applyAsInt(code,legacyWinner)>0
+                        ||learnedSequence(code,legacyWinner,learned)
+                        ||contextual!=null&&ContextLearning.supports(context,InputCandidate.chinese(dictionary,code,legacyWinner),contextual);
+                    Map<String,PhraseRelationRanker.Evidence> evidence=new HashMap<>();Map<String,Double> lifts=new HashMap<>();
+                    for(String value:result)evidence.put(value,relationRanker.evidence(context,value));
+                    PhraseRelationRanker.Evidence reference=evidence.get(legacyWinner);String best=legacyWinner;
+                    for(String value:result) {
+                        PhraseRelationRanker.Evidence candidate=evidence.get(value);
+                        double lift=candidate.supportedOver(reference)?relationRanker.correction(candidate.raw,reference.raw):0;lifts.put(value,lift);
+                        scores.put(value,scores.get(value)+lift);
+                        if(scores.get(value)>scores.get(best))best=value;
+                    }
+                    if(!explicit&&!best.equals(legacyWinner)&&scores.get(best)>=scores.get(legacyWinner)+.25
                         &&relationRanker.trustedPromotion(evidence.get(best),reference,lifts.get(best)))support=0;
+                }
             }
             Comparator<String> order = Comparator.comparingDouble((String text) -> scores.get(text)).reversed();
+            if(!alignedVisible.isEmpty())order=Comparator.comparingInt((String v)->alignedVisible.contains(v)?0:1).thenComparing(order);
             // Protect the established winner while preserving the residual
             // model's full relative order for every remaining candidate.
             final String pinned=protectedWinner;
@@ -770,6 +787,21 @@ public final class QuickDecoder {
             Token token = alternatives.get(i);
             result.add(new Token(token.text, independentScores.computeIfAbsent(token.text, word -> languageScore("", word, modelScores))));
         }
+        // A suffix without an attested multi-character word still has exact
+        // character continuations. Use only four common dictionary choices as
+        // survival hints; they never insert a word or replace the primary beam.
+        if(result.isEmpty()&&code.length()>=14&&pos<code.length()) {
+            Set<String> characters=new HashSet<>();
+            for(int length=Math.min(2,code.length()-pos);length>=1&&result.size()<4;length--) {
+                String part=code.substring(pos,pos+length);
+                for(String text:dictionary.quickCandidates(part)) {
+                    if(!hanText(text)||!characters.add(text))continue;
+                    result.add(new CharacterHint(text,independentScores.computeIfAbsent(text,
+                        word->languageScore("",word,modelScores))));
+                    if(result.size()==4)break;
+                }
+            }
+        }
         return result;
     }
 
@@ -778,6 +810,7 @@ public final class QuickDecoder {
             List<Path> result=prune(input);
             return reservePrefixes(input,result,context,following,null);
         }
+        if(following.get(0) instanceof CharacterHint)return reserveCharacterPrefixes(input,context,following,modelScores);
         Map<String, double[]> cached = new HashMap<>();
         Map<Path, Double> scores = new IdentityHashMap<>();
         Map<Path, Double> alternatives = new IdentityHashMap<>();
@@ -826,6 +859,43 @@ public final class QuickDecoder {
             if (result.size() == BEAM + PATH_RESERVE) break;
         }
         return reservePrefixes(input,result,context,following,scores);
+    }
+
+    /** At most128 future scores: prioritize an exact HK particle over ambiguous content hints. */
+    private List<Path> reserveCharacterPrefixes(List<Path> input,String context,List<Token> following,ModelScoreCache modelScores) {
+        List<Path> result=prune(input);
+        List<Token> hints=following;
+        for(Token hint:following)if(HK_PARTICLES.contains(hint.text)) {
+            hints=Collections.singletonList(hint);break;
+        }
+        int historyLimit=128/hints.size();
+        Set<String> seen=new HashSet<>(),inspected=new HashSet<>();
+        for(Path p:result)seen.add(p.text);
+        double floor=result.get(result.size()-1).score-4;
+        Map<Path,Double> scores=new IdentityHashMap<>();
+        for(Path p:input) {
+            if(p.score<floor||seen.contains(p.text))continue;
+            String tail=OfflineLanguageModel.contextTail(context+p.text);
+            if(inspected.contains(tail))continue;
+            if(inspected.size()==historyLimit)break;
+            inspected.add(tail);double best=0;
+            for(Token hint:hints) {
+                // A one-character future needs only its cached character
+                // likelihood; phrase/syntax scorers run on actual extensions.
+                best=Math.max(best,modelScores.score(tail,hint.text)-modelScores.score("",hint.text));
+                if(best>=2)break;
+            }
+            if(best>.25)scores.put(p,p.score+Math.min(2,best));
+        }
+        List<Path> proposals=new ArrayList<>(scores.keySet());
+        proposals.sort(Comparator.comparingDouble((Path p)->scores.get(p)).reversed().thenComparing(p->p.text));
+        Set<String> histories=new HashSet<>();
+        for(Path p:result)histories.add(OfflineLanguageModel.contextTail(context+p.text));
+        for(Path p:proposals) {
+            if(!seen.add(p.text)||!histories.add(OfflineLanguageModel.contextTail(context+p.text)))continue;
+            result.add(p);if(result.size()==BEAM+4)break;
+        }
+        return reservePrefixes(input,result,context,following,null);
     }
 
     /** Keep the existing beam/reserve intact; add at most four supported close histories. */
@@ -889,6 +959,7 @@ public final class QuickDecoder {
         input.sort(Comparator.comparingDouble((Path p) -> p.score).reversed());
         return distinctPaths(input);
     }
+
 
     private List<Path> pruneFinal(List<Path> input) {
         if (model == null || sentenceRanker == null) return prune(input);

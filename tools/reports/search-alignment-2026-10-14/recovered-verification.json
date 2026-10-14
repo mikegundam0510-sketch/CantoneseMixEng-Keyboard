@@ -1,0 +1,18 @@
+{
+  "java_tests": 219,
+  "java_failures": 0,
+  "python_tests": 33,
+  "python_failures": 0,
+  "lint_errors": 0,
+  "lint_existing_warnings": 25,
+  "native_calibration_cases": 3293,
+  "native_candidate_list_differences": 0,
+  "raw_feature_parity_cases": 2245,
+  "raw_feature_maximum_error": 0,
+  "simulated_single_cases": 32,
+  "simulated_single_first": 32,
+  "sequence_records": 489,
+  "verified_before_environment_restart": true,
+  "raw_native_logs_in_tmp_lost": true,
+  "limits": "Workspace code/model/data/calibration files persist; /tmp compiled snapshots and raw logs were removed by environment restart. Final timing and500 reserve remain outstanding. No production model asset or APK produced."
+}

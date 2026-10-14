@@ -38,10 +38,12 @@ public final class PhraseRelationRanker {
     private final Map<String,String> lexicon;
     private final Map<String,Float> weights;
     private final float strength,limit;
+    private final boolean aligned;
 
-    private PhraseRelationRanker(Map<String,String> lexicon,Map<String,Float> weights,float strength,float limit) {
+    private PhraseRelationRanker(Map<String,String> lexicon,Map<String,Float> weights,float strength,float limit,boolean aligned) {
         this.lexicon=Collections.unmodifiableMap(lexicon);this.weights=Collections.unmodifiableMap(weights);
         this.strength=strength;this.limit=limit;
+        this.aligned=aligned;
     }
     private static String readString(DataInputStream input,int maximum) throws IOException {
         int size=input.readUnsignedShort();if(size<1||size>maximum)throw new IOException("Invalid relation text size");
@@ -78,7 +80,8 @@ public final class PhraseRelationRanker {
     public static PhraseRelationRanker load(InputStream encoded) throws IOException {
         try(DataInputStream in=new DataInputStream(new BufferedInputStream(new GZIPInputStream(
                 Base64.getMimeDecoder().wrap(new BufferedInputStream(encoded)))))) {
-            if(in.readInt()!=0x50525231)throw new IOException("Unsupported phrase relations");
+            int magic=in.readInt();
+            if(magic!=0x50525231&&magic!=0x50525232)throw new IOException("Unsupported phrase relations");
             int words=in.readInt(),features=in.readInt();float strength=in.readFloat(),limit=in.readFloat();
             if(words<0||words>20000||features<0||features>6000||!Float.isFinite(strength)||strength<0||strength>1.5
                     ||!Float.isFinite(limit)||limit<=0||limit>2)throw new IOException("Invalid relation bounds");
@@ -93,7 +96,7 @@ public final class PhraseRelationRanker {
                     throw new IOException("Invalid relation feature");
             }
             if(in.read()!=-1)throw new IOException("Trailing relation data");
-            return new PhraseRelationRanker(lexicon,weights,strength,limit);
+            return new PhraseRelationRanker(lexicon,weights,strength,limit,magic==0x50525232);
         }catch(IllegalArgumentException e){throw new IOException("Invalid relation encoding",e);}
     }
     private static String nounCategory(String word) {
@@ -241,8 +244,15 @@ public final class PhraseRelationRanker {
         }
         return new Evidence(raw,positive,negative,kinds);
     }
-    public double rawScore(String preceding,String text) {return evidence(preceding,text).raw;}
+    public double rawScore(String preceding,String text) {
+        double score=0;
+        for(Map.Entry<String,Integer> e:features(preceding,text).entrySet())
+            score+=(double)weights.getOrDefault(e.getKey(),0f)*e.getValue();
+        return score;
+    }
     public double correction(double raw,double reference) {return Math.max(0,strength*Math.max(-limit,Math.min(limit,raw-reference))-.1);}
+    boolean aligned(){return aligned;}
+    double alignedCorrection(double raw,double reference){return strength*Math.max(-limit,Math.min(limit,raw-reference));}
     boolean trustedPromotion(Evidence candidate,Evidence reference,double lift) {
         return lift>=.5&&candidate.supportedOver(reference)&&(candidate.repairs(reference)||candidate.moreStructure(reference));
     }

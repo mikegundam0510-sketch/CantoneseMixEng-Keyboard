@@ -115,6 +115,30 @@ public class SearchRetentionTest {
         assertTrue(result.size() <= 20);
     }
 
+    @Test public void exactNextCharacterRescuesAPrefixWithoutAnAttestedFollowingWord() throws Exception {
+        StringBuilder roots=new StringBuilder("...\n甲\tdd\n"),counts=new StringBuilder("甲\t1000\n");
+        for(int group=0;group<3;group++)for(int i=0;i<24;i++) {
+            String text=character(0x4e00+group*48+i);
+            roots.append(text).append('\t').append(new String[]{"aa","bb","cc"}[group]).append('\n');
+            counts.append(text).append('\t').append(i==0?1001:1000).append('\n');
+        }
+        for(int cp=0x6000;cp<0x6400;cp++)roots.append(character(cp)).append("\tzz\n");
+        DictionaryEngine d=new DictionaryEngine(new StringReader(roots.toString()),new StringReader(""),new StringReader(counts.toString()));
+        QuickDecoder q=new QuickDecoder(d,new StringReader(""),null,null,model());
+        String prefix=character(0x4e00)+character(0x4e00+50),suffix=prefix+character(0x4e00+98);
+        String code="dd".repeat(4)+"aabbcc",wanted="甲".repeat(4)+suffix;
+        int higher=0;
+        for(int left=0;left<24;left++)for(int right=0;right<24;right++)
+            if(q.languageScore("",character(0x4e00+left)+character(0x4e00+48+right))>q.languageScore("",prefix))higher++;
+        assertTrue(higher>=48);
+        assertFalse("Short compositions retain the original search",q.decode("aabbcc",(part,word)->0).contains(suffix));
+        List<String> results=q.decode(code,(part,word)->0);
+        assertTrue("The following character must support an otherwise lost prefix",results.contains(wanted));
+        assertFalse(q.knownWord(wanted));
+        assertTrue(results.size()<=20);assertEquals(results.size(),new HashSet<>(results).size());
+        for(String value:results)assertFalse(d.matchQuickCodes(code,value).isEmpty());
+    }
+
     @Test public void aLongerFollowingWordCanRescueAnAmbiguousPrefix() throws Exception {
         StringBuilder roots=new StringBuilder("...\n"), counts=new StringBuilder();
         for(int group=0;group<3;group++) for(int i=0;i<24;i++) {

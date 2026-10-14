@@ -152,3 +152,31 @@ reviewed examples are used. They never train these weights or enter the APK.
 The separately imported words.hk public-domain frequency exports keep their
 existing, separate attribution and scope. This experiment establishes no measured
 current Hong Kong typing frequency or publisher endorsement.
+
+## Displayed-candidate phrase relation model
+
+`relation_ranker.b64` and its train-only POS lexicon are modifications of the
+attributed HKCanCor/Tatoeba training and authored material above, plus
+UD_Cantonese-HK at `68c3151c1181a7b67ef5c917570635bcccf7e4bf`.
+UD attribution: Tak-sum Wong, Kim Gerdes, Herman Leung and John Lee,
+"Quantitative Comparative Syntax on the Cantonese-Mandarin Parallel Dependency
+Treebank", Depling2017, pp266–275,
+https://github.com/UniversalDependencies/UD_Cantonese-HK , CC BY-SA4.0,
+https://creativecommons.org/licenses/by-sa/4.0/ . The derived lexicon, fitted
+weights and encoded model are offered under CC BY-SA4.0; this does not change
+the surrounding application's source license. HKCanCor retains CC BY4.0 and
+Tatoeba retains CC BY2.0 France attribution. Original authors do not endorse
+these modifications.
+
+Training uses5,381 existing licensed/source-grouped examples. Native same-code
+top-five competitors provide1,524 pairs; evaluation text/POS is excluded.
+The bundled `licenses/relations/` contains attribution, original UD description
+and license, and the complete CC BY-SA4.0 license. Attribution and complete
+license are readable in settings. `RELATION_RANKER_REPORT.json` records model
+parameters, source hashes and aggregate evaluation; `tools/data/phrase_relations/`
+and `tools/data/search_alignment/` retain the training/evaluation notices.
+
+The additional100 validation and500 reserved words.hk dictionary examples use
+the same NCDOL1.0 license and copyright2015–2022 Hong Kong Lexicography Limited
+as the earlier examples. They are evaluation-only and never train weights or
+enter the APK. No private messages or phone learning records are included.

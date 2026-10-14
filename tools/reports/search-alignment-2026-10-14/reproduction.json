@@ -1,0 +1,9 @@
+{
+  "all_model_files_equal": true,
+  "files": [
+    "weights.json",
+    "pairs.tsv",
+    "relation_ranker.b64",
+    "training-report.json"
+  ]
+}

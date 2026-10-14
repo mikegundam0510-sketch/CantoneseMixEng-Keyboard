@@ -1,0 +1,23 @@
+{
+  "strength": 1,
+  "first_and_membership_protected": true,
+  "calibration3293_native_parity": true,
+  "per_set_first_top5_top20_no_loss": true,
+  "simulated_single32_first": 32,
+  "java_tests": 219,
+  "python_tests": 33,
+  "lint_errors": 0,
+  "lint_existing_warnings": 25,
+  "final_paired_maximum_ratio": 1.0525498686672876,
+  "word_model_sha256": "3722c496fa592e0f6e2c6809e4e8d17be65bf6cdba0a9f93ba1aefef126f5b87",
+  "model_sha256": "1e999e91b8972c06bc44778aa22a51340d5b564ebb698e49559c7d6180b70163",
+  "heldout_sha256": "945cce2bd62249619d627dccb0ef5723d24c2cde9d0ddaceaa9f84ad8df03fe0",
+  "protocol_sha256": "739090c2118c42f0137626286d7a733bc6571502680c1c1a53f07e629e447e7b",
+  "runtime_source_sha256": {
+    "QuickDecoder.java": "fb77e708fa2c410f713ea320ff677fec6a25184f398e373a618fcd0607c597f1",
+    "PhraseRelationRanker.java": "686ef0aea69004987af7cb9050a8f24b248522ed85029a7eba84796c3a0b377a"
+  },
+  "decision_before_heldout": true,
+  "independent_never_used_for_tuning": true,
+  "environment_restart_note": "Core native parity/learning tests completed before restart; persisted code/model/calibration evidence retained. Same code/model rebuilt and timing repeated on restored environment."
+}

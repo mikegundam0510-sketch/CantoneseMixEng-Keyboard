@@ -1,0 +1,43 @@
+{
+  "protocol_sha256": "739090c2118c42f0137626286d7a733bc6571502680c1c1a53f07e629e447e7b",
+  "scored_sha256": "aba451869dd1ae2ee0aea8d55208d19d59a78aa425076a5a375703dd36fa14db",
+  "training_cases": 5381,
+  "counts": {
+    "observed": 5381,
+    "first_protected_by_runtime": 4104,
+    "later_in_pool": 793,
+    "top5_protection_pairs": 1103,
+    "outside_maximum_bounded_gap": 131,
+    "indistinguishable_features": 54,
+    "cutoff_blocker_pairs": 421,
+    "outside_retained_display_pool": 68,
+    "missing_from_pool": 416
+  },
+  "pairs": 1524,
+  "supported_examples": 1519,
+  "source_families": 304,
+  "features": 2165,
+  "initial_actual_clipped_objective": 0.291134950454727,
+  "final_actual_clipped_objective": 0.20636173523748308,
+  "final_saturated_sides": 55,
+  "source_mix": {
+    "HK": 0.65,
+    "Tatoeba": 0.2,
+    "authored": 0.15
+  },
+  "parameters": {
+    "epochs": 80,
+    "rate": 0.3,
+    "l2": 0.015,
+    "minimum_source_family_support": 2,
+    "feature_cap": 6000,
+    "weight_cap": 1.5,
+    "training_strength": 1,
+    "score_limit": 2
+  },
+  "weights_sha256": "3722c496fa592e0f6e2c6809e4e8d17be65bf6cdba0a9f93ba1aefef126f5b87",
+  "pairs_sha256": "8757c74bcf4c05d7420baecc56d3130096d271f985463808762e21b1ba0971c7",
+  "bytes": 59230,
+  "first_choice": "Legacy final first pinned; gold first rows are not fake ranking losses",
+  "limits": "Clipped pairwise surrogate at actual cutoff, not a guarantee of top5 improvement. No evaluation rows/POS or private learning. Independent/native verification required."
+}

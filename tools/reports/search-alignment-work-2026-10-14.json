@@ -1,0 +1,298 @@
+{
+  "date": "2026-10-14",
+  "baseline_revision": "4c57f9501acef5a8a04d9b1e5521b7927c0f7cc5",
+  "version_name": "0.6.39",
+  "version_code": 46,
+  "sequence": [
+    "Search loss diagnosis and bounded character future retention",
+    "Actual displayed-top5 clipped pairwise training",
+    "Frozen500 independent evaluation and delivery"
+  ],
+  "search_diagnosis": {
+    "cases": 354,
+    "prefix_losses": 231,
+    "completed_path_losses": 33,
+    "outside_display20": 83,
+    "character_option_omissions": 5,
+    "confidence_losses": 2,
+    "frontier_interpretation": "Furthest observed target frontier, not proof of all alternative segmentations"
+  },
+  "search_only_known796": {
+    "before": {
+      "heldout:fresh-written500": {
+        "cases": 500,
+        "top1": 94,
+        "top5": 178,
+        "top20": 250
+      },
+      "heldout:fresh-ud-legco": {
+        "cases": 296,
+        "top1": 86,
+        "top5": 160,
+        "top20": 192
+      }
+    },
+    "after": {
+      "heldout:fresh-written500": {
+        "cases": 500,
+        "top1": 94,
+        "top5": 178,
+        "top20": 251
+      },
+      "heldout:fresh-ud-legco": {
+        "cases": 296,
+        "top1": 86,
+        "top5": 160,
+        "top20": 192
+      }
+    },
+    "failed": [],
+    "calibration_only": true
+  },
+  "search": "Long inputs>=14 code letters only; existing48 beam and lexical/learned reserves kept. Up to4 exact character futures,128 future-score budget, at most4 supported close histories. No gold hints or dictionary deletion.",
+  "training": {
+    "protocol_sha256": "739090c2118c42f0137626286d7a733bc6571502680c1c1a53f07e629e447e7b",
+    "scored_sha256": "aba451869dd1ae2ee0aea8d55208d19d59a78aa425076a5a375703dd36fa14db",
+    "training_cases": 5381,
+    "counts": {
+      "observed": 5381,
+      "first_protected_by_runtime": 4104,
+      "later_in_pool": 793,
+      "top5_protection_pairs": 1103,
+      "outside_maximum_bounded_gap": 131,
+      "indistinguishable_features": 54,
+      "cutoff_blocker_pairs": 421,
+      "outside_retained_display_pool": 68,
+      "missing_from_pool": 416
+    },
+    "pairs": 1524,
+    "supported_examples": 1519,
+    "source_families": 304,
+    "features": 2165,
+    "initial_actual_clipped_objective": 0.291134950454727,
+    "final_actual_clipped_objective": 0.20636173523748308,
+    "final_saturated_sides": 55,
+    "source_mix": {
+      "HK": 0.65,
+      "Tatoeba": 0.2,
+      "authored": 0.15
+    },
+    "parameters": {
+      "epochs": 80,
+      "rate": 0.3,
+      "l2": 0.015,
+      "minimum_source_family_support": 2,
+      "feature_cap": 6000,
+      "weight_cap": 1.5,
+      "training_strength": 1,
+      "score_limit": 2
+    },
+    "weights_sha256": "3722c496fa592e0f6e2c6809e4e8d17be65bf6cdba0a9f93ba1aefef126f5b87",
+    "pairs_sha256": "8757c74bcf4c05d7420baecc56d3130096d271f985463808762e21b1ba0971c7",
+    "bytes": 59230,
+    "first_choice": "Legacy final first pinned; gold first rows are not fake ranking losses",
+    "limits": "Clipped pairwise surrogate at actual cutoff, not a guarantee of top5 improvement. No evaluation rows/POS or private learning. Independent/native verification required."
+  },
+  "selection": {
+    "strength": 1,
+    "first_and_membership_protected": true,
+    "calibration3293_native_parity": true,
+    "per_set_first_top5_top20_no_loss": true,
+    "simulated_single32_first": 32,
+    "java_tests": 219,
+    "python_tests": 33,
+    "lint_errors": 0,
+    "lint_existing_warnings": 25,
+    "final_paired_maximum_ratio": 1.0525498686672876,
+    "word_model_sha256": "3722c496fa592e0f6e2c6809e4e8d17be65bf6cdba0a9f93ba1aefef126f5b87",
+    "model_sha256": "1e999e91b8972c06bc44778aa22a51340d5b564ebb698e49559c7d6180b70163",
+    "heldout_sha256": "945cce2bd62249619d627dccb0ef5723d24c2cde9d0ddaceaa9f84ad8df03fe0",
+    "protocol_sha256": "739090c2118c42f0137626286d7a733bc6571502680c1c1a53f07e629e447e7b",
+    "runtime_source_sha256": {
+      "QuickDecoder.java": "fb77e708fa2c410f713ea320ff677fec6a25184f398e373a618fcd0607c597f1",
+      "PhraseRelationRanker.java": "686ef0aea69004987af7cb9050a8f24b248522ed85029a7eba84796c3a0b377a"
+    },
+    "decision_before_heldout": true,
+    "independent_never_used_for_tuning": true,
+    "environment_restart_note": "Core native parity/learning tests completed before restart; persisted code/model/calibration evidence retained. Same code/model rebuilt and timing repeated on restored environment."
+  },
+  "calibration": {
+    "cases_in_native_comparison": 3293,
+    "observed_material_only": true,
+    "some_cross_set_examples_overlap": true,
+    "net_top5_hits": 38,
+    "native_candidate_list_differences": 0,
+    "per_set_first_top5_top20_no_loss": true,
+    "source": "search-alignment-2026-10-14/display-calibration.json"
+  },
+  "independent_evaluation": {
+    "baseline_revision": "4c57f9501acef5a8a04d9b1e5521b7927c0f7cc5",
+    "before": {
+      "cases": 500,
+      "top1": 89,
+      "top5": 185,
+      "top20": 258,
+      "mrr": 0.2645316779969257
+    },
+    "after": {
+      "cases": 500,
+      "top1": 89,
+      "top5": 193,
+      "top20": 258,
+      "mrr": 0.26906162220132807
+    },
+    "top5_entered": 11,
+    "top5_left": 3,
+    "top5_percentage_point_gain": 1.6,
+    "paired_exact_two_sided_p": 0.057373046875,
+    "rank_changes": 93,
+    "selection_sha256": "b59e7f01b5d632e4d5258ad826cf6f704ebb9b7868cf8758fe49680c30a9d703",
+    "heldout_sha256": "945cce2bd62249619d627dccb0ef5723d24c2cde9d0ddaceaa9f84ad8df03fe0",
+    "before_sha256": "711c8a5cad714667c89803c841e8848e9d029ba2321ef2a2f89705713e0e0493",
+    "after_sha256": "8fc19b60d3ab22a0060a788771678c7db4f81b2db0342c52f507ef18afd7cbd3",
+    "model_sha256": "1e999e91b8972c06bc44778aa22a51340d5b564ebb698e49559c7d6180b70163",
+    "no_post_reserve_model_or_policy_tuning": true,
+    "exact_codes_and_display_bounds": true,
+    "independent_gate_passed": true,
+    "limitations": "Small dictionary-example gain; paired p exceeds0.05. No general chat-frequency, Fold7 or1.0 claim. Reserve is now observed evaluation material; frozen protocol/selection retain their historical unopened status."
+  },
+  "verification": "search-alignment-2026-10-14/final-verification.json",
+  "java_tests": 219,
+  "python_unique_tests_passed": 33,
+  "python_remaining_skipped": 0,
+  "lint_errors": 0,
+  "lint_warnings": 25,
+  "model_feature_parity": {
+    "cases": 2245,
+    "feature_vectors_equal": true,
+    "maximum_error": 0,
+    "raw_and_signed_clipped_parity": true
+  },
+  "model_reproduction": {
+    "all_model_files_equal": true,
+    "files": [
+      "weights.json",
+      "pairs.tsv",
+      "relation_ranker.b64",
+      "training-report.json"
+    ]
+  },
+  "personal_learning": {
+    "simulated_single_cases": 32,
+    "first_after_three_confirmations": 32,
+    "retained_sequence_records": 489,
+    "schemas_changed": false,
+    "verified_before_restart": true
+  },
+  "performance": [
+    {
+      "code": "ofonaovrmrq",
+      "letters": 11,
+      "before_wall_ms": 77.575,
+      "after_wall_ms": 80.376,
+      "before_cpu_ms": 77.09,
+      "after_cpu_ms": 78.498,
+      "wall_ratio": 1.0361069932323559,
+      "cpu_ratio": 1.0182643663250746
+    },
+    {
+      "code": "hmerrrysmlrp",
+      "letters": 12,
+      "before_wall_ms": 91.955,
+      "after_wall_ms": 93.474,
+      "before_cpu_ms": 91.292,
+      "after_cpu_ms": 92.068,
+      "wall_ratio": 1.0165189494861617,
+      "cpu_ratio": 1.008500197169522
+    },
+    {
+      "code": "dpofvivcjutrmyyjvcqnjd",
+      "letters": 22,
+      "before_wall_ms": 138.728,
+      "after_wall_ms": 144.103,
+      "before_cpu_ms": 137.113,
+      "after_cpu_ms": 142.083,
+      "wall_ratio": 1.0387448820713916,
+      "cpu_ratio": 1.03624747471064
+    },
+    {
+      "code": "ofykrmmsydwljpvwjd",
+      "letters": 18,
+      "before_wall_ms": 119.163,
+      "after_wall_ms": 125.425,
+      "before_cpu_ms": 117.477,
+      "after_cpu_ms": 123.477,
+      "wall_ratio": 1.0525498686672876,
+      "cpu_ratio": 1.0510738272172426
+    },
+    {
+      "code": "vkmmnkmrvordrjjj",
+      "letters": 16,
+      "before_wall_ms": 136.654,
+      "after_wall_ms": 138.678,
+      "before_cpu_ms": 135.665,
+      "after_cpu_ms": 137.231,
+      "wall_ratio": 1.0148111288363313,
+      "cpu_ratio": 1.0115431393506062
+    },
+    {
+      "code": "hihihihihihihihihihihihihihihihihihihihihihihihi",
+      "letters": 48,
+      "before_wall_ms": 479.191,
+      "after_wall_ms": 495.272,
+      "before_cpu_ms": 472.199,
+      "after_cpu_ms": 488.003,
+      "wall_ratio": 1.0335586436306192,
+      "cpu_ratio": 1.0334689400019905
+    }
+  ],
+  "maximum_paired_wall_ratio": 1.0525498686672876,
+  "maximum_paired_cpu_ratio": 1.0510738272172426,
+  "delivery": {
+    "search_adopted": true,
+    "relation_model_adopted": true,
+    "asset_sha256": "1e999e91b8972c06bc44778aa22a51340d5b564ebb698e49559c7d6180b70163",
+    "apk_produced": false,
+    "major_version_gate_passed": false
+  },
+  "provenance": {
+    "selected_before_heldout": true,
+    "post_heldout_accuracy_tuning": false,
+    "heldout_now_observed": true,
+    "historical_unopened_flags_retained_in_frozen_protocol": true,
+    "source_notice": "tools/data/search_alignment/NOTICE.md",
+    "model_notice": "app/src/main/assets/licenses/relations/README.md",
+    "environment_restart": "Core code/model/data/calibration persisted. Earlier /tmp raw training/native logs were lost. Engine rebuilt with exact frozen source/model; timing/500 native comparison and final219 Java/33 Python/lint checks completed after restart."
+  },
+  "limitations": [
+    "Top5 improves by8 net hits/500, but3 regressions; first/top20 counts unchanged. Paired exact p0.05737, limited evidence.",
+    "Preserving first and visible20 constrains future gains; no claim all ungrammatical candidates disappear.",
+    "Public older spoken/dictionary usage, not contemporary private Hong Kong typing-frequency measurements.",
+    "Six fixed warmed desktop timing inputs, not Fold7 latency/memory or faster recognition."
+  ],
+  "evidence_file_sha256": {
+    "calibration-cases.tsv": "d27a64dd81076b43ab592499fb442eea5500377f0183c8375a28e786c8f51013",
+    "diagnosis.json": "33b2fd93390d2254c72e636294b0211860c625e4e880a3278b6269f570103b8a",
+    "diagnostic-parity.json": "f0b2dc4725acf56b058b7718cb6bac987a03cb213031323af71af92c60d0455e",
+    "display-calibration.json": "07b70b0062dac2dedce6f11afe59772a31c5bad49188f709e348f5e2b6aa46c4",
+    "final-gradle.log": "be4a559c892747625efaa904e9fddd03be26eb10d116e43e497e875a7528a581",
+    "final-latency.tsv": "bb68e0dc4bfd214ceff89300785cecd4b652ef17d88b345c7b266a11f3d8baf8",
+    "final-python.log": "01c25664fbb4b9dac02f8cde7829a556817e4340a0a7aebf54be2c7f9843170a",
+    "final-verification.json": "27a828b12c8467da0aa8001a78c36cf49805fb85352a41ff179aff5d66ce9396",
+    "heldout-baseline.tsv": "711c8a5cad714667c89803c841e8848e9d029ba2321ef2a2f89705713e0e0493",
+    "heldout-current.tsv": "8fc19b60d3ab22a0060a788771678c7db4f81b2db0342c52f507ef18afd7cbd3",
+    "identical-latency.tsv": "cfd9f53061979db03c1029e4bfc63a75685068d1365cac4f79e70ab74625b237",
+    "independent.json": "67ba5cb4e9abefe54f141763f2eb76b3c895e421e9b59d01b63daf61e761f485",
+    "model-parity.json": "f3b830b672d4aad245cd8f441470a734ab6e875a7f483c7d19ce5c827befbefb",
+    "recovered-verification.json": "10b712207dbf0b66f6702fe73d953e8c02afaab5ead9c489aa8b9646bfdc490a",
+    "rejected-coalescing.json": "0bea13bfea29ac37dc039c89f1df0b0b5164937d83a9b48b7e9f5fe862cd95aa",
+    "rejected-full-pool-calibration.json": "cc41c1a9b9fdac10ce9cd0ef963f7dbd2acd3fab28715b481898af345bdcfa4a",
+    "reproduction.json": "a8270f23a03f69f5fe4c6c3769b4c9b5129c31cee4093a73168b15a2711761b0",
+    "restored-python.log": "0104b6042b53856b6ac4750e1ad38534f9d920a302ede154680db0df637b1bd6",
+    "search-calibration903.json": "bb41b89f55bb76be262fc4c5202ee030c39c0c464043e6cfb9d70d578573e6d3",
+    "search-known796.json": "29f82a14e02f0282b8b7a7156ff7b541b99bb40ebab509038637fc55d78f74d9",
+    "search-latency.tsv": "b0d3ad162f0234563a3454c2706a7380ac236ca4254dd160d05cb2ad029b7913",
+    "search-regression1594.json": "b65298fad3cd96ee953027a8e29d67e6bacfafa82af57607bb514f47854c4db5"
+  },
+  "docs": "docs/SEARCH_ALIGNMENT.md"
+}

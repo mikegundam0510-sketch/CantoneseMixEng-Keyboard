@@ -1,0 +1,870 @@
+{
+  "baseline_revision": "4c57f9501acef5a8a04d9b1e5521b7927c0f7cc5",
+  "before": {
+    "cases": 500,
+    "top1": 89,
+    "top5": 185,
+    "top20": 258,
+    "mrr": 0.2645316779969257
+  },
+  "after": {
+    "cases": 500,
+    "top1": 89,
+    "top5": 193,
+    "top20": 258,
+    "mrr": 0.26906162220132807
+  },
+  "top5_entered": 11,
+  "top5_left": 3,
+  "top5_percentage_point_gain": 1.6,
+  "paired_exact_two_sided_p": 0.057373046875,
+  "rank_changes": 93,
+  "changes": [
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "andbvdnioqmyrrddkofmvqjjnedrt",
+      "target": "門柄好多人揸過㗎梗係要抹乾淨啦",
+      "before": 13,
+      "after": 10,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "rmdeyjofhuhiwrrr",
+      "target": "咁樣譯你覺得點啊",
+      "before": 19,
+      "after": 16,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "hirdorylanofhirmniicefofmgkemvbhokovoern",
+      "target": "我哋個部門係得咁多資源你班友要睇餸食飯喇",
+      "before": 5,
+      "after": 3,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "ofrumyrmhnjlojostqmog",
+      "target": "你嘅一言一行都俾人監控住",
+      "before": 3,
+      "after": 4,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "hioiiovmtbkdummardrs",
+      "target": "我每次經期大概三日㗎咋",
+      "before": 6,
+      "after": 4,
+      "top5_delta": 1
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "hdmyordivyecbhirrhi",
+      "target": "學下人哋威返鋪得唔得",
+      "before": 11,
+      "after": 5,
+      "top5_delta": 1
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "osrmquvqugjnkhmjckvmkyfrt",
+      "target": "佢咁靚女把聲又甜實大紅大紫啦",
+      "before": 3,
+      "after": 4,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "onarmsmapspamjotrkmb",
+      "target": "今日咁翳悶聽日一定落大雨",
+      "before": 10,
+      "after": 9,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "spayuofyteioaychqrukandkjoyuhigiqemfrh",
+      "target": "聽日就係立法會選舉嘅大日子大家記得去投票呀",
+      "before": 6,
+      "after": 5,
+      "top5_delta": 1
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "qtgurimatdhcoafuktri",
+      "target": "拉起啲百葉簾會光猛啲",
+      "before": 16,
+      "after": 15,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "osymamtbbrrmtnwskeheor",
+      "target": "佢上星期同咗前男友復合",
+      "before": 9,
+      "after": 17,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "hinimfhetihcnqylcgrr",
+      "target": "我強烈反對興建新鐵路",
+      "before": 9,
+      "after": 10,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "osmljoajvrhdgiinhlhlvojirmtuhdhnlj",
+      "target": "佢而家開始學去廁所所以轉咗着學行褲",
+      "before": 11,
+      "after": 10,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "hioojueneiohevdniwbodrh",
+      "target": "我飲完汽水之後好多胃氣呀",
+      "before": 4,
+      "after": 5,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "rmnioihkrrporerhsmjoohmnoqksjmrt",
+      "target": "咁多人參加呢個活動一定入到健力士啦",
+      "before": 3,
+      "after": 2,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "osrdokkiybhmypdkofvdbcrt",
+      "target": "佢哋做獨市生意梗係好賺啦",
+      "before": 2,
+      "after": 5,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "trrirmnisttrriehie",
+      "target": "落啲咁多鹽落啲湯度",
+      "before": 20,
+      "after": 10,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "ofycykhjjoycmghjrd",
+      "target": "你讀文科定讀理科㗎",
+      "before": 6,
+      "after": 4,
+      "top5_delta": 1
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "osonautuoqoibkvvqrawcu",
+      "target": "佢今晚着件低胸裝搶晒鏡",
+      "before": 6,
+      "after": 8,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "vbjjdphigbhbykmuww",
+      "target": "編輯想我幫篇文配圖",
+      "before": 16,
+      "after": 12,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "ofrrvdbhosfwhhfwgsosrfnbykyukbviorbdquqmqrd",
+      "target": "你唔好睇佢爛身爛勢佢喺彌敦道有幾個冧把揸手㗎",
+      "before": 15,
+      "after": 12,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "rpoddideyunrawfmrn",
+      "target": "呢條樹枝就夠晒粗喇",
+      "before": 5,
+      "after": 4,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "osruosrrsvmfrmoskhbveruhihu",
+      "target": "佢嘅作品展示咗佢大師級嘅風範",
+      "before": 11,
+      "after": 15,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "rrodvvdhirh",
+      "target": "嗰條女好得呀",
+      "before": 3,
+      "after": 2,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "onaorsfyiwiqvecvdvdbhiutcoforncnggrvdhk",
+      "target": "今日個馬戲團表演好好睇尤其係個小丑超好笑",
+      "before": 18,
+      "after": 8,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "tpwvrudidhohohrfd",
+      "target": "花園嘅樹木欣欣向榮",
+      "before": 9,
+      "after": 12,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "osipyoamtbmmbymig",
+      "target": "佢應該星期一再上庭",
+      "before": 6,
+      "after": 4,
+      "top5_delta": 1
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "ybarniylkbkbhlsrrr",
+      "target": "請問附近有冇郵局啊",
+      "before": 14,
+      "after": 13,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "osofmorkbobkgtkruvo",
+      "target": "佢係一個有內在美嘅女人",
+      "before": 3,
+      "after": 2,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "osohovivdojnrdkbrqrrabyugiarosrt",
+      "target": "佢份人幾好人事㗎有咩唔明就去問佢啦",
+      "before": 8,
+      "after": 7,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "pnjlrlhiokoffwhiofofnrwcrh",
+      "target": "乜都叫我做你當我係你阿四呀",
+      "before": 3,
+      "after": 2,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "atymrporarachirdmyiombyiybrt",
+      "target": "關於呢個問題我哋下次再討論啦",
+      "before": 9,
+      "after": 10,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "oqkruwiyumcyphshmhusugiikodv",
+      "target": "偉大嘅母親願意犧牲自己去救仔女",
+      "before": 4,
+      "after": 5,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "rpnvorbqyyptwlybhn",
+      "target": "呢張信用卡世界通行",
+      "before": 13,
+      "after": 7,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "mmhlybjchhenhbiihiyurrpakbomvru",
+      "target": "正所謂寶物沉歸底我就唔怕冇人要嘅",
+      "before": 2,
+      "after": 3,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "rpoekrofvdbjbururrhg",
+      "target": "呢隻狗係好罕見嘅品種",
+      "before": 12,
+      "after": 4,
+      "top5_delta": 1
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "ossuvmyjvcokrmmmjviorcgmcjdblyrmrvohbioifcgo",
+      "target": "佢已經連續做咗三十幾個鐘頭未瞓過可以稱之為鐵人",
+      "before": 11,
+      "after": 12,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "osmlymkbejobmnhlvoojoarmnrrmrm",
+      "target": "佢面試冇準備到所以俾人問到口啞啞",
+      "before": 17,
+      "after": 9,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "rigjyureramnhinekcrn",
+      "target": "啲聲就嚟嘈到我發癲喇",
+      "before": 19,
+      "after": 11,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "osndrmjmmyhrrioyubhffionyyukbokyrqhnrn",
+      "target": "佢除咗十二歲嗰次盲腸炎之外就冇做過手術喇",
+      "before": 7,
+      "after": 8,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "ofokyrrqyvrnhusuplkblkrt",
+      "target": "你做過咩衰嘢自己心中有數啦",
+      "before": 5,
+      "after": 4,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "ofuurruuipbhmuiu",
+      "target": "你出唔出廳睇電視",
+      "before": 7,
+      "after": 12,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "ofrumuyrrnmfvinirnrh",
+      "target": "你嘅電話號碼幾多號呀",
+      "before": 3,
+      "after": 2,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "hirdsuvmybrmviorhdhmgbqqnceya",
+      "target": "我哋已經請咗幾個學生幫手打錄音",
+      "before": 13,
+      "after": 11,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "bhkghirdnioqrupbymhigbniofmiort",
+      "target": "睇在我哋多年嘅情誼我幫多你一次啦",
+      "before": 12,
+      "after": 11,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "hijcofdpoorrmnofoaokggrirmbbkjrurn",
+      "target": "我真係想像唔到你會做埋啲咁骨痺嘅嘢",
+      "before": 3,
+      "after": 2,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "aaobamtbwcoayknvduopre",
+      "target": "間舖星期四會送張梳化嚟",
+      "before": 5,
+      "after": 4,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "erhsseebhcmriuhdfwamkodmprrmpfs",
+      "target": "活動取消與否視乎當日天氣惡唔惡劣",
+      "before": 4,
+      "after": 7,
+      "top5_delta": -1
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "rporqhnqsuvdsvmmoqoboiorithjjlmvmeyh",
+      "target": "呢個手術手尾好長五年內每個禮拜都要覆診",
+      "before": 4,
+      "after": 3,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "suvmmkwfrnoljdmnru",
+      "target": "已經天黑喇仲未到嘅",
+      "before": 4,
+      "after": 5,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "majlofhirrvdqbmnrmktkl",
+      "target": "一日都係我唔好搞到咁尷尬",
+      "before": 3,
+      "after": 2,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "nrcurrrfsgomrrokybmjooftrrmgiwcfgrt",
+      "target": "阿爸唔喺屋企唔使講一定係落咗去買煙啦",
+      "before": 8,
+      "after": 5,
+      "top5_delta": 1
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "osgimlbraufqmdermvw",
+      "target": "佢塊面同巴掌一樣咁細",
+      "before": 8,
+      "after": 4,
+      "top5_delta": 1
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "hirdhiabococrl",
+      "target": "我哋得閒傾傾吖",
+      "before": 11,
+      "after": 12,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "rpnvogjoiwvdqurrapnvojclclhu",
+      "target": "呢張全家福好靚喎曬張俾爺爺先",
+      "before": 14,
+      "after": 10,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "hhaofmaoqhbjpiohedpribhymwrdechmurp",
+      "target": "第日你百年歸老之後想啲財產點樣分配呢",
+      "before": 9,
+      "after": 6,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "rpoqjnlybrncmrhjilrrvdjmhqyvhs",
+      "target": "呢件事非同小可千祈唔好輕舉妄動",
+      "before": 2,
+      "after": 3,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "hipvospvmnohbb",
+      "target": "我恨佢恨到入骨",
+      "before": 15,
+      "after": 13,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "osisarfsgplielelembmbyjnrevjlqn",
+      "target": "佢成日喺屋邨度蝦蝦霸霸連阿婆都打",
+      "before": 9,
+      "after": 5,
+      "top5_delta": 1
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "rihatfkihmovtrkbriem",
+      "target": "啲香蕉太生食落有啲澀",
+      "before": 11,
+      "after": 5,
+      "top5_delta": 1
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "nrmcrulmhirndimdr",
+      "target": "阿琪嘅畫風別樹一格",
+      "before": 10,
+      "after": 11,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "wwlaorriakbaj",
+      "target": "圖書館噚日冇開",
+      "before": 19,
+      "after": 17,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "ekanrusrycymmlkbmhdtjtp",
+      "target": "澳門嘅區旗上面有一朵蓮花",
+      "before": 15,
+      "after": 13,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "rrmoorhbvsmbumnmlyubgrorrvl",
+      "target": "嗰兩個師奶一見到面就雞啄唔斷",
+      "before": 15,
+      "after": 11,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "osvdydoramig",
+      "target": "佢好迷信星座",
+      "before": 6,
+      "after": 7,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "osgormiohemjmkbyayj",
+      "target": "佢走咗之後一直冇音訊",
+      "before": 4,
+      "after": 6,
+      "top5_delta": -1
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "osoforvdvdruvodofmvvdvdmhpaos",
+      "target": "佢係個好好嘅女仔你要好好珍惜佢",
+      "before": 2,
+      "after": 4,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "hirdmoorofbrtbwjtdrd",
+      "target": "我哋兩個係同期畢業㗎",
+      "before": 16,
+      "after": 11,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "himvgicvhnjilvonabrrrmnofovoe",
+      "target": "我要去銀行轉帳今日同唔到你食飯",
+      "before": 2,
+      "after": 3,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "hirdkhdhdhfwoniofmaavformgkhd",
+      "target": "我哋大學學系眾多係一間綜合型大學",
+      "before": 8,
+      "after": 9,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "riauwfofgirmysre",
+      "target": "噚晚黑你去咗邊嚟",
+      "before": 5,
+      "after": 3,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "hirdjajomyoramtbmmymlmjwrajoa",
+      "target": "我哋暫定下個星期五上晝十點開會",
+      "before": 12,
+      "after": 17,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "mkiiicbsrpaadidbokmvodmtjn",
+      "target": "政府資助呢間機構做環保研究",
+      "before": 11,
+      "after": 3,
+      "top5_delta": 1
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "osrdrfciwvohmlmu",
+      "target": "佢哋喺公園入面玩",
+      "before": 3,
+      "after": 2,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "osfqprycyrjlkbhwoiyugorm",
+      "target": "佢半句遺言都冇留低就走咗",
+      "before": 13,
+      "after": 18,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "spahibroschqruaiokoabrosqglj",
+      "target": "聽日我同佢分手嘅時候會同佢攤牌",
+      "before": 10,
+      "after": 9,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "rpkiyiruwsygngqgrmahybheyuvkissvoqmfhsqhtd",
+      "target": "呢套戲嘅男主角攞咗影帝後就變成長年票房毒藥",
+      "before": 5,
+      "after": 2,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "rpohmmmjomvkbolvrorhumgmrvollybrd",
+      "target": "呢份工一定要有介紹信先至可以申請㗎",
+      "before": 18,
+      "after": 9,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "hifshspcrmrv",
+      "target": "我勞動慣咗嘍",
+      "before": 2,
+      "after": 3,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "hiogrmviorcgvdjsrnkbkboreqvksrh",
+      "target": "我坐咗幾個鐘好攰喇有冇人嚟接力呀",
+      "before": 4,
+      "after": 3,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "gjkkomprropqvofmjoybhirr",
+      "target": "聲大夾惡唔代表你一定講得啱",
+      "before": 8,
+      "after": 9,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "vdpofrrcgypoyurrvdebo",
+      "target": "好心你唔鍾意人就唔好溝人",
+      "before": 17,
+      "after": 18,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "jphboarfmgohmlhbycuumorbrhdihkrppjc",
+      "target": "老師會喺班入面篩選出一個同學參加比賽",
+      "before": 4,
+      "after": 10,
+      "top5_delta": -1
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "ofrrorhimljokbvirmajp",
+      "target": "你唔知我而家有幾咁開心",
+      "before": 4,
+      "after": 3,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "osrcmfyrokcafhfhrnraokrrokrmwsrh",
+      "target": "佢只不過做錯少少嘢啫使唔使咁嬲呀",
+      "before": 4,
+      "after": 5,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "hionaqdrpoeqawlewvdrrvdrh",
+      "target": "我今日搽呢隻指甲油好唔好呀",
+      "before": 15,
+      "after": 14,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "osvioqjnqwvfvntichdlhivdebdo",
+      "target": "佢將件事抽絲剝繭分析得好清楚",
+      "before": 10,
+      "after": 11,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "rgbfofoforvdomfyrhisuvmkbyplorn",
+      "target": "雖然你係個好人不過我已經有意中人喇",
+      "before": 9,
+      "after": 10,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "rmninfsoodrfbrmorgdysofvdrrsifb",
+      "target": "咁多魚聚集喺同一個地方係好唔尋常",
+      "before": 18,
+      "after": 17,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "vmymuurmisvcmrvoykoipmckmrrn",
+      "target": "終於出咗成績可以放低心頭大石喇",
+      "before": 4,
+      "after": 2,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "onioykeuwioihikajbvwl",
+      "target": "今次交流團令我大開眼界",
+      "before": 3,
+      "after": 2,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "hiqoyigiovadmrn",
+      "target": "我提議去食日本嘢",
+      "before": 6,
+      "after": 7,
+      "top5_delta": 0
+    },
+    {
+      "source": "alignment:heldout",
+      "context": "",
+      "code": "osrlawhirdrehusunkrruumujnyumupnrnquyirr",
+      "target": "佢叫晒我哋嚟自己又唔出現究竟玩乜嘢把戲啊",
+      "before": 15,
+      "after": 10,
+      "top5_delta": 0
+    }
+  ],
+  "selection_sha256": "b59e7f01b5d632e4d5258ad826cf6f704ebb9b7868cf8758fe49680c30a9d703",
+  "heldout_sha256": "945cce2bd62249619d627dccb0ef5723d24c2cde9d0ddaceaa9f84ad8df03fe0",
+  "before_sha256": "711c8a5cad714667c89803c841e8848e9d029ba2321ef2a2f89705713e0e0493",
+  "after_sha256": "8fc19b60d3ab22a0060a788771678c7db4f81b2db0342c52f507ef18afd7cbd3",
+  "model_sha256": "1e999e91b8972c06bc44778aa22a51340d5b564ebb698e49559c7d6180b70163",
+  "no_post_reserve_model_or_policy_tuning": true,
+  "exact_codes_and_display_bounds": true,
+  "independent_gate_passed": true,
+  "limitations": "Small dictionary-example gain; paired p exceeds0.05. No general chat-frequency, Fold7 or1.0 claim. Reserve is now observed evaluation material; frozen protocol/selection retain their historical unopened status."
+}

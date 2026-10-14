@@ -37,12 +37,13 @@ public class RelationEvaluation {
 }
 '''
 
-def build(work):
+def build(work,revision='21ede20',original=False):
     work.mkdir(parents=True,exist_ok=True)
-    archive=subprocess.check_output(['git','archive','21ede20','app/src/main/java','app/src/main/assets'],cwd=ROOT)
+    archive=subprocess.check_output(['git','archive',revision,'app/src/main/java','app/src/main/assets'],cwd=ROOT)
     with tarfile.open(fileobj=io.BytesIO(archive)) as data:data.extractall(work,filter='data')
-    for name in ('QuickDecoder','PhraseRelationRanker'):
-        relative=f'app/src/main/java/hk/cantonesemixeng/keyboard/{name}.java';shutil.copyfile(ROOT/relative,work/relative)
+    if not original:
+        for name in ('QuickDecoder','PhraseRelationRanker'):
+            relative=f'app/src/main/java/hk/cantonesemixeng/keyboard/{name}.java';shutil.copyfile(ROOT/relative,work/relative)
     java=work/'RelationEvaluation.java';java.write_text(DRIVER)
     subprocess.run(['javac','-encoding','UTF-8','-sourcepath',str(work/'app/src/main/java'),'-d',str(work/'classes'),str(java)],check=True)
 
@@ -54,7 +55,8 @@ def run(work,cases,output):
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('mode',choices=('build','run'));p.add_argument('work',type=Path)
-    p.add_argument('--cases',type=Path);p.add_argument('--output',type=Path);a=p.parse_args()
-    if a.mode=='build':build(a.work)
+    p.add_argument('--cases',type=Path);p.add_argument('--output',type=Path)
+    p.add_argument('--revision',default='21ede20');p.add_argument('--original',action='store_true');a=p.parse_args()
+    if a.mode=='build':build(a.work,a.revision,a.original)
     elif a.cases and a.output:run(a.work,a.cases,a.output)
     else:p.error('--cases and --output required')
