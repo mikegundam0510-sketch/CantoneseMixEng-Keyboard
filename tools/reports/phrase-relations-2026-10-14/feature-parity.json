@@ -1,0 +1,7 @@
+{
+  "feature_vectors": 5201,
+  "serialized_scores": 5201,
+  "guarded_lifts": 5201,
+  "max_error": 0,
+  "parity": true
+}

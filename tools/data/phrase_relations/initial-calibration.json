@@ -1,0 +1,3608 @@
+{
+  "baseline": {
+    "written200": {
+      "cases": 200,
+      "top1": 46,
+      "top5": 78,
+      "top20": 106,
+      "mrr": 0.30639596952754844
+    },
+    "authored60": {
+      "cases": 60,
+      "top1": 27,
+      "top5": 48,
+      "top20": 60,
+      "mrr": 0.5801404151404151
+    },
+    "natural200": {
+      "cases": 200,
+      "top1": 80,
+      "top5": 117,
+      "top20": 140,
+      "mrr": 0.4820719463285253
+    },
+    "public200": {
+      "cases": 200,
+      "top1": 77,
+      "top5": 131,
+      "top20": 154,
+      "mrr": 0.5107252097317887
+    },
+    "fresh-written100": {
+      "cases": 100,
+      "top1": 20,
+      "top5": 39,
+      "top20": 52,
+      "mrr": 0.2874729061787885
+    },
+    "fresh-ud": {
+      "cases": 43,
+      "top1": 20,
+      "top5": 29,
+      "top20": 35,
+      "mrr": 0.5507071943424453
+    }
+  },
+  "trials": {
+    "0.25": {
+      "written200": {
+        "cases": 200,
+        "top1": 45,
+        "top5": 80,
+        "top20": 107,
+        "mrr": 0.30416636141636144
+      },
+      "authored60": {
+        "cases": 60,
+        "top1": 27,
+        "top5": 48,
+        "top20": 60,
+        "mrr": 0.5801404151404151
+      },
+      "natural200": {
+        "cases": 200,
+        "top1": 81,
+        "top5": 117,
+        "top20": 140,
+        "mrr": 0.4849217444062645
+      },
+      "public200": {
+        "cases": 200,
+        "top1": 78,
+        "top5": 130,
+        "top20": 154,
+        "mrr": 0.5114721528471529
+      },
+      "fresh-written100": {
+        "cases": 100,
+        "top1": 20,
+        "top5": 38,
+        "top20": 52,
+        "mrr": 0.2879804819363643
+      },
+      "fresh-ud": {
+        "cases": 43,
+        "top1": 20,
+        "top5": 29,
+        "top20": 35,
+        "mrr": 0.5507071943424453
+      }
+    },
+    "0.5": {
+      "written200": {
+        "cases": 200,
+        "top1": 44,
+        "top5": 83,
+        "top20": 105,
+        "mrr": 0.3025967920967921
+      },
+      "authored60": {
+        "cases": 60,
+        "top1": 28,
+        "top5": 48,
+        "top20": 60,
+        "mrr": 0.6134737484737485
+      },
+      "natural200": {
+        "cases": 200,
+        "top1": 82,
+        "top5": 120,
+        "top20": 140,
+        "mrr": 0.4890358317078518
+      },
+      "public200": {
+        "cases": 200,
+        "top1": 78,
+        "top5": 130,
+        "top20": 155,
+        "mrr": 0.5107405575375776
+      },
+      "fresh-written100": {
+        "cases": 100,
+        "top1": 21,
+        "top5": 39,
+        "top20": 52,
+        "mrr": 0.2955138005269584
+      },
+      "fresh-ud": {
+        "cases": 43,
+        "top1": 19,
+        "top5": 29,
+        "top20": 35,
+        "mrr": 0.539140486876105
+      }
+    },
+    "1": {
+      "written200": {
+        "cases": 200,
+        "top1": 44,
+        "top5": 84,
+        "top20": 105,
+        "mrr": 0.304648865023865
+      },
+      "authored60": {
+        "cases": 60,
+        "top1": 28,
+        "top5": 48,
+        "top20": 60,
+        "mrr": 0.6070848595848596
+      },
+      "natural200": {
+        "cases": 200,
+        "top1": 82,
+        "top5": 122,
+        "top20": 140,
+        "mrr": 0.49318650048352064
+      },
+      "public200": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 130,
+        "top20": 156,
+        "mrr": 0.5043999791058614
+      },
+      "fresh-written100": {
+        "cases": 100,
+        "top1": 21,
+        "top5": 38,
+        "top20": 53,
+        "mrr": 0.29258272283272285
+      },
+      "fresh-ud": {
+        "cases": 43,
+        "top1": 19,
+        "top5": 29,
+        "top20": 34,
+        "mrr": 0.5419364645082839
+      }
+    },
+    "1.5": {
+      "written200": {
+        "cases": 200,
+        "top1": 42,
+        "top5": 82,
+        "top20": 103,
+        "mrr": 0.2978009372163784
+      },
+      "authored60": {
+        "cases": 60,
+        "top1": 28,
+        "top5": 48,
+        "top20": 60,
+        "mrr": 0.6033821733821735
+      },
+      "natural200": {
+        "cases": 200,
+        "top1": 84,
+        "top5": 120,
+        "top20": 141,
+        "mrr": 0.49995966737510855
+      },
+      "public200": {
+        "cases": 200,
+        "top1": 78,
+        "top5": 131,
+        "top20": 156,
+        "mrr": 0.5094602891948093
+      },
+      "fresh-written100": {
+        "cases": 100,
+        "top1": 22,
+        "top5": 38,
+        "top20": 53,
+        "mrr": 0.2961252723884303
+      },
+      "fresh-ud": {
+        "cases": 43,
+        "top1": 20,
+        "top5": 29,
+        "top20": 34,
+        "mrr": 0.5535643714850281
+      }
+    }
+  },
+  "eligible_strengths": [],
+  "selected_for_native_and_regression": null,
+  "case_changes": {
+    "0.25": [
+      {
+        "source": "validation:written200",
+        "code": "rporqqomuyrobwmdudird",
+        "gold": "呢個手提電話內置相機㗎",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:written200",
+        "code": "rmkjeenejlofjulkrs",
+        "gold": "咁大支汽水都係七蚊咋",
+        "before": 11,
+        "after": 10
+      },
+      {
+        "source": "validation:written200",
+        "code": "nrdiaifbjlqyogrfqewmruvfvf",
+        "gold": "阿松時常都掛住喺泰國嘅媽媽",
+        "before": 86,
+        "after": 79
+      },
+      {
+        "source": "validation:written200",
+        "code": "ossuvmefyprmfwoqwlffuruyupp",
+        "gold": "佢已經淡忘咗當年畀火燒嘅記憶",
+        "before": 49,
+        "after": 51
+      },
+      {
+        "source": "validation:written200",
+        "code": "hirdruvmvadmoghntrhciwrumgopgigbbso",
+        "gold": "我哋嘅組織本住行善積福嘅理念去幫助人",
+        "before": 6,
+        "after": 7
+      },
+      {
+        "source": "validation:written200",
+        "code": "kbawytqoaacisrjlrrypcampbgqhoett",
+        "gold": "有晒證據間公司都唔認錯死雞撐飯蓋",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:written200",
+        "code": "oskikikckcrkjlrrorofrdjcofoeru",
+        "gold": "佢瘋瘋癲癲噉都唔知係咪真係傻嘅",
+        "before": 43,
+        "after": 39
+      },
+      {
+        "source": "validation:written200",
+        "code": "oskbvkodtxtgrupgoj",
+        "gold": "佢有收集舊鞋嘅怪僻",
+        "before": 28,
+        "after": 29
+      },
+      {
+        "source": "validation:written200",
+        "code": "ofrdpkrimgsfregbqd",
+        "gold": "你哋快啲班馬嚟幫拖",
+        "before": 24,
+        "after": 20
+      },
+      {
+        "source": "validation:written200",
+        "code": "mljoosoloftpbdajtpioheyuoavdqu",
+        "gold": "而家佢仲係花冧開花之後就會好靚",
+        "before": 19,
+        "after": 20
+      },
+      {
+        "source": "validation:written200",
+        "code": "osrfrpaacisrokqammaitltlk",
+        "gold": "佢喺呢間公司做替工時薪廿蚊",
+        "before": 64,
+        "after": 67
+      },
+      {
+        "source": "validation:written200",
+        "code": "ygyjrjotkbkbjvqyjijjqvykrr",
+        "gold": "主辦單位有冇安排專車接送啊",
+        "before": 40,
+        "after": 38
+      },
+      {
+        "source": "validation:written200",
+        "code": "osruheipoihiipmnypny",
+        "gold": "佢嘅反應令我感到意外",
+        "before": 6,
+        "after": 5
+      },
+      {
+        "source": "validation:written200",
+        "code": "rpaajmniofokhngshmyp",
+        "gold": "呢間士多係做街坊生意",
+        "before": 40,
+        "after": 41
+      },
+      {
+        "source": "validation:written200",
+        "code": "rfogmeopiomygdmediruaiopvmymdosr",
+        "gold": "喺全球化之下地球村嘅時代終於來臨",
+        "before": 6,
+        "after": 5
+      },
+      {
+        "source": "validation:written200",
+        "code": "yuhtgimnmkegejnghitiofrubevrvmmfvk",
+        "gold": "就算去到天涯海角我對你嘅愛始終不變",
+        "before": 15,
+        "after": 14
+      },
+      {
+        "source": "validation:natural200",
+        "code": "rkrphlkbrnosjlqmhnawosrr",
+        "gold": "噉呢所有嘢佢都控制晒佢喎",
+        "before": 31,
+        "after": 30
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hirdrpojrmmmjlkordce",
+        "gold": "我哋呢俾咗五十蚊人哋錄",
+        "before": 57,
+        "after": 58
+      },
+      {
+        "source": "validation:natural200",
+        "code": "imjarpmvajhihmojosrr",
+        "gold": "或者呢要開風扇俾佢啊",
+        "before": 15,
+        "after": 17
+      },
+      {
+        "source": "validation:natural200",
+        "code": "kbrimvyfogorcumcqammyhu",
+        "gold": "有啲要遮住個鏡頭拍一下先",
+        "before": 11,
+        "after": 9
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hmolksvdnirr",
+        "gold": "生命力好強啊",
+        "before": 7,
+        "after": 6
+      },
+      {
+        "source": "validation:natural200",
+        "code": "ribrhdoahkosrn",
+        "gold": "啲同學會笑佢喇",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hikbygosrkyprg",
+        "gold": "我希望佢噉諗囖",
+        "before": 7,
+        "after": 6
+      },
+      {
+        "source": "validation:natural200",
+        "code": "rroralofebybofwrde",
+        "gold": "嗰個即係溝通係點樣",
+        "before": 55,
+        "after": 52
+      },
+      {
+        "source": "validation:natural200",
+        "code": "rrorwidinkmrvorsnyok",
+        "gold": "嗰個母機又可以另外做",
+        "before": 54,
+        "after": 52
+      },
+      {
+        "source": "validation:natural200",
+        "code": "etebmyhuhirr",
+        "gold": "澄清下先得啊",
+        "before": 14,
+        "after": 12
+      },
+      {
+        "source": "validation:natural200",
+        "code": "edofrfieokonosrr",
+        "gold": "淨係喺度做創作啊",
+        "before": 8,
+        "after": 6
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hirrhikbkbciodrr",
+        "gold": "得唔得有冇公仔啊",
+        "before": 13,
+        "after": 12
+      },
+      {
+        "source": "validation:natural200",
+        "code": "vrwdwklayrchrrviorbrhd",
+        "gold": "如果默書高分嗰幾個同學",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:public200",
+        "code": "osoaygogofoeqqa",
+        "gold": "佢會望住你隻手指",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:public200",
+        "code": "hiyqriyrofor",
+        "gold": "我遲啲話你知",
+        "before": 5,
+        "after": 6
+      },
+      {
+        "source": "validation:public200",
+        "code": "ojhibhryofylceahdi",
+        "gold": "俾我睇吓你部錄影機",
+        "before": 2,
+        "after": 3
+      },
+      {
+        "source": "validation:public200",
+        "code": "hivworrraikbymyavdfg",
+        "gold": "我細個嗰時有上音樂堂",
+        "before": 19,
+        "after": 18
+      },
+      {
+        "source": "validation:public200",
+        "code": "wsrrnjyulwmlkmnj",
+        "gold": "嬲嗰陣就由一數到十",
+        "before": 89,
+        "after": 88
+      },
+      {
+        "source": "validation:public200",
+        "code": "hivichcgiotnbumnosgormohorinhlie",
+        "gold": "我幾分鐘之前見到佢走咗入個廁所度",
+        "before": 30,
+        "after": 24
+      },
+      {
+        "source": "validation:public200",
+        "code": "hirddporspaoarroaabmk",
+        "gold": "我哋想知聽日會唔會晴天",
+        "before": 10,
+        "after": 11
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofrfmnrrtrrrppnrkbbqrt",
+        "gold": "你喺到喊苦喊忽夠冇用啦",
+        "before": 9,
+        "after": 10
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofoarroahuhihiohokiyrhhhcrh",
+        "gold": "你會唔會覺得我份人太過物質呀",
+        "before": 3,
+        "after": 4
+      },
+      {
+        "source": "validation:public200",
+        "code": "osrdfwbfkbritcybwr",
+        "gold": "佢哋當然有啲共通點",
+        "before": 41,
+        "after": 42
+      },
+      {
+        "source": "validation:public200",
+        "code": "hirdrfgdmyqurmorjm",
+        "gold": "我哋喺地下掘咗個窿",
+        "before": 37,
+        "after": 38
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofwrnqofjlmvqbmnrirnrmleygra",
+        "gold": "你點解係都要搞到啲嘢咁複雜啫",
+        "before": 32,
+        "after": 31
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofsparerrrejlyrgjojhisprl",
+        "gold": "你聽日嚟唔嚟都話聲俾我聽吖",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "hioarmhqksjjm",
+        "gold": "我借咗筆大耳窿",
+        "before": 8,
+        "after": 6
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "rpylreigdireksgrmsjphvjlremnohgi",
+        "gold": "呢部吸塵機吸力超勁老鼠都吸到入去",
+        "before": 39,
+        "after": 32
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "onaulhfvdniookhlriewdvvdfe",
+        "gold": "今晚中秋好多人做節啲酒樓好爆",
+        "before": 5,
+        "after": 6
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "osrrnicgypbrncbbkemu",
+        "gold": "佢唔多鍾意同小朋友玩",
+        "before": 3,
+        "after": 2
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "onaofohhmvoreaeiwruma",
+        "gold": "今日係入冬以嚟最凍嘅一日",
+        "before": 24,
+        "after": 26
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "osfwoghisgomomltnhrhiieva",
+        "gold": "佢當住我屋企人面前向我求婚",
+        "before": 5,
+        "after": 4
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "rfodokyiacymoqjmoofvdhgmvruqiohja",
+        "gold": "喺氣候議題上年輕人係好重要嘅持份者",
+        "before": 11,
+        "after": 12
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "himvwrokhumrvooiofbeod",
+        "gold": "我要點做先可以令你服氣",
+        "before": 2,
+        "after": 3
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "osofjphncivmsoutjwedhiheljtkhg",
+        "gold": "佢係老行尊經驗豐富深得後輩敬重",
+        "before": 26,
+        "after": 27
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "rporodorohmlpuqrawhlkboelk",
+        "gold": "呢個集合入面包括晒所有雙數",
+        "before": 60,
+        "after": 64
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "ostarmodvdqrbvruydoflr",
+        "gold": "佢著咗條好搶眼嘅迷你裙",
+        "before": 27,
+        "after": 28
+      }
+    ],
+    "0.5": [
+      {
+        "source": "validation:written200",
+        "code": "osjsrmmmoqjjljyjiojljsmnrn",
+        "gold": "佢考咗三年車牌卒之都考到喇",
+        "before": 8,
+        "after": 4
+      },
+      {
+        "source": "validation:written200",
+        "code": "rporqqomuyrobwmdudird",
+        "gold": "呢個手提電話內置相機㗎",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:written200",
+        "code": "osckwiqrposoaojosrimabbkrkekbgv",
+        "gold": "佢父母擔心佢會俾佢啲豬朋狗友帶壞",
+        "before": 6,
+        "after": 5
+      },
+      {
+        "source": "validation:written200",
+        "code": "rmkjeenejlofjulkrs",
+        "gold": "咁大支汽水都係七蚊咋",
+        "before": 11,
+        "after": 10
+      },
+      {
+        "source": "validation:written200",
+        "code": "nrdiaifbjlqyogrfqewmruvfvf",
+        "gold": "阿松時常都掛住喺泰國嘅媽媽",
+        "before": 86,
+        "after": 71
+      },
+      {
+        "source": "validation:written200",
+        "code": "ossuvmefyprmfwoqwlffuruyupp",
+        "gold": "佢已經淡忘咗當年畀火燒嘅記憶",
+        "before": 49,
+        "after": 53
+      },
+      {
+        "source": "validation:written200",
+        "code": "rpaacisrofjkjvrckbvdniogifsmmynqeyy",
+        "gold": "呢間公司無故裁員有好多人去勞工處投訴",
+        "before": 9,
+        "after": 10
+      },
+      {
+        "source": "validation:written200",
+        "code": "giyuewdvhijloarleifumd",
+        "gold": "去親酒樓我都會叫叉燒酥",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:written200",
+        "code": "hirdruvmvadmoghntrhciwrumgopgigbbso",
+        "gold": "我哋嘅組織本住行善積福嘅理念去幫助人",
+        "before": 6,
+        "after": 7
+      },
+      {
+        "source": "validation:written200",
+        "code": "ypaiypynosmlmvofruatp",
+        "gold": "此時此刻佢需要你嘅關心",
+        "before": 20,
+        "after": 21
+      },
+      {
+        "source": "validation:written200",
+        "code": "rdbuqugtgertofodgtgeli",
+        "gold": "咪亂抌垃圾啦你條垃圾蟲",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:written200",
+        "code": "kbawytqoaacisrjlrrypcampbgqhoett",
+        "gold": "有晒證據間公司都唔認錯死雞撐飯蓋",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:written200",
+        "code": "wlrifqgjrespmy",
+        "gold": "畀啲掌聲嚟聽下",
+        "before": 5,
+        "after": 4
+      },
+      {
+        "source": "validation:written200",
+        "code": "oskikikckcrkjlrrorofrdjcofoeru",
+        "gold": "佢瘋瘋癲癲噉都唔知係咪真係傻嘅",
+        "before": 43,
+        "after": 35
+      },
+      {
+        "source": "validation:written200",
+        "code": "oskbvkodtxtgrupgoj",
+        "gold": "佢有收集舊鞋嘅怪僻",
+        "before": 28,
+        "after": 31
+      },
+      {
+        "source": "validation:written200",
+        "code": "mljorporoqopdpqtorebjrjltg",
+        "gold": "而家呢個年代想揾個清官都難",
+        "before": 8,
+        "after": 11
+      },
+      {
+        "source": "validation:written200",
+        "code": "ofrdpkrimgsfregbqd",
+        "gold": "你哋快啲班馬嚟幫拖",
+        "before": 24,
+        "after": 18
+      },
+      {
+        "source": "validation:written200",
+        "code": "mljoosoloftpbdajtpioheyuoavdqu",
+        "gold": "而家佢仲係花冧開花之後就會好靚",
+        "before": 19,
+        "after": 22
+      },
+      {
+        "source": "validation:written200",
+        "code": "osrfrpaacisrokqammaitltlk",
+        "gold": "佢喺呢間公司做替工時薪廿蚊",
+        "before": 64,
+        "after": 69
+      },
+      {
+        "source": "validation:written200",
+        "code": "ofrfrrysgbncbbkeqdgfhurt",
+        "gold": "你喺嗰邊幫小朋友探熱先啦",
+        "before": 6,
+        "after": 5
+      },
+      {
+        "source": "validation:written200",
+        "code": "rpiekbkkncncruirob",
+        "gold": "呢度有大大小小嘅店舖",
+        "before": 61,
+        "after": 62
+      },
+      {
+        "source": "validation:written200",
+        "code": "voopvvopvdmird",
+        "gold": "女人化妝化好耐㗎",
+        "before": 68,
+        "after": 69
+      },
+      {
+        "source": "validation:written200",
+        "code": "ygyjrjotkbkbjvqyjijjqvykrr",
+        "gold": "主辦單位有冇安排專車接送啊",
+        "before": 40,
+        "after": 33
+      },
+      {
+        "source": "validation:written200",
+        "code": "yvfhfhotwlhiomhirrhi",
+        "gold": "讓少少位畀我企得唔得",
+        "before": 27,
+        "after": 25
+      },
+      {
+        "source": "validation:written200",
+        "code": "osruheipoihiipmnypny",
+        "gold": "佢嘅反應令我感到意外",
+        "before": 6,
+        "after": 5
+      },
+      {
+        "source": "validation:written200",
+        "code": "rpaajmniofokhngshmyp",
+        "gold": "呢間士多係做街坊生意",
+        "before": 40,
+        "after": 37
+      },
+      {
+        "source": "validation:written200",
+        "code": "rfogmeopiomygdmediruaiopvmymdosr",
+        "gold": "喺全球化之下地球村嘅時代終於來臨",
+        "before": 6,
+        "after": 4
+      },
+      {
+        "source": "validation:written200",
+        "code": "yuhtgimnmkegejnghitiofrubevrvmmfvk",
+        "gold": "就算去到天涯海角我對你嘅愛始終不變",
+        "before": 15,
+        "after": 13
+      },
+      {
+        "source": "validation:written200",
+        "code": "rporamtbahirdgivioa",
+        "gold": "呢個星期日我哋去約會",
+        "before": 4,
+        "after": 3
+      },
+      {
+        "source": "validation:written200",
+        "code": "mljoichnridimfvdmj",
+        "gold": "而家廉航啲機票好平",
+        "before": 14,
+        "after": 15
+      },
+      {
+        "source": "validation:written200",
+        "code": "vdwfrrokrqrrajft",
+        "gold": "好黑喎做咩唔開燈",
+        "before": 39,
+        "after": 37
+      },
+      {
+        "source": "validation:authored60",
+        "code": "hionabhyeoryjhphume",
+        "gold": "我今日睇返個訊息先覆",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:authored60",
+        "code": "ofspabhyeoryjhphume",
+        "gold": "你聽日睇返個訊息先覆",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:authored60",
+        "code": "osonaubhyeoryjhphume",
+        "gold": "佢今晚睇返個訊息先覆",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:authored60",
+        "code": "hirdmljobhyeoryjhphume",
+        "gold": "我哋而家睇返個訊息先覆",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:authored60",
+        "code": "ofrdyqribhyeoryjhphume",
+        "gold": "你哋遲啲睇返個訊息先覆",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:authored60",
+        "code": "osrdmylmbhyeoryjhphume",
+        "gold": "佢哋下晝睇返個訊息先覆",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:authored60",
+        "code": "ofrdyqriykmmdpgibhmuah",
+        "gold": "你哋遲啲放工想去睇電影",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:natural200",
+        "code": "rkrphlkbrnosjlqmhnawosrr",
+        "gold": "噉呢所有嘢佢都控制晒佢喎",
+        "before": 31,
+        "after": 24
+      },
+      {
+        "source": "validation:natural200",
+        "code": "rkofyggggisgdi",
+        "gold": "噉你望埋去屋村",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:natural200",
+        "code": "yuvkrmofgvtggiqghnrgmdern",
+        "gold": "就變咗係越難去推行哩一樣嘢",
+        "before": 71,
+        "after": 69
+      },
+      {
+        "source": "validation:natural200",
+        "code": "yekngqghimiri",
+        "gold": "返大陸捱得耐啲",
+        "before": 26,
+        "after": 25
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hirdrpojrmmmjlkordce",
+        "gold": "我哋呢俾咗五十蚊人哋錄",
+        "before": 57,
+        "after": 59
+      },
+      {
+        "source": "validation:natural200",
+        "code": "imjarpmvajhihmojosrr",
+        "gold": "或者呢要開風扇俾佢啊",
+        "before": 15,
+        "after": 19
+      },
+      {
+        "source": "validation:natural200",
+        "code": "alofmvetebrrjcofuudo",
+        "gold": "即係要澄清啊真係出來",
+        "before": 5,
+        "after": 4
+      },
+      {
+        "source": "validation:natural200",
+        "code": "rflchpvdtoylrrofrd",
+        "gold": "喺順德好歡迎啊你哋",
+        "before": 8,
+        "after": 7
+      },
+      {
+        "source": "validation:natural200",
+        "code": "kbrimvyfogorcumcqammyhu",
+        "gold": "有啲要遮住個鏡頭拍一下先",
+        "before": 11,
+        "after": 6
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hiogvibjekrmyvrp",
+        "gold": "我住將軍澳咁遠呢",
+        "before": 15,
+        "after": 14
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hmolksvdnirr",
+        "gold": "生命力好強啊",
+        "before": 7,
+        "after": 5
+      },
+      {
+        "source": "validation:natural200",
+        "code": "ribrhdoahkosrn",
+        "gold": "啲同學會笑佢喇",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hikbygosrkyprg",
+        "gold": "我希望佢噉諗囖",
+        "before": 7,
+        "after": 6
+      },
+      {
+        "source": "validation:natural200",
+        "code": "rroralofebybofwrde",
+        "gold": "嗰個即係溝通係點樣",
+        "before": 55,
+        "after": 48
+      },
+      {
+        "source": "validation:natural200",
+        "code": "rrorwidinkmrvorsnyok",
+        "gold": "嗰個母機又可以另外做",
+        "before": 54,
+        "after": 48
+      },
+      {
+        "source": "validation:natural200",
+        "code": "etebmyhuhirr",
+        "gold": "澄清下先得啊",
+        "before": 14,
+        "after": 12
+      },
+      {
+        "source": "validation:natural200",
+        "code": "edofrfieokonosrr",
+        "gold": "淨係喺度做創作啊",
+        "before": 8,
+        "after": 4
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hirrhikbkbciodrr",
+        "gold": "得唔得有冇公仔啊",
+        "before": 13,
+        "after": 10
+      },
+      {
+        "source": "validation:natural200",
+        "code": "vrwdwklayrchrrviorbrhd",
+        "gold": "如果默書高分嗰幾個同學",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:natural200",
+        "code": "rkyuhiosrrocov",
+        "gold": "噉就等佢唔傾偈",
+        "before": 19,
+        "after": 17
+      },
+      {
+        "source": "validation:natural200",
+        "code": "tcjcofvejlkbrn",
+        "gold": "其實無線都有喇",
+        "before": 16,
+        "after": 15
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hiviaikbycyrrr",
+        "gold": "我幾時有讀過啊",
+        "before": 7,
+        "after": 5
+      },
+      {
+        "source": "validation:public200",
+        "code": "hpspofekelaekrugsyb",
+        "gold": "悉尼係澳洲最大嘅城市",
+        "before": 6,
+        "after": 7
+      },
+      {
+        "source": "validation:public200",
+        "code": "dpruyrmrvorehisgomvfmn",
+        "gold": "想嘅話可以嚟我屋企練琴",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:public200",
+        "code": "osoaygogofoeqqa",
+        "gold": "佢會望住你隻手指",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:public200",
+        "code": "niyiofgbrmhirmnipv",
+        "gold": "多謝你幫咗我咁多忙",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:public200",
+        "code": "rryojrdmbuceojhi",
+        "gold": "唔該寄本目錄俾我",
+        "before": 35,
+        "after": 34
+      },
+      {
+        "source": "validation:public200",
+        "code": "hiyqriyrofor",
+        "gold": "我遲啲話你知",
+        "before": 5,
+        "after": 6
+      },
+      {
+        "source": "validation:public200",
+        "code": "ojhibhryofylceahdi",
+        "gold": "俾我睇吓你部錄影機",
+        "before": 2,
+        "after": 3
+      },
+      {
+        "source": "validation:public200",
+        "code": "hivworrraikbymyavdfg",
+        "gold": "我細個嗰時有上音樂堂",
+        "before": 19,
+        "after": 17
+      },
+      {
+        "source": "validation:public200",
+        "code": "wsrrnjyulwmlkmnj",
+        "gold": "嬲嗰陣就由一數到十",
+        "before": 89,
+        "after": 84
+      },
+      {
+        "source": "validation:public200",
+        "code": "hivichcgiotnbumnosgormohorinhlie",
+        "gold": "我幾分鐘之前見到佢走咗入個廁所度",
+        "before": 30,
+        "after": 19
+      },
+      {
+        "source": "validation:public200",
+        "code": "mrrrmrvoviylvkyadijkvwgjfhfhrh",
+        "gold": "可唔可以將部收音機較細聲少少呀",
+        "before": 2,
+        "after": 3
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofmorkbrqyuybrqruo",
+        "gold": "係一個有咩就講咩嘅人",
+        "before": 2,
+        "after": 3
+      },
+      {
+        "source": "validation:public200",
+        "code": "hirddporspaoarroaabmk",
+        "gold": "我哋想知聽日會唔會晴天",
+        "before": 10,
+        "after": 12
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofrfmnrrtrrrppnrkbbqrt",
+        "gold": "你喺到喊苦喊忽夠冇用啦",
+        "before": 9,
+        "after": 10
+      },
+      {
+        "source": "validation:public200",
+        "code": "rgbfhibrosoghivdyl",
+        "gold": "雖然我同佢住得好近",
+        "before": 30,
+        "after": 31
+      },
+      {
+        "source": "validation:public200",
+        "code": "virxdlpuphft",
+        "gold": "將嚿麵包切粒",
+        "before": 15,
+        "after": 16
+      },
+      {
+        "source": "validation:public200",
+        "code": "rrvdrmnojmrt",
+        "gold": "唔好咁孤寒啦",
+        "before": 3,
+        "after": 2
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofoarroahuhihiohokiyrhhhcrh",
+        "gold": "你會唔會覺得我份人太過物質呀",
+        "before": 3,
+        "after": 4
+      },
+      {
+        "source": "validation:public200",
+        "code": "osrdfwbfkbritcybwr",
+        "gold": "佢哋當然有啲共通點",
+        "before": 41,
+        "after": 44
+      },
+      {
+        "source": "validation:public200",
+        "code": "hirdrfgdmyqurmorjm",
+        "gold": "我哋喺地下掘咗個窿",
+        "before": 37,
+        "after": 38
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofwrnqofjlmvqbmnrirnrmleygra",
+        "gold": "你點解係都要搞到啲嘢咁複雜啫",
+        "before": 32,
+        "after": 24
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofsparerrrejlyrgjojhisprl",
+        "gold": "你聽日嚟唔嚟都話聲俾我聽吖",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofcgypybrqrdybrqrg",
+        "gold": "你鍾意講咩咪講咩囉",
+        "before": 27,
+        "after": 26
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "osrdmoorjckskibpmdghppjcdvdmrrvdbh",
+        "gold": "佢哋兩個實力太懸殊場比賽根本唔好睇",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "hioarmhqksjjm",
+        "gold": "我借咗筆大耳窿",
+        "before": 8,
+        "after": 5
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "osonafbilrmouebsiaokrqre",
+        "gold": "佢今日精神咁飽滿尋日做咩嚟",
+        "before": 34,
+        "after": 29
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "rpylreigdireksgrmsjphvjlremnohgi",
+        "gold": "呢部吸塵機吸力超勁老鼠都吸到入去",
+        "before": 39,
+        "after": 29
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "onaulhfvdniookhlriewdvvdfe",
+        "gold": "今晚中秋好多人做節啲酒樓好爆",
+        "before": 5,
+        "after": 7
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "osrrnicgypbrncbbkemu",
+        "gold": "佢唔多鍾意同小朋友玩",
+        "before": 3,
+        "after": 2
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "onaofohhmvoreaeiwruma",
+        "gold": "今日係入冬以嚟最凍嘅一日",
+        "before": 24,
+        "after": 27
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "osfwoghisgomomltnhrhiieva",
+        "gold": "佢當住我屋企人面前向我求婚",
+        "before": 5,
+        "after": 2
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "rfodokyiacymoqjmoofvdhgmvruqiohja",
+        "gold": "喺氣候議題上年輕人係好重要嘅持份者",
+        "before": 11,
+        "after": 12
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "himvwrokhumrvooiofbeod",
+        "gold": "我要點做先可以令你服氣",
+        "before": 2,
+        "after": 3
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "onqrtmbtrgioaqbuuoolrd",
+        "gold": "停手啦再落去會搞出人命㗎",
+        "before": 17,
+        "after": 19
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "osofjphncivmsoutjwedhiheljtkhg",
+        "gold": "佢係老行尊經驗豐富深得後輩敬重",
+        "before": 26,
+        "after": 27
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "knypenaekruyrghofhpiw",
+        "gold": "九龍灣最大嘅商場係德福",
+        "before": 34,
+        "after": 36
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "rporodorohmlpuqrawhlkboelk",
+        "gold": "呢個集合入面包括晒所有雙數",
+        "before": 60,
+        "after": 62
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "ostarmodvdqrbvruydoflr",
+        "gold": "佢著咗條好搶眼嘅迷你裙",
+        "before": 27,
+        "after": 29
+      },
+      {
+        "source": "validation:fresh-ud",
+        "code": "ofnrhigilpdm",
+        "gold": "你陪我去北極",
+        "before": 20,
+        "after": 19
+      },
+      {
+        "source": "validation:fresh-ud",
+        "code": "edofoghljbrriejl",
+        "gold": "淨係坐郵輪嗰度都",
+        "before": 1,
+        "after": 2
+      }
+    ],
+    "1": [
+      {
+        "source": "validation:written200",
+        "code": "osjsrmmmoqjjljyjiojljsmnrn",
+        "gold": "佢考咗三年車牌卒之都考到喇",
+        "before": 8,
+        "after": 4
+      },
+      {
+        "source": "validation:written200",
+        "code": "rporqqomuyrobwmdudird",
+        "gold": "呢個手提電話內置相機㗎",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:written200",
+        "code": "osckwiqrposoaojosrimabbkrkekbgv",
+        "gold": "佢父母擔心佢會俾佢啲豬朋狗友帶壞",
+        "before": 6,
+        "after": 5
+      },
+      {
+        "source": "validation:written200",
+        "code": "vmexoiydylnesvsrruyjlndiyhtghn",
+        "gold": "經濟低迷新發展區嘅計劃寸步難行",
+        "before": 5,
+        "after": 4
+      },
+      {
+        "source": "validation:written200",
+        "code": "rmkjeenejlofjulkrs",
+        "gold": "咁大支汽水都係七蚊咋",
+        "before": 11,
+        "after": 4
+      },
+      {
+        "source": "validation:written200",
+        "code": "nrdiaifbjlqyogrfqewmruvfvf",
+        "gold": "阿松時常都掛住喺泰國嘅媽媽",
+        "before": 86,
+        "after": 60
+      },
+      {
+        "source": "validation:written200",
+        "code": "ossuvmefyprmfwoqwlffuruyupp",
+        "gold": "佢已經淡忘咗當年畀火燒嘅記憶",
+        "before": 49,
+        "after": 52
+      },
+      {
+        "source": "validation:written200",
+        "code": "lmmelrrmcrutjmfppjkjnaj",
+        "gold": "中亞洲嗰頭嘅草原比較乾旱",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:written200",
+        "code": "rpaacisrofjkjvrckbvdniogifsmmynqeyy",
+        "gold": "呢間公司無故裁員有好多人去勞工處投訴",
+        "before": 9,
+        "after": 14
+      },
+      {
+        "source": "validation:written200",
+        "code": "giyuewdvhijloarleifumd",
+        "gold": "去親酒樓我都會叫叉燒酥",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:written200",
+        "code": "hirdruvmvadmoghntrhciwrumgopgigbbso",
+        "gold": "我哋嘅組織本住行善積福嘅理念去幫助人",
+        "before": 6,
+        "after": 11
+      },
+      {
+        "source": "validation:written200",
+        "code": "ypaiypynosmlmvofruatp",
+        "gold": "此時此刻佢需要你嘅關心",
+        "before": 20,
+        "after": 24
+      },
+      {
+        "source": "validation:written200",
+        "code": "rdbuqugtgertofodgtgeli",
+        "gold": "咪亂抌垃圾啦你條垃圾蟲",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:written200",
+        "code": "kbawytqoaacisrjlrrypcampbgqhoett",
+        "gold": "有晒證據間公司都唔認錯死雞撐飯蓋",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:written200",
+        "code": "spybrporkbciopolofjdvaofkbdioarr",
+        "gold": "聽講呢個有錢佬仲係未婚你有機會喎",
+        "before": 60,
+        "after": 61
+      },
+      {
+        "source": "validation:written200",
+        "code": "wlrifqgjrespmy",
+        "gold": "畀啲掌聲嚟聽下",
+        "before": 5,
+        "after": 4
+      },
+      {
+        "source": "validation:written200",
+        "code": "oskikikckcrkjlrrorofrdjcofoeru",
+        "gold": "佢瘋瘋癲癲噉都唔知係咪真係傻嘅",
+        "before": 43,
+        "after": 33
+      },
+      {
+        "source": "validation:written200",
+        "code": "oskbvkodtxtgrupgoj",
+        "gold": "佢有收集舊鞋嘅怪僻",
+        "before": 28,
+        "after": 35
+      },
+      {
+        "source": "validation:written200",
+        "code": "ylkrgerrojovharbhru",
+        "gold": "新加坡唔俾食香口膠嘅",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:written200",
+        "code": "mljorporoqopdpqtorebjrjltg",
+        "gold": "而家呢個年代想揾個清官都難",
+        "before": 8,
+        "after": 15
+      },
+      {
+        "source": "validation:written200",
+        "code": "rpqyisajljskckcblvinijlrrnr",
+        "gold": "呢排成日都攰癩癩瞓幾多都唔夠",
+        "before": 8,
+        "after": 7
+      },
+      {
+        "source": "validation:written200",
+        "code": "ofrdpkrimgsfregbqd",
+        "gold": "你哋快啲班馬嚟幫拖",
+        "before": 24,
+        "after": 10
+      },
+      {
+        "source": "validation:written200",
+        "code": "mljoosoloftpbdajtpioheyuoavdqu",
+        "gold": "而家佢仲係花冧開花之後就會好靚",
+        "before": 19,
+        "after": 26
+      },
+      {
+        "source": "validation:written200",
+        "code": "oskordpoktrjf",
+        "gold": "佢大個想做警察",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:written200",
+        "code": "osrfrpaacisrokqammaitltlk",
+        "gold": "佢喺呢間公司做替工時薪廿蚊",
+        "before": 64,
+        "after": 77
+      },
+      {
+        "source": "validation:written200",
+        "code": "ofrfrrysgbncbbkeqdgfhurt",
+        "gold": "你喺嗰邊幫小朋友探熱先啦",
+        "before": 6,
+        "after": 3
+      },
+      {
+        "source": "validation:written200",
+        "code": "rpiekbkkncncruirob",
+        "gold": "呢度有大大小小嘅店舖",
+        "before": 61,
+        "after": 63
+      },
+      {
+        "source": "validation:written200",
+        "code": "voopvvopvdmird",
+        "gold": "女人化妝化好耐㗎",
+        "before": 68,
+        "after": 69
+      },
+      {
+        "source": "validation:written200",
+        "code": "ygyjrjotkbkbjvqyjijjqvykrr",
+        "gold": "主辦單位有冇安排專車接送啊",
+        "before": 40,
+        "after": 26
+      },
+      {
+        "source": "validation:written200",
+        "code": "mkodrmgfaevdyuovyedfehiers",
+        "gold": "天氣咁熱最好就食返杯沙冰嘞",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:written200",
+        "code": "yvfhfhotwlhiomhirrhi",
+        "gold": "讓少少位畀我企得唔得",
+        "before": 27,
+        "after": 25
+      },
+      {
+        "source": "validation:written200",
+        "code": "osruheipoihiipmnypny",
+        "gold": "佢嘅反應令我感到意外",
+        "before": 6,
+        "after": 4
+      },
+      {
+        "source": "validation:written200",
+        "code": "tnaarofoarmmmjlkmljoyvyewlof",
+        "gold": "前日問你借咗三十蚊而家還返畀你",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:written200",
+        "code": "rpaajmniofokhngshmyp",
+        "gold": "呢間士多係做街坊生意",
+        "before": 40,
+        "after": 29
+      },
+      {
+        "source": "validation:written200",
+        "code": "osoiiowklajlqimnmmach",
+        "gold": "佢每次默書都拎到一百分",
+        "before": 9,
+        "after": 10
+      },
+      {
+        "source": "validation:written200",
+        "code": "rfogmeopiomygdmediruaiopvmymdosr",
+        "gold": "喺全球化之下地球村嘅時代終於來臨",
+        "before": 6,
+        "after": 2
+      },
+      {
+        "source": "validation:written200",
+        "code": "ithjwchirrhiabrh",
+        "gold": "禮拜四我唔得閒呀",
+        "before": 2,
+        "after": 3
+      },
+      {
+        "source": "validation:written200",
+        "code": "yuhtgimnmkegejnghitiofrubevrvmmfvk",
+        "gold": "就算去到天涯海角我對你嘅愛始終不變",
+        "before": 15,
+        "after": 11
+      },
+      {
+        "source": "validation:written200",
+        "code": "rporamtbahirdgivioa",
+        "gold": "呢個星期日我哋去約會",
+        "before": 4,
+        "after": 3
+      },
+      {
+        "source": "validation:written200",
+        "code": "hibhordokyuvoifofqdebvbummqojcpbofahhdtgfb",
+        "gold": "我睇人哋做就以為係手板眼見工夫實情係易學難精",
+        "before": 70,
+        "after": 71
+      },
+      {
+        "source": "validation:written200",
+        "code": "wcdviotnipyobhebdoordvlahu",
+        "gold": "買樓之前應該睇清楚售樓書先",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:written200",
+        "code": "mljoichnridimfvdmj",
+        "gold": "而家廉航啲機票好平",
+        "before": 14,
+        "after": 20
+      },
+      {
+        "source": "validation:written200",
+        "code": "vdwfrrokrqrrajft",
+        "gold": "好黑喎做咩唔開燈",
+        "before": 39,
+        "after": 33
+      },
+      {
+        "source": "validation:authored60",
+        "code": "osonaudpviofoorrry",
+        "gold": "佢今晚想約你飲咖啡",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:authored60",
+        "code": "hionabhyeoryjhphume",
+        "gold": "我今日睇返個訊息先覆",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:authored60",
+        "code": "ofspabhyeoryjhphume",
+        "gold": "你聽日睇返個訊息先覆",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:authored60",
+        "code": "osonaubhyeoryjhphume",
+        "gold": "佢今晚睇返個訊息先覆",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:authored60",
+        "code": "hirdmljobhyeoryjhphume",
+        "gold": "我哋而家睇返個訊息先覆",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:authored60",
+        "code": "ofrdyqribhyeoryjhphume",
+        "gold": "你哋遲啲睇返個訊息先覆",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:authored60",
+        "code": "osrdmylmbhyeoryjhphume",
+        "gold": "佢哋下晝睇返個訊息先覆",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:authored60",
+        "code": "hionadparnvynrjykrmjd",
+        "gold": "我今日想問張訂單送咗未",
+        "before": 3,
+        "after": 4
+      },
+      {
+        "source": "validation:authored60",
+        "code": "ofspadparnvynrjykrmjd",
+        "gold": "你聽日想問張訂單送咗未",
+        "before": 3,
+        "after": 4
+      },
+      {
+        "source": "validation:authored60",
+        "code": "hirdmljodparnvynrjykrmjd",
+        "gold": "我哋而家想問張訂單送咗未",
+        "before": 3,
+        "after": 4
+      },
+      {
+        "source": "validation:authored60",
+        "code": "ofrdyqridparnvynrjykrmjd",
+        "gold": "你哋遲啲想問張訂單送咗未",
+        "before": 3,
+        "after": 4
+      },
+      {
+        "source": "validation:authored60",
+        "code": "ofrdyqriykmmdpgibhmuah",
+        "gold": "你哋遲啲放工想去睇電影",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:natural200",
+        "code": "rkrphlkbrnosjlqmhnawosrr",
+        "gold": "噉呢所有嘢佢都控制晒佢喎",
+        "before": 31,
+        "after": 22
+      },
+      {
+        "source": "validation:natural200",
+        "code": "tcjchirdipyoviosrrbrrkbhrs",
+        "gold": "其實我哋應該將佢唔同噉睇嘞",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hirdmommoqjlhdrroa",
+        "gold": "我咪兩三年都學唔會",
+        "before": 46,
+        "after": 47
+      },
+      {
+        "source": "validation:natural200",
+        "code": "nikbrmmnvyklykruqdoshgin",
+        "gold": "附帶咗一張誒中文嘅操作程序",
+        "before": 13,
+        "after": 16
+      },
+      {
+        "source": "validation:natural200",
+        "code": "rkofyggggisgdi",
+        "gold": "噉你望埋去屋村",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hlvoosmyvhd",
+        "gold": "所以佢一退學",
+        "before": 8,
+        "after": 7
+      },
+      {
+        "source": "validation:natural200",
+        "code": "yuvkrmofgvtggiqghnrgmdern",
+        "gold": "就變咗係越難去推行哩一樣嘢",
+        "before": 71,
+        "after": 68
+      },
+      {
+        "source": "validation:natural200",
+        "code": "yekngqghimiri",
+        "gold": "返大陸捱得耐啲",
+        "before": 26,
+        "after": 19
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hirdrpojrmmmjlkordce",
+        "gold": "我哋呢俾咗五十蚊人哋錄",
+        "before": 57,
+        "after": 62
+      },
+      {
+        "source": "validation:natural200",
+        "code": "imjarpmvajhihmojosrr",
+        "gold": "或者呢要開風扇俾佢啊",
+        "before": 15,
+        "after": 23
+      },
+      {
+        "source": "validation:natural200",
+        "code": "alofmvetebrrjcofuudo",
+        "gold": "即係要澄清啊真係出來",
+        "before": 5,
+        "after": 4
+      },
+      {
+        "source": "validation:natural200",
+        "code": "rflchpvdtoylrrofrd",
+        "gold": "喺順德好歡迎啊你哋",
+        "before": 8,
+        "after": 4
+      },
+      {
+        "source": "validation:natural200",
+        "code": "kbrimvyfogorcumcqammyhu",
+        "gold": "有啲要遮住個鏡頭拍一下先",
+        "before": 11,
+        "after": 4
+      },
+      {
+        "source": "validation:natural200",
+        "code": "yuguguduyuofrgrird",
+        "gold": "逆境起枕就係哩啲嚹",
+        "before": 5,
+        "after": 6
+      },
+      {
+        "source": "validation:natural200",
+        "code": "rkhirrnjokajqbuswnu",
+        "gold": "噉我嗰陣做開青山醫院",
+        "before": 2,
+        "after": 3
+      },
+      {
+        "source": "validation:natural200",
+        "code": "ofwdrfmorwundyvys",
+        "gold": "你困喺一個圈子裏邊",
+        "before": 16,
+        "after": 17
+      },
+      {
+        "source": "validation:natural200",
+        "code": "pnrnrlvdrumuahyiec",
+        "gold": "乜嘢叫好嘅電影導演",
+        "before": 3,
+        "after": 2
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hiogvibjekrmyvrp",
+        "gold": "我住將軍澳咁遠呢",
+        "before": 15,
+        "after": 13
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hmolksvdnirr",
+        "gold": "生命力好強啊",
+        "before": 7,
+        "after": 5
+      },
+      {
+        "source": "validation:natural200",
+        "code": "ribrhdoahkosrn",
+        "gold": "啲同學會笑佢喇",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hikbygosrkyprg",
+        "gold": "我希望佢噉諗囖",
+        "before": 7,
+        "after": 5
+      },
+      {
+        "source": "validation:natural200",
+        "code": "rroralofebybofwrde",
+        "gold": "嗰個即係溝通係點樣",
+        "before": 55,
+        "after": 38
+      },
+      {
+        "source": "validation:natural200",
+        "code": "rrorwidinkmrvorsnyok",
+        "gold": "嗰個母機又可以另外做",
+        "before": 54,
+        "after": 41
+      },
+      {
+        "source": "validation:natural200",
+        "code": "etebmyhuhirr",
+        "gold": "澄清下先得啊",
+        "before": 14,
+        "after": 11
+      },
+      {
+        "source": "validation:natural200",
+        "code": "rkrpisabrwqbrkmkrrr",
+        "gold": "噉呢成日周圍同左右啊",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:natural200",
+        "code": "edofrfieokonosrr",
+        "gold": "淨係喺度做創作啊",
+        "before": 8,
+        "after": 2
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hirrhikbkbciodrr",
+        "gold": "得唔得有冇公仔啊",
+        "before": 13,
+        "after": 7
+      },
+      {
+        "source": "validation:natural200",
+        "code": "rkmljorrorhdhmrpkbkbhpyerp",
+        "gold": "噉而家嗰個學生呢有冇乖返呢",
+        "before": 10,
+        "after": 9
+      },
+      {
+        "source": "validation:natural200",
+        "code": "vrwdwklayrchrrviorbrhd",
+        "gold": "如果默書高分嗰幾個同學",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:natural200",
+        "code": "rkyuhiosrrocov",
+        "gold": "噉就等佢唔傾偈",
+        "before": 19,
+        "after": 14
+      },
+      {
+        "source": "validation:natural200",
+        "code": "tcjcofvejlkbrn",
+        "gold": "其實無線都有喇",
+        "before": 16,
+        "after": 13
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hiviaikbycyrrr",
+        "gold": "我幾時有讀過啊",
+        "before": 7,
+        "after": 2
+      },
+      {
+        "source": "validation:public200",
+        "code": "ipyokbhiokhirmvd",
+        "gold": "應該冇我做得咁好",
+        "before": 16,
+        "after": 17
+      },
+      {
+        "source": "validation:public200",
+        "code": "hpspofekelaekrugsyb",
+        "gold": "悉尼係澳洲最大嘅城市",
+        "before": 6,
+        "after": 9
+      },
+      {
+        "source": "validation:public200",
+        "code": "dpruyrmrvorehisgomvfmn",
+        "gold": "想嘅話可以嚟我屋企練琴",
+        "before": 1,
+        "after": 3
+      },
+      {
+        "source": "validation:public200",
+        "code": "osoaygogofoeqqa",
+        "gold": "佢會望住你隻手指",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:public200",
+        "code": "niyiofgbrmhirmnipv",
+        "gold": "多謝你幫咗我咁多忙",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:public200",
+        "code": "rryojrdmbuceojhi",
+        "gold": "唔該寄本目錄俾我",
+        "before": 35,
+        "after": 30
+      },
+      {
+        "source": "validation:public200",
+        "code": "hiyqriyrofor",
+        "gold": "我遲啲話你知",
+        "before": 5,
+        "after": 8
+      },
+      {
+        "source": "validation:public200",
+        "code": "ojhibhryofylceahdi",
+        "gold": "俾我睇吓你部錄影機",
+        "before": 2,
+        "after": 3
+      },
+      {
+        "source": "validation:public200",
+        "code": "hivworrraikbymyavdfg",
+        "gold": "我細個嗰時有上音樂堂",
+        "before": 19,
+        "after": 16
+      },
+      {
+        "source": "validation:public200",
+        "code": "ddtkrrdpymmuiu",
+        "gold": "森美唔想上電視",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:public200",
+        "code": "wsrrnjyulwmlkmnj",
+        "gold": "嬲嗰陣就由一數到十",
+        "before": 89,
+        "after": 76
+      },
+      {
+        "source": "validation:public200",
+        "code": "osqrgoawhinrvdrimubc",
+        "gold": "佢搶走晒我阿妹啲玩具",
+        "before": 2,
+        "after": 3
+      },
+      {
+        "source": "validation:public200",
+        "code": "pnrroahuhiaprurq",
+        "gold": "乜唔會覺得悶嘅咩",
+        "before": 1,
+        "after": 3
+      },
+      {
+        "source": "validation:public200",
+        "code": "hivichcgiotnbumnosgormohorinhlie",
+        "gold": "我幾分鐘之前見到佢走咗入個廁所度",
+        "before": 30,
+        "after": 10
+      },
+      {
+        "source": "validation:public200",
+        "code": "rfnywmhmerofhdnyyrruaeogysei",
+        "gold": "喺外國生活係學外語嘅最佳方法",
+        "before": 3,
+        "after": 4
+      },
+      {
+        "source": "validation:public200",
+        "code": "mrrrmrvoviylvkyadijkvwgjfhfhrh",
+        "gold": "可唔可以將部收音機較細聲少少呀",
+        "before": 2,
+        "after": 4
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofmorkbrqyuybrqruo",
+        "gold": "係一個有咩就講咩嘅人",
+        "before": 2,
+        "after": 3
+      },
+      {
+        "source": "validation:public200",
+        "code": "hirddporspaoarroaabmk",
+        "gold": "我哋想知聽日會唔會晴天",
+        "before": 10,
+        "after": 14
+      },
+      {
+        "source": "validation:public200",
+        "code": "vdtirrogrmajqnmuyrppofep",
+        "gold": "好對唔住咁早打電話比你添",
+        "before": 16,
+        "after": 15
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofrfmnrrtrrrppnrkbbqrt",
+        "gold": "你喺到喊苦喊忽夠冇用啦",
+        "before": 9,
+        "after": 11
+      },
+      {
+        "source": "validation:public200",
+        "code": "rpgiorofojofrd",
+        "gold": "呢封信係俾你㗎",
+        "before": 38,
+        "after": 32
+      },
+      {
+        "source": "validation:public200",
+        "code": "orhehmodqrrmorvodorov",
+        "gold": "個後生仔搶咗個女仔個袋",
+        "before": 15,
+        "after": 16
+      },
+      {
+        "source": "validation:public200",
+        "code": "rgbfhibrosoghivdyl",
+        "gold": "雖然我同佢住得好近",
+        "before": 30,
+        "after": 31
+      },
+      {
+        "source": "validation:public200",
+        "code": "hirdodhpjchcgrt",
+        "gold": "我哋休息十分鐘啦",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:public200",
+        "code": "virxdlpuphft",
+        "gold": "將嚿麵包切粒",
+        "before": 15,
+        "after": 14
+      },
+      {
+        "source": "validation:public200",
+        "code": "osrilanimnbhrraw",
+        "gold": "佢啲書多到睇唔晒",
+        "before": 5,
+        "after": 4
+      },
+      {
+        "source": "validation:public200",
+        "code": "lwrpieogjjgifjjyrjchcgyumn",
+        "gold": "由呢度坐車去火車站十分鐘就到",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:public200",
+        "code": "rrvdrmnojmrt",
+        "gold": "唔好咁孤寒啦",
+        "before": 3,
+        "after": 2
+      },
+      {
+        "source": "validation:public200",
+        "code": "osojrmoskdyljjhibh",
+        "gold": "佢俾咗佢架新車我睇",
+        "before": 2,
+        "after": 3
+      },
+      {
+        "source": "validation:public200",
+        "code": "hirrojofbqhijecuhq",
+        "gold": "我唔俾你用我支鋼筆",
+        "before": 13,
+        "after": 14
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofoarroahuhihiohokiyrhhhcrh",
+        "gold": "你會唔會覺得我份人太過物質呀",
+        "before": 3,
+        "after": 4
+      },
+      {
+        "source": "validation:public200",
+        "code": "osrdfwbfkbritcybwr",
+        "gold": "佢哋當然有啲共通點",
+        "before": 41,
+        "after": 42
+      },
+      {
+        "source": "validation:public200",
+        "code": "hirdrfgdmyqurmorjm",
+        "gold": "我哋喺地下掘咗個窿",
+        "before": 37,
+        "after": 38
+      },
+      {
+        "source": "validation:public200",
+        "code": "hirdmvhdsaqebfmltiyugu",
+        "gold": "我哋要學習泰然面對逆境",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofwrnqofjlmvqbmnrirnrmleygra",
+        "gold": "你點解係都要搞到啲嘢咁複雜啫",
+        "before": 32,
+        "after": 17
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofsparerrrejlyrgjojhisprl",
+        "gold": "你聽日嚟唔嚟都話聲俾我聽吖",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofcgypybrqrdybrqrg",
+        "gold": "你鍾意講咩咪講咩囉",
+        "before": 27,
+        "after": 23
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "osrdmoorjckskibpmdghppjcdvdmrrvdbh",
+        "gold": "佢哋兩個實力太懸殊場比賽根本唔好睇",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "rpghyjybsuvmyghnrmvdmioeyssuvmkbawylruybwr",
+        "gold": "呢場辯論已經進行咗好耐雙方已經冇晒新嘅論點",
+        "before": 24,
+        "after": 27
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "hioarmhqksjjm",
+        "gold": "我借咗筆大耳窿",
+        "before": 8,
+        "after": 5
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "osonafbilrmouebsiaokrqre",
+        "gold": "佢今日精神咁飽滿尋日做咩嚟",
+        "before": 34,
+        "after": 24
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "rpylreigdireksgrmsjphvjlremnohgi",
+        "gold": "呢部吸塵機吸力超勁老鼠都吸到入去",
+        "before": 39,
+        "after": 15
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "himhejqofyumprn",
+        "gold": "我一反擊你就死喇",
+        "before": 1,
+        "after": 3
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "ofpkrigiswnurtmljojtbfnpmvofokekjorr",
+        "gold": "你快啲去醫院啦而家十萬火急要你做決定啊",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "oshdrurnvdygpnjlyari",
+        "gold": "佢學嘅嘢好雜乜都識啲",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "onaulhfvdniookhlriewdvvdfe",
+        "gold": "今晚中秋好多人做節啲酒樓好爆",
+        "before": 5,
+        "after": 7
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "spaumymgiovvdrnrt",
+        "gold": "聽晚一於去食好嘢啦",
+        "before": 12,
+        "after": 14
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "osrrnicgypbrncbbkemu",
+        "gold": "佢唔多鍾意同小朋友玩",
+        "before": 3,
+        "after": 2
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "onaofohhmvoreaeiwruma",
+        "gold": "今日係入冬以嚟最凍嘅一日",
+        "before": 24,
+        "after": 35
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "osfwoghisgomomltnhrhiieva",
+        "gold": "佢當住我屋企人面前向我求婚",
+        "before": 5,
+        "after": 1
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "rfodokyiacymoqjmoofvdhgmvruqiohja",
+        "gold": "喺氣候議題上年輕人係好重要嘅持份者",
+        "before": 11,
+        "after": 14
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "himvwrokhumrvooiofbeod",
+        "gold": "我要點做先可以令你服氣",
+        "before": 2,
+        "after": 6
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "onqrtmbtrgioaqbuuoolrd",
+        "gold": "停手啦再落去會搞出人命㗎",
+        "before": 17,
+        "after": 20
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "osofjphncivmsoutjwedhiheljtkhg",
+        "gold": "佢係老行尊經驗豐富深得後輩敬重",
+        "before": 26,
+        "after": 28
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "rporodorohmlpuqrawhlkboelk",
+        "gold": "呢個集合入面包括晒所有雙數",
+        "before": 60,
+        "after": 62
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "ostarmodvdqrbvruydoflr",
+        "gold": "佢著咗條好搶眼嘅迷你裙",
+        "before": 27,
+        "after": 32
+      },
+      {
+        "source": "validation:fresh-ud",
+        "code": "ofnrhigilpdm",
+        "gold": "你陪我去北極",
+        "before": 20,
+        "after": 21
+      },
+      {
+        "source": "validation:fresh-ud",
+        "code": "rrofhirrokqtofrt",
+        "gold": "唔係我唔使搵你啦",
+        "before": 42,
+        "after": 22
+      },
+      {
+        "source": "validation:fresh-ud",
+        "code": "hioghgpuawofrt",
+        "gold": "我全程包晒你啦",
+        "before": 3,
+        "after": 2
+      },
+      {
+        "source": "validation:fresh-ud",
+        "code": "edofoghljbrriejl",
+        "gold": "淨係坐郵輪嗰度都",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:fresh-ud",
+        "code": "jlrtofievdorsodi",
+        "gold": "都嗌你度好個尺寸",
+        "before": 19,
+        "after": 17
+      }
+    ],
+    "1.5": [
+      {
+        "source": "validation:written200",
+        "code": "hirfdvmywcrmmdmabhfh",
+        "gold": "我喺樓下買咗碟豬腸粉",
+        "before": 6,
+        "after": 5
+      },
+      {
+        "source": "validation:written200",
+        "code": "ndrmyclahdmanqeipvvobhusujlvdhgmv",
+        "gold": "除咗讀書學一門技能裝備自己都好重要",
+        "before": 7,
+        "after": 8
+      },
+      {
+        "source": "validation:written200",
+        "code": "osjsrmmmoqjjljyjiojljsmnrn",
+        "gold": "佢考咗三年車牌卒之都考到喇",
+        "before": 8,
+        "after": 2
+      },
+      {
+        "source": "validation:written200",
+        "code": "rporqqomuyrobwmdudird",
+        "gold": "呢個手提電話內置相機㗎",
+        "before": 1,
+        "after": 4
+      },
+      {
+        "source": "validation:written200",
+        "code": "osckwiqrposoaojosrimabbkrkekbgv",
+        "gold": "佢父母擔心佢會俾佢啲豬朋狗友帶壞",
+        "before": 6,
+        "after": 3
+      },
+      {
+        "source": "validation:written200",
+        "code": "vmexoiydylnesvsrruyjlndiyhtghn",
+        "gold": "經濟低迷新發展區嘅計劃寸步難行",
+        "before": 5,
+        "after": 3
+      },
+      {
+        "source": "validation:written200",
+        "code": "rmkjeenejlofjulkrs",
+        "gold": "咁大支汽水都係七蚊咋",
+        "before": 11,
+        "after": 2
+      },
+      {
+        "source": "validation:written200",
+        "code": "nrdiaifbjlqyogrfqewmruvfvf",
+        "gold": "阿松時常都掛住喺泰國嘅媽媽",
+        "before": 86,
+        "after": 51
+      },
+      {
+        "source": "validation:written200",
+        "code": "ossuvmefyprmfwoqwlffuruyupp",
+        "gold": "佢已經淡忘咗當年畀火燒嘅記憶",
+        "before": 49,
+        "after": 52
+      },
+      {
+        "source": "validation:written200",
+        "code": "lmmelrrmcrutjmfppjkjnaj",
+        "gold": "中亞洲嗰頭嘅草原比較乾旱",
+        "before": 1,
+        "after": 4
+      },
+      {
+        "source": "validation:written200",
+        "code": "rpaacisrofjkjvrckbvdniogifsmmynqeyy",
+        "gold": "呢間公司無故裁員有好多人去勞工處投訴",
+        "before": 9,
+        "after": 12
+      },
+      {
+        "source": "validation:written200",
+        "code": "hpybsuvmisifhddkjkybphobrumyloh",
+        "gold": "德育已經成為學校教育必備嘅一部份",
+        "before": 1,
+        "after": 3
+      },
+      {
+        "source": "validation:written200",
+        "code": "giyuewdvhijloarleifumd",
+        "gold": "去親酒樓我都會叫叉燒酥",
+        "before": 4,
+        "after": 6
+      },
+      {
+        "source": "validation:written200",
+        "code": "hirdruvmvadmoghntrhciwrumgopgigbbso",
+        "gold": "我哋嘅組織本住行善積福嘅理念去幫助人",
+        "before": 6,
+        "after": 17
+      },
+      {
+        "source": "validation:written200",
+        "code": "duybmynhihuhiaiaaqdymrm",
+        "gold": "相遇一刻我覺得時間靜止咗",
+        "before": 9,
+        "after": 10
+      },
+      {
+        "source": "validation:written200",
+        "code": "ypaiypynosmlmvofruatp",
+        "gold": "此時此刻佢需要你嘅關心",
+        "before": 20,
+        "after": 25
+      },
+      {
+        "source": "validation:written200",
+        "code": "rdbuqugtgertofodgtgeli",
+        "gold": "咪亂抌垃圾啦你條垃圾蟲",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:written200",
+        "code": "kbawytqoaacisrjlrrypcampbgqhoett",
+        "gold": "有晒證據間公司都唔認錯死雞撐飯蓋",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:written200",
+        "code": "rihdhmvdqdvdhwprkspsfjphbybrn",
+        "gold": "啲學生好靜好留心噉聽緊老師講嘢",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:written200",
+        "code": "spybrporkbciopolofjdvaofkbdioarr",
+        "gold": "聽講呢個有錢佬仲係未婚你有機會喎",
+        "before": 60,
+        "after": 63
+      },
+      {
+        "source": "validation:written200",
+        "code": "wlrifqgjrespmy",
+        "gold": "畀啲掌聲嚟聽下",
+        "before": 5,
+        "after": 4
+      },
+      {
+        "source": "validation:written200",
+        "code": "oskikikckcrkjlrrorofrdjcofoeru",
+        "gold": "佢瘋瘋癲癲噉都唔知係咪真係傻嘅",
+        "before": 43,
+        "after": 29
+      },
+      {
+        "source": "validation:written200",
+        "code": "oskbvkodtxtgrupgoj",
+        "gold": "佢有收集舊鞋嘅怪僻",
+        "before": 28,
+        "after": 35
+      },
+      {
+        "source": "validation:written200",
+        "code": "ylkrgerrojovharbhru",
+        "gold": "新加坡唔俾食香口膠嘅",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:written200",
+        "code": "gitrtwwrmrvorrrktjrd",
+        "gold": "去荷蘭點可以唔咬草㗎",
+        "before": 5,
+        "after": 6
+      },
+      {
+        "source": "validation:written200",
+        "code": "mljorporoqopdpqtorebjrjltg",
+        "gold": "而家呢個年代想揾個清官都難",
+        "before": 8,
+        "after": 20
+      },
+      {
+        "source": "validation:written200",
+        "code": "rpqyisajljskckcblvinijlrrnr",
+        "gold": "呢排成日都攰癩癩瞓幾多都唔夠",
+        "before": 8,
+        "after": 7
+      },
+      {
+        "source": "validation:written200",
+        "code": "ofrdpkrimgsfregbqd",
+        "gold": "你哋快啲班馬嚟幫拖",
+        "before": 24,
+        "after": 7
+      },
+      {
+        "source": "validation:written200",
+        "code": "mljoosoloftpbdajtpioheyuoavdqu",
+        "gold": "而家佢仲係花冧開花之後就會好靚",
+        "before": 19,
+        "after": 27
+      },
+      {
+        "source": "validation:written200",
+        "code": "oskordpoktrjf",
+        "gold": "佢大個想做警察",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:written200",
+        "code": "ajriblrnspamvyemmrd",
+        "gold": "早啲瞓喇聽日要返工㗎",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:written200",
+        "code": "hiaeylqmcsfmrrrmrvobqmucvykah",
+        "gold": "我最近手頭緊可唔可以用現銀交易",
+        "before": 10,
+        "after": 11
+      },
+      {
+        "source": "validation:written200",
+        "code": "osrfrpaacisrokqammaitltlk",
+        "gold": "佢喺呢間公司做替工時薪廿蚊",
+        "before": 64,
+        "after": 81
+      },
+      {
+        "source": "validation:written200",
+        "code": "ofrfrrysgbncbbkeqdgfhurt",
+        "gold": "你喺嗰邊幫小朋友探熱先啦",
+        "before": 6,
+        "after": 2
+      },
+      {
+        "source": "validation:written200",
+        "code": "rpiekbkkncncruirob",
+        "gold": "呢度有大大小小嘅店舖",
+        "before": 61,
+        "after": 63
+      },
+      {
+        "source": "validation:written200",
+        "code": "voopvvopvdmird",
+        "gold": "女人化妝化好耐㗎",
+        "before": 68,
+        "after": 69
+      },
+      {
+        "source": "validation:written200",
+        "code": "rporlakdjlvijcedrr",
+        "gold": "呢個書架都幾實淨喎",
+        "before": 3,
+        "after": 4
+      },
+      {
+        "source": "validation:written200",
+        "code": "ygyjrjotkbkbjvqyjijjqvykrr",
+        "gold": "主辦單位有冇安排專車接送啊",
+        "before": 40,
+        "after": 24
+      },
+      {
+        "source": "validation:written200",
+        "code": "mkodrmgfaevdyuovyedfehiers",
+        "gold": "天氣咁熱最好就食返杯沙冰嘞",
+        "before": 1,
+        "after": 4
+      },
+      {
+        "source": "validation:written200",
+        "code": "swhrsrsuvmqdsecheuqaydynmgnpkmjgrukbo",
+        "gold": "醫管局已經採取分流措施處理急症室嘅病人",
+        "before": 20,
+        "after": 22
+      },
+      {
+        "source": "validation:written200",
+        "code": "rfciwvbumnkbtincpborrfieqntrjborvruvdoovdjf",
+        "gold": "喺公園見到有對小情侶喺度打茄輪個女嘅好似好索",
+        "before": 46,
+        "after": 47
+      },
+      {
+        "source": "validation:written200",
+        "code": "mwmcolkbrrfhefrp",
+        "gold": "西貢仲有唔少漁民",
+        "before": 5,
+        "after": 6
+      },
+      {
+        "source": "validation:written200",
+        "code": "yvfhfhotwlhiomhirrhi",
+        "gold": "讓少少位畀我企得唔得",
+        "before": 27,
+        "after": 22
+      },
+      {
+        "source": "validation:written200",
+        "code": "osruheipoihiipmnypny",
+        "gold": "佢嘅反應令我感到意外",
+        "before": 6,
+        "after": 3
+      },
+      {
+        "source": "validation:written200",
+        "code": "tnaarofoarmmmjlkmljoyvyewlof",
+        "gold": "前日問你借咗三十蚊而家還返畀你",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:written200",
+        "code": "rpaajmniofokhngshmyp",
+        "gold": "呢間士多係做街坊生意",
+        "before": 40,
+        "after": 28
+      },
+      {
+        "source": "validation:written200",
+        "code": "rmofslrurnjcofrrdpmg",
+        "gold": "咁無聊嘅嘢真係唔想理",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:written200",
+        "code": "osoiiowklajlqimnmmach",
+        "gold": "佢每次默書都拎到一百分",
+        "before": 9,
+        "after": 10
+      },
+      {
+        "source": "validation:written200",
+        "code": "hirulhjvvrvmmfvk",
+        "gold": "我嘅初衷始終不變",
+        "before": 3,
+        "after": 4
+      },
+      {
+        "source": "validation:written200",
+        "code": "onorbajvrertlofmvpgrirn",
+        "gold": "今個月開始減薪你要慳啲喇",
+        "before": 3,
+        "after": 4
+      },
+      {
+        "source": "validation:written200",
+        "code": "rfogmeopiomygdmediruaiopvmymdosr",
+        "gold": "喺全球化之下地球村嘅時代終於來臨",
+        "before": 6,
+        "after": 2
+      },
+      {
+        "source": "validation:written200",
+        "code": "ithjwchirrhiabrh",
+        "gold": "禮拜四我唔得閒呀",
+        "before": 2,
+        "after": 3
+      },
+      {
+        "source": "validation:written200",
+        "code": "yuhtgimnmkegejnghitiofrubevrvmmfvk",
+        "gold": "就算去到天涯海角我對你嘅愛始終不變",
+        "before": 15,
+        "after": 9
+      },
+      {
+        "source": "validation:written200",
+        "code": "rporamtbahirdgivioa",
+        "gold": "呢個星期日我哋去約會",
+        "before": 4,
+        "after": 3
+      },
+      {
+        "source": "validation:written200",
+        "code": "hibhordokyuvoifofqdebvbummqojcpbofahhdtgfb",
+        "gold": "我睇人哋做就以為係手板眼見工夫實情係易學難精",
+        "before": 70,
+        "after": 71
+      },
+      {
+        "source": "validation:written200",
+        "code": "wcdviotnipyobhebdoordvlahu",
+        "gold": "買樓之前應該睇清楚售樓書先",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:written200",
+        "code": "mljoichnridimfvdmj",
+        "gold": "而家廉航啲機票好平",
+        "before": 14,
+        "after": 24
+      },
+      {
+        "source": "validation:written200",
+        "code": "vdwfrrokrqrrajft",
+        "gold": "好黑喎做咩唔開燈",
+        "before": 39,
+        "after": 31
+      },
+      {
+        "source": "validation:written200",
+        "code": "osmrodrurmmmhjfd",
+        "gold": "佢一口氣跑咗五千米",
+        "before": 16,
+        "after": 14
+      },
+      {
+        "source": "validation:authored60",
+        "code": "hirdmljojirmciyuhimgyp",
+        "gold": "我哋而家轉咗錢記得確認",
+        "before": 13,
+        "after": 14
+      },
+      {
+        "source": "validation:authored60",
+        "code": "hionadpviofoorrry",
+        "gold": "我今日想約你飲咖啡",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:authored60",
+        "code": "osonaudpviofoorrry",
+        "gold": "佢今晚想約你飲咖啡",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:authored60",
+        "code": "hionabhyeoryjhphume",
+        "gold": "我今日睇返個訊息先覆",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:authored60",
+        "code": "ofspabhyeoryjhphume",
+        "gold": "你聽日睇返個訊息先覆",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:authored60",
+        "code": "osonaubhyeoryjhphume",
+        "gold": "佢今晚睇返個訊息先覆",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:authored60",
+        "code": "hirdmljobhyeoryjhphume",
+        "gold": "我哋而家睇返個訊息先覆",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:authored60",
+        "code": "ofrdyqribhyeoryjhphume",
+        "gold": "你哋遲啲睇返個訊息先覆",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:authored60",
+        "code": "osrdmylmbhyeoryjhphume",
+        "gold": "佢哋下晝睇返個訊息先覆",
+        "before": 4,
+        "after": 2
+      },
+      {
+        "source": "validation:authored60",
+        "code": "hionadparnvynrjykrmjd",
+        "gold": "我今日想問張訂單送咗未",
+        "before": 3,
+        "after": 4
+      },
+      {
+        "source": "validation:authored60",
+        "code": "ofspadparnvynrjykrmjd",
+        "gold": "你聽日想問張訂單送咗未",
+        "before": 3,
+        "after": 4
+      },
+      {
+        "source": "validation:authored60",
+        "code": "osonaudparnvynrjykrmjd",
+        "gold": "佢今晚想問張訂單送咗未",
+        "before": 3,
+        "after": 4
+      },
+      {
+        "source": "validation:authored60",
+        "code": "hirdmljodparnvynrjykrmjd",
+        "gold": "我哋而家想問張訂單送咗未",
+        "before": 3,
+        "after": 4
+      },
+      {
+        "source": "validation:authored60",
+        "code": "ofrdyqridparnvynrjykrmjd",
+        "gold": "你哋遲啲想問張訂單送咗未",
+        "before": 3,
+        "after": 4
+      },
+      {
+        "source": "validation:authored60",
+        "code": "osrdmylmdparnvynrjykrmjd",
+        "gold": "佢哋下晝想問張訂單送咗未",
+        "before": 3,
+        "after": 4
+      },
+      {
+        "source": "validation:authored60",
+        "code": "ofrdyqriykmmdpgibhmuah",
+        "gold": "你哋遲啲放工想去睇電影",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:natural200",
+        "code": "mmiuofbrhirurn",
+        "gold": "亞視係同等嘅嘢",
+        "before": 5,
+        "after": 4
+      },
+      {
+        "source": "validation:natural200",
+        "code": "tkykwklajlofrr",
+        "gold": "英文默書都係喎",
+        "before": 4,
+        "after": 3
+      },
+      {
+        "source": "validation:natural200",
+        "code": "rkrphlkbrnosjlqmhnawosrr",
+        "gold": "噉呢所有嘢佢都控制晒佢喎",
+        "before": 31,
+        "after": 17
+      },
+      {
+        "source": "validation:natural200",
+        "code": "tcjchirdipyoviosrrbrrkbhrs",
+        "gold": "其實我哋應該將佢唔同噉睇嘞",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hirdmommoqjlhdrroa",
+        "gold": "我咪兩三年都學唔會",
+        "before": 46,
+        "after": 48
+      },
+      {
+        "source": "validation:natural200",
+        "code": "nikbrmmnvyklykruqdoshgin",
+        "gold": "附帶咗一張誒中文嘅操作程序",
+        "before": 13,
+        "after": 18
+      },
+      {
+        "source": "validation:natural200",
+        "code": "rkofyggggisgdi",
+        "gold": "噉你望埋去屋村",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hlvoosmyvhd",
+        "gold": "所以佢一退學",
+        "before": 8,
+        "after": 7
+      },
+      {
+        "source": "validation:natural200",
+        "code": "yuvkrmofgvtggiqghnrgmdern",
+        "gold": "就變咗係越難去推行哩一樣嘢",
+        "before": 71,
+        "after": 65
+      },
+      {
+        "source": "validation:natural200",
+        "code": "yekngqghimiri",
+        "gold": "返大陸捱得耐啲",
+        "before": 26,
+        "after": 16
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hirdrpojrmmmjlkordce",
+        "gold": "我哋呢俾咗五十蚊人哋錄",
+        "before": 57,
+        "after": 62
+      },
+      {
+        "source": "validation:natural200",
+        "code": "imjarpmvajhihmojosrr",
+        "gold": "或者呢要開風扇俾佢啊",
+        "before": 15,
+        "after": 30
+      },
+      {
+        "source": "validation:natural200",
+        "code": "alofmvetebrrjcofuudo",
+        "gold": "即係要澄清啊真係出來",
+        "before": 5,
+        "after": 6
+      },
+      {
+        "source": "validation:natural200",
+        "code": "rflchpvdtoylrrofrd",
+        "gold": "喺順德好歡迎啊你哋",
+        "before": 8,
+        "after": 3
+      },
+      {
+        "source": "validation:natural200",
+        "code": "kbrimvyfogorcumcqammyhu",
+        "gold": "有啲要遮住個鏡頭拍一下先",
+        "before": 11,
+        "after": 3
+      },
+      {
+        "source": "validation:natural200",
+        "code": "yuguguduyuofrgrird",
+        "gold": "逆境起枕就係哩啲嚹",
+        "before": 5,
+        "after": 7
+      },
+      {
+        "source": "validation:natural200",
+        "code": "rkhirrnjokajqbuswnu",
+        "gold": "噉我嗰陣做開青山醫院",
+        "before": 2,
+        "after": 3
+      },
+      {
+        "source": "validation:natural200",
+        "code": "abacruvdjirg",
+        "gold": "明顯嘅好轉囖",
+        "before": 4,
+        "after": 3
+      },
+      {
+        "source": "validation:natural200",
+        "code": "ofwdrfmorwundyvys",
+        "gold": "你困喺一個圈子裏邊",
+        "before": 16,
+        "after": 18
+      },
+      {
+        "source": "validation:natural200",
+        "code": "pnrnrlvdrumuahyiec",
+        "gold": "乜嘢叫好嘅電影導演",
+        "before": 3,
+        "after": 1
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hiogvibjekrmyvrp",
+        "gold": "我住將軍澳咁遠呢",
+        "before": 15,
+        "after": 11
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hmolksvdnirr",
+        "gold": "生命力好強啊",
+        "before": 7,
+        "after": 5
+      },
+      {
+        "source": "validation:natural200",
+        "code": "ribrhdoahkosrn",
+        "gold": "啲同學會笑佢喇",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hikbygosrkyprg",
+        "gold": "我希望佢噉諗囖",
+        "before": 7,
+        "after": 5
+      },
+      {
+        "source": "validation:natural200",
+        "code": "rroralofebybofwrde",
+        "gold": "嗰個即係溝通係點樣",
+        "before": 55,
+        "after": 32
+      },
+      {
+        "source": "validation:natural200",
+        "code": "rrorwidinkmrvorsnyok",
+        "gold": "嗰個母機又可以另外做",
+        "before": 54,
+        "after": 36
+      },
+      {
+        "source": "validation:natural200",
+        "code": "etebmyhuhirr",
+        "gold": "澄清下先得啊",
+        "before": 14,
+        "after": 8
+      },
+      {
+        "source": "validation:natural200",
+        "code": "rkrpisabrwqbrkmkrrr",
+        "gold": "噉呢成日周圍同左右啊",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:natural200",
+        "code": "edofrfieokonosrr",
+        "gold": "淨係喺度做創作啊",
+        "before": 8,
+        "after": 2
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hirrhikbkbciodrr",
+        "gold": "得唔得有冇公仔啊",
+        "before": 13,
+        "after": 6
+      },
+      {
+        "source": "validation:natural200",
+        "code": "bhogkjowrfrmp",
+        "gold": "睇住大家點焗死",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:natural200",
+        "code": "rkmljorrorhdhmrpkbkbhpyerp",
+        "gold": "噉而家嗰個學生呢有冇乖返呢",
+        "before": 10,
+        "after": 8
+      },
+      {
+        "source": "validation:natural200",
+        "code": "jlofleygrmfhfh",
+        "gold": "都係複雜咗少少",
+        "before": 3,
+        "after": 4
+      },
+      {
+        "source": "validation:natural200",
+        "code": "vrwdwklayrchrrviorbrhd",
+        "gold": "如果默書高分嗰幾個同學",
+        "before": 4,
+        "after": 6
+      },
+      {
+        "source": "validation:natural200",
+        "code": "kbrihgmvruvkyuwrbf",
+        "gold": "有啲重要嘅變遷固然",
+        "before": 18,
+        "after": 20
+      },
+      {
+        "source": "validation:natural200",
+        "code": "rkyuhiosrrocov",
+        "gold": "噉就等佢唔傾偈",
+        "before": 19,
+        "after": 14
+      },
+      {
+        "source": "validation:natural200",
+        "code": "kjoogrfieyr",
+        "gold": "大家坐喺度話",
+        "before": 5,
+        "after": 4
+      },
+      {
+        "source": "validation:natural200",
+        "code": "tcjcofvejlkbrn",
+        "gold": "其實無線都有喇",
+        "before": 16,
+        "after": 12
+      },
+      {
+        "source": "validation:natural200",
+        "code": "hiviaikbycyrrr",
+        "gold": "我幾時有讀過啊",
+        "before": 7,
+        "after": 2
+      },
+      {
+        "source": "validation:public200",
+        "code": "hirrncpqyrmofgior",
+        "gold": "我唔小心拆咗你封信",
+        "before": 22,
+        "after": 23
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofyarryaosrdrd",
+        "gold": "你識唔識佢哋㗎",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:public200",
+        "code": "ipyokbhiokhirmvd",
+        "gold": "應該冇我做得咁好",
+        "before": 16,
+        "after": 17
+      },
+      {
+        "source": "validation:public200",
+        "code": "hpspofekelaekrugsyb",
+        "gold": "悉尼係澳洲最大嘅城市",
+        "before": 6,
+        "after": 9
+      },
+      {
+        "source": "validation:public200",
+        "code": "dpruyrmrvorehisgomvfmn",
+        "gold": "想嘅話可以嚟我屋企練琴",
+        "before": 1,
+        "after": 3
+      },
+      {
+        "source": "validation:public200",
+        "code": "osoaygogofoeqqa",
+        "gold": "佢會望住你隻手指",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:public200",
+        "code": "niyiofgbrmhirmnipv",
+        "gold": "多謝你幫咗我咁多忙",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:public200",
+        "code": "osqhsprrmnhiybwn",
+        "gold": "佢扮聽唔到我講野",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:public200",
+        "code": "rryojrdmbuceojhi",
+        "gold": "唔該寄本目錄俾我",
+        "before": 35,
+        "after": 23
+      },
+      {
+        "source": "validation:public200",
+        "code": "hiyqriyrofor",
+        "gold": "我遲啲話你知",
+        "before": 5,
+        "after": 9
+      },
+      {
+        "source": "validation:public200",
+        "code": "ribvekyumrrehuure",
+        "gold": "啲眼淚就一路滮出嚟",
+        "before": 37,
+        "after": 38
+      },
+      {
+        "source": "validation:public200",
+        "code": "hivworrraikbymyavdfg",
+        "gold": "我細個嗰時有上音樂堂",
+        "before": 19,
+        "after": 15
+      },
+      {
+        "source": "validation:public200",
+        "code": "ddtkrrdpymmuiu",
+        "gold": "森美唔想上電視",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:public200",
+        "code": "wsrrnjyulwmlkmnj",
+        "gold": "嬲嗰陣就由一數到十",
+        "before": 89,
+        "after": 74
+      },
+      {
+        "source": "validation:public200",
+        "code": "osqrgoawhinrvdrimubc",
+        "gold": "佢搶走晒我阿妹啲玩具",
+        "before": 2,
+        "after": 3
+      },
+      {
+        "source": "validation:public200",
+        "code": "pnrroahuhiaprurq",
+        "gold": "乜唔會覺得悶嘅咩",
+        "before": 1,
+        "after": 3
+      },
+      {
+        "source": "validation:public200",
+        "code": "hivichcgiotnbumnosgormohorinhlie",
+        "gold": "我幾分鐘之前見到佢走咗入個廁所度",
+        "before": 30,
+        "after": 4
+      },
+      {
+        "source": "validation:public200",
+        "code": "orswhmrlhipeperkedrdre",
+        "gold": "個醫生叫我慢慢噉深呼吸",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:public200",
+        "code": "rfnywmhmerofhdnyyrruaeogysei",
+        "gold": "喺外國生活係學外語嘅最佳方法",
+        "before": 3,
+        "after": 4
+      },
+      {
+        "source": "validation:public200",
+        "code": "mrrrmrvoviylvkyadijkvwgjfhfhrh",
+        "gold": "可唔可以將部收音機較細聲少少呀",
+        "before": 2,
+        "after": 5
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofmorkbrqyuybrqruo",
+        "gold": "係一個有咩就講咩嘅人",
+        "before": 2,
+        "after": 3
+      },
+      {
+        "source": "validation:public200",
+        "code": "hirddporspaoarroaabmk",
+        "gold": "我哋想知聽日會唔會晴天",
+        "before": 10,
+        "after": 15
+      },
+      {
+        "source": "validation:public200",
+        "code": "rfiedmsftpwv",
+        "gold": "喺度整緊花園",
+        "before": 3,
+        "after": 2
+      },
+      {
+        "source": "validation:public200",
+        "code": "vdtirrogrmajqnmuyrppofep",
+        "gold": "好對唔住咁早打電話比你添",
+        "before": 16,
+        "after": 15
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofrfmnrrtrrrppnrkbbqrt",
+        "gold": "你喺到喊苦喊忽夠冇用啦",
+        "before": 9,
+        "after": 15
+      },
+      {
+        "source": "validation:public200",
+        "code": "rpgiorofojofrd",
+        "gold": "呢封信係俾你㗎",
+        "before": 38,
+        "after": 23
+      },
+      {
+        "source": "validation:public200",
+        "code": "orhehmodqrrmorvodorov",
+        "gold": "個後生仔搶咗個女仔個袋",
+        "before": 15,
+        "after": 19
+      },
+      {
+        "source": "validation:public200",
+        "code": "rgbfhibrosoghivdyl",
+        "gold": "雖然我同佢住得好近",
+        "before": 30,
+        "after": 31
+      },
+      {
+        "source": "validation:public200",
+        "code": "hirdodhpjchcgrt",
+        "gold": "我哋休息十分鐘啦",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:public200",
+        "code": "virxdlpuphft",
+        "gold": "將嚿麵包切粒",
+        "before": 15,
+        "after": 11
+      },
+      {
+        "source": "validation:public200",
+        "code": "osrilanimnbhrraw",
+        "gold": "佢啲書多到睇唔晒",
+        "before": 5,
+        "after": 4
+      },
+      {
+        "source": "validation:public200",
+        "code": "lwrpieogjjgifjjyrjchcgyumn",
+        "gold": "由呢度坐車去火車站十分鐘就到",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:public200",
+        "code": "rrvdrmnojmrt",
+        "gold": "唔好咁孤寒啦",
+        "before": 3,
+        "after": 2
+      },
+      {
+        "source": "validation:public200",
+        "code": "osojrmoskdyljjhibh",
+        "gold": "佢俾咗佢架新車我睇",
+        "before": 2,
+        "after": 3
+      },
+      {
+        "source": "validation:public200",
+        "code": "osoctvrmrrornohu",
+        "gold": "佢領養咗嗰個孤兒",
+        "before": 31,
+        "after": 33
+      },
+      {
+        "source": "validation:public200",
+        "code": "hirrojofbqhijecuhq",
+        "gold": "我唔俾你用我支鋼筆",
+        "before": 13,
+        "after": 14
+      },
+      {
+        "source": "validation:public200",
+        "code": "osrdfwbfkbritcybwr",
+        "gold": "佢哋當然有啲共通點",
+        "before": 41,
+        "after": 40
+      },
+      {
+        "source": "validation:public200",
+        "code": "hirdrfgdmyqurmorjm",
+        "gold": "我哋喺地下掘咗個窿",
+        "before": 37,
+        "after": 39
+      },
+      {
+        "source": "validation:public200",
+        "code": "hirdmvhdsaqebfmltiyugu",
+        "gold": "我哋要學習泰然面對逆境",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofwrnqofjlmvqbmnrirnrmleygra",
+        "gold": "你點解係都要搞到啲嘢咁複雜啫",
+        "before": 32,
+        "after": 12
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofsparerrrejlyrgjojhisprl",
+        "gold": "你聽日嚟唔嚟都話聲俾我聽吖",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofcgypybrqrdybrqrg",
+        "gold": "你鍾意講咩咪講咩囉",
+        "before": 27,
+        "after": 22
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "osrdmoorjckskibpmdghppjcdvdmrrvdbh",
+        "gold": "佢哋兩個實力太懸殊場比賽根本唔好睇",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "rpghyjybsuvmyghnrmvdmioeyssuvmkbawylruybwr",
+        "gold": "呢場辯論已經進行咗好耐雙方已經冇晒新嘅論點",
+        "before": 24,
+        "after": 32
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "hioarmhqksjjm",
+        "gold": "我借咗筆大耳窿",
+        "before": 8,
+        "after": 5
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "osonafbilrmouebsiaokrqre",
+        "gold": "佢今日精神咁飽滿尋日做咩嚟",
+        "before": 34,
+        "after": 19
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "rpylreigdireksgrmsjphvjlremnohgi",
+        "gold": "呢部吸塵機吸力超勁老鼠都吸到入去",
+        "before": 39,
+        "after": 11
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "himhejqofyumprn",
+        "gold": "我一反擊你就死喇",
+        "before": 1,
+        "after": 5
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "ofpkrigiswnurtmljojtbfnpmvofokekjorr",
+        "gold": "你快啲去醫院啦而家十萬火急要你做決定啊",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "oshdrurnvdygpnjlyari",
+        "gold": "佢學嘅嘢好雜乜都識啲",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "onaulhfvdniookhlriewdvvdfe",
+        "gold": "今晚中秋好多人做節啲酒樓好爆",
+        "before": 5,
+        "after": 8
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "spaumymgiovvdrnrt",
+        "gold": "聽晚一於去食好嘢啦",
+        "before": 12,
+        "after": 14
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "osrrnicgypbrncbbkemu",
+        "gold": "佢唔多鍾意同小朋友玩",
+        "before": 3,
+        "after": 1
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "onaofohhmvoreaeiwruma",
+        "gold": "今日係入冬以嚟最凍嘅一日",
+        "before": 24,
+        "after": 37
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "osfwoghisgomomltnhrhiieva",
+        "gold": "佢當住我屋企人面前向我求婚",
+        "before": 5,
+        "after": 1
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "rfodokyiacymoqjmoofvdhgmvruqiohja",
+        "gold": "喺氣候議題上年輕人係好重要嘅持份者",
+        "before": 11,
+        "after": 20
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "himvwrokhumrvooiofbeod",
+        "gold": "我要點做先可以令你服氣",
+        "before": 2,
+        "after": 6
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "onqrtmbtrgioaqbuuoolrd",
+        "gold": "停手啦再落去會搞出人命㗎",
+        "before": 17,
+        "after": 23
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "osofjphncivmsoutjwedhiheljtkhg",
+        "gold": "佢係老行尊經驗豐富深得後輩敬重",
+        "before": 26,
+        "after": 29
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "ostarmodvdqrbvruydoflr",
+        "gold": "佢著咗條好搶眼嘅迷你裙",
+        "before": 27,
+        "after": 31
+      },
+      {
+        "source": "validation:fresh-ud",
+        "code": "ofnrhigilpdm",
+        "gold": "你陪我去北極",
+        "before": 20,
+        "after": 26
+      },
+      {
+        "source": "validation:fresh-ud",
+        "code": "rrofhirrokqtofrt",
+        "gold": "唔係我唔使搵你啦",
+        "before": 42,
+        "after": 22
+      },
+      {
+        "source": "validation:fresh-ud",
+        "code": "hioghgpuawofrt",
+        "gold": "我全程包晒你啦",
+        "before": 3,
+        "after": 2
+      },
+      {
+        "source": "validation:fresh-ud",
+        "code": "edofoghljbrriejl",
+        "gold": "淨係坐郵輪嗰度都",
+        "before": 1,
+        "after": 2
+      },
+      {
+        "source": "validation:fresh-ud",
+        "code": "sgomofrdrporrp",
+        "gold": "屋企係咪呢個呢",
+        "before": 2,
+        "after": 1
+      },
+      {
+        "source": "validation:fresh-ud",
+        "code": "jlrtofievdorsodi",
+        "gold": "都嗌你度好個尺寸",
+        "before": 19,
+        "after": 17
+      }
+    ]
+  },
+  "calibration_only": true,
+  "protocol_sha256": "5ce5ae39a0325aec2cb073255ad2975a7ded63b8e7837873c28a6c52ad41e49f",
+  "scored_sha256": "c3197fa18c9ab0d85265efb38dc9ab412cbb0212db261ec7d1919fb05f31a354",
+  "weights_sha256": "e52aa4467fc70f9fbfd89c1fef94dae60462348677a67f641eb11b5e1d942837",
+  "limit": "Candidate pools frozen; full native inference and regression guards required before selection/independent test. No private counts in this offline simulation."
+}

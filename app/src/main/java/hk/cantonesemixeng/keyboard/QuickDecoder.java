@@ -33,6 +33,7 @@ public final class QuickDecoder {
     private final CandidateRanker candidateRanker;
     private final CandidateRanker wordRanker;
     private final SentenceRanker sentenceRanker;
+    private final PhraseRelationRanker relationRanker;
     private final PrefixRanker prefixRanker;
     private final double clauseStartStrength;
     // Common HK particles can have low character-only corpus counts. Admit
@@ -122,6 +123,13 @@ public final class QuickDecoder {
     }
     public QuickDecoder(DictionaryEngine dictionary, Reader input, Reader hkInput, Reader cantoneseInput,
                         OfflineLanguageModel model, PhraseLanguageModel phraseModel, Reader chatInput,
+                        CandidateRanker candidateRanker, CandidateRanker wordRanker, SentenceRanker sentenceRanker,
+                        PrefixRanker prefixRanker, PhraseRelationRanker relationRanker) throws IOException {
+        this(dictionary,input,hkInput,cantoneseInput,model,phraseModel,chatInput,candidateRanker,
+            wordRanker,CLAUSE_START_STRENGTH,sentenceRanker,prefixRanker,relationRanker);
+    }
+    public QuickDecoder(DictionaryEngine dictionary, Reader input, Reader hkInput, Reader cantoneseInput,
+                        OfflineLanguageModel model, PhraseLanguageModel phraseModel, Reader chatInput,
                         CandidateRanker candidateRanker, CandidateRanker wordRanker, double clauseStartStrength,
                         SentenceRanker sentenceRanker) throws IOException {
         this(dictionary,input,hkInput,cantoneseInput,model,phraseModel,chatInput,candidateRanker,
@@ -131,12 +139,20 @@ public final class QuickDecoder {
                         OfflineLanguageModel model, PhraseLanguageModel phraseModel, Reader chatInput,
                         CandidateRanker candidateRanker, CandidateRanker wordRanker, double clauseStartStrength,
                         SentenceRanker sentenceRanker, PrefixRanker prefixRanker) throws IOException {
+        this(dictionary,input,hkInput,cantoneseInput,model,phraseModel,chatInput,candidateRanker,
+            wordRanker,clauseStartStrength,sentenceRanker,prefixRanker,null);
+    }
+    public QuickDecoder(DictionaryEngine dictionary, Reader input, Reader hkInput, Reader cantoneseInput,
+                        OfflineLanguageModel model, PhraseLanguageModel phraseModel, Reader chatInput,
+                        CandidateRanker candidateRanker, CandidateRanker wordRanker, double clauseStartStrength,
+                        SentenceRanker sentenceRanker, PrefixRanker prefixRanker, PhraseRelationRanker relationRanker) throws IOException {
         if (!Double.isFinite(clauseStartStrength) || clauseStartStrength < 0 || clauseStartStrength > 2)
             throw new IllegalArgumentException("Invalid clause-start strength");
         this.dictionary = dictionary; this.model = model; this.phraseModel = phraseModel;
         this.candidateRanker = candidateRanker;
         this.wordRanker = wordRanker;
         this.sentenceRanker = sentenceRanker;
+        this.relationRanker = relationRanker;
         this.prefixRanker = prefixRanker;
         this.clauseStartStrength = clauseStartStrength;
         // Merge duplicate code variants and sources before creating prediction tails.
@@ -400,10 +416,30 @@ public final class QuickDecoder {
                 scores.put(path.text, path.score + sentenceRanker.score(context, path.text));
             String original = result.get(0);
             double support = structuralSupport(context, original);
+            String protectedWinner=original;
+            if(relationRanker!=null) {
+                String legacyWinner=support>0?original:Collections.max(result,Comparator.comparingDouble(scores::get));
+                boolean explicit=knownWord(legacyWinner)&&learned.applyAsInt(code,legacyWinner)>0
+                    ||learnedSequence(code,legacyWinner,learned)
+                    ||contextual!=null&&ContextLearning.supports(context,InputCandidate.chinese(dictionary,code,legacyWinner),contextual);
+                protectedWinner=legacyWinner;support=1;
+                Map<String,PhraseRelationRanker.Evidence> evidence=new HashMap<>();Map<String,Double> lifts=new HashMap<>();
+                for(String value:result)evidence.put(value,relationRanker.evidence(context,value));
+                PhraseRelationRanker.Evidence reference=evidence.get(legacyWinner);String best=legacyWinner;
+                for(String value:result) {
+                    PhraseRelationRanker.Evidence candidate=evidence.get(value);
+                    double lift=candidate.supportedOver(reference)?relationRanker.correction(candidate.raw,reference.raw):0;lifts.put(value,lift);
+                    scores.put(value,scores.get(value)+lift);
+                    if(scores.get(value)>scores.get(best))best=value;
+                }
+                if(!explicit&&!best.equals(legacyWinner)&&scores.get(best)>=scores.get(legacyWinner)+.25
+                        &&relationRanker.trustedPromotion(evidence.get(best),reference,lifts.get(best)))support=0;
+            }
             Comparator<String> order = Comparator.comparingDouble((String text) -> scores.get(text)).reversed();
             // Protect the established winner while preserving the residual
             // model's full relative order for every remaining candidate.
-            if (support > 0) order = Comparator.comparingInt((String text) -> text.equals(original) ? 0 : 1).thenComparing(order);
+            final String pinned=protectedWinner;
+            if (support > 0) order = Comparator.comparingInt((String text) -> text.equals(pinned) ? 0 : 1).thenComparing(order);
             result.sort(order);
         }
         // Explicit repeated choices outrank statistical guesses. Zero counts preserve

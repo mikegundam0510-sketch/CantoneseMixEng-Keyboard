@@ -1,0 +1,18 @@
+{
+  "training_protocol_sha256": "5ce5ae39a0325aec2cb073255ad2975a7ded63b8e7837873c28a6c52ad41e49f",
+  "initial_calibration_sha256": "219bc83238b03bb077438bbcc70d3e84ca9a8a6ea3ae44cf2f0a83364dac942f",
+  "reason": "Initial role model improves natural top5 but loses written first and public/fresh-written top5. Generic role density alone is insufficient evidence to promote an alternative.",
+  "policy": "Reference the actual legacy final winner, preserving it by default. Any lift requires two canonical lexical relation families with weights>0.1 and one new positively supported relation absent in the winner. A first override also needs lift>=0.5, adjusted gap>=0.25 and an adverse trained known-role/lexical pattern on the winner absent on the candidate. Unknown O-role patterns never justify overriding first. Explicit confirmation stays protected.",
+  "weights_unchanged": true,
+  "feature_extraction_unchanged": true,
+  "strength_grid": [
+    0.25,
+    0.5,
+    1,
+    1.5
+  ],
+  "selection": "Same803 now-known calibration cases and per-set no-first/top5/top20-loss rule; original regression gates remain. New796 reserve is still unopened. No outcome-dependent target removal or test retuning.",
+  "created_before_guarded_trial": true,
+  "strict_calibration_sha256": "12a2c7282a5293ed8f433d1d04fb84d04a2cf492873fe4e7d16a6103915bebe6",
+  "scale_amendment": "Strict0.1 lexical weight gate admits only14 of283 positive lexical features (median0.01734); no safe MRR gain. Use positive nonzero exported weights (already supported by>=2 independent training families) for lexical-family support, keeping actual lift>=0.5 and adjusted gap>=0.25. A first override must repair adverse known-pattern evidence or increase distinct supported non-negation relations. Negation alone is not evidence of greater coherence. Original first/explicit-choice protection and all no-loss/independent/latency rules remain."
+}

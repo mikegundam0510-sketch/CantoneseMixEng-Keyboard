@@ -1,0 +1,39 @@
+{
+  "baseline_revision": "21ede200e95cde63e18632ad5ac8b33629ea51fe",
+  "manifest_sha256": "9105809466feb939c33f25cc2ab86320f800bd2d382f86c63e4e35c9c9a6cbb8",
+  "model_sha256": {
+    "candidate_ranker.b64": "0fe065437c4b87ac3852440c69cf8140cd159241f723d4927b959fb7772d3f62",
+    "prefix_ranker.b64": "0929d45aab58f6dc80dc1772d0717ddb24309707425680692cf9fb21d241c811",
+    "sentence_ranker.b64": "3d6e6c3d73be95ab4366bda0eeb9fcf3ad01aca931f53cb651144f21bbbc28a8",
+    "word_ranker.b64": "58697234c7fe8fafd816c44c0d65e5bf152d08f7fbca52c801f63eb57b29a536"
+  },
+  "parameters": {
+    "epochs": 80,
+    "rate": 0.3,
+    "l2": 0.015,
+    "minimum_independent_support": 2,
+    "maximum_features": 6000
+  },
+  "source_mix": {
+    "train:hk:|train:ud:": 0.65,
+    "train:tatoeba:": 0.2,
+    "train:daily:|train:authored:": 0.15
+  },
+  "maximum_rivals_per_target": 3,
+  "maximum_training_score_gap": 3,
+  "strength_grid": [
+    0.25,
+    0.5,
+    1,
+    1.5
+  ],
+  "features": "Train-only longest lexeme up to4Han, typed role sequences2..4, subject/action, negation/action, classifier/noun category/head, action/object category/head, question/action and shared subject/negative/action/object categories. At most12 trailing Han context and6token history; each feature<=2. Complete sentences and evaluation POS never become features.",
+  "runtime": "Optional PRR1 positive residual max(0,strength*clip(candidateRaw-originalRaw,+-2)-0.1) over frozen original candidate pools/scores. Original structural first pin is retained except a higher adjusted-scoring candidate with lift>=0.5 and at least2 positive trained lexical-relation kinds can override by>=0.25. Explicit known-word/sequence/context confirmations remain protected. No raw confidence, beam, dictionary or learning-schema change.",
+  "selection": "Fresh written100 and source-disjoint UD film validation plus known660. Require no per-set first/top5/top20 loss; select equal-set MRR, tie lower strength. Intersect original regression eligibility before opening new heldout. Disable if ineffective or unsafe. Cases missing from original pool are never invented.",
+  "independent_test": "Frozen fresh written500 and source-disjoint UD parliament examples opened only after decision/guards. Previous800 and all older cases are regression material. No outcome-driven changes after opening reserve.",
+  "delivery": "Only independently useful first/top5 improvement with neither worse and passing existing regression, Single learning and quiet paired desktop latency<=1.2 can enable production asset. 1.0 requires original+5percentage-point head/top5 gates and physical Fold7 evidence; no APK on merely synthetic/calibration gains.",
+  "license": "HKCanCor CC BY4.0; original Tatoeba CC BY2.0 France; project authored examples; derived UD-Cantonese-HK lexicon/weights attributed and distributed under CC BY-SA4.0. words.hk NCDOL1.0 examples evaluation-only, never training or APK.",
+  "created_before_native_trial": true,
+  "feature_sha256": "8b5433c31c60c3f78693ffc8c5ced6e5f989eb81e04d6e8cc765aa6205051c97",
+  "semantic_categories": "Conservative exact project-authored noun groups, unknown nouns generic. Do not infer food/person/equipment from a shared last character; this prevents e.g. 錢包,花生,司機 category mistakes. Lexical head relation features remain learned evidence."
+}

@@ -1,0 +1,555 @@
+{
+  "baseline": {
+    "written200": {
+      "cases": 200,
+      "top1": 46,
+      "top5": 78,
+      "top20": 106,
+      "mrr": 0.30639596952754844
+    },
+    "authored60": {
+      "cases": 60,
+      "top1": 27,
+      "top5": 48,
+      "top20": 60,
+      "mrr": 0.5801404151404151
+    },
+    "natural200": {
+      "cases": 200,
+      "top1": 80,
+      "top5": 117,
+      "top20": 140,
+      "mrr": 0.4820719463285253
+    },
+    "public200": {
+      "cases": 200,
+      "top1": 77,
+      "top5": 131,
+      "top20": 154,
+      "mrr": 0.5107252097317887
+    },
+    "fresh-written100": {
+      "cases": 100,
+      "top1": 20,
+      "top5": 39,
+      "top20": 52,
+      "mrr": 0.2874729061787885
+    },
+    "fresh-ud": {
+      "cases": 43,
+      "top1": 20,
+      "top5": 29,
+      "top20": 35,
+      "mrr": 0.5507071943424453
+    }
+  },
+  "trials": {
+    "0.25": {
+      "written200": {
+        "cases": 200,
+        "top1": 46,
+        "top5": 78,
+        "top20": 106,
+        "mrr": 0.30639596952754844
+      },
+      "authored60": {
+        "cases": 60,
+        "top1": 27,
+        "top5": 48,
+        "top20": 60,
+        "mrr": 0.5801404151404151
+      },
+      "natural200": {
+        "cases": 200,
+        "top1": 80,
+        "top5": 117,
+        "top20": 140,
+        "mrr": 0.4820719463285253
+      },
+      "public200": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 131,
+        "top20": 154,
+        "mrr": 0.5104752097317887
+      },
+      "fresh-written100": {
+        "cases": 100,
+        "top1": 20,
+        "top5": 39,
+        "top20": 52,
+        "mrr": 0.2874729061787885
+      },
+      "fresh-ud": {
+        "cases": 43,
+        "top1": 20,
+        "top5": 29,
+        "top20": 35,
+        "mrr": 0.5507071943424453
+      }
+    },
+    "0.5": {
+      "written200": {
+        "cases": 200,
+        "top1": 46,
+        "top5": 78,
+        "top20": 106,
+        "mrr": 0.30639596952754844
+      },
+      "authored60": {
+        "cases": 60,
+        "top1": 27,
+        "top5": 48,
+        "top20": 60,
+        "mrr": 0.5801404151404151
+      },
+      "natural200": {
+        "cases": 200,
+        "top1": 80,
+        "top5": 117,
+        "top20": 140,
+        "mrr": 0.4820719463285253
+      },
+      "public200": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 131,
+        "top20": 155,
+        "mrr": 0.5107529875095664
+      },
+      "fresh-written100": {
+        "cases": 100,
+        "top1": 20,
+        "top5": 39,
+        "top20": 52,
+        "mrr": 0.2874729061787885
+      },
+      "fresh-ud": {
+        "cases": 43,
+        "top1": 20,
+        "top5": 29,
+        "top20": 35,
+        "mrr": 0.5507071943424453
+      }
+    },
+    "1": {
+      "written200": {
+        "cases": 200,
+        "top1": 46,
+        "top5": 78,
+        "top20": 106,
+        "mrr": 0.30632652508310404
+      },
+      "authored60": {
+        "cases": 60,
+        "top1": 27,
+        "top5": 48,
+        "top20": 60,
+        "mrr": 0.5793070818070818
+      },
+      "natural200": {
+        "cases": 200,
+        "top1": 80,
+        "top5": 117,
+        "top20": 141,
+        "mrr": 0.4824052796618586
+      },
+      "public200": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 132,
+        "top20": 156,
+        "mrr": 0.5117252097317887
+      },
+      "fresh-written100": {
+        "cases": 100,
+        "top1": 20,
+        "top5": 39,
+        "top20": 52,
+        "mrr": 0.28580623951212186
+      },
+      "fresh-ud": {
+        "cases": 43,
+        "top1": 20,
+        "top5": 29,
+        "top20": 35,
+        "mrr": 0.5507071943424453
+      }
+    },
+    "1.5": {
+      "written200": {
+        "cases": 200,
+        "top1": 46,
+        "top5": 79,
+        "top20": 106,
+        "mrr": 0.3064931917497707
+      },
+      "authored60": {
+        "cases": 60,
+        "top1": 27,
+        "top5": 48,
+        "top20": 60,
+        "mrr": 0.5784737484737484
+      },
+      "natural200": {
+        "cases": 200,
+        "top1": 80,
+        "top5": 117,
+        "top20": 141,
+        "mrr": 0.4824886129951919
+      },
+      "public200": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 131,
+        "top20": 156,
+        "mrr": 0.512308543065122
+      },
+      "fresh-written100": {
+        "cases": 100,
+        "top1": 20,
+        "top5": 39,
+        "top20": 52,
+        "mrr": 0.28580623951212186
+      },
+      "fresh-ud": {
+        "cases": 43,
+        "top1": 20,
+        "top5": 29,
+        "top20": 35,
+        "mrr": 0.5507071943424453
+      }
+    }
+  },
+  "eligible_strengths": [
+    "0.25",
+    "0.5",
+    "1",
+    "1.5"
+  ],
+  "selected_for_native_and_regression": "0.5",
+  "case_changes": {
+    "0.25": [
+      {
+        "source": "validation:natural200",
+        "code": "ofnehuyvysofkbvdge",
+        "gold": "你發覺裏邊係有樂趣",
+        "before": 23,
+        "after": 22
+      },
+      {
+        "source": "validation:public200",
+        "code": "osoaygogofoeqqa",
+        "gold": "佢會望住你隻手指",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:public200",
+        "code": "hivichcgiotnbumnosgormohorinhlie",
+        "gold": "我幾分鐘之前見到佢走咗入個廁所度",
+        "before": 30,
+        "after": 21
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofwrnqofjlmvqbmnrirnrmleygra",
+        "gold": "你點解係都要搞到啲嘢咁複雜啫",
+        "before": 32,
+        "after": 31
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "osofjphncivmsoutjwedhiheljtkhg",
+        "gold": "佢係老行尊經驗豐富深得後輩敬重",
+        "before": 26,
+        "after": 27
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "rporodorohmlpuqrawhlkboelk",
+        "gold": "呢個集合入面包括晒所有雙數",
+        "before": 60,
+        "after": 62
+      }
+    ],
+    "0.5": [
+      {
+        "source": "validation:written200",
+        "code": "spybrporkbciopolofjdvaofkbdioarr",
+        "gold": "聽講呢個有錢佬仲係未婚你有機會喎",
+        "before": 60,
+        "after": 62
+      },
+      {
+        "source": "validation:written200",
+        "code": "oskikikckcrkjlrrorofrdjcofoeru",
+        "gold": "佢瘋瘋癲癲噉都唔知係咪真係傻嘅",
+        "before": 43,
+        "after": 44
+      },
+      {
+        "source": "validation:natural200",
+        "code": "ofnehuyvysofkbvdge",
+        "gold": "你發覺裏邊係有樂趣",
+        "before": 23,
+        "after": 22
+      },
+      {
+        "source": "validation:public200",
+        "code": "osoaygogofoeqqa",
+        "gold": "佢會望住你隻手指",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:public200",
+        "code": "hivichcgiotnbumnosgormohorinhlie",
+        "gold": "我幾分鐘之前見到佢走咗入個廁所度",
+        "before": 30,
+        "after": 18
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofwrnqofjlmvqbmnrirnrmleygra",
+        "gold": "你點解係都要搞到啲嘢咁複雜啫",
+        "before": 32,
+        "after": 28
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "osofjphncivmsoutjwedhiheljtkhg",
+        "gold": "佢係老行尊經驗豐富深得後輩敬重",
+        "before": 26,
+        "after": 27
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "rporodorohmlpuqrawhlkboelk",
+        "gold": "呢個集合入面包括晒所有雙數",
+        "before": 60,
+        "after": 62
+      }
+    ],
+    "1": [
+      {
+        "source": "validation:written200",
+        "code": "spybrporkbciopolofjdvaofkbdioarr",
+        "gold": "聽講呢個有錢佬仲係未婚你有機會喎",
+        "before": 60,
+        "after": 62
+      },
+      {
+        "source": "validation:written200",
+        "code": "oskikikckcrkjlrrorofrdjcofoeru",
+        "gold": "佢瘋瘋癲癲噉都唔知係咪真係傻嘅",
+        "before": 43,
+        "after": 45
+      },
+      {
+        "source": "validation:written200",
+        "code": "mljorporoqopdpqtorebjrjltg",
+        "gold": "而家呢個年代想揾個清官都難",
+        "before": 8,
+        "after": 9
+      },
+      {
+        "source": "validation:written200",
+        "code": "hibhordokyuvoifofqdebvbummqojcpbofahhdtgfb",
+        "gold": "我睇人哋做就以為係手板眼見工夫實情係易學難精",
+        "before": 70,
+        "after": 71
+      },
+      {
+        "source": "validation:authored60",
+        "code": "osonaudpviofoorrry",
+        "gold": "佢今晚想約你飲咖啡",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:natural200",
+        "code": "ofnehuyvysofkbvdge",
+        "gold": "你發覺裏邊係有樂趣",
+        "before": 23,
+        "after": 15
+      },
+      {
+        "source": "validation:public200",
+        "code": "osoaygogofoeqqa",
+        "gold": "佢會望住你隻手指",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:public200",
+        "code": "hivichcgiotnbumnosgormohorinhlie",
+        "gold": "我幾分鐘之前見到佢走咗入個廁所度",
+        "before": 30,
+        "after": 5
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofwrnqofjlmvqbmnrirnrmleygra",
+        "gold": "你點解係都要搞到啲嘢咁複雜啫",
+        "before": 32,
+        "after": 20
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "himvwrokhumrvooiofbeod",
+        "gold": "我要點做先可以令你服氣",
+        "before": 2,
+        "after": 3
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "osofjphncivmsoutjwedhiheljtkhg",
+        "gold": "佢係老行尊經驗豐富深得後輩敬重",
+        "before": 26,
+        "after": 28
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "rporodorohmlpuqrawhlkboelk",
+        "gold": "呢個集合入面包括晒所有雙數",
+        "before": 60,
+        "after": 64
+      }
+    ],
+    "1.5": [
+      {
+        "source": "validation:written200",
+        "code": "hirfdvmywcrmmdmabhfh",
+        "gold": "我喺樓下買咗碟豬腸粉",
+        "before": 6,
+        "after": 5
+      },
+      {
+        "source": "validation:written200",
+        "code": "spybrporkbciopolofjdvaofkbdioarr",
+        "gold": "聽講呢個有錢佬仲係未婚你有機會喎",
+        "before": 60,
+        "after": 62
+      },
+      {
+        "source": "validation:written200",
+        "code": "oskikikckcrkjlrrorofrdjcofoeru",
+        "gold": "佢瘋瘋癲癲噉都唔知係咪真係傻嘅",
+        "before": 43,
+        "after": 45
+      },
+      {
+        "source": "validation:written200",
+        "code": "mljorporoqopdpqtorebjrjltg",
+        "gold": "而家呢個年代想揾個清官都難",
+        "before": 8,
+        "after": 9
+      },
+      {
+        "source": "validation:written200",
+        "code": "rfciwvbumnkbtincpborrfieqntrjborvruvdoovdjf",
+        "gold": "喺公園見到有對小情侶喺度打茄輪個女嘅好似好索",
+        "before": 46,
+        "after": 47
+      },
+      {
+        "source": "validation:written200",
+        "code": "rpaajmniofokhngshmyp",
+        "gold": "呢間士多係做街坊生意",
+        "before": 40,
+        "after": 41
+      },
+      {
+        "source": "validation:written200",
+        "code": "hibhordokyuvoifofqdebvbummqojcpbofahhdtgfb",
+        "gold": "我睇人哋做就以為係手板眼見工夫實情係易學難精",
+        "before": 70,
+        "after": 69
+      },
+      {
+        "source": "validation:authored60",
+        "code": "hionadpviofoorrry",
+        "gold": "我今日想約你飲咖啡",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:authored60",
+        "code": "osonaudpviofoorrry",
+        "gold": "佢今晚想約你飲咖啡",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:natural200",
+        "code": "ofnehuyvysofkbvdge",
+        "gold": "你發覺裏邊係有樂趣",
+        "before": 23,
+        "after": 12
+      },
+      {
+        "source": "validation:public200",
+        "code": "osoaygogofoeqqa",
+        "gold": "佢會望住你隻手指",
+        "before": 4,
+        "after": 6
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofrrmgkbviniord",
+        "gold": "你嗰班有幾多人㗎",
+        "before": 22,
+        "after": 23
+      },
+      {
+        "source": "validation:public200",
+        "code": "hivichcgiotnbumnosgormohorinhlie",
+        "gold": "我幾分鐘之前見到佢走咗入個廁所度",
+        "before": 30,
+        "after": 3
+      },
+      {
+        "source": "validation:public200",
+        "code": "ofwrnqofjlmvqbmnrirnrmleygra",
+        "gold": "你點解係都要搞到啲嘢咁複雜啫",
+        "before": 32,
+        "after": 15
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "onaofohhmvoreaeiwruma",
+        "gold": "今日係入冬以嚟最凍嘅一日",
+        "before": 24,
+        "after": 26
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "himvwrokhumrvooiofbeod",
+        "gold": "我要點做先可以令你服氣",
+        "before": 2,
+        "after": 3
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "osofjphncivmsoutjwedhiheljtkhg",
+        "gold": "佢係老行尊經驗豐富深得後輩敬重",
+        "before": 26,
+        "after": 29
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "rporodorohmlpuqrawhlkboelk",
+        "gold": "呢個集合入面包括晒所有雙數",
+        "before": 60,
+        "after": 64
+      }
+    ]
+  },
+  "calibration_only": true,
+  "protocol_sha256": "5ce5ae39a0325aec2cb073255ad2975a7ded63b8e7837873c28a6c52ad41e49f",
+  "policy_sha256": "3b5eeee10dec1a45bb0bdab0cac9e2b1d8af97bf62760a594aa524a4c504bca7",
+  "scored_sha256": "c3197fa18c9ab0d85265efb38dc9ab412cbb0212db261ec7d1919fb05f31a354",
+  "weights_sha256": "e52aa4467fc70f9fbfd89c1fef94dae60462348677a67f641eb11b5e1d942837",
+  "limit": "Candidate pools frozen; full native inference and regression guards required before selection/independent test. No private counts in this offline simulation."
+}

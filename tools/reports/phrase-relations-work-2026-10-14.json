@@ -1,0 +1,269 @@
+{
+  "date": "2026-10-14",
+  "baseline_revision": "21ede200e95cde63e18632ad5ac8b33629ea51fe",
+  "version_name": "0.6.39",
+  "version_code": 46,
+  "implementation": {
+    "additional_hk_examples": 2000,
+    "additional_ud_examples": 300,
+    "training_rows": 5381,
+    "lexicon_entries": 5610,
+    "mined_same_code_pairs": 2938,
+    "source_families": 782,
+    "exported_features": 3186,
+    "trial_model_bytes": 68405,
+    "relation_types": [
+      "subject/action",
+      "action/object category/head",
+      "negation/action",
+      "classifier/noun category/head",
+      "question/action",
+      "typed role sequences"
+    ],
+    "optional_runtime": true,
+    "production_asset_bundled": false,
+    "changed_dictionary": false,
+    "changed_signing_or_application_id": false,
+    "changed_learning_schema": false
+  },
+  "frozen_selection_sha256": "e015102f1178a56c92ea5e20d013dd4f9f6ba0ebfc413229ce13c9b908edb585",
+  "independent": {
+    "before": {
+      "fresh-written500": {
+        "cases": 500,
+        "top1": 94,
+        "top5": 178,
+        "top20": 250,
+        "mrr": 0.2641056076620318
+      },
+      "fresh-ud-legco": {
+        "cases": 296,
+        "top1": 86,
+        "top5": 160,
+        "top20": 192,
+        "mrr": 0.39633305241857875
+      }
+    },
+    "after": {
+      "fresh-written500": {
+        "cases": 500,
+        "top1": 94,
+        "top5": 177,
+        "top20": 250,
+        "mrr": 0.26407574132953393
+      },
+      "fresh-ud-legco": {
+        "cases": 296,
+        "top1": 86,
+        "top5": 160,
+        "top20": 192,
+        "mrr": 0.39633305241857875
+      }
+    },
+    "aggregate_before": {
+      "cases": 796,
+      "top1": 180,
+      "top5": 338,
+      "top20": 442
+    },
+    "aggregate_after": {
+      "cases": 796,
+      "top1": 180,
+      "top5": 337,
+      "top20": 442
+    },
+    "changed_target_ranks": [
+      {
+        "source": "heldout:fresh-written500",
+        "code": "osoforvduunrruvvvrjfqqgkbkagfhvf",
+        "target": "佢係個好出名嘅網絡寫手擁有大量粉絲",
+        "before": 19,
+        "after": 18
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "osruoewroftsks",
+        "target": "佢嘅優點係勤力",
+        "before": 15,
+        "after": 10
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "ofofyssrruycrprr",
+        "target": "你係邊區嘅選民啊",
+        "before": 7,
+        "after": 8
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "mnofhusuhmhuybvruaiokyuabhackwiruprs",
+        "target": "到你自己生兒育女嘅時候就明白父母嘅心嘞",
+        "before": 5,
+        "after": 6
+      }
+    ],
+    "changed_candidate_lists": 68,
+    "selection_written_before_decoding": true,
+    "retuned_after_reserve": false,
+    "now_observed_evaluation_material": true,
+    "target_sha256": "b7980fc5013c6a1f01d742a3c786bcf194b7086198005498fd9e00c096898d13"
+  },
+  "regression": {
+    "before": {
+      "cases": 1594,
+      "top1": 758,
+      "top5": 1119,
+      "top20": 1263
+    },
+    "after": {
+      "cases": 1594,
+      "top1": 758,
+      "top5": 1120,
+      "top20": 1264
+    },
+    "per_set_no_loss": true,
+    "calibration_only": true
+  },
+  "learning": {
+    "cases": 32,
+    "simulated_single_confirmations": 3,
+    "legacy_top1": 30,
+    "contextual_top1": 32,
+    "sequence_records": 489,
+    "phone_data_used": false,
+    "source": "Existing ContextLearningEvaluation with optional trial loader; source unchanged learning schemas"
+  },
+  "verification": {
+    "java": {
+      "tests": 216,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "python_tests": 27,
+    "lint": {
+      "Warning": 25
+    },
+    "feature_parity": {
+      "feature_vectors": 5201,
+      "serialized_scores": 5201,
+      "guarded_lifts": 5201,
+      "max_error": 0,
+      "parity": true
+    },
+    "enabled_native_parity": {
+      "cases": 803,
+      "candidate_lists_equal": true,
+      "exact_codes": true
+    },
+    "absent_native_parity": {
+      "cases": 803,
+      "all_candidate_lists_equal": true,
+      "exact_codes": true,
+      "reference_revision": "21ede20"
+    },
+    "reproduced_data_model_asset": true
+  },
+  "latency": {
+    "method": "One JVM; isolated class loaders; alternating before/after order; quiet CPU0 desktop run",
+    "warmup_passes": 12,
+    "samples_per_code": 15,
+    "rows": [
+      {
+        "code": "ofonaovrmrq",
+        "letters": 11,
+        "before_wall_ms": 82.559,
+        "after_wall_ms": 83.317,
+        "wall_ratio": 1.0091813127581486,
+        "before_cpu_ms": 81.812,
+        "after_cpu_ms": 83.273,
+        "cpu_ratio": 1.017858015938982
+      },
+      {
+        "code": "hmerrrysmlrp",
+        "letters": 12,
+        "before_wall_ms": 96.758,
+        "after_wall_ms": 98.066,
+        "wall_ratio": 1.0135182620558507,
+        "before_cpu_ms": 95.58,
+        "after_cpu_ms": 95.849,
+        "cpu_ratio": 1.0028143963172211
+      },
+      {
+        "code": "dpofvivcjutrmyyjvcqnjd",
+        "letters": 22,
+        "before_wall_ms": 250.515,
+        "after_wall_ms": 232.334,
+        "wall_ratio": 0.9274255034628666,
+        "before_cpu_ms": 246.186,
+        "after_cpu_ms": 229.571,
+        "cpu_ratio": 0.9325103783318304
+      },
+      {
+        "code": "ofykrmmsydwljpvwjd",
+        "letters": 18,
+        "before_wall_ms": 169.75,
+        "after_wall_ms": 158.715,
+        "wall_ratio": 0.9349926362297497,
+        "before_cpu_ms": 168.989,
+        "after_cpu_ms": 157.37,
+        "cpu_ratio": 0.9312440454704153
+      },
+      {
+        "code": "vkmmnkmrvordrjjj",
+        "letters": 16,
+        "before_wall_ms": 166.944,
+        "after_wall_ms": 153.996,
+        "wall_ratio": 0.9224410580793561,
+        "before_cpu_ms": 165.225,
+        "after_cpu_ms": 151.912,
+        "cpu_ratio": 0.9194250264790438
+      },
+      {
+        "code": "hihihihihihihihihihihihihihihihihihihihihihihihi",
+        "letters": 48,
+        "before_wall_ms": 663.06,
+        "after_wall_ms": 661.333,
+        "wall_ratio": 0.9973954091635749,
+        "before_cpu_ms": 656.364,
+        "after_cpu_ms": 652.509,
+        "cpu_ratio": 0.9941267345558257
+      }
+    ],
+    "maximum_wall_ratio": 1.0135182620558507,
+    "maximum_cpu_ratio": 1.017858015938982,
+    "ratio_limit": 1.2,
+    "passed": true,
+    "fold7_measurements": false
+  },
+  "delivery": {
+    "production_enabled": false,
+    "apk_produced": false,
+    "one_point_zero_reached": false,
+    "reason": "Independent first hits unchanged and top5 loses one; fails predeclared useful-gain/no-loss rule. Keep optional code and licensed training/evaluation artifacts only.",
+    "default_candidate_order_unchanged": true,
+    "private_learning_preserved": true
+  },
+  "limits": [
+    "Older public spoken dialogue/interview/parliament and dictionary examples do not measure contemporary Hong Kong private typing.",
+    "UD custom production-disjoint partition is not the official UD benchmark.",
+    "Existing earlier cases and every inspected pilot remain calibration/regression only.",
+    "The relation scorer is statistical word-role evidence, not a full dependency parser or a proof that other candidates are ungrammatical.",
+    "Training only mines reachable current final-pool targets; absent targets remain absent.",
+    "Desktop medians cannot establish Fold7 responsiveness or promised speedups."
+  ],
+  "licenses": "CC BY4.0 HKCanCor; CC BY2.0 France Tatoeba; project-authored rows; CC BY-SA4.0 UD-derived lexicon/weights/model. words.hk NCDOL1.0 evaluation-only, never training or APK.",
+  "evidence": {
+    "tools/reports/phrase-relations-2026-10-14/absent-parity.json": "1bb629253b378b29bb8cd30738c9defdaab7dabe253c412fed6b890427005db7",
+    "tools/reports/phrase-relations-2026-10-14/calibration.json": "d236a5a19ab93993faae8e4be8919861f4a831773073564fca444f77e44f9876",
+    "tools/reports/phrase-relations-2026-10-14/feature-parity.json": "890d554d21930b469494d17f55ba4678a090000d33d259e14a5cc83fd56a0215",
+    "tools/reports/phrase-relations-2026-10-14/heldout-paired.tsv": "3a9969e4a8c73b614b04e6349b2e58b56c7400bb2778b490ea8755d8f685cc47",
+    "tools/reports/phrase-relations-2026-10-14/independent.json": "5786bcb9c4ffd2390658340659ec7a79ad723fbc2d18963d93c0373439e9650e",
+    "tools/reports/phrase-relations-2026-10-14/latency.tsv": "d9f8156d0c05fc1af152b8d25b2e19e5d72c1f1e91c979ac39b05d813468402b",
+    "tools/reports/phrase-relations-2026-10-14/native-parity.json": "4253be454789119aa0c681f46ce33fe85b17f420d6fad42d1dc7883364f2cef8",
+    "tools/reports/phrase-relations-2026-10-14/regression.json": "8bee90343eddf4ce0f6040d45888ea147a022fcf97ebf67fc379390dffde592f",
+    "tools/reports/phrase-relations-2026-10-14/reproduction.json": "6170c7fd8cb2dd9e6791b9078ed8fab539ec448c5c61c3fb63ef2a04edcf8e63",
+    "tools/reports/phrase-relations-2026-10-14/strict-calibration.json": "12a2c7282a5293ed8f433d1d04fb84d04a2cf492873fe4e7d16a6103915bebe6",
+    "tools/reports/phrase-relations-2026-10-14/calibration-cases.tsv": "754f3b6c6f54673cbc06ca1cca7768deb4e7f943aa3d29c3b4e0daebad05b9ad"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "selected_strength": 0.5,
+  "calibration_sha256": "d236a5a19ab93993faae8e4be8919861f4a831773073564fca444f77e44f9876",
+  "native_parity": {
+    "cases": 803,
+    "candidate_lists_equal": true,
+    "exact_codes": true
+  },
+  "native_parity_sha256": "4253be454789119aa0c681f46ce33fe85b17f420d6fad42d1dc7883364f2cef8",
+  "policy_sha256": "3b5eeee10dec1a45bb0bdab0cac9e2b1d8af97bf62760a594aa524a4c504bca7",
+  "training_protocol_sha256": "5ce5ae39a0325aec2cb073255ad2975a7ded63b8e7837873c28a6c52ad41e49f",
+  "manifest_sha256": "9105809466feb939c33f25cc2ab86320f800bd2d382f86c63e4e35c9c9a6cbb8",
+  "weights_sha256": "e52aa4467fc70f9fbfd89c1fef94dae60462348677a67f641eb11b5e1d942837",
+  "asset_sha256": "0857105a06a8452fdab4459f734426f08bca7e773b6a0e56c7fb9399e0c02e65",
+  "heldout_sha256": "b7980fc5013c6a1f01d742a3c786bcf194b7086198005498fd9e00c096898d13",
+  "guards_sha256": "8bee90343eddf4ce0f6040d45888ea147a022fcf97ebf67fc379390dffde592f",
+  "guard_failures": [],
+  "personal_learning": "Three confirmations each,32cases; contextual32/32 first,489sequence records; identical original schemas.",
+  "java_tests": 216,
+  "python_tests": 27,
+  "lint_errors": 0,
+  "lint_warnings": 25,
+  "decision_written_before_heldout": true,
+  "runtime_source_sha256": {
+    "PhraseRelationRanker.java": "c558c8ddcffe716775e5cf3de8ba637e5537a1fdd6398bf5484e6c4a728e66ed",
+    "QuickDecoder.java": "6a4e60a1eedda94b41af29201499b77fb061791249447323898f32d50c236567",
+    "CantoneseMixEngKeyboardService.java": "705beac11be8e5484f47b06077fea94d6d5bda266393b12328e8531bb2d9195d"
+  },
+  "delivery": "Asset enablement requires useful independent first/top5 increase, neither metric worse, old guards and warmed desktop median ratio<=1.2. No1.0 without original major/device gates."
+}

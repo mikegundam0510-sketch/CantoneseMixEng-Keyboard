@@ -1,0 +1,20 @@
+{
+  "checks": {
+    "UD-LICENSE.txt": true,
+    "UD-README.md": true,
+    "evaluation-source.jsonl": true,
+    "heldout.tsv": true,
+    "lexicon.json": true,
+    "new-training.tsv": true,
+    "train.tsv": true,
+    "ud-evaluation-source.json": true,
+    "validation.tsv": true,
+    "manifest.json": true,
+    "model/weights.json": true,
+    "model/pairs.tsv": true,
+    "model/relation_ranker.b64": true,
+    "model/training-report.json": true,
+    "selected_asset": true
+  },
+  "all_equal": true
+}

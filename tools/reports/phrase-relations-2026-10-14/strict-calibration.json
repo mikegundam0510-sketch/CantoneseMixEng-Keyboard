@@ -1,0 +1,338 @@
+{
+  "baseline": {
+    "written200": {
+      "cases": 200,
+      "top1": 46,
+      "top5": 78,
+      "top20": 106,
+      "mrr": 0.30639596952754844
+    },
+    "authored60": {
+      "cases": 60,
+      "top1": 27,
+      "top5": 48,
+      "top20": 60,
+      "mrr": 0.5801404151404151
+    },
+    "natural200": {
+      "cases": 200,
+      "top1": 80,
+      "top5": 117,
+      "top20": 140,
+      "mrr": 0.4820719463285253
+    },
+    "public200": {
+      "cases": 200,
+      "top1": 77,
+      "top5": 131,
+      "top20": 154,
+      "mrr": 0.5107252097317887
+    },
+    "fresh-written100": {
+      "cases": 100,
+      "top1": 20,
+      "top5": 39,
+      "top20": 52,
+      "mrr": 0.2874729061787885
+    },
+    "fresh-ud": {
+      "cases": 43,
+      "top1": 20,
+      "top5": 29,
+      "top20": 35,
+      "mrr": 0.5507071943424453
+    }
+  },
+  "trials": {
+    "0.25": {
+      "written200": {
+        "cases": 200,
+        "top1": 46,
+        "top5": 78,
+        "top20": 106,
+        "mrr": 0.30639596952754844
+      },
+      "authored60": {
+        "cases": 60,
+        "top1": 27,
+        "top5": 48,
+        "top20": 60,
+        "mrr": 0.5801404151404151
+      },
+      "natural200": {
+        "cases": 200,
+        "top1": 80,
+        "top5": 117,
+        "top20": 140,
+        "mrr": 0.4820719463285253
+      },
+      "public200": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 131,
+        "top20": 154,
+        "mrr": 0.5104752097317887
+      },
+      "fresh-written100": {
+        "cases": 100,
+        "top1": 20,
+        "top5": 39,
+        "top20": 52,
+        "mrr": 0.2874729061787885
+      },
+      "fresh-ud": {
+        "cases": 43,
+        "top1": 20,
+        "top5": 29,
+        "top20": 35,
+        "mrr": 0.5507071943424453
+      }
+    },
+    "0.5": {
+      "written200": {
+        "cases": 200,
+        "top1": 46,
+        "top5": 78,
+        "top20": 106,
+        "mrr": 0.30639596952754844
+      },
+      "authored60": {
+        "cases": 60,
+        "top1": 27,
+        "top5": 48,
+        "top20": 60,
+        "mrr": 0.5801404151404151
+      },
+      "natural200": {
+        "cases": 200,
+        "top1": 80,
+        "top5": 117,
+        "top20": 140,
+        "mrr": 0.4820719463285253
+      },
+      "public200": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 131,
+        "top20": 154,
+        "mrr": 0.5104752097317887
+      },
+      "fresh-written100": {
+        "cases": 100,
+        "top1": 20,
+        "top5": 39,
+        "top20": 52,
+        "mrr": 0.2874729061787885
+      },
+      "fresh-ud": {
+        "cases": 43,
+        "top1": 20,
+        "top5": 29,
+        "top20": 35,
+        "mrr": 0.5507071943424453
+      }
+    },
+    "1": {
+      "written200": {
+        "cases": 200,
+        "top1": 46,
+        "top5": 78,
+        "top20": 106,
+        "mrr": 0.30639596952754844
+      },
+      "authored60": {
+        "cases": 60,
+        "top1": 27,
+        "top5": 48,
+        "top20": 60,
+        "mrr": 0.5801404151404151
+      },
+      "natural200": {
+        "cases": 200,
+        "top1": 80,
+        "top5": 117,
+        "top20": 140,
+        "mrr": 0.4820719463285253
+      },
+      "public200": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 131,
+        "top20": 154,
+        "mrr": 0.5104752097317887
+      },
+      "fresh-written100": {
+        "cases": 100,
+        "top1": 20,
+        "top5": 39,
+        "top20": 52,
+        "mrr": 0.2874729061787885
+      },
+      "fresh-ud": {
+        "cases": 43,
+        "top1": 20,
+        "top5": 29,
+        "top20": 35,
+        "mrr": 0.5507071943424453
+      }
+    },
+    "1.5": {
+      "written200": {
+        "cases": 200,
+        "top1": 46,
+        "top5": 78,
+        "top20": 106,
+        "mrr": 0.30639596952754844
+      },
+      "authored60": {
+        "cases": 60,
+        "top1": 27,
+        "top5": 48,
+        "top20": 60,
+        "mrr": 0.5801404151404151
+      },
+      "natural200": {
+        "cases": 200,
+        "top1": 80,
+        "top5": 117,
+        "top20": 140,
+        "mrr": 0.4820719463285253
+      },
+      "public200": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 131,
+        "top20": 154,
+        "mrr": 0.5104752097317887
+      },
+      "fresh-written100": {
+        "cases": 100,
+        "top1": 20,
+        "top5": 39,
+        "top20": 52,
+        "mrr": 0.2874729061787885
+      },
+      "fresh-ud": {
+        "cases": 43,
+        "top1": 20,
+        "top5": 29,
+        "top20": 35,
+        "mrr": 0.5507071943424453
+      }
+    }
+  },
+  "eligible_strengths": [
+    "0.25",
+    "0.5",
+    "1",
+    "1.5"
+  ],
+  "selected_for_native_and_regression": null,
+  "case_changes": {
+    "0.25": [
+      {
+        "source": "validation:public200",
+        "code": "osoaygogofoeqqa",
+        "gold": "佢會望住你隻手指",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "osofjphncivmsoutjwedhiheljtkhg",
+        "gold": "佢係老行尊經驗豐富深得後輩敬重",
+        "before": 26,
+        "after": 27
+      }
+    ],
+    "0.5": [
+      {
+        "source": "validation:written200",
+        "code": "spybrporkbciopolofjdvaofkbdioarr",
+        "gold": "聽講呢個有錢佬仲係未婚你有機會喎",
+        "before": 60,
+        "after": 62
+      },
+      {
+        "source": "validation:public200",
+        "code": "osoaygogofoeqqa",
+        "gold": "佢會望住你隻手指",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "osofjphncivmsoutjwedhiheljtkhg",
+        "gold": "佢係老行尊經驗豐富深得後輩敬重",
+        "before": 26,
+        "after": 27
+      }
+    ],
+    "1": [
+      {
+        "source": "validation:written200",
+        "code": "spybrporkbciopolofjdvaofkbdioarr",
+        "gold": "聽講呢個有錢佬仲係未婚你有機會喎",
+        "before": 60,
+        "after": 62
+      },
+      {
+        "source": "validation:written200",
+        "code": "hibhordokyuvoifofqdebvbummqojcpbofahhdtgfb",
+        "gold": "我睇人哋做就以為係手板眼見工夫實情係易學難精",
+        "before": 70,
+        "after": 71
+      },
+      {
+        "source": "validation:public200",
+        "code": "osoaygogofoeqqa",
+        "gold": "佢會望住你隻手指",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "osofjphncivmsoutjwedhiheljtkhg",
+        "gold": "佢係老行尊經驗豐富深得後輩敬重",
+        "before": 26,
+        "after": 28
+      }
+    ],
+    "1.5": [
+      {
+        "source": "validation:written200",
+        "code": "spybrporkbciopolofjdvaofkbdioarr",
+        "gold": "聽講呢個有錢佬仲係未婚你有機會喎",
+        "before": 60,
+        "after": 62
+      },
+      {
+        "source": "validation:written200",
+        "code": "hibhordokyuvoifofqdebvbummqojcpbofahhdtgfb",
+        "gold": "我睇人哋做就以為係手板眼見工夫實情係易學難精",
+        "before": 70,
+        "after": 69
+      },
+      {
+        "source": "validation:public200",
+        "code": "osoaygogofoeqqa",
+        "gold": "佢會望住你隻手指",
+        "before": 4,
+        "after": 5
+      },
+      {
+        "source": "validation:fresh-written100",
+        "code": "osofjphncivmsoutjwedhiheljtkhg",
+        "gold": "佢係老行尊經驗豐富深得後輩敬重",
+        "before": 26,
+        "after": 29
+      }
+    ]
+  },
+  "calibration_only": true,
+  "protocol_sha256": "5ce5ae39a0325aec2cb073255ad2975a7ded63b8e7837873c28a6c52ad41e49f",
+  "policy_sha256": "ea70e8539ace99f73cc4f3b79630fa934078c00d2ba134b07774a2b7738a964f",
+  "scored_sha256": "c3197fa18c9ab0d85265efb38dc9ab412cbb0212db261ec7d1919fb05f31a354",
+  "weights_sha256": "e52aa4467fc70f9fbfd89c1fef94dae60462348677a67f641eb11b5e1d942837",
+  "limit": "Candidate pools frozen; full native inference and regression guards required before selection/independent test. No private counts in this offline simulation."
+}

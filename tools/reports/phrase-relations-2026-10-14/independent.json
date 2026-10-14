@@ -1,0 +1,37 @@
+{
+  "before": {
+    "fresh-written500": {
+      "cases": 500,
+      "top1": 94,
+      "top5": 178,
+      "top20": 250,
+      "mrr": 0.2641056076620318
+    },
+    "fresh-ud-legco": {
+      "cases": 296,
+      "top1": 86,
+      "top5": 160,
+      "top20": 192,
+      "mrr": 0.39633305241857875
+    }
+  },
+  "after": {
+    "fresh-written500": {
+      "cases": 500,
+      "top1": 94,
+      "top5": 177,
+      "top20": 250,
+      "mrr": 0.26407574132953393
+    },
+    "fresh-ud-legco": {
+      "cases": 296,
+      "top1": 86,
+      "top5": 160,
+      "top20": 192,
+      "mrr": 0.39633305241857875
+    }
+  },
+  "selection_sha256": "e015102f1178a56c92ea5e20d013dd4f9f6ba0ebfc413229ce13c9b908edb585",
+  "selected_strength": 0.5,
+  "calibration_only": false
+}

@@ -1,0 +1,50 @@
+{
+  "algorithm": "Actual reachable same-code score errors plus near correct heads; shared typed word-role/category relations",
+  "protocol_sha256": "5ce5ae39a0325aec2cb073255ad2975a7ded63b8e7837873c28a6c52ad41e49f",
+  "manifest_sha256": "9105809466feb939c33f25cc2ab86320f800bd2d382f86c63e4e35c9c9a6cbb8",
+  "scored_sha256": "29a8c6bdc31e93c6a054fc0fc1b4cf78e6f3ba4e478b4f03f2eb74cc1228fcff",
+  "pairs_sha256": "d95784b05423023f375d9c1d9634e8143cf5b823cfdda1e8fd0b52400d9bacdf",
+  "weights_sha256": "e52aa4467fc70f9fbfd89c1fef94dae60462348677a67f641eb11b5e1d942837",
+  "lexicon_sha256": "f33bc169188b9b9f856d717e58ca0469f4cb4cf4834632456122a00f9d154550",
+  "cases": 5381,
+  "pairs": 2938,
+  "families": 782,
+  "counts": {
+    "observed": 5381,
+    "gold_first": 4104,
+    "head_protection_pairs": 1448,
+    "no_reachable_rival": 2711,
+    "gold_later": 860,
+    "reachable_error_pairs": 1490,
+    "gold_missing": 417
+  },
+  "training": {
+    "epochs": 80,
+    "rate": 0.3,
+    "l2": 0.015,
+    "minimum_independent_target_support": 2,
+    "feature_support_unit": "Distinct (source,context,code,positive); authored variants collapsed to family",
+    "features_considered": 8489,
+    "features_supported": 3199,
+    "features_exported": 3186,
+    "training_examples": 2553,
+    "initial_logistic_objective": 0.5366192395568192,
+    "final_logistic_objective": 0.44007692412659155,
+    "positive_features": 1538,
+    "negative_features": 1648,
+    "source_balance": {
+      "desired_mix": {
+        "train:hk:|train:ud:": 0.65,
+        "train:tatoeba:": 0.2,
+        "train:daily:|train:authored:": 0.15
+      },
+      "previous_weight_mass": {
+        "train:hk:|train:ud:": 34.89559808260428,
+        "train:tatoeba:": 606.3333333333322,
+        "train:daily:|train:authored:": 68.36111111111154
+      }
+    }
+  },
+  "encoded_bytes": 68405,
+  "limits": "Reachable final-pool ranking only. No dictionary examples/evaluation POS in training; no complete sentence feature; no beam or private-learning change. Training surrogate is unclipped, actual bounded native inference is separately verified."
+}

@@ -56,7 +56,7 @@ def extracts(text):
             normalized=re.sub(r'[，、,「」『』“”‘’"\s]','',sentence)
             if normalized and all(han(c) for c in normalized):yield number,normalized,value
 
-def prepare(source,output=DATA):
+def prepare(source,output=DATA,heldout_count=800):
     if digest(source)!=CSV_SHA:raise ValueError('Pinned dictionary example CSV required')
     reverse=reverse_codes();prior,inputs=existing_targets();rejected=Counter()
     frequencies={}
@@ -99,7 +99,7 @@ def prepare(source,output=DATA):
         row=min(members,key=lambda r:hashed(r['id']+':'+r['text']))
         pools[split].append(dict(row,group=group))
     selected={}
-    for split,count in (('validation',200),('heldout',800)):
+    for split,count in (('validation',200),('heldout',heldout_count)):
         rows=sorted(pools[split],key=lambda r:hashed('daily-written-sample-v1:'+r['group']))[:count]
         if len(rows)!=count:raise ValueError(f'Insufficient eligible {split}: {len(rows)}')
         selected[split]=rows
@@ -135,7 +135,7 @@ def prepare(source,output=DATA):
         'evaluation_source':'Public, reviewed words.hk dictionary examples mirrored in AlienKevin/wordshk-tools/examples/wordshk.csv',
         'evaluation_license':'Hong Kong Lexicography Limited; Non-Commercial Open Data License1.0; evaluation-only, not bundled in app or used for training.',
         'rejected':dict(rejected),'eligible_examples':len(records),'family_groups':len(groups),
-        'validation_cases':200,'heldout_cases':800,'training_cases':len(rows),
+        'validation_cases':200,'heldout_cases':heldout_count,'training_cases':len(rows),
         'licensed_training_cases':len(licensed),'authored_training_cases':len(training),
         'input_sha256':inputs,'authored_sha256':digest(DATA/'authored.json'),
         'file_sha256':{n:digest(output/n) for n in ('train.tsv','validation.tsv','heldout.tsv','validation-source.jsonl','heldout-source.jsonl')},
