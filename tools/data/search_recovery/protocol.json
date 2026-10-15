@@ -1,0 +1,58 @@
+{
+  "baseline_revision": "db4b363d63479506b337de66ded4b6adda59c89d",
+  "sequence": [
+    "bounded lexical endpoint search reserve",
+    "evidence-gated first-choice model"
+  ],
+  "calibration": "Previously observed500/796 and original903/1594 guards; fresh100 may select policy. Overlapping known sets are never independent evidence.",
+  "search_trials": {
+    "extra_paths": [
+      2,
+      4
+    ],
+    "raw_score_floor_below_48th": 2,
+    "proposal_contexts": 48,
+    "endpoint": "Longest known vocabulary suffix2..4 Han; bounded existing phrase evidence. Preserve all original survivors and existing hints/reserves. No target derived production hints."
+  },
+  "head_training": "Existing source-separated5381 only. Actual current head-vs-gold pairs plus correct-head protection. Bounded signed relative correction and real base-score offsets, supported by>=2 source families. Evaluate finite evidence/margin thresholds on calibration only. Preserve explicit/local choices.",
+  "head_gate_grid": {
+    "minimum_adjusted_margin": [
+      0.5,
+      1.0
+    ],
+    "minimum_evidence_kinds": [
+      2
+    ],
+    "minimum_raw_lift": [
+      0.5,
+      1.0
+    ]
+  },
+  "acceptance": "Per-set first/top5/top20 no loss on calibration/guards; useful search coverage gain for search adoption, useful first gain for head adoption. Model optional absent/corrupt fallback. Single32/32 and desktop wall/CPU ratio<=1.2.",
+  "independent": "Fresh500 frozen before native trials, open once only after policy/models/learning/timing fixed. No post-outcome accuracy changes. Require net useful first or top5 gain with neither lower and no top20 loss for delivery.",
+  "first_choice": "At most19 challengers from existing displayed20. Only>=2 supported relation kinds and positive relative evidence, adjusted margin plus threshold. No override of positive word/sequence/context personal preference. Existing head retained in display.",
+  "limits": "No APK or1.0 claim. Public dictionary/source material, not private chats. Phone learning remains local; no device evidence yet.",
+  "search_completed_pool_amendment": "After two lexical-reserve paths show no added coverage, also test archived baseline with completed-only pool128 (was96), separately from lexical reserve4. Ordinary beam48 and display20/confidence10 stay fixed. No gold-derived search hints; evaluate known600 and old3293 guards before any reserve opening.",
+  "head_gate_amendment": "Before head trials, first test existing fixed PRR2 weights with evidence-gated swaps among existing top5. This tests whether stronger evidence can safely release the first-choice pin without retraining. If insufficient, head-pair fitting remains a later alternative. No evaluation sentence trains weights; min-margin/lift grid fixed above. Select more conservative thresholds on ties.",
+  "head_fit_amendment": "Fixed tail weights with the conservative gate cause no head changes on600 calibration rows. Fit a separate head map from training-only5381 actual current pools, leaving tail map intact. Positive examples repair wrong heads at ranks2..5; negative examples protect actual correct heads against ranks2..5. Objective is softplus of signed min(rawLift-.5, actualBaseGain+1.5*clip(rawLift,+-2)-.5); derivative follows the active branch/clipping. Report structurally gated inference separately; it is not replaced by this surrogate.",
+  "head_fit_parameters": {
+    "epochs": 80,
+    "rate": 0.3,
+    "l2": 0.015,
+    "minimum_source_family_support": 2,
+    "feature_cap": 6000,
+    "weight_cap": 1.5,
+    "head_strength": 1.5,
+    "limit": 2,
+    "source_mix": {
+      "HK": 0.65,
+      "Tatoeba": 0.2,
+      "authored": 0.15
+    }
+  },
+  "independent_arm_amendment": "Before opening500, distinguish the search and head goals with archived baseline, search-only PRR2 and selected combined PRR3. Search adoption requires an independent useful first/top5/top20 gain with none lower; head adoption additionally requires useful first gain over search-only with none lower. If the head arm fails, retain only qualifying search and keep PRR2 production asset. No post-outcome parameter changes. This clarifies coverage-only search delivery before any reserve decoding.",
+  "head_display_amendment": "First fitted top5-only head pilot makes7 swaps but no labeled first gain on600. Before reserve opening, test existing displayed20 challengers and retain old head second (rather than swap). Refit with visible gold ranks2..20 and correct-head protection against ranks2..9, same clipped/raw actual gate; compare l2 .015/.005 with all other fit parameters fixed. Keep strict per-set first/top5/top20 guards and same threshold grid; no evaluation training. An independent first gain is still required for head delivery.",
+  "head_numeral_amendment": "Displayed20 pilots give net first gains but regress one old fragment group: ordinal第 and numeral三 are replaced by non-numeral characters. Before opening reserve, preserve the full ordered Chinese numeral/ordinal signature between legacy head and proposed replacement. This generic semantic guard uses no target lookup or whole-sentence literal. Re-evaluate the same two fixed head maps and same finite margin/lift grid; weights are not retrained against those fragments.",
+  "combined_delivery_clarification": "Before reserve opening: adopt combined only with useful first gain over search-only and no first/top5/top20 losses vs either search-only or baseline. Search may be independently neutral in a qualifying combined improvement; do not claim search gains in that case. If combined fails, adopt search-only only for a useful first/top5/top20 gain with none lower. Otherwise keep production baseline. No parameters are changed after reserve outcomes.",
+  "performance_amendment": "Preserve failed30warm/15sample timings before exact vector-sharing/lazy-evidence optimization. Final decision uses matched50warm/31samples and same-version A/A control onCPU0; requirewall/CPU<=1.2. No claim of speedup or installed-phone latency. Generic model-format switch selects pool128 with PRR3 asset; PRR1/2 or missing/corrupt model keep96. Zero head thresholds/empty map select search-only without post-reserve source edits."
+}

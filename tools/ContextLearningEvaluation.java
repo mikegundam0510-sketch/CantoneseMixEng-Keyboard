@@ -24,7 +24,9 @@ public final class ContextLearningEvaluation {
             Files.exists(assets.resolve("sentence_ranker.b64"))
                 ? SentenceRanker.load(Files.newInputStream(assets.resolve("sentence_ranker.b64"))) : null,
             Files.exists(assets.resolve("prefix_ranker.b64"))
-                ? PrefixRanker.load(Files.newInputStream(assets.resolve("prefix_ranker.b64"))) : null);
+                ? PrefixRanker.load(Files.newInputStream(assets.resolve("prefix_ranker.b64"))) : null,
+            Files.exists(assets.resolve("relation_ranker.b64"))
+                ? PhraseRelationRanker.load(Files.newInputStream(assets.resolve("relation_ranker.b64"))) : null);
         List<String[]> cases=new ArrayList<>();
         for(String line:Files.readAllLines(Path.of(args[1]),StandardCharsets.UTF_8))
             if(!line.isEmpty() && !line.startsWith("#")) cases.add(line.split("\t",-1));

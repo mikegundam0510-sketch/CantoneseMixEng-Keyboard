@@ -1,0 +1,6 @@
+............s..ss...s..s.s...............
+----------------------------------------------------------------------
+Ran 41 tests in 12.565s
+
+OK (skipped=6)
+{"pairs_sha256": "d8a09bcaabdf2707432108298d3d6ae29006badf1219d1af7d6470e1e1e8f78d", "training_sha256": "ed11415794ea8c52b6966d1c59804257d31e0f236f8d3448427e59a2c1ffbfa0", "protocol_sha256": "8e10504bb3506678fdda49cef2beb1f04eee1b9761cd4fb68c027d967e7c9d1a", "pairs": 7632, "families": 721, "model_bytes": 23429, "training": {"epochs": 80, "rate": 0.3, "l2": 0.01, "minimum_independent_target_support": 3, "feature_support_unit": "Distinct corpus conversation, Tatoeba translation-family or project-authored template; rival/checkpoint/slot variants never multiply independent support.", "features_considered": 87804, "features_supported": 2625, "features_exported": 2403, "training_examples": 6712, "initial_logistic_objective": 0.7639920244257502, "final_logistic_objective": 0.6090326049819982, "positive_features": 1105, "negative_features": 1298}, "purpose": "Search survival only; actual baseline pruning margins; no words.hk dictionary examples in training; no full-sentence features."}

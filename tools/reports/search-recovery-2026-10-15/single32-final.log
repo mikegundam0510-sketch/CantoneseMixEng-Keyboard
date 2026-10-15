@@ -1,0 +1,2 @@
+Picked up JAVA_TOOL_OPTIONS: -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts -Djava.util.prefs.userRoot=/workspace/android-environment/java-prefs -Dhttp.proxyHost=proxy -Dhttp.proxyPort=8080 -Dhttps.proxyHost=proxy -Dhttps.proxyPort=8080
+cases=32 sequence_records=489 legacy=[30, 32, 32] contextual=[32, 32, 32] mrr=0.968750/1.000000 elapsed_ms=9953

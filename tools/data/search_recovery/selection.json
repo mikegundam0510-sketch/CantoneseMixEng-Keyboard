@@ -1,0 +1,46 @@
+{
+  "baseline_revision": "db4b363d63479506b337de66ded4b6adda59c89d",
+  "heldout_sha256": "22a9e9bd48f663852f0a823a532ff2fb1f30bce1ce337f3bdcef703ba77e1486",
+  "manifest_sha256": "f25bee07f094922c81fd473df6f69dca643aece15edcc1c5d1ff73c3fa50cabc",
+  "protocol_sha256": "53a19560ea88917cf3c48073d5bccb7671c4af4b84224fa648ee599b281c3b84",
+  "tail_model_sha256": "1e999e91b8972c06bc44778aa22a51340d5b564ebb698e49559c7d6180b70163",
+  "combined_model_sha256": "d60d25924fd732de1d022ebc969f29d7939367876cda54a70cebe726668fc988",
+  "search_model_sha256": "366664a36964f331d6bc45605fb4bde279756e48f2cbfd1cac3edf1e8c65220a",
+  "head_weights_sha256": "17d7c148088d54c09e5474a1d0f874384808126ffd212c4060cbd444ccc4f3d1",
+  "head_parameters": {
+    "strength": 1.5,
+    "limit": 2,
+    "margin": 0.5,
+    "lift": 0.5,
+    "l2": 0.005,
+    "maximum_challengers": 19,
+    "numerals_preserved": true
+  },
+  "runtime_source_sha256": {
+    "QuickDecoder.java": "1897db41ec252831adf8359c8879548b0f9ef2617a60940c4df2b7bdf6da9bec",
+    "PhraseRelationRanker.java": "0977ffe58eb182bbb0541522aa8b050825f3e7be99af4bf5e1257f9ee5f84ebe"
+  },
+  "calibration": {
+    "cases": 3893,
+    "overlapping_known_sets": true,
+    "first_net_gain": 10,
+    "first_gained": 13,
+    "first_lost": 3,
+    "all_per_set_first_top5_top20_no_loss": true
+  },
+  "native_gate_parity_cases": 3893,
+  "native_full_decode_cases": 600,
+  "native_configured_search_parity_cases": 100,
+  "java_tests": 222,
+  "python_unique_tests": 42,
+  "lint_errors": 0,
+  "lint_existing_warnings": 25,
+  "single32_first": 32,
+  "maximum_paired_wall_ratio": 1.062956915797541,
+  "maximum_paired_cpu_ratio": 1.0626244283023945,
+  "performance_warmup": 50,
+  "performance_samples": 31,
+  "independent_unopened": true,
+  "no_post_reserve_accuracy_tuning": true,
+  "delivery": "Use predeclared baseline/search/combined asset arms; combined needs independent first gain over search-only and no1/5/20 losses vs either control. Otherwise qualifying search-only or unchanged PRR2 baseline."
+}

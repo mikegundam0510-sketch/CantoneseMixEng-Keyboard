@@ -1,0 +1,2049 @@
+{
+  "before": {
+    "alignment:heldout": {
+      "cases": 500,
+      "top1": 89,
+      "top5": 193,
+      "top20": 259,
+      "mrr": 0.26918662220132805
+    },
+    "recovery:validation": {
+      "cases": 100,
+      "top1": 23,
+      "top5": 45,
+      "top20": 56,
+      "mrr": 0.32686446886446885
+    },
+    "validation:written200": {
+      "cases": 200,
+      "top1": 46,
+      "top5": 86,
+      "top20": 106,
+      "mrr": 0.30949772632338424
+    },
+    "validation:authored60": {
+      "cases": 60,
+      "top1": 27,
+      "top5": 48,
+      "top20": 60,
+      "mrr": 0.6076923076923076
+    },
+    "validation:natural200": {
+      "cases": 200,
+      "top1": 80,
+      "top5": 120,
+      "top20": 140,
+      "mrr": 0.48838791274085397
+    },
+    "validation:public200": {
+      "cases": 200,
+      "top1": 77,
+      "top5": 134,
+      "top20": 154,
+      "mrr": 0.5129473622782447
+    },
+    "validation:fresh-written100": {
+      "cases": 100,
+      "top1": 20,
+      "top5": 39,
+      "top20": 52,
+      "mrr": 0.28943082794398584
+    },
+    "validation:fresh-ud": {
+      "cases": 43,
+      "top1": 20,
+      "top5": 29,
+      "top20": 35,
+      "mrr": 0.5549380851706434
+    },
+    "alignment:validation": {
+      "cases": 100,
+      "top1": 25,
+      "top5": 40,
+      "top20": 52,
+      "mrr": 0.3208095238095238
+    },
+    "heldout:fresh-written500": {
+      "cases": 500,
+      "top1": 94,
+      "top5": 183,
+      "top20": 251,
+      "mrr": 0.2690272438345968
+    },
+    "heldout:fresh-ud-legco": {
+      "cases": 296,
+      "top1": 86,
+      "top5": 160,
+      "top20": 192,
+      "mrr": 0.40179016079751373
+    },
+    "guard:fresh100": {
+      "cases": 100,
+      "top1": 36,
+      "top5": 63,
+      "top20": 73,
+      "mrr": 0.47791666666666666
+    },
+    "guard:natural200": {
+      "cases": 200,
+      "top1": 77,
+      "top5": 121,
+      "top20": 138,
+      "mrr": 0.4708510656010656
+    },
+    "guard:authored120": {
+      "cases": 120,
+      "top1": 74,
+      "top5": 86,
+      "top20": 98,
+      "mrr": 0.6756944444444444
+    },
+    "guard:old600": {
+      "cases": 600,
+      "top1": 291,
+      "top5": 437,
+      "top20": 483,
+      "mrr": 0.5937525944557678
+    },
+    "guard:daily32": {
+      "cases": 32,
+      "top1": 23,
+      "top5": 31,
+      "top20": 32,
+      "mrr": 0.8364583333333333
+    },
+    "guard:completion16": {
+      "cases": 16,
+      "top1": 16,
+      "top5": 16,
+      "top20": 16,
+      "mrr": 1.0
+    },
+    "guard:tatoeba200": {
+      "cases": 200,
+      "top1": 87,
+      "top5": 146,
+      "top20": 162,
+      "mrr": 0.5562906052281051
+    },
+    "guard:public100": {
+      "cases": 100,
+      "top1": 46,
+      "top5": 76,
+      "top20": 85,
+      "mrr": 0.5805235597735598
+    },
+    "guard:authored70": {
+      "cases": 70,
+      "top1": 15,
+      "top5": 41,
+      "top20": 48,
+      "mrr": 0.3871768707482993
+    },
+    "guard:plural": {
+      "cases": 18,
+      "top1": 15,
+      "top5": 18,
+      "top20": 18,
+      "mrr": 0.8981481481481483
+    },
+    "guard:handover": {
+      "cases": 30,
+      "top1": 29,
+      "top5": 30,
+      "top20": 30,
+      "mrr": 0.9833333333333333
+    },
+    "guard:continuous": {
+      "cases": 8,
+      "top1": 8,
+      "top5": 8,
+      "top20": 8,
+      "mrr": 1.0
+    },
+    "guard:followup100": {
+      "cases": 100,
+      "top1": 41,
+      "top5": 62,
+      "top20": 72,
+      "mrr": 0.4904732669291493
+    }
+  },
+  "trials": {
+    "margin0.5/lift0.5": {
+      "alignment:heldout": {
+        "cases": 500,
+        "top1": 89,
+        "top5": 193,
+        "top20": 259,
+        "mrr": 0.2685199555346614
+      },
+      "recovery:validation": {
+        "cases": 100,
+        "top1": 23,
+        "top5": 45,
+        "top20": 56,
+        "mrr": 0.32686446886446885
+      },
+      "validation:written200": {
+        "cases": 200,
+        "top1": 46,
+        "top5": 86,
+        "top20": 106,
+        "mrr": 0.30949772632338424
+      },
+      "validation:authored60": {
+        "cases": 60,
+        "top1": 27,
+        "top5": 48,
+        "top20": 60,
+        "mrr": 0.6076923076923076
+      },
+      "validation:natural200": {
+        "cases": 200,
+        "top1": 80,
+        "top5": 120,
+        "top20": 140,
+        "mrr": 0.48838791274085397
+      },
+      "validation:public200": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 134,
+        "top20": 154,
+        "mrr": 0.5129473622782447
+      },
+      "validation:fresh-written100": {
+        "cases": 100,
+        "top1": 20,
+        "top5": 39,
+        "top20": 52,
+        "mrr": 0.28943082794398584
+      },
+      "validation:fresh-ud": {
+        "cases": 43,
+        "top1": 20,
+        "top5": 29,
+        "top20": 35,
+        "mrr": 0.5549380851706434
+      },
+      "alignment:validation": {
+        "cases": 100,
+        "top1": 26,
+        "top5": 40,
+        "top20": 52,
+        "mrr": 0.3258095238095238
+      },
+      "heldout:fresh-written500": {
+        "cases": 500,
+        "top1": 94,
+        "top5": 183,
+        "top20": 251,
+        "mrr": 0.2690272438345968
+      },
+      "heldout:fresh-ud-legco": {
+        "cases": 296,
+        "top1": 86,
+        "top5": 160,
+        "top20": 192,
+        "mrr": 0.40179016079751373
+      },
+      "guard:fresh100": {
+        "cases": 100,
+        "top1": 37,
+        "top5": 63,
+        "top20": 73,
+        "mrr": 0.48291666666666666
+      },
+      "guard:natural200": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 121,
+        "top20": 138,
+        "mrr": 0.4708510656010656
+      },
+      "guard:authored120": {
+        "cases": 120,
+        "top1": 80,
+        "top5": 86,
+        "top20": 98,
+        "mrr": 0.7020833333333333
+      },
+      "guard:old600": {
+        "cases": 600,
+        "top1": 289,
+        "top5": 437,
+        "top20": 483,
+        "mrr": 0.5920859277891012
+      },
+      "guard:daily32": {
+        "cases": 32,
+        "top1": 23,
+        "top5": 31,
+        "top20": 32,
+        "mrr": 0.8364583333333333
+      },
+      "guard:completion16": {
+        "cases": 16,
+        "top1": 16,
+        "top5": 16,
+        "top20": 16,
+        "mrr": 1.0
+      },
+      "guard:tatoeba200": {
+        "cases": 200,
+        "top1": 88,
+        "top5": 146,
+        "top20": 162,
+        "mrr": 0.5587906052281052
+      },
+      "guard:public100": {
+        "cases": 100,
+        "top1": 46,
+        "top5": 76,
+        "top20": 85,
+        "mrr": 0.5805235597735598
+      },
+      "guard:authored70": {
+        "cases": 70,
+        "top1": 15,
+        "top5": 41,
+        "top20": 48,
+        "mrr": 0.3871768707482993
+      },
+      "guard:plural": {
+        "cases": 18,
+        "top1": 15,
+        "top5": 18,
+        "top20": 18,
+        "mrr": 0.8981481481481483
+      },
+      "guard:handover": {
+        "cases": 30,
+        "top1": 29,
+        "top5": 30,
+        "top20": 30,
+        "mrr": 0.9833333333333333
+      },
+      "guard:continuous": {
+        "cases": 8,
+        "top1": 8,
+        "top5": 8,
+        "top20": 8,
+        "mrr": 1.0
+      },
+      "guard:followup100": {
+        "cases": 100,
+        "top1": 41,
+        "top5": 62,
+        "top20": 72,
+        "mrr": 0.4904732669291493
+      }
+    },
+    "margin0.5/lift1": {
+      "alignment:heldout": {
+        "cases": 500,
+        "top1": 89,
+        "top5": 193,
+        "top20": 259,
+        "mrr": 0.2685199555346614
+      },
+      "recovery:validation": {
+        "cases": 100,
+        "top1": 23,
+        "top5": 45,
+        "top20": 56,
+        "mrr": 0.32686446886446885
+      },
+      "validation:written200": {
+        "cases": 200,
+        "top1": 46,
+        "top5": 86,
+        "top20": 106,
+        "mrr": 0.30949772632338424
+      },
+      "validation:authored60": {
+        "cases": 60,
+        "top1": 27,
+        "top5": 48,
+        "top20": 60,
+        "mrr": 0.6076923076923076
+      },
+      "validation:natural200": {
+        "cases": 200,
+        "top1": 80,
+        "top5": 120,
+        "top20": 140,
+        "mrr": 0.48838791274085397
+      },
+      "validation:public200": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 134,
+        "top20": 154,
+        "mrr": 0.5129473622782447
+      },
+      "validation:fresh-written100": {
+        "cases": 100,
+        "top1": 20,
+        "top5": 39,
+        "top20": 52,
+        "mrr": 0.28943082794398584
+      },
+      "validation:fresh-ud": {
+        "cases": 43,
+        "top1": 20,
+        "top5": 29,
+        "top20": 35,
+        "mrr": 0.5549380851706434
+      },
+      "alignment:validation": {
+        "cases": 100,
+        "top1": 26,
+        "top5": 40,
+        "top20": 52,
+        "mrr": 0.3258095238095238
+      },
+      "heldout:fresh-written500": {
+        "cases": 500,
+        "top1": 93,
+        "top5": 183,
+        "top20": 251,
+        "mrr": 0.2680272438345968
+      },
+      "heldout:fresh-ud-legco": {
+        "cases": 296,
+        "top1": 86,
+        "top5": 160,
+        "top20": 192,
+        "mrr": 0.40179016079751373
+      },
+      "guard:fresh100": {
+        "cases": 100,
+        "top1": 36,
+        "top5": 63,
+        "top20": 73,
+        "mrr": 0.47791666666666666
+      },
+      "guard:natural200": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 121,
+        "top20": 138,
+        "mrr": 0.4708510656010656
+      },
+      "guard:authored120": {
+        "cases": 120,
+        "top1": 80,
+        "top5": 86,
+        "top20": 98,
+        "mrr": 0.7020833333333333
+      },
+      "guard:old600": {
+        "cases": 600,
+        "top1": 289,
+        "top5": 437,
+        "top20": 483,
+        "mrr": 0.5920859277891012
+      },
+      "guard:daily32": {
+        "cases": 32,
+        "top1": 23,
+        "top5": 31,
+        "top20": 32,
+        "mrr": 0.8364583333333333
+      },
+      "guard:completion16": {
+        "cases": 16,
+        "top1": 16,
+        "top5": 16,
+        "top20": 16,
+        "mrr": 1.0
+      },
+      "guard:tatoeba200": {
+        "cases": 200,
+        "top1": 87,
+        "top5": 146,
+        "top20": 162,
+        "mrr": 0.5562906052281051
+      },
+      "guard:public100": {
+        "cases": 100,
+        "top1": 46,
+        "top5": 76,
+        "top20": 85,
+        "mrr": 0.5805235597735598
+      },
+      "guard:authored70": {
+        "cases": 70,
+        "top1": 15,
+        "top5": 41,
+        "top20": 48,
+        "mrr": 0.3871768707482993
+      },
+      "guard:plural": {
+        "cases": 18,
+        "top1": 15,
+        "top5": 18,
+        "top20": 18,
+        "mrr": 0.8981481481481483
+      },
+      "guard:handover": {
+        "cases": 30,
+        "top1": 29,
+        "top5": 30,
+        "top20": 30,
+        "mrr": 0.9833333333333333
+      },
+      "guard:continuous": {
+        "cases": 8,
+        "top1": 8,
+        "top5": 8,
+        "top20": 8,
+        "mrr": 1.0
+      },
+      "guard:followup100": {
+        "cases": 100,
+        "top1": 41,
+        "top5": 62,
+        "top20": 72,
+        "mrr": 0.4904732669291493
+      }
+    },
+    "margin1/lift0.5": {
+      "alignment:heldout": {
+        "cases": 500,
+        "top1": 89,
+        "top5": 193,
+        "top20": 259,
+        "mrr": 0.26918662220132805
+      },
+      "recovery:validation": {
+        "cases": 100,
+        "top1": 23,
+        "top5": 45,
+        "top20": 56,
+        "mrr": 0.32686446886446885
+      },
+      "validation:written200": {
+        "cases": 200,
+        "top1": 46,
+        "top5": 86,
+        "top20": 106,
+        "mrr": 0.30949772632338424
+      },
+      "validation:authored60": {
+        "cases": 60,
+        "top1": 27,
+        "top5": 48,
+        "top20": 60,
+        "mrr": 0.6076923076923076
+      },
+      "validation:natural200": {
+        "cases": 200,
+        "top1": 80,
+        "top5": 120,
+        "top20": 140,
+        "mrr": 0.48838791274085397
+      },
+      "validation:public200": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 134,
+        "top20": 154,
+        "mrr": 0.5129473622782447
+      },
+      "validation:fresh-written100": {
+        "cases": 100,
+        "top1": 20,
+        "top5": 39,
+        "top20": 52,
+        "mrr": 0.28943082794398584
+      },
+      "validation:fresh-ud": {
+        "cases": 43,
+        "top1": 20,
+        "top5": 29,
+        "top20": 35,
+        "mrr": 0.5549380851706434
+      },
+      "alignment:validation": {
+        "cases": 100,
+        "top1": 26,
+        "top5": 40,
+        "top20": 52,
+        "mrr": 0.3258095238095238
+      },
+      "heldout:fresh-written500": {
+        "cases": 500,
+        "top1": 95,
+        "top5": 183,
+        "top20": 251,
+        "mrr": 0.2700272438345968
+      },
+      "heldout:fresh-ud-legco": {
+        "cases": 296,
+        "top1": 86,
+        "top5": 160,
+        "top20": 192,
+        "mrr": 0.40179016079751373
+      },
+      "guard:fresh100": {
+        "cases": 100,
+        "top1": 37,
+        "top5": 63,
+        "top20": 73,
+        "mrr": 0.48291666666666666
+      },
+      "guard:natural200": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 121,
+        "top20": 138,
+        "mrr": 0.4708510656010656
+      },
+      "guard:authored120": {
+        "cases": 120,
+        "top1": 74,
+        "top5": 86,
+        "top20": 98,
+        "mrr": 0.6756944444444444
+      },
+      "guard:old600": {
+        "cases": 600,
+        "top1": 289,
+        "top5": 437,
+        "top20": 483,
+        "mrr": 0.5920859277891012
+      },
+      "guard:daily32": {
+        "cases": 32,
+        "top1": 23,
+        "top5": 31,
+        "top20": 32,
+        "mrr": 0.8364583333333333
+      },
+      "guard:completion16": {
+        "cases": 16,
+        "top1": 16,
+        "top5": 16,
+        "top20": 16,
+        "mrr": 1.0
+      },
+      "guard:tatoeba200": {
+        "cases": 200,
+        "top1": 87,
+        "top5": 146,
+        "top20": 162,
+        "mrr": 0.5562906052281051
+      },
+      "guard:public100": {
+        "cases": 100,
+        "top1": 46,
+        "top5": 76,
+        "top20": 85,
+        "mrr": 0.5805235597735598
+      },
+      "guard:authored70": {
+        "cases": 70,
+        "top1": 15,
+        "top5": 41,
+        "top20": 48,
+        "mrr": 0.3871768707482993
+      },
+      "guard:plural": {
+        "cases": 18,
+        "top1": 15,
+        "top5": 18,
+        "top20": 18,
+        "mrr": 0.8981481481481483
+      },
+      "guard:handover": {
+        "cases": 30,
+        "top1": 29,
+        "top5": 30,
+        "top20": 30,
+        "mrr": 0.9833333333333333
+      },
+      "guard:continuous": {
+        "cases": 8,
+        "top1": 8,
+        "top5": 8,
+        "top20": 8,
+        "mrr": 1.0
+      },
+      "guard:followup100": {
+        "cases": 100,
+        "top1": 41,
+        "top5": 62,
+        "top20": 72,
+        "mrr": 0.4904732669291493
+      }
+    },
+    "margin1/lift1": {
+      "alignment:heldout": {
+        "cases": 500,
+        "top1": 89,
+        "top5": 193,
+        "top20": 259,
+        "mrr": 0.26918662220132805
+      },
+      "recovery:validation": {
+        "cases": 100,
+        "top1": 23,
+        "top5": 45,
+        "top20": 56,
+        "mrr": 0.32686446886446885
+      },
+      "validation:written200": {
+        "cases": 200,
+        "top1": 46,
+        "top5": 86,
+        "top20": 106,
+        "mrr": 0.30949772632338424
+      },
+      "validation:authored60": {
+        "cases": 60,
+        "top1": 27,
+        "top5": 48,
+        "top20": 60,
+        "mrr": 0.6076923076923076
+      },
+      "validation:natural200": {
+        "cases": 200,
+        "top1": 80,
+        "top5": 120,
+        "top20": 140,
+        "mrr": 0.48838791274085397
+      },
+      "validation:public200": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 134,
+        "top20": 154,
+        "mrr": 0.5129473622782447
+      },
+      "validation:fresh-written100": {
+        "cases": 100,
+        "top1": 20,
+        "top5": 39,
+        "top20": 52,
+        "mrr": 0.28943082794398584
+      },
+      "validation:fresh-ud": {
+        "cases": 43,
+        "top1": 20,
+        "top5": 29,
+        "top20": 35,
+        "mrr": 0.5549380851706434
+      },
+      "alignment:validation": {
+        "cases": 100,
+        "top1": 26,
+        "top5": 40,
+        "top20": 52,
+        "mrr": 0.3258095238095238
+      },
+      "heldout:fresh-written500": {
+        "cases": 500,
+        "top1": 94,
+        "top5": 183,
+        "top20": 251,
+        "mrr": 0.2690272438345968
+      },
+      "heldout:fresh-ud-legco": {
+        "cases": 296,
+        "top1": 86,
+        "top5": 160,
+        "top20": 192,
+        "mrr": 0.40179016079751373
+      },
+      "guard:fresh100": {
+        "cases": 100,
+        "top1": 36,
+        "top5": 63,
+        "top20": 73,
+        "mrr": 0.47791666666666666
+      },
+      "guard:natural200": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 121,
+        "top20": 138,
+        "mrr": 0.4708510656010656
+      },
+      "guard:authored120": {
+        "cases": 120,
+        "top1": 74,
+        "top5": 86,
+        "top20": 98,
+        "mrr": 0.6756944444444444
+      },
+      "guard:old600": {
+        "cases": 600,
+        "top1": 289,
+        "top5": 437,
+        "top20": 483,
+        "mrr": 0.5920859277891012
+      },
+      "guard:daily32": {
+        "cases": 32,
+        "top1": 23,
+        "top5": 31,
+        "top20": 32,
+        "mrr": 0.8364583333333333
+      },
+      "guard:completion16": {
+        "cases": 16,
+        "top1": 16,
+        "top5": 16,
+        "top20": 16,
+        "mrr": 1.0
+      },
+      "guard:tatoeba200": {
+        "cases": 200,
+        "top1": 87,
+        "top5": 146,
+        "top20": 162,
+        "mrr": 0.5562906052281051
+      },
+      "guard:public100": {
+        "cases": 100,
+        "top1": 46,
+        "top5": 76,
+        "top20": 85,
+        "mrr": 0.5805235597735598
+      },
+      "guard:authored70": {
+        "cases": 70,
+        "top1": 15,
+        "top5": 41,
+        "top20": 48,
+        "mrr": 0.3871768707482993
+      },
+      "guard:plural": {
+        "cases": 18,
+        "top1": 15,
+        "top5": 18,
+        "top20": 18,
+        "mrr": 0.8981481481481483
+      },
+      "guard:handover": {
+        "cases": 30,
+        "top1": 29,
+        "top5": 30,
+        "top20": 30,
+        "mrr": 0.9833333333333333
+      },
+      "guard:continuous": {
+        "cases": 8,
+        "top1": 8,
+        "top5": 8,
+        "top20": 8,
+        "mrr": 1.0
+      },
+      "guard:followup100": {
+        "cases": 100,
+        "top1": 41,
+        "top5": 62,
+        "top20": 72,
+        "mrr": 0.4904732669291493
+      }
+    }
+  },
+  "changes": {
+    "margin0.5/lift0.5": [
+      {
+        "source": "alignment:heldout",
+        "code": "rpoqmmbcjcofrrokkbrmosorinhlieyvdmrrmn",
+        "target": "呢件工具真係啱使冇咗佢個廁所永遠整唔到",
+        "before": 0,
+        "after": 0,
+        "old_head": "呢件工具真係唔使病咗佢個廁所永遠本唔到",
+        "new_head": "呢件工具真係唔使有啲佢個廁所永遠查唔到"
+      },
+      {
+        "source": "alignment:heldout",
+        "code": "hijkbfkbovhdjrksruhnhs",
+        "target": "我突然有食朱古力嘅衝動",
+        "before": 0,
+        "after": 0,
+        "old_head": "我突然有偈朱古力嘅行動",
+        "new_head": "我突然冇食朱古力嘅行動"
+      },
+      {
+        "source": "alignment:heldout",
+        "code": "pnjlrlhiokoffwhiofofnrwcrh",
+        "target": "乜都叫我做你當我係你阿四呀",
+        "before": 2,
+        "after": 3,
+        "old_head": "乜都叫我做你當得係無名四呀",
+        "new_head": "乜都叫我做你當我係無名買呀"
+      },
+      {
+        "source": "alignment:heldout",
+        "code": "ofyborkbonrnjdiiruohcqcvkcialofnlkvohjgra",
+        "target": "你請個有偷嘢案底嘅人負責收錢即係引狼入室啫",
+        "before": 0,
+        "after": 0,
+        "old_head": "你通知有仇別字底嘅人負責幾錢即係引狼入室啫",
+        "new_head": "你講信有仇別字底嘅人負責收錢即係引狼入室啫"
+      },
+      {
+        "source": "alignment:heldout",
+        "code": "hivdrevrhkbpnrnoorh",
+        "target": "我好口渴呀有乜嘢飲呀",
+        "before": 2,
+        "after": 3,
+        "old_head": "我好口渴呀冇乜嘢飲呀",
+        "new_head": "我好口渴踢有乜嘢飲呀"
+      },
+      {
+        "source": "alignment:heldout",
+        "code": "oforlbcgvarmmorcgrnrrvdrmfwblrt",
+        "target": "你個鬧鐘響咗一個鐘喇唔好咁爛瞓啦",
+        "before": 0,
+        "after": 0,
+        "old_head": "你知補鐘響咗一個鐘嘢唔好咁爛瞓啦",
+        "new_head": "你估鬧鐘響咗一個鐘嘢唔好咁爛瞓啦"
+      },
+      {
+        "source": "validation:written200",
+        "code": "nvtdhnkiovqbmnhiqirrryrrnjmvvnoiodbv",
+        "target": "張茶几太矮搞到我拎咖啡嗰陣要彎低條腰",
+        "before": 0,
+        "after": 0,
+        "old_head": "張茶几太矮搞到我找咖啡嗰陣電剝每條腰",
+        "new_head": "張茶几太矮搞到我找咖啡嗰陣要剝蝕條腰"
+      },
+      {
+        "source": "validation:written200",
+        "code": "mljorporoqopdpqtorebjrjltg",
+        "target": "而家呢個年代想揾個清官都難",
+        "before": 15,
+        "after": 15,
+        "old_head": "而家呢個年代想揾個清宮都難",
+        "new_head": "而家呢個年代想揾個滿客都難"
+      },
+      {
+        "source": "validation:written200",
+        "code": "osikyrofmolofyubfmvjrosofjcofmorypwphctiruo",
+        "target": "佢救過你一命你竟然要害佢你真係一個忘恩負義嘅人",
+        "before": 0,
+        "after": 0,
+        "old_head": "佢廠商你一命你就爲要害佢係真係一個意思興義嘅人",
+        "new_head": "佢廠話你一命係就爲要害佢係真係一個意思興義嘅人"
+      },
+      {
+        "source": "validation:public200",
+        "code": "hirdwrhumrvoalogribdrh",
+        "target": "我哋點先可以閘住戰爭呀",
+        "before": 0,
+        "after": 0,
+        "old_head": "我哋點先可以即住戰爭吵",
+        "new_head": "我哋點先可以即坐戰爭吵"
+      },
+      {
+        "source": "alignment:validation",
+        "code": "kbrqybyurjshjmohrt",
+        "target": "有咩講就單刀直入啦",
+        "before": 15,
+        "after": 15,
+        "old_head": "冇咩市道單刀直入啦",
+        "new_head": "有咩講道單刀直入啦"
+      },
+      {
+        "source": "alignment:validation",
+        "code": "mkiiohmlkbvdniorylankbrrbrsaqc",
+        "target": "政府入面有好多個部門有唔同職責",
+        "before": 2,
+        "after": 1,
+        "old_head": "政府入面有好多人口部門有唔同職責",
+        "new_head": "政府入面有好多個部門有唔同職責"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "aepariyvipkbhiyndryaoqynoqbmnpcofniork",
+        "target": "最憎啲餐廳冇得訂枱迫人排隊搞到懶係多人噉",
+        "before": 0,
+        "after": 0,
+        "old_head": "最憎啲餐廳冇得虎格識人排隊搞到頓無多人噉",
+        "new_head": "最憎啲餐廳帶我訂格識人排隊搞到頓係多人噉"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "orkmconrrofhiqbuureofnphijlkbbqrc",
+        "target": "個大頭佛唔係我搞出嚟你怨我都冇用𠿪",
+        "before": 0,
+        "after": 0,
+        "old_head": "個大頭佛唔係我搞出嚟焦急我都冇用員",
+        "new_head": "個大頭佛唔係我搞出嚟煲急我都冇用只"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "ybjryjhiybhari",
+        "target": "請容許我講白啲",
+        "before": 0,
+        "after": 0,
+        "old_head": "市容許我講香啲",
+        "new_head": "請客運我講白啲"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "osoforvduunrruvvvrjfqqgkbkagfhvf",
+        "target": "佢係個好出名嘅網絡寫手擁有大量粉絲",
+        "before": 16,
+        "after": 16,
+        "old_head": "佢係個好出名嘅女裝啤掌握有大量粉絲",
+        "new_head": "佢係個好出名嘅網絡寫手攤有大量粉絲"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "odhoevvdqhrnrdyjrtoreioejlmvybtkyk",
+        "target": "條八婆好扮嘢㗎連嗌個叉飯都要講英文",
+        "before": 0,
+        "after": 0,
+        "old_head": "人才人流好扮嘢咪計啦合法飯都要講英文",
+        "new_head": "人才人流好扮嘢咪計啦個法隻都要講英文"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "ofrmpvjlybgbhiofjcofvdvdo",
+        "target": "你咁忙都肯幫我你真係好好人",
+        "before": 0,
+        "after": 0,
+        "old_head": "你咁忙都請幫我你真係好好人",
+        "new_head": "你咁忙都請幫我係真係好好人"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "osuurmgiykorrhyrmorcgmbyereqtosrt",
+        "target": "佢出咗去送信呀過一個鐘再返嚟揾佢啦",
+        "before": 0,
+        "after": 0,
+        "old_head": "佢出咗去誒知呀這一個鐘再返嚟搵佢啦",
+        "new_head": "佢出咗去送個呀這一個鐘再返嚟搵佢啦"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "vdtotpofkborrmkbykkbruodrrokoioqdp",
+        "target": "好羨慕你有個咁有交帶嘅仔唔使令人操心",
+        "before": 0,
+        "after": 0,
+        "old_head": "好萊花係有個囖有效有嘅仔唔使每年想",
+        "new_head": "好萊花係有個囖冇交帶嘅氣唔使每年想"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "hiuuhmgdofichl",
+        "target": "我出生地係廣州",
+        "before": 2,
+        "after": 1,
+        "old_head": "我出生地無廣州",
+        "new_head": "我出生地係廣州"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "vrwdhldfabruokycovmnrgryrmoycmfvioalejmkbosie",
+        "target": "如果所標明嘅候選人姓名超過一人選票將會被宣布作廢",
+        "before": 0,
+        "after": 0,
+        "old_head": "如果州標明嘅候選食到哩啡啲人讀不將會被空有佢慶",
+        "new_head": "如果州標明嘅候選食到哩啡啲人讀不約會被空有佢慶"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "hiturrybqkwrysjdybrpjnyrmfqr",
+        "target": "特首唔肯撤回方案市民窮追不捨",
+        "before": 0,
+        "after": 0,
+        "old_head": "等着唔通換回方案市民窮追不捨",
+        "new_head": "我着唔肯換回方案市民窮追不捨"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "hioaviofruqeyybrhiruymveheakrdrn",
+        "target": "我會將你嘅投訴同我嘅上級反映㗎喇",
+        "before": 0,
+        "after": 0,
+        "old_head": "我會將你嘅投訴同我嘅產線反映㗎喇",
+        "new_head": "我會將你嘅投訴同等號上級反映㗎喇"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "osmorhusuybcarnalynskr",
+        "target": "佢一知自己講錯嘢即刻改口",
+        "before": 7,
+        "after": 7,
+        "old_head": "佢一個自己講錯喇即刻改口",
+        "new_head": "佢一估自己講錯嘢即刻改口"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "hirhvfhrythimvokorkbqcogruo",
+        "target": "我呀媽告誡我要做個有責任嘅人",
+        "before": 1,
+        "after": 2,
+        "old_head": "我呀媽告誡我要做個有責任嘅人",
+        "new_head": "我呀媽告誡我要使知有責任嘅人"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "rrvdohjrrinchshhrporptwlofkbwkwdncpkbgeip",
+        "target": "唔好傷害啲小動物呢個世界係有因果小心有報應",
+        "before": 0,
+        "after": 0,
+        "old_head": "唔好傷害啲小動物呢個世界無病因果小心有趣能",
+        "new_head": "唔好傷害啲小動物呢個世界係冇因果小心有趣能"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "osoerorcokpnmgosrl",
+        "target": "佢傻𠺢嘛使乜理佢唧",
+        "before": 0,
+        "after": 0,
+        "old_head": "佢隻足跡做乜理佢吖",
+        "new_head": "佢隻足跡使乜理佢吖"
+      },
+      {
+        "source": "heldout:fresh-ud-legco",
+        "code": "hirumgnqofosjdvkonrpohykoq",
+        "target": "我嘅理解係佢未收倒呢份文件",
+        "before": 0,
+        "after": 0,
+        "old_head": "我嘅理解你作案幾舒呢份文件",
+        "new_head": "我嘅理解係佢未幾舒呢份文件"
+      },
+      {
+        "source": "heldout:fresh-ud-legco",
+        "code": "rporofkbhuheioinruaracrd",
+        "target": "呢個係有先後次序嘅問題㗎",
+        "before": 0,
+        "after": 0,
+        "old_head": "呢個你有自毀次序嘅問題嚹",
+        "new_head": "呢個係冇先後次序嘅問題嚹"
+      },
+      {
+        "source": "heldout:fresh-ud-legco",
+        "code": "yurrofbrkjoofyjybovriarac",
+        "target": "就唔係同大家係辯論依啲問題",
+        "before": 0,
+        "after": 0,
+        "old_head": "就唔係同大家伙評論依啲問題",
+        "new_head": "就唔係同大家伙計請食啲問題"
+      },
+      {
+        "source": "heldout:fresh-ud-legco",
+        "code": "hiovjoofmmimheoa",
+        "target": "我依家係正式復會",
+        "before": 0,
+        "after": 0,
+        "old_head": "我依家係正式反智",
+        "new_head": "我依家係正式後會"
+      },
+      {
+        "source": "guard:fresh100",
+        "code": "ofhuhipnrnoforprr",
+        "target": "你覺得乜嘢係信心啊",
+        "before": 2,
+        "after": 1,
+        "old_head": "你覺得乜嘢你信心啊",
+        "new_head": "你覺得乜嘢係信心啊"
+      },
+      {
+        "source": "guard:fresh100",
+        "code": "ofybrmhusuvmsorn",
+        "target": "你講咗自己經驗喇",
+        "before": 4,
+        "after": 4,
+        "old_head": "你講咗自已經驗喇",
+        "new_head": "你講咗毛已經驗喇"
+      },
+      {
+        "source": "guard:natural200",
+        "code": "ofrdwcdlpuovrr",
+        "target": "你咪買麵包食啊",
+        "before": 7,
+        "after": 7,
+        "old_head": "你哋買麵包食品",
+        "new_head": "你哋買麵包食啊"
+      },
+      {
+        "source": "guard:authored120",
+        "code": "hionawcjuokhuyesgom",
+        "target": "我今日買完餸先返屋企",
+        "before": 2,
+        "after": 1,
+        "old_head": "我今日買完做先返屋企",
+        "new_head": "我今日買完餸先返屋企"
+      },
+      {
+        "source": "guard:authored120",
+        "code": "ofspawcjuokhuyesgom",
+        "target": "你聽日買完餸先返屋企",
+        "before": 2,
+        "after": 1,
+        "old_head": "你聽日買完做先返屋企",
+        "new_head": "你聽日買完餸先返屋企"
+      },
+      {
+        "source": "guard:authored120",
+        "code": "osonauwcjuokhuyesgom",
+        "target": "佢今晚買完餸先返屋企",
+        "before": 2,
+        "after": 1,
+        "old_head": "佢今晚買完做先返屋企",
+        "new_head": "佢今晚買完餸先返屋企"
+      },
+      {
+        "source": "guard:authored120",
+        "code": "hirdmljowcjuokhuyesgom",
+        "target": "我哋而家買完餸先返屋企",
+        "before": 2,
+        "after": 1,
+        "old_head": "我哋而家買完做先返屋企",
+        "new_head": "我哋而家買完餸先返屋企"
+      },
+      {
+        "source": "guard:authored120",
+        "code": "ofrdyqriwcjuokhuyesgom",
+        "target": "你哋遲啲買完餸先返屋企",
+        "before": 2,
+        "after": 1,
+        "old_head": "你哋遲啲買完做先返屋企",
+        "new_head": "你哋遲啲買完餸先返屋企"
+      },
+      {
+        "source": "guard:authored120",
+        "code": "osrdmylmwcjuokhuyesgom",
+        "target": "佢哋下晝買完餸先返屋企",
+        "before": 3,
+        "after": 1,
+        "old_head": "佢哋下晝買完做先返屋企",
+        "new_head": "佢哋下晝買完餸先返屋企"
+      },
+      {
+        "source": "guard:authored120",
+        "code": "hionaskvdohykoqhuoiwlhi",
+        "target": "我今日改好份文件先傳畀我",
+        "before": 0,
+        "after": 0,
+        "old_head": "我今日改好傷文件自付畀我",
+        "new_head": "我今日改好份文件自付畀我"
+      },
+      {
+        "source": "guard:authored120",
+        "code": "ofspaskvdohykoqhuoiwlhi",
+        "target": "你聽日改好份文件先傳畀我",
+        "before": 0,
+        "after": 0,
+        "old_head": "你聽日改好傷文件自付畀我",
+        "new_head": "你聽日改好份文件自付畀我"
+      },
+      {
+        "source": "guard:authored120",
+        "code": "osonauskvdohykoqhuoiwlhi",
+        "target": "佢今晚改好份文件先傳畀我",
+        "before": 0,
+        "after": 0,
+        "old_head": "佢今晚改好傷文件自付畀我",
+        "new_head": "佢今晚改好份文件自付畀我"
+      },
+      {
+        "source": "guard:authored120",
+        "code": "hirdmljoskvdohykoqhuoiwlhi",
+        "target": "我哋而家改好份文件先傳畀我",
+        "before": 0,
+        "after": 0,
+        "old_head": "我哋而家改好傷文件自付畀我",
+        "new_head": "我哋而家改好份文件自付畀我"
+      },
+      {
+        "source": "guard:authored120",
+        "code": "ofrdyqriskvdohykoqhuoiwlhi",
+        "target": "你哋遲啲改好份文件先傳畀我",
+        "before": 0,
+        "after": 0,
+        "old_head": "你哋遲啲改好傷文件自付畀我",
+        "new_head": "你哋遲啲改好份文件自付畀我"
+      },
+      {
+        "source": "guard:old600",
+        "code": "tbarraofhh",
+        "target": "期日嗰日係第",
+        "before": 1,
+        "after": 2,
+        "old_head": "期日嗰日係第",
+        "new_head": "期日嗰日係身"
+      },
+      {
+        "source": "guard:old600",
+        "code": "suoformmeuru",
+        "target": "己係個三流嘅",
+        "before": 1,
+        "after": 2,
+        "old_head": "己係個三流嘅",
+        "new_head": "己係個工流嘅"
+      },
+      {
+        "source": "guard:tatoeba200",
+        "code": "osrdyrhiofjpvo",
+        "target": "佢哋話我係老女人",
+        "before": 2,
+        "after": 1,
+        "old_head": "佢哋話得你老女人",
+        "new_head": "佢哋話我係老女人"
+      },
+      {
+        "source": "guard:authored70",
+        "code": "ofseebrmncvijd",
+        "target": "係取消咗預約未",
+        "before": 0,
+        "after": 0,
+        "old_head": "你取消咗小將字",
+        "new_head": "你取消咗預約字"
+      },
+      {
+        "source": "guard:authored70",
+        "code": "ofseebrmncvijd",
+        "target": "你取消咗預約未",
+        "before": 4,
+        "after": 4,
+        "old_head": "你取消咗小將字",
+        "new_head": "你取消咗預約字"
+      },
+      {
+        "source": "guard:followup100",
+        "code": "mriposnermrrosrm",
+        "target": "可能佢發咗啊佢𠻺",
+        "before": 0,
+        "after": 0,
+        "old_head": "可能佢發咗啊佢咁",
+        "new_head": "可能佢發咗路佢囖"
+      }
+    ],
+    "margin0.5/lift1": [
+      {
+        "source": "alignment:heldout",
+        "code": "rpoqmmbcjcofrrokkbrmosorinhlieyvdmrrmn",
+        "target": "呢件工具真係啱使冇咗佢個廁所永遠整唔到",
+        "before": 0,
+        "after": 0,
+        "old_head": "呢件工具真係唔使病咗佢個廁所永遠本唔到",
+        "new_head": "呢件工具真係唔使有啲佢個廁所永遠查唔到"
+      },
+      {
+        "source": "alignment:heldout",
+        "code": "hijkbfkbovhdjrksruhnhs",
+        "target": "我突然有食朱古力嘅衝動",
+        "before": 0,
+        "after": 0,
+        "old_head": "我突然有偈朱古力嘅行動",
+        "new_head": "我突然冇食朱古力嘅行動"
+      },
+      {
+        "source": "alignment:heldout",
+        "code": "pnjlrlhiokoffwhiofofnrwcrh",
+        "target": "乜都叫我做你當我係你阿四呀",
+        "before": 2,
+        "after": 3,
+        "old_head": "乜都叫我做你當得係無名四呀",
+        "new_head": "乜都叫我做你當我係無名買呀"
+      },
+      {
+        "source": "alignment:heldout",
+        "code": "ofyborkbonrnjdiiruohcqcvkcialofnlkvohjgra",
+        "target": "你請個有偷嘢案底嘅人負責收錢即係引狼入室啫",
+        "before": 0,
+        "after": 0,
+        "old_head": "你通知有仇別字底嘅人負責幾錢即係引狼入室啫",
+        "new_head": "你講信有仇別字底嘅人負責收錢即係引狼入室啫"
+      },
+      {
+        "source": "alignment:heldout",
+        "code": "hivdrevrhkbpnrnoorh",
+        "target": "我好口渴呀有乜嘢飲呀",
+        "before": 2,
+        "after": 3,
+        "old_head": "我好口渴呀冇乜嘢飲呀",
+        "new_head": "我好口渴踢有乜嘢飲呀"
+      },
+      {
+        "source": "alignment:heldout",
+        "code": "oforlbcgvarmmorcgrnrrvdrmfwblrt",
+        "target": "你個鬧鐘響咗一個鐘喇唔好咁爛瞓啦",
+        "before": 0,
+        "after": 0,
+        "old_head": "你知補鐘響咗一個鐘嘢唔好咁爛瞓啦",
+        "new_head": "你估鬧鐘響咗一個鐘嘢唔好咁爛瞓啦"
+      },
+      {
+        "source": "validation:written200",
+        "code": "nvtdhnkiovqbmnhiqirrryrrnjmvvnoiodbv",
+        "target": "張茶几太矮搞到我拎咖啡嗰陣要彎低條腰",
+        "before": 0,
+        "after": 0,
+        "old_head": "張茶几太矮搞到我找咖啡嗰陣電剝每條腰",
+        "new_head": "張茶几太矮搞到我找咖啡嗰陣要剝蝕條腰"
+      },
+      {
+        "source": "validation:written200",
+        "code": "mljorporoqopdpqtorebjrjltg",
+        "target": "而家呢個年代想揾個清官都難",
+        "before": 15,
+        "after": 15,
+        "old_head": "而家呢個年代想揾個清宮都難",
+        "new_head": "而家呢個年代想揾個滿客都難"
+      },
+      {
+        "source": "validation:written200",
+        "code": "osikyrofmolofyubfmvjrosofjcofmorypwphctiruo",
+        "target": "佢救過你一命你竟然要害佢你真係一個忘恩負義嘅人",
+        "before": 0,
+        "after": 0,
+        "old_head": "佢廠商你一命你就爲要害佢係真係一個意思興義嘅人",
+        "new_head": "佢廠話你一命係就爲要害佢係真係一個意思興義嘅人"
+      },
+      {
+        "source": "alignment:validation",
+        "code": "kbrqybyurjshjmohrt",
+        "target": "有咩講就單刀直入啦",
+        "before": 15,
+        "after": 15,
+        "old_head": "冇咩市道單刀直入啦",
+        "new_head": "有咩講道單刀直入啦"
+      },
+      {
+        "source": "alignment:validation",
+        "code": "mkiiohmlkbvdniorylankbrrbrsaqc",
+        "target": "政府入面有好多個部門有唔同職責",
+        "before": 2,
+        "after": 1,
+        "old_head": "政府入面有好多人口部門有唔同職責",
+        "new_head": "政府入面有好多個部門有唔同職責"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "aepariyvipkbhiyndryaoqynoqbmnpcofniork",
+        "target": "最憎啲餐廳冇得訂枱迫人排隊搞到懶係多人噉",
+        "before": 0,
+        "after": 0,
+        "old_head": "最憎啲餐廳冇得虎格識人排隊搞到頓無多人噉",
+        "new_head": "最憎啲餐廳帶我訂格識人排隊搞到頓係多人噉"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "ybjryjhiybhari",
+        "target": "請容許我講白啲",
+        "before": 0,
+        "after": 0,
+        "old_head": "市容許我講香啲",
+        "new_head": "請客運我講白啲"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "osoforvduunrruvvvrjfqqgkbkagfhvf",
+        "target": "佢係個好出名嘅網絡寫手擁有大量粉絲",
+        "before": 16,
+        "after": 16,
+        "old_head": "佢係個好出名嘅女裝啤掌握有大量粉絲",
+        "new_head": "佢係個好出名嘅網絡寫手攤有大量少媽"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "ofrmpvjlybgbhiofjcofvdvdo",
+        "target": "你咁忙都肯幫我你真係好好人",
+        "before": 0,
+        "after": 0,
+        "old_head": "你咁忙都請幫我你真係好好人",
+        "new_head": "你咁忙都請幫我係真係好好人"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "osuurmgiykorrhyrmorcgmbyereqtosrt",
+        "target": "佢出咗去送信呀過一個鐘再返嚟揾佢啦",
+        "before": 0,
+        "after": 0,
+        "old_head": "佢出咗去誒知呀這一個鐘再返嚟搵佢啦",
+        "new_head": "佢出咗去送個呀這一個鐘再返嚟搵佢啦"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "osmorhusuybcarnalynskr",
+        "target": "佢一知自己講錯嘢即刻改口",
+        "before": 7,
+        "after": 7,
+        "old_head": "佢一個自己講錯喇即刻改口",
+        "new_head": "佢一估自己講錯嘢即刻改口"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "hirhvfhrythimvokorkbqcogruo",
+        "target": "我呀媽告誡我要做個有責任嘅人",
+        "before": 1,
+        "after": 2,
+        "old_head": "我呀媽告誡我要做個有責任嘅人",
+        "new_head": "我呀媽告誡我要使知有責任嘅人"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "rrvdohjrrinchshhrporptwlofkbwkwdncpkbgeip",
+        "target": "唔好傷害啲小動物呢個世界係有因果小心有報應",
+        "before": 0,
+        "after": 0,
+        "old_head": "唔好傷害啲小動物呢個世界無病因果小心有趣能",
+        "new_head": "唔好傷害啲小動物呢個世界係冇因果小心有趣能"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "osoerorcokpnmgosrl",
+        "target": "佢傻𠺢嘛使乜理佢唧",
+        "before": 0,
+        "after": 0,
+        "old_head": "佢隻足跡做乜理佢吖",
+        "new_head": "佢隻足跡使乜理佢吖"
+      },
+      {
+        "source": "heldout:fresh-ud-legco",
+        "code": "rporofkbhuheioinruaracrd",
+        "target": "呢個係有先後次序嘅問題㗎",
+        "before": 0,
+        "after": 0,
+        "old_head": "呢個你有自毀次序嘅問題嚹",
+        "new_head": "呢個係冇先後次序嘅問題嚹"
+      },
+      {
+        "source": "heldout:fresh-ud-legco",
+        "code": "yurrofbrkjoofyjybovriarac",
+        "target": "就唔係同大家係辯論依啲問題",
+        "before": 0,
+        "after": 0,
+        "old_head": "就唔係同大家伙評論依啲問題",
+        "new_head": "就唔係同大家伙計請食啲問題"
+      },
+      {
+        "source": "guard:natural200",
+        "code": "ofrdwcdlpuovrr",
+        "target": "你咪買麵包食啊",
+        "before": 7,
+        "after": 7,
+        "old_head": "你哋買麵包食品",
+        "new_head": "你哋買麵包食啊"
+      },
+      {
+        "source": "guard:authored120",
+        "code": "hionawcjuokhuyesgom",
+        "target": "我今日買完餸先返屋企",
+        "before": 2,
+        "after": 1,
+        "old_head": "我今日買完做先返屋企",
+        "new_head": "我今日買完餸先返屋企"
+      },
+      {
+        "source": "guard:authored120",
+        "code": "ofspawcjuokhuyesgom",
+        "target": "你聽日買完餸先返屋企",
+        "before": 2,
+        "after": 1,
+        "old_head": "你聽日買完做先返屋企",
+        "new_head": "你聽日買完餸先返屋企"
+      },
+      {
+        "source": "guard:authored120",
+        "code": "osonauwcjuokhuyesgom",
+        "target": "佢今晚買完餸先返屋企",
+        "before": 2,
+        "after": 1,
+        "old_head": "佢今晚買完做先返屋企",
+        "new_head": "佢今晚買完餸先返屋企"
+      },
+      {
+        "source": "guard:authored120",
+        "code": "hirdmljowcjuokhuyesgom",
+        "target": "我哋而家買完餸先返屋企",
+        "before": 2,
+        "after": 1,
+        "old_head": "我哋而家買完做先返屋企",
+        "new_head": "我哋而家買完餸先返屋企"
+      },
+      {
+        "source": "guard:authored120",
+        "code": "ofrdyqriwcjuokhuyesgom",
+        "target": "你哋遲啲買完餸先返屋企",
+        "before": 2,
+        "after": 1,
+        "old_head": "你哋遲啲買完做先返屋企",
+        "new_head": "你哋遲啲買完餸先返屋企"
+      },
+      {
+        "source": "guard:authored120",
+        "code": "osrdmylmwcjuokhuyesgom",
+        "target": "佢哋下晝買完餸先返屋企",
+        "before": 3,
+        "after": 1,
+        "old_head": "佢哋下晝買完做先返屋企",
+        "new_head": "佢哋下晝買完餸先返屋企"
+      },
+      {
+        "source": "guard:old600",
+        "code": "tbarraofhh",
+        "target": "期日嗰日係第",
+        "before": 1,
+        "after": 2,
+        "old_head": "期日嗰日係第",
+        "new_head": "期日嗰日係身"
+      },
+      {
+        "source": "guard:old600",
+        "code": "suoformmeuru",
+        "target": "己係個三流嘅",
+        "before": 1,
+        "after": 2,
+        "old_head": "己係個三流嘅",
+        "new_head": "己係個工流嘅"
+      },
+      {
+        "source": "guard:followup100",
+        "code": "mriposnermrrosrm",
+        "target": "可能佢發咗啊佢𠻺",
+        "before": 0,
+        "after": 0,
+        "old_head": "可能佢發咗啊佢咁",
+        "new_head": "可能佢發咗路佢囖"
+      }
+    ],
+    "margin1/lift0.5": [
+      {
+        "source": "alignment:heldout",
+        "code": "hijkbfkbovhdjrksruhnhs",
+        "target": "我突然有食朱古力嘅衝動",
+        "before": 0,
+        "after": 0,
+        "old_head": "我突然有偈朱古力嘅行動",
+        "new_head": "我突然冇食朱古力嘅行動"
+      },
+      {
+        "source": "alignment:heldout",
+        "code": "ofyborkbonrnjdiiruohcqcvkcialofnlkvohjgra",
+        "target": "你請個有偷嘢案底嘅人負責收錢即係引狼入室啫",
+        "before": 0,
+        "after": 0,
+        "old_head": "你通知有仇別字底嘅人負責幾錢即係引狼入室啫",
+        "new_head": "你講信有仇別字底嘅人負責收錢即係引狼入室啫"
+      },
+      {
+        "source": "alignment:heldout",
+        "code": "oforlbcgvarmmorcgrnrrvdrmfwblrt",
+        "target": "你個鬧鐘響咗一個鐘喇唔好咁爛瞓啦",
+        "before": 0,
+        "after": 0,
+        "old_head": "你知補鐘響咗一個鐘嘢唔好咁爛瞓啦",
+        "new_head": "你估鬧鐘響咗一個鐘嘢唔好咁爛瞓啦"
+      },
+      {
+        "source": "validation:written200",
+        "code": "nvtdhnkiovqbmnhiqirrryrrnjmvvnoiodbv",
+        "target": "張茶几太矮搞到我拎咖啡嗰陣要彎低條腰",
+        "before": 0,
+        "after": 0,
+        "old_head": "張茶几太矮搞到我找咖啡嗰陣電剝每條腰",
+        "new_head": "張茶几太矮搞到我找咖啡嗰陣要剝蝕條腰"
+      },
+      {
+        "source": "validation:written200",
+        "code": "osikyrofmolofyubfmvjrosofjcofmorypwphctiruo",
+        "target": "佢救過你一命你竟然要害佢你真係一個忘恩負義嘅人",
+        "before": 0,
+        "after": 0,
+        "old_head": "佢廠商你一命你就爲要害佢係真係一個意思興義嘅人",
+        "new_head": "佢廠話你一命係就爲要害佢係真係一個意思興義嘅人"
+      },
+      {
+        "source": "alignment:validation",
+        "code": "kbrqybyurjshjmohrt",
+        "target": "有咩講就單刀直入啦",
+        "before": 15,
+        "after": 15,
+        "old_head": "冇咩市道單刀直入啦",
+        "new_head": "有咩講道單刀直入啦"
+      },
+      {
+        "source": "alignment:validation",
+        "code": "mkiiohmlkbvdniorylankbrrbrsaqc",
+        "target": "政府入面有好多個部門有唔同職責",
+        "before": 2,
+        "after": 1,
+        "old_head": "政府入面有好多人口部門有唔同職責",
+        "new_head": "政府入面有好多個部門有唔同職責"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "aepariyvipkbhiyndryaoqynoqbmnpcofniork",
+        "target": "最憎啲餐廳冇得訂枱迫人排隊搞到懶係多人噉",
+        "before": 0,
+        "after": 0,
+        "old_head": "最憎啲餐廳冇得虎格識人排隊搞到頓無多人噉",
+        "new_head": "最憎啲餐廳帶我訂格識人排隊搞到頓係多人噉"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "ybjryjhiybhari",
+        "target": "請容許我講白啲",
+        "before": 0,
+        "after": 0,
+        "old_head": "市容許我講香啲",
+        "new_head": "請客運我講白啲"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "osoforvduunrruvvvrjfqqgkbkagfhvf",
+        "target": "佢係個好出名嘅網絡寫手擁有大量粉絲",
+        "before": 16,
+        "after": 16,
+        "old_head": "佢係個好出名嘅女裝啤掌握有大量粉絲",
+        "new_head": "佢係個好出名嘅網絡寫手攤有大量粉絲"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "ofrmpvjlybgbhiofjcofvdvdo",
+        "target": "你咁忙都肯幫我你真係好好人",
+        "before": 0,
+        "after": 0,
+        "old_head": "你咁忙都請幫我你真係好好人",
+        "new_head": "你咁忙都請幫我係真係好好人"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "vdtotpofkborrmkbykkbruodrrokoioqdp",
+        "target": "好羨慕你有個咁有交帶嘅仔唔使令人操心",
+        "before": 0,
+        "after": 0,
+        "old_head": "好萊花係有個囖有效有嘅仔唔使每年想",
+        "new_head": "好萊花係有個囖冇交帶嘅氣唔使每年想"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "hiuuhmgdofichl",
+        "target": "我出生地係廣州",
+        "before": 2,
+        "after": 1,
+        "old_head": "我出生地無廣州",
+        "new_head": "我出生地係廣州"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "vrwdhldfabruokycovmnrgryrmoycmfvioalejmkbosie",
+        "target": "如果所標明嘅候選人姓名超過一人選票將會被宣布作廢",
+        "before": 0,
+        "after": 0,
+        "old_head": "如果州標明嘅候選食到哩啡啲人讀不將會被空有佢慶",
+        "new_head": "如果州標明嘅候選食到哩啡啲人讀不約會被空有佢慶"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "hioaviofruqeyybrhiruymveheakrdrn",
+        "target": "我會將你嘅投訴同我嘅上級反映㗎喇",
+        "before": 0,
+        "after": 0,
+        "old_head": "我會將你嘅投訴同我嘅產線反映㗎喇",
+        "new_head": "我會將你嘅投訴同等號上級反映㗎喇"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "osmorhusuybcarnalynskr",
+        "target": "佢一知自己講錯嘢即刻改口",
+        "before": 7,
+        "after": 7,
+        "old_head": "佢一個自己講錯喇即刻改口",
+        "new_head": "佢一估自己講錯嘢即刻改口"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "rrvdohjrrinchshhrporptwlofkbwkwdncpkbgeip",
+        "target": "唔好傷害啲小動物呢個世界係有因果小心有報應",
+        "before": 0,
+        "after": 0,
+        "old_head": "唔好傷害啲小動物呢個世界無病因果小心有趣能",
+        "new_head": "唔好傷害啲小動物呢個世界係冇因果小心有趣能"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "osoerorcokpnmgosrl",
+        "target": "佢傻𠺢嘛使乜理佢唧",
+        "before": 0,
+        "after": 0,
+        "old_head": "佢隻足跡做乜理佢吖",
+        "new_head": "佢隻足跡使乜理佢吖"
+      },
+      {
+        "source": "heldout:fresh-ud-legco",
+        "code": "rporofkbhuheioinruaracrd",
+        "target": "呢個係有先後次序嘅問題㗎",
+        "before": 0,
+        "after": 0,
+        "old_head": "呢個你有自毀次序嘅問題嚹",
+        "new_head": "呢個係冇先後次序嘅問題嚹"
+      },
+      {
+        "source": "heldout:fresh-ud-legco",
+        "code": "yurrofbrkjoofyjybovriarac",
+        "target": "就唔係同大家係辯論依啲問題",
+        "before": 0,
+        "after": 0,
+        "old_head": "就唔係同大家伙評論依啲問題",
+        "new_head": "就唔係同大家伙計請食啲問題"
+      },
+      {
+        "source": "guard:fresh100",
+        "code": "ofhuhipnrnoforprr",
+        "target": "你覺得乜嘢係信心啊",
+        "before": 2,
+        "after": 1,
+        "old_head": "你覺得乜嘢你信心啊",
+        "new_head": "你覺得乜嘢係信心啊"
+      },
+      {
+        "source": "guard:natural200",
+        "code": "ofrdwcdlpuovrr",
+        "target": "你咪買麵包食啊",
+        "before": 7,
+        "after": 7,
+        "old_head": "你哋買麵包食品",
+        "new_head": "你哋買麵包食啊"
+      },
+      {
+        "source": "guard:authored120",
+        "code": "hionaskvdohykoqhuoiwlhi",
+        "target": "我今日改好份文件先傳畀我",
+        "before": 0,
+        "after": 0,
+        "old_head": "我今日改好傷文件自付畀我",
+        "new_head": "我今日改好份文件自付畀我"
+      },
+      {
+        "source": "guard:authored120",
+        "code": "ofspaskvdohykoqhuoiwlhi",
+        "target": "你聽日改好份文件先傳畀我",
+        "before": 0,
+        "after": 0,
+        "old_head": "你聽日改好傷文件自付畀我",
+        "new_head": "你聽日改好份文件自付畀我"
+      },
+      {
+        "source": "guard:authored120",
+        "code": "osonauskvdohykoqhuoiwlhi",
+        "target": "佢今晚改好份文件先傳畀我",
+        "before": 0,
+        "after": 0,
+        "old_head": "佢今晚改好傷文件自付畀我",
+        "new_head": "佢今晚改好份文件自付畀我"
+      },
+      {
+        "source": "guard:authored120",
+        "code": "hirdmljoskvdohykoqhuoiwlhi",
+        "target": "我哋而家改好份文件先傳畀我",
+        "before": 0,
+        "after": 0,
+        "old_head": "我哋而家改好傷文件自付畀我",
+        "new_head": "我哋而家改好份文件自付畀我"
+      },
+      {
+        "source": "guard:authored120",
+        "code": "ofrdyqriskvdohykoqhuoiwlhi",
+        "target": "你哋遲啲改好份文件先傳畀我",
+        "before": 0,
+        "after": 0,
+        "old_head": "你哋遲啲改好傷文件自付畀我",
+        "new_head": "你哋遲啲改好份文件自付畀我"
+      },
+      {
+        "source": "guard:old600",
+        "code": "tbarraofhh",
+        "target": "期日嗰日係第",
+        "before": 1,
+        "after": 2,
+        "old_head": "期日嗰日係第",
+        "new_head": "期日嗰日係身"
+      },
+      {
+        "source": "guard:old600",
+        "code": "suoformmeuru",
+        "target": "己係個三流嘅",
+        "before": 1,
+        "after": 2,
+        "old_head": "己係個三流嘅",
+        "new_head": "己係個工流嘅"
+      }
+    ],
+    "margin1/lift1": [
+      {
+        "source": "alignment:heldout",
+        "code": "hijkbfkbovhdjrksruhnhs",
+        "target": "我突然有食朱古力嘅衝動",
+        "before": 0,
+        "after": 0,
+        "old_head": "我突然有偈朱古力嘅行動",
+        "new_head": "我突然冇食朱古力嘅行動"
+      },
+      {
+        "source": "alignment:heldout",
+        "code": "ofyborkbonrnjdiiruohcqcvkcialofnlkvohjgra",
+        "target": "你請個有偷嘢案底嘅人負責收錢即係引狼入室啫",
+        "before": 0,
+        "after": 0,
+        "old_head": "你通知有仇別字底嘅人負責幾錢即係引狼入室啫",
+        "new_head": "你講信有仇別字底嘅人負責收錢即係引狼入室啫"
+      },
+      {
+        "source": "alignment:heldout",
+        "code": "oforlbcgvarmmorcgrnrrvdrmfwblrt",
+        "target": "你個鬧鐘響咗一個鐘喇唔好咁爛瞓啦",
+        "before": 0,
+        "after": 0,
+        "old_head": "你知補鐘響咗一個鐘嘢唔好咁爛瞓啦",
+        "new_head": "你估鬧鐘響咗一個鐘嘢唔好咁爛瞓啦"
+      },
+      {
+        "source": "validation:written200",
+        "code": "nvtdhnkiovqbmnhiqirrryrrnjmvvnoiodbv",
+        "target": "張茶几太矮搞到我拎咖啡嗰陣要彎低條腰",
+        "before": 0,
+        "after": 0,
+        "old_head": "張茶几太矮搞到我找咖啡嗰陣電剝每條腰",
+        "new_head": "張茶几太矮搞到我找咖啡嗰陣要剝蝕條腰"
+      },
+      {
+        "source": "validation:written200",
+        "code": "osikyrofmolofyubfmvjrosofjcofmorypwphctiruo",
+        "target": "佢救過你一命你竟然要害佢你真係一個忘恩負義嘅人",
+        "before": 0,
+        "after": 0,
+        "old_head": "佢廠商你一命你就爲要害佢係真係一個意思興義嘅人",
+        "new_head": "佢廠話你一命係就爲要害佢係真係一個意思興義嘅人"
+      },
+      {
+        "source": "alignment:validation",
+        "code": "kbrqybyurjshjmohrt",
+        "target": "有咩講就單刀直入啦",
+        "before": 15,
+        "after": 15,
+        "old_head": "冇咩市道單刀直入啦",
+        "new_head": "有咩講道單刀直入啦"
+      },
+      {
+        "source": "alignment:validation",
+        "code": "mkiiohmlkbvdniorylankbrrbrsaqc",
+        "target": "政府入面有好多個部門有唔同職責",
+        "before": 2,
+        "after": 1,
+        "old_head": "政府入面有好多人口部門有唔同職責",
+        "new_head": "政府入面有好多個部門有唔同職責"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "aepariyvipkbhiyndryaoqynoqbmnpcofniork",
+        "target": "最憎啲餐廳冇得訂枱迫人排隊搞到懶係多人噉",
+        "before": 0,
+        "after": 0,
+        "old_head": "最憎啲餐廳冇得虎格識人排隊搞到頓無多人噉",
+        "new_head": "最憎啲餐廳帶我訂格識人排隊搞到頓係多人噉"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "ybjryjhiybhari",
+        "target": "請容許我講白啲",
+        "before": 0,
+        "after": 0,
+        "old_head": "市容許我講香啲",
+        "new_head": "請客運我講白啲"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "ofrmpvjlybgbhiofjcofvdvdo",
+        "target": "你咁忙都肯幫我你真係好好人",
+        "before": 0,
+        "after": 0,
+        "old_head": "你咁忙都請幫我你真係好好人",
+        "new_head": "你咁忙都請幫我係真係好好人"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "osmorhusuybcarnalynskr",
+        "target": "佢一知自己講錯嘢即刻改口",
+        "before": 7,
+        "after": 7,
+        "old_head": "佢一個自己講錯喇即刻改口",
+        "new_head": "佢一估自己講錯嘢即刻改口"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "rrvdohjrrinchshhrporptwlofkbwkwdncpkbgeip",
+        "target": "唔好傷害啲小動物呢個世界係有因果小心有報應",
+        "before": 0,
+        "after": 0,
+        "old_head": "唔好傷害啲小動物呢個世界無病因果小心有趣能",
+        "new_head": "唔好傷害啲小動物呢個世界係冇因果小心有趣能"
+      },
+      {
+        "source": "heldout:fresh-written500",
+        "code": "osoerorcokpnmgosrl",
+        "target": "佢傻𠺢嘛使乜理佢唧",
+        "before": 0,
+        "after": 0,
+        "old_head": "佢隻足跡做乜理佢吖",
+        "new_head": "佢隻足跡使乜理佢吖"
+      },
+      {
+        "source": "heldout:fresh-ud-legco",
+        "code": "rporofkbhuheioinruaracrd",
+        "target": "呢個係有先後次序嘅問題㗎",
+        "before": 0,
+        "after": 0,
+        "old_head": "呢個你有自毀次序嘅問題嚹",
+        "new_head": "呢個係冇先後次序嘅問題嚹"
+      },
+      {
+        "source": "heldout:fresh-ud-legco",
+        "code": "yurrofbrkjoofyjybovriarac",
+        "target": "就唔係同大家係辯論依啲問題",
+        "before": 0,
+        "after": 0,
+        "old_head": "就唔係同大家伙評論依啲問題",
+        "new_head": "就唔係同大家伙計請食啲問題"
+      },
+      {
+        "source": "guard:natural200",
+        "code": "ofrdwcdlpuovrr",
+        "target": "你咪買麵包食啊",
+        "before": 7,
+        "after": 7,
+        "old_head": "你哋買麵包食品",
+        "new_head": "你哋買麵包食啊"
+      },
+      {
+        "source": "guard:old600",
+        "code": "tbarraofhh",
+        "target": "期日嗰日係第",
+        "before": 1,
+        "after": 2,
+        "old_head": "期日嗰日係第",
+        "new_head": "期日嗰日係身"
+      },
+      {
+        "source": "guard:old600",
+        "code": "suoformmeuru",
+        "target": "己係個三流嘅",
+        "before": 1,
+        "after": 2,
+        "old_head": "己係個三流嘅",
+        "new_head": "己係個工流嘅"
+      }
+    ]
+  },
+  "eligible": [],
+  "selected": null,
+  "calibration_only": true,
+  "weights_unchanged": false,
+  "headstrength": 1.5,
+  "policy": "Promote only an existing displayed challenger; keep old head second. Two positive relation kinds, new positive evidence and repair/more non-negation structure, positive raw lift and actual adjusted margin. Native personal guards required."
+}

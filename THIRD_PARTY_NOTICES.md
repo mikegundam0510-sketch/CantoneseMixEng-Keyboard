@@ -180,3 +180,12 @@ The additional100 validation and500 reserved words.hk dictionary examples use
 the same NCDOL1.0 license and copyright2015–2022 Hong Kong Lexicography Limited
 as the earlier examples. They are evaluation-only and never train weights or
 enter the APK. No private messages or phone learning records are included.
+
+The October15 PRR3 extension retains that tail payload and adds a separate
+2,502-feature first-choice map from2,236 native same-code pairs in the same
+5,381 licensed training examples. The train-only POS lexicon and all existing
+HKCanCor, Tatoeba and UD attributions/licenses remain applicable; the derived
+head weights/encoding are also offered under CC BY-SA4.0. Another100 validation
+and500 reserved words.hk dictionary examples remain NCDOL1.0 evaluation-only
+material, excluded from training and APK assets. The bundled relation notice
+and model report document the modifications, source hashes and limited results.

@@ -1,0 +1,36 @@
+--- a/app/src/main/java/hk/cantonesemixeng/keyboard/QuickDecoder.java
++++ b/app/src/main/java/hk/cantonesemixeng/keyboard/QuickDecoder.java
+@@ -808,0 +809,33 @@
++        List<Path> result=pruneWithHints(input,context,following,modelScores);
++        return reserveLexicalEndpoints(input,result);
++    }
++
++    /** Preserve the original beam, then retain four close, attested word endings. */
++    private List<Path> reserveLexicalEndpoints(List<Path> input,List<Path> result) {
++        if(model==null||result.size()<BEAM||input.size()<=result.size())return result;
++        double floor=result.get(BEAM-1).score-2;
++        Set<String> histories=new HashSet<>(),inspected=new HashSet<>();
++        for(Path path:result)histories.add(OfflineLanguageModel.contextTail(path.text));
++        Map<Path,Double> proposals=new IdentityHashMap<>();
++        for(Path path:input) {
++            if(path.score<floor)continue;
++            String tail=OfflineLanguageModel.contextTail(path.text);
++            if(histories.contains(tail)||!inspected.add(tail))continue;
++            if(inspected.size()>48)break;
++            int count=tail.codePointCount(0,tail.length());double evidence=0;
++            for(int n=2;n<=Math.min(4,count);n++) {
++                String word=tail.substring(tail.offsetByCodePoints(tail.length(),-n));
++                evidence=Math.max(evidence,phraseEvidence.getOrDefault(word,0.0));
++            }
++            if(evidence>0)proposals.put(path,path.score+Math.min(2,evidence));
++        }
++        List<Path> candidates=new ArrayList<>(proposals.keySet());
++        candidates.sort(Comparator.comparingDouble((Path p)->proposals.get(p)).reversed().thenComparing(p->p.text));
++        int added=0;
++        for(Path path:candidates)if(histories.add(OfflineLanguageModel.contextTail(path.text))) {
++            result.add(path);if(++added==4)break;
++        }
++        return result;
++    }
++
++    private List<Path> pruneWithHints(List<Path> input, String context, List<Token> following, ModelScoreCache modelScores) {

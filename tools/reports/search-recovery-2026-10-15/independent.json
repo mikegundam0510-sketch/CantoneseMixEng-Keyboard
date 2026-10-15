@@ -1,0 +1,101 @@
+{
+  "baseline_revision": "db4b363d63479506b337de66ded4b6adda59c89d",
+  "metrics": {
+    "baseline": {
+      "cases": 500,
+      "top1": 108,
+      "top5": 198,
+      "top20": 256,
+      "mrr": 0.29310211103825656
+    },
+    "search": {
+      "cases": 500,
+      "top1": 108,
+      "top5": 198,
+      "top20": 256,
+      "mrr": 0.29310211103825656
+    },
+    "combined": {
+      "cases": 500,
+      "top1": 109,
+      "top5": 198,
+      "top20": 256,
+      "mrr": 0.2950354443715899
+    }
+  },
+  "comparisons": {
+    "search_vs_baseline": {
+      "first": {
+        "gained": 0,
+        "lost": 0,
+        "net": 0,
+        "paired_exact_two_sided_p": 1
+      },
+      "top5": {
+        "gained": 0,
+        "lost": 0,
+        "net": 0,
+        "paired_exact_two_sided_p": 1
+      },
+      "top20": {
+        "gained": 0,
+        "lost": 0,
+        "net": 0,
+        "paired_exact_two_sided_p": 1
+      }
+    },
+    "combined_vs_search": {
+      "first": {
+        "gained": 2,
+        "lost": 1,
+        "net": 1,
+        "paired_exact_two_sided_p": 1
+      },
+      "top5": {
+        "gained": 0,
+        "lost": 0,
+        "net": 0,
+        "paired_exact_two_sided_p": 1
+      },
+      "top20": {
+        "gained": 0,
+        "lost": 0,
+        "net": 0,
+        "paired_exact_two_sided_p": 1
+      }
+    },
+    "combined_vs_baseline": {
+      "first": {
+        "gained": 2,
+        "lost": 1,
+        "net": 1,
+        "paired_exact_two_sided_p": 1
+      },
+      "top5": {
+        "gained": 0,
+        "lost": 0,
+        "net": 0,
+        "paired_exact_two_sided_p": 1
+      },
+      "top20": {
+        "gained": 0,
+        "lost": 0,
+        "net": 0,
+        "paired_exact_two_sided_p": 1
+      }
+    }
+  },
+  "search_qualifies_alone": false,
+  "head_qualifies": true,
+  "delivery": "combined",
+  "selection_sha256": "7c255399ff33be66216726fbb7ed37754c8737bef79b0008f8340dc0d758db73",
+  "case_sha256": "22a9e9bd48f663852f0a823a532ff2fb1f30bce1ce337f3bdcef703ba77e1486",
+  "output_sha256": {
+    "baseline": "39627aecf617b6175c4490459b6539feac13145b48a20a1315b3120097eeb393",
+    "search": "63036c516371e90ebaf05a9016c98a891ae351d67d860bbda9beaa12e491afaf",
+    "combined": "b0445b30ed73479fa1477a7cb2d1e6a4176dc272d57ac5a81122c0c2154b2c4d"
+  },
+  "no_post_reserve_accuracy_tuning": true,
+  "exact_codes_and_display_bounds": true,
+  "limitations": "Public dictionary example500, now observed. Small paired changes are not population typing accuracy, physical Fold7 evidence or1.0 qualification."
+}

@@ -10,7 +10,7 @@ public final class QuickDecoder {
     private static final int BEAM = 48;
     // Only the completed boundary receives this wider pool; ordinary beam
     // widths and the confidence margin remain bounded as before.
-    private static final int FINAL_POOL = 96;
+    private final int finalPool;
     private static final int LOOKAHEAD_WORDS = 4, EXTRA_LOOKAHEAD_WORDS = 2, PATH_RESERVE = 8;
     // Selected on separate validation conversations, before held-out evaluation.
     private static final double SENTENCE_SCORE_MARGIN = 10;
@@ -156,6 +156,7 @@ public final class QuickDecoder {
         this.wordRanker = wordRanker;
         this.sentenceRanker = sentenceRanker;
         this.relationRanker = relationRanker;
+        this.finalPool=relationRanker!=null&&relationRanker.expandedPool()?128:96;
         this.prefixRanker = prefixRanker;
         this.clauseStartStrength = clauseStartStrength;
         // Merge duplicate code variants and sources before creating prediction tails.
@@ -409,12 +410,15 @@ public final class QuickDecoder {
                     && !learnedSequence(code, path.text, learned)
                     && (contextual==null || !ContextLearning.supports(context,InputCandidate.chinese(dictionary,code,path.text),contextual))) continue;
             if (path.text.codePointCount(0, path.text.length()) > 1 && !result.contains(path.text)) result.add(path.text);
-            if (result.size() == (sentenceRanker == null ? 20 : FINAL_POOL)) break;
+            if (result.size() == (sentenceRanker == null ? 20 : finalPool)) break;
         }
         // Correct the bounded, confidence-eligible final pool before its display
         // cutoff. Exact-code checks and original personal path bonuses still apply.
+        Map<String,Double> finalScores=null;
+        Map<String,Map<String,Integer>> headFeatures=null;
         if (model != null && sentenceRanker != null && result.size() > 1) {
             Map<String, Double> scores = new HashMap<>();
+            finalScores=scores;
             for (Path path : completed) if (result.contains(path.text))
                 scores.put(path.text, path.score + sentenceRanker.score(context, path.text));
             String original = result.get(0);
@@ -425,15 +429,16 @@ public final class QuickDecoder {
                 String legacyWinner=support>0?original:Collections.max(result,Comparator.comparingDouble(scores::get));
                 protectedWinner=legacyWinner;support=1;
                 if(relationRanker.aligned()) {
+                    if(relationRanker.headPromotion())headFeatures=new HashMap<>();
                     List<String> legacy=new ArrayList<>(result);
                     legacy.sort(Comparator.comparingInt((String v)->v.equals(legacyWinner)?0:1)
                         .thenComparing(Comparator.comparingDouble((String v)->scores.get(v)).reversed()));
                     legacy.sort(Comparator.comparingInt((String v)->knownWord(v)?learned.applyAsInt(code,v):0).reversed());
                     protectedWinner=legacy.get(0);
                     alignedVisible.addAll(legacy.subList(0,Math.min(20,legacy.size())));
-                    double reference=relationRanker.rawScore(context,protectedWinner);
+                    double reference=relationRanker.rawScore(context,protectedWinner,headFeatures);
                     for(String value:legacy.subList(0,Math.min(20,legacy.size())))if(!value.equals(protectedWinner))
-                        scores.put(value,scores.get(value)+relationRanker.alignedCorrection(relationRanker.rawScore(context,value),reference));
+                        scores.put(value,scores.get(value)+relationRanker.alignedCorrection(relationRanker.rawScore(context,value,headFeatures),reference));
                 } else {
                     boolean explicit=knownWord(legacyWinner)&&learned.applyAsInt(code,legacyWinner)>0
                         ||learnedSequence(code,legacyWinner,learned)
@@ -463,6 +468,12 @@ public final class QuickDecoder {
         // the existing context order; only exact, bundled words can be personalized.
         result.sort(Comparator.comparingInt((String text) -> knownWord(text)
             ? learned.applyAsInt(code, text) : 0).reversed());
+        if(relationRanker!=null&&relationRanker.headPromotion()&&finalScores!=null&&!result.isEmpty()) {
+            String head=result.get(0);
+            boolean explicit=knownWord(head)&&learned.applyAsInt(code,head)>0||learnedSequence(code,head,learned)
+                ||contextual!=null&&ContextLearning.supports(context,InputCandidate.chinese(dictionary,code,head),contextual);
+            if(!explicit)relationRanker.promoteHead(context,result,finalScores,headFeatures);
+        }
         if (result.size() > 20) return new ArrayList<>(result.subList(0, 20));
         return result;
     }
@@ -966,7 +977,7 @@ public final class QuickDecoder {
         input.sort(Comparator.comparingDouble((Path p) -> p.score).reversed());
         List<Path> result = new ArrayList<>(); Set<String> seen = new HashSet<>();
         for (Path path : input) if (seen.add(path.text)) {
-            result.add(path); if (result.size() == FINAL_POOL) break;
+            result.add(path); if (result.size() == finalPool) break;
         }
         return result;
     }

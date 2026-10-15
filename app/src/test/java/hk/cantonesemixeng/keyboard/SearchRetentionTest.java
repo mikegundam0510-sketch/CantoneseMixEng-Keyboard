@@ -11,6 +11,48 @@ import static org.junit.Assert.*;
 public class SearchRetentionTest {
     private static String character(int cp) { return new String(Character.toChars(cp)); }
 
+    @Test public void completedSentenceCanReachRerankingBelowTheOldNinetySixPathCutoff() throws Exception {
+        StringBuilder roots=new StringBuilder("...\n"),counts=new StringBuilder();
+        List<String> left=new ArrayList<>(),right=new ArrayList<>();
+        TreeMap<Long,float[]> grams=new TreeMap<>();
+        for(int i=0;i<24;i++)for(int group=0;group<2;group++) {
+            int cp=group==0?(i==5?'你':0x6000+i):(i==0?'交':0x7000+i);
+            String text=character(cp);(group==0?left:right).add(text);
+            roots.append(text).append(group==0?"\taa\n":"\tbb\n");
+            counts.append(text).append('\t').append(10000-i).append('\n');
+            grams.put(OfflineLanguageModel.hash(new int[]{cp},0,1),new float[]{.01f-i*(group==0?.000001f:.00000001f),1});
+        }
+        ByteArrayOutputStream bytes=new ByteArrayOutputStream();
+        try(DataOutputStream out=new DataOutputStream(new GZIPOutputStream(bytes))) {
+            out.writeInt(0x4B4C4D32);out.writeInt(5);out.writeInt(grams.size());out.writeFloat(.000001f);
+            for(Map.Entry<Long,float[]> e:grams.entrySet()){out.writeLong(e.getKey());out.writeFloat(e.getValue()[0]);out.writeFloat(e.getValue()[1]);}
+        }
+        OfflineLanguageModel lm=OfflineLanguageModel.load(new ByteArrayInputStream(Base64.getEncoder().encode(bytes.toByteArray())));
+        bytes=new ByteArrayOutputStream();
+        try(DataOutputStream out=new DataOutputStream(new GZIPOutputStream(bytes))) {
+            out.writeInt(0x53524b32);out.writeInt(1);out.writeInt(2);out.writeFloat(1);out.writeFloat(3);
+            byte[] key="W|你交".getBytes(java.nio.charset.StandardCharsets.UTF_8);
+            out.writeShort(key.length);out.write(key);out.writeFloat(1.5f);
+        }
+        SentenceRanker ranker=SentenceRanker.load(new ByteArrayInputStream(Base64.getEncoder().encode(bytes.toByteArray())));
+        bytes=new ByteArrayOutputStream();
+        try(DataOutputStream out=new DataOutputStream(new GZIPOutputStream(bytes))) {
+            out.writeInt(0x50525233);out.writeInt(0);out.writeInt(0);out.writeFloat(1);out.writeFloat(2);
+            out.writeFloat(0);out.writeFloat(0);out.writeInt(0);out.writeFloat(0);out.writeFloat(2);
+        }
+        PhraseRelationRanker expanded=PhraseRelationRanker.load(new ByteArrayInputStream(Base64.getEncoder().encode(bytes.toByteArray())));
+        assertTrue(expanded.expandedPool());assertFalse(expanded.headPromotion());
+        for(int cp=0x8000;cp<0x8400;cp++)roots.append(character(cp)).append("\tzz\n");
+        DictionaryEngine dictionary=new DictionaryEngine(new StringReader(roots.toString()),new StringReader(""),new StringReader(counts.toString()));
+        QuickDecoder decoder=new QuickDecoder(dictionary,new StringReader(""),null,null,lm,null,null,null,null,0,ranker,null,expanded);
+        double wanted=decoder.languageScore("","你")+decoder.languageScore("你","交");int higher=0;
+        for(String a:left)for(String b:right)if(decoder.languageScore("",a)+decoder.languageScore(a,b)>wanted)higher++;
+        assertTrue("Target must really fall below the former96-path limit",higher>=96&&higher<128);
+        List<String> values=decoder.decode("aabb",(code,word)->0);
+        assertEquals("你交",values.get(0));assertTrue(values.size()<=20);
+        for(String value:values)assertFalse(dictionary.matchQuickCodes("aabb",value).isEmpty());
+    }
+
     @Test public void contextCanAdmitAnAttestedWordBelowTheFrequencyCutoff() throws Exception {
         StringBuilder roots=new StringBuilder("...\n甲\taa\n乙\tcc\n"), counts=new StringBuilder("甲\t1000\n乙\t1000\n"), words=new StringBuilder();
         TreeMap<Long,float[]> grams=new TreeMap<>();

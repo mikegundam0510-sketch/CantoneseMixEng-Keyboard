@@ -1,0 +1,415 @@
+{
+  "date": "2026-10-15",
+  "baseline_revision": "db4b363d63479506b337de66ded4b6adda59c89d",
+  "version_name": "0.6.39",
+  "version_code": 46,
+  "requested_sequence": [
+    "Recover exact-code paths lost in search",
+    "Evidence-gated first-choice improvements"
+  ],
+  "diagnosis": {
+    "observed_missing_cases": 242,
+    "prefix_losses": 165,
+    "completed_path_losses": 26,
+    "outside_twenty": 49,
+    "choice_cutoff": 1,
+    "confidence_filtered": 1,
+    "exact_codes": 242,
+    "interpretation": "Furthest observed frontiers; not a proof about every alternative segmentation."
+  },
+  "search": {
+    "rejected_lexical_reserves": [
+      2,
+      4
+    ],
+    "selected_completed_pool": 128,
+    "legacy_pool": 96,
+    "ordinary_beam": 48,
+    "display": 20,
+    "confidence_margin": 10,
+    "known500_first_top5": [
+      89,
+      193
+    ],
+    "known500_top20_before_after": [
+      258,
+      259
+    ],
+    "old3293_per_set_counts_unchanged": true,
+    "independent_target_gain": false,
+    "asset_control": "PRR3 pool128;PRR1/PRR2/missing model96;0/0head thresholds+empty map select search-only."
+  },
+  "head_training": {
+    "training_cases": 5381,
+    "counts": {
+      "observed": 5381,
+      "correct_head_protection": 1692,
+      "indistinguishable": 361,
+      "cannot_reach_score_gate": 26761,
+      "no_challenger": 93,
+      "wrong_head_repair": 544,
+      "outside_display": 484
+    },
+    "pairs": 2236,
+    "supported_examples": 2219,
+    "source_families": 586,
+    "features": 2502,
+    "initial_actual_gate_objective": 0.607508116685867,
+    "final_actual_gate_objective": 0.3737883617634078,
+    "parameters": {
+      "epochs": 80,
+      "rate": 0.3,
+      "l2": 0.005,
+      "minimum_source_family_support": 2,
+      "head_strength": 1.5,
+      "limit": 2,
+      "margin": 0.5,
+      "lift": 0.5,
+      "challengers": 20,
+      "protection_ranks": "2..9"
+    },
+    "source_mix": {
+      "HK": 0.65,
+      "Tatoeba": 0.2,
+      "authored": 0.15
+    },
+    "training_sha256": "24686596e3f00667912cff73787dfc2d023c1ddbb8a02bce94b5b885bd0a9c22",
+    "scored_sha256": "7176a2d9c0e8ae4addbb99484e4a3214e7c4abeaa1891264fc3cbd9faad8e6af",
+    "weights_sha256": "17d7c148088d54c09e5474a1d0f874384808126ffd212c4060cbd444ccc4f3d1",
+    "pairs_sha256": "da9fc95e4d7463a77ed47f1f20f4618c60e4c040f1e659a3bba2f9cd0076de96",
+    "tail_asset_sha256": "1e999e91b8972c06bc44778aa22a51340d5b564ebb698e49559c7d6180b70163",
+    "limitation": "Actual min(raw-lift, bounded-score-margin) surrogate; discrete structural evidence gate is verified at inference. No evaluation or personal text trains this model; original tail weights unchanged."
+  },
+  "head_selection": {
+    "choices": [
+      {
+        "model": "head-model20",
+        "setting": "margin0.5/lift0.5",
+        "margin": 0.5,
+        "lift": 0.5,
+        "first_gain": 9,
+        "mrr": 13.339413352540946
+      },
+      {
+        "model": "head-model20",
+        "setting": "margin1/lift0.5",
+        "margin": 1.0,
+        "lift": 0.5,
+        "first_gain": 3,
+        "mrr": 13.312191130318723
+      },
+      {
+        "model": "head-model20",
+        "setting": "margin1/lift1",
+        "margin": 1.0,
+        "lift": 1.0,
+        "first_gain": 1,
+        "mrr": 13.306191130318723
+      },
+      {
+        "model": "head-model20-light",
+        "setting": "margin0.5/lift0.5",
+        "margin": 0.5,
+        "lift": 0.5,
+        "first_gain": 10,
+        "mrr": 13.337852541730136,
+        "criterion": "Eligible per-set first/top5/top20 no loss, then aggregate first gain, then summedMRR, more conservative thresholds/regularization on ties. Known overlapping calibration sets only."
+      },
+      {
+        "model": "head-model20-light",
+        "setting": "margin1/lift0.5",
+        "margin": 1.0,
+        "lift": 0.5,
+        "first_gain": 8,
+        "mrr": 13.32679698617458
+      }
+    ],
+    "chosen": {
+      "model": "head-model20-light",
+      "setting": "margin0.5/lift0.5",
+      "margin": 0.5,
+      "lift": 0.5,
+      "first_gain": 10,
+      "mrr": 13.337852541730136,
+      "criterion": "Eligible per-set first/top5/top20 no loss, then aggregate first gain, then summedMRR, more conservative thresholds/regularization on ties. Known overlapping calibration sets only."
+    }
+  },
+  "calibration": {
+    "case_rows": 3893,
+    "known_overlapping_sets": true,
+    "first_entered": 13,
+    "first_left": 3,
+    "first_net": 10,
+    "all_per_set_first_top5_top20_no_loss": true,
+    "no_independent_claim": true
+  },
+  "frozen_selection": {
+    "baseline_revision": "db4b363d63479506b337de66ded4b6adda59c89d",
+    "heldout_sha256": "22a9e9bd48f663852f0a823a532ff2fb1f30bce1ce337f3bdcef703ba77e1486",
+    "manifest_sha256": "f25bee07f094922c81fd473df6f69dca643aece15edcc1c5d1ff73c3fa50cabc",
+    "protocol_sha256": "53a19560ea88917cf3c48073d5bccb7671c4af4b84224fa648ee599b281c3b84",
+    "tail_model_sha256": "1e999e91b8972c06bc44778aa22a51340d5b564ebb698e49559c7d6180b70163",
+    "combined_model_sha256": "d60d25924fd732de1d022ebc969f29d7939367876cda54a70cebe726668fc988",
+    "search_model_sha256": "366664a36964f331d6bc45605fb4bde279756e48f2cbfd1cac3edf1e8c65220a",
+    "head_weights_sha256": "17d7c148088d54c09e5474a1d0f874384808126ffd212c4060cbd444ccc4f3d1",
+    "head_parameters": {
+      "strength": 1.5,
+      "limit": 2,
+      "margin": 0.5,
+      "lift": 0.5,
+      "l2": 0.005,
+      "maximum_challengers": 19,
+      "numerals_preserved": true
+    },
+    "runtime_source_sha256": {
+      "QuickDecoder.java": "1897db41ec252831adf8359c8879548b0f9ef2617a60940c4df2b7bdf6da9bec",
+      "PhraseRelationRanker.java": "0977ffe58eb182bbb0541522aa8b050825f3e7be99af4bf5e1257f9ee5f84ebe"
+    },
+    "calibration": {
+      "cases": 3893,
+      "overlapping_known_sets": true,
+      "first_net_gain": 10,
+      "first_gained": 13,
+      "first_lost": 3,
+      "all_per_set_first_top5_top20_no_loss": true
+    },
+    "native_gate_parity_cases": 3893,
+    "native_full_decode_cases": 600,
+    "native_configured_search_parity_cases": 100,
+    "java_tests": 222,
+    "python_unique_tests": 42,
+    "lint_errors": 0,
+    "lint_existing_warnings": 25,
+    "single32_first": 32,
+    "maximum_paired_wall_ratio": 1.062956915797541,
+    "maximum_paired_cpu_ratio": 1.0626244283023945,
+    "performance_warmup": 50,
+    "performance_samples": 31,
+    "independent_unopened": true,
+    "no_post_reserve_accuracy_tuning": true,
+    "delivery": "Use predeclared baseline/search/combined asset arms; combined needs independent first gain over search-only and no1/5/20 losses vs either control. Otherwise qualifying search-only or unchanged PRR2 baseline."
+  },
+  "selection_sha256": "7c255399ff33be66216726fbb7ed37754c8737bef79b0008f8340dc0d758db73",
+  "independent": {
+    "baseline_revision": "db4b363d63479506b337de66ded4b6adda59c89d",
+    "metrics": {
+      "baseline": {
+        "cases": 500,
+        "top1": 108,
+        "top5": 198,
+        "top20": 256,
+        "mrr": 0.29310211103825656
+      },
+      "search": {
+        "cases": 500,
+        "top1": 108,
+        "top5": 198,
+        "top20": 256,
+        "mrr": 0.29310211103825656
+      },
+      "combined": {
+        "cases": 500,
+        "top1": 109,
+        "top5": 198,
+        "top20": 256,
+        "mrr": 0.2950354443715899
+      }
+    },
+    "comparisons": {
+      "search_vs_baseline": {
+        "first": {
+          "gained": 0,
+          "lost": 0,
+          "net": 0,
+          "paired_exact_two_sided_p": 1
+        },
+        "top5": {
+          "gained": 0,
+          "lost": 0,
+          "net": 0,
+          "paired_exact_two_sided_p": 1
+        },
+        "top20": {
+          "gained": 0,
+          "lost": 0,
+          "net": 0,
+          "paired_exact_two_sided_p": 1
+        }
+      },
+      "combined_vs_search": {
+        "first": {
+          "gained": 2,
+          "lost": 1,
+          "net": 1,
+          "paired_exact_two_sided_p": 1
+        },
+        "top5": {
+          "gained": 0,
+          "lost": 0,
+          "net": 0,
+          "paired_exact_two_sided_p": 1
+        },
+        "top20": {
+          "gained": 0,
+          "lost": 0,
+          "net": 0,
+          "paired_exact_two_sided_p": 1
+        }
+      },
+      "combined_vs_baseline": {
+        "first": {
+          "gained": 2,
+          "lost": 1,
+          "net": 1,
+          "paired_exact_two_sided_p": 1
+        },
+        "top5": {
+          "gained": 0,
+          "lost": 0,
+          "net": 0,
+          "paired_exact_two_sided_p": 1
+        },
+        "top20": {
+          "gained": 0,
+          "lost": 0,
+          "net": 0,
+          "paired_exact_two_sided_p": 1
+        }
+      }
+    },
+    "search_qualifies_alone": false,
+    "head_qualifies": true,
+    "delivery": "combined",
+    "selection_sha256": "7c255399ff33be66216726fbb7ed37754c8737bef79b0008f8340dc0d758db73",
+    "case_sha256": "22a9e9bd48f663852f0a823a532ff2fb1f30bce1ce337f3bdcef703ba77e1486",
+    "output_sha256": {
+      "baseline": "39627aecf617b6175c4490459b6539feac13145b48a20a1315b3120097eeb393",
+      "search": "63036c516371e90ebaf05a9016c98a891ae351d67d860bbda9beaa12e491afaf",
+      "combined": "b0445b30ed73479fa1477a7cb2d1e6a4176dc272d57ac5a81122c0c2154b2c4d"
+    },
+    "no_post_reserve_accuracy_tuning": true,
+    "exact_codes_and_display_bounds": true,
+    "limitations": "Public dictionary example500, now observed. Small paired changes are not population typing accuracy, physical Fold7 evidence or1.0 qualification."
+  },
+  "verification": "search-recovery-2026-10-15/verification.json",
+  "performance": [
+    {
+      "code": "ofonaovrmrq",
+      "letters": 11,
+      "before_wall_ms": 82.217,
+      "after_wall_ms": 84.81,
+      "before_cpu_ms": 80.312,
+      "after_cpu_ms": 82.995,
+      "wall_ratio": 1.0315384896067723,
+      "cpu_ratio": 1.0334072118736928
+    },
+    {
+      "code": "hmerrrysmlrp",
+      "letters": 12,
+      "before_wall_ms": 116.943,
+      "after_wall_ms": 109.798,
+      "before_cpu_ms": 116.539,
+      "after_cpu_ms": 107.053,
+      "wall_ratio": 0.9389018581702198,
+      "cpu_ratio": 0.9186023562927431
+    },
+    {
+      "code": "dpofvivcjutrmyyjvcqnjd",
+      "letters": 22,
+      "before_wall_ms": 150.055,
+      "after_wall_ms": 159.502,
+      "before_cpu_ms": 148.68,
+      "after_cpu_ms": 157.991,
+      "wall_ratio": 1.062956915797541,
+      "cpu_ratio": 1.0626244283023945
+    },
+    {
+      "code": "ofykrmmsydwljpvwjd",
+      "letters": 18,
+      "before_wall_ms": 132.546,
+      "after_wall_ms": 134.413,
+      "before_cpu_ms": 130.426,
+      "after_cpu_ms": 133.173,
+      "wall_ratio": 1.0140856759162857,
+      "cpu_ratio": 1.0210617514912672
+    },
+    {
+      "code": "vkmmnkmrvordrjjj",
+      "letters": 16,
+      "before_wall_ms": 148.308,
+      "after_wall_ms": 147.341,
+      "before_cpu_ms": 146.114,
+      "after_cpu_ms": 145.725,
+      "wall_ratio": 0.9934797853116488,
+      "cpu_ratio": 0.9973376952242768
+    },
+    {
+      "code": "hihihihihihihihihihihihihihihihihihihihihihihihi",
+      "letters": 48,
+      "before_wall_ms": 624.147,
+      "after_wall_ms": 593.049,
+      "before_cpu_ms": 616.182,
+      "after_cpu_ms": 584.125,
+      "wall_ratio": 0.9501751991117476,
+      "cpu_ratio": 0.9479747866701721
+    }
+  ],
+  "maximum_wall_ratio": 1.062956915797541,
+  "maximum_cpu_ratio": 1.0626244283023945,
+  "delivery": {
+    "arm": "combined",
+    "search_pool_enabled": true,
+    "head_model_enabled": true,
+    "head_asset_sha256": "d60d25924fd732de1d022ebc969f29d7939367876cda54a70cebe726668fc988",
+    "source_changed_after_independent": false,
+    "apk_created": false,
+    "major_version_qualified": false
+  },
+  "licensing": "Original train-only lexicon/tail payload unchanged. Head weights derive only from same HKCanCor/Tatoeba/UD/authored training5381,CCBY-SA4.0 head asset plus retained source attribution. words.hk dictionary examplesNCDOL1.0 evaluation-only,never training orAPK. No phone data collected.",
+  "limitations": [
+    "Independent500 first108->109 (2gains/1loss),top5198/top20256 unchanged. First paired p=1; very limited evidence.",
+    "Search-only neutral on new500; most missing prefixes remain unresolved.",
+    "Calibration sets overlap and include authored examples; counts are not unique independent conversations.",
+    "Desktop warm50/samples31 matched control,not Fold7 latency orretained memory. No faster-recognition claim.",
+    "Existing learning schemas/signing configuration unchanged;32/32 is simulated three-confirmation learning,not realphone validation."
+  ],
+  "evidence_sha256": {
+    "diagnosis.json": "49aca98a9d6f59b3a8f65599efb912ca6a5d60f6cc7130f8a2b41e079ad641ff",
+    "final-gradle.log": "b4d5cb6d7b221277e33e6c83a0c075058789f16f2d97a23e9103d6b87386ed50",
+    "final-latency-cached.tsv": "0af4760522a189f31cc82581430f66ad160781b34a557cdc4a68cf880fd591e5",
+    "final-latency-steady.tsv": "0600f253ed4c31c373a01651ee61fcf81af0488bc3ae2432ef5c174e9e45258c",
+    "final-new-python.log": "e91b481f19e12476ad9404a0a9b9f1df170c26ad5dcdd31ca22cc8edc49d6b5c",
+    "final-python.log": "a3f383bf6ff436ca3802a987a52385dc0c9a68b39e22c3879e5b3a41f2fd45ce",
+    "head-calibration600.json": "91cbacff5ba31aa0b9c8370c78f3ebb4bdb8375f3344f5cfe7ebeb19d3f77745",
+    "head-fitted-calibration600.json": "65cd8ecf334831d673381dbe11988cddaa6760aea622350e76dd89a8dd6731f7",
+    "head-parity.json": "df40feabd8ee872cdbc29e89a7515f003b54d7ebbc5f01b4f59535d5e5198fd3",
+    "head20-calibration3893.json": "3c5b5689a46c3bfb2cdaa73ead54fae094ef58c479e2b70f9688724d8d040726",
+    "head20-calibration600.json": "b223204730e18248435b1b7fc45ee3b9f175a9f4874cde3f3e95e01af2adea90",
+    "head20-light-calibration3893.json": "a22461924c6f274c11f290d627926035f593728924c0b0294dd237b840e07d03",
+    "head20-light-calibration600.json": "6381d45e77aaab0b5b6f103a69a2b0802623f6298e459d9858dd02b3517ba628",
+    "head20-light-protected-calibration3893.json": "01b19f8a6f4c7763d6839673ac5dadf4f44094e9d8408398ea8c1d6b838729f1",
+    "head20-protected-calibration3893.json": "906591d1725af0e39f683972630e583d13622816e5c7a3bfcf334163a25cb37f",
+    "identical-latency.tsv": "b7d154803919b10e3a0ed605438b83b65f389539f2946d68cc337aecc9a7d8df",
+    "independent-baseline.tsv": "39627aecf617b6175c4490459b6539feac13145b48a20a1315b3120097eeb393",
+    "independent-combined.tsv": "b0445b30ed73479fa1477a7cb2d1e6a4176dc272d57ac5a81122c0c2154b2c4d",
+    "independent-paired.tsv": "e0c050a3abaa55e1466de06dfad46602e8c16b70568051b8f7bfaf6ed2409a71",
+    "independent-search.tsv": "63036c516371e90ebaf05a9016c98a891ae351d67d860bbda9beaa12e491afaf",
+    "independent.json": "c470e7ecc39b0810f074adb8c1b3c518322021d8367d7a1c0967171c224d17d0",
+    "native600-parity.json": "ac5a548da41e394e34dfb82b203b213e60d33a3b50482189b3c7860afec3ba15",
+    "rejected-latency-before-cache.tsv": "cacb980f61d9cbcdfb0a5b2178cd0a835d9dc9e0fd4e68cb74b4653f5e51273c",
+    "rejected-regularization-head-training-report.json": "eed301b8deca0aacb8cd2d965447263b64884b92ac14c16d97111bfb6bf55519",
+    "rejected-regularization-head-weights.json": "35fafe3bf406b0dad5ac2854eb70b4069339e22083dc3db4e53fc504075d4d84",
+    "rejected-top5-head-training-report.json": "f337e87760fd67d417f210c58c991f20e583f6599bed182b251dedcef6932e01",
+    "rejected-top5-head-weights.json": "82e45a4792ded831ad2fe1b4417dd10e3cc0d05c8ec37b6f1838e750defc97c6",
+    "reproduction.json": "0673e3d508d0447330539cd45fd8f32935c3126140f8f28b0c47e3ec98e81004",
+    "restored-python.log": "db968b0aeb97d9ff6247f8539c5bf36116c8fd0007a60fe80fb8b01e5a0ea120",
+    "search-latency.tsv": "68800692a16bad626fc50127d4591e1f36d1685ee8c35d401f8e5e61126d9652",
+    "search128-guards.json": "759253ffb8282df2333e58a6c944b4bcb9ffeaf83911b4299b44eae469149a18",
+    "search2-calibration.json": "262cd336daa9f7796fd06c0cf628fdfb83fceaf61b3a6c36be004bb077f87de9",
+    "search4-calibration.json": "262cd336daa9f7796fd06c0cf628fdfb83fceaf61b3a6c36be004bb077f87de9",
+    "single32-final.log": "d9679420f482449352afefa4a82e2bca1c5137ae303a39f65dca486e89cea2d2",
+    "single32-final.tsv": "f3e0cd8ca2ade6f12729a8fa5f01eacea5c350c8aff434e14edb632e4cab4525",
+    "verification.json": "0bb4a5b0b8ae7dd289be5ee8a210691ff2a436c6be77bb52c32a4b9b61f3077f"
+  },
+  "docs": "docs/SEARCH_RECOVERY.md"
+}

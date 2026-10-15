@@ -61,7 +61,7 @@ public class PriorityObserve {
 }
 '''
 
-def observe(cases,output,revision='a65f43d',working_tree=False):
+def observe(cases,output,revision='a65f43d',working_tree=False,include_relation=False,relation_asset=None):
     archive=subprocess.check_output(['git','archive',revision,'app/src/main/java','app/src/main/assets'],cwd=ROOT)
     with tempfile.TemporaryDirectory(prefix='priority-observe-') as directory:
         work=Path(directory)
@@ -69,6 +69,9 @@ def observe(cases,output,revision='a65f43d',working_tree=False):
         if working_tree:
             names=subprocess.check_output(['git','ls-tree','-r','--name-only',revision,'app/src/main/java','app/src/main/assets'],cwd=ROOT,text=True).splitlines()
             for name in names:shutil.copyfile(ROOT/name,work/name)
+        if relation_asset is not None:
+            if not include_relation:raise ValueError('An explicit relation asset requires include_relation')
+            shutil.copyfile(relation_asset,work/'app/src/main/assets/relation_ranker.b64')
         java=work/'app/src/main/java/hk/cantonesemixeng/keyboard/QuickDecoder.java';text=java.read_text()
         hooks={
             '    private static final int BEAM = 48;':'''    static final Map<String,Double> observedRaw=new HashMap<>(),observedAdjusted=new HashMap<>();
@@ -81,11 +84,20 @@ def observe(cases,output,revision='a65f43d',working_tree=False):
         for old,new in hooks.items():
             if text.count(old)!=1:raise ValueError('Observer structure changed')
             text=text.replace(old,new)
-        java.write_text(text);driver=work/'PriorityObserve.java';driver.write_text(DRIVER)
+        driver_text=DRIVER
+        if include_relation:
+            needle='PrefixRanker.load(Files.newInputStream(assets.resolve("prefix_ranker.b64"))));'
+            replacement='PrefixRanker.load(Files.newInputStream(assets.resolve("prefix_ranker.b64"))),PhraseRelationRanker.load(Files.newInputStream(assets.resolve("relation_ranker.b64"))));'
+            if driver_text.count(needle)!=1:raise ValueError('Relation observer constructor changed')
+            driver_text=driver_text.replace(needle,replacement)
+            needle='            result.sort(order);'
+            if text.count(needle)!=1:raise ValueError('Relation observer score hook changed')
+            text=text.replace(needle,needle+'\n            observedAdjusted.clear();observedAdjusted.putAll(scores);')
+        java.write_text(text);driver=work/'PriorityObserve.java';driver.write_text(driver_text)
         subprocess.run(['javac','-encoding','UTF-8','-sourcepath',str(work/'app/src/main/java'),'-d',str(work/'classes'),str(driver)],check=True)
-        complete=work/'complete.tsv'
+        output.parent.mkdir(parents=True,exist_ok=True);complete=output.with_suffix('.pending.tsv').resolve()
         subprocess.run(['java','-Xmx1g','-cp',str(work/'classes'),'hk.cantonesemixeng.keyboard.PriorityObserve',str(work/'app/src/main/assets'),str(cases.resolve()),str(complete)],check=True)
-        output.parent.mkdir(parents=True,exist_ok=True);output.write_text(complete.read_text())
+        complete.replace(output)
 
 def summarize(scored,expected,output):
     rows=[];groups=defaultdict(list);pins=defaultdict(int)

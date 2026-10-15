@@ -1,6 +1,6 @@
 # Displayed-candidate phrase relation model
 
-`relation_ranker.b64` (PRR2) contains a modified train-only POS lexicon and fitted
+`relation_ranker.b64` (PRR3) contains a modified train-only POS lexicon and fitted
 weights. These derived lexicon/weights and their encoded model are offered under
 CC BY-SA4.0, https://creativecommons.org/licenses/by-sa/4.0/ . The complete
 license is retained in `CC-BY-SA-4.0.txt`. This attribution concerns these data
@@ -28,16 +28,26 @@ training families contribute to this modification. Project-authored scenario
 variants are synthetic, not measured Hong Kong usage frequency. Original authors
 do not endorse this keyboard or these modifications.
 
-The fitted2,165-feature model uses actual same-code top-five competitors from
-5,381 training examples, with at least two source families supporting a feature.
-Signed score corrections have strength1 and limit2. The existing first choice
-and visible20-candidate membership remain protected. It does not ban dictionary
-characters. Parameters, hashes and aggregate evaluation are recorded in
+The original2,165-feature tail model and POS lexicon remain intact. A separate
+2,502-feature head map uses2,236 actual native first-choice repair/protection
+pairs from the same5,381 training examples, with at least two source families
+supporting a feature and65/20/15 corpus-source balancing. The fitted head map is
+also a modification under the same CC BY-SA4.0 terms.
+
+Tail corrections retain strength1/limit2; the head correction has strength1.5,
+limit2, margin0.5 and minimum raw lift0.5. Only a supported existing displayed
+candidate may move first, with the old first retained second. Ordered Chinese
+numerals/ordinals and positive word/sequence/context personal preferences remain
+protected. The PRR3 wrapper enables completed pool128; a zero-threshold/empty
+head map can enable search alone. Older/missing models retain pool96. Dictionary
+characters are not banned. Parameters, hashes and aggregate evaluation are in
 `RELATION_RANKER_REPORT.json`.
 
 words.hk NCDOL1.0 dictionary examples are evaluation-only development material;
 they never train this model or POS lexicon and are not bundled in the APK.
-The independent500-example comparison has185→193 top-five hits and89→89 first
-hits. This small result is not contemporary chat-frequency or physical Fold7
-evidence. No private messages or phone learning records train this immutable
-model; existing personalization remains on the device.
+The latest independent500-example comparison has108→109 first hits (two gains,
+one loss), with198 top-five and256 top-twenty hits unchanged. Search-only has
+no extra independent target hits. The paired first-hit p-value is1, giving very
+limited evidence. These dictionary examples are not contemporary chat-frequency
+or physical Fold7 evidence. No private messages or phone learning records train
+this immutable model; existing personalization remains on the device.

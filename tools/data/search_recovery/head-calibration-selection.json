@@ -1,0 +1,54 @@
+{
+  "choices": [
+    {
+      "model": "head-model20",
+      "setting": "margin0.5/lift0.5",
+      "margin": 0.5,
+      "lift": 0.5,
+      "first_gain": 9,
+      "mrr": 13.339413352540946
+    },
+    {
+      "model": "head-model20",
+      "setting": "margin1/lift0.5",
+      "margin": 1.0,
+      "lift": 0.5,
+      "first_gain": 3,
+      "mrr": 13.312191130318723
+    },
+    {
+      "model": "head-model20",
+      "setting": "margin1/lift1",
+      "margin": 1.0,
+      "lift": 1.0,
+      "first_gain": 1,
+      "mrr": 13.306191130318723
+    },
+    {
+      "model": "head-model20-light",
+      "setting": "margin0.5/lift0.5",
+      "margin": 0.5,
+      "lift": 0.5,
+      "first_gain": 10,
+      "mrr": 13.337852541730136,
+      "criterion": "Eligible per-set first/top5/top20 no loss, then aggregate first gain, then summedMRR, more conservative thresholds/regularization on ties. Known overlapping calibration sets only."
+    },
+    {
+      "model": "head-model20-light",
+      "setting": "margin1/lift0.5",
+      "margin": 1.0,
+      "lift": 0.5,
+      "first_gain": 8,
+      "mrr": 13.32679698617458
+    }
+  ],
+  "chosen": {
+    "model": "head-model20-light",
+    "setting": "margin0.5/lift0.5",
+    "margin": 0.5,
+    "lift": 0.5,
+    "first_gain": 10,
+    "mrr": 13.337852541730136,
+    "criterion": "Eligible per-set first/top5/top20 no loss, then aggregate first gain, then summedMRR, more conservative thresholds/regularization on ties. Known overlapping calibration sets only."
+  }
+}

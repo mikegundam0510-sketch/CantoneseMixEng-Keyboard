@@ -39,11 +39,18 @@ public final class PhraseRelationRanker {
     private final Map<String,Float> weights;
     private final float strength,limit;
     private final boolean aligned;
+    private final boolean expandedPool;
+    private final float headMargin,headLift;
+    private final Map<String,Float> headWeights;
+    private final float headStrength,headLimit;
 
-    private PhraseRelationRanker(Map<String,String> lexicon,Map<String,Float> weights,float strength,float limit,boolean aligned) {
+    private PhraseRelationRanker(Map<String,String> lexicon,Map<String,Float> weights,float strength,float limit,int format,float headMargin,float headLift,
+            Map<String,Float> headWeights,float headStrength,float headLimit) {
         this.lexicon=Collections.unmodifiableMap(lexicon);this.weights=Collections.unmodifiableMap(weights);
         this.strength=strength;this.limit=limit;
-        this.aligned=aligned;
+        this.aligned=format!=0x50525231;this.expandedPool=format==0x50525233;
+        this.headMargin=headMargin;this.headLift=headLift;
+        this.headWeights=Collections.unmodifiableMap(headWeights);this.headStrength=headStrength;this.headLimit=headLimit;
     }
     private static String readString(DataInputStream input,int maximum) throws IOException {
         int size=input.readUnsignedShort();if(size<1||size>maximum)throw new IOException("Invalid relation text size");
@@ -81,8 +88,12 @@ public final class PhraseRelationRanker {
         try(DataInputStream in=new DataInputStream(new BufferedInputStream(new GZIPInputStream(
                 Base64.getMimeDecoder().wrap(new BufferedInputStream(encoded)))))) {
             int magic=in.readInt();
-            if(magic!=0x50525231&&magic!=0x50525232)throw new IOException("Unsupported phrase relations");
+            if(magic!=0x50525231&&magic!=0x50525232&&magic!=0x50525233)throw new IOException("Unsupported phrase relations");
             int words=in.readInt(),features=in.readInt();float strength=in.readFloat(),limit=in.readFloat();
+            float headMargin=magic==0x50525233?in.readFloat():0,headLift=magic==0x50525233?in.readFloat():0;
+            boolean headDisabled=headMargin==0&&headLift==0;
+            if(magic==0x50525233&&!headDisabled&&(!Float.isFinite(headMargin)||headMargin<.5||headMargin>1
+                    ||!Float.isFinite(headLift)||headLift<.5||headLift>1))throw new IOException("Invalid head promotion bounds");
             if(words<0||words>20000||features<0||features>6000||!Float.isFinite(strength)||strength<0||strength>1.5
                     ||!Float.isFinite(limit)||limit<=0||limit>2)throw new IOException("Invalid relation bounds");
             Map<String,String> lexicon=new HashMap<>();Map<String,Float> weights=new HashMap<>();
@@ -95,8 +106,20 @@ public final class PhraseRelationRanker {
                 if(!validFeature(key)||!Float.isFinite(value)||Math.abs(value)>1.5||weights.put(key,value)!=null)
                     throw new IOException("Invalid relation feature");
             }
+            Map<String,Float> headWeights=new HashMap<>();float headStrength=0,headLimit=2;
+            if(magic==0x50525233) {
+                int size=in.readInt();headStrength=in.readFloat();headLimit=in.readFloat();
+                if(size<0||size>6000||!Float.isFinite(headStrength)||headStrength<0||headStrength>1.5
+                        ||!Float.isFinite(headLimit)||headLimit<=0||headLimit>2)throw new IOException("Invalid head model bounds");
+                if(headDisabled&&(size!=0||headStrength!=0))throw new IOException("Disabled head model has weights");
+                for(int i=0;i<size;i++) {
+                    String key=readString(in,96);float value=in.readFloat();
+                    if(!validFeature(key)||!Float.isFinite(value)||Math.abs(value)>1.5||headWeights.put(key,value)!=null)
+                        throw new IOException("Invalid head feature");
+                }
+            }
             if(in.read()!=-1)throw new IOException("Trailing relation data");
-            return new PhraseRelationRanker(lexicon,weights,strength,limit,magic==0x50525232);
+            return new PhraseRelationRanker(lexicon,weights,strength,limit,magic,headMargin,headLift,headWeights,headStrength,headLimit);
         }catch(IllegalArgumentException e){throw new IOException("Invalid relation encoding",e);}
     }
     private static String nounCategory(String word) {
@@ -231,27 +254,83 @@ public final class PhraseRelationRanker {
         }
     }
     Evidence evidence(String preceding,String text) {
+        return evidence(preceding,text,weights);
+    }
+    private Evidence evidence(String preceding,String text,Map<String,Float> weights) {
+        return evidence(features(preceding,text),weights);
+    }
+    private Evidence evidence(Map<String,Integer> features,Map<String,Float> weights) {
         double raw=0;Set<String> positive=new HashSet<>(),negative=new HashSet<>(),kinds=new HashSet<>();
-        for(Map.Entry<String,Integer> e:features(preceding,text).entrySet()) {
+        for(Map.Entry<String,Integer> e:features.entrySet()) {
             float weight=weights.getOrDefault(e.getKey(),0f);raw+=(double)weight*e.getValue();
-            String[] parts=e.getKey().split("\\|",-1);String k=kind(parts[0]);
-            if(weight>0&&!k.isEmpty()){positive.add(e.getKey());kinds.add(k);}
+            String key=e.getKey();
+            if(weight>0&&key.charAt(0)!='G'&&key.charAt(0)!='B'&&key.charAt(0)!='Q') {
+                String k=kind(key.substring(0,key.indexOf('|')));
+                if(!k.isEmpty()){positive.add(key);kinds.add(k);}
+            }
             // An unknown-word role is uncertainty, not adverse grammatical evidence.
-            boolean unknown=parts[0].equals("G")&&parts[1].contains("O")
-                ||parts[0].equals("B")&&(parts[1].equals("O")||parts[2].equals("O"))
-                ||parts[0].equals("Q")&&parts[2].contains("O");
-            if(weight<-.1&&!unknown)negative.add(e.getKey());
+            if(weight<-.1) {
+                boolean unknown=key.startsWith("G|")&&key.indexOf('O',2)>=0
+                    ||key.startsWith("B|")&&(key.charAt(2)=='O'||key.charAt(4)=='O')
+                    ||key.startsWith("Q|")&&key.indexOf('O',4)>=0;
+                if(!unknown)negative.add(key);
+            }
         }
         return new Evidence(raw,positive,negative,kinds);
     }
     public double rawScore(String preceding,String text) {
+        return dot(features(preceding,text),weights);
+    }
+    /** Cache only within one decode/context; head evidence reuses the exact same vectors. */
+    double rawScore(String preceding,String text,Map<String,Map<String,Integer>> cache) {
+        if(cache==null)return rawScore(preceding,text);
+        return dot(cache.computeIfAbsent(text,k->features(preceding,k)),weights);
+    }
+    private static double dot(Map<String,Integer> vector,Map<String,Float> weights) {
         double score=0;
-        for(Map.Entry<String,Integer> e:features(preceding,text).entrySet())
+        for(Map.Entry<String,Integer> e:vector.entrySet())
             score+=(double)weights.getOrDefault(e.getKey(),0f)*e.getValue();
         return score;
     }
     public double correction(double raw,double reference) {return Math.max(0,strength*Math.max(-limit,Math.min(limit,raw-reference))-.1);}
     boolean aligned(){return aligned;}
+    boolean expandedPool(){return expandedPool;}
+    boolean headPromotion(){return strength>0&&headMargin>0;}
+    private static String numerals(String text) {
+        StringBuilder value=new StringBuilder();
+        text.codePoints().filter(cp->"〇零一二三四五六七八九十百千萬億兩幾第壹貳參肆伍陸柒捌玖拾佰仟廿卅卌".indexOf(cp)>=0).forEach(value::appendCodePoint);
+        return value.toString();
+    }
+    /** Promote within the established display; keep the former head as runner-up. */
+    void promoteHead(String context,List<String> values,Map<String,Double> scores) {
+        promoteHead(context,values,scores,null);
+    }
+    void promoteHead(String context,List<String> values,Map<String,Double> scores,Map<String,Map<String,Integer>> cache) {
+        if(!headPromotion()||values.size()<2)return;
+        Map<String,Float> selectedWeights=headWeights.isEmpty()?weights:headWeights;
+        String first=values.get(0);Map<String,Integer> firstVector=vector(context,first,cache);
+        double referenceRaw=dot(firstVector,selectedWeights);Evidence reference=null;
+        String numbers=numerals(first);
+        int chosen=-1;double best=Double.NEGATIVE_INFINITY;
+        for(int i=1;i<Math.min(20,values.size());i++) {
+            String value=values.get(i);
+            // The bounded correction cannot close a larger base-score gap.
+            if(scores.get(value)+(double)headStrength*headLimit<scores.get(first)+headMargin
+                    ||!numbers.equals(numerals(value)))continue;
+            Map<String,Integer> vector=vector(context,value,cache);
+            double lift=dot(vector,selectedWeights)-referenceRaw;
+            if(lift<headLift)continue;
+            double score=scores.get(value)+headStrength*Math.max(-headLimit,Math.min(headLimit,lift));
+            if(score<scores.get(first)+headMargin||score<=best)continue;
+            if(reference==null)reference=evidence(firstVector,selectedWeights);
+            Evidence candidate=evidence(vector,selectedWeights);
+            if(lift>=headLift&&trustedPromotion(candidate,reference,lift)){chosen=i;best=score;}
+        }
+        if(chosen>0){String selected=values.remove(chosen);values.add(0,selected);}
+    }
+    private Map<String,Integer> vector(String context,String text,Map<String,Map<String,Integer>> cache) {
+        return cache==null?features(context,text):cache.computeIfAbsent(text,k->features(context,k));
+    }
     double alignedCorrection(double raw,double reference){return strength*Math.max(-limit,Math.min(limit,raw-reference));}
     boolean trustedPromotion(Evidence candidate,Evidence reference,double lift) {
         return lift>=.5&&candidate.supportedOver(reference)&&(candidate.repairs(reference)||candidate.moreStructure(reference));

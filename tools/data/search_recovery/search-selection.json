@@ -1,0 +1,36 @@
+{
+  "search": "completed-only pool128, ordinary48/display20 unchanged",
+  "known500": {
+    "top1": [
+      89,
+      89
+    ],
+    "top5": [
+      193,
+      193
+    ],
+    "top20": [
+      258,
+      259
+    ]
+  },
+  "validation100": {
+    "top1": [
+      23,
+      23
+    ],
+    "top5": [
+      45,
+      45
+    ],
+    "top20": [
+      56,
+      56
+    ]
+  },
+  "old3293_all_per_set_counts_unchanged": true,
+  "search_snapshot_sha256": "7dd4450d6f887166760fad68cdfb9f92f8f060c32d16cb672d6860e86a5965aa",
+  "head_still_optional": true,
+  "independent500_unopened": true,
+  "timing_required_before_delivery": true
+}

@@ -1,0 +1,41 @@
+{
+  "training_cases": 5381,
+  "counts": {
+    "observed": 5381,
+    "correct_head_protection": 1692,
+    "indistinguishable": 361,
+    "cannot_reach_score_gate": 26761,
+    "no_challenger": 93,
+    "wrong_head_repair": 544,
+    "outside_display": 484
+  },
+  "pairs": 2236,
+  "supported_examples": 2219,
+  "source_families": 586,
+  "features": 2502,
+  "initial_actual_gate_objective": 0.607508116685867,
+  "final_actual_gate_objective": 0.3737883617634078,
+  "parameters": {
+    "epochs": 80,
+    "rate": 0.3,
+    "l2": 0.005,
+    "minimum_source_family_support": 2,
+    "head_strength": 1.5,
+    "limit": 2,
+    "margin": 0.5,
+    "lift": 0.5,
+    "challengers": 20,
+    "protection_ranks": "2..9"
+  },
+  "source_mix": {
+    "HK": 0.65,
+    "Tatoeba": 0.2,
+    "authored": 0.15
+  },
+  "training_sha256": "24686596e3f00667912cff73787dfc2d023c1ddbb8a02bce94b5b885bd0a9c22",
+  "scored_sha256": "7176a2d9c0e8ae4addbb99484e4a3214e7c4abeaa1891264fc3cbd9faad8e6af",
+  "weights_sha256": "17d7c148088d54c09e5474a1d0f874384808126ffd212c4060cbd444ccc4f3d1",
+  "pairs_sha256": "da9fc95e4d7463a77ed47f1f20f4618c60e4c040f1e659a3bba2f9cd0076de96",
+  "tail_asset_sha256": "1e999e91b8972c06bc44778aa22a51340d5b564ebb698e49559c7d6180b70163",
+  "limitation": "Actual min(raw-lift, bounded-score-margin) surrogate; discrete structural evidence gate is verified at inference. No evaluation or personal text trains this model; original tail weights unchanged."
+}

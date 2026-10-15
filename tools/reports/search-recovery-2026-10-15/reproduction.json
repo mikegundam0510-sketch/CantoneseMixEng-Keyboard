@@ -1,0 +1,9 @@
+{
+  "byte_identical": true,
+  "files": [
+    "head-weights.json",
+    "head-pairs.tsv",
+    "head-training-report.json",
+    "relation_ranker.b64"
+  ]
+}

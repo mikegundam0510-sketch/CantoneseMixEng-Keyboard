@@ -1,0 +1,116 @@
+{
+  "cases": 3293,
+  "differences": {
+    "validation:written200": {
+      "top1": 0,
+      "top5": 0,
+      "top20": 0
+    },
+    "validation:authored60": {
+      "top1": 0,
+      "top5": 0,
+      "top20": 0
+    },
+    "validation:natural200": {
+      "top1": 0,
+      "top5": 0,
+      "top20": 0
+    },
+    "validation:public200": {
+      "top1": 0,
+      "top5": 0,
+      "top20": 0
+    },
+    "validation:fresh-written100": {
+      "top1": 0,
+      "top5": 0,
+      "top20": 0
+    },
+    "validation:fresh-ud": {
+      "top1": 0,
+      "top5": 0,
+      "top20": 0
+    },
+    "alignment:validation": {
+      "top1": 0,
+      "top5": 0,
+      "top20": 0
+    },
+    "heldout:fresh-written500": {
+      "top1": 0,
+      "top5": 0,
+      "top20": 0
+    },
+    "heldout:fresh-ud-legco": {
+      "top1": 0,
+      "top5": 0,
+      "top20": 0
+    },
+    "guard:fresh100": {
+      "top1": 0,
+      "top5": 0,
+      "top20": 0
+    },
+    "guard:natural200": {
+      "top1": 0,
+      "top5": 0,
+      "top20": 0
+    },
+    "guard:authored120": {
+      "top1": 0,
+      "top5": 0,
+      "top20": 0
+    },
+    "guard:old600": {
+      "top1": 0,
+      "top5": 0,
+      "top20": 0
+    },
+    "guard:daily32": {
+      "top1": 0,
+      "top5": 0,
+      "top20": 0
+    },
+    "guard:completion16": {
+      "top1": 0,
+      "top5": 0,
+      "top20": 0
+    },
+    "guard:tatoeba200": {
+      "top1": 0,
+      "top5": 0,
+      "top20": 0
+    },
+    "guard:public100": {
+      "top1": 0,
+      "top5": 0,
+      "top20": 0
+    },
+    "guard:authored70": {
+      "top1": 0,
+      "top5": 0,
+      "top20": 0
+    },
+    "guard:plural": {
+      "top1": 0,
+      "top5": 0,
+      "top20": 0
+    },
+    "guard:handover": {
+      "top1": 0,
+      "top5": 0,
+      "top20": 0
+    },
+    "guard:continuous": {
+      "top1": 0,
+      "top5": 0,
+      "top20": 0
+    },
+    "guard:followup100": {
+      "top1": 0,
+      "top5": 0,
+      "top20": 0
+    }
+  },
+  "passed": true
+}

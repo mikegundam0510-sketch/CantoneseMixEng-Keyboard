@@ -1,0 +1,8 @@
+# warmup=30 samples=15
+# code	letters	before_wall_median_ms	after_wall_median_ms	before_cpu_median_ms	after_cpu_median_ms
+ofonaovrmrq	11	89.100	109.011	89.079	108.041
+hmerrrysmlrp	12	165.110	101.746	165.042	101.299
+dpofvivcjutrmyyjvcqnjd	22	153.258	155.090	150.146	152.027
+ofykrmmsydwljpvwjd	18	149.632	174.322	148.143	171.856
+vkmmnkmrvordrjjj	16	146.225	149.302	144.612	144.036
+hihihihihihihihihihihihihihihihihihihihihihihihi	48	659.665	666.342	652.445	659.059

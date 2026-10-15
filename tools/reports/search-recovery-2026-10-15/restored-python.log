@@ -1,0 +1,12 @@
+test_preparation_reproduces_frozen_inputs (tools.test_daily_prefix.DailyPrefixTest.test_preparation_reproduces_frozen_inputs) ... ok
+test_preparation_reproduces_cases_without_decoder_results (tools.test_sentence_ranking.SentenceRankingTest.test_preparation_reproduces_cases_without_decoder_results) ... ok
+test_followup_is_reproducible_and_excludes_prior_fresh_targets (tools.test_sentence_ranking.SentenceRankingTest.test_followup_is_reproducible_and_excludes_prior_fresh_targets) ... ok
+test_misattributed_excluded_conversation_cannot_train (tools.test_sentence_ranking.SentenceRankingTest.test_misattributed_excluded_conversation_cannot_train) ... ok
+test_new_preparation_reproduces_frozen_inputs (tools.test_sentence_search.SentenceSearchTest.test_new_preparation_reproduces_frozen_inputs) ... ok
+test_second_reserve_reproduces_and_excludes_first_targets (tools.test_sentence_search.SentenceSearchTest.test_second_reserve_reproduces_and_excludes_first_targets) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 59.426s
+
+OK
+{'eligible_examples': 10559, 'family_groups': 6897, 'training_cases': 3081, 'authored_training_cases': 552, 'validation_cases': 200, 'heldout_cases': 800}
