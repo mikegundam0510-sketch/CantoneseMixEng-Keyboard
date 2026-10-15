@@ -1,0 +1,63 @@
+{
+  "training_cases": 7891,
+  "counts": {
+    "correct_first": 6630,
+    "later_top5": 954,
+    "later_top20": 110,
+    "missing_from_pool": 122,
+    "outside20": 75,
+    "final_pairs": 19461,
+    "prefix_pairs": 15144,
+    "reconstructed_prefix_pairs": 405,
+    "reconstructed_final_pairs": 366
+  },
+  "pairs": 35376,
+  "supported_examples": 25752,
+  "source_families": 2053,
+  "features": 4729,
+  "stage_mix": {
+    "prefix": 0.5,
+    "final": 0.5
+  },
+  "source_mix": {
+    "HK": 0.7,
+    "Tatoeba": 0.2,
+    "authored": 0.1
+  },
+  "parameters": {
+    "epochs": 100,
+    "rate": 0.2,
+    "l2": 0.003,
+    "minimum_family_support": 3,
+    "feature_cap": 16000,
+    "weight_cap": 0.5,
+    "stage_mix": {
+      "prefix": 0.5,
+      "final": 0.5
+    },
+    "source_mix": {
+      "HK": 0.7,
+      "Tatoeba": 0.2,
+      "authored": 0.1
+    },
+    "maximum_final_rivals": 3,
+    "maximum_prefix_checkpoints": 2,
+    "maximum_prefix_rivals": 3
+  },
+  "initial_objective": 0.5992002052497957,
+  "final_objective": 0.5502295431035105,
+  "training_sha256": "c4a39e42520a267d9b666ad40c21fd864fa93d62881c846988a21d73719fb87c",
+  "protocol_sha256": "107399875d51f9b991df6bd7d4d4e6130959f436ac8fc918dfdf4bfd0c58d6d3",
+  "pools_sha256": "fe7816be75867d7b3b611fcccc0d5a4696968dc8a4c18cb7c744e678f8445e9a",
+  "prefix_sha256": "da02d6f9521f725677a86780ddfa220b00ad98ba9dae3b8fc2c6c890659c11b0",
+  "weights_sha256": "91a335b27a6a2d527953fcc528302b52bb46cb27327be14664759f2f80cf02d4",
+  "pairs_sha256": "7561030be058c20ecd389542eb17185cf865f2929ed1048e83a83099ae52459f",
+  "categories_sha256": "89a4c3ba5ba62de8fcef47543d13307036ad4063f80bfc06d3fed47ecd118859",
+  "model_sha256": {
+    "0.25": "aeb84ac11e45dde951c2aae866df5ab030a37b573660f35614426c747a4b6a21",
+    "0.5": "46bfbb52c507206b4d8d4c4c2679d0e91e88ad094e5e22699707208d0419f854",
+    "1": "42fdd6906f0a1eb01d6ca52c10cf935566b23cffbfb27d7cb751a22271bbf72a"
+  },
+  "limits": "Clean TRAIN span comparisons and supervised shadow paths only. No inference gold injection; no new vocabulary/glyph generation or evaluation recoding. Ordinary decoding decides adoption.",
+  "shadow_sha256": "184e0c804a3ca0421c15ca1f654a30068047b2009a2db7f9a4938f3f106b8bb3"
+}

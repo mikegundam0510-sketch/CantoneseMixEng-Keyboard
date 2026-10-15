@@ -1,0 +1,61 @@
+{
+  "baseline_revision": "0787863",
+  "app_source_baseline": "b5b084fa043724f38913a8042b47ffcd551330e8",
+  "training_sha256": "c4a39e42520a267d9b666ad40c21fd864fa93d62881c846988a21d73719fb87c",
+  "manifest_sha256": "3cffc5551d464a6ea55b1012cbdbb97ef95f206a1f17aecc237503408aa4b0e7",
+  "data": "Freeze7891 traceable Han TRAIN spans before any candidate fit/validation. Retain4077 admitted prior rows, add2614 original46 HK TRAIN conversation spans and1200 Tatoeba TRAIN spans. Split at all non-Han boundaries, including whitespace-containing English tokens and malformed non-Han missing-speech markers; no deletion/joining across them. Review-only six OpenCC one-to-one glyph forms and NFC; no guessed historical particle replacements. Exact code alignment must use native cold character rank<=24. New/transformed evaluation overlap6+ rejected, including reserve500 and normalized variants. Limits were4000HK/1200Tatoeba, hash selection before decoder outcomes; HK only2614 eligible.",
+  "model": "Use the preceding shared short-bigram/trigram additive score, unchanged integration and bounds. Fit all actual error/protection pairs in the clean data plus supervised legal shadow comparisons for missing TRAIN targets. No vocabulary/beam/character-generator expansion, gold insertion at inference or evaluation recoding.",
+  "training": {
+    "epochs": 100,
+    "rate": 0.2,
+    "l2": [
+      0.003,
+      0.015
+    ],
+    "minimum_family_support": 3,
+    "feature_cap": 16000,
+    "weight_cap": 0.5,
+    "stage_mix": {
+      "prefix": 0.5,
+      "final": 0.5
+    },
+    "source_mix": {
+      "HK": 0.7,
+      "Tatoeba": 0.2,
+      "authored": 0.1
+    },
+    "maximum_final_rivals": 3,
+    "maximum_prefix_checkpoints": 2,
+    "maximum_prefix_rivals": 3
+  },
+  "trial_grid": [
+    {
+      "l2": 0.003,
+      "strength": 0.5
+    },
+    {
+      "l2": 0.015,
+      "strength": 0.5
+    }
+  ],
+  "calibration": "Fixed L2 values0.003,0.015 and strength0.5 on new100 validation and previously observed700. Require no first/top5/top20 loss on new100, and at least one first/top5 gain across both sets; old700 aggregate first/top5/top20 nondecreasing and per-set first/top5 regression<=1percentage point. Select equal-set mean first rate,then top5,then top20,thenMRR,then lower strength and higher L2. No qualify means reject without opening new500.",
+  "guards": "Selected arm must pass all observed3893 rows: aggregate first/top5/top20 nondecreasing and per-set first/top5 regression<=1percentage point, exact-code/unique20 bounds, Single32/32 after three confirmations, Java/Python/Lint and paired warmed desktop wall/CPU ratios<=1.2. Compare final-only shared-weight control at the selected strength to identify search contribution; report tradeoffs without assigning answer-specific overrides.",
+  "independent": "Freeze exact candidate source/model hashes and all qualification evidence before decoding new500 once per baseline/candidate. Adopt only if first/top5/top20 counts do not decrease and at least first or top5 has a net gain. No post-reserve weight, threshold, code or case changes. Otherwise restore production baseline and retain research artifacts.",
+  "delivery": "No APK; preserve0.6.39/code46, fixed signing, learning storage and existing Fold7 layout. No1.0 claim without original major-release gates and physical device evidence. Previously opened sets are calibration, never fresh evidence.",
+  "freeze": "Before first clean fit or candidate decode. Two configurations only; no extra grid expansion after outcomes. Previously observed800/3893 are calibration. Existing joint reserve500 stays unopened until selected arm passes guards; comparison of training-set counts to older filtered datasets is not accuracy evidence.",
+  "offsets": "Prefix offsets compare reconstructed real accumulated transition scores with actual raw beam rivals; lookahead is not included in these new offsets. Complete offsets use the harder of the raw gap and raw-plus-SentenceRanker gap. PRR3 categorical head/visible gates are not simulated for a missing teacher candidate; actual inference validation is mandatory.",
+  "cache": "Reuse only identical context/code/gold under identical baseline code/assets; source labels re-keyed to current provenance. Fifteen stratified reused examples are natively checked. Parser refinement before fitting changed six native inputs and source IDs; preserve first-pass observations and finish those six separately.",
+  "source_sha256": {
+    "export_training_codes.py": "5757912f0cad69b9b18dcd7216cc5aef4b1c81158630c1f2dc1a3fbafbd1edb8",
+    "prepare_clean_ranking.py": "edaf8ba038253a27dd71620e9423b6c5af34ec44fc3c07a844c03629cb0561e7",
+    "clean_ranking_observations.py": "2ac4b833473b462e5aefd345d7a8e1b8900abc25fff8ca63a8171dcf94d2ec94",
+    "train_clean_ranking.py": "2083b8564120eb55aa63c69f373e7f379e879e13c3200ec21632d47a315c081a",
+    "train_joint_ranking.py": "9605a2eb36a2727bcd095ac6ed9699979d41a3acb0ea3fed8ff6bb076e452a2f",
+    "run_joint_ranking.py": "e00f4714f5435e9ffab0007b260d5d806aff69d07a9447986c67e84d7ff787cb",
+    "observe_joint_ranking.py": "dd65921202400099be636a83e3ed9466a73c50a09f1ed2f94c6a0988f32e8b41",
+    "observe_structured_training.py": "56df9692f6cd409a485ef31a2bedda3a69da796fa1489d37a8787271ff855003",
+    "structured_training_hooks.inc": "97c2ac0697b084c9f7a7ad38ba1214e0dbad353eb76a5a0fb9f004b2ffc18557",
+    "train_candidate_ranker.py": "86e9de3ea6b34fee8e7020f34671ca9100f4382489fbd74def2206d5754fe981",
+    "evaluate_joint_ranking.py": "7b70848cc5d4fcb5c0dffb0ae7afb8d98f7d0805a0e6d8e332c39798bad66d7e"
+  }
+}

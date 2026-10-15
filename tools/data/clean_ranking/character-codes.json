@@ -1,0 +1,11 @@
+{
+  "baseline_revision": "b5b084fa043724f38913a8042b47ffcd551330e8",
+  "output_sha256": "ba7d46cad30bb200f9c4eba7130fcb92d8aefc8efb02c0a176680e29d98e3d5e",
+  "rows": 129624,
+  "asset_sha256": {
+    "cangjie5.base.dict.yaml": "98e3291003110e3a6f4ae10ce0c061a475793e44c006d3acc3b075a9fecd2b26",
+    "character_frequencies.tsv": "f489850c135e252ebda0b054a40f664996c7b107e4949718397b4ae4ef181dc7"
+  },
+  "java_sha256": "9562b0e36bc2946d5cb147e23243feba999228cdefba2cbc98a95f5e085f6f24",
+  "policy": "Actual dictionary cold Han ranks; training admission chooses rank<=24 so character options do not depend on context rescue. This does not guarantee beam survival or display."
+}

@@ -1,0 +1,15 @@
+{
+  "source": "OpenCC, BYVoid and contributors",
+  "url": "https://raw.githubusercontent.com/BYVoid/OpenCC/master/data/dictionary/HKVariants.txt",
+  "source_sha256": "e5cd4345303224587102f2c9e4d2b67d2b7e349c6ce9152e4a118f4656cf7302",
+  "license": "Apache-2.0",
+  "pairs": {
+    "爲": "為",
+    "僞": "偽",
+    "檯": "枱",
+    "脣": "唇",
+    "鍼": "針",
+    "衆": "眾"
+  },
+  "policy": "Small reviewed unambiguous one-to-one glyph subset only; no same-pronunciation inference. HKCanCor historical forms𡃉𠻺𠸏𡁵 have no approved replacement and remain untouched, then fail admission if unavailable. Applied to TRAIN text only, never user/editor text or evaluation gold."
+}
