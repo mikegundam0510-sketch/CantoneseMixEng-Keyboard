@@ -1,0 +1,28 @@
+{
+  "baseline_revision": "d8575595b689916d8649e71e1a365224392683a9",
+  "hypothesis": "Prefix proposal retrieval ignores positive trained four-character words, two/three-character endpoints and most matching-word boundary features. Such prefixes cannot reach the full signed scorer even when it would support them.",
+  "trial": "One bounded proposal expansion: W suffix2..4,E suffix1..3,B suffix1..2 against first1..2 of at most6 exact-code hints,C endpoint role; same tier/count semantics as the existing prefix model. Cache by suffix4. Weights, signed correction, raw floor, original beam, max32 full scores and max4 added paths unchanged.",
+  "calibration": "Previous search_recovery100+500, then all3893 previous calibration rows plus new100 validation. These are observed/selection material, not independent evidence.",
+  "selection": "Require at least one net top20 or top5 gain across observed600, with no per-set first/top5/top20 count loss on all guards or new100; preserve contextual Single32/32; max warmed paired wall and CPU ratios<=1.2. Otherwise reject runtime change. No outcome-based phrase exceptions or model fitting.",
+  "independent": "Freeze candidate source/model checksums and calibration results before decoding new500, once per baseline/trial. Require net first/top5/top20 gain and no losses in their aggregate counts. Do not tune after opening reserve. If no calibration candidate qualifies, leave reserve unopened.",
+  "data": "No training changes. All previously observed dictionary families, tracked6+ targets and raw HKCanCor/UD/Tatoeba training exposure excluded. words.hk NCDOL1.0 examples evaluation only, never APK assets.",
+  "delivery": "Version0.6.39/code46; no APK; no claim of1.0 or physical Fold7 improvement. Record rejected trials.",
+  "calibration_amendment": {
+    "before_second_trial": true,
+    "independent_unopened": true,
+    "broad_trial600": {
+      "before": [
+        132,
+        243,
+        312
+      ],
+      "after": [
+        131,
+        242,
+        312
+      ],
+      "adopt": false
+    },
+    "second_trial": "Positive W2..4 anywhere within the trailing4 Han characters, E suffix1..3 and B suffix1..2 against up to6 matching hints; exclude all role-only C features. Same cap2 feature counts; no model/threshold/search bound changes. Existing and new validation are calibration. Same original adoption gates."
+  }
+}

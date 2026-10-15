@@ -1,0 +1,163 @@
+{
+  "date": "2026-10-15",
+  "baseline_revision": "d8575595b689916d8649e71e1a365224392683a9",
+  "delivery": "App unchanged; rejected experiments and new diagnostic/evaluation tooling only.",
+  "calibration_cases": 700,
+  "calibration_is_independent": false,
+  "baseline": {
+    "cases": 700,
+    "top1": 152,
+    "top5": 280,
+    "top20": 362,
+    "mrr": 0.29510495331122266
+  },
+  "trials": {
+    "broad": {
+      "metrics": {
+        "cases": 700,
+        "top1": 151,
+        "top5": 279,
+        "top20": 362,
+        "mrr": 0.2939185253294055
+      },
+      "paired": {
+        "first": {
+          "gained": 0,
+          "lost": 1,
+          "net": -1,
+          "paired_exact_two_sided_p": 1
+        },
+        "top5": {
+          "gained": 0,
+          "lost": 1,
+          "net": -1,
+          "paired_exact_two_sided_p": 1
+        },
+        "top20": {
+          "gained": 0,
+          "lost": 0,
+          "net": 0,
+          "paired_exact_two_sided_p": 1
+        }
+      },
+      "adopted": false
+    },
+    "lexical": {
+      "metrics": {
+        "cases": 700,
+        "top1": 152,
+        "top5": 280,
+        "top20": 362,
+        "mrr": 0.29510495331122266
+      },
+      "paired": {
+        "first": {
+          "gained": 0,
+          "lost": 0,
+          "net": 0,
+          "paired_exact_two_sided_p": 1
+        },
+        "top5": {
+          "gained": 0,
+          "lost": 0,
+          "net": 0,
+          "paired_exact_two_sided_p": 1
+        },
+        "top20": {
+          "gained": 0,
+          "lost": 0,
+          "net": 0,
+          "paired_exact_two_sided_p": 1
+        }
+      },
+      "adopted": false
+    }
+  },
+  "survival_intervention": {
+    "using_answer": true,
+    "deployable_accuracy": false,
+    "formal_maximum": false,
+    "before": {
+      "cases": 700,
+      "top1": 152,
+      "top5": 280,
+      "top20": 362,
+      "mrr": 0.29510495331122266
+    },
+    "after": {
+      "cases": 700,
+      "top1": 152,
+      "top5": 283,
+      "top20": 370,
+      "mrr": 0.2971275418338112
+    },
+    "baseline_outcomes": {
+      "displayed": 362,
+      "outside_twenty": 75,
+      "not_generated": 232,
+      "completed_pool_cut": 31
+    },
+    "intervention_outcomes": {
+      "displayed": 370,
+      "outside_twenty": 145,
+      "completed_pool_cut": 175,
+      "confidence_filtered": 6,
+      "not_generated": 4
+    },
+    "cases_intervened": 321,
+    "prefixes_added": 2829,
+    "full_target_generation_gained": 228,
+    "full_target_generation_lost": 0,
+    "interpretation": "Protected prefixes generate many more full targets, but most are then cut from the completed pool or rank outside20. Search survival alone is insufficient; inspect complete-target scoring and final-pool alignment. Other option/tokenization failures remain possible."
+  },
+  "verification": {
+    "python_unique_tests": 11,
+    "python_failures": 0,
+    "python_skips": 0,
+    "final_report_tests_rerun": 2,
+    "original_and_new_data_byte_reproduction": true,
+    "observer_disabled_native_parity_cases": 700,
+    "additional_observer_enabled_native_parity_cases": 700,
+    "native_exact_codes_and_display_bounds": true,
+    "java_gradle_lint_rerun": false,
+    "reason": "No tracked app/runtime/model/build changes; only Python tooling, evaluation data, rejected patches and documentation change.",
+    "native_control700_sha256": "0f2b7ae844df8bde9a99f13c890f5e0196cf5cb6b776ffff313e53c3aa1aa87f",
+    "baseline700_sha256": "0f2b7ae844df8bde9a99f13c890f5e0196cf5cb6b776ffff313e53c3aa1aa87f",
+    "oracle700_sha256": "515a9c77c01294daa6c7462d137bcfac20e33353eff07be77b3dd7f58e3e6255",
+    "python_log_sha256": "69952bec72db8a8fecea8b11cf8fcfaa8bfea45f283c0443e1dc80c3c8d031d9",
+    "lexical_rejected_patch_native_reproduction_cases": 20
+  },
+  "reserve": {
+    "validation_cases": 100,
+    "validation_observed": true,
+    "heldout_cases": 500,
+    "heldout_outcomes_decoded": false,
+    "heldout_sha256": "98d69db9d1bf83cc173b506d161090d854b196c724b25569c325e9ef02b2b32e",
+    "license": "words.hk NCDOL1.0 evaluation-only; never training or APK assets."
+  },
+  "selection_sha256": "7e25224bd56e1ba2d8bd78066f054375673bc32a7f34683be85ae0cf98f28bb7",
+  "source_sha256": {
+    "prefix_survival_oracle.py": "71c2799bf7ef497b07036a0ffb7f3f7f5919af608bc6ea4d32d62ed3e706ea9d",
+    "report_prefix_retrieval.py": "5482a5527b216760f860a8748708690acf124b885cd98ffe84d737ac4564b181",
+    "run_prefix_retrieval_trial.py": "e7b1aed19a36967159474c70cb12adb65827355a9aaead9ae166813a89038551"
+  },
+  "report_artifact_sha256": {
+    "baseline-diagnosis.json": "a8386b29c2673903c28321af9ab46d4e186e07770b0d8538552e4db662c978f7",
+    "baseline700-diagnostics.tsv": "616ef4da4928dc61dba1fb35c55ce6771b558b8f39e2ddb87398d681119dd1b2",
+    "baseline700.tsv": "0f2b7ae844df8bde9a99f13c890f5e0196cf5cb6b776ffff313e53c3aa1aa87f",
+    "broad-calibration.json": "04d90ba5d0d2adacc1c75124f3eb9f196a9876fb8fe41a9d0241da6a2e857335",
+    "broad700.tsv": "c47552159b896cd2eabfdbd452fb8581f0f4768721c65f0c631c23b509bd0088",
+    "calibration700.tsv": "d2f1b5c74941283b4e6d4252906b99c0f631f2a5da449d7373fab2eb4aaca2e5",
+    "gold-assisted-diagnosis.json": "5e47f35c8bd67fc812e6ea05e47a0fac9baa17f15ec87fd0fe9d6f6172afdd82",
+    "lexical-calibration.json": "70f81b89983f50d4a9eb545839b91b0ac79795cf27f875979594a6cec243715f",
+    "lexical700.tsv": "dd81597809f419a579322aaaaab55c4f96ecb6ab0fa8444bfad35cee0a893324",
+    "oracle700-diagnostics.tsv": "57e095b0f0eee5d2485fcdd462396638ac952910eb57bba578cd77f146db7c2d",
+    "oracle700.tsv": "515a9c77c01294daa6c7462d137bcfac20e33353eff07be77b3dd7f58e3e6255"
+  },
+  "limitations": [
+    "No new independent accuracy gain is claimed.",
+    "Oracle uses gold labels; no statistical population claim.",
+    "No phone data or physical Fold7 measurements.",
+    "No1.0 qualification; version0.6.39/code46 and signing/personal schemas unchanged; no APK."
+  ]
+}

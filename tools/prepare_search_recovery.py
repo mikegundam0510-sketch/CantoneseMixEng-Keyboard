@@ -14,8 +14,8 @@ from sentence_features import han
 BASELINE='db4b363d63479506b337de66ded4b6adda59c89d'
 DATA=ROOT/'tools/data/search_recovery'
 
-def prepare(dictionary,hk,treebank,output=DATA):
-    tracked=subprocess.check_output(['git','ls-tree','-r','--name-only',BASELINE],cwd=ROOT,text=True).splitlines()
+def prepare(dictionary,hk,treebank,output=DATA,*,baseline=BASELINE,additional_sources=(),label='recovery'):
+    tracked=subprocess.check_output(['git','ls-tree','-r','--name-only',baseline],cwd=ROOT,text=True).splitlines()
     seen=set();inputs={}
     for name in tracked:
         if not name.startswith('tools/') or not name.endswith('.tsv'):continue
@@ -27,7 +27,7 @@ def prepare(dictionary,hk,treebank,output=DATA):
     groups=set()
     for name in ('tools/data/daily_prefix/validation-source.jsonl','tools/data/daily_prefix/heldout-source.jsonl',
                  'tools/data/phrase_relations/evaluation-source.jsonl','tools/data/search_alignment/validation-source.jsonl',
-                 'tools/data/search_alignment/heldout-source.jsonl'):
+                 'tools/data/search_alignment/heldout-source.jsonl',*additional_sources):
         path=ROOT/name;inputs[name]=digest(path)
         groups.update(json.loads(line)['group'] for line in path.read_text().splitlines())
     report=json.loads((ROOT/'app/src/main/assets/PHRASE_MODEL_REPORT.json').read_text())
@@ -50,9 +50,9 @@ def prepare(dictionary,hk,treebank,output=DATA):
     reverse=reverse_codes()
     def code(text):return ''.join(sorted(reverse[c],key=lambda s:(-len(s),s))[0] for c in text)
     for split,rs in [('validation',validation),('heldout',heldout)]:
-        (output/(split+'.tsv')).write_text(''.join('\t'.join(('recovery:'+split,'',code(r['text']),r['text']))+'\n' for r in rs))
+        (output/(split+'.tsv')).write_text(''.join('\t'.join((label+':'+split,'',code(r['text']),r['text']))+'\n' for r in rs))
         (output/(split+'-source.jsonl')).write_text(''.join(json.dumps(r,ensure_ascii=False,sort_keys=True)+'\n' for r in rs))
-    manifest=dict(baseline_revision=BASELINE,validation_cases=100,heldout_cases=500,dictionary_sha256=digest(dictionary),
+    manifest=dict(baseline_revision=baseline,validation_cases=100,heldout_cases=500,dictionary_sha256=digest(dictionary),
         hkcancor_sha256=digest(hk),ud_sha256=digest(treebank),known_input_sha256=inputs,
         file_sha256={name:digest(output/name) for name in ('validation.tsv','heldout.tsv','validation-source.jsonl','heldout-source.jsonl')},
         selection='Before trial decoding: extend fixed4000-family hash pool; exclude every previously tracked evaluation/train target, old dictionary families and raw training full-target exposure; remove cross-split full-target substring6+.',

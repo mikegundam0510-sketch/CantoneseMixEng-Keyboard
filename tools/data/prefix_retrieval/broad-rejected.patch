@@ -1,0 +1,47 @@
+--- a/app/src/main/java/hk/cantonesemixeng/keyboard/PrefixRanker.java
++++ b/app/src/main/java/hk/cantonesemixeng/keyboard/PrefixRanker.java
+@@ -78,15 +78,28 @@
+         for(Map.Entry<String,Integer> e:features(context,text,hints).entrySet())total+=weights.getOrDefault(e.getKey(),0f)*e.getValue();
+         return strength*Math.max(-limit,Math.min(limit,total));
+     }
+-    /** Cheap positive endpoint evidence retrieves candidates for full pairwise scoring. */
++    /** Bounded positive local evidence retrieves candidates for full signed scoring. */
+     double proposal(String text,List<String> hints) {
+         if(strength==0||text.isEmpty())return 0;
+         int count=text.codePointCount(0,text.length());double total=0;
+-        for(int n=2;n<=Math.min(3,count);n++)total+=positive("W|"+text.substring(text.offsetByCodePoints(text.length(),-n)));
+-        String last=text.substring(text.offsetByCodePoints(text.length(),-1));total+=positive("E|"+last);
+-        for(int i=0;i<Math.min(2,hints.size());i++) {
+-            String hint=hints.get(i);if(!hint.isEmpty())total+=positive("B|0|"+last+"|"+hint.substring(0,Character.charCount(hint.codePointAt(0))));
++        for(int n=1;n<=Math.min(4,count);n++) {
++            String suffix=text.substring(text.offsetByCodePoints(text.length(),-n));
++            if(n>=2)total+=positive("W|"+suffix);
++            if(n<=3)total+=positive("E|"+suffix);
+         }
++        Map<String,Integer> boundaries=new HashMap<>();
++        for(int i=0;i<Math.min(6,hints.size());i++) {
++            String hint=hints.get(i),tier=i<2?"0":"1";int end=0,n=0;
++            while(end<hint.length()&&n<2&&SentenceRanker.han(hint.codePointAt(end))) {
++                end+=Character.charCount(hint.codePointAt(end));n++;
++            }
++            for(int a=1;a<=Math.min(2,count);a++)for(int b=1;b<=n;b++)
++                add(boundaries,"B|"+tier+"|"+text.substring(text.offsetByCodePoints(text.length(),-a))+"|"
++                    +hint.substring(0,hint.offsetByCodePoints(0,b)));
++            if(n>0)add(boundaries,"C|"+tier+"|"+SentenceRanker.role(text.codePointBefore(text.length()),2)+"|"
++                +SentenceRanker.role(hint.codePointAt(0),2));
++        }
++        for(Map.Entry<String,Integer> e:boundaries.entrySet())total+=positive(e.getKey())*e.getValue();
+         return strength*Math.min(limit,total);
+     }
+     private double positive(String key){return Math.max(0,weights.getOrDefault(key,0f));}
+--- a/app/src/main/java/hk/cantonesemixeng/keyboard/QuickDecoder.java
++++ b/app/src/main/java/hk/cantonesemixeng/keyboard/QuickDecoder.java
+@@ -924,7 +924,7 @@
+             String history=PrefixRanker.tail(context+p.text);
+             if(histories.contains(history)||!proposed.add(history))continue;
+             int count=history.codePointCount(0,history.length());
+-            String endpoint=history.substring(history.offsetByCodePoints(0,Math.max(0,count-3)));
++            String endpoint=history.substring(history.offsetByCodePoints(0,Math.max(0,count-4)));
+             double evidence=cache.computeIfAbsent(endpoint,k->prefixRanker.proposal(k,hints));
+             // Unknown endpoints cannot be promoted just because another path has negative evidence.
+             if(evidence>0)proposals.put(p,(baselineScores==null?p.score:baselineScores.get(p))+evidence);

@@ -1,0 +1,2152 @@
+{
+  "baseline_revision": "d8575595b689916d8649e71e1a365224392683a9",
+  "cases_sha256": "d2f1b5c74941283b4e6d4252906b99c0f631f2a5da449d7373fab2eb4aaca2e5",
+  "output_sha256": {
+    "before": "0f2b7ae844df8bde9a99f13c890f5e0196cf5cb6b776ffff313e53c3aa1aa87f",
+    "after": "515a9c77c01294daa6c7462d137bcfac20e33353eff07be77b3dd7f58e3e6255"
+  },
+  "before": {
+    "cases": 700,
+    "top1": 152,
+    "top5": 280,
+    "top20": 362,
+    "mrr": 0.29510495331122266
+  },
+  "after": {
+    "cases": 700,
+    "top1": 152,
+    "top5": 283,
+    "top20": 370,
+    "mrr": 0.2971275418338112
+  },
+  "paired": {
+    "first": {
+      "gained": 0,
+      "lost": 0,
+      "net": 0,
+      "paired_exact_two_sided_p": 1
+    },
+    "top5": {
+      "gained": 3,
+      "lost": 0,
+      "net": 3,
+      "paired_exact_two_sided_p": 0.25
+    },
+    "top20": {
+      "gained": 8,
+      "lost": 0,
+      "net": 8,
+      "paired_exact_two_sided_p": 0.0078125
+    }
+  },
+  "per_set": {
+    "recovery:validation": {
+      "before": {
+        "cases": 100,
+        "top1": 23,
+        "top5": 45,
+        "top20": 56,
+        "mrr": 0.32686446886446885
+      },
+      "after": {
+        "cases": 100,
+        "top1": 23,
+        "top5": 47,
+        "top20": 59,
+        "mrr": 0.33436446886446886
+      },
+      "no_count_loss": true
+    },
+    "recovery:heldout": {
+      "before": {
+        "cases": 500,
+        "top1": 109,
+        "top5": 198,
+        "top20": 256,
+        "mrr": 0.2950354443715899
+      },
+      "after": {
+        "cases": 500,
+        "top1": 109,
+        "top5": 199,
+        "top20": 261,
+        "mrr": 0.29636706830321385
+      },
+      "no_count_loss": true
+    },
+    "retrieval:validation": {
+      "before": {
+        "cases": 100,
+        "top1": 20,
+        "top5": 37,
+        "top20": 50,
+        "mrr": 0.26369298245614037
+      },
+      "after": {
+        "cases": 100,
+        "top1": 20,
+        "top5": 37,
+        "top20": 50,
+        "mrr": 0.26369298245614037
+      },
+      "no_count_loss": true
+    }
+  },
+  "no_per_set_count_loss": true,
+  "rank_changes": [
+    {
+      "source": "recovery:validation",
+      "code": "osmfhckjorumdygycrmbibj",
+      "target": "佢不負大家嘅厚望贏咗冠軍",
+      "before": 0,
+      "after": 2
+    },
+    {
+      "source": "recovery:validation",
+      "code": "onaosvrvarmyrhcoonividfkghltgnurdrn",
+      "target": "今日佢結婚咁高興飲多幾杯在所難免㗎喇",
+      "before": 0,
+      "after": 5
+    },
+    {
+      "source": "recovery:validation",
+      "code": "trnoajtnhqyjrusvsurenlrmvdniybrpihtu",
+      "target": "警隊早前舉辦嘅展覽吸引咗好多市民參觀",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "ofvdoeogsftvujlolioiormyvykhiyepuan",
+      "target": "你好傻住馬鞍山都仲次次咁遠送我返屯門",
+      "before": 0,
+      "after": 10
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "hiaajlhqrmcierbu",
+      "target": "我日日都舉啞鈴減肥",
+      "before": 0,
+      "after": 10
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "ofrlosajriguhhhiymmvosodol",
+      "target": "你叫佢早啲起身等於要佢條命",
+      "before": 0,
+      "after": 13
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "brofybyrvdniiorrvdymfgmudnrdrtrooirmqgyuorbwwrht",
+      "target": "同你講過好多次唔好上堂卼櫈㗎啦跌低咗撞親個腦點算",
+      "before": 0,
+      "after": 3
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "hihusujlrrorqrrmodccapgiys",
+      "target": "我自己都唔知揈咗條鎖匙去邊",
+      "before": 0,
+      "after": 18
+    }
+  ],
+  "exact_codes_and_display_bounds": true,
+  "survival_diagnosis": {
+    "cases": 700,
+    "intervention_enabled": true,
+    "intervened_cases": 321,
+    "added_prefixes": 2829,
+    "outcomes": {
+      "displayed": 370,
+      "outside_twenty": 145,
+      "completed_pool_cut": 175,
+      "confidence_filtered": 6,
+      "not_generated": 4
+    },
+    "missing": [
+      {
+        "source": "recovery:validation",
+        "code": "rpigkieotymyblp",
+        "target": "呢座大廈位於市中心",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "osofigjrjpmrurempjlrrybwcqqomuyr",
+        "target": "佢係座古老石山嚟死都唔肯買手提電話",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "vmmmrmoqrmkbtrrujnosovbfrmmked",
+        "target": "經歷咗件咁痛苦嘅事佢依然咁硬淨",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "hibroskbyrmmliovoonabumlipyooayphi",
+        "target": "我同佢有過一面之緣今日見面應該會認得",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "rpormpghhuhokbovirkrohioheyuhmhm",
+        "target": "呢個死場自從有食店加入之後就翻生",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "ridspuyrtbjd",
+        "target": "啲麪包過期未",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "dmlavurmlevdnioqrn",
+        "target": "本書絕咗版好多年喇",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "oshrjpvwygyfqgohmmrejkno",
+        "target": "佢向老細進諫攞份工嚟較飛",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "ofrcmfyrhrlyhlaryryjhiruarac",
+        "target": "你只不過答非所問迴避我嘅問題",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "oshuvwyumjpymyeyjdkmg",
+        "target": "佢自細就醉心於設計模型",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "osyjhivdtmrihmyjoltgabyrmfyk",
+        "target": "佢譯得好差啲翻譯仲難明過原文",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "niylrudirpjlgbqikf",
+        "target": "附近嘅村民都幫手救火",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "rraayviprirnrmvwmdovrmjlmnrkrrmnbbrt",
+        "target": "嗰間餐廳啲嘢咁細碟食咗都到喉唔到肺啦",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "jeqdgfcjmvorrfbniimchcgioheqiyeuure",
+        "target": "支探熱針要含喺脷底一分鐘之後拎返出嚟",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "jevmhqmvreskhiru",
+        "target": "支紅筆要嚟改簿嘅",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "osrdrfoddiiembrmgigd",
+        "target": "佢哋喺條村度霸咗塊地",
+        "reason": "confidence_filtered"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "osnjcumnofhuhdrukbrvyrjphb",
+        "target": "佢彈鋼琴係自學嘅冇跟過老師",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "hiwcrmnvbqdyrrudr",
+        "target": "我買咗張用木造嘅枱",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "onorbhotdyjgakrrmmachiomiwrmm",
+        "target": "今個月失業率增加咗百分之零點二",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "mljomrvobraiynmgrmnijnjlynvkmftfhtrmrprr",
+        "target": "而家可以同時處理咁多事都處變不驚升咗呢喎",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "ofjlhtvjrgqxbsriqhrrvroskdjjiehioswltmopqt",
+        "target": "你都算奸囉插贓啲毒品嚮佢架車度等佢畀差佬拉",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "qjljdqdyryuykvitblkithhojooehirf",
+        "target": "手都未拖過就送幾萬蚊禮物俾人傻的嗎",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "ofmbrahiyubqteodnhof",
+        "target": "你再嘈我就用藤條𢞵你",
+        "reason": "not_generated"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "oiorbofojhimhjlkjobqsgomjcofhmrxeifuvdyrhmofrh",
+        "target": "每個月你俾得一千蚊家用屋企真係生嚿叉燒好過生你呀",
+        "reason": "confidence_filtered"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "jijoyrrcmvokniriylvfosvdkdioaisificoehuyg",
+        "target": "專家話只要做多啲訓練佢好大機會成為資優兒童",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "aeylruisvcxrabrmhirdvutirroatmyrtcodhddk",
+        "target": "最近嘅成績説明咗我哋絕對唔會差過其他學校",
+        "reason": "confidence_filtered"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "oniomwgmyvhmlyfbismssuvmvkhermjuishogd",
+        "target": "今次西域遠征非常成功已經收復咗七成失地",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "iuhrotyuberuhcjrsgympkvd",
+        "target": "祝各位親愛嘅顧客聖誕快樂",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "mgndbrciyghoypyroggjiwpkvdruhmer",
+        "target": "王子同公主從此過住幸福快樂嘅生活",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "ltklkjnommhjrrordrjlvdtgqtmnhddkvk",
+        "target": "中英數事但一科唔合格都好難揾到學校收",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "hsqjrrrjrcmrvobqredmjdtcolmrvobqreqnlykjdrp",
+        "target": "粵拼唔單只可以用嚟查字典仲可以用嚟打中文字𠻹",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "ofmrrrmrvogbhigitdhswcotphmgkb",
+        "target": "你可唔可以幫我去藥房買盒必理痛",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "trysrpiohnhsmtcqtrmmowsmv",
+        "target": "警方呢次行動一共拉咗兩男一女",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "mwmvmfmcofmorbhatrruvdgdys",
+        "target": "西環碼頭係一個睇日落嘅好地方",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "oskbygnivvosrroryvomrvolevuioymei",
+        "target": "佢希望強姦佢嗰個衰人可以被繩之於法",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "vdsdrhofrmjlycrrmnos",
+        "target": "好屎呀你咁都贏唔到佢",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "rpiorrofrpodkerg",
+        "target": "呢之唔係呢條友囉",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "gbhiajyuanybmyhirl",
+        "target": "幫我開道門通下風吖",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "mljondjrmckumrvoncnsrdkbketwqnrdrc",
+        "target": "而家子宮頸癌可以預防㗎有疫苗打㗎嘛",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "rjofcnfumcrh",
+        "target": "嘩你剃光頭呀",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:validation",
+        "code": "mgiejpvmaofhljnjnmgrsyuofqplnrihehmod",
+        "target": "班廢老終日無所事事至叻就係批鬥啲後生仔",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "ofrukbdptcjcxuofdvqo",
+        "target": "你嘅猜想其實毫無根據",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "rmkoroyjrijlrryaqn",
+        "target": "咁大個人連呔都唔識打",
+        "reason": "confidence_filtered"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "rpghmbtrrmviorcgrnonrtkop",
+        "target": "呢場雨落咗幾個鐘喇停啦大佬",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "rpkiymsfrumuahhotrmrnwjdnuyrhr",
+        "target": "呢套上緊嘅電影乏善可陳未免過譽",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "ilrrieifikhi",
+        "target": "神啊求祢救我",
+        "reason": "not_generated"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "rpgiddekitivdahvl",
+        "target": "呢塊木板太薄好易斷",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "oniocisroirmrmnicijpvwybjoqthirebfyc",
+        "target": "今次公司蝕咗咁多錢老細肯定揾我嚟祭旗",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "heferuoqqbovmfbtickwirutshryusjmfaj",
+        "target": "反叛嘅年青人經常對父母嘅勸告充耳不聞",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "osrueelmlmmsmsjkjnmmvdnioyr",
+        "target": "佢嘅漫畫畫功勁故事正好多人追",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "rryomrrrmrvogbhiqojtrh",
+        "target": "唔該可唔可以幫我撳𨋢呀",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "groiruyfrgkyshibt",
+        "target": "嘉儀嘅談吐大方得體",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "osgbodmorvvmcrcofvkmomalkjcofokfwyb",
+        "target": "佢幫人整個網頁只係收兩百蚊真係做爛市",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "aacisrofkbohri",
+        "target": "間公司你有份嘎",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "okekfuobiurdmfsieyirgrrokmbjcbvcu",
+        "target": "做激光矯視咪一勞永逸囉唔使再戴眼鏡",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "rrorrryebhtrisodegdprm",
+        "target": "嗰個啊叔睇落成條淫棍咁",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "ydjrsrohyskbrrfhncbevaiehuquhmyp",
+        "target": "遊客區入邊有唔少小販響度兜攬生意",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "rporrjotkbdkiiabinvdniobdrd",
+        "target": "呢個單位有梗廚明廁好多人爭㗎",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "rvvforrrorvfcgypajrrorwsodsiauurmdc",
+        "target": "喂妳知唔知妳鍾意開嗰個男仔尋日出咗櫃",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "uymmlkborefxnojhnuojmodhpru",
+        "target": "山上面有個涼亭俾行山人士休息嘅",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "ossiagirmtckouwcrmorsvgiftreiliw",
+        "target": "佢尋日去咗黃大仙買咗個長壽燈嚟祈福",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "oiiorlyuiwdnenrvfjlarwrnqrrrldntdyrdntdqioori",
+        "target": "每次叫親凍檸水阿媽都問點解唔叫檸茶話檸茶抵飲啲",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "hionaedrmmmjorgr",
+        "target": "我今日游咗三十個塘",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "hondmlhcnrwptiyuofmororumlmgvdoohondrmde",
+        "target": "瓜子面顧名思義就係一個人嘅面型好似瓜子咁樣",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "oforvuuptrrnjvihgrr",
+        "target": "你個女出世嗰陣幾重啊",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "rpaayvipvvohyriohejcofsjbumylrr",
+        "target": "呢間餐廳裝修過之後真係耳目一新啊",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "mrrrmrvoqoohgevptrwrvkdb",
+        "target": "可唔可以掟份報紙落回收桶",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "osybawhlkboyuofrrybofqpabjjsfcjtiofrr",
+        "target": "佢請晒所有人就係唔請你擺明車馬針對你喎",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "oshoncyuvabtqdnobeyl",
+        "target": "佢從小就響體操隊受訓",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "highodhpaiaaswrmbgrn",
+        "target": "我趁休息時間醫咗肚喇",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "ofnvrrruorbqjckbvini",
+        "target": "你張咭嘅信用額有幾多",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "oarrmntutbrrsfmvkbckjjrdhirg",
+        "target": "儲唔到首期唔緊要有父幹咪得囉",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "wfmbrraihdygipyohwofsgom",
+        "target": "黑雨嗰時學童應該留係屋企",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "osdmfwhiorovmfhircolovawyvmlrimioveprr",
+        "target": "佢整爛我個袋不特只仲食晒裏面啲零食添啊",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "lkhdtiohhhmghfrupphgvdyr",
+        "target": "數學對入物理系嘅比重好高",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "jdvmyjmrrkdfobyg",
+        "target": "未經許可嚴禁內進",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "mchurfhniebumnkborvoqdvenubvahisoehirm",
+        "target": "頭先喺街度見到有個女人搽綠色眼影成隻鬼咁",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "osekjohrtryshrju",
+        "target": "佢決定向警方告密",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "siautrsfhlbrhguurujjlkrevrmoq",
+        "target": "尋晚落馬州同皇崗口岸都加派咗人手",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "rrvdbhnrodtltlykykoshhqvdvdrd",
+        "target": "唔好睇阿傑斯斯文文佢身手好好㗎",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "rpkiyiohmlruribdghmlqahivdywjc",
+        "target": "呢套戲入面嘅戰爭場面拍得好逼真",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "oioramtbajbajhijloahintajriguhhgideyuovmgji",
+        "target": "每個星期日朝早我都會特登早啲起身去麥記食班戟",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "rryogbhiqufwrihqoorl",
+        "target": "唔該幫我攪爛啲牛肉吖",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "lwmevrmvdniocgiqnok",
+        "target": "中國派咗好多兵去打仗",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "ylajnvruobmcisabqerocyseirenlhcjr",
+        "target": "新開張嘅舖頭成日用減價方法吸引顧客",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "hidpyuhuniyios",
+        "target": "我想親自多謝佢",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "kinhkiapruaiokaevdrrvdedlbee",
+        "target": "太陽太曬嘅時候最好唔好游背泳",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "ybdebuosysnehirr",
+        "target": "論樣貌佢邊及我啊",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "osisayrhusukbvimmtcjcrqjlrrya",
+        "target": "佢成日話自己有幾醒其實咩都唔識",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "himmaobmvykmmohybykjcofhiabmprrhiabkb",
+        "target": "我三日內要交五份論文真係得閒死唔得閒病",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "ofburrmnosorpyurgrgvqofrrofcgyprmosrh",
+        "target": "你見唔到佢個心就囉囉攣係唔係鍾意咗佢呀",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "oforoniohtossaofrdkbrqbqyp",
+        "target": "你估今次升佢職係咪有咩用意",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "kbmgyukerfciwvodbtracj",
+        "target": "有班道友喺公園集體啪針",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "hiclclvdmcwrrrybspoyb",
+        "target": "我爺爺好頑固唔肯聽人講",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "nkmvykhunkmvbrostichjundhoqriohehirdbcrrmnvinici",
+        "target": "又要交税又要同佢對分七除八扣之後我哋賺唔到幾多錢",
+        "reason": "not_generated"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "vrwdofykokvkrpohithhmrvojsypjibaojtcodo",
+        "target": "如果你放便收呢份禮物可以考慮轉贈俾其他人",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "hfmkruhihirnefkk",
+        "target": "秋天嘅風特別涼爽",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "swhdymabovwibutirjrjofaevdru",
+        "target": "醫學証明餵母乳對啤啤係最好嘅",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "nryrkbycjfnjmojfjdrrnjisavioejdonjirmrejf",
+        "target": "阿諾有讀寫障礙寫字嗰陣成日將隻字倒轉咗嚟寫",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "hirrcgyprpriofykvihlaevdjlofhaharjrj",
+        "target": "我唔鍾意呢啲繁文縟節最好都係簡簡單單",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "rporyjcijgohmlvdnioybhogyqbyjcijgmkerrdncpri",
+        "target": "呢個辦公室入面好多人講八卦搞辦公室政治㗎小心啲",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "ovlptkmjomvtrnitkhummrd",
+        "target": "食蛇羹一定要落蛋散先正㗎",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "oswkifbeqhojofnrmvmhhstdf",
+        "target": "佢因為販毒俾人判咗終身監禁",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "ofrrvdrmlprirtfhfhmckbrrokbhnpkmrh",
+        "target": "你唔好咁蛇𠺌啦少少頭痛唔使睇急症呀",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "oshnuujjyrvdpkyurfosqyvmlebho",
+        "target": "佢行出車站好快就喺人群裏面消失",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "hiofyrkgighrotjlofgtge",
+        "target": "我係話在座各位都係垃圾",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "osqumnhijcmjc",
+        "target": "佢攬到我實一實",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "hiqnjueeioheodbvvdkb",
+        "target": "我打完波之後條腰好痛",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "osisorkbgvrkofolrlosrumowu",
+        "target": "佢成個病壞噉你仲叫佢跑兩圈",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "ofkbkbbqyrhhidmfthprr",
+        "target": "你有冇用過竹篾整燈籠啊",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "oekuodohinpofokhpruhnif",
+        "target": "侵犯他人私隱係缺德嘅行為",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "qdvrhgveheorpdflagnobvdnioypifosoforaesr",
+        "target": "秦始皇奴役人民焚書坑儒好多人認為佢係個暴君",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "yuhtofoaojosruhijlptmolqi",
+        "target": "就算係會俾佢呃我都心甘命抵",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "rpaamuiuirqaxnisanovpodhlvotnherryjyi",
+        "target": "呢間電視台拍劇成日飛紙仔所以前後唔連戲",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "hioijbajyvjloaovtfoeni",
+        "target": "我每朝早餐都會食煎雙蛋",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "qnmmjmmchfbilkbykorfniyl",
+        "target": "打醒十二分精神有敵人喺附近",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "oghimiaarraimvguhhonsvmy",
+        "target": "坐得耐間唔時要起身舒展下",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "kimjebmfrubqypofedopigsrodgujvrp",
+        "target": "太平清醮嘅用意係淨化社區保境安民",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "oslbsfknruhplkqv",
+        "target": "佢背緊九嘅乘數表",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "tdwmisajlynphcypvitdhuvbohhusuruleww",
+        "target": "某國成日都處心積慮將某島納入自己嘅版圖",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "hioiajlqrdiauyehd",
+        "target": "我每日都搭村巴返學",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "ofvemtehaevdtrriejkb",
+        "target": "煲綠豆沙最好落啲海帶",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "mkiifnervfqercoatioivkohrujoigmmymkrmu",
+        "target": "政府削減綜援只會對低收入嘅家庭雪上加霜",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "vdpofcnryscrthwschwhirmdojk",
+        "target": "好心你剃吓鬚啦留鬚留得咁核突",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "ylruvmfliliomduvilenemu",
+        "target": "新嘅紅火蟻蟻丘相繼被發現",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "otuotljoftuotljwrnqoftumnoroprm",
+        "target": "人着短褲你着短褲點解你着到個佬咁",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "hidmnirmohmmykerybofovrl",
+        "target": "我整多咗份三文治請你食吖",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "kbvbbkenkwrrahmerrdmvvivcyr",
+        "target": "冇女朋友又點啫生活咪要繼續過",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "aaoveoogpuofoljdmkrq",
+        "target": "日日食漢堡包你仲未厭咩",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "osymoramtbgirmbacivrwdismnhhjojnebfu",
+        "target": "佢上個星期去咗賭錢結果成副身家輸清光",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "jphbwkifhdhmruqdhnaracmviebujosv",
+        "target": "老師因為學生嘅操行問題要求見家長",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "vrwdtkwmruybbvqivcstoasryuofhirrqotnkrhp",
+        "target": "如果美國嘅通脹持續聯儲局就無得唔提前加息",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "hijlorrrmnosokrnrmxvymrdogoymotjlkbru",
+        "target": "我都估唔到佢做嘢咁邋遢踩住人上位都有嘅",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "himvgiahmnvylruytoqduwkifhidmyeafmvvctb",
+        "target": "我要去影一張新嘅證件相因為我本護照要續期",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "osochiypqormorvmnuhq",
+        "target": "佢貪得意撳咗個紅色掣",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "tcbqhulbvdrrhnhm",
+        "target": "共用毛巾好唔衞生",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "hijlismmjyhrswrmrvoqgkqdearsgomqgcirh",
+        "target": "我都成三十歲嘞點可以攤大手板問屋企攞錢呀",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "nrdijfrujkodjcofvddrfd",
+        "target": "阿松寫嘅故仔真係好枯燥",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "higbkdjjqnrmlvbhtrmskbfuej",
+        "target": "我幫架車打咗蠟睇落勁有光澤",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "oscgpbvujcqjahysyrcumcqbqomujc",
+        "target": "佢鍾情紀實攝影透過鏡頭捕捉現實",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "osheqyugbhigigumooerlhimnjqiyesgomofnn",
+        "target": "佢黎手就幫我執起兩隻叫我一陣拎返屋企煲粥",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "pokuyjhbhusurrorhnddrpohmlkbqhrr",
+        "target": "疑犯辯稱自己唔知行李喼入面有毒品",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "mljovdniogygjlbqvkcreopqaoefgrdrn",
+        "target": "而家好多僱主都用獎金嚟代替雙糧㗎喇",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "osifrmrpoqjnmlipmntgpi",
+        "target": "佢為咗呢件事而感到羞愧",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "osvirmhimwrmimmchrfrpiehi",
+        "target": "佢約咗我一點零五分喺呢度等",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "ofjmhngimnhhmmorrrrjikryubumnaaobmcrdrn",
+        "target": "你直行去到第二個路口轉右就見到間舖頭㗎喇",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "hiiotnrfyhhlymrmndjrmvovjojlmooqra",
+        "target": "我之前喺診所上咗子宮環依家都兩年嚕",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "rpohmmrmhaojhiyuhfoeiprn",
+        "target": "呢份工咁筍俾我就𦧲飯應喇",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "osvoifycrmajvrerylsrsuwltiqgrtnhnve",
+        "target": "佢以為贏咗開始減速臨尾畀對手超前衝線",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "hirdekjoalaivihnhshtve",
+        "target": "我哋決定即時將行動升級",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "vvymvryarmmionavmymuuremsojcofajnrmfvrbuml",
+        "target": "網上結識咁耐今日終於出嚟一聚真係聞名不如見面",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "spaajoatnvimsydykwlhjsv",
+        "target": "聽日早會前將功課交畀科長",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "ncvmkbrqmrvoykfs",
+        "target": "小姐有咩可以效勞",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "ortdgmyrhirrvdtjtdaimfaioaebe",
+        "target": "個茶壺造得唔好斟茶時不時會漏水",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "rfwfjfhnmrvoqtmnddddvpvprumundymrr",
+        "target": "喺鴨寮街可以揾到林林總總嘅電子產品",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "osqfguodhsgogisgomniylrunfgrcinf",
+        "target": "佢摵起條筋走去屋企附近嘅魚塘釣魚",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "osrdmbumlyunkqunkch",
+        "target": "佢哋一見面就又攬又錫",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "brhiratknvmmmalkvprl",
+        "target": "同我唱散張五百蚊紙吖",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "vihqqcruqvmltfgimrvoccogooejbrrdyu",
+        "target": "將牛扒嘅表面煎封可以鎖住肉汁同味道",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "ovmvwatsrnybrpotagrrvdyragygovuffuoojn",
+        "target": "食環署勸喻市民儘量唔好過量進食炭燒肉乾",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "ifrmsktrhiruramoqemshigermgjvdylvfmg",
+        "target": "為咗改善我嘅唱歌技巧我報咗聲樂訓練班",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "qmyskbhqymruqcog",
+        "target": "控方有舉証嘅責任",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "rpodyrodjfmnrkrudegimyosrt",
+        "target": "呢條詞條寫到噉嘅樣執下佢啦",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "hirutndpofogfhnymkijm",
+        "target": "我嘅夢想係坐火箭上太空",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "osjhdcdbiiruytqosuvmqhrmuugionoboljfrrmpos",
+        "target": "佢穿櫃桶底嘅證據已經揚咗出去今舖仲煮唔死佢",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "vwrrodaecgypbhtqrqrqrodorogi",
+        "target": "細路仔最鍾意睇羊咩咩跳來跳去",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "heqamrmdwanos",
+        "target": "反手閂咗棟門佢",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "rpornroruygoqhmernqifoor",
+        "target": "呢個名人嘅童年生活鮮為人知",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "bhoshhdhjkbfrmjsjoyuorosovrmerbutd",
+        "target": "睇佢身材突然咁窈窕就知佢食咗減肥藥",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "rpioypnyoiosohmnncbwmjhnksycjlvktm",
+        "target": "呢次意外令佢傷到小腦平衡力亦都變差",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "vdyvrryvkbkbyfhuretrmb",
+        "target": "好衰唔衰冇帶遮先嚟落雨",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "odrrrumoysykrmvdnimmffhr",
+        "target": "條路嘅兩旁放咗好多雪糕筒",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "ofwlrmripnrnydtdosovqbmnosrmbdof",
+        "target": "你畀咗啲乜嘢迷藥佢食搞到佢咁冧你",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "osrurocbemntryshcpo",
+        "target": "佢嘅口供受到警方質疑",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "mwnijmvdyryyrrwgrd",
+        "target": "西多士好高卡路里㗎",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "ycsflycbrorwcjmmyhruvoqaqdolrrofofjptb",
+        "target": "讀緊中六同個四十五歲嘅女人拍拖仲唔係煲老藕",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "edofhnmnfqusuvmvdjskbksmbhnymgi",
+        "target": "淨係行到半山已經好攰冇力再行上去",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "vrwdofdpjsymisvcvdofyumvghajajvretsars",
+        "target": "如果你想考試成績好你就要趁早開始温習嘞",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "josvipyoyuoondvruhdtd",
+        "target": "家長應該督促子女嘅學業",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "hehmrraiqggvrmmnovbcvinijlkbolydrt",
+        "target": "後生嗰時捱壞咗副偈賺幾多都冇命享啦",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "hbwiofrmehwlhirdoo",
+        "target": "師母煲咗湯畀我哋飲",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "orncausrdihnvmftrvogojkdtrjjjgonrm",
+        "target": "個小巴司機衝紅燈跟住俾架警車截停咗",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "rpoetdmnosbqvdmsoaovmnhimcajqmv",
+        "target": "呢隻藥副作用好勁會食到我頭暈手震",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "higctdvdjpjcrurroaruhj",
+        "target": "我賣菜好老實嘅唔會呃秤",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "osrrhtvdqumfyrqugjvdvk",
+        "target": "佢唔算好靚不過把聲好姣",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "dwtjmmnumwovpmgoioqrfymmvykmmibhqhnhfbf",
+        "target": "東華三院一眾總理每年喺上環文武廟舉行秋祭",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "rpgiorrummykrckbmmhn",
+        "target": "呢封信嘅正文只有三行",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "viakbmryrmlosonavmymyme",
+        "target": "幾日冇露過面佢今日終於上水",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "xbwrofnundruhdhm",
+        "target": "顏回係孔子嘅學生",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "vworrrnjhuhicucuvdsqhnrdpnjlyaokmrvonomkyugdrmgo",
+        "target": "細個嗰陣覺得爸爸好犀利㗎乜都識做可以飛天遁地咁款",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "oqcruygmvmsipofhiwcjoahemrvokbmrhyruvkoh",
+        "target": "年金嘅主要功能係等買家日後可以有可靠嘅收入",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "rpdmncxrhibhmnqafwqfq",
+        "target": "呢本小説我睇到拍爛手掌",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "ioheviauhirdjlogrfylsr",
+        "target": "之後幾晚我哋都住喺郊區",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "rpmgbjjrwkifmijrmjrpruaehnmlbemnjwfn",
+        "target": "呢班軍官因為殘害平民嘅暴行而受到審判",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "osbqrmistbvilkokorndbkhukfhg",
+        "target": "佢用咗成萬幾蚊做個除腋毛療程",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "wfrcrcftjlkbahhiahsfrq",
+        "target": "黑嘛嘛燈都冇影鬼影馬咩",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "onosjcofmrvomksfhnjmkbnvhn",
+        "target": "創作真係可以天馬行空冇限制",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "osquogorvygogosbl",
+        "target": "佢抱住個女望住佢瞓",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "vrwdycrmejekjcyumrvorfvpekjcbdbibjrn",
+        "target": "如果贏咗準決賽就可以喺總決賽爭冠軍喇",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "ffvdrroagerpriylajrdoakbqcosrdffrumhno",
+        "target": "黨媒唔會報呢啲新聞㗎會有損佢哋黨嘅形象",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "oriioddkmnaeiwrdrnofgfyundlhrt",
+        "target": "個冷氣校到最凍㗎喇你熱就除衫啦",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "nrvdjntdkbispgdnkvdnkjdlcckwijcofmorvdwsodrerd",
+        "target": "阿樂事業有成心地又好又孝順父母真係一個好男仔嚟㗎",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "rpormercmrvovdhbblrkkbeevdmbjr",
+        "target": "呢個球員可以好黐腳噉帶波好厲害",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "onaofnrmrrukandhiojmlosrrbrofraog",
+        "target": "今日係阿哥嘅大日子我俾面佢唔同你嘈住",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "hiygmnmcjlsvvmymygmnaanrirvahirrsrajchir",
+        "target": "我望到頸都長終於望到間名店響我嗰區開分店",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "hirdjvpkbygdkysoahriphirdrumvie",
+        "target": "我哋衷心希望校方會答應我哋嘅要求",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "riofyrwlhimvyrwljphbor",
+        "target": "哦你過界我要話畀老師知",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "rpaayvipvkkrm",
+        "target": "呢間餐廳收加一",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "oveofmhlcruhubficef",
+        "target": "食水係珍貴嘅自然資源",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "rrfhonyjorfajlhyjgeruaiokjlkbufyrrumgop",
+        "target": "唔少創辦人喺開初辦報嘅時候都有崇高嘅理念",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "cumnmmhgqkruvdrrybfbpuqrcumnncqomnbrggkqomn",
+        "target": "鋼琴三重奏嘅樂器通常包括鋼琴小提琴同埋大提琴",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "osjuogkbcihgyrhiruypbujcofgrveutkbypmgrr",
+        "target": "佢完全冇尊重過我嘅意見真係超級豈有此理啊",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "ifrmwcnrljqovyvyvqgdspuomhirq",
+        "target": "為咗買名牌手袋餐餐捱麪包值得咩",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "osisbljloflkti",
+        "target": "佢成腳都係蚊𧕴",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "hqdatdkbpnrdkryerirrrgyurrrrvdrs",
+        "target": "牛栢葉冇乜味加返啲咖哩就啱啱好嘞",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "oshaydrmmmjoqjlmrvommyejcofmfmrwpyi",
+        "target": "佢昏迷咗二十年都可以醒返真係不可思議",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "dmhhvoifrpcbhioaycwrmforyvvksusrsuharm",
+        "target": "本身以為呢鋪我會贏點不知衰收尾臨尾香咗",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "osgimgispmuyryemnreridsyufhfvrmrn",
+        "target": "佢去一去聽電話返到嚟啲麪就炒燶咗喇",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "yureviebrnrrorjpardprrdpbrhivcvirp",
+        "target": "就嚟約滿喇唔知老闆想唔想同我續約呢",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "hijdovyryjndtddpymmykbkbysoeljndkbrmnimnosbq",
+        "target": "我未食過避孕藥想試下有冇邊隻牌子冇咁多副作用",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "hirdkigrxnoarftvmayloqymlmhituwohkogkcyh",
+        "target": "我哋套喜劇會喺農曆新年上畫等觀眾笑住賀歲",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "dfevdgfrdncpylyurh",
+        "target": "杯水好熱㗎小心辣親呀",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "oshhiftmooreikueiletjqmofphbfrujn",
+        "target": "佢身為差人知法犯法被革扯係必然嘅事",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "yrujjjlrrnrtmmummmkbbrsyfc",
+        "target": "過山車都唔夠薑玩正一冇膽匪類",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "hijnipyonbdiipvkrrmrvormmpde",
+        "target": "凡事應該隨機應變唔可以咁死板",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "osoijbuuanriotnjloabqmmjchcgopvvru",
+        "target": "佢每朝出門口之前都會用三十分鐘化妝嘅",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "ogrpiemvoiorbojmmtblkhm",
+        "target": "住呢度要每個月俾三萬蚊租",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "oformcisorgdqdrkpkriginose",
+        "target": "你個頭成個地拖噉快啲去飛髮",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "amtbycrfejegogrfiebhlajcoffcpvdjn",
+        "target": "星期六喺海灘坐喺度睇書真係賞心樂事",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "rpdfoorrruewfboragvdoi",
+        "target": "呢杯飲品嘅酒精含量好低",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "osrphbosykybdrrd",
+        "target": "佢呢篇作文請槍㗎",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "osifrmymotokhqoksfjlkghlmfpa",
+        "target": "佢為咗上位做牛做馬都在所不惜",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "rpdffhhmrpdfmmfb",
+        "target": "呢杯少甜呢杯正常",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "yakrosrdyjhusugoyajljfhurrmn",
+        "target": "音痴佢哋連自己走音都察覺唔到",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "ndrmmmyvrripyombovrn",
+        "target": "除咗正餐唔應該再食嘢",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "orripyowkifybnumlbemnyeiu",
+        "target": "人唔應該因為膚色而受到歧視",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "ysiekboonbghurmvkiprd",
+        "target": "邊度有人偷肚兜咁變態㗎",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "sgtujkbfonmuqbmnvdniodtjtuurrmnre",
+        "target": "屋苑突然停電搞到好多人韞𨋢出唔到嚟",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "kbhilnhibdomde",
+        "target": "冇得鬥我爭人一皮",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "ohyjlnlamyamtbmvykofokrrokhiphrd",
+        "target": "份計劃書下星期要交你做唔做得切㗎",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "ofililqthireneetofofrnmyyr",
+        "target": "無神神揾我嚟發泄你無嘢下話",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "gsybnpoonesvkbrehmmkmegdruvkop",
+        "target": "城市急促發展帶嚟翻天覆地嘅變化",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "rrofyrdfkrytwcyuoakbohofcrdhkofofoeodjljdjorr",
+        "target": "唔係話標奇立異就會有人欣賞㗎笑你係傻仔都未定啊",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "kbbbkerehaeurgmwrnrmvovyuofmihrds",
+        "target": "有朋友嚟香港唯一點名要食就係雲吞麪",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "fhtdrrvdedoftrsttrrinifrrbmyrdoavdovvdni",
+        "target": "炒菜唔好淨係落鹽落啲多糖吊下味會好食好多",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "hiopjdrubejrooabemnsrnrodye",
+        "target": "風化案嘅受害人會受到匿名保護",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "hiyermankboip",
+        "target": "我敲咗門冇人應",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "osrujkjnjcofloqwsorulpmo",
+        "target": "佢嘅故事真係中年男人嘅悲歌",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "tcerruymedrfobtojrohml",
+        "target": "黃河嘅上游喺內蒙古入面",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "osruqvecuuilohopoioroiftuym",
+        "target": "佢嘅表演出神入化令人嘆為觀止",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "dmhlbuvioaolvrmmylbckblpjqmuqfrumuah",
+        "target": "本節目將會介紹五部具有北韓元素嘅電影",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "ofvdhirlnwkyk",
+        "target": "你好我叫陳大文",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "jtanmajyubumnkbmmoroblrmrfie",
+        "target": "𨋢門一開就見到有三個人瞓咗喺度",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "hinrevyrdenimvkbmmtphumgofmmrn",
+        "target": "我阿婆話皮蛋要有雪花先至係正嘢",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "hiisorbkbbhylajhuhihusuvdoosuvmbrorptwlburmjnrk",
+        "target": "我成個月冇睇新聞覺得自己好似已經同個世界脱咗軌噉",
+        "reason": "not_generated"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "osodvwjpevvkoffhrmosruyrosyukbcitvjordrn",
+        "target": "佢仔細老婆嫩你炒咗佢嘅話佢就冇錢養家㗎喇",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "fhristtrritdie",
+        "target": "糝啲鹽落啲菜度",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "rpmkbmrvoyrofmfhuiogd",
+        "target": "呢一帶可以話係不毛之地",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "vrwdmkiimgyaorpyurroahimnorprujeqi",
+        "target": "如果政府壓迫人民就唔會得到人民嘅支持",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "mnbutnifymswhmtirphgylkbovbfdlqofhb",
+        "target": "到目前為止醫生對呢種新病依然束手無策",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "orjwyopujjykrmoekrgiswnu",
+        "target": "個富豪包車送咗隻狗去醫院",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "hiorofkbokyr",
+        "target": "我信你冇做過",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "amtbmmofaejsruand",
+        "target": "星期三係最攰嘅日子",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "rpylylgorujjerbqymmopruyeyjhidr",
+        "target": "呢部新款跑車沿用上一代嘅設計風格",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "giqbtgrraihioakbdftdtp",
+        "target": "去掃墓嗰時我會帶紮菊花",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "mljorimuiudigvuugvti",
+        "target": "而家啲電視機越出越薄",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "ofmcrrmcypsvosifofruoreijvnd",
+        "target": "你願唔願意娶佢為你嘅合法妻子",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "rporithjychirdgifurnovrr",
+        "target": "呢個禮拜六我哋去燒嘢食咯",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "trysrfmiohhjuhnhsfwlvirisyhomvvqnlt",
+        "target": "警方喺一次秘密行動當中將啲匪徒一網打盡",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "mgymilhhgrjcofysoryuhihigcoratndhu",
+        "target": "至於神秘嘉賓係邊個就等我賣個關子先",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "huhoosbermohiohejlkbihkryrppjc",
+        "target": "自從佢受咗傷之後都冇參加過比賽",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "rpaapkyvirhifumfmbaeheolyvuuhaeuybgh",
+        "target": "呢間快餐店風光不再最後仲退出香港市場",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "rryormniotkkgbqgcoharfu",
+        "target": "唔該咁多位大大幫手填份問卷",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "hiajmnrivdharurrrgrdrr",
+        "target": "我聞到啲好香嘅咖喱味喎",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "osriblrmvdmmer",
+        "target": "佢啲腳趾好靈活",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "hirpkdjpcljjofhijpmthwojhirdrromcimfyrkbippb",
+        "target": "我呢架老爺車係我老豆留俾我㗎唔值錢不過有感情",
+        "reason": "confidence_filtered"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "trysyrdmrmmoorbrjjdvmymjcdukha",
+        "target": "警方調查咗兩個月單案終於真相大白",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "ofrrvdrfiebrwqrkrt",
+        "target": "你唔好喺度周圍吠啦",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "rrorkeokuojtrysyrjjrmjuoqvmymrfejattrvv",
+        "target": "嗰個殺人犯俾警方追輯咗七年終於喺海關落網",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "recovery:heldout",
+        "code": "ostugumwvvnkviilodrr",
+        "target": "佢着起西裝又幾神氣喎",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "rporyrghmooqheoaguvdsgaioakbmtbormmosdioa",
+        "target": "呢個商場兩年後會起好屆時會有一萬個工作機會",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "oskbrmmmorbhhnd",
+        "target": "佢有咗三個月身孕",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "rjfjofrdsgrd",
+        "target": "單料係咪堅㗎",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "giyuootdhijloarlyemdbhfh",
+        "target": "去親飲茶我都會叫返碟腸粉",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "orewirqvvehmedofikhnhidvdmkbypjcsphiybrn",
+        "target": "個酒店接線生淨係敷衍我根本冇認真聽我講嘢",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "nrwpvsksrmjoqvmymrfcmiwlulmrmcng",
+        "target": "阿思努力咗十年終於喺金融界嶄露頭角",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "himysmlnkdpgiswnuqdosomrsmysmlnkpaahvaosodhp",
+        "target": "我一方面又想去醫院探佢但另一方面又怕影響佢休息",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "hirdafonycwrcgvkob",
+        "target": "我哋照例六點鐘收舖",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "hihbmmtbjdruykvmymjlkmshrisrn",
+        "target": "我篇三萬字嘅文終於都大功告成喇",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "onahlbuybrmvdnigrjcymrehihiyomolvrmyhu",
+        "target": "今日節目請咗好多嘉賓上嚟等我逐一介紹下先",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "bhofrmwmeqshirrcajort",
+        "target": "睇你咁疊水撈得唔錯定啦",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "osetndrkqfqkosgiml",
+        "target": "佢温柔噉撫摸佢塊面",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "rpodqcfofbqbcgedmru",
+        "target": "呢條手鍊係用貝殼整嘅",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "ofpkrietlartjsymyupkmnrn",
+        "target": "你快啲温書啦考試就快到喇",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "icdwyrkbrrfhebyrfwlvdnijlbrmmstvvkbat",
+        "target": "廣東話有唔少潮語當中好多都同互聯網有關",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "rpprxryryuofoghbykyjrufbbb",
+        "target": "呢句説話就係全篇文章嘅精髓",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "oshtsaioheybawogcisrrioovoeviyoodrh",
+        "target": "佢升職之後請晒全公司啲人食飯幾豪氣呀",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "tgjnoanqyidmtbobrrevneltbhp",
+        "target": "董事會建議本期內唔派發中期息",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "nsopofvotntihirmvdoniohiyumfyfofrt",
+        "target": "乃念你以前對我咁好今次我就原諒你啦",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "osokrmmmjoqjpfgdrtxoqvmymitfg",
+        "target": "佢做咗三十年老煙槍舊年終於戒煙",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "kbrqrrajprdbrkjorlmyrg",
+        "target": "有咩唔開心咪同大家呻下囉",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "oiorihjcjajuisrmppjciohejloakehivuoprrmoh",
+        "target": "每個參賽者完成咗比賽之後都會獲得紀念品一份",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "osrrofhivmqoofhivdqo",
+        "target": "佢唔係我姐夫係我妹夫",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "hirdsuvmkbvrybrnrporoayumnypifymrt",
+        "target": "我哋已經有結論喇呢個會就到此為止啦",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "hiymsfvvqticfj",
+        "target": "我上緊網揾資料",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "osrermmoebl",
+        "target": "佢跛咗一隻腳",
+        "reason": "confidence_filtered"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "hiduorjdjwioaaofkbmoryrhhygru",
+        "target": "我相信宇宙之間係有一個造物主嘅",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "hiduorosrroaruhi",
+        "target": "我相信佢唔會呃我",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "rpiemnjwurd",
+        "target": "呢度一陣罨味",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "osbqcijdnuyrohkysrr",
+        "target": "佢用錢未免過份大方喎",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "muahrfjblnfhj",
+        "target": "電影喺十月中煞科",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "hijpevhmrmtindodhirdogjojlgruuygnyrr",
+        "target": "我老婆生咗對孖仔我哋全家都喜出望外啊",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "oforiihsmakbrujlofrtnygcrt",
+        "target": "你個廚房百冇嘅都係嗌外賣啦",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "hrtnmjmhnbumnodrreiajrmrriejikr",
+        "target": "向前一直行見到條路叉開咗嗰度轉右",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "hiofoeomord",
+        "target": "待係雙企人㗎",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "mkiiipyoifrpwobensmlrrofomwwqmhnrpwo",
+        "target": "政府應該為民眾服務而唔係企圖控制民眾",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "ofkbmmorjdqvdomu",
+        "target": "你有五個未接來電",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "onodhlbuhirdvioayndlhaeuisifwmnfcmilprumfwk",
+        "target": "今集節目我哋將會剖析香港成為國際金融中心嘅原因",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "osrdmoorhuhoygrmvaioheyuvkrmmptimc",
+        "target": "佢哋兩個自從離咗婚之後就變咗死對頭",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "hibsumjoyvmncirdrnrrofmnaiqpormcwloffwnnog",
+        "target": "我月尾一定還到錢㗎喇唔係到時批個頭畀你當凳坐",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "vdpofkbhiyurrvdovrmniobbsrt",
+        "target": "好心你痛風就唔好食咁多內臟啦",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "ofnbgdrgkfrmkbcihpprd",
+        "target": "你隨地吐痰咁冇公德心㗎",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "reregigijlofhirpvirdokvdmkrr",
+        "target": "嚟嚟去去都係得呢幾味餸好厭啊",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "rrorvhdhmmajvrrcofvwvwgjrrvimlkgjrkrr",
+        "target": "嗰個女學生一開始只係細細聲喊繼而大聲噉喊",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "ysorykrxhcdrfgdmy",
+        "target": "邊個放嚿積木喺地下",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "rmnioqkbbummmmmljosuvmxnxnmiytkorvrn",
+        "target": "咁多年冇見珊珊而家已經亭亭玉立大個女喇",
+        "reason": "outside_twenty"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "hijnmcmpjlrrokodys",
+        "target": "我寧願死都唔做俘虜",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "oflwhiorwvqaqdrtmljorrhcyuvarmvordrnrdrmrrybodrt",
+        "target": "你由得個囡拍拖啦而家唔興盲婚啞嫁㗎喇咪咁唔通氣啦",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "suvmremnvuovruhhmmanrababacyvnhrmrrofvdommnguhh",
+        "target": "已經嚟到絕食嘅第三日阿明明顯衰弱咗唔係好企到起身",
+        "reason": "completed_pool_cut"
+      },
+      {
+        "source": "retrieval:validation",
+        "code": "ritgotvdnmgorh",
+        "target": "啲鞋盒好阻埞呀",
+        "reason": "completed_pool_cut"
+      }
+    ],
+    "diagnostics_sha256": "57e095b0f0eee5d2485fcdd462396638ac952910eb57bba578cd77f146db7c2d",
+    "warning": "Gold-assisted diagnostic intervention, not deployable accuracy or a formal maximum. No statistical population claim. Missing generation can still reflect option limits or a different exact tokenization."
+  }
+}

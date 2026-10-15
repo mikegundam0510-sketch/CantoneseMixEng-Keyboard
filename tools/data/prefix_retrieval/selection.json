@@ -1,0 +1,34 @@
+{
+  "baseline_revision": "d8575595b689916d8649e71e1a365224392683a9",
+  "delivery": "unchanged_baseline",
+  "broad_rejected": "Lost one first and one top5 without coverage gain.",
+  "lexical_rejected": "No target-hit gain on old600 or new100 validation.",
+  "no_runtime_change": true,
+  "heldout_outcomes_decoded": false,
+  "heldout_sha256": "98d69db9d1bf83cc173b506d161090d854b196c724b25569c325e9ef02b2b32e",
+  "manifest_sha256": "3f60fc1a665dd17ae98a4d0e0a4131bf404fb742b61b2e830c54f43613fbcde4",
+  "protocol_sha256": "2ff384dac0d4bbf93a67a41c2939409c7a72c59f7c5795f7203caece9bae495a",
+  "retained_model_sha256": {
+    "prefix_ranker.b64": "0929d45aab58f6dc80dc1772d0717ddb24309707425680692cf9fb21d241c811",
+    "candidate_ranker.b64": "0fe065437c4b87ac3852440c69cf8140cd159241f723d4927b959fb7772d3f62",
+    "word_ranker.b64": "58697234c7fe8fafd816c44c0d65e5bf152d08f7fbca52c801f63eb57b29a536",
+    "sentence_ranker.b64": "3d6e6c3d73be95ab4366bda0eeb9fcf3ad01aca931f53cb651144f21bbbc28a8",
+    "relation_ranker.b64": "d60d25924fd732de1d022ebc969f29d7939367876cda54a70cebe726668fc988",
+    "language_model.b64": "be0afd4d26db314a1516d787099db96db864259147932f4221fc4ee7626cfbcd",
+    "phrase_model.b64": "6e2d2dcebc9d76f002100bde8d2d1f904332478cda9e46e4cd7a807a13cc2ea3"
+  },
+  "retained_runtime_sha256": {
+    "QuickDecoder.java": "1897db41ec252831adf8359c8879548b0f9ef2617a60940c4df2b7bdf6da9bec",
+    "PrefixRanker.java": "7a110b8e8c27a058540024ed070f0438025e82b7f6c6e599183b929cce08c787",
+    "SentenceRanker.java": "c80a94aea43d0e335d720ed6953537d88647a96fc11d2857001c3f52067d320f",
+    "PhraseRelationRanker.java": "0977ffe58eb182bbb0541522aa8b050825f3e7be99af4bf5e1257f9ee5f84ebe"
+  },
+  "rejected_patch_sha256": {
+    "lexical-rejected.patch": "ab8cbcef38b69e7c73216d9acb31906db937a7cc85365200e9c77c28aa3b861b",
+    "broad-rejected.patch": "42da562d1bbf1183ac00bf66397e45deff55ef5306e51a4d55cfb67bfa44e742"
+  },
+  "guard_stage": "Stopped at initial700 calibration gate; full3893, Single and latency qualification not run because neither trial qualifies.",
+  "no_apk": true,
+  "version_name": "0.6.39",
+  "version_code": 46
+}

@@ -1,0 +1,134 @@
+{
+  "baseline_revision": "d8575595b689916d8649e71e1a365224392683a9",
+  "cases_sha256": "d2f1b5c74941283b4e6d4252906b99c0f631f2a5da449d7373fab2eb4aaca2e5",
+  "output_sha256": {
+    "before": "0f2b7ae844df8bde9a99f13c890f5e0196cf5cb6b776ffff313e53c3aa1aa87f",
+    "after": "c47552159b896cd2eabfdbd452fb8581f0f4768721c65f0c631c23b509bd0088"
+  },
+  "before": {
+    "cases": 700,
+    "top1": 152,
+    "top5": 280,
+    "top20": 362,
+    "mrr": 0.29510495331122266
+  },
+  "after": {
+    "cases": 700,
+    "top1": 151,
+    "top5": 279,
+    "top20": 362,
+    "mrr": 0.2939185253294055
+  },
+  "paired": {
+    "first": {
+      "gained": 0,
+      "lost": 1,
+      "net": -1,
+      "paired_exact_two_sided_p": 1
+    },
+    "top5": {
+      "gained": 0,
+      "lost": 1,
+      "net": -1,
+      "paired_exact_two_sided_p": 1
+    },
+    "top20": {
+      "gained": 0,
+      "lost": 0,
+      "net": 0,
+      "paired_exact_two_sided_p": 1
+    }
+  },
+  "per_set": {
+    "recovery:validation": {
+      "before": {
+        "cases": 100,
+        "top1": 23,
+        "top5": 45,
+        "top20": 56,
+        "mrr": 0.32686446886446885
+      },
+      "after": {
+        "cases": 100,
+        "top1": 23,
+        "top5": 45,
+        "top20": 56,
+        "mrr": 0.3268852813852814
+      },
+      "no_count_loss": true
+    },
+    "recovery:heldout": {
+      "before": {
+        "cases": 500,
+        "top1": 109,
+        "top5": 198,
+        "top20": 256,
+        "mrr": 0.2950354443715899
+      },
+      "after": {
+        "cases": 500,
+        "top1": 108,
+        "top5": 197,
+        "top20": 256,
+        "mrr": 0.29337028269288334
+      },
+      "no_count_loss": false
+    },
+    "retrieval:validation": {
+      "before": {
+        "cases": 100,
+        "top1": 20,
+        "top5": 37,
+        "top20": 50,
+        "mrr": 0.26369298245614037
+      },
+      "after": {
+        "cases": 100,
+        "top1": 20,
+        "top5": 37,
+        "top20": 50,
+        "mrr": 0.26369298245614037
+      },
+      "no_count_loss": true
+    }
+  },
+  "no_per_set_count_loss": false,
+  "rank_changes": [
+    {
+      "source": "recovery:validation",
+      "code": "osriaublhirrvd",
+      "target": "佢噚晚瞓得唔好",
+      "before": 13,
+      "after": 14
+    },
+    {
+      "source": "recovery:validation",
+      "code": "rrmvritxrnhumgkbotykriylrn",
+      "target": "唔要啲舊嘢先至有位放啲新嘢",
+      "before": 12,
+      "after": 11
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "rkrpkbyurrvdovrmnigfodrnrt",
+      "target": "喉嚨痛就唔好食咁多熱氣嘢啦",
+      "before": 17,
+      "after": 16
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "osjihhrrmyvdmgrh",
+      "target": "佢轉身嗰下好型呀",
+      "before": 1,
+      "after": 6
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "mnhdjmofjkybyrrropruymhh",
+      "target": "副學士係教育商品化嘅產物",
+      "before": 18,
+      "after": 19
+    }
+  ],
+  "exact_codes_and_display_bounds": true
+}
