@@ -1,0 +1,24 @@
+{
+  "baseline_revision": "b5b084fa043724f38913a8042b47ffcd551330e8",
+  "data": "Retain5381 attributed phrase_relations training rows; add up to4000 unused HKCanCor utterances from original46 training files and600 Tatoeba train examples, hash-selected before decoding. Exclude known evaluation target substrings6+. Freeze new100 validation/new500 dictionary-family reserve, excluding all prior groups and raw training exposure. Dictionary examples remain evaluation-only.",
+  "observation": "One archive-only baseline pass records actual final128 eligible raw/adjusted scores, final displayed20 and at-risk exactly continuable prefix competitors. Gold labels only select training comparisons; never insert a missing path or change the observer search. Classify correct first, later top5, later top20, outside20 and missing; retain protection examples. Before fitting or candidate trials, final comparisons use the minimum of actual raw and final-adjusted gold-minus-rival margins: a common residual must address both entry-winner and final-score gaps.",
+  "model": "One shared additive short-Han bigram/trigram residual influences actual path transitions, search pruning, complete-pool survival and final first-choice selection through the same accumulated score. Existing models remain intact. Local score is exactly invariant under token splitting; two endpoint features at weight cap0.5 imply no endpoint clipping below runtime limit1.5. No complete-sentence keys or evaluation text in training.",
+  "training": {
+    "epochs": 100,
+    "rate": 0.2,
+    "l2": [0.003, 0.015],
+    "minimum_family_support": 3,
+    "feature_cap": 16000,
+    "weight_cap": 0.5,
+    "stage_mix": {"prefix": 0.5, "final": 0.5},
+    "source_mix": {"HK": 0.7, "Tatoeba": 0.2, "authored": 0.1},
+    "maximum_final_rivals": 3,
+    "maximum_prefix_checkpoints": 2,
+    "maximum_prefix_rivals": 3
+  },
+  "before_first_fit_amendment": "Before fitting any weights or decoding any candidate, compare fixed L2 values0.003 and0.015. The shared short-feature map distributes evidence over up to16000 parameters, unlike the earlier small tail map, so assess both lighter and stronger regularization. Six candidate configurations total; no further grid expansion after outcomes.",
+  "calibration": "Fixed L2 values0.003,0.015 and strengths0.25,0.5,1 on new100 validation and previously observed700. Require no first/top5/top20 loss on new100, and at least one first/top5 gain across both sets; old700 aggregate first/top5/top20 nondecreasing and per-set first/top5 regression<=1percentage point. Select equal-set mean first rate,then top5,then top20,thenMRR,then lower strength and higher L2. No qualify means reject without opening new500.",
+  "guards": "Selected arm must pass all observed3893 rows: aggregate first/top5/top20 nondecreasing and per-set first/top5 regression<=1percentage point, exact-code/unique20 bounds, Single32/32 after three confirmations, Java/Python/Lint and paired warmed desktop wall/CPU ratios<=1.2. Compare final-only shared-weight control at the selected strength to identify search contribution; report tradeoffs without assigning answer-specific overrides.",
+  "independent": "Freeze exact candidate source/model hashes and all qualification evidence before decoding new500 once per baseline/candidate. Adopt only if first/top5/top20 counts do not decrease and at least first or top5 has a net gain. No post-reserve weight, threshold, code or case changes. Otherwise restore production baseline and retain research artifacts.",
+  "delivery": "No APK; preserve0.6.39/code46, fixed signing, learning storage and existing Fold7 layout. No1.0 claim without original major-release gates and physical device evidence. Previously opened sets are calibration, never fresh evidence."
+}

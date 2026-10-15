@@ -1,0 +1,7 @@
+{
+  "missing_full_targets": 1821,
+  "missing_with_observed_close_prefix_comparison": 777,
+  "missing_without_observed_close_prefix_comparison": 1044,
+  "all_targets_with_prefix_comparison": 3956,
+  "limitation": "No close observed prefix pair does not prove which earlier generation/pruning step failed. These targets remain diagnosed but do not provide a final-pool ranking pair."
+}

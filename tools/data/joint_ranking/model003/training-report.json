@@ -1,0 +1,60 @@
+{
+  "training_cases": 9981,
+  "counts": {
+    "correct_first": 7100,
+    "later_top5": 897,
+    "later_top20": 84,
+    "outside20": 79,
+    "missing_from_pool": 1821,
+    "final_pairs": 19822,
+    "prefix_pairs": 17895
+  },
+  "pairs": 37717,
+  "supported_examples": 27514,
+  "source_families": 1403,
+  "features": 4955,
+  "stage_mix": {
+    "prefix": 0.5,
+    "final": 0.5
+  },
+  "source_mix": {
+    "HK": 0.7,
+    "Tatoeba": 0.2,
+    "authored": 0.1
+  },
+  "parameters": {
+    "epochs": 100,
+    "rate": 0.2,
+    "l2": 0.003,
+    "minimum_family_support": 3,
+    "feature_cap": 16000,
+    "weight_cap": 0.5,
+    "stage_mix": {
+      "prefix": 0.5,
+      "final": 0.5
+    },
+    "source_mix": {
+      "HK": 0.7,
+      "Tatoeba": 0.2,
+      "authored": 0.1
+    },
+    "maximum_final_rivals": 3,
+    "maximum_prefix_checkpoints": 2,
+    "maximum_prefix_rivals": 3
+  },
+  "initial_objective": 0.5395517585718959,
+  "final_objective": 0.5014484569331922,
+  "training_sha256": "a2e37cd49deb1eeecb825b0bb011552f12e665869cd52f8474d69599bceb4a97",
+  "protocol_sha256": "a2b3a030cdf752f59c4200d44f79b4c5afe817c0b07244cd08dea97918b37493",
+  "pools_sha256": "9505967bd085897dd109d4b207a0bcde49237a53d0ea94312d5e8d68efc5b7a8",
+  "prefix_sha256": "959ca12c859284cc2c01f1d533e425f2b30dff172446c7987e741cc642731598",
+  "weights_sha256": "d0f260c890e77aa0ba571ea70f22dd8ef35f70a437950c125fb7363ca9b6e8a1",
+  "pairs_sha256": "da72b5b9da68a6d5abc6819d556917e5b3750051cf070fcad0ae623116278cdc",
+  "categories_sha256": "df22ac7c67b88c5f3789982ca9890e484e3211d217580b792a1b0f52f78e3a6a",
+  "model_sha256": {
+    "0.25": "d9fc0f4bf8110c822b2e2f360d9c87b8f4094eaeccb33185c9f59c057db1801f",
+    "0.5": "662c9d30441171e074ee8b461afb6de13f9a120b1ecb63ff827fb9ce0122270c",
+    "1": "f9d9b6e888a5919c5276852004067a487d3a7fcdc0ec4b2f2fba477c0dbf374b"
+  },
+  "limits": "Shared decomposable score, not a calibrated sentence probability or a guarantee of end-to-end improvement. Baseline pruning offsets include lookahead. Actual native search/guards are required. Missing golds are not inserted; no evaluation/phone data train weights."
+}

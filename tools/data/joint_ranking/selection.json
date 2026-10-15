@@ -1,0 +1,77 @@
+{
+  "baseline_revision": "b5b084fa043724f38913a8042b47ffcd551330e8",
+  "delivery": "baseline",
+  "qualified_candidate": null,
+  "all_six_configurations_rejected": true,
+  "best_research_configuration": {
+    "l2": 0.015,
+    "strength": 0.5,
+    "counts": {
+      "cases": 800,
+      "top1": 172,
+      "top5": 324,
+      "top20": 422,
+      "mrr": 0.2967328266526215
+    },
+    "old700": {
+      "before": {
+        "cases": 700,
+        "top1": 152,
+        "top5": 280,
+        "top20": 362,
+        "mrr": 0.29510495331122266
+      },
+      "after": {
+        "cases": 700,
+        "top1": 153,
+        "top5": 279,
+        "top20": 362,
+        "mrr": 0.29609028867343773
+      }
+    },
+    "new100": {
+      "before": {
+        "cases": 100,
+        "top1": 19,
+        "top5": 44,
+        "top20": 59,
+        "mrr": 0.2962305925069083
+      },
+      "after": {
+        "cases": 100,
+        "top1": 19,
+        "top5": 45,
+        "top20": 60,
+        "mrr": 0.3012305925069083
+      }
+    },
+    "selection_key": [
+      0.21000000000000002,
+      0.41600000000000004,
+      0.543,
+      0.2971476692511135
+    ]
+  },
+  "reason": "Every configuration loses old700 aggregate top5; the best calibration arm gains one first and one top20 overall but fails the predeclared no-loss gate.",
+  "model_sha256": "606b4992889d00f3889071d74b18a9f2e1a553f53e25d8ffaf9a043a17c27f85",
+  "protocol_sha256": "a2b3a030cdf752f59c4200d44f79b4c5afe817c0b07244cd08dea97918b37493",
+  "training_sha256": "a2e37cd49deb1eeecb825b0bb011552f12e665869cd52f8474d69599bceb4a97",
+  "cases_sha256": "c87d61567cd37aae8c65dd4e432ce256233397754b868874b9e0d2f77abb7dec",
+  "baseline_output_sha256": "aa047e7b524d1a24cf231024e8217ac48472a61b7a946bf6a76140f6d045de20",
+  "research_quick_source_sha256": "225be76d2d09905d6057a907ee2b5072a4a6bc411cc4e7b744a4b4dfcd65ec3a",
+  "calibration_sha256": {
+    "cal-003-0.25.json": "c289d4f6bd54656fc8ed06eeb5ad72d9e2561ffd7b4aab42eb77aa728bc43760",
+    "cal-003-0.5.json": "e199eb0c153696872a22d63b138977ab3a9e236ae7fb31675cf55844a381e448",
+    "cal-003-1.json": "95fe5d567a968dd5c43c5ef1179a00142861b791d714dafd2d2030d7d96c32e3",
+    "cal-015-0.25.json": "98cdc4331178dd9edefda77d4e3035e6d840386e694ed5c9e46c13d296742b42",
+    "cal-015-0.5.json": "53e405d424b7d17f4262035d5c22c29a1cde3b141aa16b94142390a772ad6f1c",
+    "cal-015-1.json": "c54dba501a98a7e5c2719fa6509631eb758da8c530ddaec5ca5c38b223715e0b"
+  },
+  "heldout_cases_sha256": "5cc40483e09a87e877167bc622114b1b249d46a253916ad272ab72866a776ddd",
+  "heldout_outcomes_unopened": true,
+  "heldout_decoding_required": false,
+  "final_only_control": "Diagnostic at best research setting015/0.5 only; no adoption or new parameter selection from its outcomes.",
+  "no_apk": true,
+  "version_name": "0.6.39",
+  "version_code": 46
+}
