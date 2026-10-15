@@ -1,5 +1,19 @@
 # Offline model and compact candidates: 0.6.0 source preview
 
+## Current character-model revision (unreleased, 2026-10-16)
+
+The [clean primary-model experiment](CLEAN_LANGUAGE_MODELS.md) adopts a retrained
+character5gram after fixed ablations, old-case/learning checks, Android tests,
+warmed timing and one independent500 comparison. Independent first choices stay
+107/500; top5 improves179→180 and top20 improves235→236. This is a small gain,
+not the1.0 target or a real-phone accuracy result. The word model and decoder
+remain unchanged, version is0.6.39/code46, and no APK is released.
+
+`app/src/main/assets/PRIMARY_MODEL_REPORT.json` now describes the current
+`language_model.b64`. The original `MODEL_REPORT.json` is retained byte-identical
+as the historical baseline training reference; its counts/perplexities refer to
+the previous model. Dated comparisons below are historical results.
+
 ## Completed-pool coverage and longer relations (unreleased, 2026-10-13)
 
 The [new comparison](SENTENCE_SEARCH.md) keeps up to96 confidence-eligible

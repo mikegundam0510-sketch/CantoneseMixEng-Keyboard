@@ -1,0 +1,68 @@
+{
+  "warmup": 30,
+  "samples": 11,
+  "cases": [
+    {
+      "code": "ofonaovrmrq",
+      "letters": 11,
+      "before_wall_ms": 81.532,
+      "after_wall_ms": 88.284,
+      "before_cpu_ms": 81.532,
+      "after_cpu_ms": 86.438,
+      "wall_ratio": 1.0828141097973802,
+      "cpu_ratio": 1.0601726929303832
+    },
+    {
+      "code": "hmerrrysmlrp",
+      "letters": 12,
+      "before_wall_ms": 100.377,
+      "after_wall_ms": 97.638,
+      "before_cpu_ms": 99.248,
+      "after_cpu_ms": 97.638,
+      "wall_ratio": 0.9727128724707852,
+      "cpu_ratio": 0.9837780106400129
+    },
+    {
+      "code": "dpofvivcjutrmyyjvcqnjd",
+      "letters": 22,
+      "before_wall_ms": 145.973,
+      "after_wall_ms": 145.218,
+      "before_cpu_ms": 145.976,
+      "after_cpu_ms": 145.22,
+      "wall_ratio": 0.9948278106225122,
+      "cpu_ratio": 0.9948210664766811
+    },
+    {
+      "code": "ofykrmmsydwljpvwjd",
+      "letters": 18,
+      "before_wall_ms": 164.373,
+      "after_wall_ms": 133.559,
+      "before_cpu_ms": 164.376,
+      "after_cpu_ms": 133.552,
+      "wall_ratio": 0.8125361221125125,
+      "cpu_ratio": 0.8124787073538715
+    },
+    {
+      "code": "vkmmnkmrvordrjjj",
+      "letters": 16,
+      "before_wall_ms": 144.083,
+      "after_wall_ms": 147.398,
+      "before_cpu_ms": 142.119,
+      "after_cpu_ms": 147.374,
+      "wall_ratio": 1.023007572024458,
+      "cpu_ratio": 1.0369760552776195
+    },
+    {
+      "code": "hihihihihihihihihihihihihihihihihihihihihihihihi",
+      "letters": 48,
+      "before_wall_ms": 575.957,
+      "after_wall_ms": 523.135,
+      "before_cpu_ms": 571.831,
+      "after_cpu_ms": 523.089,
+      "wall_ratio": 0.9082882923551584,
+      "cpu_ratio": 0.9147615291930659
+    }
+  ],
+  "qualified": true,
+  "note": "Paired alternating order in one warmed desktop JVM. No other active Java workloads during timing; not Fold7 latency evidence."
+}

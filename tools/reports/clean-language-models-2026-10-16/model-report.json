@@ -1,0 +1,45 @@
+{
+  "manifest_sha256": "58dafbe610f71302f3a0bad31dfe86808b456cfd196554314513b668f477d733",
+  "protocol_sha256": "fc703f30d89a2fcad5543885b4fe8e054c272f477d54c569714e67a90787a2dd",
+  "models": {
+    "language_model.b64": "c8527713a152427cc1f90b428bfad1a14e92e9e3d8e6338b45a812e423c9e5f5",
+    "phrase_model.b64": "b681893470bce61d22276318830a80f59c130e442d023f51afc89d473205102c"
+  },
+  "character": {
+    "prior_strength": 128,
+    "entries": 526299,
+    "grams_by_order": [
+      20492,
+      176542,
+      189481,
+      80597,
+      59187
+    ],
+    "primitive_array_bytes": 8420784,
+    "thresholds": [
+      1,
+      2,
+      2,
+      3,
+      3
+    ],
+    "character_occurrences": 3760728
+  },
+  "word": {
+    "strength": 1,
+    "relations": 7541,
+    "trie_nodes": 13861,
+    "primitive_array_bytes": 539356
+  },
+  "lexical_prior_words": {
+    "written": 100632,
+    "cantonese": 99955
+  },
+  "weights": {
+    "HK_character": 12,
+    "Tatoeba_character_per_family": 2,
+    "HK_word": 1,
+    "authored_word_per_family": 3
+  },
+  "limits": "Same model formats, fixed original strengths128/1, thresholds, smoothing and inference. Full vocabulary/dictionary assets frozen; no new phrase tokens. No Tatoeba word-boundary guesses or held-out probability optimization. Research only, adoption requires separate native validation."
+}

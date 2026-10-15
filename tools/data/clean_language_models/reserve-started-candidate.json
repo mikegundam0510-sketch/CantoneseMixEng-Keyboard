@@ -1,0 +1,7 @@
+{
+  "qualification_sha256": "cade3fc1de6c0324f7f5e35f72425f61c4debf4f7acb41b86fefb29140641868",
+  "source_model_freeze": true,
+  "cases_sha256": "5cc40483e09a87e877167bc622114b1b249d46a253916ad272ab72866a776ddd",
+  "arm": "candidate",
+  "policy": "One pass only. This marker prevents an unrecorded repeat."
+}

@@ -1,0 +1,114 @@
+{
+  "status": "Current primary character model; authoritative replacement metadata",
+  "algorithm": "Character5gram KLM2, count interpolation and pruning-aware backoff; unchanged runtime and strength128",
+  "model": "language_model.b64",
+  "model_sha256": "c8527713a152427cc1f90b428bfad1a14e92e9e3d8e6338b45a812e423c9e5f5",
+  "character": {
+    "prior_strength": 128,
+    "entries": 526299,
+    "grams_by_order": [
+      20492,
+      176542,
+      189481,
+      80597,
+      59187
+    ],
+    "primitive_array_bytes": 8420784,
+    "thresholds": [
+      1,
+      2,
+      2,
+      3,
+      3
+    ],
+    "character_occurrences": 3760728
+  },
+  "source_revisions": {
+    "hkcancor": "39aeadf920e0b5ca93d0ad7792c59e740e7bdd65",
+    "rime_cantonese": "259f0e48bba840c3a2e0d117539e96937f3d89bc",
+    "rime_essay": "054920de4f54c9e5994276a96a4fc2a35cb51aa3"
+  },
+  "source_sha256": {
+    "hkcancor_zip": "09223963b8756254e15353cad843f8a4b0cbc4b9223dc8a8fa27fb1cf846057e",
+    "cantonese_words": "54d174ad2bb997e4a678b7b076b84e4dc5914481b32467cdea3b43e88b7d5474"
+  },
+  "training_assets_sha256": {
+    "cangjie5.base.dict.yaml": "8690f2ad8aafd38780846881aa916b5779e6d9247a351a1da426d3f3257afca4",
+    "quick_phrases.tsv": "c11c72bd00c398af04ffea7a9eedac18dd2987d041294d5a9502b8e1bd1d12dd",
+    "hk_phrases.tsv": "c9d4f16e3f16002a5c224ae0f2d5f3a9e8a5170c7c439eaa28eefad810f476c5"
+  },
+  "corpus_manifest_sha256": "58dafbe610f71302f3a0bad31dfe86808b456cfd196554314513b668f477d733",
+  "protocol_sha256": "fc703f30d89a2fcad5543885b4fe8e054c272f477d54c569714e67a90787a2dd",
+  "qualification_sha256": "cade3fc1de6c0324f7f5e35f72425f61c4debf4f7acb41b86fefb29140641868",
+  "word_model": {
+    "status": "Existing production word model retained; retrained word model not adopted",
+    "sha256": "6e2d2dcebc9d76f002100bde8d2d1f904332478cda9e46e4cd7a807a13cc2ea3"
+  },
+  "baseline": {
+    "model_sha256": "be0afd4d26db314a1516d787099db96db864259147932f4221fc4ee7626cfbcd",
+    "report": "MODEL_REPORT.json",
+    "report_sha256": "cdc9c0c704ab9d7e58b975488c953411fc9422165204761d329902d4d02dc2e4",
+    "note": "MODEL_REPORT.json is preserved byte-identical as the historical training-input reference; its counts and probability evaluations describe the previous character model. This PRIMARY_MODEL_REPORT.json describes the current language_model.b64."
+  },
+  "validation": {
+    "calibration800": {
+      "before": [
+        171,
+        324,
+        421
+      ],
+      "after": [
+        172,
+        325,
+        423
+      ]
+    },
+    "old3893": {
+      "before": [
+        1355,
+        2212,
+        2620
+      ],
+      "after": [
+        1358,
+        2215,
+        2625
+      ]
+    },
+    "independent500": {
+      "before": {
+        "cases": 500,
+        "top1": 107,
+        "top5": 179,
+        "top20": 235,
+        "mrr": 0.27745936338343463
+      },
+      "after": {
+        "cases": 500,
+        "top1": 107,
+        "top5": 180,
+        "top20": 236,
+        "mrr": 0.27849866677010643
+      }
+    },
+    "test_summary": "29 Python checks,222 Android JVM tests,no Lint errors and25 existing warnings,Single32/32 after three confirmations,92 Python/Java score rows per ablation and504 token splits each,all six paired desktop wall/CPU median ratios<=1.2"
+  },
+  "normalization": "TRAIN text only: non-Han boundaries retained, NFC and six reviewed OpenCC glyph pairs. No editor/evaluation normalization, guessed historical particles, vocabulary or code changes.",
+  "notices": "See THIRD_PARTY_NOTICES.md, bundled licences and tools/data/clean_language_models/NOTICE.md. words.hk examples are evaluation-only, never fitting data or APK assets.",
+  "limits": "Independent500 are public dictionary examples, not a physical-device typing study. Top5 gains1/500 (0.2percentage points), first unchanged. No statistically strong population claim,1.0 claim,APK release or device-speed claim. Preserve0.6.39/code46,signing,learning storage andFold7.",
+  "corpus_records": {
+    "HK": 25177,
+    "Tatoeba": 4954,
+    "authored": 240
+  },
+  "character_training_records": {
+    "HK": 25177,
+    "Tatoeba": 4954
+  },
+  "character_weights": {
+    "HK_character": 12,
+    "Tatoeba_character_per_family": 2,
+    "written_lexical_prior": "capped1..12",
+    "cantonese_lexical_prior": 2
+  }
+}

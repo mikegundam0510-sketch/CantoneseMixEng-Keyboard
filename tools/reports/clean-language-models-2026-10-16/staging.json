@@ -1,0 +1,21 @@
+{
+  "protocol_sha256": "fc703f30d89a2fcad5543885b4fe8e054c272f477d54c569714e67a90787a2dd",
+  "baseline_revision": "b5b084fa043724f38913a8042b47ffcd551330e8",
+  "baseline_parity_cases": 20,
+  "models": {
+    "character": {
+      "language_model.b64": "c8527713a152427cc1f90b428bfad1a14e92e9e3d8e6338b45a812e423c9e5f5",
+      "phrase_model.b64": "6e2d2dcebc9d76f002100bde8d2d1f904332478cda9e46e4cd7a807a13cc2ea3"
+    },
+    "word": {
+      "language_model.b64": "be0afd4d26db314a1516d787099db96db864259147932f4221fc4ee7626cfbcd",
+      "phrase_model.b64": "b681893470bce61d22276318830a80f59c130e442d023f51afc89d473205102c"
+    },
+    "combined": {
+      "language_model.b64": "c8527713a152427cc1f90b428bfad1a14e92e9e3d8e6338b45a812e423c9e5f5",
+      "phrase_model.b64": "b681893470bce61d22276318830a80f59c130e442d023f51afc89d473205102c"
+    }
+  },
+  "initial_protocol_sha256": "6f3d2baab13a7176acaae98aa594634d4fc84d8f33aeccfdf37173038df597e5",
+  "verification_amendment": "Typed-zero serialization only; all staged model hashes identical to original pre-amendment fit, independent replay and amended-metadata repeat fit."
+}

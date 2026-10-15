@@ -1,0 +1,15 @@
+{
+  "unit_tests": {
+    "tests": 222,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "suites": 36,
+  "lint": {
+    "Warning": 25
+  },
+  "isolated_candidate_model_sha256": "c8527713a152427cc1f90b428bfad1a14e92e9e3d8e6338b45a812e423c9e5f5",
+  "no_apk": true,
+  "note": "Archive of parent main app with selected character model only. First sandbox Gradle startup could not create a usable wildcard IP; same offline task passed with approved local-process access. Main app untouched."
+}

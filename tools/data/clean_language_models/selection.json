@@ -1,0 +1,205 @@
+{
+  "protocol_sha256": "fc703f30d89a2fcad5543885b4fe8e054c272f477d54c569714e67a90787a2dd",
+  "models": {
+    "character": {
+      "language_model.b64": "c8527713a152427cc1f90b428bfad1a14e92e9e3d8e6338b45a812e423c9e5f5",
+      "phrase_model.b64": "6e2d2dcebc9d76f002100bde8d2d1f904332478cda9e46e4cd7a807a13cc2ea3"
+    },
+    "word": {
+      "language_model.b64": "be0afd4d26db314a1516d787099db96db864259147932f4221fc4ee7626cfbcd",
+      "phrase_model.b64": "b681893470bce61d22276318830a80f59c130e442d023f51afc89d473205102c"
+    },
+    "combined": {
+      "language_model.b64": "c8527713a152427cc1f90b428bfad1a14e92e9e3d8e6338b45a812e423c9e5f5",
+      "phrase_model.b64": "b681893470bce61d22276318830a80f59c130e442d023f51afc89d473205102c"
+    }
+  },
+  "trials": {
+    "character": {
+      "before": {
+        "cases": 800,
+        "top1": 171,
+        "top5": 324,
+        "top20": 421,
+        "mrr": 0.2952456582106834
+      },
+      "after": {
+        "cases": 800,
+        "top1": 172,
+        "top5": 325,
+        "top20": 423,
+        "mrr": 0.2971108277633529
+      },
+      "new100": {
+        "before": {
+          "cases": 100,
+          "top1": 19,
+          "top5": 44,
+          "top20": 59,
+          "mrr": 0.2962305925069083
+        },
+        "after": {
+          "cases": 100,
+          "top1": 19,
+          "top5": 44,
+          "top20": 60,
+          "mrr": 0.29775638615770195
+        }
+      },
+      "old700": {
+        "before": {
+          "cases": 700,
+          "top1": 152,
+          "top5": 280,
+          "top20": 362,
+          "mrr": 0.29510495331122266
+        },
+        "after": {
+          "cases": 700,
+          "top1": 153,
+          "top5": 281,
+          "top20": 363,
+          "mrr": 0.2970186051355888
+        }
+      },
+      "calibration_gate": {
+        "new_counts_nondecreasing": true,
+        "old_aggregate_counts_nondecreasing": true,
+        "old_per_set_head_top5_loss_within_one_percentage_point": true,
+        "head_or_top5_net_gain": true
+      },
+      "selection_key": [
+        0.212,
+        0.4145,
+        0.5455,
+        0.2982889167828216
+      ],
+      "qualified": true
+    },
+    "word": {
+      "before": {
+        "cases": 800,
+        "top1": 171,
+        "top5": 324,
+        "top20": 421,
+        "mrr": 0.2952456582106834
+      },
+      "after": {
+        "cases": 800,
+        "top1": 171,
+        "top5": 324,
+        "top20": 421,
+        "mrr": 0.2952456582106834
+      },
+      "new100": {
+        "before": {
+          "cases": 100,
+          "top1": 19,
+          "top5": 44,
+          "top20": 59,
+          "mrr": 0.2962305925069083
+        },
+        "after": {
+          "cases": 100,
+          "top1": 19,
+          "top5": 44,
+          "top20": 59,
+          "mrr": 0.2962305925069083
+        }
+      },
+      "old700": {
+        "before": {
+          "cases": 700,
+          "top1": 152,
+          "top5": 280,
+          "top20": 362,
+          "mrr": 0.29510495331122266
+        },
+        "after": {
+          "cases": 700,
+          "top1": 152,
+          "top5": 280,
+          "top20": 362,
+          "mrr": 0.29510495331122266
+        }
+      },
+      "calibration_gate": {
+        "new_counts_nondecreasing": true,
+        "old_aggregate_counts_nondecreasing": true,
+        "old_per_set_head_top5_loss_within_one_percentage_point": true,
+        "head_or_top5_net_gain": false
+      },
+      "selection_key": [
+        0.20950000000000002,
+        0.41400000000000003,
+        0.5405,
+        0.29545587204977686
+      ],
+      "qualified": false
+    },
+    "combined": {
+      "before": {
+        "cases": 800,
+        "top1": 171,
+        "top5": 324,
+        "top20": 421,
+        "mrr": 0.2952456582106834
+      },
+      "after": {
+        "cases": 800,
+        "top1": 172,
+        "top5": 325,
+        "top20": 423,
+        "mrr": 0.2971108277633529
+      },
+      "new100": {
+        "before": {
+          "cases": 100,
+          "top1": 19,
+          "top5": 44,
+          "top20": 59,
+          "mrr": 0.2962305925069083
+        },
+        "after": {
+          "cases": 100,
+          "top1": 19,
+          "top5": 44,
+          "top20": 60,
+          "mrr": 0.29775638615770195
+        }
+      },
+      "old700": {
+        "before": {
+          "cases": 700,
+          "top1": 152,
+          "top5": 280,
+          "top20": 362,
+          "mrr": 0.29510495331122266
+        },
+        "after": {
+          "cases": 700,
+          "top1": 153,
+          "top5": 281,
+          "top20": 363,
+          "mrr": 0.2970186051355888
+        }
+      },
+      "calibration_gate": {
+        "new_counts_nondecreasing": true,
+        "old_aggregate_counts_nondecreasing": true,
+        "old_per_set_head_top5_loss_within_one_percentage_point": true,
+        "head_or_top5_net_gain": true
+      },
+      "selection_key": [
+        0.212,
+        0.4145,
+        0.5455,
+        0.2982889167828216
+      ],
+      "qualified": true
+    }
+  },
+  "selected": "character",
+  "independent500_decoded": false,
+  "decision": "Proceed to frozen guards before reserve500"
+}

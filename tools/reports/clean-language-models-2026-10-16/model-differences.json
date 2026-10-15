@@ -1,0 +1,17 @@
+{
+  "character": {
+    "before_entries": 526613,
+    "after_entries": 526299,
+    "added_hashes": 2115,
+    "removed_hashes": 2429,
+    "shared_probability_or_backoff_changed": 80638
+  },
+  "word": {
+    "before_relations": 7541,
+    "after_relations": 7541,
+    "added_relations": 7,
+    "removed_relations": 7,
+    "shared_values_changed": 3702
+  },
+  "note": "Model-file differences, not accuracy. Normalization and denominators can alter many probabilities after very few corpus edits. No orthographic guess, vocabulary change or decoder tuning."
+}

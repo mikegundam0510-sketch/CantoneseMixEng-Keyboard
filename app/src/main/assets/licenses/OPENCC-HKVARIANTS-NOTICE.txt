@@ -1,0 +1,16 @@
+OpenCC HKVariants training-data normalization
+
+BYVoid and OpenCC contributors, Apache License 2.0.
+Source: https://github.com/BYVoid/OpenCC
+Dictionary: https://raw.githubusercontent.com/BYVoid/OpenCC/master/data/dictionary/HKVariants.txt
+Pinned dictionary SHA256: e5cd4345303224587102f2c9e4d2b67d2b7e349c6ce9152e4a118f4656cf7302
+
+This project uses six reviewed one-to-one glyph pairs in offline TRAIN text:
+爲→為, 僞→偽, 檯→枱, 脣→唇, 鍼→針, 衆→眾.
+Unicode NFC is applied separately. Original source/rules/provenance remain in
+tools/data/clean_ranking/orthography and tools/data/clean_language_models.
+No editor text, evaluation gold, keyboard character set or code is changed.
+Historical particles without an approved mapping are left unchanged.
+
+The derived statistical character model is recorded in PRIMARY_MODEL_REPORT.json.
+OpenCC authors do not endorse this keyboard or the modifications.

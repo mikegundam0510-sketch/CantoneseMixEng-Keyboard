@@ -1,0 +1,59 @@
+{
+  "parent_revision": "e31fed9",
+  "app_source_baseline": "b5b084fa043724f38913a8042b47ffcd551330e8",
+  "manifest_sha256": "58dafbe610f71302f3a0bad31dfe86808b456cfd196554314513b668f477d733",
+  "freeze": "Before first primary-model fit or candidate native decode. Exactly three ablations; no additional strength/source/weight grid after calibration outcomes. Known800/3893 are observed calibration, not independent evidence.",
+  "data": "Use full boundary-safe TRAIN corpus, not code-admitted ranking examples:25177 HK spans from original46 TRAIN files,4954 Tatoeba spans from frozen TRAIN families,240 authored TRAIN examples. Preserve original HK word boundaries. Split every non-Han boundary including spaced English and missing-speech markers; NFC plus six reviewed glyph pairs only. No guessed historical particles. Tatoeba character-only. Reject evaluation overlap6+ after normalization, whole related Tatoeba/authored families on any overlap; retained external lexical priors are pinned original source material. No evaluation recoding.",
+  "model": {
+    "character": "Same interpolated5gram KLM2 format and pruning, strength128 fixed to production; HK counts12, Tatoeba gram once per family times2, original Rime Essay/HK lexical prior caps1..12 and Rime Cantonese weight2. Normalize priors with same rules; no new vocabulary tokens.",
+    "word": "Same bounded segmented-word bigram/trigram likelihood-ratio WLM1, strength1 fixed to production. HK word observations1, authored transition once per family times3. No Tatoeba synthetic word boundaries. Unknown transitions neutral, endpoint maximum evidence."
+  },
+  "trial_grid": [
+    {
+      "name": "character",
+      "replace": [
+        "language_model.b64"
+      ]
+    },
+    {
+      "name": "word",
+      "replace": [
+        "phrase_model.b64"
+      ]
+    },
+    {
+      "name": "combined",
+      "replace": [
+        "language_model.b64",
+        "phrase_model.b64"
+      ]
+    }
+  ],
+  "calibration": "New100 first/top5/top20 nondecreasing; old700 aggregate first/top5/top20 nondecreasing and per-set first/top5 loss<=1percentage point; combined first or top5 net gain. Select qualified arm by equal-set mean first,top5,top20,MRR, then priority character,word,combined. If none qualify, reject without reserve500 decode.",
+  "guards": "Selected arm: old3893 aggregate first/top5/top20 nondecreasing and per-set first/top5 loss<=1percentage point, exact-code/unique20 bounds, actual Single32/32 after three confirmations, Python/Java and Android JUnit/Lint, paired warmed same-JVM wall/CPU medians<=1.2 on all six frozen codes (warm30,samples11), unchanged version/signing/learning/Fold7. No other CPU jobs during timing.",
+  "independent": "Freeze selected source/model hashes and qualification evidence before decoding joint reserve500 once per baseline and candidate. Adopt only with nondecreasing first/top5/top20 and first or top5 net gain. No case/code/weight changes after outcomes; otherwise retain production. Reserve labels may be read solely for exclusion/provenance checks, never candidate selection.",
+  "delivery": "No APK. Keep0.6.39/code46/fixed signing/local learning storage/Fold7. Major1.0 still needs independent authored+10pp first/+5pp top5, natural+5pp first/+5pp top5, old regression<=1pp, speed and physical Fold7/update-retention evidence.",
+  "source_sha256": {
+    "tools/train_clean_language_models.py": "26e2fe8e60b311445a77b49c677431b05d1dbebfd35008c11984c62b24982b3b",
+    "tools/run_clean_language_models.py": "21135208fd7e3c636880ffb47fa8a01cd2f29d1813f4402986e1f1060841ab03",
+    "tools/verify_clean_language_models.py": "1753926221d3a9af9bf55e1ba580355708724aad63b92e177313b70ed7b44cf9",
+    "tools/test_clean_language_models.py": "291aaa3fe55fcae16c579fbcb0a4d2dc3825b7607d06631a9ec39a1b6cfd17c6",
+    "tools/prepare_clean_ranking.py": "edaf8ba038253a27dd71620e9423b6c5af34ec44fc3c07a844c03629cb0561e7",
+    "tools/prepare_phrase_relations.py": "cd2b5e2b6ad480ad6e49fe682ad754db1bab5e7d4fc733b854b4d842bb827e15",
+    "tools/prepare_tatoeba_corpus.py": "5b31e6af4e40458bdd68e49fdda935c31e35a47dc56269ce224d16a36fedfa50",
+    "tools/train_language_model.py": "562ce3e22b1e79befc57880c461d8f38c7696d26e3f59e42d32891369f8e15f9",
+    "tools/train_phrase_model.py": "5f9f1144c8bed0ac85e3d257cb2d1f17d757e3ff4e0585c0d2f11a2952ca578a",
+    "tools/sentence_features.py": "757b4b9a2efa068ca20da179bc814e1941e2805258d29365faf36ec08cfe07db",
+    "tools/native_phrase_relations.py": "f5765a9a47a4b88c622fa1237bebf5f0c9803e3196d2fd2f1df7b762be0fec63",
+    "tools/evaluate_joint_ranking.py": "7b70848cc5d4fcb5c0dffb0ae7afb8d98f7d0805a0e6d8e332c39798bad66d7e",
+    "tools/report_prefix_retrieval.py": "5482a5527b216760f860a8748708690acf124b885cd98ffe84d737ac4564b181",
+    "tools/report_search_recovery.py": "8a935e0d5f3cc4db20b482abf923ba042dc9dea5ecc5a0bc0f486c065a0b1dfb"
+  },
+  "evaluation_sha256": {
+    "tools/reports/joint-ranking-2026-10-15/calibration800.tsv": "c87d61567cd37aae8c65dd4e432ce256233397754b868874b9e0d2f77abb7dec",
+    "tools/reports/joint-ranking-2026-10-15/baseline800.tsv": "aa047e7b524d1a24cf231024e8217ac48472a61b7a946bf6a76140f6d045de20",
+    "tools/data/joint_ranking/heldout.tsv": "5cc40483e09a87e877167bc622114b1b249d46a253916ad272ab72866a776ddd",
+    ".native/joint-ranking-20261015/guard-cases3893.tsv": "8e4b74c8174dee73da8dda89d4c0cf1716c7d6fb69acc69c6fc12d08518b515d",
+    ".native/joint-ranking-20261015/baseline3893.tsv": "b4568ea7f016183c5abf73789829a9a16a22a941cc949a918c22041799f0929b"
+  }
+}

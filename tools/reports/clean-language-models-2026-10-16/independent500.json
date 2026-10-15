@@ -1,0 +1,128 @@
+{
+  "baseline_revision": "b5b084fa043724f38913a8042b47ffcd551330e8",
+  "cases_sha256": "5cc40483e09a87e877167bc622114b1b249d46a253916ad272ab72866a776ddd",
+  "output_sha256": {
+    "before": "0d0004a3194230437fc9a38d68a69db1f990d49d6b6a8470666f5967a552ccec",
+    "after": "b36c9326f15d61e3de236b695eef12d672fbc864376d41b89aabeba42b1a3c2d"
+  },
+  "before": {
+    "cases": 500,
+    "top1": 107,
+    "top5": 179,
+    "top20": 235,
+    "mrr": 0.27745936338343463
+  },
+  "after": {
+    "cases": 500,
+    "top1": 107,
+    "top5": 180,
+    "top20": 236,
+    "mrr": 0.27849866677010643
+  },
+  "paired": {
+    "first": {
+      "gained": 0,
+      "lost": 0,
+      "net": 0,
+      "paired_exact_two_sided_p": 1
+    },
+    "top5": {
+      "gained": 2,
+      "lost": 1,
+      "net": 1,
+      "paired_exact_two_sided_p": 1
+    },
+    "top20": {
+      "gained": 2,
+      "lost": 1,
+      "net": 1,
+      "paired_exact_two_sided_p": 1
+    }
+  },
+  "per_set": {
+    "joint:heldout": {
+      "before": {
+        "cases": 500,
+        "top1": 107,
+        "top5": 179,
+        "top20": 235,
+        "mrr": 0.27745936338343463
+      },
+      "after": {
+        "cases": 500,
+        "top1": 107,
+        "top5": 180,
+        "top20": 236,
+        "mrr": 0.27849866677010643
+      },
+      "no_count_loss": true
+    }
+  },
+  "no_per_set_count_loss": true,
+  "rank_changes": [
+    {
+      "source": "joint:heldout",
+      "code": "oshufermniiojlmprrginkvivdrnrr",
+      "target": "佢自爆咁多次都死唔去又幾好嘢喎",
+      "before": 5,
+      "after": 6
+    },
+    {
+      "source": "joint:heldout",
+      "code": "iigdrfisythaeukhdruyrhgluuciuuksmrybmshpofag",
+      "target": "麼地喺成立香港大學嘅過程中出錢出力可謂功德無量",
+      "before": 18,
+      "after": 0
+    },
+    {
+      "source": "joint:heldout",
+      "code": "hikbmowrdplbyu",
+      "target": "我有兩點想補充",
+      "before": 3,
+      "after": 2
+    },
+    {
+      "source": "joint:heldout",
+      "code": "hirdypoggifurnovwroryubftrmb",
+      "target": "我哋諗住去燒嘢食點知竟然落雨",
+      "before": 0,
+      "after": 14
+    },
+    {
+      "source": "joint:heldout",
+      "code": "hiykrmgiorrfdrmc",
+      "target": "我放咗封信喺枱頭",
+      "before": 0,
+      "after": 4
+    },
+    {
+      "source": "joint:heldout",
+      "code": "spybkbriokbgripksmrvobpedrfjml",
+      "target": "聽講有啲人有超能力可以懸浮喺空中",
+      "before": 13,
+      "after": 12
+    },
+    {
+      "source": "joint:heldout",
+      "code": "rpnomenoruhemsiembvmymmrvohebkifbs",
+      "target": "呢隊球隊嘅後勁凌厲終於可以反敗為勝",
+      "before": 19,
+      "after": 4
+    },
+    {
+      "source": "joint:heldout",
+      "code": "osifrmhcogksrmfhimfykydhusuruhcge",
+      "target": "佢為咗顧全大局不得不放棄自己嘅興趣",
+      "before": 3,
+      "after": 4
+    }
+  ],
+  "exact_codes_and_display_bounds": true,
+  "independent_gate": {
+    "counts_nondecreasing": true,
+    "first_or_top5_net_gain": true
+  },
+  "qualified": true,
+  "qualification_sha256": "cade3fc1de6c0324f7f5e35f72425f61c4debf4f7acb41b86fefb29140641868",
+  "decision": "Adopt selected character model only; no APK or1.0 claim"
+}

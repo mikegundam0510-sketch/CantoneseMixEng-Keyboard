@@ -1,0 +1,1 @@
+rows=92 token_splits=504 character_array_bytes=8425808 word_array_bytes=539356

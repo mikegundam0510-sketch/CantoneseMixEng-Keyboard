@@ -1,0 +1,24 @@
+{
+  "baseline_revision": "b5b084fa043724f38913a8042b47ffcd551330e8",
+  "before": {
+    "cases": 500,
+    "top1": 107,
+    "top5": 179,
+    "top20": 235,
+    "mrr": 0.27745936338343463
+  },
+  "after": {
+    "cases": 500,
+    "top1": 107,
+    "top5": 180,
+    "top20": 236,
+    "mrr": 0.27849866677010643
+  },
+  "independent_gate": {
+    "counts_nondecreasing": true,
+    "first_or_top5_net_gain": true
+  },
+  "qualified": true,
+  "qualification_sha256": "cade3fc1de6c0324f7f5e35f72425f61c4debf4f7acb41b86fefb29140641868",
+  "decision": "Adopt selected character model only; no APK or1.0 claim"
+}
