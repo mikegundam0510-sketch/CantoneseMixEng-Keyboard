@@ -17,7 +17,14 @@ DATA=ROOT/'tools/data/joint_ranking'
 PREVIOUS=tuple('tools/data/'+name+'/'+split+'-source.jsonl'
     for name in ('search_recovery','prefix_retrieval') for split in ('validation','heldout'))
 
-def prepare(dictionary,hk,treebank,output=DATA):
+def input_target(text,reverse,allow_coded_punctuation=False):
+    """Dictionary reachability alone does not imply a Han-only decoder target."""
+    return (6<=len(text)<=24 and bool(MARKERS.intersection(text)) and all(c in reverse for c in text)
+            and (allow_coded_punctuation or all(han(c) for c in text)))
+
+def prepare(dictionary,hk,treebank,output=DATA,allow_coded_punctuation=False):
+    if output.exists() and (not output.is_dir() or any(output.iterdir())):
+        raise ValueError('Choose a fresh --output directory; frozen datasets and existing files are preserved')
     reserve(dictionary,hk,treebank,output,baseline=BASELINE,additional_sources=PREVIOUS,label='joint')
     manifest=json.loads((output/'manifest.json').read_text())
     old=[tuple(s.split('\t')) for s in (ROOT/'tools/data/phrase_relations/train.tsv').read_text().splitlines()]
@@ -35,7 +42,7 @@ def prepare(dictionary,hk,treebank,output=DATA):
     allowed=set(report['training_conversation_files']);hk_rows={};tatoeba_rows={}
     def accept(text):
         if text in seen:rejected['already_selected']+=1;return False
-        if not 6<=len(text)<=24 or not MARKERS.intersection(text) or not all(c in reverse for c in text):
+        if not input_target(text,reverse,allow_coded_punctuation):
             rejected['length_marker_or_code']+=1;return False
         if overlap(text,excluded):rejected['evaluation_overlap']+=1;return False
         return True
@@ -63,6 +70,8 @@ def prepare(dictionary,hk,treebank,output=DATA):
         source_split='Original46 HKCanCor training conversations and Tatoeba train groups only. Excluded conversations, translations and all known evaluation target substrings6+ are forbidden in additions.',
         training_license='HKCanCor CC BY4.0; Tatoeba CC BY2.0 France; retained UD derivative CC BY-SA4.0 and project-authored rows. Full original notices retained.',
         training_limit='New ranking supervision from already licensed baseline training text; not new recordings, contemporary chat frequency, or additional independent speakers. Rival and checkpoint multiplicity never multiply family support.')
+    if not allow_coded_punctuation:
+        manifest['training_target_policy']='New additions must be entirely Han as well as dictionary-code reachable. Punctuation is not silently removed and orthography is not guessed. This minimum admission rule does not guarantee survival within runtime option caps.'
     manifest['file_sha256'].update({name:digest(output/name) for name in ('train.tsv','additional-training.tsv')})
     (output/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n')
     print(json.dumps({k:manifest[k] for k in ('training_cases','additional_hk','additional_tatoeba','validation_cases','heldout_cases')}))
@@ -71,4 +80,6 @@ def prepare(dictionary,hk,treebank,output=DATA):
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     for name in ('dictionary','hk','treebank'):p.add_argument(name,type=Path)
-    p.add_argument('--output',type=Path,default=DATA);a=p.parse_args();prepare(a.dictionary,a.hk,a.treebank,a.output)
+    p.add_argument('--output',type=Path,default=DATA)
+    p.add_argument('--legacy-allow-coded-punctuation',action='store_true',help='Reproduce the frozen historical dataset, including non-emittable punctuation labels; never use for new data.')
+    a=p.parse_args();prepare(a.dictionary,a.hk,a.treebank,a.output,a.legacy_allow_coded_punctuation)

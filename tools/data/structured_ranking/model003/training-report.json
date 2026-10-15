@@ -1,0 +1,63 @@
+{
+  "training_cases": 9981,
+  "counts": {
+    "correct_first": 7100,
+    "later_top5": 897,
+    "later_top20": 84,
+    "outside20": 79,
+    "missing_from_pool": 1821,
+    "final_pairs": 19822,
+    "prefix_pairs": 17895,
+    "reconstructed_prefix_pairs": 440,
+    "reconstructed_final_pairs": 399
+  },
+  "pairs": 38556,
+  "supported_examples": 28238,
+  "source_families": 1403,
+  "features": 4989,
+  "stage_mix": {
+    "prefix": 0.5,
+    "final": 0.5
+  },
+  "source_mix": {
+    "HK": 0.7,
+    "Tatoeba": 0.2,
+    "authored": 0.1
+  },
+  "parameters": {
+    "epochs": 100,
+    "rate": 0.2,
+    "l2": 0.003,
+    "minimum_family_support": 3,
+    "feature_cap": 16000,
+    "weight_cap": 0.5,
+    "stage_mix": {
+      "prefix": 0.5,
+      "final": 0.5
+    },
+    "source_mix": {
+      "HK": 0.7,
+      "Tatoeba": 0.2,
+      "authored": 0.1
+    },
+    "maximum_final_rivals": 3,
+    "maximum_prefix_checkpoints": 2,
+    "maximum_prefix_rivals": 3
+  },
+  "initial_objective": 0.6109588847078501,
+  "final_objective": 0.5671810104087788,
+  "training_sha256": "a2e37cd49deb1eeecb825b0bb011552f12e665869cd52f8474d69599bceb4a97",
+  "protocol_sha256": "08525020a0e270d69d73e76da9f9b0f99eea7b65211edca5b7da7745d91e0635",
+  "pools_sha256": "9505967bd085897dd109d4b207a0bcde49237a53d0ea94312d5e8d68efc5b7a8",
+  "prefix_sha256": "959ca12c859284cc2c01f1d533e425f2b30dff172446c7987e741cc642731598",
+  "weights_sha256": "6acda259a6dadf7bee1505dc31cfbbd46137a997a8c4073bb61c3e871c111b65",
+  "pairs_sha256": "16e253da89712a18016551eac4b91878a64a610b3b41245b486340336d666a21",
+  "categories_sha256": "df22ac7c67b88c5f3789982ca9890e484e3211d217580b792a1b0f52f78e3a6a",
+  "model_sha256": {
+    "0.25": "e87897217cdaeef879cf1025d58e1dd0d71e5516b17a11543a65b73a559fc64a",
+    "0.5": "348f578e8cf946ac1f0048f9079f409297337cd172d4ddf98952d9c47fe624fb",
+    "1": "dd640faa33512ba31347fa0c6ca179227fe7f6b665e4efa34919f7b5857898aa"
+  },
+  "limits": "Gold paths reconstructed only from licensed TRAIN labels with original transition scoring. No inference gold insertion; ordinary answer-free native decoding alone determines accuracy. Beyond-static-cap targets supply diagnosis only.",
+  "reconstruction_sha256": "a6b605f9de42b83ef135cfde0367e883275cefd5d74e2ed19055162fac77eec1"
+}

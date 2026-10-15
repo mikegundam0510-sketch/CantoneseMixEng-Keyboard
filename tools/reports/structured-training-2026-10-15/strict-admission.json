@@ -1,0 +1,16 @@
+{
+  "training_cases": 9384,
+  "additional_hk": 4000,
+  "additional_tatoeba": 3,
+  "training_target_policy": "New additions must be entirely Han as well as dictionary-code reachable. Punctuation is not silently removed and orthography is not guessed. This minimum admission rule does not guarantee survival within runtime option caps.",
+  "all_new_targets_han": true,
+  "new_fit_run": false,
+  "output_sha256": {
+    "validation.tsv": "bfd78eb3ef6be7b3aea03e8efa8caaba064f4a79ed2dd3d19c03c48ee34450ae",
+    "heldout.tsv": "5cc40483e09a87e877167bc622114b1b249d46a253916ad272ab72866a776ddd",
+    "validation-source.jsonl": "2237bdec1e65d69f40617e47bbd6bb76037057b86a3d4df8ab7b6d9aa767c14b",
+    "heldout-source.jsonl": "e0cdee5592095016dd73ea459c1268f3c2d89a975f8759ead371d15bcda17833",
+    "train.tsv": "c2beffad753cc6a9aa4b652b7dc4b1fa10b99d6f9f72e7db950c1f18930a0ea4",
+    "additional-training.tsv": "a8755b1ffdccbb78d818ed13493373f78d599dc911cc37a9a7e9fdabf342f990"
+  }
+}

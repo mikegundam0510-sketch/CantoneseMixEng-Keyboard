@@ -138,13 +138,19 @@ Raw pinned sources and large native observers remain in ignored `.native/`;
 manifests preserve their hashes. No private phone records are used.
 
 ```sh
-python tools/prepare_joint_ranking.py /path/wordshk.csv /path/hkcancor-utf8.zip /path/yue_hk-ud-test.conllu
+python tools/prepare_joint_ranking.py /path/wordshk.csv /path/hkcancor-utf8.zip /path/yue_hk-ud-test.conllu --output .native/joint-data-replay --legacy-allow-coded-punctuation
 python tools/observe_joint_ranking.py prepare .native/joint-observer
 python tools/observe_joint_ranking.py run .native/joint-observer --cases tools/data/joint_ranking/train.tsv --output .native/joint-observations
 python tools/train_joint_ranking.py .native/joint-observations/pools.tsv .native/joint-observations/prefix.tsv /tmp/joint-fit
 python tools/run_joint_ranking.py prepare .native/joint-trial --model /tmp/joint-fit/joint-0.5.b64
 python tools/run_joint_ranking.py run .native/joint-trial --cases tools/data/joint_ranking/validation.tsv --output /tmp/joint-validation.tsv
 ```
+
+The historical dataset contains 600 punctuation-bearing Tatoeba targets, which
+the Han-only decoder cannot emit. The later structured-path audit identifies
+this issue. New preparation rejects non-Han additions by default and preserves
+existing output directories. The legacy flag above exists only to reproduce
+these already-frozen historical artifacts; do not use it for new training data.
 
 Use new or empty archive directories for observers/trials. They reject existing
 files and never patch production app

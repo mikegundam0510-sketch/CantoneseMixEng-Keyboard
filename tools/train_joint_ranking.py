@@ -59,7 +59,12 @@ def read_pairs(pools,prefix,data=DATA):
     return pairs,counts,categories,protocol
 
 def train(pools,prefix,output,data=DATA,l2=.015):
-    pairs,counts,categories,protocol=read_pairs(pools,prefix,data);p=dict(protocol['training']);cache={}
+    pairs,counts,categories,protocol=read_pairs(pools,prefix,data)
+    return fit_pairs(pairs,counts,categories,protocol,output,pools,prefix,data,l2)
+
+def fit_pairs(pairs,counts,categories,protocol,output,pools,prefix,data=DATA,l2=.015,metadata=None):
+    """Shared optimizer; callers must validate their own training-only observations."""
+    p=dict(protocol['training']);cache={}
     if l2 not in p['l2']:raise ValueError('Unregistered regularization')
     p['l2']=l2
     support=defaultdict(set);raw=[];per_target=Counter();per_family=defaultdict(set)
@@ -118,6 +123,7 @@ def train(pools,prefix,output,data=DATA,l2=.015):
         pairs_sha256=digest(output/'pairs.tsv'),categories_sha256=digest(output/'categories.tsv'),
         model_sha256={str(s):digest(output/f'joint-{s:g}.b64') for s in (.25,.5,1)},
         limits='Shared decomposable score, not a calibrated sentence probability or a guarantee of end-to-end improvement. Baseline pruning offsets include lookahead. Actual native search/guards are required. Missing golds are not inserted; no evaluation/phone data train weights.')
+    if metadata:report.update(metadata)
     (output/'training-report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n');print(json.dumps(report))
     return fitted
 

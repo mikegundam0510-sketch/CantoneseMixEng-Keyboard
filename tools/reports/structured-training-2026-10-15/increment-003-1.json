@@ -1,0 +1,158 @@
+{
+  "baseline_revision": "previous unadopted joint research arm at identical L2/strength; both use unchanged production assets",
+  "cases_sha256": "c87d61567cd37aae8c65dd4e432ce256233397754b868874b9e0d2f77abb7dec",
+  "output_sha256": {
+    "before": "7023b02bb5058965daf9ce1d547a03c0d10a3f82f37ad21bc8b17cd73a5f32f2",
+    "after": "dc25b55298899887f2c9632f5c824dcd6499bbaa5f9c9b3f9619c49b3ccb0124"
+  },
+  "before": {
+    "cases": 800,
+    "top1": 170,
+    "top5": 324,
+    "top20": 422,
+    "mrr": 0.29456581979574437
+  },
+  "after": {
+    "cases": 800,
+    "top1": 170,
+    "top5": 324,
+    "top20": 422,
+    "mrr": 0.2944773735197981
+  },
+  "paired": {
+    "first": {
+      "gained": 0,
+      "lost": 0,
+      "net": 0,
+      "paired_exact_two_sided_p": 1
+    },
+    "top5": {
+      "gained": 0,
+      "lost": 0,
+      "net": 0,
+      "paired_exact_two_sided_p": 1
+    },
+    "top20": {
+      "gained": 0,
+      "lost": 0,
+      "net": 0,
+      "paired_exact_two_sided_p": 1
+    }
+  },
+  "per_set": {
+    "joint:validation": {
+      "before": {
+        "cases": 100,
+        "top1": 19,
+        "top5": 45,
+        "top20": 59,
+        "mrr": 0.29730441677345704
+      },
+      "after": {
+        "cases": 100,
+        "top1": 19,
+        "top5": 45,
+        "top20": 59,
+        "mrr": 0.2969869564559967
+      },
+      "no_count_loss": true
+    },
+    "recovery:validation": {
+      "before": {
+        "cases": 100,
+        "top1": 23,
+        "top5": 45,
+        "top20": 56,
+        "mrr": 0.3268761238761239
+      },
+      "after": {
+        "cases": 100,
+        "top1": 23,
+        "top5": 45,
+        "top20": 56,
+        "mrr": 0.3268761238761239
+      },
+      "no_count_loss": true
+    },
+    "recovery:heldout": {
+      "before": {
+        "cases": 500,
+        "top1": 109,
+        "top5": 197,
+        "top20": 258,
+        "mrr": 0.2947031216719297
+      },
+      "after": {
+        "cases": 500,
+        "top1": 109,
+        "top5": 197,
+        "top20": 258,
+        "mrr": 0.2946334330272411
+      },
+      "no_count_loss": true
+    },
+    "retrieval:validation": {
+      "before": {
+        "cases": 100,
+        "top1": 19,
+        "top5": 37,
+        "top20": 49,
+        "mrr": 0.25883040935672513
+      },
+      "after": {
+        "cases": 100,
+        "top1": 19,
+        "top5": 37,
+        "top20": 49,
+        "mrr": 0.25878874269005847
+      },
+      "no_count_loss": true
+    }
+  },
+  "no_per_set_count_loss": true,
+  "rank_changes": [
+    {
+      "source": "joint:validation",
+      "code": "oswkkbodhdmoqomofodhwhdha",
+      "target": "佢因病休學一年但係保留學籍",
+      "before": 7,
+      "after": 9
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "hirdjdipsehiogorjkme",
+      "target": "我哋未能取得任何突破",
+      "before": 14,
+      "after": 13
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "oimnkbmynvrk",
+      "target": "低到冇下限噉",
+      "before": 16,
+      "after": 15
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "ofrlosajriguhhhiymmvosodol",
+      "target": "你叫佢早啲起身等於要佢條命",
+      "before": 14,
+      "after": 13
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "wkifrigvbbkeoshuoaxvohyeyd",
+      "target": "因為啲壞朋友佢先會誤入歧途",
+      "before": 4,
+      "after": 5
+    },
+    {
+      "source": "retrieval:validation",
+      "code": "hiykrmoedfrfofkmml",
+      "target": "我放咗隻杯喺你左面",
+      "before": 15,
+      "after": 16
+    }
+  ],
+  "exact_codes_and_display_bounds": true
+}

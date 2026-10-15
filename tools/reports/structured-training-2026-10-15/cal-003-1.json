@@ -1,0 +1,420 @@
+{
+  "baseline_revision": "b5b084fa043724f38913a8042b47ffcd551330e8",
+  "cases_sha256": "c87d61567cd37aae8c65dd4e432ce256233397754b868874b9e0d2f77abb7dec",
+  "output_sha256": {
+    "before": "aa047e7b524d1a24cf231024e8217ac48472a61b7a946bf6a76140f6d045de20",
+    "after": "dc25b55298899887f2c9632f5c824dcd6499bbaa5f9c9b3f9619c49b3ccb0124"
+  },
+  "before": {
+    "cases": 800,
+    "top1": 171,
+    "top5": 324,
+    "top20": 421,
+    "mrr": 0.2952456582106834
+  },
+  "after": {
+    "cases": 800,
+    "top1": 170,
+    "top5": 324,
+    "top20": 422,
+    "mrr": 0.2944773735197981
+  },
+  "paired": {
+    "first": {
+      "gained": 1,
+      "lost": 2,
+      "net": -1,
+      "paired_exact_two_sided_p": 1
+    },
+    "top5": {
+      "gained": 2,
+      "lost": 2,
+      "net": 0,
+      "paired_exact_two_sided_p": 1
+    },
+    "top20": {
+      "gained": 2,
+      "lost": 1,
+      "net": 1,
+      "paired_exact_two_sided_p": 1
+    }
+  },
+  "per_set": {
+    "joint:validation": {
+      "before": {
+        "cases": 100,
+        "top1": 19,
+        "top5": 44,
+        "top20": 59,
+        "mrr": 0.2962305925069083
+      },
+      "after": {
+        "cases": 100,
+        "top1": 19,
+        "top5": 45,
+        "top20": 59,
+        "mrr": 0.2969869564559967
+      },
+      "no_count_loss": true
+    },
+    "recovery:validation": {
+      "before": {
+        "cases": 100,
+        "top1": 23,
+        "top5": 45,
+        "top20": 56,
+        "mrr": 0.32686446886446885
+      },
+      "after": {
+        "cases": 100,
+        "top1": 23,
+        "top5": 45,
+        "top20": 56,
+        "mrr": 0.3268761238761239
+      },
+      "no_count_loss": true
+    },
+    "recovery:heldout": {
+      "before": {
+        "cases": 500,
+        "top1": 109,
+        "top5": 198,
+        "top20": 256,
+        "mrr": 0.2950354443715899
+      },
+      "after": {
+        "cases": 500,
+        "top1": 109,
+        "top5": 197,
+        "top20": 258,
+        "mrr": 0.2946334330272411
+      },
+      "no_count_loss": false
+    },
+    "retrieval:validation": {
+      "before": {
+        "cases": 100,
+        "top1": 20,
+        "top5": 37,
+        "top20": 50,
+        "mrr": 0.26369298245614037
+      },
+      "after": {
+        "cases": 100,
+        "top1": 19,
+        "top5": 37,
+        "top20": 49,
+        "mrr": 0.25878874269005847
+      },
+      "no_count_loss": false
+    }
+  },
+  "no_per_set_count_loss": false,
+  "rank_changes": [
+    {
+      "source": "joint:validation",
+      "code": "osmnaumgofofreyrrr",
+      "target": "佢琴晚確係無嚟過喎",
+      "before": 4,
+      "after": 1
+    },
+    {
+      "source": "joint:validation",
+      "code": "oforosrdjcofciajqrdfrqwqivrvrdrs",
+      "target": "你估佢哋真係公開招標咩圍威喂㗎咋",
+      "before": 10,
+      "after": 8
+    },
+    {
+      "source": "joint:validation",
+      "code": "ckwirfhimmyhrrnjyuyrrmhh",
+      "target": "父母喺我五歲嗰陣就過咗身",
+      "before": 10,
+      "after": 8
+    },
+    {
+      "source": "joint:validation",
+      "code": "odanapofrdrfofie",
+      "target": "條門匙係咪喺你度",
+      "before": 6,
+      "after": 5
+    },
+    {
+      "source": "joint:validation",
+      "code": "hirdrtrmorehhq",
+      "target": "我哋嗌咗個沙律",
+      "before": 2,
+      "after": 3
+    },
+    {
+      "source": "joint:validation",
+      "code": "hiipyowrhbrdofrr",
+      "target": "我應該點稱呼你啊",
+      "before": 19,
+      "after": 17
+    },
+    {
+      "source": "joint:validation",
+      "code": "oswkkbodhdmoqomofodhwhdha",
+      "target": "佢因病休學一年但係保留學籍",
+      "before": 8,
+      "after": 9
+    },
+    {
+      "source": "joint:validation",
+      "code": "hiylqyhhbtvdrmvdni",
+      "target": "我近排身體好咗好多",
+      "before": 3,
+      "after": 4
+    },
+    {
+      "source": "joint:validation",
+      "code": "osoqicyryrhivdkbvmso",
+      "target": "佢年資高過我好有經驗",
+      "before": 1,
+      "after": 2
+    },
+    {
+      "source": "recovery:validation",
+      "code": "hirdmjomvyc",
+      "target": "我哋一定要贏",
+      "before": 12,
+      "after": 13
+    },
+    {
+      "source": "recovery:validation",
+      "code": "mfdoeboirmrfierrpghihiqtrrmnrt",
+      "target": "原來漏低咗喺度唔怪得我揾唔到啦",
+      "before": 12,
+      "after": 11
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "hivirmosamtbycuuhn",
+      "target": "我約咗佢星期六出街",
+      "before": 14,
+      "after": 12
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "rkrpkbyurrvdovrmnigfodrnrt",
+      "target": "喉嚨痛就唔好食咁多熱氣嘢啦",
+      "before": 17,
+      "after": 15
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "olytjdfhfhrrqrhiwrjloakbru",
+      "target": "人非草木少少唔捨得點都會有嘅",
+      "before": 19,
+      "after": 20
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "ncbbkeggrebhmykbrqmubcrrofrdmu",
+      "target": "小朋友埋嚟睇下有咩玩具啱你哋玩",
+      "before": 9,
+      "after": 8
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "rrbrruerhsoimnrpievdkbhlanubh",
+      "target": "唔同嘅活動令到呢度好有節日色彩",
+      "before": 9,
+      "after": 10
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "mmrirtrqjlokca",
+      "target": "醒啲啦咩都做錯",
+      "before": 5,
+      "after": 4
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "hirdonasotumfgofifrmyvpjrrrryrrmhhruevev",
+      "target": "我哋今日聚首一堂係為咗哀悼啱啱過咗身嘅婆婆",
+      "before": 9,
+      "after": 5
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "ofrmpbvaoptcodovdtgbrofokrnrdrr",
+      "target": "你咁情緒化其他人好難同你做嘢㗎喎",
+      "before": 17,
+      "after": 13
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "rfwjtdtcitymmlhibrbrhdorafhwop",
+      "target": "喺畢業典禮上面我同同學合照留念",
+      "before": 3,
+      "after": 4
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "hibrosybhimebmmdordrnhirroavoojos",
+      "target": "我同佢講得一清二楚㗎喇我唔會嫁俾佢",
+      "before": 17,
+      "after": 18
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "hiabyuqtmgruchuureovmyoert",
+      "target": "得閒就揾班兄弟出嚟食下飯啦",
+      "before": 6,
+      "after": 7
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "oshusujlfmrfwhrvdtgrlosrivwrrrryb",
+      "target": "佢自己都粗口爛舌好難叫佢啲細路唔講",
+      "before": 5,
+      "after": 4
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "ororithjjlkborfrporotgcyc",
+      "target": "個個禮拜都有人喺呢個位賣旗",
+      "before": 3,
+      "after": 8
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "rpjeewvdrnre",
+      "target": "呢支酒好嘢嚟",
+      "before": 5,
+      "after": 6
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "oimnkbmynvrk",
+      "target": "低到冇下限噉",
+      "before": 17,
+      "after": 15
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "rpaalpqoocruyeydpuqrvvmeyrmkqomebrggodyimehihi",
+      "target": "呢間中心提供嘅設施包括網球高爾夫球同埋保齡球等等",
+      "before": 12,
+      "after": 13
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "ofsgomdmrmrifuh",
+      "target": "你屋企整咗啲炮竹",
+      "before": 2,
+      "after": 3
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "ofrlosajriguhhhiymmvosodol",
+      "target": "你叫佢早啲起身等於要佢條命",
+      "before": 0,
+      "after": 13
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "emmetcrrrrvdqbca",
+      "target": "江夏黃喎唔好搞錯",
+      "before": 4,
+      "after": 5
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "huhoosbermohiohejlkbihkryrppjc",
+      "target": "自從佢受咗傷之後都冇參加過比賽",
+      "before": 0,
+      "after": 16
+    },
+    {
+      "source": "retrieval:validation",
+      "code": "mkiihahaevlcrmmmhjtbhcarlc",
+      "target": "政府白白浪費咗五千萬顧問費",
+      "before": 10,
+      "after": 9
+    },
+    {
+      "source": "retrieval:validation",
+      "code": "kbygonoqhiyrmblckbpnmkvf",
+      "target": "希望今年風調雨順冇乜天災",
+      "before": 20,
+      "after": 19
+    },
+    {
+      "source": "retrieval:validation",
+      "code": "mkygjkjkoaniioevrcrelwmoijk",
+      "target": "天主教教會多次派員嚟中國傳教",
+      "before": 5,
+      "after": 4
+    },
+    {
+      "source": "retrieval:validation",
+      "code": "osymghppjcruqvmuvdtmhlvoonghmvogiidenn",
+      "target": "佢上場比賽嘅表現好差所以今場要坐冷板凳",
+      "before": 20,
+      "after": 0
+    },
+    {
+      "source": "retrieval:validation",
+      "code": "hiykrmoedfrfofkmml",
+      "target": "我放咗隻杯喺你左面",
+      "before": 15,
+      "after": 16
+    },
+    {
+      "source": "retrieval:validation",
+      "code": "hiieilhjonjlygosmjmjjvjvyere",
+      "target": "我求神拜佛都望佢平平安安返嚟",
+      "before": 1,
+      "after": 2
+    }
+  ],
+  "exact_codes_and_display_bounds": true,
+  "calibration_gate": {
+    "new_counts_nondecreasing": true,
+    "old_aggregate_counts_nondecreasing": false,
+    "old_per_set_head_top5_loss_within_one_percentage_point": true,
+    "head_or_top5_net_gain": false
+  },
+  "qualified": false,
+  "new100": {
+    "before": {
+      "cases": 100,
+      "top1": 19,
+      "top5": 44,
+      "top20": 59,
+      "mrr": 0.2962305925069083
+    },
+    "after": {
+      "cases": 100,
+      "top1": 19,
+      "top5": 45,
+      "top20": 59,
+      "mrr": 0.2969869564559967
+    }
+  },
+  "old700": {
+    "before": {
+      "cases": 700,
+      "top1": 152,
+      "top5": 280,
+      "top20": 362,
+      "mrr": 0.29510495331122266
+    },
+    "after": {
+      "cases": 700,
+      "top1": 151,
+      "top5": 279,
+      "top20": 363,
+      "mrr": 0.29411886167176965
+    }
+  },
+  "selection_key": [
+    0.20700000000000002,
+    0.41600000000000004,
+    0.539,
+    0.29432131401235506
+  ]
+}

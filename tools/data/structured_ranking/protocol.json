@@ -1,0 +1,67 @@
+{
+  "baseline_revision": "dea23cec1bec30d2531aed5208f0379eb76b7434",
+  "app_source_baseline": "b5b084fa043724f38913a8042b47ffcd551330e8",
+  "training_sha256": "a2e37cd49deb1eeecb825b0bb011552f12e665869cd52f8474d69599bceb4a97",
+  "method": "Retain all prior 37717 protection/error pairs. Reconstruct exactly coded TRAIN gold paths for the 1044 missing targets with no old close-prefix comparison. Dynamic programming uses real language transitions, history clipping and token priors; compare earliest lost and maximum-raw-deficit prefix checkpoints (at most two rivals each), plus three actual complete-pool rivals. Positive paths are shadow-only, never added to inference. Diagnose beyond-static-option-cap targets but do not fit impossible final/prefix targets. Targets with dictionary-coded non-Han punctuation and no legal Han decoder path are diagnosed and excluded from reconstructed comparisons.",
+  "static_eligibility": "Upper bound only: first24 vocabulary tokens; ranks25..64 require 2..8 characters and context; first64 dictionary Han candidates or HK particles at later ranks. Selected-only DP uses actually generated options. Context-selected eligibility depends on surviving paths; neither flag alone establishes the earliest causal failure.",
+  "training": {
+    "epochs": 100,
+    "rate": 0.2,
+    "l2": [
+      0.003,
+      0.015
+    ],
+    "minimum_family_support": 3,
+    "feature_cap": 16000,
+    "weight_cap": 0.5,
+    "stage_mix": {
+      "prefix": 0.5,
+      "final": 0.5
+    },
+    "source_mix": {
+      "HK": 0.7,
+      "Tatoeba": 0.2,
+      "authored": 0.1
+    },
+    "maximum_final_rivals": 3,
+    "maximum_prefix_checkpoints": 2,
+    "maximum_prefix_rivals": 3
+  },
+  "trial_grid": [
+    {
+      "l2": 0.003,
+      "strength": 0.5
+    },
+    {
+      "l2": 0.003,
+      "strength": 1
+    },
+    {
+      "l2": 0.015,
+      "strength": 0.5
+    },
+    {
+      "l2": 0.015,
+      "strength": 1
+    }
+  ],
+  "calibration": "Fixed L2 values0.003,0.015 and strengths0.5,1 on new100 validation and previously observed700. Require no first/top5/top20 loss on new100, and at least one first/top5 gain across both sets; old700 aggregate first/top5/top20 nondecreasing and per-set first/top5 regression<=1percentage point. Select equal-set mean first rate,then top5,then top20,thenMRR,then lower strength and higher L2. No qualify means reject without opening new500.",
+  "guards": "Selected arm must pass all observed3893 rows: aggregate first/top5/top20 nondecreasing and per-set first/top5 regression<=1percentage point, exact-code/unique20 bounds, Single32/32 after three confirmations, Java/Python/Lint and paired warmed desktop wall/CPU ratios<=1.2. Compare final-only shared-weight control at the selected strength to identify search contribution; report tradeoffs without assigning answer-specific overrides.",
+  "independent": "Freeze exact candidate source/model hashes and all qualification evidence before decoding new500 once per baseline/candidate. Adopt only if first/top5/top20 counts do not decrease and at least first or top5 has a net gain. No post-reserve weight, threshold, code or case changes. Otherwise restore production baseline and retain research artifacts.",
+  "delivery": "No APK; preserve0.6.39/code46, fixed signing, learning storage and existing Fold7 layout. No1.0 claim without original major-release gates and physical device evidence. Previously opened sets are calibration, never fresh evidence.",
+  "freeze": "Written before any structured fit or candidate decoding. Existing100/700/3893 are calibration. Unopened joint_ranking/heldout.tsv500 only after exact candidate/guards frozen. No extra grid expansion after results.",
+  "source_sha256": {
+    "structured_training_hooks.inc": "97c2ac0697b084c9f7a7ad38ba1214e0dbad353eb76a5a0fb9f004b2ffc18557",
+    "observe_structured_training.py": "56df9692f6cd409a485ef31a2bedda3a69da796fa1489d37a8787271ff855003",
+    "train_structured_ranking.py": "c15c43f6566c23962d206a2fd7b065235d34ff3c02a8d1028eb35c2a9e4e1aaa",
+    "train_joint_ranking.py": "9605a2eb36a2727bcd095ac6ed9699979d41a3acb0ea3fed8ff6bb076e452a2f",
+    "run_joint_ranking.py": "e00f4714f5435e9ffab0007b260d5d806aff69d07a9447986c67e84d7ff787cb",
+    "evaluate_joint_ranking.py": "7b70848cc5d4fcb5c0dffb0ae7afb8d98f7d0805a0e6d8e332c39798bad66d7e",
+    "train_candidate_ranker.py": "86e9de3ea6b34fee8e7020f34671ca9100f4382489fbd74def2206d5754fe981",
+    "verify_structured_training.py": "76b7c372e52233e499af523af0e92697b3c4faae8cee95ffb36170935f3d861a"
+  },
+  "before_first_fit_amendment": "Observer now records no-legal-Han-path targets instead of aborting on historical punctuation-bearing TRAIN labels. No fit or candidate decode occurred before this amendment; all other pilot choices unchanged.",
+  "observation_scope": "All1821 missing TRAIN targets, retaining the1044 gap diagnosis separately. Gap1044 produced zero legal score-learnable full targets (791 static option barriers;253 non-Han punctuation labels), so inspect other777 missing targets before fitting. No candidate results observed before scope amendment.",
+  "training_stop": "If reconstructed comparisons are empty, stop without fitting identical old models or opening reserve500.",
+  "offsets": "Prefix offsets compare reconstructed real accumulated transition scores with actual raw beam rivals; lookahead is not included in these new offsets. Complete offsets use the harder of the raw gap and raw-plus-SentenceRanker gap. PRR3 categorical head/visible gates are not simulated for a missing teacher candidate; actual inference validation is mandatory."
+}

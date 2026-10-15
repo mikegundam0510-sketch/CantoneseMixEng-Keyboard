@@ -1,0 +1,536 @@
+{
+  "date": "2026-10-15T23:27:55.727119+08:00",
+  "implementation_parent": "dea23cec1bec30d2531aed5208f0379eb76b7434",
+  "production_revision": "b5b084fa043724f38913a8042b47ffcd551330e8",
+  "app_tree_sha": "261ce88dd610442f520fc41dd5c51cc88e872c45",
+  "version": "0.6.39",
+  "version_code": 46,
+  "apk_built": false,
+  "production_changed": false,
+  "task": "Trace previously unpaired missing TRAIN targets, reconstruct legitimate shadow gold paths, train structured comparisons, assess ordinary inference; fix the discovered non-Han admission bug.",
+  "data": {
+    "training_cases": 9981,
+    "initial_gap": {
+      "counts": {
+        "all": 1044,
+        "outside_static_option_caps": 791,
+        "no_legal_han_path": 253
+      },
+      "ordinary_inference_parity": 1044,
+      "pairs": 0,
+      "input_sha256": {
+        "pools": "9505967bd085897dd109d4b207a0bcde49237a53d0ea94312d5e8d68efc5b7a8",
+        "prefix": "959ca12c859284cc2c01f1d533e425f2b30dff172446c7987e741cc642731598"
+      },
+      "output_sha256": {
+        "cases.tsv": "06617601626b7bc980efeb764d61cf2c5e9c185a88adeab13b1cd710640f6088",
+        "audit.tsv": "2d03faea9a592d04a926032f3365025778f440909b4e41ccb4c2bd3a46c30476",
+        "visible.tsv": "aa39c7d419bcd8295c684c8543794e7e493dca45aa4bc62748df7d4218f1d882",
+        "reconstructed-pairs.tsv": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "limits": "TRAIN-only shadow reconstruction, not recovered inference or held-out accuracy. Static option eligibility is an upper bound; selected-option gaps can also follow an earlier pruning loss."
+    },
+    "full_missing": {
+      "counts": {
+        "all": 1821,
+        "outside_static_option_caps": 1088,
+        "no_legal_han_path": 600,
+        "prefix_search_loss": 110,
+        "observed_pruned_gold_prefix": 124,
+        "final_pool_cap": 15,
+        "completed_confidence_filtered": 8
+      },
+      "ordinary_inference_parity": 1821,
+      "pairs": 839,
+      "input_sha256": {
+        "pools": "9505967bd085897dd109d4b207a0bcde49237a53d0ea94312d5e8d68efc5b7a8",
+        "prefix": "959ca12c859284cc2c01f1d533e425f2b30dff172446c7987e741cc642731598"
+      },
+      "output_sha256": {
+        "cases.tsv": "4d94a7d33bd676414e5c7ef77092b5d526a90b0bc50bdc137b3c64d7f975c575",
+        "audit.tsv": "d3c32b1dae0324e165a11b934090d657bde6b0bd5c915448eb9d0551b22d8321",
+        "visible.tsv": "83de4faf6990411b0e6d0d92e7032a9b2c6113f4197b4b6b34fdd7c0f9dc798e",
+        "reconstructed-pairs.tsv": "a6b605f9de42b83ef135cfde0367e883275cefd5d74e2ed19055162fac77eec1"
+      },
+      "limits": "TRAIN-only shadow reconstruction, not recovered inference or held-out accuracy. Static option eligibility is an upper bound; selected-option gaps can also follow an earlier pruning loss."
+    },
+    "additional_targets_with_reconstructed_pairs": 133,
+    "reconstructed_prefix_pairs": 440,
+    "reconstructed_final_pairs": 399,
+    "old_pairs": 37717,
+    "total_pairs": 38556,
+    "limits": "133 reconstructed TRAIN targets are not inference recoveries; 1088 static-cap and600 non-Han targets are not fitted as new complete positives. No additional speakers or contemporary chat-frequency data. All600 non-Han targets are the previous experiment added Tatoeba rows."
+  },
+  "selection": {
+    "protocol_sha256": "08525020a0e270d69d73e76da9f9b0f99eea7b65211edca5b7da7745d91e0635",
+    "cases_sha256": "c87d61567cd37aae8c65dd4e432ce256233397754b868874b9e0d2f77abb7dec",
+    "baseline_output_sha256": "aa047e7b524d1a24cf231024e8217ac48472a61b7a946bf6a76140f6d045de20",
+    "results": [
+      {
+        "l2": 0.003,
+        "strength": 0.5,
+        "name": "003-0.5",
+        "qualified": false,
+        "selection_key": [
+          0.20750000000000002,
+          0.4135,
+          0.541,
+          0.29476308717941846
+        ],
+        "before": {
+          "cases": 800,
+          "top1": 171,
+          "top5": 324,
+          "top20": 421,
+          "mrr": 0.2952456582106834
+        },
+        "after": {
+          "cases": 800,
+          "top1": 171,
+          "top5": 323,
+          "top20": 422,
+          "mrr": 0.2955224630031132
+        },
+        "new100": {
+          "before": {
+            "cases": 100,
+            "top1": 19,
+            "top5": 44,
+            "top20": 59,
+            "mrr": 0.2962305925069083
+          },
+          "after": {
+            "cases": 100,
+            "top1": 19,
+            "top5": 44,
+            "top20": 59,
+            "mrr": 0.29679251201155227
+          }
+        },
+        "old700": {
+          "before": {
+            "cases": 700,
+            "top1": 152,
+            "top5": 280,
+            "top20": 362,
+            "mrr": 0.29510495331122266
+          },
+          "after": {
+            "cases": 700,
+            "top1": 152,
+            "top5": 279,
+            "top20": 363,
+            "mrr": 0.295341027430479
+          }
+        },
+        "gate": {
+          "new_counts_nondecreasing": true,
+          "old_aggregate_counts_nondecreasing": false,
+          "old_per_set_head_top5_loss_within_one_percentage_point": true,
+          "head_or_top5_net_gain": false
+        },
+        "output_sha256": "49152a959abcaae6eefb548eab9ba163e9727f3a811b4c750954fdfcabbd261f"
+      },
+      {
+        "l2": 0.003,
+        "strength": 1,
+        "name": "003-1",
+        "qualified": false,
+        "selection_key": [
+          0.20700000000000002,
+          0.41600000000000004,
+          0.539,
+          0.29432131401235506
+        ],
+        "before": {
+          "cases": 800,
+          "top1": 171,
+          "top5": 324,
+          "top20": 421,
+          "mrr": 0.2952456582106834
+        },
+        "after": {
+          "cases": 800,
+          "top1": 170,
+          "top5": 324,
+          "top20": 422,
+          "mrr": 0.2944773735197981
+        },
+        "new100": {
+          "before": {
+            "cases": 100,
+            "top1": 19,
+            "top5": 44,
+            "top20": 59,
+            "mrr": 0.2962305925069083
+          },
+          "after": {
+            "cases": 100,
+            "top1": 19,
+            "top5": 45,
+            "top20": 59,
+            "mrr": 0.2969869564559967
+          }
+        },
+        "old700": {
+          "before": {
+            "cases": 700,
+            "top1": 152,
+            "top5": 280,
+            "top20": 362,
+            "mrr": 0.29510495331122266
+          },
+          "after": {
+            "cases": 700,
+            "top1": 151,
+            "top5": 279,
+            "top20": 363,
+            "mrr": 0.29411886167176965
+          }
+        },
+        "gate": {
+          "new_counts_nondecreasing": true,
+          "old_aggregate_counts_nondecreasing": false,
+          "old_per_set_head_top5_loss_within_one_percentage_point": true,
+          "head_or_top5_net_gain": false
+        },
+        "output_sha256": "dc25b55298899887f2c9632f5c824dcd6499bbaa5f9c9b3f9619c49b3ccb0124"
+      },
+      {
+        "l2": 0.015,
+        "strength": 0.5,
+        "name": "015-0.5",
+        "qualified": false,
+        "selection_key": [
+          0.21000000000000002,
+          0.41600000000000004,
+          0.543,
+          0.2971476692511135
+        ],
+        "before": {
+          "cases": 800,
+          "top1": 171,
+          "top5": 324,
+          "top20": 421,
+          "mrr": 0.2952456582106834
+        },
+        "after": {
+          "cases": 800,
+          "top1": 172,
+          "top5": 324,
+          "top20": 422,
+          "mrr": 0.2967328266526215
+        },
+        "new100": {
+          "before": {
+            "cases": 100,
+            "top1": 19,
+            "top5": 44,
+            "top20": 59,
+            "mrr": 0.2962305925069083
+          },
+          "after": {
+            "cases": 100,
+            "top1": 19,
+            "top5": 45,
+            "top20": 60,
+            "mrr": 0.3012305925069083
+          }
+        },
+        "old700": {
+          "before": {
+            "cases": 700,
+            "top1": 152,
+            "top5": 280,
+            "top20": 362,
+            "mrr": 0.29510495331122266
+          },
+          "after": {
+            "cases": 700,
+            "top1": 153,
+            "top5": 279,
+            "top20": 362,
+            "mrr": 0.29609028867343773
+          }
+        },
+        "gate": {
+          "new_counts_nondecreasing": true,
+          "old_aggregate_counts_nondecreasing": false,
+          "old_per_set_head_top5_loss_within_one_percentage_point": true,
+          "head_or_top5_net_gain": true
+        },
+        "output_sha256": "3c4e6df767a66688b17d817f6215a10043c3906bc06f88e6aacdf28a588cfc54"
+      },
+      {
+        "l2": 0.015,
+        "strength": 1,
+        "name": "015-1",
+        "qualified": false,
+        "selection_key": [
+          0.21000000000000002,
+          0.4135,
+          0.541,
+          0.29602903381448276
+        ],
+        "before": {
+          "cases": 800,
+          "top1": 171,
+          "top5": 324,
+          "top20": 421,
+          "mrr": 0.2952456582106834
+        },
+        "after": {
+          "cases": 800,
+          "top1": 172,
+          "top5": 323,
+          "top20": 422,
+          "mrr": 0.29622122135260676
+        },
+        "new100": {
+          "before": {
+            "cases": 100,
+            "top1": 19,
+            "top5": 44,
+            "top20": 59,
+            "mrr": 0.2962305925069083
+          },
+          "after": {
+            "cases": 100,
+            "top1": 19,
+            "top5": 44,
+            "top20": 59,
+            "mrr": 0.29666062592378384
+          }
+        },
+        "old700": {
+          "before": {
+            "cases": 700,
+            "top1": 152,
+            "top5": 280,
+            "top20": 362,
+            "mrr": 0.29510495331122266
+          },
+          "after": {
+            "cases": 700,
+            "top1": 153,
+            "top5": 279,
+            "top20": 363,
+            "mrr": 0.29615844927101004
+          }
+        },
+        "gate": {
+          "new_counts_nondecreasing": true,
+          "old_aggregate_counts_nondecreasing": false,
+          "old_per_set_head_top5_loss_within_one_percentage_point": true,
+          "head_or_top5_net_gain": true
+        },
+        "output_sha256": "c81ce7cb084f8b89105a60de2654686f248b0d0365ea23b677671a79c1388fca"
+      }
+    ],
+    "qualified": [],
+    "selected": null,
+    "best_research": "015-0.5",
+    "reserve500_opened": false,
+    "decision": "Reject all four arms. Preserve production app and unopened reserve500. No extra grid expansion."
+  },
+  "increment_over_previous_same_configuration": {
+    "003-0.5": {
+      "before": {
+        "cases": 800,
+        "top1": 171,
+        "top5": 323,
+        "top20": 423,
+        "mrr": 0.29561174871739887
+      },
+      "after": {
+        "cases": 800,
+        "top1": 171,
+        "top5": 323,
+        "top20": 422,
+        "mrr": 0.2955224630031132
+      }
+    },
+    "003-1": {
+      "before": {
+        "cases": 800,
+        "top1": 170,
+        "top5": 324,
+        "top20": 422,
+        "mrr": 0.29456581979574437
+      },
+      "after": {
+        "cases": 800,
+        "top1": 170,
+        "top5": 324,
+        "top20": 422,
+        "mrr": 0.2944773735197981
+      }
+    },
+    "015-0.5": {
+      "before": {
+        "cases": 800,
+        "top1": 172,
+        "top5": 324,
+        "top20": 422,
+        "mrr": 0.2967328266526215
+      },
+      "after": {
+        "cases": 800,
+        "top1": 172,
+        "top5": 324,
+        "top20": 422,
+        "mrr": 0.2967328266526215
+      }
+    },
+    "015-1": {
+      "before": {
+        "cases": 800,
+        "top1": 172,
+        "top5": 323,
+        "top20": 422,
+        "mrr": 0.29622122135260676
+      },
+      "after": {
+        "cases": 800,
+        "top1": 172,
+        "top5": 323,
+        "top20": 422,
+        "mrr": 0.29622122135260676
+      }
+    }
+  },
+  "checks": {
+    "python_tests": 11,
+    "python_skips": 0,
+    "python_log": "tools/reports/structured-training-2026-10-15/python-checks.txt",
+    "ordinary_observer_baseline_exact_lists": 1821,
+    "exhaustive_teacher_cases": 6,
+    "observer_label_invariance_cases": 3,
+    "invalid_alignment": true,
+    "selected_option_isolation": true,
+    "supplementary_unicode": true,
+    "shared_score_checks_per_model": 24,
+    "token_splits_per_model": 177,
+    "model_primitive_bytes": {
+      "003": 373916,
+      "015": 362656
+    },
+    "previous_optimizer_compatibility_sha256": {
+      "joint-0.5.b64": "662c9d30441171e074ee8b461afb6de13f9a120b1ecb63ff827fb9ce0122270c",
+      "categories.tsv": "df22ac7c67b88c5f3789982ca9890e484e3211d217580b792a1b0f52f78e3a6a",
+      "training-report.json": "390fa7e9ebeef95724423f66c46756992b7af5afd138e77634aaf28ff31eaa1e",
+      "pairs.tsv": "da72b5b9da68a6d5abc6819d556917e5b3750051cf070fcad0ae623116278cdc",
+      "joint-0.25.b64": "d9fc0f4bf8110c822b2e2f360d9c87b8f4094eaeccb33185c9f59c057db1801f",
+      "joint-1.b64": "f9d9b6e888a5919c5276852004067a487d3a7fcdc0ec4b2f2fba477c0dbf374b",
+      "weights.json": "d0f260c890e77aa0ba571ea70f22dd8ef35f70a437950c125fb7363ca9b6e8a1"
+    },
+    "previous_dataset_compatibility_sha256": {
+      "train.tsv": "a2e37cd49deb1eeecb825b0bb011552f12e665869cd52f8474d69599bceb4a97",
+      "additional-training.tsv": "3bcdda8e81c0f61faf2e81573e45a5418a0c749b38a8666fb45ad442cbd3a23a",
+      "validation.tsv": "bfd78eb3ef6be7b3aea03e8efa8caaba064f4a79ed2dd3d19c03c48ee34450ae",
+      "heldout.tsv": "5cc40483e09a87e877167bc622114b1b249d46a253916ad272ab72866a776ddd",
+      "validation-source.jsonl": "2237bdec1e65d69f40617e47bbd6bb76037057b86a3d4df8ab7b6d9aa767c14b",
+      "heldout-source.jsonl": "e0cdee5592095016dd73ea459c1268f3c2d89a975f8759ead371d15bcda17833",
+      "manifest.json": "3b2c27e920c2ed155c30a464572683cffd0897475f3bc196771bf0c9db077591"
+    },
+    "strict_admission": {
+      "training_cases": 9384,
+      "additional_hk": 4000,
+      "additional_tatoeba": 3,
+      "training_target_policy": "New additions must be entirely Han as well as dictionary-code reachable. Punctuation is not silently removed and orthography is not guessed. This minimum admission rule does not guarantee survival within runtime option caps.",
+      "all_new_targets_han": true,
+      "new_fit_run": false,
+      "output_sha256": {
+        "validation.tsv": "bfd78eb3ef6be7b3aea03e8efa8caaba064f4a79ed2dd3d19c03c48ee34450ae",
+        "heldout.tsv": "5cc40483e09a87e877167bc622114b1b249d46a253916ad272ab72866a776ddd",
+        "validation-source.jsonl": "2237bdec1e65d69f40617e47bbd6bb76037057b86a3d4df8ab7b6d9aa767c14b",
+        "heldout-source.jsonl": "e0cdee5592095016dd73ea459c1268f3c2d89a975f8759ead371d15bcda17833",
+        "train.tsv": "c2beffad753cc6a9aa4b652b7dc4b1fa10b99d6f9f72e7db950c1f18930a0ea4",
+        "additional-training.tsv": "a8755b1ffdccbb78d818ed13493373f78d599dc911cc37a9a7e9fdabf342f990"
+      }
+    },
+    "complete_actual_native_trials": 4,
+    "cases_per_trial": 800,
+    "exact_code_unique_twenty_bounds": "Validated by native drivers and complete-list comparison",
+    "not_run_after_accuracy_rejection": [
+      "extended3893 candidate guard",
+      "final-only candidate control",
+      "Single32 simulation",
+      "Android JUnit and lint",
+      "paired warmed desktop timing",
+      "physical Fold7 validation",
+      "independent reserve500 decode"
+    ]
+  },
+  "admission_fix": {
+    "default": "Reject non-Han additions even when a dictionary code exists; require fresh output folders.",
+    "legacy": "Explicit --legacy-allow-coded-punctuation only for reproduction of frozen history.",
+    "strict_data_replay_fit": false,
+    "normalized_or_recoded_labels": false
+  },
+  "observation_prototype": {
+    "reused_valid_prefix_rows": 791,
+    "remainder_rows": 253,
+    "explanation": "The first observer stopped at the first non-Han label in each shard. Its791 complete legal audit rows were preserved; the revised observer only adds a legal flag and records impossible targets instead of aborting. The253 remaining rows were run with that observer. The instrumented-source diff changes only the impossible-path audit branch and flag. All1821 ordinary lists are verified identical to baseline; a clean current full replay is available."
+  },
+  "decision": "Reject all four arms; no stable additional hit-count gain over previous best research. Preserve production, version/signing/local learning/Fold layout and unopened500. No APK or1.0 claim.",
+  "next": "Clean and attribute training input/orthography into truly emittable HK Han spans or verified common forms, respecting evaluation separation; then mine reachable errors. Do not expand rare-glyph generation or keep tuning this failed residual grid.",
+  "artifact_sha256": {
+    "README.md": "242a65a9ab5bd41a2c62e7db05f164d917b54fbdc8a142c6214e741c5cc3d668",
+    "docs/JOINT_RANKING.md": "949c0e921a2e3de8ca78980cbf21f92f3731c749769d3c4953f7377b335bdc17",
+    "docs/STRUCTURED_TRAINING.md": "5147a71c7aff467c02763848411db6dc06953ba202796da53a73d2a2442e55f9",
+    "tools/data/structured_ranking/NOTICE.md": "07e7d65b9b2df132c9d6fd347277dbb75dd548eea48e337efc526520a03af895",
+    "tools/data/structured_ranking/audit.tsv": "d3c32b1dae0324e165a11b934090d657bde6b0bd5c915448eb9d0551b22d8321",
+    "tools/data/structured_ranking/cases.tsv": "4d94a7d33bd676414e5c7ef77092b5d526a90b0bc50bdc137b3c64d7f975c575",
+    "tools/data/structured_ranking/gap/audit.tsv": "2d03faea9a592d04a926032f3365025778f440909b4e41ccb4c2bd3a46c30476",
+    "tools/data/structured_ranking/gap/cases.tsv": "06617601626b7bc980efeb764d61cf2c5e9c185a88adeab13b1cd710640f6088",
+    "tools/data/structured_ranking/gap/observation.json": "20b0981631b5a9921c04ccd042d805b19d8fad50f5c774cd5295ca514fb4aed9",
+    "tools/data/structured_ranking/gap/reconstructed-pairs.tsv": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tools/data/structured_ranking/gap/visible.tsv": "aa39c7d419bcd8295c684c8543794e7e493dca45aa4bc62748df7d4218f1d882",
+    "tools/data/structured_ranking/model003/categories.tsv": "df22ac7c67b88c5f3789982ca9890e484e3211d217580b792a1b0f52f78e3a6a",
+    "tools/data/structured_ranking/model003/joint-0.25.b64": "e87897217cdaeef879cf1025d58e1dd0d71e5516b17a11543a65b73a559fc64a",
+    "tools/data/structured_ranking/model003/joint-0.5.b64": "348f578e8cf946ac1f0048f9079f409297337cd172d4ddf98952d9c47fe624fb",
+    "tools/data/structured_ranking/model003/joint-1.b64": "dd640faa33512ba31347fa0c6ca179227fe7f6b665e4efa34919f7b5857898aa",
+    "tools/data/structured_ranking/model003/pairs.tsv": "16e253da89712a18016551eac4b91878a64a610b3b41245b486340336d666a21",
+    "tools/data/structured_ranking/model003/training-report.json": "7cba5a08dd2c56defeb23974fb81516f5227fe257db77c35b71052b66152ad9a",
+    "tools/data/structured_ranking/model003/weights.json": "6acda259a6dadf7bee1505dc31cfbbd46137a997a8c4073bb61c3e871c111b65",
+    "tools/data/structured_ranking/model015/categories.tsv": "df22ac7c67b88c5f3789982ca9890e484e3211d217580b792a1b0f52f78e3a6a",
+    "tools/data/structured_ranking/model015/joint-0.25.b64": "4089d9d164b2fbb656e2cbee5595bf33e5fc877aebfac2b70d2b37159ecd4a91",
+    "tools/data/structured_ranking/model015/joint-0.5.b64": "471803784205055db4dc89dc897a526182423598a1188dac65db7d5f14d1fc6a",
+    "tools/data/structured_ranking/model015/joint-1.b64": "75a646f776301b08ba6cbaeefc3a6cb877a173cec75c21b276c5f4ffcdda9e68",
+    "tools/data/structured_ranking/model015/pairs.tsv": "16e253da89712a18016551eac4b91878a64a610b3b41245b486340336d666a21",
+    "tools/data/structured_ranking/model015/training-report.json": "e3cd619c6b450b8112809f4011db2ad100c6d17c35585bf977860ae78eec4d8d",
+    "tools/data/structured_ranking/model015/weights.json": "a421f6f14f138e788379cd3ead442f2bc0dc3ee071ff8e6dd31faa3dede4b4e3",
+    "tools/data/structured_ranking/observation.json": "4c7b1dc1f87f4050dc5e674696147d2e8aeadd4020e3e2f74a9ad18f7c9b2c65",
+    "tools/data/structured_ranking/protocol.json": "08525020a0e270d69d73e76da9f9b0f99eea7b65211edca5b7da7745d91e0635",
+    "tools/data/structured_ranking/reconstructed-pairs.tsv": "a6b605f9de42b83ef135cfde0367e883275cefd5d74e2ed19055162fac77eec1",
+    "tools/data/structured_ranking/selection.json": "79ee5bd0befba8c2408be0068ba7da9d41e81acfff9e62bb6ee89ef0a1f1bc48",
+    "tools/data/structured_ranking/visible.tsv": "83de4faf6990411b0e6d0d92e7032a9b2c6113f4197b4b6b34fdd7c0f9dc798e",
+    "tools/observe_structured_training.py": "56df9692f6cd409a485ef31a2bedda3a69da796fa1489d37a8787271ff855003",
+    "tools/prepare_joint_ranking.py": "cf68174267caed8dc95b75d1a6f17a532f5e5db059a645d3df7d86f957c66d01",
+    "tools/report_structured_ranking.py": "b05fa95236068795f303b10df873764b533a265456708ad3ac7686cf38fb2c4b",
+    "tools/reports/structured-training-2026-10-15/cal-003-0.5.json": "705ba8b407132e6221b8c38a168cad51cf6b9e29e65eba9dc97dbde764337104",
+    "tools/reports/structured-training-2026-10-15/cal-003-0.5.tsv": "49152a959abcaae6eefb548eab9ba163e9727f3a811b4c750954fdfcabbd261f",
+    "tools/reports/structured-training-2026-10-15/cal-003-1.json": "d5a9754ee39a159034504205ae30cd745c4f0529ed8cb454613f1fb1f7fb9158",
+    "tools/reports/structured-training-2026-10-15/cal-003-1.tsv": "dc25b55298899887f2c9632f5c824dcd6499bbaa5f9c9b3f9619c49b3ccb0124",
+    "tools/reports/structured-training-2026-10-15/cal-015-0.5.json": "85a577fd8fcca6ea506659a45b1cadf695d4aaad6a4314071757ef6d4a71a5a0",
+    "tools/reports/structured-training-2026-10-15/cal-015-0.5.tsv": "3c4e6df767a66688b17d817f6215a10043c3906bc06f88e6aacdf28a588cfc54",
+    "tools/reports/structured-training-2026-10-15/cal-015-1.json": "052c904fdf864cde3e583f9ec8351e037a240fb86943e12eb6bfaf0a18d23fe6",
+    "tools/reports/structured-training-2026-10-15/cal-015-1.tsv": "c81ce7cb084f8b89105a60de2654686f248b0d0365ea23b677671a79c1388fca",
+    "tools/reports/structured-training-2026-10-15/data-diagnosis.json": "853940444650528d550b97236498cb12eab97500ffd65c9a077ffa912cadb4fa",
+    "tools/reports/structured-training-2026-10-15/increment-003-0.5.json": "a6cc6d85256ee2bff20c7a76018eeec0a8759d494f561ff6802c16c2402681eb",
+    "tools/reports/structured-training-2026-10-15/increment-003-1.json": "bae23793eac350084c07ccdd6f99e3b9a352b9d36910329f1970d04ea726846a",
+    "tools/reports/structured-training-2026-10-15/increment-015-0.5.json": "08d3d59b3c40caf3cc958763b5a61adcba17b5da05c8a5d437e30f7574024de2",
+    "tools/reports/structured-training-2026-10-15/increment-015-1.json": "34b79c56c99458a6766325fb6dd97ffb0782bfe7a36f0938a7c35540e79e708b",
+    "tools/reports/structured-training-2026-10-15/python-checks.txt": "1d7ff3b3048e72a48805c0f17fec6ab2021df1f404a58d4844eccda8e5d6625d",
+    "tools/reports/structured-training-2026-10-15/score-003.txt": "abd3ad5d9fee611e1f9038bcf3ef18cc7a1af094d31fc703f5ec3060d3785a98",
+    "tools/reports/structured-training-2026-10-15/score-015.txt": "687777fdfe8f4bec4ad162fb7670995a4db04b24d5c9ba025f917c93846ce45e",
+    "tools/reports/structured-training-2026-10-15/strict-admission.json": "11677142e5f74e497b09b0c314b94c013ed864aed57c7cce65c5ee4b1716f1d1",
+    "tools/reports/structured-training-2026-10-15/teacher-check.txt": "98c2e5e96e177f895a2507f63737de25c134de3ce093f27659b690a01ae6703d",
+    "tools/structured_training_hooks.inc": "97c2ac0697b084c9f7a7ad38ba1214e0dbad353eb76a5a0fb9f004b2ffc18557",
+    "tools/test_structured_training.py": "d24fe5ff3ec6ef881d9560d432893ebe04c492dceb0d456cd7ace0e03590b9ee",
+    "tools/train_joint_ranking.py": "9605a2eb36a2727bcd095ac6ed9699979d41a3acb0ea3fed8ff6bb076e452a2f",
+    "tools/train_structured_ranking.py": "c15c43f6566c23962d206a2fd7b065235d34ff3c02a8d1028eb35c2a9e4e1aaa",
+    "tools/verify_structured_training.py": "76b7c372e52233e499af523af0e92697b3c4faae8cee95ffb36170935f3d861a"
+  }
+}

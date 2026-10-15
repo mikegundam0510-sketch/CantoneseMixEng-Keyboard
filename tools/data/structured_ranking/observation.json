@@ -1,0 +1,24 @@
+{
+  "counts": {
+    "all": 1821,
+    "outside_static_option_caps": 1088,
+    "no_legal_han_path": 600,
+    "prefix_search_loss": 110,
+    "observed_pruned_gold_prefix": 124,
+    "final_pool_cap": 15,
+    "completed_confidence_filtered": 8
+  },
+  "ordinary_inference_parity": 1821,
+  "pairs": 839,
+  "input_sha256": {
+    "pools": "9505967bd085897dd109d4b207a0bcde49237a53d0ea94312d5e8d68efc5b7a8",
+    "prefix": "959ca12c859284cc2c01f1d533e425f2b30dff172446c7987e741cc642731598"
+  },
+  "output_sha256": {
+    "cases.tsv": "4d94a7d33bd676414e5c7ef77092b5d526a90b0bc50bdc137b3c64d7f975c575",
+    "audit.tsv": "d3c32b1dae0324e165a11b934090d657bde6b0bd5c915448eb9d0551b22d8321",
+    "visible.tsv": "83de4faf6990411b0e6d0d92e7032a9b2c6113f4197b4b6b34fdd7c0f9dc798e",
+    "reconstructed-pairs.tsv": "a6b605f9de42b83ef135cfde0367e883275cefd5d74e2ed19055162fac77eec1"
+  },
+  "limits": "TRAIN-only shadow reconstruction, not recovered inference or held-out accuracy. Static option eligibility is an upper bound; selected-option gaps can also follow an earlier pruning loss."
+}

@@ -1,0 +1,20 @@
+{
+  "counts": {
+    "all": 1044,
+    "outside_static_option_caps": 791,
+    "no_legal_han_path": 253
+  },
+  "ordinary_inference_parity": 1044,
+  "pairs": 0,
+  "input_sha256": {
+    "pools": "9505967bd085897dd109d4b207a0bcde49237a53d0ea94312d5e8d68efc5b7a8",
+    "prefix": "959ca12c859284cc2c01f1d533e425f2b30dff172446c7987e741cc642731598"
+  },
+  "output_sha256": {
+    "cases.tsv": "06617601626b7bc980efeb764d61cf2c5e9c185a88adeab13b1cd710640f6088",
+    "audit.tsv": "2d03faea9a592d04a926032f3365025778f440909b4e41ccb4c2bd3a46c30476",
+    "visible.tsv": "aa39c7d419bcd8295c684c8543794e7e493dca45aa4bc62748df7d4218f1d882",
+    "reconstructed-pairs.tsv": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "limits": "TRAIN-only shadow reconstruction, not recovered inference or held-out accuracy. Static option eligibility is an upper bound; selected-option gaps can also follow an earlier pruning loss."
+}

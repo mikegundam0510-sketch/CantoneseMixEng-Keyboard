@@ -1,0 +1,115 @@
+{
+  "baseline_revision": "previous unadopted joint research arm at identical L2/strength; both use unchanged production assets",
+  "cases_sha256": "c87d61567cd37aae8c65dd4e432ce256233397754b868874b9e0d2f77abb7dec",
+  "output_sha256": {
+    "before": "a4c9d5ab5fe8e9041fb7c2570caddec6482ca8ab20bbbf8477c456af7d711b6e",
+    "after": "c81ce7cb084f8b89105a60de2654686f248b0d0365ea23b677671a79c1388fca"
+  },
+  "before": {
+    "cases": 800,
+    "top1": 172,
+    "top5": 323,
+    "top20": 422,
+    "mrr": 0.29622122135260676
+  },
+  "after": {
+    "cases": 800,
+    "top1": 172,
+    "top5": 323,
+    "top20": 422,
+    "mrr": 0.29622122135260676
+  },
+  "paired": {
+    "first": {
+      "gained": 0,
+      "lost": 0,
+      "net": 0,
+      "paired_exact_two_sided_p": 1
+    },
+    "top5": {
+      "gained": 0,
+      "lost": 0,
+      "net": 0,
+      "paired_exact_two_sided_p": 1
+    },
+    "top20": {
+      "gained": 0,
+      "lost": 0,
+      "net": 0,
+      "paired_exact_two_sided_p": 1
+    }
+  },
+  "per_set": {
+    "joint:validation": {
+      "before": {
+        "cases": 100,
+        "top1": 19,
+        "top5": 44,
+        "top20": 59,
+        "mrr": 0.29666062592378384
+      },
+      "after": {
+        "cases": 100,
+        "top1": 19,
+        "top5": 44,
+        "top20": 59,
+        "mrr": 0.29666062592378384
+      },
+      "no_count_loss": true
+    },
+    "recovery:validation": {
+      "before": {
+        "cases": 100,
+        "top1": 23,
+        "top5": 45,
+        "top20": 56,
+        "mrr": 0.32686446886446885
+      },
+      "after": {
+        "cases": 100,
+        "top1": 23,
+        "top5": 45,
+        "top20": 56,
+        "mrr": 0.32686446886446885
+      },
+      "no_count_loss": true
+    },
+    "recovery:heldout": {
+      "before": {
+        "cases": 500,
+        "top1": 110,
+        "top5": 197,
+        "top20": 257,
+        "mrr": 0.29641340889073087
+      },
+      "after": {
+        "cases": 500,
+        "top1": 110,
+        "top5": 197,
+        "top20": 257,
+        "mrr": 0.29641340889073087
+      },
+      "no_count_loss": true
+    },
+    "retrieval:validation": {
+      "before": {
+        "cases": 100,
+        "top1": 20,
+        "top5": 37,
+        "top20": 50,
+        "mrr": 0.26417763157894736
+      },
+      "after": {
+        "cases": 100,
+        "top1": 20,
+        "top5": 37,
+        "top20": 50,
+        "mrr": 0.26417763157894736
+      },
+      "no_count_loss": true
+    }
+  },
+  "no_per_set_count_loss": true,
+  "rank_changes": [],
+  "exact_codes_and_display_bounds": true
+}
