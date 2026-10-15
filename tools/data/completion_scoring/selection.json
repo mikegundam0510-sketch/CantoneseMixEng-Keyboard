@@ -1,0 +1,60 @@
+{
+  "baseline_revision": "99708f9c80553684bfafb25aa353af9b9a30cf48",
+  "candidate": "model015/strict_two_kind",
+  "model_sha256": "9a89eec7ff46b4484df7ea598ea912321cf25ba4f864336450c30cca65f141f5",
+  "protocol_sha256": "b4acc8c73ebf55b684bb566da0cd5380e4d7480719d60d25c87c7605f78dbda0",
+  "heldout_sha256": "98d69db9d1bf83cc173b506d161090d854b196c724b25569c325e9ef02b2b32e",
+  "heldout_outcomes_unopened": true,
+  "qualified_raw_control": false,
+  "calibration": {
+    "700": {
+      "cases": 700,
+      "top1": 152,
+      "top5": 280,
+      "top20": 363,
+      "mrr": 0.2952755063809354
+    },
+    "3893": {
+      "cases": 3893,
+      "top1": 1355,
+      "top5": 2212,
+      "top20": 2621,
+      "mrr": 0.44447947532597165
+    }
+  },
+  "all_per_set_first_top5_top20_non_decreasing": true,
+  "first_five_exactly_retained": true,
+  "runtime_source_sha256": {
+    "app/src/main/java/hk/cantonesemixeng/keyboard/QuickDecoder.java": "492d525f2d6ff33201d01a50abbba05bf1faffef5a875a435deed99d9fdf17d5",
+    "app/src/main/java/hk/cantonesemixeng/keyboard/PhraseRelationRanker.java": "a5506d45682c7c27b46e68100c473fdc3826275ce6db378f667578a95926b64f",
+    "app/src/main/java/hk/cantonesemixeng/keyboard/TailRecoveryRanker.java": "6e90bb8984ddc6c2f4c41cebf714ea3a511779fd0a44e173a1e1b9f6ccd734c4",
+    "app/src/main/java/hk/cantonesemixeng/keyboard/CantoneseMixEngKeyboardService.java": "ab61594f03c2224ad752b19228c887e0952d62af731468dc81feec9d260e794d"
+  },
+  "model_assets_sha256": {
+    "app/src/main/assets/prefix_ranker.b64": "0929d45aab58f6dc80dc1772d0717ddb24309707425680692cf9fb21d241c811",
+    "app/src/main/assets/candidate_ranker.b64": "0fe065437c4b87ac3852440c69cf8140cd159241f723d4927b959fb7772d3f62",
+    "app/src/main/assets/tail_ranker.b64": "9a89eec7ff46b4484df7ea598ea912321cf25ba4f864336450c30cca65f141f5",
+    "app/src/main/assets/word_ranker.b64": "58697234c7fe8fafd816c44c0d65e5bf152d08f7fbca52c801f63eb57b29a536",
+    "app/src/main/assets/sentence_ranker.b64": "3d6e6c3d73be95ab4366bda0eeb9fcf3ad01aca931f53cb651144f21bbbc28a8",
+    "app/src/main/assets/relation_ranker.b64": "d60d25924fd732de1d022ebc969f29d7939367876cda54a70cebe726668fc988",
+    "app/src/main/assets/language_model.b64": "be0afd4d26db314a1516d787099db96db864259147932f4221fc4ee7626cfbcd",
+    "app/src/main/assets/phrase_model.b64": "6e2d2dcebc9d76f002100bde8d2d1f904332478cda9e46e4cd7a807a13cc2ea3"
+  },
+  "source_snapshot_matches": true,
+  "actual_native_replay_parity_cases": 700,
+  "earlier_replay_policies_native_parity_cases": 2100,
+  "java_tests": 226,
+  "python_tests": 24,
+  "lint_errors": 0,
+  "lint_warnings": 25,
+  "simulated_single_first": 32,
+  "simulated_single_cases": 32,
+  "paired_warmup": 50,
+  "paired_samples": 31,
+  "paired_max_wall_ratio": 1.026619593036975,
+  "paired_max_cpu_ratio": 1.0142356598092188,
+  "delivery_rule": "Adopt this exact candidate only if independent500 first/top5/top20 counts have no losses vs baseline and at least one net gain; otherwise retain baseline. No post-reserve tuning.",
+  "no_apk": true,
+  "version_name": "0.6.39",
+  "version_code": 46
+}

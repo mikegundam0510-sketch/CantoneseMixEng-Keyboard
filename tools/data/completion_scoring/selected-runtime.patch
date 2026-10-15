@@ -1,0 +1,213 @@
+--- a/app/src/main/java/hk/cantonesemixeng/keyboard/QuickDecoder.java
++++ b/app/src/main/java/hk/cantonesemixeng/keyboard/QuickDecoder.java
+@@ -34,6 +34,7 @@
+     private final CandidateRanker wordRanker;
+     private final SentenceRanker sentenceRanker;
+     private final PhraseRelationRanker relationRanker;
++    private final TailRecoveryRanker tailRanker;
+     private final PrefixRanker prefixRanker;
+     private final double clauseStartStrength;
+     // Common HK particles can have low character-only corpus counts. Admit
+@@ -133,6 +134,13 @@
+     }
+     public QuickDecoder(DictionaryEngine dictionary, Reader input, Reader hkInput, Reader cantoneseInput,
+                         OfflineLanguageModel model, PhraseLanguageModel phraseModel, Reader chatInput,
++                        CandidateRanker candidateRanker, CandidateRanker wordRanker, SentenceRanker sentenceRanker,
++                        PrefixRanker prefixRanker, PhraseRelationRanker relationRanker, TailRecoveryRanker tailRanker) throws IOException {
++        this(dictionary,input,hkInput,cantoneseInput,model,phraseModel,chatInput,candidateRanker,
++            wordRanker,CLAUSE_START_STRENGTH,sentenceRanker,prefixRanker,relationRanker,tailRanker);
++    }
++    public QuickDecoder(DictionaryEngine dictionary, Reader input, Reader hkInput, Reader cantoneseInput,
++                        OfflineLanguageModel model, PhraseLanguageModel phraseModel, Reader chatInput,
+                         CandidateRanker candidateRanker, CandidateRanker wordRanker, double clauseStartStrength,
+                         SentenceRanker sentenceRanker) throws IOException {
+         this(dictionary,input,hkInput,cantoneseInput,model,phraseModel,chatInput,candidateRanker,
+@@ -149,6 +157,14 @@
+                         OfflineLanguageModel model, PhraseLanguageModel phraseModel, Reader chatInput,
+                         CandidateRanker candidateRanker, CandidateRanker wordRanker, double clauseStartStrength,
+                         SentenceRanker sentenceRanker, PrefixRanker prefixRanker, PhraseRelationRanker relationRanker) throws IOException {
++        this(dictionary,input,hkInput,cantoneseInput,model,phraseModel,chatInput,candidateRanker,
++            wordRanker,clauseStartStrength,sentenceRanker,prefixRanker,relationRanker,null);
++    }
++    public QuickDecoder(DictionaryEngine dictionary, Reader input, Reader hkInput, Reader cantoneseInput,
++                        OfflineLanguageModel model, PhraseLanguageModel phraseModel, Reader chatInput,
++                        CandidateRanker candidateRanker, CandidateRanker wordRanker, double clauseStartStrength,
++                        SentenceRanker sentenceRanker, PrefixRanker prefixRanker, PhraseRelationRanker relationRanker,
++                        TailRecoveryRanker tailRanker) throws IOException {
+         if (!Double.isFinite(clauseStartStrength) || clauseStartStrength < 0 || clauseStartStrength > 2)
+             throw new IllegalArgumentException("Invalid clause-start strength");
+         this.dictionary = dictionary; this.model = model; this.phraseModel = phraseModel;
+@@ -156,6 +172,7 @@
+         this.wordRanker = wordRanker;
+         this.sentenceRanker = sentenceRanker;
+         this.relationRanker = relationRanker;
++        this.tailRanker = tailRanker;
+         this.finalPool=relationRanker!=null&&relationRanker.expandedPool()?128:96;
+         this.prefixRanker = prefixRanker;
+         this.clauseStartStrength = clauseStartStrength;
+@@ -474,6 +491,8 @@
+                 ||contextual!=null&&ContextLearning.supports(context,InputCandidate.chinese(dictionary,code,head),contextual);
+             if(!explicit)relationRanker.promoteHead(context,result,finalScores,headFeatures);
+         }
++        if(tailRanker!=null&&relationRanker!=null&&relationRanker.headPromotion()&&finalScores!=null)
++            tailRanker.recover(context,result,finalScores,value->knownWord(value)?learned.applyAsInt(code,value):0);
+         if (result.size() > 20) return new ArrayList<>(result.subList(0, 20));
+         return result;
+     }
+--- a/app/src/main/java/hk/cantonesemixeng/keyboard/PhraseRelationRanker.java
++++ b/app/src/main/java/hk/cantonesemixeng/keyboard/PhraseRelationRanker.java
+@@ -256,6 +256,9 @@
+     Evidence evidence(String preceding,String text) {
+         return evidence(preceding,text,weights);
+     }
++    Evidence cachedEvidence(String preceding,String text,Map<String,Map<String,Integer>> cache) {
++        return evidence(vector(preceding,text,cache),weights);
++    }
+     private Evidence evidence(String preceding,String text,Map<String,Float> weights) {
+         return evidence(features(preceding,text),weights);
+     }
+--- /dev/null
++++ b/app/src/main/java/hk/cantonesemixeng/keyboard/TailRecoveryRanker.java
+@@ -0,0 +1,41 @@
++package hk.cantonesemixeng.keyboard;
++
++import java.io.*;
++import java.util.*;
++import java.util.function.ToIntFunction;
++
++/** Optional residual for omitted tail alternatives; the established first five stay intact. */
++public final class TailRecoveryRanker {
++    private final PhraseRelationRanker model;
++    private TailRecoveryRanker(PhraseRelationRanker model){this.model=model;}
++    public static TailRecoveryRanker load(InputStream encoded)throws IOException {
++        PhraseRelationRanker model=PhraseRelationRanker.load(encoded);
++        if(model.aligned())throw new IOException("Unsupported tail recovery model");
++        return new TailRecoveryRanker(model);
++    }
++    void recover(String context,List<String> values,Map<String,Double> scores,ToIntFunction<String> personal) {
++        if(scores==null||values.size()<=20)return;
++        String boundary=values.get(19);double floor=scores.get(boundary);
++        Map<String,Map<String,Integer>> cache=new HashMap<>();
++        double reference=model.rawScore(context,boundary,cache);
++        PhraseRelationRanker.Evidence boundaryEvidence=null;
++        Map<String,Double> promotedScores=new HashMap<>();List<String> eligible=new ArrayList<>();
++        for(String value:values.subList(20,Math.min(36,values.size()))) {
++            double raw=model.rawScore(context,value,cache),lift=raw-reference;
++            double correction=model.alignedCorrection(raw,reference),score=scores.get(value)+correction;
++            if(lift<.5||correction<=0||score<floor+.5)continue;
++            if(boundaryEvidence==null)boundaryEvidence=model.cachedEvidence(context,boundary,cache);
++            if(!model.cachedEvidence(context,value,cache).supportedOver(boundaryEvidence))continue;
++            promotedScores.put(value,score);eligible.add(value);
++        }
++        eligible.sort(Comparator.comparingDouble((String value)->promotedScores.get(value)).reversed());
++        if(eligible.size()>2)eligible=new ArrayList<>(eligible.subList(0,2));
++        if(eligible.isEmpty())return;
++        List<String> tail=new ArrayList<>(values.subList(5,20));tail.addAll(eligible);
++        tail.sort(Comparator.comparingInt(personal).reversed().thenComparing(
++            Comparator.comparingDouble((String value)->promotedScores.getOrDefault(value,scores.get(value))).reversed()));
++        List<String> reordered=new ArrayList<>(values.subList(0,5));reordered.addAll(tail.subList(0,15));
++        Set<String> seen=new HashSet<>(reordered);for(String value:values)if(seen.add(value))reordered.add(value);
++        values.clear();values.addAll(reordered);
++    }
++}
+--- a/app/src/main/java/hk/cantonesemixeng/keyboard/CantoneseMixEngKeyboardService.java
++++ b/app/src/main/java/hk/cantonesemixeng/keyboard/CantoneseMixEngKeyboardService.java
+@@ -177,13 +177,19 @@
+                 } catch (IOException optionalModelUnavailable) {
+                     relationRanker = null;
+                 }
++                TailRecoveryRanker tailRanker;
++                try {
++                    tailRanker = TailRecoveryRanker.load(getAssets().open("tail_ranker.b64"));
++                } catch (IOException optionalModelUnavailable) {
++                    tailRanker = null;
++                }
+                 QuickDecoder phrases = new QuickDecoder(loaded, new InputStreamReader(getAssets().open("quick_phrases.tsv"), StandardCharsets.UTF_8),
+                     new InputStreamReader(getAssets().open("hk_phrases.tsv"), StandardCharsets.UTF_8),
+                     new InputStreamReader(getAssets().open("cantonese_phrases.tsv"), StandardCharsets.UTF_8),
+                     OfflineLanguageModel.load(getAssets().open("language_model.b64")),
+                     PhraseLanguageModel.load(getAssets().open("phrase_model.b64")),
+                     new InputStreamReader(getAssets().open("hk_chat_phrases.tsv"), StandardCharsets.UTF_8),
+-                    candidateRanker, wordRanker, sentenceRanker, prefixRanker, relationRanker);
++                    candidateRanker, wordRanker, sentenceRanker, prefixRanker, relationRanker, tailRanker);
+                 EmojiCatalog emojis = new EmojiCatalog(new InputStreamReader(getAssets().open("emoji.tsv"), StandardCharsets.UTF_8));
+                 CandidateEngine mixed = new CandidateEngine(loaded, phrases, englishWords);
+                 QuickTypos repairs = new QuickTypos(loaded, phrases);
+--- /dev/null
++++ b/app/src/test/java/hk/cantonesemixeng/keyboard/TailRecoveryRankerTest.java
+@@ -0,0 +1,75 @@
++package hk.cantonesemixeng.keyboard;
++
++import org.junit.Test;
++import static org.junit.Assert.*;
++import java.io.*;
++import java.nio.charset.StandardCharsets;
++import java.util.*;
++import java.util.zip.GZIPOutputStream;
++
++public class TailRecoveryRankerTest {
++    private static Reader asset(String name)throws IOException {
++        return new InputStreamReader(new FileInputStream("src/main/assets/"+name),StandardCharsets.UTF_8);
++    }
++    private static QuickDecoder decoder(DictionaryEngine dictionary,TailRecoveryRanker tail)throws IOException {
++        return new QuickDecoder(dictionary,asset("quick_phrases.tsv"),asset("hk_phrases.tsv"),asset("cantonese_phrases.tsv"),
++            OfflineLanguageModel.load(new FileInputStream("src/main/assets/language_model.b64")),
++            PhraseLanguageModel.load(new FileInputStream("src/main/assets/phrase_model.b64")),asset("hk_chat_phrases.tsv"),
++            CandidateRanker.load(new FileInputStream("src/main/assets/candidate_ranker.b64")),
++            CandidateRanker.loadWords(new FileInputStream("src/main/assets/word_ranker.b64")),
++            SentenceRanker.load(new FileInputStream("src/main/assets/sentence_ranker.b64")),
++            PrefixRanker.load(new FileInputStream("src/main/assets/prefix_ranker.b64")),
++            PhraseRelationRanker.load(new FileInputStream("src/main/assets/relation_ranker.b64")),tail);
++    }
++    @Test public void bundledModelRecoversAnExactSentenceWithoutChangingTheFirstFive()throws Exception {
++        DictionaryEngine dictionary=new DictionaryEngine(asset("cangjie5.base.dict.yaml"),asset("english.txt"),asset("character_frequencies.tsv"));
++        QuickDecoder before=decoder(dictionary,null),after=decoder(dictionary,TailRecoveryRanker.load(new FileInputStream("src/main/assets/tail_ranker.b64")));
++        // Evaluation-only public words.hk example; tools/data/phrase_relations/NOTICE.md.
++        String code="ofkbpnrnkgpvggpcucujloajeqiofrd",gold="你有乜嘢雄心壯志爸爸都會支持你㗎";
++        List<String> old=before.decode(code,(c,w)->0),values=after.decode(code,(c,w)->0);
++        assertFalse(old.contains(gold));assertEquals(8,values.indexOf(gold)+1);
++        assertEquals(old.subList(0,5),values.subList(0,5));assertTrue(values.size()<=20);
++        assertEquals(values.size(),new HashSet<>(values).size());
++        for(String value:values)assertFalse(dictionary.matchQuickCodes(code,value).isEmpty());
++    }
++    private static TailRecoveryRanker fixture(float strength)throws IOException {
++        ByteArrayOutputStream bytes=new ByteArrayOutputStream();
++        try(DataOutputStream out=new DataOutputStream(new GZIPOutputStream(bytes))) {
++            out.writeInt(0x50525231);out.writeInt(2);out.writeInt(2);out.writeFloat(strength);out.writeFloat(2);
++            for(String[] item:new String[][]{{"交","V"},{"功課","N"}}) {
++                byte[] raw=item[0].getBytes(StandardCharsets.UTF_8);out.writeShort(raw.length);out.write(raw);out.writeByte(item[1].charAt(0));out.writeShort(10);
++            }
++            for(String key:Arrays.asList("SV|你|交","VQ|交|Y")) {
++                byte[] raw=key.getBytes(StandardCharsets.UTF_8);out.writeShort(raw.length);out.write(raw);out.writeFloat(1);
++            }
++        }
++        return TailRecoveryRanker.load(new ByteArrayInputStream(Base64.getEncoder().encode(bytes.toByteArray())));
++    }
++    private static List<String> original() {
++        List<String> values=new ArrayList<>();for(int i=0;i<20;i++)values.add("占"+(char)(0x4E00+i));return values;
++    }
++    private static Map<String,Double> scores(List<String> values) {
++        Map<String,Double> result=new HashMap<>();for(int i=0;i<20;i++)result.put(values.get(i),20.0-i);
++        for(String value:values.subList(20,values.size()))result.put(value,.75);return result;
++    }
++    @Test public void evidenceGateRejectsSingleKindAndPreservesPersonalTailChoices()throws Exception {
++        List<String> original=original(),values=new ArrayList<>(original);
++        values.add("你交功課");Map<String,Double> scores=scores(values);List<String> unsupported=new ArrayList<>(values);
++        fixture(1.5f).recover("",values,scores,v->0);assertEquals(unsupported,values);
++        values.add("你交功課未");scores=scores(values);Map<String,Double> untouched=new HashMap<>(scores);
++        final String favorite=original.get(19);fixture(1.5f).recover("",values,scores,v->v.equals(favorite)?100:0);
++        assertEquals(original.subList(0,5),values.subList(0,5));assertEquals(favorite,values.get(5));
++        assertTrue(values.subList(0,20).contains("你交功課未"));assertFalse(values.subList(0,20).contains("你交功課"));
++        assertEquals(untouched,scores);assertEquals(values.size(),new HashSet<>(values).size());
++    }
++    @Test public void zeroStrengthAndCandidatesPastTheInspectionBoundLeaveTheListIntact()throws Exception {
++        List<String> values=original();values.add("你交功課未");List<String> old=new ArrayList<>(values);
++        fixture(0).recover("",values,scores(values),v->0);assertEquals(old,values);
++        values=original();for(int i=0;i<16;i++)values.add("未知"+(char)(0x4E00+i));values.add("你交功課未");old=new ArrayList<>(values);
++        fixture(1.5f).recover("",values,scores(values),v->0);assertEquals(old,values);
++    }
++    @Test public void wrongModelTypeAndCorruptEncodingAreRejectedForOptionalFallback()throws Exception {
++        try{TailRecoveryRanker.load(new FileInputStream("src/main/assets/relation_ranker.b64"));fail();}catch(IOException expected){}
++        try{TailRecoveryRanker.load(new ByteArrayInputStream(new byte[]{1,2,3}));fail();}catch(IOException expected){}
++    }
++}

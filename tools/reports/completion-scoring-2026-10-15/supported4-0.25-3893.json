@@ -1,0 +1,477 @@
+{
+  "baseline_revision": "d8575595b689916d8649e71e1a365224392683a9",
+  "cases_sha256": "8e4b74c8174dee73da8dda89d4c0cf1716c7d6fb69acc69c6fc12d08518b515d",
+  "output_sha256": {
+    "before": "b4568ea7f016183c5abf73789829a9a16a22a941cc949a918c22041799f0929b",
+    "after": "1f8b1486ca454b82d2eb2f776fc2a01e2de74d8330a4b4c8843b31fc728d0134"
+  },
+  "before": {
+    "cases": 3893,
+    "top1": 1355,
+    "top5": 2212,
+    "top20": 2620,
+    "mrr": 0.4445187259688699
+  },
+  "after": {
+    "cases": 3893,
+    "top1": 1355,
+    "top5": 2212,
+    "top20": 2622,
+    "mrr": 0.44456245525097576
+  },
+  "paired": {
+    "first": {
+      "gained": 0,
+      "lost": 0,
+      "net": 0,
+      "paired_exact_two_sided_p": 1
+    },
+    "top5": {
+      "gained": 0,
+      "lost": 0,
+      "net": 0,
+      "paired_exact_two_sided_p": 1
+    },
+    "top20": {
+      "gained": 2,
+      "lost": 0,
+      "net": 2,
+      "paired_exact_two_sided_p": 0.5
+    }
+  },
+  "per_set": {
+    "alignment:heldout": {
+      "before": {
+        "cases": 500,
+        "top1": 90,
+        "top5": 193,
+        "top20": 259,
+        "mrr": 0.26985328886799476
+      },
+      "after": {
+        "cases": 500,
+        "top1": 90,
+        "top5": 193,
+        "top20": 259,
+        "mrr": 0.26985328886799476
+      },
+      "no_count_loss": true
+    },
+    "recovery:validation": {
+      "before": {
+        "cases": 100,
+        "top1": 23,
+        "top5": 45,
+        "top20": 56,
+        "mrr": 0.32686446886446885
+      },
+      "after": {
+        "cases": 100,
+        "top1": 23,
+        "top5": 45,
+        "top20": 56,
+        "mrr": 0.32686446886446885
+      },
+      "no_count_loss": true
+    },
+    "validation:written200": {
+      "before": {
+        "cases": 200,
+        "top1": 47,
+        "top5": 86,
+        "top20": 106,
+        "mrr": 0.31199772632338424
+      },
+      "after": {
+        "cases": 200,
+        "top1": 47,
+        "top5": 86,
+        "top20": 106,
+        "mrr": 0.3119739167995747
+      },
+      "no_count_loss": true
+    },
+    "validation:authored60": {
+      "before": {
+        "cases": 60,
+        "top1": 27,
+        "top5": 48,
+        "top20": 60,
+        "mrr": 0.6076923076923076
+      },
+      "after": {
+        "cases": 60,
+        "top1": 27,
+        "top5": 48,
+        "top20": 60,
+        "mrr": 0.6076923076923076
+      },
+      "no_count_loss": true
+    },
+    "validation:natural200": {
+      "before": {
+        "cases": 200,
+        "top1": 80,
+        "top5": 120,
+        "top20": 140,
+        "mrr": 0.48838791274085397
+      },
+      "after": {
+        "cases": 200,
+        "top1": 80,
+        "top5": 120,
+        "top20": 140,
+        "mrr": 0.48838791274085397
+      },
+      "no_count_loss": true
+    },
+    "validation:public200": {
+      "before": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 134,
+        "top20": 154,
+        "mrr": 0.5121140289449113
+      },
+      "after": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 134,
+        "top20": 154,
+        "mrr": 0.5121140289449113
+      },
+      "no_count_loss": true
+    },
+    "validation:fresh-written100": {
+      "before": {
+        "cases": 100,
+        "top1": 20,
+        "top5": 39,
+        "top20": 52,
+        "mrr": 0.28943082794398584
+      },
+      "after": {
+        "cases": 100,
+        "top1": 20,
+        "top5": 39,
+        "top20": 52,
+        "mrr": 0.28943082794398584
+      },
+      "no_count_loss": true
+    },
+    "validation:fresh-ud": {
+      "before": {
+        "cases": 43,
+        "top1": 20,
+        "top5": 29,
+        "top20": 35,
+        "mrr": 0.5549380851706434
+      },
+      "after": {
+        "cases": 43,
+        "top1": 20,
+        "top5": 29,
+        "top20": 35,
+        "mrr": 0.5549380851706434
+      },
+      "no_count_loss": true
+    },
+    "alignment:validation": {
+      "before": {
+        "cases": 100,
+        "top1": 26,
+        "top5": 40,
+        "top20": 52,
+        "mrr": 0.3258095238095238
+      },
+      "after": {
+        "cases": 100,
+        "top1": 26,
+        "top5": 40,
+        "top20": 52,
+        "mrr": 0.3258095238095238
+      },
+      "no_count_loss": true
+    },
+    "heldout:fresh-written500": {
+      "before": {
+        "cases": 500,
+        "top1": 94,
+        "top5": 183,
+        "top20": 251,
+        "mrr": 0.2690272438345968
+      },
+      "after": {
+        "cases": 500,
+        "top1": 94,
+        "top5": 183,
+        "top20": 252,
+        "mrr": 0.26912724383459674
+      },
+      "no_count_loss": true
+    },
+    "heldout:fresh-ud-legco": {
+      "before": {
+        "cases": 296,
+        "top1": 87,
+        "top5": 160,
+        "top20": 192,
+        "mrr": 0.40347934998670293
+      },
+      "after": {
+        "cases": 296,
+        "top1": 87,
+        "top5": 160,
+        "top20": 192,
+        "mrr": 0.40347934998670293
+      },
+      "no_count_loss": true
+    },
+    "guard:fresh100": {
+      "before": {
+        "cases": 100,
+        "top1": 37,
+        "top5": 63,
+        "top20": 73,
+        "mrr": 0.48291666666666666
+      },
+      "after": {
+        "cases": 100,
+        "top1": 37,
+        "top5": 63,
+        "top20": 73,
+        "mrr": 0.48291666666666666
+      },
+      "no_count_loss": true
+    },
+    "guard:natural200": {
+      "before": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 121,
+        "top20": 138,
+        "mrr": 0.4708510656010656
+      },
+      "after": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 121,
+        "top20": 138,
+        "mrr": 0.4708510656010656
+      },
+      "no_count_loss": true
+    },
+    "guard:authored120": {
+      "before": {
+        "cases": 120,
+        "top1": 79,
+        "top5": 86,
+        "top20": 98,
+        "mrr": 0.6979166666666666
+      },
+      "after": {
+        "cases": 120,
+        "top1": 79,
+        "top5": 86,
+        "top20": 98,
+        "mrr": 0.6979166666666666
+      },
+      "no_count_loss": true
+    },
+    "guard:old600": {
+      "before": {
+        "cases": 600,
+        "top1": 291,
+        "top5": 437,
+        "top20": 483,
+        "mrr": 0.5941692611224345
+      },
+      "after": {
+        "cases": 600,
+        "top1": 291,
+        "top5": 437,
+        "top20": 484,
+        "mrr": 0.5943775944557679
+      },
+      "no_count_loss": true
+    },
+    "guard:daily32": {
+      "before": {
+        "cases": 32,
+        "top1": 23,
+        "top5": 31,
+        "top20": 32,
+        "mrr": 0.8364583333333333
+      },
+      "after": {
+        "cases": 32,
+        "top1": 23,
+        "top5": 31,
+        "top20": 32,
+        "mrr": 0.8364583333333333
+      },
+      "no_count_loss": true
+    },
+    "guard:completion16": {
+      "before": {
+        "cases": 16,
+        "top1": 16,
+        "top5": 16,
+        "top20": 16,
+        "mrr": 1.0
+      },
+      "after": {
+        "cases": 16,
+        "top1": 16,
+        "top5": 16,
+        "top20": 16,
+        "mrr": 1.0
+      },
+      "no_count_loss": true
+    },
+    "guard:tatoeba200": {
+      "before": {
+        "cases": 200,
+        "top1": 87,
+        "top5": 146,
+        "top20": 162,
+        "mrr": 0.5562906052281051
+      },
+      "after": {
+        "cases": 200,
+        "top1": 87,
+        "top5": 146,
+        "top20": 162,
+        "mrr": 0.5562906052281051
+      },
+      "no_count_loss": true
+    },
+    "guard:public100": {
+      "before": {
+        "cases": 100,
+        "top1": 46,
+        "top5": 76,
+        "top20": 85,
+        "mrr": 0.5805235597735598
+      },
+      "after": {
+        "cases": 100,
+        "top1": 46,
+        "top5": 76,
+        "top20": 85,
+        "mrr": 0.5805235597735598
+      },
+      "no_count_loss": true
+    },
+    "guard:authored70": {
+      "before": {
+        "cases": 70,
+        "top1": 15,
+        "top5": 41,
+        "top20": 48,
+        "mrr": 0.3871768707482993
+      },
+      "after": {
+        "cases": 70,
+        "top1": 15,
+        "top5": 41,
+        "top20": 48,
+        "mrr": 0.3871768707482993
+      },
+      "no_count_loss": true
+    },
+    "guard:plural": {
+      "before": {
+        "cases": 18,
+        "top1": 15,
+        "top5": 18,
+        "top20": 18,
+        "mrr": 0.8981481481481483
+      },
+      "after": {
+        "cases": 18,
+        "top1": 15,
+        "top5": 18,
+        "top20": 18,
+        "mrr": 0.8981481481481483
+      },
+      "no_count_loss": true
+    },
+    "guard:handover": {
+      "before": {
+        "cases": 30,
+        "top1": 29,
+        "top5": 30,
+        "top20": 30,
+        "mrr": 0.9833333333333333
+      },
+      "after": {
+        "cases": 30,
+        "top1": 29,
+        "top5": 30,
+        "top20": 30,
+        "mrr": 0.9833333333333333
+      },
+      "no_count_loss": true
+    },
+    "guard:continuous": {
+      "before": {
+        "cases": 8,
+        "top1": 8,
+        "top5": 8,
+        "top20": 8,
+        "mrr": 1.0
+      },
+      "after": {
+        "cases": 8,
+        "top1": 8,
+        "top5": 8,
+        "top20": 8,
+        "mrr": 1.0
+      },
+      "no_count_loss": true
+    },
+    "guard:followup100": {
+      "before": {
+        "cases": 100,
+        "top1": 41,
+        "top5": 62,
+        "top20": 72,
+        "mrr": 0.4904732669291493
+      },
+      "after": {
+        "cases": 100,
+        "top1": 41,
+        "top5": 62,
+        "top20": 72,
+        "mrr": 0.4904732669291493
+      },
+      "no_count_loss": true
+    }
+  },
+  "no_per_set_count_loss": true,
+  "rank_changes": [
+    {
+      "source": "validation:written200",
+      "code": "ofyarryahijjlhrd",
+      "target": "你識唔識得車衫㗎",
+      "before": 14,
+      "after": 15
+    },
+    {
+      "source": "heldout:fresh-written500",
+      "code": "ofkbpnrnkgpvggpcucujloajeqiofrd",
+      "target": "你有乜嘢雄心壯志爸爸都會支持你㗎",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "guard:old600",
+      "code": "orpoflwysie",
+      "target": "信心係由邊度",
+      "before": 0,
+      "after": 8
+    }
+  ],
+  "exact_codes_and_display_bounds": true
+}

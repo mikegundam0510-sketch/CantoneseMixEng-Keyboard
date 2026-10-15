@@ -1,0 +1,330 @@
+{
+  "baseline_revision": "d8575595b689916d8649e71e1a365224392683a9",
+  "cases_sha256": "d2f1b5c74941283b4e6d4252906b99c0f631f2a5da449d7373fab2eb4aaca2e5",
+  "output_sha256": {
+    "before": "0f2b7ae844df8bde9a99f13c890f5e0196cf5cb6b776ffff313e53c3aa1aa87f",
+    "after": "965b2aaafce1a0b502fe0a951e91c48e977239877aefbbfd368500c9b5257503"
+  },
+  "before": {
+    "cases": 700,
+    "top1": 152,
+    "top5": 280,
+    "top20": 362,
+    "mrr": 0.29510495331122266
+  },
+  "after": {
+    "cases": 700,
+    "top1": 152,
+    "top5": 280,
+    "top20": 363,
+    "mrr": 0.2953175528891473
+  },
+  "paired": {
+    "first": {
+      "gained": 0,
+      "lost": 0,
+      "net": 0,
+      "paired_exact_two_sided_p": 1
+    },
+    "top5": {
+      "gained": 0,
+      "lost": 0,
+      "net": 0,
+      "paired_exact_two_sided_p": 1
+    },
+    "top20": {
+      "gained": 10,
+      "lost": 9,
+      "net": 1,
+      "paired_exact_two_sided_p": 1
+    }
+  },
+  "per_set": {
+    "recovery:validation": {
+      "before": {
+        "cases": 100,
+        "top1": 23,
+        "top5": 45,
+        "top20": 56,
+        "mrr": 0.32686446886446885
+      },
+      "after": {
+        "cases": 100,
+        "top1": 23,
+        "top5": 45,
+        "top20": 58,
+        "mrr": 0.3283003663003663
+      },
+      "no_count_loss": true
+    },
+    "recovery:heldout": {
+      "before": {
+        "cases": 500,
+        "top1": 109,
+        "top5": 198,
+        "top20": 256,
+        "mrr": 0.2950354443715899
+      },
+      "after": {
+        "cases": 500,
+        "top1": 109,
+        "top5": 198,
+        "top20": 256,
+        "mrr": 0.2950971991974314
+      },
+      "no_count_loss": true
+    },
+    "retrieval:validation": {
+      "before": {
+        "cases": 100,
+        "top1": 20,
+        "top5": 37,
+        "top20": 50,
+        "mrr": 0.26369298245614037
+      },
+      "after": {
+        "cases": 100,
+        "top1": 20,
+        "top5": 37,
+        "top20": 49,
+        "mrr": 0.26343650793650797
+      },
+      "no_count_loss": false
+    }
+  },
+  "no_per_set_count_loss": false,
+  "rank_changes": [
+    {
+      "source": "recovery:validation",
+      "code": "rpigkieotymyblp",
+      "target": "呢座大廈位於市中心",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "recovery:validation",
+      "code": "osrffwomtbaaqmygsajihlvowljparfhrm",
+      "target": "佢喺當值期間擅離職守所以畀老闆炒咗",
+      "before": 12,
+      "after": 13
+    },
+    {
+      "source": "recovery:validation",
+      "code": "ofmrrrmrvogbhigitdhswcotphmgkb",
+      "target": "你可唔可以幫我去藥房買盒必理痛",
+      "before": 0,
+      "after": 10
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "hivirmosamtbycuuhn",
+      "target": "我約咗佢星期六出街",
+      "before": 14,
+      "after": 15
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "rpghmbtrrmviorcgrnonrtkop",
+      "target": "呢場雨落咗幾個鐘喇停啦大佬",
+      "before": 0,
+      "after": 17
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "rpkiymsfrumuahhotrmrnwjdnuyrhr",
+      "target": "呢套上緊嘅電影乏善可陳未免過譽",
+      "before": 0,
+      "after": 18
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "olytjdfhfhrrqrhiwrjloakbru",
+      "target": "人非草木少少唔捨得點都會有嘅",
+      "before": 19,
+      "after": 0
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "rpkiyiohmlruribdghmlqahivdywjc",
+      "target": "呢套戲入面嘅戰爭場面拍得好逼真",
+      "before": 0,
+      "after": 10
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "hiqnjueeioheodbvvdkb",
+      "target": "我打完波之後條腰好痛",
+      "before": 0,
+      "after": 16
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "neyrohgllosrdvumfhrmppbohndbvjs",
+      "target": "發言人重申佢哋絕不向恐怖份子妥協",
+      "before": 11,
+      "after": 13
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "ithjycahicgyphwrfsgomofxn",
+      "target": "禮拜六日我鍾意留喺屋企煲劇",
+      "before": 9,
+      "after": 10
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "offwhimmqnycrh",
+      "target": "你當我二打六呀",
+      "before": 18,
+      "after": 0
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "hibrosybhimebmmdordrnhirroavoojos",
+      "target": "我同佢講得一清二楚㗎喇我唔會嫁俾佢",
+      "before": 17,
+      "after": 19
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "vdniojlxvvoifvmnuruekfuofvmnyve",
+      "target": "好多人都誤以為紅色嘅激光係紅外線",
+      "before": 20,
+      "after": 0
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "mkiirijrrcmormmorjlofrmhaibru",
+      "target": "政府啲官員一個二個都係咁昏庸嘅",
+      "before": 18,
+      "after": 19
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "oimotgrjcjloakbdioaneyrbfioheofrdycjlmrvoararac",
+      "target": "每一位嘉賓都會有機會發言然之後你哋亦都可以問問題",
+      "before": 19,
+      "after": 0
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "rvofqgmnhirh",
+      "target": "喂你撞到我呀",
+      "before": 18,
+      "after": 0
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "rpoehdjrksvdkbnrrd",
+      "target": "呢隻朱古力好有名㗎",
+      "before": 12,
+      "after": 13
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "kgpmrunufgkbbhnurusmhu",
+      "target": "雄性嘅孔雀有彩色嘅羽毛",
+      "before": 10,
+      "after": 11
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "oimnkbmynvrk",
+      "target": "低到冇下限噉",
+      "before": 17,
+      "after": 19
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "jddoviakmemkab",
+      "target": "未來幾日大致天晴",
+      "before": 10,
+      "after": 11
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "oformcisorgdqdrkpkriginose",
+      "target": "你個頭成個地拖噉快啲去飛髮",
+      "before": 0,
+      "after": 18
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "osvwvworyuvdmmbuisagcrhpqgfrov",
+      "target": "佢細細個就好醒目成日賣口乖攞糖食",
+      "before": 9,
+      "after": 10
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "osycofjlofdpqqnoofra",
+      "target": "佢讚你都係想奉承你啫",
+      "before": 16,
+      "after": 19
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "mnhdjmofjkybyrrropruymhh",
+      "target": "副學士係教育商品化嘅產物",
+      "before": 18,
+      "after": 0
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "gsybnpoonesvkbrehmmkmegdruvkop",
+      "target": "城市急促發展帶嚟翻天覆地嘅變化",
+      "before": 0,
+      "after": 9
+    },
+    {
+      "source": "retrieval:validation",
+      "code": "rporyrghmooqheoaguvdsgaioakbmtbormmosdioa",
+      "target": "呢個商場兩年後會起好屆時會有一萬個工作機會",
+      "before": 0,
+      "after": 14
+    },
+    {
+      "source": "retrieval:validation",
+      "code": "kbygonoqhiyrmblckbpnmkvf",
+      "target": "希望今年風調雨順冇乜天災",
+      "before": 20,
+      "after": 0
+    },
+    {
+      "source": "retrieval:validation",
+      "code": "osymghppjcruqvmuvdtmhlvoonghmvogiidenn",
+      "target": "佢上場比賽嘅表現好差所以今場要坐冷板凳",
+      "before": 20,
+      "after": 0
+    },
+    {
+      "source": "retrieval:validation",
+      "code": "tgjnoanqyidmtbobrrevneltbhp",
+      "target": "董事會建議本期內唔派發中期息",
+      "before": 0,
+      "after": 14
+    },
+    {
+      "source": "retrieval:validation",
+      "code": "hiykrmoedfrfofkmml",
+      "target": "我放咗隻杯喺你左面",
+      "before": 15,
+      "after": 18
+    },
+    {
+      "source": "retrieval:validation",
+      "code": "rfjqwmvihdhlkbwsojlmvbenihnoche",
+      "target": "喺韓國幾乎所有男人都要服強制兵役",
+      "before": 14,
+      "after": 15
+    },
+    {
+      "source": "retrieval:validation",
+      "code": "oonidfkbjrru",
+      "target": "飲多杯冇害嘅",
+      "before": 19,
+      "after": 0
+    }
+  ],
+  "exact_codes_and_display_bounds": true
+}

@@ -1,0 +1,98 @@
+{
+  "baseline_revision": "99708f9",
+  "runtime_baseline": "Production app identical to d857559; current models retained, no new training.",
+  "hypothesis": "SentenceRanker currently scores only after raw completed-path pruning; assess its actual final score before rejecting close completed candidates.",
+  "trials": {
+    "score-cut": "At each completed-path prune, keep original raw winner first; select remaining127 by raw+SentenceRanker score from first192 unique raw paths. Per-decode512-entry exact residual cache shared with final reranking.",
+    "score-reserve": "Keep original128 raw paths; add up to16 best raw+SentenceRanker paths from raw ranks129..192, sharing the same512-entry cache. Final pool maximum144.",
+    "raw144": "Raw completed pool144, otherwise unchanged; control for simple widening."
+  },
+  "bounds": "Only active PRR3 expanded-pool configurations opt in; legacy/null models retain old96 behavior. Prefix beam, option generation, confidence margin10, display20, model weights and personal scores unchanged. No gold labels in inference.",
+  "calibration": "Previously observed700 prefix-retrieval cases first; useful first/top5/top20 gain with no per-source count loss required. Then all prior3893 calibration/guard rows; no per-set first/top5/top20 loss, simulated Single32/32, Java/lint and Python checks, paired desktop maximum wall/CPU ratios<=1.2.",
+  "selection": "Among qualified arms maximize summed per-set top5 rate, then first rate, then top20 rate, then MRR; lower measured latency and smaller final pool break ties. Scored arms must not lose aggregate first/top5/top20 vs raw144 to establish scoring value. Known/overlapping sets are calibration only.",
+  "independent": "Reuse still-unopened500 source-separated words.hk examples in tools/data/prefix_retrieval/heldout.tsv. Freeze exact sources/models/selection before one native run per baseline/qualified arms. No tuning after opening. Adoption needs net first/top5/top20 gain with no count losses vs baseline; scored arm must also have no count losses vs qualified raw control. Otherwise retain baseline (or independently qualified raw control if preselected).",
+  "delivery": "Version0.6.39/code46, no APK, no1.0 or physical Fold7 claim. words.hk NCDOL1.0 examples evaluation-only, never train or bundle; all signing and personal storage retained.",
+  "display_boundary_amendment": {
+    "before_display_trial": true,
+    "heldout_outcomes_unopened": true,
+    "observed_so_far": "score-reserve neutral700; score-cut/raw144 neutral in partial409, not final outcomes. No new reserve decoded.",
+    "trial": "display36: retain raw completed128; apply existing aligned tail relation scores to legacy candidates1..36 and allow those36 to compete for display20 instead of categorically preserving the old20. Head/personal/numeral protections and all weights unchanged. Same calibration/regression/performance/independent gates.",
+    "rationale": "Existing categorical display20 protection can block the learned relation scorer from bringing a correct candidate ranked21..36 onto the screen even if its corrected score is high enough."
+  },
+  "tail_guard_amendment": {
+    "before_tail_guard_trial": true,
+    "heldout_outcomes_unopened": true,
+    "observed_display36_replay": "Known3893 replay: first1355 unchanged, top5 2212->2211,top20 2620->2663; loses1top5 and1coverage in a written200 subgroup, so broad policy cannot qualify. Replay needs full native parity.",
+    "trial": "Run ordinary baseline including head/personal guards first. Preserve final first5 exactly. Inspect next16 candidates beyond display20; add max4 only when existing signed tail score beats original20th by0.25 and positive relation lift over original20th>=0.5, plus existing trustedPromotion evidence(two positive kinds,new evidence,repair/more non-negation structure). Rerank slots6..20 with explicit learned word priority; unchanged weights/pool/beam/confidence. No second head promotion. Same old/independent gates."
+  },
+  "supported_tail_grid": {
+    "before_grid": true,
+    "heldout_outcomes_unopened": true,
+    "observation": "Strict repair/more-structure gate on old3893 has only2 new visible targets, no losses. For a tail option reserve, repairing the boundary meaning is stronger than necessary; distinct supported lexical relations can also justify an alternative.",
+    "grid": {
+      "cap": [
+        2,
+        4
+      ],
+      "score_margin": [
+        0.25,
+        0.5
+      ],
+      "support": "two positive relation kinds and new positive lexical feature over old20th; no repair/more-structure requirement",
+      "positive_relation_lift": 0.5
+    },
+    "constant": "Original final first5 exact order and explicit word priority retained. Inspect16 old tail options only. No weight fitting or gold insertion. Same initial700 per-set no-loss/useful-gain and old3893 gates; more conservative cap/margin break selection ties."
+  },
+  "total_score_evidence_amendment": {
+    "before_trial": true,
+    "heldout_outcomes_unopened": true,
+    "observation": "Support-only with minimum relation lift0.5 still recovers at most2 old3893 targets, although broad learned total-score reranking recovers43 net. A tail alternative can be better in total even with non-positive individual relation delta; preserve first5 and require lexical evidence plus total-score margin.",
+    "trials": [
+      {
+        "cap": 2,
+        "margin": 0.5,
+        "minimum_lift": 0
+      },
+      {
+        "cap": 4,
+        "margin": 0.25,
+        "minimum_lift": 0
+      }
+    ],
+    "unchanged": "At least two positive relation kinds and a new positive lexical feature compared with old20th; no repair condition. All same qualification and independent gates."
+  },
+  "trained_tail_model": {
+    "before_training": true,
+    "heldout_outcomes_unopened": true,
+    "training": "Exact5381 phrase_relations/train.tsv rows; cached actual native full128 training observer SHA7176a2d9c0e8ae4addbb99484e4a3214e7c4abeaa1891264fc3cbd9faad8e6af. Apply fixed existing head model to obtain baseline final20; never insert a missing gold.",
+    "pairs": "Positive gold21..36 versus old20th; negative actual wrong21..36 top4 versus gold6..20; include only possible bounded-score-gate margins. Max4 negatives per target.",
+    "parameters": {
+      "epochs": 80,
+      "rate": 0.3,
+      "l2": [
+        0.005,
+        0.015
+      ],
+      "features": 6000,
+      "minimum_independent_family_support": 2,
+      "weight_cap": 1.5,
+      "strength": 1.5,
+      "limit": 2,
+      "margin": 0.5,
+      "minimum_raw_lift": 0.5,
+      "admissions": 2,
+      "inspect_outside": 16,
+      "source_mix": {
+        "HK": 0.65,
+        "Tatoeba": 0.2,
+        "authored": 0.15
+      },
+      "label_mix": {
+        "recover": 0.5,
+        "protect": 0.5
+      }
+    },
+    "inference": "Additional optional tail-only model. Original final first5 byte-identical; rerank slots6..20 using extra-model positive signed difference from original20th, learned-word priority retained. Raw lift>=0.5 and actual score margin>=0.5. Compare strict existing two-kind evidence vs tail-specific at least2 positive lexical features,at least1 kind,new evidence over boundary. No second head promotion.",
+    "selection": "Known700+3893 no per-set first/top5/top20 loss; useful netcoverage gain across calibration. Prefer equal-set top20 rate,thenMRR,then strict evidence,higherL2 on ties. All original testing/performance and still-unopened500 gates retained. This amendment allows a gain on combined calibration even if initial700 neutral, since targeted outside-display recovery examples are sparse."
+  }
+}

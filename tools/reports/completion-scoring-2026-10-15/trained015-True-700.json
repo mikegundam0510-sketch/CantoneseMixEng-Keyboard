@@ -1,0 +1,120 @@
+{
+  "baseline_revision": "d8575595b689916d8649e71e1a365224392683a9",
+  "cases_sha256": "d2f1b5c74941283b4e6d4252906b99c0f631f2a5da449d7373fab2eb4aaca2e5",
+  "output_sha256": {
+    "before": "0f2b7ae844df8bde9a99f13c890f5e0196cf5cb6b776ffff313e53c3aa1aa87f",
+    "after": "8de8724f22eee22db36720d33ea10d73d21ada0c17fce34159f68c11b84ca372"
+  },
+  "before": {
+    "cases": 700,
+    "top1": 152,
+    "top5": 280,
+    "top20": 362,
+    "mrr": 0.29510495331122266
+  },
+  "after": {
+    "cases": 700,
+    "top1": 152,
+    "top5": 280,
+    "top20": 363,
+    "mrr": 0.2952755063809354
+  },
+  "paired": {
+    "first": {
+      "gained": 0,
+      "lost": 0,
+      "net": 0,
+      "paired_exact_two_sided_p": 1
+    },
+    "top5": {
+      "gained": 0,
+      "lost": 0,
+      "net": 0,
+      "paired_exact_two_sided_p": 1
+    },
+    "top20": {
+      "gained": 1,
+      "lost": 0,
+      "net": 1,
+      "paired_exact_two_sided_p": 1
+    }
+  },
+  "per_set": {
+    "recovery:validation": {
+      "before": {
+        "cases": 100,
+        "top1": 23,
+        "top5": 45,
+        "top20": 56,
+        "mrr": 0.32686446886446885
+      },
+      "after": {
+        "cases": 100,
+        "top1": 23,
+        "top5": 45,
+        "top20": 56,
+        "mrr": 0.32686446886446885
+      },
+      "no_count_loss": true
+    },
+    "recovery:heldout": {
+      "before": {
+        "cases": 500,
+        "top1": 109,
+        "top5": 198,
+        "top20": 256,
+        "mrr": 0.2950354443715899
+      },
+      "after": {
+        "cases": 500,
+        "top1": 109,
+        "top5": 198,
+        "top20": 257,
+        "mrr": 0.2952742186691877
+      },
+      "no_count_loss": true
+    },
+    "retrieval:validation": {
+      "before": {
+        "cases": 100,
+        "top1": 20,
+        "top5": 37,
+        "top20": 50,
+        "mrr": 0.26369298245614037
+      },
+      "after": {
+        "cases": 100,
+        "top1": 20,
+        "top5": 37,
+        "top20": 50,
+        "mrr": 0.26369298245614037
+      },
+      "no_count_loss": true
+    }
+  },
+  "no_per_set_count_loss": true,
+  "rank_changes": [
+    {
+      "source": "recovery:heldout",
+      "code": "rrbrruerhsoimnrpievdkbhlanubh",
+      "target": "唔同嘅活動令到呢度好有節日色彩",
+      "before": 9,
+      "after": 11
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "oimnkbmynvrk",
+      "target": "低到冇下限噉",
+      "before": 17,
+      "after": 18
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "oshhiftmooreikueiletjqmofphbfrujn",
+      "target": "佢身為差人知法犯法被革扯係必然嘅事",
+      "before": 0,
+      "after": 7
+    }
+  ],
+  "exact_codes_and_display_bounds": true
+}

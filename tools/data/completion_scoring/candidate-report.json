@@ -1,0 +1,58 @@
+{
+  "training_cases": 5381,
+  "counts": {
+    "observed": 5381,
+    "not_tail_target": 4854,
+    "protection_targets": 75,
+    "unreachable_score": 102,
+    "recovery_targets": 47,
+    "gold_missing": 405,
+    "indistinguishable": 7
+  },
+  "pairs": 236,
+  "supported_examples": 234,
+  "source_families": 41,
+  "features": 460,
+  "parameters": {
+    "epochs": 80,
+    "rate": 0.3,
+    "l2": 0.015,
+    "features": 6000,
+    "minimum_independent_family_support": 2,
+    "weight_cap": 1.5,
+    "strength": 1.5,
+    "limit": 2,
+    "margin": 0.5,
+    "minimum_raw_lift": 0.5,
+    "admissions": 2,
+    "inspect_outside": 16,
+    "source_mix": {
+      "HK": 0.65,
+      "Tatoeba": 0.2,
+      "authored": 0.15
+    },
+    "label_mix": {
+      "recover": 0.5,
+      "protect": 0.5
+    }
+  },
+  "initial_gate_objective": 0.6122636815887561,
+  "final_gate_objective": 0.14910553151827655,
+  "training_sha256": "24686596e3f00667912cff73787dfc2d023c1ddbb8a02bce94b5b885bd0a9c22",
+  "scored_sha256": "7176a2d9c0e8ae4addbb99484e4a3214e7c4abeaa1891264fc3cbd9faad8e6af",
+  "weights_sha256": "6475e23a38ea19aab8a85142b917ae5444bae1981f8aa07c845d4cb2c7268762",
+  "model_sha256": "9a89eec7ff46b4484df7ea598ea912321cf25ba4f864336450c30cca65f141f5",
+  "pairs_sha256": "2ec3fc5dc7ec172216d2fbc1f2632926a0651e7f3f11425465b8d55755d0e7e2",
+  "protocol_sha256": "b4acc8c73ebf55b684bb566da0cd5380e4d7480719d60d25c87c7605f78dbda0",
+  "limitation": "Training-only stacked baseline head; gold never inserted. Class/source-balanced bounded score/lift surrogate; lexical evidence gate verified at inference. No evaluation or phone data trains the model.",
+  "state": "Rejected after independent500: no target-hit gain; not bundled or enabled in app.",
+  "license": "CC BY-SA4.0; licenses/relations/README.md",
+  "purpose": "Tail alternatives only; established final first5 retained exactly; no phone data or evaluation examples in training.",
+  "independent": {
+    "cases": 500,
+    "top1": 86,
+    "top5": 182,
+    "top20": 253,
+    "mrr": 0.25695789108552264
+  }
+}

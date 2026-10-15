@@ -1,0 +1,48 @@
+{
+  "training_cases": 5381,
+  "counts": {
+    "observed": 5381,
+    "not_tail_target": 4854,
+    "protection_targets": 75,
+    "unreachable_score": 102,
+    "recovery_targets": 47,
+    "gold_missing": 405,
+    "indistinguishable": 7
+  },
+  "pairs": 236,
+  "supported_examples": 234,
+  "source_families": 41,
+  "features": 462,
+  "parameters": {
+    "epochs": 80,
+    "rate": 0.3,
+    "l2": 0.005,
+    "features": 6000,
+    "minimum_independent_family_support": 2,
+    "weight_cap": 1.5,
+    "strength": 1.5,
+    "limit": 2,
+    "margin": 0.5,
+    "minimum_raw_lift": 0.5,
+    "admissions": 2,
+    "inspect_outside": 16,
+    "source_mix": {
+      "HK": 0.65,
+      "Tatoeba": 0.2,
+      "authored": 0.15
+    },
+    "label_mix": {
+      "recover": 0.5,
+      "protect": 0.5
+    }
+  },
+  "initial_gate_objective": 0.6122636815887561,
+  "final_gate_objective": 0.09763034032588573,
+  "training_sha256": "24686596e3f00667912cff73787dfc2d023c1ddbb8a02bce94b5b885bd0a9c22",
+  "scored_sha256": "7176a2d9c0e8ae4addbb99484e4a3214e7c4abeaa1891264fc3cbd9faad8e6af",
+  "weights_sha256": "5da96fe88a295bb31f006968330ea9093e5fa2adc5a691bc3a1ea9be36fdce72",
+  "model_sha256": "974f338765255d6cef2ace639bf30eb7d74206d32472efa2925d0cc7929789a3",
+  "pairs_sha256": "2ec3fc5dc7ec172216d2fbc1f2632926a0651e7f3f11425465b8d55755d0e7e2",
+  "protocol_sha256": "b4acc8c73ebf55b684bb566da0cd5380e4d7480719d60d25c87c7605f78dbda0",
+  "limitation": "Training-only stacked baseline head; gold never inserted. Class/source-balanced bounded score/lift surrogate; lexical evidence gate verified at inference. No evaluation or phone data trains the model."
+}

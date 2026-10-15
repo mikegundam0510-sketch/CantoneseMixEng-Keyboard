@@ -1,0 +1,621 @@
+{
+  "date": "2026-10-15",
+  "baseline_revision": "99708f9c80553684bfafb25aa353af9b9a30cf48",
+  "production_app_matches_revision": "d8575595b689916d8649e71e1a365224392683a9",
+  "version_name": "0.6.39",
+  "version_code": 46,
+  "scope": "Completed-path sentence scoring, displayed-candidate boundary and guarded tail-only model.",
+  "delivery": {
+    "selected": "baseline",
+    "candidate": "rejected",
+    "reason": "Independent500 has no first/top5/top20 target-hit gain and slightly worse MRR.",
+    "app_diff_from_baseline": false,
+    "new_model_in_app": false,
+    "apk_built": false,
+    "signing_changed": false,
+    "personal_storage_changed": false
+  },
+  "calibration": {
+    "display36-calibration": {
+      "before": {
+        "cases": 700,
+        "top1": 152,
+        "top5": 280,
+        "top20": 362,
+        "mrr": 0.29510495331122266
+      },
+      "after": {
+        "cases": 700,
+        "top1": 152,
+        "top5": 280,
+        "top20": 363,
+        "mrr": 0.2953175528891473
+      },
+      "no_per_set_count_loss": false
+    },
+    "display36-replay": {
+      "before": {
+        "cases": 3893,
+        "top1": 1355,
+        "top5": 2212,
+        "top20": 2620,
+        "mrr": 0.4445187259688699
+      },
+      "after": {
+        "cases": 3893,
+        "top1": 1355,
+        "top5": 2211,
+        "top20": 2663,
+        "mrr": 0.445236050556587
+      },
+      "no_per_set_count_loss": false
+    },
+    "evidence2-0.5-3893": {
+      "before": {
+        "cases": 3893,
+        "top1": 1355,
+        "top5": 2212,
+        "top20": 2620,
+        "mrr": 0.4445187259688699
+      },
+      "after": {
+        "cases": 3893,
+        "top1": 1355,
+        "top5": 2212,
+        "top20": 2621,
+        "mrr": 0.444549611685602
+      },
+      "no_per_set_count_loss": true
+    },
+    "evidence4-0.25-3893": {
+      "before": {
+        "cases": 3893,
+        "top1": 1355,
+        "top5": 2212,
+        "top20": 2620,
+        "mrr": 0.4445187259688699
+      },
+      "after": {
+        "cases": 3893,
+        "top1": 1355,
+        "top5": 2212,
+        "top20": 2622,
+        "mrr": 0.44456245525097576
+      },
+      "no_per_set_count_loss": true
+    },
+    "guard-replay": {
+      "before": {
+        "cases": 3893,
+        "top1": 1355,
+        "top5": 2212,
+        "top20": 2620,
+        "mrr": 0.4445187259688699
+      },
+      "after": {
+        "cases": 3893,
+        "top1": 1355,
+        "top5": 2212,
+        "top20": 2622,
+        "mrr": 0.44456245525097576
+      },
+      "no_per_set_count_loss": true
+    },
+    "raw144-calibration": {
+      "before": {
+        "cases": 700,
+        "top1": 152,
+        "top5": 280,
+        "top20": 362,
+        "mrr": 0.29510495331122266
+      },
+      "after": {
+        "cases": 700,
+        "top1": 152,
+        "top5": 280,
+        "top20": 362,
+        "mrr": 0.29510495331122266
+      },
+      "no_per_set_count_loss": true
+    },
+    "score-cut-calibration": {
+      "before": {
+        "cases": 700,
+        "top1": 152,
+        "top5": 280,
+        "top20": 362,
+        "mrr": 0.29510495331122266
+      },
+      "after": {
+        "cases": 700,
+        "top1": 152,
+        "top5": 280,
+        "top20": 362,
+        "mrr": 0.29510495331122266
+      },
+      "no_per_set_count_loss": true
+    },
+    "score-reserve-calibration": {
+      "before": {
+        "cases": 700,
+        "top1": 152,
+        "top5": 280,
+        "top20": 362,
+        "mrr": 0.29510495331122266
+      },
+      "after": {
+        "cases": 700,
+        "top1": 152,
+        "top5": 280,
+        "top20": 362,
+        "mrr": 0.29510495331122266
+      },
+      "no_per_set_count_loss": true
+    },
+    "supported2-0.25-3893": {
+      "before": {
+        "cases": 3893,
+        "top1": 1355,
+        "top5": 2212,
+        "top20": 2620,
+        "mrr": 0.4445187259688699
+      },
+      "after": {
+        "cases": 3893,
+        "top1": 1355,
+        "top5": 2212,
+        "top20": 2622,
+        "mrr": 0.44456245525097576
+      },
+      "no_per_set_count_loss": true
+    },
+    "supported2-0.5-3893": {
+      "before": {
+        "cases": 3893,
+        "top1": 1355,
+        "top5": 2212,
+        "top20": 2620,
+        "mrr": 0.4445187259688699
+      },
+      "after": {
+        "cases": 3893,
+        "top1": 1355,
+        "top5": 2212,
+        "top20": 2621,
+        "mrr": 0.444549611685602
+      },
+      "no_per_set_count_loss": true
+    },
+    "supported4-0.25-3893": {
+      "before": {
+        "cases": 3893,
+        "top1": 1355,
+        "top5": 2212,
+        "top20": 2620,
+        "mrr": 0.4445187259688699
+      },
+      "after": {
+        "cases": 3893,
+        "top1": 1355,
+        "top5": 2212,
+        "top20": 2622,
+        "mrr": 0.44456245525097576
+      },
+      "no_per_set_count_loss": true
+    },
+    "tail-guard-calibration": {
+      "before": {
+        "cases": 700,
+        "top1": 152,
+        "top5": 280,
+        "top20": 362,
+        "mrr": 0.29510495331122266
+      },
+      "after": {
+        "cases": 700,
+        "top1": 152,
+        "top5": 280,
+        "top20": 362,
+        "mrr": 0.29510495331122266
+      },
+      "no_per_set_count_loss": true
+    },
+    "trained005-False-3893": {
+      "before": {
+        "cases": 3893,
+        "top1": 1355,
+        "top5": 2212,
+        "top20": 2620,
+        "mrr": 0.4445187259688699
+      },
+      "after": {
+        "cases": 3893,
+        "top1": 1355,
+        "top5": 2212,
+        "top20": 2619,
+        "mrr": 0.4444387409622105
+      },
+      "no_per_set_count_loss": false
+    },
+    "trained005-False-700": {
+      "before": {
+        "cases": 700,
+        "top1": 152,
+        "top5": 280,
+        "top20": 362,
+        "mrr": 0.29510495331122266
+      },
+      "after": {
+        "cases": 700,
+        "top1": 152,
+        "top5": 280,
+        "top20": 362,
+        "mrr": 0.29517006420406466
+      },
+      "no_per_set_count_loss": false
+    },
+    "trained005-True-3893": {
+      "before": {
+        "cases": 3893,
+        "top1": 1355,
+        "top5": 2212,
+        "top20": 2620,
+        "mrr": 0.4445187259688699
+      },
+      "after": {
+        "cases": 3893,
+        "top1": 1355,
+        "top5": 2212,
+        "top20": 2621,
+        "mrr": 0.44451452461609414
+      },
+      "no_per_set_count_loss": true
+    },
+    "trained005-True-700": {
+      "before": {
+        "cases": 700,
+        "top1": 152,
+        "top5": 280,
+        "top20": 362,
+        "mrr": 0.29510495331122266
+      },
+      "after": {
+        "cases": 700,
+        "top1": 152,
+        "top5": 280,
+        "top20": 362,
+        "mrr": 0.2952040778095068
+      },
+      "no_per_set_count_loss": false
+    },
+    "trained015-False-3893": {
+      "before": {
+        "cases": 3893,
+        "top1": 1355,
+        "top5": 2212,
+        "top20": 2620,
+        "mrr": 0.4445187259688699
+      },
+      "after": {
+        "cases": 3893,
+        "top1": 1355,
+        "top5": 2212,
+        "top20": 2619,
+        "mrr": 0.4444117536503529
+      },
+      "no_per_set_count_loss": false
+    },
+    "trained015-False-700": {
+      "before": {
+        "cases": 700,
+        "top1": 152,
+        "top5": 280,
+        "top20": 362,
+        "mrr": 0.29510495331122266
+      },
+      "after": {
+        "cases": 700,
+        "top1": 152,
+        "top5": 280,
+        "top20": 363,
+        "mrr": 0.2952414927754932
+      },
+      "no_per_set_count_loss": true
+    },
+    "trained015-True-3893": {
+      "before": {
+        "cases": 3893,
+        "top1": 1355,
+        "top5": 2212,
+        "top20": 2620,
+        "mrr": 0.4445187259688699
+      },
+      "after": {
+        "cases": 3893,
+        "top1": 1355,
+        "top5": 2212,
+        "top20": 2621,
+        "mrr": 0.44447947532597165
+      },
+      "no_per_set_count_loss": true
+    },
+    "trained015-True-700": {
+      "before": {
+        "cases": 700,
+        "top1": 152,
+        "top5": 280,
+        "top20": 362,
+        "mrr": 0.29510495331122266
+      },
+      "after": {
+        "cases": 700,
+        "top1": 152,
+        "top5": 280,
+        "top20": 363,
+        "mrr": 0.2952755063809354
+      },
+      "no_per_set_count_loss": true
+    }
+  },
+  "calibration_limits": "Known and partly overlapping sets. 700 actual full native decodes; 3893 actual-native-pool replays, not 3893 new full decodes.",
+  "training": {
+    "training_cases": 5381,
+    "counts": {
+      "observed": 5381,
+      "not_tail_target": 4854,
+      "protection_targets": 75,
+      "unreachable_score": 102,
+      "recovery_targets": 47,
+      "gold_missing": 405,
+      "indistinguishable": 7
+    },
+    "pairs": 236,
+    "supported_examples": 234,
+    "source_families": 41,
+    "features": 460,
+    "parameters": {
+      "epochs": 80,
+      "rate": 0.3,
+      "l2": 0.015,
+      "features": 6000,
+      "minimum_independent_family_support": 2,
+      "weight_cap": 1.5,
+      "strength": 1.5,
+      "limit": 2,
+      "margin": 0.5,
+      "minimum_raw_lift": 0.5,
+      "admissions": 2,
+      "inspect_outside": 16,
+      "source_mix": {
+        "HK": 0.65,
+        "Tatoeba": 0.2,
+        "authored": 0.15
+      },
+      "label_mix": {
+        "recover": 0.5,
+        "protect": 0.5
+      }
+    },
+    "initial_gate_objective": 0.6122636815887561,
+    "final_gate_objective": 0.14910553151827655,
+    "training_sha256": "24686596e3f00667912cff73787dfc2d023c1ddbb8a02bce94b5b885bd0a9c22",
+    "scored_sha256": "7176a2d9c0e8ae4addbb99484e4a3214e7c4abeaa1891264fc3cbd9faad8e6af",
+    "weights_sha256": "6475e23a38ea19aab8a85142b917ae5444bae1981f8aa07c845d4cb2c7268762",
+    "model_sha256": "9a89eec7ff46b4484df7ea598ea912321cf25ba4f864336450c30cca65f141f5",
+    "pairs_sha256": "2ec3fc5dc7ec172216d2fbc1f2632926a0651e7f3f11425465b8d55755d0e7e2",
+    "protocol_sha256": "b4acc8c73ebf55b684bb566da0cd5380e4d7480719d60d25c87c7605f78dbda0",
+    "limitation": "Training-only stacked baseline head; gold never inserted. Class/source-balanced bounded score/lift surrogate; lexical evidence gate verified at inference. No evaluation or phone data trains the model."
+  },
+  "selection": {
+    "path": "tools/data/completion_scoring/selection.json",
+    "sha256": "10fee83266683582c03c8762a134d0f97c77ed541ef8dda6f5660096c1319fbf",
+    "protocol_sha256": "b4acc8c73ebf55b684bb566da0cd5380e4d7480719d60d25c87c7605f78dbda0",
+    "native_decoder_and_model_hashes_match_selected_archive": true,
+    "all_runtime_and_model_hashes_match_reproduced_patch": true,
+    "native_android_service_note": "Desktop archives compile decoder classes only. Android service is covered by the candidate Gradle build and retained patch, not executed by desktop evaluation.",
+    "frozen_before_independent_outcomes": true
+  },
+  "independent": {
+    "baseline_revision": "99708f9c80553684bfafb25aa353af9b9a30cf48",
+    "cases_sha256": "98d69db9d1bf83cc173b506d161090d854b196c724b25569c325e9ef02b2b32e",
+    "output_sha256": {
+      "before": "8cad7b6d9f357f14ff90f5073e62322391ceb73445411d00a6bcc5542156a6ef",
+      "after": "3df09d0f187c568ecd363b2289c082821472a3a5a7a8aaf1b1eb6a1b8ffe3244"
+    },
+    "before": {
+      "cases": 500,
+      "top1": 86,
+      "top5": 182,
+      "top20": 253,
+      "mrr": 0.256991224418856
+    },
+    "after": {
+      "cases": 500,
+      "top1": 86,
+      "top5": 182,
+      "top20": 253,
+      "mrr": 0.25695789108552264
+    },
+    "paired": {
+      "first": {
+        "gained": 0,
+        "lost": 0,
+        "net": 0,
+        "paired_exact_two_sided_p": 1
+      },
+      "top5": {
+        "gained": 0,
+        "lost": 0,
+        "net": 0,
+        "paired_exact_two_sided_p": 1
+      },
+      "top20": {
+        "gained": 0,
+        "lost": 0,
+        "net": 0,
+        "paired_exact_two_sided_p": 1
+      }
+    },
+    "per_set": {
+      "retrieval:heldout": {
+        "before": {
+          "cases": 500,
+          "top1": 86,
+          "top5": 182,
+          "top20": 253,
+          "mrr": 0.256991224418856
+        },
+        "after": {
+          "cases": 500,
+          "top1": 86,
+          "top5": 182,
+          "top20": 253,
+          "mrr": 0.25695789108552264
+        },
+        "no_count_loss": true
+      }
+    },
+    "no_per_set_count_loss": true,
+    "rank_changes": [
+      {
+        "source": "retrieval:heldout",
+        "code": "hidpjimmkbkbhammolvr",
+        "target": "我想轉工有冇筍工介紹",
+        "before": 10,
+        "after": 12
+      }
+    ],
+    "exact_codes_and_display_bounds": true,
+    "delivery": "baseline",
+    "selection_sha256": "10fee83266683582c03c8762a134d0f97c77ed541ef8dda6f5660096c1319fbf",
+    "protocol_sha256": "b4acc8c73ebf55b684bb566da0cd5380e4d7480719d60d25c87c7605f78dbda0",
+    "first_five_exactly_retained": true,
+    "no_post_reserve_runtime_weight_or_threshold_tuning": true,
+    "limitations": "Single independent500 dictionary-example set; not physical Fold7 or contemporary private chat accuracy. Reserve is now observed. Frozen selection flags describe pre-decode state."
+  },
+  "candidate_verification": {
+    "java": {
+      "tests": 226,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "python": {
+      "tests": 24,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "command": "PYTHONPATH=tools python -m unittest tools/test_tail_recovery.py tools/test_head_promotion.py tools/test_phrase_relations.py tools/test_aligned_relations.py tools/test_prefix_retrieval.py"
+    },
+    "gradle_command": "./gradlew --offline --max-workers=2 testDebugUnitTest lintDebug",
+    "lint": {
+      "Error": 0,
+      "Warning": 25
+    },
+    "native_selected_replay_parity_cases": 700,
+    "earlier_native_replay_parity_cases": 2100,
+    "simulated_single": {
+      "cases": 32,
+      "first_after_three_confirmations": 32,
+      "records": 489,
+      "legacy_first": 30
+    },
+    "paired_desktop": {
+      "warmup": 50,
+      "samples": 31,
+      "inputs": 6,
+      "max_wall_ratio": 1.026619593036975,
+      "max_cpu_ratio": 1.0142356598092188,
+      "physical_fold7_tested": false
+    }
+  },
+  "post_restoration_verification": {
+    "production_app_exact_baseline": true,
+    "research_python": {
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "standalone_patch_native_reproduction": {
+      "cases": 5,
+      "includes_changed_lists": 3,
+      "byte_identical": true,
+      "source_and_asset_hashes_match_frozen_selection": true,
+      "cases_path": "tools/reports/completion-scoring-2026-10-15/reproduction5-cases.tsv",
+      "output_path": "tools/reports/completion-scoring-2026-10-15/reproduction5.tsv",
+      "empty_directory_and_checkout_guards_verified": true
+    },
+    "note": "Java/lint/performance evidence belongs to the rejected candidate. No extra production Java run is claimed after exact app restoration."
+  },
+  "data_boundaries": {
+    "training": "5381 pinned, licensed phrase_relations/train.tsv rows only; no gold insertion into candidate pools.",
+    "models": "CC BY-SA 4.0 derivative; full notices retained under tools/data/completion_scoring/NOTICE.md.",
+    "evaluation": "words.hk NCDOL 1.0 examples evaluation-only; never trained or bundled.",
+    "phone_data": "No private chat or phone learning records used.",
+    "reserve_status": "Independent500 is now observed. No post-reserve model, threshold or runtime tuning.",
+    "observer_caches": "Large native observers excluded from Git; regenerate from the pinned archived drivers and source/model manifests.",
+    "training_observer_sha256": "7176a2d9c0e8ae4addbb99484e4a3214e7c4abeaa1891264fc3cbd9faad8e6af",
+    "calibration3893_observer_sha256": "9b47a83c6ea49ce8f02fb205f90d46da927eb3b2ddc0731d95cdde0e73eb8bfc"
+  },
+  "next_step": "Collect more licensed natural training examples with actual correct candidates at positions21..36, plus protection examples, and reserve a new untouched family-separated test before further fitting.",
+  "limitations": [
+    "Only47 recoverable tail training targets,41 families across usable recovery/protection pairs.",
+    "No independent hit-count gain; no1.0, speed or physical-device accuracy claim.",
+    "First-five preservation constrains this candidate to tail coverage; it cannot improve first/top5 by design."
+  ],
+  "artifact_sha256": {
+    "tools/data/completion_scoring/ContextLearningEvaluation.java.txt": "6b16e14c557d12b3391aa66cd278899330584af9d84607775fcac1ccdebe5c5a",
+    "tools/data/completion_scoring/NOTICE.md": "017ffcce4e8db7f00696e6097831155eaa763c65b8e47f266cd95ff54a3837ab",
+    "tools/data/completion_scoring/candidate-report.json": "c6b7737f32ba251974034a98a164a73695672d4daecd4c536a55019fdd2f649a",
+    "tools/data/completion_scoring/model005/tail-pairs.tsv": "2ec3fc5dc7ec172216d2fbc1f2632926a0651e7f3f11425465b8d55755d0e7e2",
+    "tools/data/completion_scoring/model005/tail-training-report.json": "06211b2319a38d1568f224c853d89d1f9fee0157549d0e5a22b2ece7a60c41b6",
+    "tools/data/completion_scoring/model005/tail-weights.json": "5da96fe88a295bb31f006968330ea9093e5fa2adc5a691bc3a1ea9be36fdce72",
+    "tools/data/completion_scoring/model005/tail_ranker.b64": "974f338765255d6cef2ace639bf30eb7d74206d32472efa2925d0cc7929789a3",
+    "tools/data/completion_scoring/model015/tail-pairs.tsv": "2ec3fc5dc7ec172216d2fbc1f2632926a0651e7f3f11425465b8d55755d0e7e2",
+    "tools/data/completion_scoring/model015/tail-training-report.json": "6c8c67de5399057cbb82b4e73a49e4914be613e05903cd018aeb285087bfe69a",
+    "tools/data/completion_scoring/model015/tail-weights.json": "6475e23a38ea19aab8a85142b917ae5444bae1981f8aa07c845d4cb2c7268762",
+    "tools/data/completion_scoring/model015/tail_ranker.b64": "9a89eec7ff46b4484df7ea598ea912321cf25ba4f864336450c30cca65f141f5",
+    "tools/data/completion_scoring/protocol.json": "b4acc8c73ebf55b684bb566da0cd5380e4d7480719d60d25c87c7605f78dbda0",
+    "tools/data/completion_scoring/selected-runtime.patch": "0244e07c5b8c3f6a4cfbd259da06299e8cf881deae61fdf85a6b8872826016d0",
+    "tools/data/completion_scoring/selection.json": "10fee83266683582c03c8762a134d0f97c77ed541ef8dda6f5660096c1319fbf",
+    "tools/reports/completion-scoring-2026-10-15/display36-calibration.json": "77cb6bdb519dce05edd697b944516a26b8076ee54f7f518b6f1fabae56103532",
+    "tools/reports/completion-scoring-2026-10-15/display36-replay.json": "29d7cc69402f55c2526248f9fe85db666794941eaa7b72a1d3b9e544242cced0",
+    "tools/reports/completion-scoring-2026-10-15/evidence2-0.5-3893.json": "cef54b80e08d6bb431e7b04a84a8172814a4b100c47aaddc9b8b84c38baf4d27",
+    "tools/reports/completion-scoring-2026-10-15/evidence4-0.25-3893.json": "beed1df46051da0558d40fe1ef3681e96ba4c34b9f95dc871d968a84214db92d",
+    "tools/reports/completion-scoring-2026-10-15/guard-replay.json": "965e75664b5b6183aeebca027766f7ca380caddd8874b8b97baa46c1292940dc",
+    "tools/reports/completion-scoring-2026-10-15/independent-base.tsv": "8cad7b6d9f357f14ff90f5073e62322391ceb73445411d00a6bcc5542156a6ef",
+    "tools/reports/completion-scoring-2026-10-15/independent-selected.tsv": "3df09d0f187c568ecd363b2289c082821472a3a5a7a8aaf1b1eb6a1b8ffe3244",
+    "tools/reports/completion-scoring-2026-10-15/independent.json": "e528fd8c0d840911d7f1659d6bdee9b3228ed496093b1f1d8c75be8d519056c3",
+    "tools/reports/completion-scoring-2026-10-15/latency.tsv": "d61d07d4a22ad53985b76529035d3a819cdee7f81fba754d2326cc452512e309",
+    "tools/reports/completion-scoring-2026-10-15/raw144-calibration.json": "1a5b9fa0f5bd0cb5d242b75579159e65e95de74c9e4bef8e26393171f26ad3b5",
+    "tools/reports/completion-scoring-2026-10-15/reproduction5-cases.tsv": "2a18a0dc67db4b92a19d03d1468674ff402460d6a35e501715cd53f8661c5682",
+    "tools/reports/completion-scoring-2026-10-15/reproduction5.tsv": "4f0044b444a3f52b5b06a2c48b73a9c6f721b09fc1566f131f957572948e2361",
+    "tools/reports/completion-scoring-2026-10-15/score-cut-calibration.json": "1dacd988a3320ef78ddffd9bbe800b51917da7c9c984b498ee8ffbf14e03ffef",
+    "tools/reports/completion-scoring-2026-10-15/score-reserve-calibration.json": "03edfe1a1b975dec3264eaa3b90e90c3d19b236319ef77e2fe43f3a10ae6bc6e",
+    "tools/reports/completion-scoring-2026-10-15/selected700.tsv": "8de8724f22eee22db36720d33ea10d73d21ada0c17fce34159f68c11b84ca372",
+    "tools/reports/completion-scoring-2026-10-15/single32.tsv": "f3e0cd8ca2ade6f12729a8fa5f01eacea5c350c8aff434e14edb632e4cab4525",
+    "tools/reports/completion-scoring-2026-10-15/supported2-0.25-3893.json": "47b8758a13fd0d5731d621008c1ea234aec2c720e31d9319b438837a95130997",
+    "tools/reports/completion-scoring-2026-10-15/supported2-0.5-3893.json": "0ad89eaf2a1f9486e6703d00ae321208cdb9e16df785cec909ec13af32afd352",
+    "tools/reports/completion-scoring-2026-10-15/supported4-0.25-3893.json": "d49087a588ac0b307d6d5dbb733d260e4cbe82476dd44794c822513beb214295",
+    "tools/reports/completion-scoring-2026-10-15/tail-guard-calibration.json": "cfe237a693e307f696ec8ef194107293687fe41c3ce5b76c8bb5ec7f6204a08a",
+    "tools/reports/completion-scoring-2026-10-15/trained005-False-3893.json": "dce80a06ddd223da5f73cfa2840349dc375c297f43431821df6c7482452ac228",
+    "tools/reports/completion-scoring-2026-10-15/trained005-False-700.json": "218ebd8ede57bd2131c54210e5a9bbcc94df8793767e6f0e4e5a9d8a6b8b899d",
+    "tools/reports/completion-scoring-2026-10-15/trained005-True-3893.json": "761f0a70a8e27c4a6c5a3ecbe3f84629d8db66c5405dbff39b384335b9e49904",
+    "tools/reports/completion-scoring-2026-10-15/trained005-True-700.json": "bddc8a0d1d010b43f43694b0d41959561fb21fe8754987fa2921a1bf9d6d8e68",
+    "tools/reports/completion-scoring-2026-10-15/trained015-False-3893.json": "e0bce2cf6013c89feb91434857025e5858769ec08a3bbe19c9b18d6319a83221",
+    "tools/reports/completion-scoring-2026-10-15/trained015-False-700.json": "f33eee0faffa21e9816347c2296ef97b6ec19c59afb9b3ad0391571e23287e3f",
+    "tools/reports/completion-scoring-2026-10-15/trained015-True-3893.json": "182f631e3bd25672ba71f687f3085428fa3c49620f3321e7f0539d3678e747cc",
+    "tools/reports/completion-scoring-2026-10-15/trained015-True-700.json": "fb9b358e6b8fcc78c3f5063e5c5ad5f946cb1355bdc7bb423447d75a86503d3b"
+  },
+  "research_source_sha256": {
+    "tools/completion_scoring_trial.py": "081f369d355c58925e225667f566c4c2f27c509c27700a80fd4b2574edacf67f",
+    "tools/completion_scoring_replay.py": "192d38f2dbe0acf21f503c9f659591ccb37c81a877a49003cf814221e4d35816",
+    "tools/train_tail_recovery.py": "4bb396aa160967a1b019e0ee52dfb946fe48150c55bce45e69fbcb0c83f1c247",
+    "tools/test_tail_recovery.py": "a7aeb527485cf2ce14eaa014e4cf4079f36d82121ca31332cb1b91522f5a5d4a",
+    "tools/run_tail_recovery_trial.py": "adc55294ed88a8f18e76dd8ceeb1d30e0c884f44399d6ae54258bd05cadc8eb4",
+    "tools/PairedRankingPerformance.java": "614e40bd7206363ce452ed5d379dd1c2a7f094d1a4f7d852771c1d35294e2cb0",
+    "docs/COMPLETION_SCORING.md": "be00283768075dca624949959ba06d9323692c7cb782a49cad62c7e86f56874b",
+    "README.md": "4363e0da375bbbae08b3581ffdd93dfa6026f4afc598c66a22bc9754ea503f4c"
+  }
+}

@@ -57,6 +57,11 @@ public final class PairedRankingPerformance {
                 values.add(relationClass.getMethod("load",InputStream.class)
                     .invoke(null,Files.newInputStream(assets.resolve("relation_ranker.b64"))));
             }
+            if(Files.exists(assets.resolve("tail_ranker.b64"))) {
+                Class<?> tailClass=classes.loadClass(pkg+"TailRecoveryRanker");types.add(tailClass);
+                values.add(tailClass.getMethod("load",InputStream.class)
+                    .invoke(null,Files.newInputStream(assets.resolve("tail_ranker.b64"))));
+            }
             decoder = decoderClass.getConstructor(types.toArray(new Class<?>[0])).newInstance(values.toArray());
             decode = decoderClass.getMethod("decode", String.class, ToIntBiFunction.class);
             match = dictionaryClass.getMethod("matchQuickCodes", String.class, String.class);

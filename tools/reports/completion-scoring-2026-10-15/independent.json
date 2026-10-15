@@ -1,0 +1,78 @@
+{
+  "baseline_revision": "99708f9c80553684bfafb25aa353af9b9a30cf48",
+  "cases_sha256": "98d69db9d1bf83cc173b506d161090d854b196c724b25569c325e9ef02b2b32e",
+  "output_sha256": {
+    "before": "8cad7b6d9f357f14ff90f5073e62322391ceb73445411d00a6bcc5542156a6ef",
+    "after": "3df09d0f187c568ecd363b2289c082821472a3a5a7a8aaf1b1eb6a1b8ffe3244"
+  },
+  "before": {
+    "cases": 500,
+    "top1": 86,
+    "top5": 182,
+    "top20": 253,
+    "mrr": 0.256991224418856
+  },
+  "after": {
+    "cases": 500,
+    "top1": 86,
+    "top5": 182,
+    "top20": 253,
+    "mrr": 0.25695789108552264
+  },
+  "paired": {
+    "first": {
+      "gained": 0,
+      "lost": 0,
+      "net": 0,
+      "paired_exact_two_sided_p": 1
+    },
+    "top5": {
+      "gained": 0,
+      "lost": 0,
+      "net": 0,
+      "paired_exact_two_sided_p": 1
+    },
+    "top20": {
+      "gained": 0,
+      "lost": 0,
+      "net": 0,
+      "paired_exact_two_sided_p": 1
+    }
+  },
+  "per_set": {
+    "retrieval:heldout": {
+      "before": {
+        "cases": 500,
+        "top1": 86,
+        "top5": 182,
+        "top20": 253,
+        "mrr": 0.256991224418856
+      },
+      "after": {
+        "cases": 500,
+        "top1": 86,
+        "top5": 182,
+        "top20": 253,
+        "mrr": 0.25695789108552264
+      },
+      "no_count_loss": true
+    }
+  },
+  "no_per_set_count_loss": true,
+  "rank_changes": [
+    {
+      "source": "retrieval:heldout",
+      "code": "hidpjimmkbkbhammolvr",
+      "target": "我想轉工有冇筍工介紹",
+      "before": 10,
+      "after": 12
+    }
+  ],
+  "exact_codes_and_display_bounds": true,
+  "delivery": "baseline",
+  "selection_sha256": "10fee83266683582c03c8762a134d0f97c77ed541ef8dda6f5660096c1319fbf",
+  "protocol_sha256": "b4acc8c73ebf55b684bb566da0cd5380e4d7480719d60d25c87c7605f78dbda0",
+  "first_five_exactly_retained": true,
+  "no_post_reserve_runtime_weight_or_threshold_tuning": true,
+  "limitations": "Single independent500 dictionary-example set; not physical Fold7 or contemporary private chat accuracy. Reserve is now observed. Frozen selection flags describe pre-decode state."
+}
