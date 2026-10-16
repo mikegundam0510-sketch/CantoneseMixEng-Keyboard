@@ -1,0 +1,7 @@
+{
+  "parent_revision": "3aa8870",
+  "cached_baseline_revision": "e209474",
+  "app_tree": "504ee9ea95fb6b3cf0a2230288943eaba0578d6c",
+  "byte_identical_app_trees": true,
+  "note": "Calibration helper reports its e209474 baseline; 3aa8870 has the same app tree. Current candidate archives use 3aa8870. Frozen ordinary cached outputs are valid references."
+}

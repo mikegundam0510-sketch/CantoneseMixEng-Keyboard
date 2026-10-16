@@ -1,0 +1,69 @@
+--- a/app/src/main/java/hk/cantonesemixeng/keyboard/QuickDecoder.java
++++ b/app/src/main/java/hk/cantonesemixeng/keyboard/QuickDecoder.java
+@@ -30,7 +30,7 @@
+     private final DictionaryEngine dictionary;
+     private final OfflineLanguageModel model;
+     private final PhraseLanguageModel phraseModel;
+-    private final CandidateRanker candidateRanker;
++    private final CandidateRanker candidateRanker, jointRanker;
+     private final CandidateRanker wordRanker;
+     private final SentenceRanker sentenceRanker;
+     private final PhraseRelationRanker relationRanker;
+@@ -149,10 +149,25 @@
+                         OfflineLanguageModel model, PhraseLanguageModel phraseModel, Reader chatInput,
+                         CandidateRanker candidateRanker, CandidateRanker wordRanker, double clauseStartStrength,
+                         SentenceRanker sentenceRanker, PrefixRanker prefixRanker, PhraseRelationRanker relationRanker) throws IOException {
++        this(dictionary,input,hkInput,cantoneseInput,model,phraseModel,chatInput,candidateRanker,wordRanker,
++            clauseStartStrength,sentenceRanker,prefixRanker,relationRanker,null);
++    }
++    public QuickDecoder(DictionaryEngine dictionary, Reader input, Reader hkInput, Reader cantoneseInput,
++                        OfflineLanguageModel model, PhraseLanguageModel phraseModel, Reader chatInput,
++                        CandidateRanker candidateRanker, CandidateRanker wordRanker, SentenceRanker sentenceRanker,
++                        PrefixRanker prefixRanker, PhraseRelationRanker relationRanker, CandidateRanker jointRanker) throws IOException {
++        this(dictionary,input,hkInput,cantoneseInput,model,phraseModel,chatInput,candidateRanker,wordRanker,
++            CLAUSE_START_STRENGTH,sentenceRanker,prefixRanker,relationRanker,jointRanker);
++    }
++    public QuickDecoder(DictionaryEngine dictionary, Reader input, Reader hkInput, Reader cantoneseInput,
++                        OfflineLanguageModel model, PhraseLanguageModel phraseModel, Reader chatInput,
++                        CandidateRanker candidateRanker, CandidateRanker wordRanker, double clauseStartStrength,
++                        SentenceRanker sentenceRanker, PrefixRanker prefixRanker, PhraseRelationRanker relationRanker,
++                        CandidateRanker jointRanker) throws IOException {
+         if (!Double.isFinite(clauseStartStrength) || clauseStartStrength < 0 || clauseStartStrength > 2)
+             throw new IllegalArgumentException("Invalid clause-start strength");
+         this.dictionary = dictionary; this.model = model; this.phraseModel = phraseModel;
+-        this.candidateRanker = candidateRanker;
++        this.candidateRanker = candidateRanker; this.jointRanker=jointRanker;
+         this.wordRanker = wordRanker;
+         this.sentenceRanker = sentenceRanker;
+         this.relationRanker = relationRanker;
+@@ -595,6 +610,7 @@
+             + handoverBonus(prefix, text) + ClauseRelations.score(prefix, text)
+             + (phraseModel == null ? 0 : phraseModel.score(prefix, text))
+             + (candidateRanker == null ? 0 : candidateRanker.score(prefix, text))
++            + (jointRanker == null ? 0 : jointRanker.score(prefix, text))
+             + (wordRanker == null ? 0 : wordRanker.score(prefix, text))
+             + (clauseStartStrength == 0 ? 0 : clauseStartStrength * ClauseStartRelations.score(prefix, text));
+         String previous = prefix.isEmpty() ? null : new String(Character.toChars(prefix.codePointBefore(prefix.length())));
+--- a/app/src/main/java/hk/cantonesemixeng/keyboard/CantoneseMixEngKeyboardService.java
++++ b/app/src/main/java/hk/cantonesemixeng/keyboard/CantoneseMixEngKeyboardService.java
+@@ -177,13 +177,19 @@
+                 } catch (IOException optionalModelUnavailable) {
+                     relationRanker = null;
+                 }
++                CandidateRanker jointRanker;
++                try {
++                    jointRanker = CandidateRanker.loadWords(getAssets().open("joint_ranker.b64"));
++                } catch (IOException optionalModelUnavailable) {
++                    jointRanker = null;
++                }
+                 QuickDecoder phrases = new QuickDecoder(loaded, new InputStreamReader(getAssets().open("quick_phrases.tsv"), StandardCharsets.UTF_8),
+                     new InputStreamReader(getAssets().open("hk_phrases.tsv"), StandardCharsets.UTF_8),
+                     new InputStreamReader(getAssets().open("cantonese_phrases.tsv"), StandardCharsets.UTF_8),
+                     OfflineLanguageModel.load(getAssets().open("language_model.b64")),
+                     PhraseLanguageModel.load(getAssets().open("phrase_model.b64")),
+                     new InputStreamReader(getAssets().open("hk_chat_phrases.tsv"), StandardCharsets.UTF_8),
+-                    candidateRanker, wordRanker, sentenceRanker, prefixRanker, relationRanker);
++                    candidateRanker, wordRanker, sentenceRanker, prefixRanker, relationRanker, jointRanker);
+                 EmojiCatalog emojis = new EmojiCatalog(new InputStreamReader(getAssets().open("emoji.tsv"), StandardCharsets.UTF_8));
+                 CandidateEngine mixed = new CandidateEngine(loaded, phrases, englishWords);
+                 QuickTypos repairs = new QuickTypos(loaded, phrases);

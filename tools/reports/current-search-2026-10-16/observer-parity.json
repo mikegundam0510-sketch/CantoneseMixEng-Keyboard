@@ -1,0 +1,12 @@
+{
+  "parent": "3aa8870",
+  "ordinary_lists": 20,
+  "changed_label_lists": 20,
+  "changed_label_complete_pools": 20,
+  "all_equal": true,
+  "evidence_sha256": {
+    "observer-expected.tsv": "a69e77d5fef27dfca2de1d56a1cf65d053679395c25e9b3bdec0be965982a29b",
+    "observer-visible.tsv": "8c5a13ded315e79e347c8af5fbcb7bd4adb8223de42b440a77e159dfa3308935",
+    "observer-pools.tsv.gz": "07bc27c5cbad6933ba0e7209fda51515d5f107ffab6eff98a2fd21442f97fbb6"
+  }
+}

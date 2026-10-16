@@ -1,0 +1,62 @@
+{
+  "parent_revision": "3aa8870",
+  "selected_at_calibration": "full",
+  "adopted": false,
+  "reason": "Fixed3893 per-set first/top5 loss limit failed. Do not relax the threshold after outcomes.",
+  "calibration1450": {
+    "before": [
+      301,
+      558,
+      736
+    ],
+    "after": [
+      305,
+      560,
+      740
+    ]
+  },
+  "guard3893": {
+    "before": {
+      "cases": 3893,
+      "top1": 1358,
+      "top5": 2215,
+      "top20": 2625,
+      "mrr": 0.4453086115079659
+    },
+    "after": {
+      "cases": 3893,
+      "top1": 1362,
+      "top5": 2219,
+      "top20": 2637,
+      "mrr": 0.44644957447939343
+    },
+    "gates": {
+      "aggregate_counts_nondecreasing": true,
+      "per_set_first_top5_loss_within_one_pp": false
+    },
+    "failed_subsets": {
+      "guard:authored70": {
+        "before": {
+          "cases": 70,
+          "top1": 15,
+          "top5": 41,
+          "top20": 48,
+          "mrr": 0.3871768707482993
+        },
+        "after": {
+          "cases": 70,
+          "top1": 14,
+          "top5": 41,
+          "top20": 48,
+          "mrr": 0.3776530612244898
+        },
+        "no_count_loss": false
+      }
+    }
+  },
+  "independent500_decoded": false,
+  "timing_run": false,
+  "final_only_control": "Diagnostic only; no replacement arm or adoption override.",
+  "production": "Unchanged parent app tree; retain0.6.39/code46. No APK.",
+  "decision": "Reject full after guard regression; half already failed calibration. Preserve unused reserve500."
+}

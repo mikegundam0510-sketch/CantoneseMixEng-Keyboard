@@ -1,0 +1,49 @@
+{
+  "parent_revision": "3aa8870",
+  "training_sha256": "c4a39e42520a267d9b666ad40c21fd864fa93d62881c846988a21d73719fb87c",
+  "cases": 7891,
+  "categories": {
+    "first": 6636,
+    "top5": 948,
+    "top20": 111,
+    "missing": 120,
+    "outside20": 76
+  },
+  "pairs": 42500,
+  "stage_counts": {
+    "final": 22740,
+    "prefix": 19760
+  },
+  "origin_counts": {
+    "ordinary": 22380,
+    "survived": 19102,
+    "lost": 460,
+    "shadow": 558
+  },
+  "targets_with_observed_lost_prefix": 197,
+  "pairs_sha256": "1d641c924bb8a371086734fb11762501396dfc7b97bf8495fc17d8b0b7273000",
+  "observations": {
+    "baseline_revision": "3aa8870",
+    "training_sha256": "c4a39e42520a267d9b666ad40c21fd864fa93d62881c846988a21d73719fb87c",
+    "reused": 0,
+    "new": 7891,
+    "missing": 120,
+    "output_sha256": {
+      "pools.tsv": "0943a3dcf768138372d2fc4c3673acc15cc990f5eb2e4ee140ae4b168a8fca29",
+      "visible.tsv": "f9abb2b19febd023872966acccbdf2477ed75a1ebc02408aad2a24224314768c",
+      "prefix.tsv": "3c95192a3b55501cabc2cb1408e26e7cd505048d24c451c4ded97e2456759cee"
+    }
+  },
+  "shadow": {
+    "missing_targets": 120,
+    "ordinary_inference_exact_parity": 120,
+    "pairs": 759,
+    "output_sha256": {
+      "audit.tsv": "27670364bf49c2517ab6191b454e8784592f0578c11caf482de687ec8d17cc6d",
+      "visible.tsv": "105d667d7a10401e65acd541c0cb4dd4de1a45d639aecacbab24ed40aaff0cfa",
+      "pairs.tsv": "5dea067cb4db7ddaa1cc5f27bbae226694626dd70f12759941f5f8499f38ca86"
+    },
+    "parent_revision": "3aa8870"
+  },
+  "limitation": "Training observation counts are not independent accuracy. Raw prefix gaps omit bounded lookahead; shadow finals approximate pre-PRR3 score. Ordinary candidate inference decides adoption."
+}

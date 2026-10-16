@@ -1,0 +1,11 @@
+test_all_token_splits_preserve_features (test_current_search.SharedEndpointEvidence.test_all_token_splits_preserve_features) ... ok
+test_boundaries_clear_history (test_current_search.SharedEndpointEvidence.test_boundaries_clear_history) ... ok
+test_fitted_features_have_independent_support_and_bounded_endpoints (test_current_search.SharedEndpointEvidence.test_fitted_features_have_independent_support_and_bounded_endpoints) ... ok
+test_loader_header_and_weight_bounds (test_current_search.SharedEndpointEvidence.test_loader_header_and_weight_bounds) ... ok
+test_longer_order_is_distinguished (test_current_search.SharedEndpointEvidence.test_longer_order_is_distinguished) ... ok
+test_only_exact_clean_training_comparisons (test_current_search.SharedEndpointEvidence.test_only_exact_clean_training_comparisons) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 4.148s
+
+OK

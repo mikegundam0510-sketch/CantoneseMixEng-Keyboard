@@ -1,0 +1,13 @@
+{
+  "arm": "half",
+  "cases": "tools/reports/context-search-2026-10-16/diagnosis/visible.tsv",
+  "population": "The same264 already observed missing old500 targets; no fresh reserve or training labels.",
+  "purpose": "Observe whether prefixes survive farther under the fixed0.5 candidate. No candidate selection, model fitting, threshold changes or adoption override from this diagnostic.",
+  "parity": "All264 instrumented ordinary lists must equal the corresponding answer-free half-arm calibration outputs. Report stage counts and paired stage transitions; not independent accuracy.",
+  "freeze_sha256": "60acdf6781c16d7a8f639b6fd80174abcffe7b13f5faba9d2a85fb17c2b6467e",
+  "timing": "Declared while complete1450 candidate outputs are still pending; additional diagnostic only, original selection gates unchanged.",
+  "source_sha256": {
+    "tools/diagnose_current_search.py": "373ee9be2f26aad3a45bafcbb0ea450ca09d7af30d4fe2e9c7319bf29b89186c",
+    "tools/diagnose_context_search.py": "a1a88fc67693d0a06846a671ded6e4db68a48ea15a90e924d4ff001be61a7504"
+  }
+}

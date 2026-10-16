@@ -1,0 +1,36 @@
+{
+  "scope": "Descriptive TRAIN feature support after frozen fit; not holdout accuracy or grounds for retuning this experiment.",
+  "four_five_features": 306,
+  "groups": {
+    "final": {
+      "pairs": 22740,
+      "any_trained_feature": 15532,
+      "trained_four_or_five_char_difference": 1065
+    },
+    "origin:ordinary": {
+      "pairs": 22380,
+      "any_trained_feature": 15217,
+      "trained_four_or_five_char_difference": 1028
+    },
+    "prefix": {
+      "pairs": 19760,
+      "any_trained_feature": 13829,
+      "trained_four_or_five_char_difference": 390
+    },
+    "origin:survived": {
+      "pairs": 19102,
+      "any_trained_feature": 13273,
+      "trained_four_or_five_char_difference": 352
+    },
+    "origin:lost": {
+      "pairs": 460,
+      "any_trained_feature": 381,
+      "trained_four_or_five_char_difference": 22
+    },
+    "origin:shadow": {
+      "pairs": 558,
+      "any_trained_feature": 490,
+      "trained_four_or_five_char_difference": 53
+    }
+  }
+}

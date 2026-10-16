@@ -1,0 +1,193 @@
+{
+  "parent_revision": "3aa8870",
+  "freeze_sha256": "60acdf6781c16d7a8f639b6fd80174abcffe7b13f5faba9d2a85fb17c2b6467e",
+  "selected": "full",
+  "trials": {
+    "half": {
+      "new150": {
+        "before": {
+          "cases": 150,
+          "top1": 22,
+          "top5": 53,
+          "top20": 77,
+          "mrr": 0.23972046947433942
+        },
+        "after": {
+          "cases": 150,
+          "top1": 24,
+          "top5": 53,
+          "top20": 77,
+          "mrr": 0.24816623667010665
+        }
+      },
+      "old1300": {
+        "before": {
+          "cases": 1300,
+          "top1": 279,
+          "top5": 505,
+          "top20": 659,
+          "mrr": 0.28995230430441193
+        },
+        "after": {
+          "cases": 1300,
+          "top1": 280,
+          "top5": 504,
+          "top20": 660,
+          "mrr": 0.29058208584765505
+        }
+      },
+      "before": {
+        "cases": 1450,
+        "top1": 301,
+        "top5": 558,
+        "top20": 736,
+        "mrr": 0.28475590759785274
+      },
+      "after": {
+        "cases": 1450,
+        "top1": 304,
+        "top5": 557,
+        "top20": 737,
+        "mrr": 0.2861942393810121
+      },
+      "gate": {
+        "new_counts_nondecreasing": true,
+        "new_first_or_top5_gain": true,
+        "old_counts_nondecreasing": false,
+        "old_per_set_loss_within_one_pp": true
+      },
+      "qualified": false,
+      "selection_key": [
+        0.20266666666666666,
+        0.3948888888888889,
+        0.5282222222222223,
+        0.2863770793147341
+      ]
+    },
+    "full": {
+      "new150": {
+        "before": {
+          "cases": 150,
+          "top1": 22,
+          "top5": 53,
+          "top20": 77,
+          "mrr": 0.23972046947433942
+        },
+        "after": {
+          "cases": 150,
+          "top1": 25,
+          "top5": 54,
+          "top20": 77,
+          "mrr": 0.2530022933149868
+        }
+      },
+      "old1300": {
+        "before": {
+          "cases": 1300,
+          "top1": 279,
+          "top5": 505,
+          "top20": 659,
+          "mrr": 0.28995230430441193
+        },
+        "after": {
+          "cases": 1300,
+          "top1": 280,
+          "top5": 506,
+          "top20": 663,
+          "mrr": 0.29123870771140953
+        }
+      },
+      "before": {
+        "cases": 1450,
+        "top1": 301,
+        "top5": 558,
+        "top20": 736,
+        "mrr": 0.28475590759785274
+      },
+      "after": {
+        "cases": 1450,
+        "top1": 305,
+        "top5": 560,
+        "top20": 740,
+        "mrr": 0.287283216566952
+      },
+      "gate": {
+        "new_counts_nondecreasing": true,
+        "new_first_or_top5_gain": true,
+        "old_counts_nondecreasing": true,
+        "old_per_set_loss_within_one_pp": true
+      },
+      "qualified": true,
+      "selection_key": [
+        0.20377777777777775,
+        0.39799999999999996,
+        0.5305555555555556,
+        0.28832576729876785
+      ]
+    },
+    "short-control": {
+      "new150": {
+        "before": {
+          "cases": 150,
+          "top1": 22,
+          "top5": 53,
+          "top20": 77,
+          "mrr": 0.23972046947433942
+        },
+        "after": {
+          "cases": 150,
+          "top1": 24,
+          "top5": 53,
+          "top20": 77,
+          "mrr": 0.24816623667010665
+        }
+      },
+      "old1300": {
+        "before": {
+          "cases": 1300,
+          "top1": 279,
+          "top5": 505,
+          "top20": 659,
+          "mrr": 0.28995230430441193
+        },
+        "after": {
+          "cases": 1300,
+          "top1": 280,
+          "top5": 504,
+          "top20": 660,
+          "mrr": 0.2905863123903431
+        }
+      },
+      "before": {
+        "cases": 1450,
+        "top1": 301,
+        "top5": 558,
+        "top20": 736,
+        "mrr": 0.28475590759785274
+      },
+      "after": {
+        "cases": 1450,
+        "top1": 304,
+        "top5": 557,
+        "top20": 737,
+        "mrr": 0.2861980286951462
+      },
+      "gate": {
+        "new_counts_nondecreasing": true,
+        "new_first_or_top5_gain": true,
+        "old_counts_nondecreasing": false,
+        "old_per_set_loss_within_one_pp": true
+      },
+      "qualified": false,
+      "selection_key": [
+        0.20266666666666666,
+        0.3948888888888889,
+        0.5282222222222223,
+        0.2863789108165656
+      ]
+    }
+  },
+  "short_control_eligible": false,
+  "fresh500_decoded": false,
+  "decision": "Proceed to larger, learning, timing and independent gates"
+}

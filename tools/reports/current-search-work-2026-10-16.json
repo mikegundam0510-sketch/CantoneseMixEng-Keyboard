@@ -1,0 +1,489 @@
+{
+  "parent_revision": "3aa8870132b5b8528fa44173cc4626bf6f511edc",
+  "task": "Current-parent first-loss/max-violation prefix and final-rival training with bounded 2-to-5-character shared score",
+  "decision": {
+    "parent_revision": "3aa8870",
+    "selected_at_calibration": "full",
+    "adopted": false,
+    "reason": "Fixed3893 per-set first/top5 loss limit failed. Do not relax the threshold after outcomes.",
+    "calibration1450": {
+      "before": [
+        301,
+        558,
+        736
+      ],
+      "after": [
+        305,
+        560,
+        740
+      ]
+    },
+    "guard3893": {
+      "before": {
+        "cases": 3893,
+        "top1": 1358,
+        "top5": 2215,
+        "top20": 2625,
+        "mrr": 0.4453086115079659
+      },
+      "after": {
+        "cases": 3893,
+        "top1": 1362,
+        "top5": 2219,
+        "top20": 2637,
+        "mrr": 0.44644957447939343
+      },
+      "gates": {
+        "aggregate_counts_nondecreasing": true,
+        "per_set_first_top5_loss_within_one_pp": false
+      },
+      "failed_subsets": {
+        "guard:authored70": {
+          "before": {
+            "cases": 70,
+            "top1": 15,
+            "top5": 41,
+            "top20": 48,
+            "mrr": 0.3871768707482993
+          },
+          "after": {
+            "cases": 70,
+            "top1": 14,
+            "top5": 41,
+            "top20": 48,
+            "mrr": 0.3776530612244898
+          },
+          "no_count_loss": false
+        }
+      }
+    },
+    "independent500_decoded": false,
+    "timing_run": false,
+    "final_only_control": "Diagnostic only; no replacement arm or adoption override.",
+    "production": "Unchanged parent app tree; retain0.6.39/code46. No APK.",
+    "decision": "Reject full after guard regression; half already failed calibration. Preserve unused reserve500."
+  },
+  "calibration": {
+    "parent_revision": "3aa8870",
+    "freeze_sha256": "60acdf6781c16d7a8f639b6fd80174abcffe7b13f5faba9d2a85fb17c2b6467e",
+    "selected": "full",
+    "trials": {
+      "half": {
+        "new150": {
+          "before": {
+            "cases": 150,
+            "top1": 22,
+            "top5": 53,
+            "top20": 77,
+            "mrr": 0.23972046947433942
+          },
+          "after": {
+            "cases": 150,
+            "top1": 24,
+            "top5": 53,
+            "top20": 77,
+            "mrr": 0.24816623667010665
+          }
+        },
+        "old1300": {
+          "before": {
+            "cases": 1300,
+            "top1": 279,
+            "top5": 505,
+            "top20": 659,
+            "mrr": 0.28995230430441193
+          },
+          "after": {
+            "cases": 1300,
+            "top1": 280,
+            "top5": 504,
+            "top20": 660,
+            "mrr": 0.29058208584765505
+          }
+        },
+        "before": {
+          "cases": 1450,
+          "top1": 301,
+          "top5": 558,
+          "top20": 736,
+          "mrr": 0.28475590759785274
+        },
+        "after": {
+          "cases": 1450,
+          "top1": 304,
+          "top5": 557,
+          "top20": 737,
+          "mrr": 0.2861942393810121
+        },
+        "gate": {
+          "new_counts_nondecreasing": true,
+          "new_first_or_top5_gain": true,
+          "old_counts_nondecreasing": false,
+          "old_per_set_loss_within_one_pp": true
+        },
+        "qualified": false,
+        "selection_key": [
+          0.20266666666666666,
+          0.3948888888888889,
+          0.5282222222222223,
+          0.2863770793147341
+        ]
+      },
+      "full": {
+        "new150": {
+          "before": {
+            "cases": 150,
+            "top1": 22,
+            "top5": 53,
+            "top20": 77,
+            "mrr": 0.23972046947433942
+          },
+          "after": {
+            "cases": 150,
+            "top1": 25,
+            "top5": 54,
+            "top20": 77,
+            "mrr": 0.2530022933149868
+          }
+        },
+        "old1300": {
+          "before": {
+            "cases": 1300,
+            "top1": 279,
+            "top5": 505,
+            "top20": 659,
+            "mrr": 0.28995230430441193
+          },
+          "after": {
+            "cases": 1300,
+            "top1": 280,
+            "top5": 506,
+            "top20": 663,
+            "mrr": 0.29123870771140953
+          }
+        },
+        "before": {
+          "cases": 1450,
+          "top1": 301,
+          "top5": 558,
+          "top20": 736,
+          "mrr": 0.28475590759785274
+        },
+        "after": {
+          "cases": 1450,
+          "top1": 305,
+          "top5": 560,
+          "top20": 740,
+          "mrr": 0.287283216566952
+        },
+        "gate": {
+          "new_counts_nondecreasing": true,
+          "new_first_or_top5_gain": true,
+          "old_counts_nondecreasing": true,
+          "old_per_set_loss_within_one_pp": true
+        },
+        "qualified": true,
+        "selection_key": [
+          0.20377777777777775,
+          0.39799999999999996,
+          0.5305555555555556,
+          0.28832576729876785
+        ]
+      },
+      "short-control": {
+        "new150": {
+          "before": {
+            "cases": 150,
+            "top1": 22,
+            "top5": 53,
+            "top20": 77,
+            "mrr": 0.23972046947433942
+          },
+          "after": {
+            "cases": 150,
+            "top1": 24,
+            "top5": 53,
+            "top20": 77,
+            "mrr": 0.24816623667010665
+          }
+        },
+        "old1300": {
+          "before": {
+            "cases": 1300,
+            "top1": 279,
+            "top5": 505,
+            "top20": 659,
+            "mrr": 0.28995230430441193
+          },
+          "after": {
+            "cases": 1300,
+            "top1": 280,
+            "top5": 504,
+            "top20": 660,
+            "mrr": 0.2905863123903431
+          }
+        },
+        "before": {
+          "cases": 1450,
+          "top1": 301,
+          "top5": 558,
+          "top20": 736,
+          "mrr": 0.28475590759785274
+        },
+        "after": {
+          "cases": 1450,
+          "top1": 304,
+          "top5": 557,
+          "top20": 737,
+          "mrr": 0.2861980286951462
+        },
+        "gate": {
+          "new_counts_nondecreasing": true,
+          "new_first_or_top5_gain": true,
+          "old_counts_nondecreasing": false,
+          "old_per_set_loss_within_one_pp": true
+        },
+        "qualified": false,
+        "selection_key": [
+          0.20266666666666666,
+          0.3948888888888889,
+          0.5282222222222223,
+          0.2863789108165656
+        ]
+      }
+    },
+    "short_control_eligible": false,
+    "fresh500_decoded": false,
+    "decision": "Proceed to larger, learning, timing and independent gates"
+  },
+  "implementation": {
+    "data_replay": [
+      "pairs.jsonl.gz",
+      "manifest.json",
+      "categories.tsv"
+    ],
+    "model_replay": [
+      "report.json",
+      "search-0.5.b64",
+      "search-1.b64",
+      "weights.json"
+    ],
+    "identical": true,
+    "implementation_checks": {
+      "python": 6,
+      "ordinary_observer_parity": 20,
+      "changed_label_parity": 20,
+      "null_constructor_parity": 20,
+      "shadow_ordinary_parity": 120,
+      "score_rows_per_arm": 84,
+      "token_splits": {
+        "half": 648,
+        "full": 648,
+        "short_control": 552
+      }
+    },
+    "evaluation_target_containment": {
+      "validation150": 0,
+      "reserve500": 0
+    },
+    "explanation": "Both regenerated data and complete independently refitted long-model artifacts match byte-for-byte. Evaluation target containment checked on all new positives/negatives plus normalized spans; no heldout decoder run."
+  },
+  "android": {
+    "scope": "Isolated full-model service wiring; existing222 regression tests. Actual enabled score/split/learning checks are separate. No APK or physical device run.",
+    "unit": {
+      "tests": 222,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "suites": 36,
+    "lint": {
+      "Warning": 25
+    },
+    "qualified": true,
+    "command": "./gradlew --offline --no-daemon --max-workers=1 testDebugUnitTest lintDebug",
+    "service_sha256": "c1f4f6f114eb48467839a182c7ac5fc8bd401f827df5cb20fb471d0ade2b7269"
+  },
+  "learning": {
+    "cases": 32,
+    "confirmations_per_case": 3,
+    "actual_model_enabled": true,
+    "legacy_first": 31,
+    "contextual_first": 32,
+    "scope": "Native simulation, not physical device update persistence."
+  },
+  "diagnostic_half": {
+    "parent_revision": "3aa8870",
+    "arm": "half",
+    "cases": 264,
+    "all_ordinary_lists_match": true,
+    "before": {
+      "prefix_search_lost": 166,
+      "outside_display20": 67,
+      "completed_pool_cut": 28,
+      "outside_static_option_bounds": 1,
+      "ordinary_options_uncovered": 2
+    },
+    "after": {
+      "prefix_search_lost": 166,
+      "outside_display20": 66,
+      "completed_pool_cut": 28,
+      "visible": 1,
+      "outside_static_option_bounds": 1,
+      "ordinary_options_uncovered": 2
+    },
+    "transitions": {
+      "prefix_search_lost -> prefix_search_lost": 166,
+      "outside_display20 -> outside_display20": 65,
+      "completed_pool_cut -> completed_pool_cut": 27,
+      "outside_display20 -> visible": 1,
+      "completed_pool_cut -> outside_display20": 1,
+      "outside_static_option_bounds -> outside_static_option_bounds": 1,
+      "ordinary_options_uncovered -> ordinary_options_uncovered": 2,
+      "outside_display20 -> completed_pool_cut": 1
+    },
+    "newly_visible_in_observed_missing_subset": 1,
+    "output_sha256": {
+      "audit.tsv": "45cd1f69b660ea6cfc9d83abaeaac7f55146dc15edd42a43f1874863078965c6",
+      "visible.tsv": "b7fca5954be8addc76d950d76039bfab830ff484e1076d55708cd85883c1949e"
+    },
+    "limitation": "Fixed exposed missing subset only; excludes regressions among originally visible targets. Selected-option reachability is an upper bound; stage changes are observations, not unique causal attribution. Does not override full1450 adoption gates."
+  },
+  "feature_support": {
+    "scope": "Descriptive TRAIN feature support after frozen fit; not holdout accuracy or grounds for retuning this experiment.",
+    "four_five_features": 306,
+    "groups": {
+      "final": {
+        "pairs": 22740,
+        "any_trained_feature": 15532,
+        "trained_four_or_five_char_difference": 1065
+      },
+      "origin:ordinary": {
+        "pairs": 22380,
+        "any_trained_feature": 15217,
+        "trained_four_or_five_char_difference": 1028
+      },
+      "prefix": {
+        "pairs": 19760,
+        "any_trained_feature": 13829,
+        "trained_four_or_five_char_difference": 390
+      },
+      "origin:survived": {
+        "pairs": 19102,
+        "any_trained_feature": 13273,
+        "trained_four_or_five_char_difference": 352
+      },
+      "origin:lost": {
+        "pairs": 460,
+        "any_trained_feature": 381,
+        "trained_four_or_five_char_difference": 22
+      },
+      "origin:shadow": {
+        "pairs": 558,
+        "any_trained_feature": 490,
+        "trained_four_or_five_char_difference": 53
+      }
+    }
+  },
+  "final_only_control": {
+    "before": {
+      "cases": 1450,
+      "top1": 301,
+      "top5": 558,
+      "top20": 736,
+      "mrr": 0.28475590759785274
+    },
+    "after": {
+      "cases": 1450,
+      "top1": 305,
+      "top5": 559,
+      "top20": 739,
+      "mrr": 0.28693221412112196
+    },
+    "shared_full": {
+      "cases": 1450,
+      "top1": 305,
+      "top5": 560,
+      "top20": 740,
+      "mrr": 0.287283216566952
+    },
+    "selection_eligible": false,
+    "scope": "Same full weights applied only after complete-pool filtering, diagnostic only. No alternative adoption or tuning after the full arm failed guards."
+  },
+  "unrun": [
+    "Paired timing after larger guard failure",
+    "Independent context-search500 reserve",
+    "Fold7 physical-device tests",
+    "APK packaging"
+  ],
+  "production_unchanged": true,
+  "version": "0.6.39",
+  "version_code": 46,
+  "sources_and_evidence_sha256": {
+    "tools/CurrentSearchObserverCheck.java": "b577e8d2ec2ec6da9874041c2042f75a940cb504705d928500b7c95115ec74a3",
+    "tools/current-search-requirements.txt": "1668a3152e33680d94637b13421c15e68bd97cd8701f7f555c691f5bc5c0b9f3",
+    "tools/current_search_guards.py": "e0c885ae0ddf117bcb9d2fb374163948b8190e0a7332cde45904e07360c0f3dd",
+    "tools/data/current_search/NOTICE.md": "b772375974f46b9961b0643ac97497fde08f070474a3af3ce77e6b4cf7680f23",
+    "tools/data/current_search/categories.tsv": "b32a688a369bec38919fcc7ca1357315f4d67393b3d3ff403807ffb3f1727033",
+    "tools/data/current_search/decision.json": "41c87b682dfb0a875c10029f153987fc269016dc1abab4e8819a4ce177720469",
+    "tools/data/current_search/diagnostic-protocol.json": "024c4759371098f756189797ab69f56e09a6336f149102bd21ed083d75bc5e77",
+    "tools/data/current_search/freeze.json": "60acdf6781c16d7a8f639b6fd80174abcffe7b13f5faba9d2a85fb17c2b6467e",
+    "tools/data/current_search/manifest.json": "bb72086e41330de3da5f34f7240f83ee77e84d08dfee6e65b56f856034354bc5",
+    "tools/data/current_search/model/report.json": "bf037a583a444550a1c0f2053d7493ab6add0fad67f2736bea5a1c9e8e0e4e22",
+    "tools/data/current_search/model/search-0.5.b64": "0cf9332706fbd10c6840e089863ba19426b3d9f3f446506929381779062e08d0",
+    "tools/data/current_search/model/search-1.b64": "a827e136da49a1f6f5c1bf4def3d7df71c36dd1d5f88d663b90b5d3b2ea9ddfe",
+    "tools/data/current_search/model/weights.json": "1cc9ece7fdc58737db71a11a25d15df40b505a3635bc9be391430fc1d2326498",
+    "tools/data/current_search/pairs.jsonl.gz": "1d641c924bb8a371086734fb11762501396dfc7b97bf8495fc17d8b0b7273000",
+    "tools/data/current_search/protocol.json": "92baaad844c10fc8742c5f1490ba85c4d3082758e6714424449fe57b9b873b1f",
+    "tools/data/current_search/selection.json": "763cf1a07d3dc09575eb94972b568df1a3dff9fd9af137d199d8d076a3d68371",
+    "tools/data/current_search/shadow/audit.tsv": "27670364bf49c2517ab6191b454e8784592f0578c11caf482de687ec8d17cc6d",
+    "tools/data/current_search/shadow/observation.json": "ee99db0883bb267eb7e6266d237a59cbf21302a4c528914b185cb89babc9ca77",
+    "tools/data/current_search/shadow/pairs.tsv": "5dea067cb4db7ddaa1cc5f27bbae226694626dd70f12759941f5f8499f38ca86",
+    "tools/data/current_search/shadow/visible.tsv": "105d667d7a10401e65acd541c0cb4dd4de1a45d639aecacbab24ed40aaff0cfa",
+    "tools/data/current_search/short-model/report.json": "66fdc47dbdbe969dfb1ad599df617af34d11583b4b235282d24e58a03bbef734",
+    "tools/data/current_search/short-model/search-0.5.b64": "bf8fda6ae6c19cbd23ca911198fe92f2b271c7787dd7cf13a18eabe55d194726",
+    "tools/data/current_search/short-model/weights.json": "db5a898af7040b338e72200565f32333c57033392158a88b90547caf966c0a63",
+    "tools/diagnose_current_search.py": "373ee9be2f26aad3a45bafcbb0ea450ca09d7af30d4fe2e9c7319bf29b89186c",
+    "tools/observe_current_search.py": "99f14f1b8377cf863435fda5b8662f775dc945aa479c40664ae273eea08e8e8b",
+    "tools/reports/current-search-2026-10-16/android-integration.patch": "462ac51b7a3703d0b0dd19f06bf4e21952ccc88aed69f0cf97eda3fe09eba51d",
+    "tools/reports/current-search-2026-10-16/android-wiring.json": "bb70113bf7c2f52317a7d27468af772e21f86c964e67d6ec7abd7b7e586345ca",
+    "tools/reports/current-search-2026-10-16/android.json": "7701dc54214f9afcc65aae3c85a751997150420d25c2d85848a4660d96f10e07",
+    "tools/reports/current-search-2026-10-16/android.txt": "c783fa80ca77d14559fed041af5cb0938a7ba12b63fa7fd30503e162abe58411",
+    "tools/reports/current-search-2026-10-16/baseline-provenance.json": "a67facf5fe87b0bfa6ef3dee6556fb43ceea82f3562e4bdac438f418f5db602e",
+    "tools/reports/current-search-2026-10-16/calibration-changes.json": "b892be911661e55ab34bf7cc1a0b3e7b93b26825f4944c9f69b6d4a6d76e3e0d",
+    "tools/reports/current-search-2026-10-16/diagnosis/audit.tsv": "45cd1f69b660ea6cfc9d83abaeaac7f55146dc15edd42a43f1874863078965c6",
+    "tools/reports/current-search-2026-10-16/diagnosis/summary.json": "4913412906902aaa9fdddcaadc90f0574476061285c0f07eada70787e93e1ed2",
+    "tools/reports/current-search-2026-10-16/diagnosis/visible.tsv": "b7fca5954be8addc76d950d76039bfab830ff484e1076d55708cd85883c1949e",
+    "tools/reports/current-search-2026-10-16/feature-coverage.json": "0ea52e3b84e04db4d9c708626dba67d1ed4e97e8ff2889c783cc524d4a4f3360",
+    "tools/reports/current-search-2026-10-16/final-only.json": "885c1e11138808157f648401688b9d5ffcabffa47cc5cda45f22d617bc577597",
+    "tools/reports/current-search-2026-10-16/final-only.tsv": "761e38e3da9aa2cb4a1f421a1dbcf857a2a7f5c271b98e8d6692280926bb314c",
+    "tools/reports/current-search-2026-10-16/full-score.txt": "4bfa3cc36c34a87c0bf47ca78342214c181bbc56edebd9de32eeba0f97094799",
+    "tools/reports/current-search-2026-10-16/full.json": "06b763d0db8614ee5d3488402b721ffe673dd70a1324fa92fbcf7850fd889f1e",
+    "tools/reports/current-search-2026-10-16/full.tsv": "f7c0fbbcd39a5b167509661ea56563d781737882e006da455af8b274eade98f7",
+    "tools/reports/current-search-2026-10-16/guard3893.json": "8216be25b8d1a3f9de0634d27850ca186ef748932b25d9f8fac154518bfa3b0b",
+    "tools/reports/current-search-2026-10-16/guard3893.tsv": "9b5f1f5b8f1cfc338de364219e0b73c599623be77bcc8e288858608180da22d0",
+    "tools/reports/current-search-2026-10-16/half-score.txt": "4bfa3cc36c34a87c0bf47ca78342214c181bbc56edebd9de32eeba0f97094799",
+    "tools/reports/current-search-2026-10-16/half.json": "125ee6469de4eae59f627d5fbca880a2674f6acb064b435725ba0260ba9b1c11",
+    "tools/reports/current-search-2026-10-16/half.tsv": "9f3b36246cab99301ac60713347bf28bd6f9f143e35110d73a9b453ce877abca",
+    "tools/reports/current-search-2026-10-16/lint.xml": "f0056c6b18ff9ff51870bd1105a049e2bfc922b8b68c9a186f926fd533d6e17e",
+    "tools/reports/current-search-2026-10-16/loaded-models.json": "73980f99cb034393391d820af71af565d3adc8422f0509652abda748ad7f066c",
+    "tools/reports/current-search-2026-10-16/null-parity.tsv": "a69e77d5fef27dfca2de1d56a1cf65d053679395c25e9b3bdec0be965982a29b",
+    "tools/reports/current-search-2026-10-16/observer-check.txt": "497c0d5f33b2491072b359049bb6d7609f4a8185870c8741a1208883260ee4fe",
+    "tools/reports/current-search-2026-10-16/observer-expected.tsv": "a69e77d5fef27dfca2de1d56a1cf65d053679395c25e9b3bdec0be965982a29b",
+    "tools/reports/current-search-2026-10-16/observer-parity.json": "da714ac0e47cb870dc3906a1369794ee5265983a79c1d316b05f8f5414d4c183",
+    "tools/reports/current-search-2026-10-16/observer-pools.tsv.gz": "07bc27c5cbad6933ba0e7209fda51515d5f107ffab6eff98a2fd21442f97fbb6",
+    "tools/reports/current-search-2026-10-16/observer-visible.tsv": "8c5a13ded315e79e347c8af5fbcb7bd4adb8223de42b440a77e159dfa3308935",
+    "tools/reports/current-search-2026-10-16/python-tests.txt": "ac3964c081f8ac06460941f8f51f63d49476447e9786db5b3b7090461a9443fd",
+    "tools/reports/current-search-2026-10-16/reproducibility.json": "2c27a0df9dd088c92cf2e18ad808d3f5957c67655d4436f369b8e1bdc71a56d4",
+    "tools/reports/current-search-2026-10-16/shadow-check.txt": "98c2e5e96e177f895a2507f63737de25c134de3ce093f27659b690a01ae6703d",
+    "tools/reports/current-search-2026-10-16/short-control.json": "a0ae6b2731fabb792183d6f80a724a6605cdec344b711068393ad5c215752997",
+    "tools/reports/current-search-2026-10-16/short-control.tsv": "fd99536c99152db1825648d5f2cc2d01a14f37fa14c3159d47f382dee309a542",
+    "tools/reports/current-search-2026-10-16/short-score.txt": "be9e002fac7c85a32aeb7245c0d6f272bdb6c307bad84d2918c837782e386fd9",
+    "tools/reports/current-search-2026-10-16/single32.tsv": "35f78f8e717ebc6f3b6239a6e8546bcca086c9aacdc94f6d0fb89ee8c1c87b1d",
+    "tools/reports/current-search-2026-10-16/single32.txt": "dec667f36ccf918095bbaa01237725b99994e51d818287b1c55dd157987abdaa",
+    "tools/run_current_search.py": "8483d9385e88a0fae9267eb6cf55745edf55d414823b00e077eedbadb45aa5a3",
+    "tools/test_current_search.py": "607f395f5fb6eb9a3ddfa5c53d36f42679d5a89652be12bc78c24c0368dc7743",
+    "tools/train_current_search.py": "2995306f977dbb3d3af37baf64fb51425b780b777889be653fe93558264f419e",
+    "tools/verify_current_search.py": "e3d02671400a4ba137162c3d6a7de59ca72e3873f3330f2a9780eb24dac22302"
+  }
+}

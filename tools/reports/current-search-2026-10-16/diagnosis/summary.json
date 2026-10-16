@@ -1,0 +1,37 @@
+{
+  "parent_revision": "3aa8870",
+  "arm": "half",
+  "cases": 264,
+  "all_ordinary_lists_match": true,
+  "before": {
+    "prefix_search_lost": 166,
+    "outside_display20": 67,
+    "completed_pool_cut": 28,
+    "outside_static_option_bounds": 1,
+    "ordinary_options_uncovered": 2
+  },
+  "after": {
+    "prefix_search_lost": 166,
+    "outside_display20": 66,
+    "completed_pool_cut": 28,
+    "visible": 1,
+    "outside_static_option_bounds": 1,
+    "ordinary_options_uncovered": 2
+  },
+  "transitions": {
+    "prefix_search_lost -> prefix_search_lost": 166,
+    "outside_display20 -> outside_display20": 65,
+    "completed_pool_cut -> completed_pool_cut": 27,
+    "outside_display20 -> visible": 1,
+    "completed_pool_cut -> outside_display20": 1,
+    "outside_static_option_bounds -> outside_static_option_bounds": 1,
+    "ordinary_options_uncovered -> ordinary_options_uncovered": 2,
+    "outside_display20 -> completed_pool_cut": 1
+  },
+  "newly_visible_in_observed_missing_subset": 1,
+  "output_sha256": {
+    "audit.tsv": "45cd1f69b660ea6cfc9d83abaeaac7f55146dc15edd42a43f1874863078965c6",
+    "visible.tsv": "b7fca5954be8addc76d950d76039bfab830ff484e1076d55708cd85883c1949e"
+  },
+  "limitation": "Fixed exposed missing subset only; excludes regressions among originally visible targets. Selected-option reachability is an upper bound; stage changes are observations, not unique causal attribution. Does not override full1450 adoption gates."
+}

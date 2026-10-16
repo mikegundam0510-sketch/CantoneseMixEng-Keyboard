@@ -1,0 +1,8 @@
+{
+  "scope": "Candidate wiring in isolated archive only; production untouched. No predictive changes from calibrated native full arm.",
+  "files": {
+    "app/src/main/java/hk/cantonesemixeng/keyboard/CantoneseMixEngKeyboardService.java": "c1f4f6f114eb48467839a182c7ac5fc8bd401f827df5cb20fb471d0ade2b7269",
+    "app/src/main/java/hk/cantonesemixeng/keyboard/QuickDecoder.java": "225be76d2d09905d6057a907ee2b5072a4a6bc411cc4e7b744a4b4dfcd65ec3a",
+    "app/src/main/assets/joint_ranker.b64": "a827e136da49a1f6f5c1bf4def3d7df71c36dd1d5f88d663b90b5d3b2ea9ddfe"
+  }
+}

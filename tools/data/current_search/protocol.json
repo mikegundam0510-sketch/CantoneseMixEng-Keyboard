@@ -1,0 +1,41 @@
+{
+  "parent_revision": "3aa8870132b5b8528fa44173cc4626bf6f511edc",
+  "training_sha256": "c4a39e42520a267d9b666ad40c21fd864fa93d62881c846988a21d73719fb87c",
+  "purpose": "Current-parent first-loss/max-violation prefix and complete rivals; shared decomposable four/five-character evidence before pruning.",
+  "observation": "All7891 clean licensed TRAIN rows decoded anew. Actual generated continuable positive, earliest cut with no surviving target prefix, then largest raw deficit; at most2 checkpoints and3 actual rivals. Correct-result protection included. Missing finals get separately audited legal TRAIN-only reconstruction, never inserted into inference. Labels do not affect ordinary search.",
+  "training": {
+    "epochs": 150,
+    "rate": 0.2,
+    "l2": 0.003,
+    "minimum_family_support": 3,
+    "feature_cap": 24000,
+    "weight_cap": 0.25,
+    "maximum_feature_length": 5,
+    "stage_mix": {
+      "prefix": 0.5,
+      "final": 0.5
+    },
+    "source_mix": {
+      "HK": 0.7,
+      "Tatoeba": 0.2,
+      "authored": 0.1
+    }
+  },
+  "trial_grid": [
+    {
+      "arm": "half",
+      "strength": 0.5
+    },
+    {
+      "arm": "full",
+      "strength": 1
+    }
+  ],
+  "control": "A same-data2/3-character fit at strength0.5 is diagnostic only, not eligible for selection. No new models/strengths after calibration outcomes.",
+  "calibration": "Observed context_search150 plus old1300; nondecreasing first/top5/top20 on both subsets, new150 first/top5 net gain, old per-set first/top5 loss<=1pp. Fixed selection equal-set mean first/top5/top20/MRR then half.",
+  "guards": "Selected:3893 aggregate first/top5/top20 preserved/per-set first/top5 loss<=1pp; actual enabled Single32/32, JUnit/Lint, paired timing30warm/11samples sixcodes wall/CPU<=1.2. Final-only same-weights control diagnoses search contribution.",
+  "independent": "Only after frozen exact source/model/guards: context_search reserve500 one parent/candidate pass; no count losses and first/top5 gain. No post-test fitting, recoding or thresholds.",
+  "delivery": "No APK; preserve version0.6.39/code46/signing/learning/layout. Reject unqualified arms; no1.0 claim without original independent and device gates.",
+  "freeze": "Design before collection/fitting. Source hash addendum before first fit; no evaluation outcome-driven changes.",
+  "large_gain_target": "For the proposed substantial improvement: independent500 top5 net +25 (5 percentage points), first-choice and existing guards preserved. Smaller qualified gains must be reported as small, not 1.0 readiness."
+}

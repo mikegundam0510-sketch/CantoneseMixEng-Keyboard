@@ -1,0 +1,32 @@
+{
+  "data_replay": [
+    "pairs.jsonl.gz",
+    "manifest.json",
+    "categories.tsv"
+  ],
+  "model_replay": [
+    "report.json",
+    "search-0.5.b64",
+    "search-1.b64",
+    "weights.json"
+  ],
+  "identical": true,
+  "implementation_checks": {
+    "python": 6,
+    "ordinary_observer_parity": 20,
+    "changed_label_parity": 20,
+    "null_constructor_parity": 20,
+    "shadow_ordinary_parity": 120,
+    "score_rows_per_arm": 84,
+    "token_splits": {
+      "half": 648,
+      "full": 648,
+      "short_control": 552
+    }
+  },
+  "evaluation_target_containment": {
+    "validation150": 0,
+    "reserve500": 0
+  },
+  "explanation": "Both regenerated data and complete independently refitted long-model artifacts match byte-for-byte. Evaluation target containment checked on all new positives/negatives plus normalized spans; no heldout decoder run."
+}

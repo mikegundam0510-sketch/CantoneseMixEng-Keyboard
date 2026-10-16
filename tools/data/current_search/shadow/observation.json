@@ -1,0 +1,11 @@
+{
+  "missing_targets": 120,
+  "ordinary_inference_exact_parity": 120,
+  "pairs": 759,
+  "output_sha256": {
+    "audit.tsv": "27670364bf49c2517ab6191b454e8784592f0578c11caf482de687ec8d17cc6d",
+    "visible.tsv": "105d667d7a10401e65acd541c0cb4dd4de1a45d639aecacbab24ed40aaff0cfa",
+    "pairs.tsv": "5dea067cb4db7ddaa1cc5f27bbae226694626dd70f12759941f5f8499f38ca86"
+  },
+  "parent_revision": "3aa8870"
+}

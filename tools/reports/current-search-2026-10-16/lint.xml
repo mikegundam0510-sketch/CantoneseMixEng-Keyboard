@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="6" by="lint 8.9.2">
+
+    <issue
+        id="ApplySharedPref"
+        severity="Warning"
+        message="Consider using `apply()` instead; `commit` writes its data to persistent storage immediately, whereas `apply` will handle it in the background"
+        category="Correctness"
+        priority="6"
+        summary="Use `apply()` on `SharedPreferences`"
+        explanation="Consider using `apply()` instead of `commit` on shared preferences. Whereas `commit` blocks and writes its data to persistent storage immediately, `apply` will handle it in the background."
+        errorLine1="            context.getSharedPreferences(&quot;learned&quot;, Context.MODE_PRIVATE).edit().clear().commit();"
+        errorLine2="                                                                                         ~~~~~~~~">
+        <location
+            file="/workspace/CantoneseMixEng-Keyboard/.native/current-search-20261016/android-candidate/app/src/main/java/hk/cantonesemixeng/keyboard/Prefs.java"
+            line="21"
+            column="90"/>
+    </issue>
+
+    <issue
+        id="ApplySharedPref"
+        severity="Warning"
+        message="Consider using `apply()` instead; `commit` writes its data to persistent storage immediately, whereas `apply` will handle it in the background"
+        category="Correctness"
+        priority="6"
+        summary="Use `apply()` on `SharedPreferences`"
+        explanation="Consider using `apply()` instead of `commit` on shared preferences. Whereas `commit` blocks and writes its data to persistent storage immediately, `apply` will handle it in the background."
+        errorLine1="            context.getSharedPreferences(&quot;english_learned&quot;, Context.MODE_PRIVATE).edit().clear().commit();"
+        errorLine2="                                                                                                 ~~~~~~~~">
+        <location
+            file="/workspace/CantoneseMixEng-Keyboard/.native/current-search-20261016/android-candidate/app/src/main/java/hk/cantonesemixeng/keyboard/Prefs.java"
+            line="22"
+            column="98"/>
+    </issue>
+
+    <issue
+        id="ApplySharedPref"
+        severity="Warning"
+        message="Consider using `apply()` instead; `commit` writes its data to persistent storage immediately, whereas `apply` will handle it in the background"
+        category="Correctness"
+        priority="6"
+        summary="Use `apply()` on `SharedPreferences`"
+        explanation="Consider using `apply()` instead of `commit` on shared preferences. Whereas `commit` blocks and writes its data to persistent storage immediately, `apply` will handle it in the background."
+        errorLine1="            context.getSharedPreferences(&quot;recent_learned&quot;, Context.MODE_PRIVATE).edit().clear().commit();"
+        errorLine2="                                                                                                ~~~~~~~~">
+        <location
+            file="/workspace/CantoneseMixEng-Keyboard/.native/current-search-20261016/android-candidate/app/src/main/java/hk/cantonesemixeng/keyboard/Prefs.java"
+            line="23"
+            column="97"/>
+    </issue>
+
+    <issue
+        id="ApplySharedPref"
+        severity="Warning"
+        message="Consider using `apply()` instead; `commit` writes its data to persistent storage immediately, whereas `apply` will handle it in the background"
+        category="Correctness"
+        priority="6"
+        summary="Use `apply()` on `SharedPreferences`"
+        explanation="Consider using `apply()` instead of `commit` on shared preferences. Whereas `commit` blocks and writes its data to persistent storage immediately, `apply` will handle it in the background."
+        errorLine1="            context.getSharedPreferences(&quot;rejected_learned&quot;, Context.MODE_PRIVATE).edit().clear().commit();"
+        errorLine2="                                                                                                  ~~~~~~~~">
+        <location
+            file="/workspace/CantoneseMixEng-Keyboard/.native/current-search-20261016/android-candidate/app/src/main/java/hk/cantonesemixeng/keyboard/Prefs.java"
+            line="24"
+            column="99"/>
+    </issue>
+
+    <issue
+        id="ApplySharedPref"
+        severity="Warning"
+        message="Consider using `apply()` instead; `commit` writes its data to persistent storage immediately, whereas `apply` will handle it in the background"
+        category="Correctness"
+        priority="6"
+        summary="Use `apply()` on `SharedPreferences`"
+        explanation="Consider using `apply()` instead of `commit` on shared preferences. Whereas `commit` blocks and writes its data to persistent storage immediately, `apply` will handle it in the background."
+        errorLine1="                .remove(&quot;recent_emoji&quot;).putBoolean(&quot;privacy_defaults_v1&quot;, true).commit();"
+        errorLine2="                                                                                ~~~~~~~~">
+        <location
+            file="/workspace/CantoneseMixEng-Keyboard/.native/current-search-20261016/android-candidate/app/src/main/java/hk/cantonesemixeng/keyboard/Prefs.java"
+            line="26"
+            column="81"/>
+    </issue>
+
+    <issue
+        id="DrawAllocation"
+        severity="Warning"
+        message="Avoid object allocations during draw/layout operations (preallocate and reuse instead)"
+        category="Performance"
+        priority="9"
+        summary="Memory allocations within drawing code"
+        explanation="You should avoid allocating objects during a drawing or layout operation. These are called frequently, so a smooth UI can be interrupted by garbage collection pauses caused by the object allocations.&#xA;&#xA;The way this is generally handled is to allocate the needed objects up front and to reuse them for each drawing operation.&#xA;&#xA;Some methods allocate memory on your behalf (such as `Bitmap.create`), and these should be handled in the same way."
+        errorLine1="        Path path = new Path();"
+        errorLine2="                    ~~~~~~~~~~">
+        <location
+            file="/workspace/CantoneseMixEng-Keyboard/.native/current-search-20261016/android-candidate/app/src/main/java/hk/cantonesemixeng/keyboard/KeyboardKey.java"
+            line="77"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="ViewConstructor"
+        severity="Warning"
+        message="Custom view `CursorGestureRow` is missing constructor used by tools: `(Context)` or `(Context,AttributeSet)` or `(Context,AttributeSet,int)`"
+        category="Usability"
+        priority="3"
+        summary="Missing View constructors for XML inflation"
+        explanation="Some layout tools (such as the Android layout editor) need to find a constructor with one of the following signatures:&#xA;* `View(Context context)`&#xA;* `View(Context context, AttributeSet attrs)`&#xA;* `View(Context context, AttributeSet attrs, int defStyle)`&#xA;&#xA;If your custom view needs to perform initialization which does not apply when used in a layout editor, you can surround the given code with a check to see if `View#isInEditMode()` is false, since that method will return `false` at runtime but true within a user interface editor."
+        errorLine1="final class CursorGestureRow extends LinearLayout {"
+        errorLine2="            ~~~~~~~~~~~~~~~~">
+        <location
+            file="/workspace/CantoneseMixEng-Keyboard/.native/current-search-20261016/android-candidate/app/src/main/java/hk/cantonesemixeng/keyboard/CursorGestureRow.java"
+            line="9"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="ViewConstructor"
+        severity="Warning"
+        message="Custom view `StrokePanel` is missing constructor used by tools: `(Context)` or `(Context,AttributeSet)` or `(Context,AttributeSet,int)`"
+        category="Usability"
+        priority="3"
+        summary="Missing View constructors for XML inflation"
+        explanation="Some layout tools (such as the Android layout editor) need to find a constructor with one of the following signatures:&#xA;* `View(Context context)`&#xA;* `View(Context context, AttributeSet attrs)`&#xA;* `View(Context context, AttributeSet attrs, int defStyle)`&#xA;&#xA;If your custom view needs to perform initialization which does not apply when used in a layout editor, you can surround the given code with a check to see if `View#isInEditMode()` is false, since that method will return `false` at runtime but true within a user interface editor."
+        errorLine1="final class StrokePanel extends LinearLayout implements AutoCloseable {"
+        errorLine2="            ~~~~~~~~~~~">
+        <location
+            file="/workspace/CantoneseMixEng-Keyboard/.native/current-search-20261016/android-candidate/app/src/main/java/hk/cantonesemixeng/keyboard/StrokePanel.java"
+            line="15"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="ClickableViewAccessibility"
+        severity="Warning"
+        message="Custom view ``HorizontalScrollView`` has `setOnTouchListener` called on it but does not override `performClick`"
+        category="Accessibility"
+        priority="6"
+        summary="Accessibility in Custom Views"
+        explanation="If a `View` that overrides `onTouchEvent` or uses an `OnTouchListener` does not also implement `performClick` and call it when clicks are detected, the `View` may not handle accessibility actions properly. Logic handling the click actions should ideally be placed in `View#performClick` as some accessibility services invoke `performClick` when a click action should occur."
+        errorLine1="        candidateScroll.setOnTouchListener((v,e) -> { if(e.getActionMasked()==MotionEvent.ACTION_DOWN)freezeSemantic(); return false; });"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/workspace/CantoneseMixEng-Keyboard/.native/current-search-20261016/android-candidate/app/src/main/java/hk/cantonesemixeng/keyboard/CantoneseMixEngKeyboardService.java"
+            line="452"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="ClickableViewAccessibility"
+        severity="Warning"
+        message="`onTouch` lambda should call `View#performClick` when a click is detected"
+        category="Accessibility"
+        priority="6"
+        summary="Accessibility in Custom Views"
+        explanation="If a `View` that overrides `onTouchEvent` or uses an `OnTouchListener` does not also implement `performClick` and call it when clicks are detected, the `View` may not handle accessibility actions properly. Logic handling the click actions should ideally be placed in `View#performClick` as some accessibility services invoke `performClick` when a click action should occur."
+        errorLine1="        candidateScroll.setOnTouchListener((v,e) -> { if(e.getActionMasked()==MotionEvent.ACTION_DOWN)freezeSemantic(); return false; });"
+        errorLine2="                                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/workspace/CantoneseMixEng-Keyboard/.native/current-search-20261016/android-candidate/app/src/main/java/hk/cantonesemixeng/keyboard/CantoneseMixEngKeyboardService.java"
+            line="452"
+            column="44"/>
+    </issue>
+
+    <issue
+        id="ClickableViewAccessibility"
+        severity="Warning"
+        message="Custom view ``TextView`` has `setOnTouchListener` called on it but does not override `performClick`"
+        category="Accessibility"
+        priority="6"
+        summary="Accessibility in Custom Views"
+        explanation="If a `View` that overrides `onTouchEvent` or uses an `OnTouchListener` does not also implement `performClick` and call it when clicks are detected, the `View` may not handle accessibility actions properly. Logic handling the click actions should ideally be placed in `View#performClick` as some accessibility services invoke `performClick` when a click action should occur."
+        errorLine1="        if (repeat) button.setOnTouchListener((v, event) -> {"
+        errorLine2="                    ^">
+        <location
+            file="/workspace/CantoneseMixEng-Keyboard/.native/current-search-20261016/android-candidate/app/src/main/java/hk/cantonesemixeng/keyboard/CantoneseMixEngKeyboardService.java"
+            line="805"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="ClickableViewAccessibility"
+        severity="Warning"
+        message="Custom view ``TextView`` has `setOnTouchListener` called on it but does not override `performClick`"
+        category="Accessibility"
+        priority="6"
+        summary="Accessibility in Custom Views"
+        explanation="If a `View` that overrides `onTouchEvent` or uses an `OnTouchListener` does not also implement `performClick` and call it when clicks are detected, the `View` may not handle accessibility actions properly. Logic handling the click actions should ideally be placed in `View#performClick` as some accessibility services invoke `performClick` when a click action should occur."
+        errorLine1="            item.setOnTouchListener((v, event) -> { if(event.getActionMasked()==MotionEvent.ACTION_DOWN)freezeSemantic(); return false; });"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/workspace/CantoneseMixEng-Keyboard/.native/current-search-20261016/android-candidate/app/src/main/java/hk/cantonesemixeng/keyboard/CantoneseMixEngKeyboardService.java"
+            line="1321"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="ClickableViewAccessibility"
+        severity="Warning"
+        message="`onTouch` lambda should call `View#performClick` when a click is detected"
+        category="Accessibility"
+        priority="6"
+        summary="Accessibility in Custom Views"
+        explanation="If a `View` that overrides `onTouchEvent` or uses an `OnTouchListener` does not also implement `performClick` and call it when clicks are detected, the `View` may not handle accessibility actions properly. Logic handling the click actions should ideally be placed in `View#performClick` as some accessibility services invoke `performClick` when a click action should occur."
+        errorLine1="            item.setOnTouchListener((v, event) -> { if(event.getActionMasked()==MotionEvent.ACTION_DOWN)freezeSemantic(); return false; });"
+        errorLine2="                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/workspace/CantoneseMixEng-Keyboard/.native/current-search-20261016/android-candidate/app/src/main/java/hk/cantonesemixeng/keyboard/CantoneseMixEngKeyboardService.java"
+            line="1321"
+            column="37"/>
+    </issue>
+
+    <issue
+        id="ClickableViewAccessibility"
+        severity="Warning"
+        message="Custom view ``TextView`` has `setOnTouchListener` called on it but does not override `performClick`"
+        category="Accessibility"
+        priority="6"
+        summary="Accessibility in Custom Views"
+        explanation="If a `View` that overrides `onTouchEvent` or uses an `OnTouchListener` does not also implement `performClick` and call it when clicks are detected, the `View` may not handle accessibility actions properly. Logic handling the click actions should ideally be placed in `View#performClick` as some accessibility services invoke `performClick` when a click action should occur."
+        errorLine1="        button.setOnTouchListener((v, event) -> {"
+        errorLine2="        ^">
+        <location
+            file="/workspace/CantoneseMixEng-Keyboard/.native/current-search-20261016/android-candidate/app/src/main/java/hk/cantonesemixeng/keyboard/CantoneseMixEngKeyboardService.java"
+            line="1660"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="ClickableViewAccessibility"
+        severity="Warning"
+        message="Custom view ``TextView`` has `setOnTouchListener` called on it but does not override `performClick`"
+        category="Accessibility"
+        priority="6"
+        summary="Accessibility in Custom Views"
+        explanation="If a `View` that overrides `onTouchEvent` or uses an `OnTouchListener` does not also implement `performClick` and call it when clicks are detected, the `View` may not handle accessibility actions properly. Logic handling the click actions should ideally be placed in `View#performClick` as some accessibility services invoke `performClick` when a click action should occur."
+        errorLine1="        key.setOnTouchListener(new View.OnTouchListener() {"
+        errorLine2="        ^">
+        <location
+            file="/workspace/CantoneseMixEng-Keyboard/.native/current-search-20261016/android-candidate/app/src/main/java/hk/cantonesemixeng/keyboard/CantoneseMixEngKeyboardService.java"
+            line="1672"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="ClickableViewAccessibility"
+        severity="Warning"
+        message="Custom view ``ScrollView`` has `setOnTouchListener` called on it but does not override `performClick`"
+        category="Accessibility"
+        priority="6"
+        summary="Accessibility in Custom Views"
+        explanation="If a `View` that overrides `onTouchEvent` or uses an `OnTouchListener` does not also implement `performClick` and call it when clicks are detected, the `View` may not handle accessibility actions properly. Logic handling the click actions should ideally be placed in `View#performClick` as some accessibility services invoke `performClick` when a click action should occur."
+        errorLine1="            expandedScroll.setOnTouchListener((v,e) -> { if(e.getActionMasked()==MotionEvent.ACTION_DOWN)freezeSemantic(); return false; });"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/workspace/CantoneseMixEng-Keyboard/.native/current-search-20261016/android-candidate/app/src/main/java/hk/cantonesemixeng/keyboard/CantoneseMixEngKeyboardService.java"
+            line="2035"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="ClickableViewAccessibility"
+        severity="Warning"
+        message="`onTouch` lambda should call `View#performClick` when a click is detected"
+        category="Accessibility"
+        priority="6"
+        summary="Accessibility in Custom Views"
+        explanation="If a `View` that overrides `onTouchEvent` or uses an `OnTouchListener` does not also implement `performClick` and call it when clicks are detected, the `View` may not handle accessibility actions properly. Logic handling the click actions should ideally be placed in `View#performClick` as some accessibility services invoke `performClick` when a click action should occur."
+        errorLine1="            expandedScroll.setOnTouchListener((v,e) -> { if(e.getActionMasked()==MotionEvent.ACTION_DOWN)freezeSemantic(); return false; });"
+        errorLine2="                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/workspace/CantoneseMixEng-Keyboard/.native/current-search-20261016/android-candidate/app/src/main/java/hk/cantonesemixeng/keyboard/CantoneseMixEngKeyboardService.java"
+            line="2035"
+            column="47"/>
+    </issue>
+
+    <issue
+        id="ClickableViewAccessibility"
+        severity="Warning"
+        message="Custom view ``TextView`` has `setOnTouchListener` called on it but does not override `performClick`"
+        category="Accessibility"
+        priority="6"
+        summary="Accessibility in Custom Views"
+        explanation="If a `View` that overrides `onTouchEvent` or uses an `OnTouchListener` does not also implement `performClick` and call it when clicks are detected, the `View` may not handle accessibility actions properly. Logic handling the click actions should ideally be placed in `View#performClick` as some accessibility services invoke `performClick` when a click action should occur."
+        errorLine1="            item.setOnTouchListener((v,event) -> { if(event.getActionMasked()==MotionEvent.ACTION_DOWN)freezeSemantic(); return false; });"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/workspace/CantoneseMixEng-Keyboard/.native/current-search-20261016/android-candidate/app/src/main/java/hk/cantonesemixeng/keyboard/CantoneseMixEngKeyboardService.java"
+            line="2059"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="ClickableViewAccessibility"
+        severity="Warning"
+        message="`onTouch` lambda should call `View#performClick` when a click is detected"
+        category="Accessibility"
+        priority="6"
+        summary="Accessibility in Custom Views"
+        explanation="If a `View` that overrides `onTouchEvent` or uses an `OnTouchListener` does not also implement `performClick` and call it when clicks are detected, the `View` may not handle accessibility actions properly. Logic handling the click actions should ideally be placed in `View#performClick` as some accessibility services invoke `performClick` when a click action should occur."
+        errorLine1="            item.setOnTouchListener((v,event) -> { if(event.getActionMasked()==MotionEvent.ACTION_DOWN)freezeSemantic(); return false; });"
+        errorLine2="                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/workspace/CantoneseMixEng-Keyboard/.native/current-search-20261016/android-candidate/app/src/main/java/hk/cantonesemixeng/keyboard/CantoneseMixEngKeyboardService.java"
+            line="2059"
+            column="37"/>
+    </issue>
+
+    <issue
+        id="ClickableViewAccessibility"
+        severity="Warning"
+        message="Custom view `CursorGestureRow` overrides `onTouchEvent` but not `performClick`"
+        category="Accessibility"
+        priority="6"
+        summary="Accessibility in Custom Views"
+        explanation="If a `View` that overrides `onTouchEvent` or uses an `OnTouchListener` does not also implement `performClick` and call it when clicks are detected, the `View` may not handle accessibility actions properly. Logic handling the click actions should ideally be placed in `View#performClick` as some accessibility services invoke `performClick` when a click action should occur."
+        errorLine1="    @Override public boolean onTouchEvent(MotionEvent event) {"
+        errorLine2="                             ~~~~~~~~~~~~">
+        <location
+            file="/workspace/CantoneseMixEng-Keyboard/.native/current-search-20261016/android-candidate/app/src/main/java/hk/cantonesemixeng/keyboard/CursorGestureRow.java"
+            line="43"
+            column="30"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        severity="Warning"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+        category="Internationalization"
+        priority="6"
+        summary="TextView Internationalization"
+        explanation="When calling `TextView#setText`&#xA;* Never call `Number#toString()` to format numbers; it will not handle fraction separators and locale-specific digits properly. Consider using `String#format` with proper format specifications (`%d` or `%f`) instead.&#xA;* Do not pass a string literal (e.g. &quot;Hello&quot;) to display text. Hardcoded text can not be properly translated to other languages. Consider using Android resource strings instead.&#xA;* Do not build messages by concatenating text chunks. Such messages can not be properly translated."
+        url="https://developer.android.com/guide/topics/resources/localization.html"
+        urls="https://developer.android.com/guide/topics/resources/localization.html"
+        errorLine1="        if (emojiSearchLabel != null) emojiSearchLabel.setText(&quot;⌕  &quot; + (emojiQuery.isEmpty() ? &quot;搜尋 Emoji（英文名稱）&quot; : emojiQuery));"
+        errorLine2="                                                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/workspace/CantoneseMixEng-Keyboard/.native/current-search-20261016/android-candidate/app/src/main/java/hk/cantonesemixeng/keyboard/CantoneseMixEngKeyboardService.java"
+            line="2080"
+            column="64"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        severity="Warning"
+        message="String literal in `setText` can not be translated. Use Android resources instead."
+        category="Internationalization"
+        priority="6"
+        summary="TextView Internationalization"
+        explanation="When calling `TextView#setText`&#xA;* Never call `Number#toString()` to format numbers; it will not handle fraction separators and locale-specific digits properly. Consider using `String#format` with proper format specifications (`%d` or `%f`) instead.&#xA;* Do not pass a string literal (e.g. &quot;Hello&quot;) to display text. Hardcoded text can not be properly translated to other languages. Consider using Android resource strings instead.&#xA;* Do not build messages by concatenating text chunks. Such messages can not be properly translated."
+        url="https://developer.android.com/guide/topics/resources/localization.html"
+        urls="https://developer.android.com/guide/topics/resources/localization.html"
+        errorLine1="            TextView loading = new TextView(this); loading.setText(&quot;載入 Emoji…&quot;); loading.setTextColor(fg); panel.addView(loading); return;"
+        errorLine2="                                                                   ~~~~~~~~~~~">
+        <location
+            file="/workspace/CantoneseMixEng-Keyboard/.native/current-search-20261016/android-candidate/app/src/main/java/hk/cantonesemixeng/keyboard/CantoneseMixEngKeyboardService.java"
+            line="2129"
+            column="68"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        severity="Warning"
+        message="String literal in `setText` can not be translated. Use Android resources instead."
+        category="Internationalization"
+        priority="6"
+        summary="TextView Internationalization"
+        explanation="When calling `TextView#setText`&#xA;* Never call `Number#toString()` to format numbers; it will not handle fraction separators and locale-specific digits properly. Consider using `String#format` with proper format specifications (`%d` or `%f`) instead.&#xA;* Do not pass a string literal (e.g. &quot;Hello&quot;) to display text. Hardcoded text can not be properly translated to other languages. Consider using Android resource strings instead.&#xA;* Do not build messages by concatenating text chunks. Such messages can not be properly translated."
+        url="https://developer.android.com/guide/topics/resources/localization.html"
+        urls="https://developer.android.com/guide/topics/resources/localization.html"
+        errorLine1="        TextView empty=new TextView(this);empty.setText(&quot;沒有符合的 Emoji&quot;);empty.setTextColor(muted);empty.setGravity(Gravity.CENTER);"
+        errorLine2="                                                        ~~~~~~~~~~~~~">
+        <location
+            file="/workspace/CantoneseMixEng-Keyboard/.native/current-search-20261016/android-candidate/app/src/main/java/hk/cantonesemixeng/keyboard/CantoneseMixEngKeyboardService.java"
+            line="2170"
+            column="57"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        severity="Warning"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+        category="Internationalization"
+        priority="6"
+        summary="TextView Internationalization"
+        explanation="When calling `TextView#setText`&#xA;* Never call `Number#toString()` to format numbers; it will not handle fraction separators and locale-specific digits properly. Consider using `String#format` with proper format specifications (`%d` or `%f`) instead.&#xA;* Do not pass a string literal (e.g. &quot;Hello&quot;) to display text. Hardcoded text can not be properly translated to other languages. Consider using Android resource strings instead.&#xA;* Do not build messages by concatenating text chunks. Such messages can not be properly translated."
+        url="https://developer.android.com/guide/topics/resources/localization.html"
+        urls="https://developer.android.com/guide/topics/resources/localization.html"
+        errorLine1="        emojiSearchLabel.setText(&quot;⌕  &quot;+(emojiQuery.isEmpty()?&quot;搜尋 Emoji（英文名稱）&quot;:emojiQuery));"
+        errorLine2="                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/workspace/CantoneseMixEng-Keyboard/.native/current-search-20261016/android-candidate/app/src/main/java/hk/cantonesemixeng/keyboard/CantoneseMixEngKeyboardService.java"
+            line="2198"
+            column="34"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        severity="Warning"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+        category="Internationalization"
+        priority="6"
+        summary="TextView Internationalization"
+        explanation="When calling `TextView#setText`&#xA;* Never call `Number#toString()` to format numbers; it will not handle fraction separators and locale-specific digits properly. Consider using `String#format` with proper format specifications (`%d` or `%f`) instead.&#xA;* Do not pass a string literal (e.g. &quot;Hello&quot;) to display text. Hardcoded text can not be properly translated to other languages. Consider using Android resource strings instead.&#xA;* Do not build messages by concatenating text chunks. Such messages can not be properly translated."
+        url="https://developer.android.com/guide/topics/resources/localization.html"
+        urls="https://developer.android.com/guide/topics/resources/localization.html"
+        errorLine1="            control.setText(label + &quot;   ·   &quot; + titles[selected]);"
+        errorLine2="                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/workspace/CantoneseMixEng-Keyboard/.native/current-search-20261016/android-candidate/app/src/main/java/hk/cantonesemixeng/keyboard/SettingsActivity.java"
+            line="143"
+            column="29"/>
+    </issue>
+
+</issues>

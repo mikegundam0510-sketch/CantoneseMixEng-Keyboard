@@ -1,0 +1,16 @@
+{
+  "scope": "Isolated full-model service wiring; existing222 regression tests. Actual enabled score/split/learning checks are separate. No APK or physical device run.",
+  "unit": {
+    "tests": 222,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "suites": 36,
+  "lint": {
+    "Warning": 25
+  },
+  "qualified": true,
+  "command": "./gradlew --offline --no-daemon --max-workers=1 testDebugUnitTest lintDebug",
+  "service_sha256": "c1f4f6f114eb48467839a182c7ac5fc8bd401f827df5cb20fb471d0ade2b7269"
+}

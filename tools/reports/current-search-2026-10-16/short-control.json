@@ -1,0 +1,440 @@
+{
+  "baseline_revision": "e209474",
+  "cases_sha256": "fd874eeed989500d1cbbc483e70342d865af9e086360edc7978387a0a1e95743",
+  "output_sha256": {
+    "before": "e421d07e647a34fc2d377513b7733f8e7ed9c17029055957cc4b4590a60db5a1",
+    "after": "fd99536c99152db1825648d5f2cc2d01a14f37fa14c3159d47f382dee309a542"
+  },
+  "before": {
+    "cases": 1450,
+    "top1": 301,
+    "top5": 558,
+    "top20": 736,
+    "mrr": 0.28475590759785274
+  },
+  "after": {
+    "cases": 1450,
+    "top1": 304,
+    "top5": 557,
+    "top20": 737,
+    "mrr": 0.2861980286951462
+  },
+  "paired": {
+    "first": {
+      "gained": 4,
+      "lost": 1,
+      "net": 3,
+      "paired_exact_two_sided_p": 0.375
+    },
+    "top5": {
+      "gained": 0,
+      "lost": 1,
+      "net": -1,
+      "paired_exact_two_sided_p": 1
+    },
+    "top20": {
+      "gained": 1,
+      "lost": 0,
+      "net": 1,
+      "paired_exact_two_sided_p": 1
+    }
+  },
+  "per_set": {
+    "context-search:validation": {
+      "before": {
+        "cases": 150,
+        "top1": 22,
+        "top5": 53,
+        "top20": 77,
+        "mrr": 0.23972046947433942
+      },
+      "after": {
+        "cases": 150,
+        "top1": 24,
+        "top5": 53,
+        "top20": 77,
+        "mrr": 0.24816623667010665
+      },
+      "no_count_loss": true
+    },
+    "joint:validation": {
+      "before": {
+        "cases": 100,
+        "top1": 19,
+        "top5": 44,
+        "top20": 60,
+        "mrr": 0.29775638615770195
+      },
+      "after": {
+        "cases": 100,
+        "top1": 19,
+        "top5": 44,
+        "top20": 60,
+        "mrr": 0.2981864195745775
+      },
+      "no_count_loss": true
+    },
+    "recovery:validation": {
+      "before": {
+        "cases": 100,
+        "top1": 23,
+        "top5": 45,
+        "top20": 56,
+        "mrr": 0.32686446886446885
+      },
+      "after": {
+        "cases": 100,
+        "top1": 23,
+        "top5": 45,
+        "top20": 56,
+        "mrr": 0.32686446886446885
+      },
+      "no_count_loss": true
+    },
+    "recovery:heldout": {
+      "before": {
+        "cases": 500,
+        "top1": 109,
+        "top5": 199,
+        "top20": 256,
+        "mrr": 0.29593273874388426
+      },
+      "after": {
+        "cases": 500,
+        "top1": 110,
+        "top5": 198,
+        "top20": 256,
+        "mrr": 0.2970328913690369
+      },
+      "no_count_loss": false
+    },
+    "retrieval:validation": {
+      "before": {
+        "cases": 100,
+        "top1": 21,
+        "top5": 37,
+        "top20": 51,
+        "mrr": 0.2726020733652313
+      },
+      "after": {
+        "cases": 100,
+        "top1": 20,
+        "top5": 37,
+        "top20": 51,
+        "mrr": 0.26817763157894736
+      },
+      "no_count_loss": false
+    },
+    "joint:heldout": {
+      "before": {
+        "cases": 500,
+        "top1": 107,
+        "top5": 180,
+        "top20": 236,
+        "mrr": 0.27849866677010643
+      },
+      "after": {
+        "cases": 500,
+        "top1": 108,
+        "top5": 180,
+        "top20": 237,
+        "mrr": 0.27984581684225646
+      },
+      "no_count_loss": true
+    }
+  },
+  "no_per_set_count_loss": false,
+  "rank_changes": [
+    {
+      "source": "context-search:validation",
+      "code": "rpqugjofbqhgimorisuureru",
+      "target": "呢把聲係用程式合成出嚟嘅",
+      "before": 3,
+      "after": 4
+    },
+    {
+      "source": "context-search:validation",
+      "code": "mfhinnrnorkborrburmrr",
+      "target": "不得了喇個病人唔見咗啊",
+      "before": 14,
+      "after": 16
+    },
+    {
+      "source": "context-search:validation",
+      "code": "hivirmosithjyc",
+      "target": "我約咗佢禮拜六",
+      "before": 14,
+      "after": 12
+    },
+    {
+      "source": "context-search:validation",
+      "code": "rporpurdyujlrrca",
+      "target": "呢個包味道都唔錯",
+      "before": 3,
+      "after": 1
+    },
+    {
+      "source": "context-search:validation",
+      "code": "hivdbehiruimwm",
+      "target": "我好愛我嘅祖國",
+      "before": 3,
+      "after": 1
+    },
+    {
+      "source": "context-search:validation",
+      "code": "oskbmgitbuekwsrmjphb",
+      "target": "佢冇厘禮貌激嬲咗老師",
+      "before": 9,
+      "after": 8
+    },
+    {
+      "source": "joint:validation",
+      "code": "oforosrdjcofciajqrdfrqwqivrvrdrs",
+      "target": "你估佢哋真係公開招標咩圍威喂㗎咋",
+      "before": 10,
+      "after": 9
+    },
+    {
+      "source": "joint:validation",
+      "code": "ckwirfhimmyhrrnjyuyrrmhh",
+      "target": "父母喺我五歲嗰陣就過咗身",
+      "before": 10,
+      "after": 9
+    },
+    {
+      "source": "joint:validation",
+      "code": "hiipyowrhbrdofrr",
+      "target": "我應該點稱呼你啊",
+      "before": 19,
+      "after": 18
+    },
+    {
+      "source": "joint:validation",
+      "code": "oswkkbodhdmoqomofodhwhdha",
+      "target": "佢因病休學一年但係保留學籍",
+      "before": 8,
+      "after": 7
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "hivirmosamtbycuuhn",
+      "target": "我約咗佢星期六出街",
+      "before": 14,
+      "after": 13
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "rkrpkbyurrvdovrmnigfodrnrt",
+      "target": "喉嚨痛就唔好食咁多熱氣嘢啦",
+      "before": 16,
+      "after": 17
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "hirdonasotumfgofifrmyvpjrrrryrrmhhruevev",
+      "target": "我哋今日聚首一堂係為咗哀悼啱啱過咗身嘅婆婆",
+      "before": 9,
+      "after": 7
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "rfwjtdtcitymmlhibrbrhdorafhwop",
+      "target": "喺畢業典禮上面我同同學合照留念",
+      "before": 3,
+      "after": 4
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "hibrosybhimebmmdordrnhirroavoojos",
+      "target": "我同佢講得一清二楚㗎喇我唔會嫁俾佢",
+      "before": 17,
+      "after": 18
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "hiabyuqtmgruchuureovmyoert",
+      "target": "得閒就揾班兄弟出嚟食下飯啦",
+      "before": 6,
+      "after": 7
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "ororithjjlkborfrporotgcyc",
+      "target": "個個禮拜都有人喺呢個位賣旗",
+      "before": 3,
+      "after": 1
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "rpjeewvdrnre",
+      "target": "呢支酒好嘢嚟",
+      "before": 5,
+      "after": 6
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "rpaalpqoocruyeydpuqrvvmeyrmkqomebrggodyimehihi",
+      "target": "呢間中心提供嘅設施包括網球高爾夫球同埋保齡球等等",
+      "before": 12,
+      "after": 13
+    },
+    {
+      "source": "retrieval:validation",
+      "code": "kbygonoqhiyrmblckbpnmkvf",
+      "target": "希望今年風調雨順冇乜天災",
+      "before": 20,
+      "after": 19
+    },
+    {
+      "source": "retrieval:validation",
+      "code": "mkygjkjkoaniioevrcrelwmoijk",
+      "target": "天主教教會多次派員嚟中國傳教",
+      "before": 5,
+      "after": 4
+    },
+    {
+      "source": "retrieval:validation",
+      "code": "hiykrmoedfrfofkmml",
+      "target": "我放咗隻杯喺你左面",
+      "before": 15,
+      "after": 16
+    },
+    {
+      "source": "retrieval:validation",
+      "code": "mkiiipyoifrpwobensmlrrofomwwqmhnrpwo",
+      "target": "政府應該為民眾服務而唔係企圖控制民眾",
+      "before": 11,
+      "after": 10
+    },
+    {
+      "source": "retrieval:validation",
+      "code": "hiieilhjonjlygosmjmjjvjvyere",
+      "target": "我求神拜佛都望佢平平安安返嚟",
+      "before": 1,
+      "after": 2
+    },
+    {
+      "source": "joint:heldout",
+      "code": "oslehrifvinwxkyjiohejcksaeniruhaeuwsmoq",
+      "target": "佢被譽為繼陳奕迅之後實力最強嘅香港男歌手",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "joint:heldout",
+      "code": "hibrosocyrrpoqjn",
+      "target": "我同佢傾過呢件事",
+      "before": 9,
+      "after": 10
+    },
+    {
+      "source": "joint:heldout",
+      "code": "dmlahijdbhjurrmrrrmrvogbhivcoarr",
+      "target": "本書我未睇完啊可唔可以幫我續借啊",
+      "before": 15,
+      "after": 14
+    },
+    {
+      "source": "joint:heldout",
+      "code": "dmlahikmeymsuvmjfju",
+      "target": "本書我大致上已經寫完",
+      "before": 4,
+      "after": 3
+    },
+    {
+      "source": "joint:heldout",
+      "code": "hnuofvdebqubtksrd",
+      "target": "行山係好消耗體力㗎",
+      "before": 11,
+      "after": 12
+    },
+    {
+      "source": "joint:heldout",
+      "code": "oskbygrfmmjyhiotnwmtd",
+      "target": "佢希望喺三十歲之前置業",
+      "before": 14,
+      "after": 13
+    },
+    {
+      "source": "joint:heldout",
+      "code": "rpaasgaanbwcmmaftuajqhipyovivdog",
+      "target": "呢間屋間隔四正景觀開揚應該幾好住",
+      "before": 15,
+      "after": 14
+    },
+    {
+      "source": "joint:heldout",
+      "code": "hikbjnofrrskqrp",
+      "target": "我冇事你唔駛擔心",
+      "before": 3,
+      "after": 1
+    },
+    {
+      "source": "joint:heldout",
+      "code": "rrorecrcruqhduvdyiotogr",
+      "target": "嗰個演員嘅扮相好討人歡喜",
+      "before": 16,
+      "after": 15
+    },
+    {
+      "source": "joint:heldout",
+      "code": "rrvdmbokyirtythmhirdjlorofofqhrn",
+      "target": "唔好再做戲啦盧生我哋都知你係扮嘢",
+      "before": 13,
+      "after": 12
+    },
+    {
+      "source": "joint:heldout",
+      "code": "ncvmhirdrpiepnrnawjmjlkbofmrvoykp",
+      "target": "小姐我哋呢度乜嘢晒士都有你可以放心",
+      "before": 3,
+      "after": 5
+    }
+  ],
+  "exact_codes_and_display_bounds": true,
+  "gate": {
+    "new_counts_nondecreasing": true,
+    "new_first_or_top5_gain": true,
+    "old_counts_nondecreasing": false,
+    "old_per_set_loss_within_one_pp": true
+  },
+  "qualified": false,
+  "new150": {
+    "before": {
+      "cases": 150,
+      "top1": 22,
+      "top5": 53,
+      "top20": 77,
+      "mrr": 0.23972046947433942
+    },
+    "after": {
+      "cases": 150,
+      "top1": 24,
+      "top5": 53,
+      "top20": 77,
+      "mrr": 0.24816623667010665
+    }
+  },
+  "old1300": {
+    "before": {
+      "cases": 1300,
+      "top1": 279,
+      "top5": 505,
+      "top20": 659,
+      "mrr": 0.28995230430441193
+    },
+    "after": {
+      "cases": 1300,
+      "top1": 280,
+      "top5": 504,
+      "top20": 660,
+      "mrr": 0.2905863123903431
+    }
+  },
+  "selection_key": [
+    0.20266666666666666,
+    0.3948888888888889,
+    0.5282222222222223,
+    0.2863789108165656
+  ]
+}
