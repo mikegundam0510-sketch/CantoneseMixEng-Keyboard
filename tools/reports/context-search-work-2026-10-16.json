@@ -1,0 +1,292 @@
+{
+  "baseline_revision": "e209474",
+  "diagnosis": {
+    "baseline_revision": "e209474",
+    "cases": 264,
+    "categories": {
+      "prefix_search_lost": 166,
+      "outside_display20": 67,
+      "completed_pool_cut": 28,
+      "outside_static_option_bounds": 1,
+      "ordinary_options_uncovered": 2
+    },
+    "all_ordinary_lists_match": true,
+    "source_sha256": "a1a88fc67693d0a06846a671ded6e4db68a48ea15a90e924d4ff001be61a7504",
+    "outputs": {
+      "audit": "185785ca89c49aad8b7cc1830fc1cca4dbc46c5125d5cf291fae1cd443b24fed",
+      "visible": "1fdacd97c19c769e70fc7ce0fb7ccaa45ee394be7464e2c6808025e07477be29"
+    },
+    "columns": "source/context/code/gold/stage/legal/static_bound/ordinary_selected_bound/generated/complete/eligible/first_observed_prefix_loss/teacher_segments",
+    "limits": "Observed old500 only, not independent accuracy. Gold is read only by archive diagnostic instrumentation/after-search DP, not ordinary search decisions; no training comparisons or app hooks. Selected-options DP is an upper bound aggregated from actual visits, not an exhaustive causal account. A missing option can follow prior prefix loss. Static bounds are vocabulary24/64 and character64/HK particles. No reconstructed path is inserted into inference."
+  },
+  "protocol_sha256": "5a5d987b97d09f37d45528e301ab921554d6955400e2a2efa3fd7bb571c04ade",
+  "selection": {
+    "protocol_sha256": "5a5d987b97d09f37d45528e301ab921554d6955400e2a2efa3fd7bb571c04ade",
+    "selected": null,
+    "fresh500_decoded": false,
+    "trials": {
+      "prefix40": {
+        "before": {
+          "cases": 1450,
+          "top1": 301,
+          "top5": 558,
+          "top20": 736,
+          "mrr": 0.28475590759785274
+        },
+        "after": {
+          "cases": 1450,
+          "top1": 302,
+          "top5": 558,
+          "top20": 738,
+          "mrr": 0.2855072618477924
+        },
+        "new150": {
+          "before": {
+            "cases": 150,
+            "top1": 22,
+            "top5": 53,
+            "top20": 77,
+            "mrr": 0.23972046947433942
+          },
+          "after": {
+            "cases": 150,
+            "top1": 22,
+            "top5": 53,
+            "top20": 77,
+            "mrr": 0.23975221550608547
+          }
+        },
+        "old1300": {
+          "before": {
+            "cases": 1300,
+            "top1": 279,
+            "top5": 505,
+            "top20": 659,
+            "mrr": 0.28995230430441193
+          },
+          "after": {
+            "cases": 1300,
+            "top1": 280,
+            "top5": 505,
+            "top20": 661,
+            "mrr": 0.29078669027183557
+          }
+        },
+        "gate": {
+          "new_counts_nondecreasing": true,
+          "new_first_or_top5_gain": false,
+          "old_counts_nondecreasing": true,
+          "old_per_set_loss_within_one_pp": true
+        },
+        "qualified": false,
+        "selection_key": [
+          0.2031111111111111,
+          0.39655555555555555,
+          0.5298888888888889,
+          0.28712647030997135
+        ]
+      },
+      "prefix32": {
+        "before": {
+          "cases": 1450,
+          "top1": 301,
+          "top5": 558,
+          "top20": 736,
+          "mrr": 0.28475590759785274
+        },
+        "after": {
+          "cases": 1450,
+          "top1": 301,
+          "top5": 555,
+          "top20": 731,
+          "mrr": 0.2840097989889545
+        },
+        "new150": {
+          "before": {
+            "cases": 150,
+            "top1": 22,
+            "top5": 53,
+            "top20": 77,
+            "mrr": 0.23972046947433942
+          },
+          "after": {
+            "cases": 150,
+            "top1": 22,
+            "top5": 52,
+            "top20": 76,
+            "mrr": 0.2381623462250397
+          }
+        },
+        "old1300": {
+          "before": {
+            "cases": 1300,
+            "top1": 279,
+            "top5": 505,
+            "top20": 659,
+            "mrr": 0.28995230430441193
+          },
+          "after": {
+            "cases": 1300,
+            "top1": 279,
+            "top5": 503,
+            "top20": 655,
+            "mrr": 0.28929988969248316
+          }
+        },
+        "gate": {
+          "new_counts_nondecreasing": false,
+          "new_first_or_top5_gain": false,
+          "old_counts_nondecreasing": false,
+          "old_per_set_loss_within_one_pp": true
+        },
+        "qualified": false,
+        "selection_key": [
+          0.20277777777777775,
+          0.3934444444444445,
+          0.5227777777777778,
+          0.2853029303179716
+        ]
+      },
+      "completed": {
+        "before": {
+          "cases": 1450,
+          "top1": 301,
+          "top5": 558,
+          "top20": 736,
+          "mrr": 0.28475590759785274
+        },
+        "after": {
+          "cases": 1450,
+          "top1": 301,
+          "top5": 558,
+          "top20": 736,
+          "mrr": 0.28475590759785274
+        },
+        "new150": {
+          "before": {
+            "cases": 150,
+            "top1": 22,
+            "top5": 53,
+            "top20": 77,
+            "mrr": 0.23972046947433942
+          },
+          "after": {
+            "cases": 150,
+            "top1": 22,
+            "top5": 53,
+            "top20": 77,
+            "mrr": 0.23972046947433942
+          }
+        },
+        "old1300": {
+          "before": {
+            "cases": 1300,
+            "top1": 279,
+            "top5": 505,
+            "top20": 659,
+            "mrr": 0.28995230430441193
+          },
+          "after": {
+            "cases": 1300,
+            "top1": 279,
+            "top5": 505,
+            "top20": 659,
+            "mrr": 0.28995230430441193
+          }
+        },
+        "gate": {
+          "new_counts_nondecreasing": true,
+          "new_first_or_top5_gain": false,
+          "old_counts_nondecreasing": true,
+          "old_per_set_loss_within_one_pp": true
+        },
+        "qualified": false,
+        "selection_key": [
+          0.20144444444444445,
+          0.3952222222222222,
+          0.527888888888889,
+          0.28522913389595533
+        ]
+      },
+      "combined": {
+        "before": {
+          "cases": 1450,
+          "top1": 301,
+          "top5": 558,
+          "top20": 736,
+          "mrr": 0.28475590759785274
+        },
+        "after": {
+          "cases": 1450,
+          "top1": 302,
+          "top5": 558,
+          "top20": 738,
+          "mrr": 0.2855072618477924
+        },
+        "new150": {
+          "before": {
+            "cases": 150,
+            "top1": 22,
+            "top5": 53,
+            "top20": 77,
+            "mrr": 0.23972046947433942
+          },
+          "after": {
+            "cases": 150,
+            "top1": 22,
+            "top5": 53,
+            "top20": 77,
+            "mrr": 0.23975221550608547
+          }
+        },
+        "old1300": {
+          "before": {
+            "cases": 1300,
+            "top1": 279,
+            "top5": 505,
+            "top20": 659,
+            "mrr": 0.28995230430441193
+          },
+          "after": {
+            "cases": 1300,
+            "top1": 280,
+            "top5": 505,
+            "top20": 661,
+            "mrr": 0.29078669027183557
+          }
+        },
+        "gate": {
+          "new_counts_nondecreasing": true,
+          "new_first_or_top5_gain": false,
+          "old_counts_nondecreasing": true,
+          "old_per_set_loss_within_one_pp": true
+        },
+        "qualified": false,
+        "selection_key": [
+          0.2031111111111111,
+          0.39655555555555555,
+          0.5298888888888889,
+          0.28712647030997135
+        ]
+      }
+    },
+    "decision": "Reject all four; retain parent-main production and leave fresh500 untested"
+  },
+  "tests": {
+    "python": 6,
+    "native_archives": 5,
+    "diagnostic_complete_list_parity": 264,
+    "changed_label_list_parity": 12,
+    "cached_baseline_list_parity": 20,
+    "data_replay": "All5 artifacts byte-identical"
+  },
+  "decision": "Reject all four search policies: new150 first22/top5=53/top20=77 unchanged in conservative/complete/combined arms, worse in prefix32. Original app source/model/signing/layout/version retained; no APK. Fresh500 remains un-decoded for the separately frozen next long-context model experiment.",
+  "not_run": [
+    "selected3893 guard",
+    "Single32",
+    "Android/Lint",
+    "paired speed",
+    "fresh500 decoding"
+  ],
+  "next": "Separate low-parameter recurrent whole-candidate scorer trained only on licensed clean final TRAIN comparisons. Search grid remains closed; no source/case/threshold changes based on fresh500 outcomes."
+}

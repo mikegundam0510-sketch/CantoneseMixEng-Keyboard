@@ -1,0 +1,5 @@
+{
+  "cases": 12,
+  "complete_lists_match": true,
+  "note": "Replace gold only with an unrelated Han string. Labels affect archive diagnostics, never ordinary search decisions."
+}

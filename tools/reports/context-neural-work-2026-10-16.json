@@ -1,0 +1,450 @@
+{
+  "parent_revision": "e209474",
+  "version": "0.6.39",
+  "version_code": 46,
+  "scope": "Separately frozen longer-context whole-candidate residual after rejecting all four bounded search policies. Research tools/data/results only.",
+  "selection": {
+    "selected": null,
+    "protocol_sha256": "6af3096ea81359d988a63fda86b752fc1ab33e268a7c8cfe226bdeb1fc2c90c9",
+    "fresh500_decoded": false,
+    "trials": {
+      "half": {
+        "before": {
+          "cases": 1450,
+          "top1": 301,
+          "top5": 558,
+          "top20": 736,
+          "mrr": 0.28475590759785274
+        },
+        "after": {
+          "cases": 1450,
+          "top1": 299,
+          "top5": 559,
+          "top20": 736,
+          "mrr": 0.28552704746056407
+        },
+        "new150": {
+          "before": {
+            "cases": 150,
+            "top1": 22,
+            "top5": 53,
+            "top20": 77,
+            "mrr": 0.23972046947433942
+          },
+          "after": {
+            "cases": 150,
+            "top1": 25,
+            "top5": 57,
+            "top20": 74,
+            "mrr": 0.2550779306406241
+          }
+        },
+        "old1300": {
+          "before": {
+            "cases": 1300,
+            "top1": 279,
+            "top5": 505,
+            "top20": 659,
+            "mrr": 0.28995230430441193
+          },
+          "after": {
+            "cases": 1300,
+            "top1": 274,
+            "top5": 502,
+            "top20": 662,
+            "mrr": 0.28904040709363404
+          }
+        },
+        "gate": {
+          "new_counts_nondecreasing": false,
+          "new_first_or_top5_gain": true,
+          "old_counts_nondecreasing": false,
+          "old_per_set_loss_within_one_pp": false
+        },
+        "qualified": false,
+        "selection_key": [
+          0.2031111111111111,
+          0.39866666666666667,
+          0.5255555555555556,
+          0.2882521985076423
+        ]
+      },
+      "full": {
+        "before": {
+          "cases": 1450,
+          "top1": 301,
+          "top5": 558,
+          "top20": 736,
+          "mrr": 0.28475590759785274
+        },
+        "after": {
+          "cases": 1450,
+          "top1": 289,
+          "top5": 546,
+          "top20": 735,
+          "mrr": 0.27800809517813363
+        },
+        "new150": {
+          "before": {
+            "cases": 150,
+            "top1": 22,
+            "top5": 53,
+            "top20": 77,
+            "mrr": 0.23972046947433942
+          },
+          "after": {
+            "cases": 150,
+            "top1": 23,
+            "top5": 58,
+            "top20": 73,
+            "mrr": 0.24643205487323133
+          }
+        },
+        "old1300": {
+          "before": {
+            "cases": 1300,
+            "top1": 279,
+            "top5": 505,
+            "top20": 659,
+            "mrr": 0.28995230430441193
+          },
+          "after": {
+            "cases": 1300,
+            "top1": 266,
+            "top5": 488,
+            "top20": 662,
+            "mrr": 0.2816514844440839
+          }
+        },
+        "gate": {
+          "new_counts_nondecreasing": false,
+          "new_first_or_top5_gain": true,
+          "old_counts_nondecreasing": false,
+          "old_per_set_loss_within_one_pp": false
+        },
+        "qualified": false,
+        "selection_key": [
+          0.1928888888888889,
+          0.39511111111111114,
+          0.5231111111111111,
+          0.27838805502346525
+        ]
+      }
+    },
+    "decision": "Reject both recurrent residual strengths; retain original app and leave fresh500 untested"
+  },
+  "paired_and_per_set": {
+    "half": {
+      "paired": {
+        "first": {
+          "gained": 15,
+          "lost": 17,
+          "net": -2,
+          "paired_exact_two_sided_p": 0.860050065908581
+        },
+        "top5": {
+          "gained": 14,
+          "lost": 13,
+          "net": 1,
+          "paired_exact_two_sided_p": 1
+        },
+        "top20": {
+          "gained": 15,
+          "lost": 15,
+          "net": 0,
+          "paired_exact_two_sided_p": 1
+        }
+      },
+      "per_set": {
+        "context-search:validation": {
+          "before": {
+            "cases": 150,
+            "top1": 22,
+            "top5": 53,
+            "top20": 77,
+            "mrr": 0.23972046947433942
+          },
+          "after": {
+            "cases": 150,
+            "top1": 25,
+            "top5": 57,
+            "top20": 74,
+            "mrr": 0.2550779306406241
+          },
+          "no_count_loss": false
+        },
+        "joint:validation": {
+          "before": {
+            "cases": 100,
+            "top1": 19,
+            "top5": 44,
+            "top20": 60,
+            "mrr": 0.29775638615770195
+          },
+          "after": {
+            "cases": 100,
+            "top1": 17,
+            "top5": 44,
+            "top20": 59,
+            "mrr": 0.28699906015037596
+          },
+          "no_count_loss": false
+        },
+        "recovery:validation": {
+          "before": {
+            "cases": 100,
+            "top1": 23,
+            "top5": 45,
+            "top20": 56,
+            "mrr": 0.32686446886446885
+          },
+          "after": {
+            "cases": 100,
+            "top1": 24,
+            "top5": 46,
+            "top20": 57,
+            "mrr": 0.33773784548784547
+          },
+          "no_count_loss": true
+        },
+        "recovery:heldout": {
+          "before": {
+            "cases": 500,
+            "top1": 109,
+            "top5": 199,
+            "top20": 256,
+            "mrr": 0.29593273874388426
+          },
+          "after": {
+            "cases": 500,
+            "top1": 106,
+            "top5": 195,
+            "top20": 253,
+            "mrr": 0.2920814955770064
+          },
+          "no_count_loss": false
+        },
+        "retrieval:validation": {
+          "before": {
+            "cases": 100,
+            "top1": 21,
+            "top5": 37,
+            "top20": 51,
+            "mrr": 0.2726020733652313
+          },
+          "after": {
+            "cases": 100,
+            "top1": 22,
+            "top5": 36,
+            "top20": 51,
+            "mrr": 0.27892584681400473
+          },
+          "no_count_loss": false
+        },
+        "joint:heldout": {
+          "before": {
+            "cases": 500,
+            "top1": 107,
+            "top5": 180,
+            "top20": 236,
+            "mrr": 0.27849866677010643
+          },
+          "after": {
+            "cases": 500,
+            "top1": 105,
+            "top5": 181,
+            "top20": 242,
+            "mrr": 0.27869101237599686
+          },
+          "no_count_loss": false
+        }
+      },
+      "exact_codes_and_display_bounds": true
+    },
+    "full": {
+      "paired": {
+        "first": {
+          "gained": 23,
+          "lost": 35,
+          "net": -12,
+          "paired_exact_two_sided_p": 0.14800580076020597
+        },
+        "top5": {
+          "gained": 24,
+          "lost": 36,
+          "net": -12,
+          "paired_exact_two_sided_p": 0.1550019040032606
+        },
+        "top20": {
+          "gained": 29,
+          "lost": 30,
+          "net": -1,
+          "paired_exact_two_sided_p": 1
+        }
+      },
+      "per_set": {
+        "context-search:validation": {
+          "before": {
+            "cases": 150,
+            "top1": 22,
+            "top5": 53,
+            "top20": 77,
+            "mrr": 0.23972046947433942
+          },
+          "after": {
+            "cases": 150,
+            "top1": 23,
+            "top5": 58,
+            "top20": 73,
+            "mrr": 0.24643205487323133
+          },
+          "no_count_loss": false
+        },
+        "joint:validation": {
+          "before": {
+            "cases": 100,
+            "top1": 19,
+            "top5": 44,
+            "top20": 60,
+            "mrr": 0.29775638615770195
+          },
+          "after": {
+            "cases": 100,
+            "top1": 19,
+            "top5": 46,
+            "top20": 59,
+            "mrr": 0.30053968253968255
+          },
+          "no_count_loss": false
+        },
+        "recovery:validation": {
+          "before": {
+            "cases": 100,
+            "top1": 23,
+            "top5": 45,
+            "top20": 56,
+            "mrr": 0.32686446886446885
+          },
+          "after": {
+            "cases": 100,
+            "top1": 20,
+            "top5": 43,
+            "top20": 56,
+            "mrr": 0.2969604700854701
+          },
+          "no_count_loss": false
+        },
+        "recovery:heldout": {
+          "before": {
+            "cases": 500,
+            "top1": 109,
+            "top5": 199,
+            "top20": 256,
+            "mrr": 0.29593273874388426
+          },
+          "after": {
+            "cases": 500,
+            "top1": 106,
+            "top5": 187,
+            "top20": 252,
+            "mrr": 0.287786313188016
+          },
+          "no_count_loss": false
+        },
+        "retrieval:validation": {
+          "before": {
+            "cases": 100,
+            "top1": 21,
+            "top5": 37,
+            "top20": 51,
+            "mrr": 0.2726020733652313
+          },
+          "after": {
+            "cases": 100,
+            "top1": 20,
+            "top5": 37,
+            "top20": 51,
+            "mrr": 0.2670028670160249
+          },
+          "no_count_loss": false
+        },
+        "joint:heldout": {
+          "before": {
+            "cases": 500,
+            "top1": 107,
+            "top5": 180,
+            "top20": 236,
+            "mrr": 0.27849866677010643
+          },
+          "after": {
+            "cases": 500,
+            "top1": 101,
+            "top5": 175,
+            "top20": 244,
+            "mrr": 0.2716069424383666
+          },
+          "no_count_loss": false
+        }
+      },
+      "exact_codes_and_display_bounds": true
+    }
+  },
+  "training": {
+    "numpy": "2.3.5",
+    "vocabulary": 1418,
+    "embedding_dimension": 16,
+    "hidden": 16,
+    "initial_internal_validation_loss": 0.24764093575168453,
+    "best_internal_validation_loss": 0.21834235762800355,
+    "best_epoch": 1
+  },
+  "implementation_checks": {
+    "python_tests": 6,
+    "gradient_coordinates": 11,
+    "java_python_score_rows_per_strength": 60,
+    "malformed_loaders_rejected_per_strength": 8,
+    "primitive_model_bytes": 102816,
+    "optional_null_complete_list_parity": 20,
+    "actual_enabled_decode_fixture": "null_head=丙乙 enabled_head=甲乙 exact_code=true; controlled fixture only, not measured accuracy"
+  },
+  "reproducibility": {
+    "models_and_full_training_report": {
+      "context-gru-0.5.b64": "e7e76eeb6aefd72dfef97aa5e0ca935e447ebfb8be39ed114f24794da6eb7b70",
+      "context-gru-1.b64": "c930af86bbf966eea6c13d5001f8f169b4eb44e42396f98bef7b78037d689aa4",
+      "report.json": "e1ecd2ddec550b68c6d0295883bb623e66d5bb777fa123757362c7985a872801"
+    },
+    "training_pair_and_manifest_replay": true,
+    "preceding_search_data_replay_artifacts": 5
+  },
+  "decision": "Reject both strengths: new top20 and old first/top5 losses. Preserve parent production source/assets and leave reserve500 un-decoded. No significant improvement or 1.0 readiness established.",
+  "production_changed": false,
+  "apk_built": false,
+  "fresh500_decoded": false,
+  "not_run": [
+    "3893 model-enabled guard",
+    "model-enabled Single32",
+    "Android JUnit/Lint",
+    "paired wall/CPU speed",
+    "fresh500 decoding",
+    "physical Fold7 and update data retention"
+  ],
+  "next_hypothesis": "Mine current-parent actual prefix/final rivals on licensed TRAIN; jointly improve prefix survival and whole-sentence ordering. Historical final-only margins and final-only placement remain limitations. Needs a separate frozen protocol and unused final evaluation.",
+  "evidence_sha256": {
+    "tools/ContextGRUIntegrationCheck.java": "f4ba6b23fb2e9871acb50777fea54593ca50832b598ebdd5111e06c22af292c7",
+    "tools/data/context_neural/context-gru-0.5.b64": "e7e76eeb6aefd72dfef97aa5e0ca935e447ebfb8be39ed114f24794da6eb7b70",
+    "tools/data/context_neural/context-gru-1.b64": "c930af86bbf966eea6c13d5001f8f169b4eb44e42396f98bef7b78037d689aa4",
+    "tools/data/context_neural/manifest.json": "e66db1baa5a61174a4069d2da005e8ac99ec8092559910392d4ed9ef2085b391",
+    "tools/data/context_neural/protocol.json": "6af3096ea81359d988a63fda86b752fc1ab33e268a7c8cfe226bdeb1fc2c90c9",
+    "tools/data/context_neural/selection.json": "b4619feb2298f7dfc675c20b06565feacc5694da7226cbf04be08b226a7be50a",
+    "tools/data/context_neural/training-report.json": "e1ecd2ddec550b68c6d0295883bb623e66d5bb777fa123757362c7985a872801",
+    "tools/reports/context-neural-2026-10-16/full-score.txt": "80240607280e2326b843249d2528ff7cce074bcb0b00bc82e22295235bd4db01",
+    "tools/reports/context-neural-2026-10-16/full.json": "f92fcd13a25128897b1eb061c44836d3a195ad6ec0c865ff0cf8b6c377c4db45",
+    "tools/reports/context-neural-2026-10-16/full.tsv": "b0f6cc5f5093449655565ee27e39b2d3710e44adbff5aa75db171fe2f2025a14",
+    "tools/reports/context-neural-2026-10-16/half-score.txt": "80240607280e2326b843249d2528ff7cce074bcb0b00bc82e22295235bd4db01",
+    "tools/reports/context-neural-2026-10-16/half.json": "d1043145d13c4c8f1d8553aab1ce5d4303c204ece924eeebae16e0a3a2d9c203",
+    "tools/reports/context-neural-2026-10-16/half.tsv": "532d1f3480ff77ef9e6d9cb38fe1f11f858d383e09ae31c76e608311f2b0cbfc",
+    "tools/reports/context-neural-2026-10-16/integration.txt": "2e79877351b0232b77f501abe811b15acefc4389b5ff445860c4b2a2a8bb8162",
+    "tools/reports/context-neural-2026-10-16/null-parity.tsv": "f4fe2b9a3fbd5ed769f1fe3a029c1e732c87691052d135df12b8249f02f9dc58",
+    "tools/reports/context-neural-2026-10-16/python-tests.txt": "4600747e35d53afc51c522b9f31b241c92c9ba6c3abaa1e4c4ec9a5c75deb6f3"
+  }
+}

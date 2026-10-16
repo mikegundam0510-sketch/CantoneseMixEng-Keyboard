@@ -1,0 +1,11 @@
+test_families_and_training_exclusions (test_context_search.ContextSearchData.test_families_and_training_exclusions) ... ok
+test_new_gain_with_old_preserved_qualifies (test_context_search.ContextSearchData.test_new_gain_with_old_preserved_qualifies) ... ok
+test_new_loss_is_not_hidden_by_old_gain (test_context_search.ContextSearchData.test_new_loss_is_not_hidden_by_old_gain) ... ok
+test_old_only_gain_does_not_qualify (test_context_search.ContextSearchData.test_old_only_gain_does_not_qualify) ... ok
+test_partial_and_inexact_outputs_are_rejected (test_context_search.ContextSearchData.test_partial_and_inexact_outputs_are_rejected) ... ok
+test_unchanged_lists_do_not_qualify (test_context_search.ContextSearchData.test_unchanged_lists_do_not_qualify) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 10.836s
+
+OK

@@ -1,0 +1,321 @@
+{
+  "baseline_revision": "e209474",
+  "cases_sha256": "fd874eeed989500d1cbbc483e70342d865af9e086360edc7978387a0a1e95743",
+  "output_sha256": {
+    "before": "e421d07e647a34fc2d377513b7733f8e7ed9c17029055957cc4b4590a60db5a1",
+    "after": "307784a3ead575cb137d8705d1545ad0e8ac747b015591df49ff23281fbf5a8c"
+  },
+  "before": {
+    "cases": 1450,
+    "top1": 301,
+    "top5": 558,
+    "top20": 736,
+    "mrr": 0.28475590759785274
+  },
+  "after": {
+    "cases": 1450,
+    "top1": 302,
+    "top5": 558,
+    "top20": 738,
+    "mrr": 0.2855072618477924
+  },
+  "paired": {
+    "first": {
+      "gained": 1,
+      "lost": 0,
+      "net": 1,
+      "paired_exact_two_sided_p": 1
+    },
+    "top5": {
+      "gained": 1,
+      "lost": 1,
+      "net": 0,
+      "paired_exact_two_sided_p": 1
+    },
+    "top20": {
+      "gained": 3,
+      "lost": 1,
+      "net": 2,
+      "paired_exact_two_sided_p": 0.625
+    }
+  },
+  "per_set": {
+    "context-search:validation": {
+      "before": {
+        "cases": 150,
+        "top1": 22,
+        "top5": 53,
+        "top20": 77,
+        "mrr": 0.23972046947433942
+      },
+      "after": {
+        "cases": 150,
+        "top1": 22,
+        "top5": 53,
+        "top20": 77,
+        "mrr": 0.23975221550608547
+      },
+      "no_count_loss": true
+    },
+    "joint:validation": {
+      "before": {
+        "cases": 100,
+        "top1": 19,
+        "top5": 44,
+        "top20": 60,
+        "mrr": 0.29775638615770195
+      },
+      "after": {
+        "cases": 100,
+        "top1": 19,
+        "top5": 45,
+        "top20": 61,
+        "mrr": 0.30248007036822827
+      },
+      "no_count_loss": true
+    },
+    "recovery:validation": {
+      "before": {
+        "cases": 100,
+        "top1": 23,
+        "top5": 45,
+        "top20": 56,
+        "mrr": 0.32686446886446885
+      },
+      "after": {
+        "cases": 100,
+        "top1": 24,
+        "top5": 45,
+        "top20": 56,
+        "mrr": 0.3335311355311355
+      },
+      "no_count_loss": true
+    },
+    "recovery:heldout": {
+      "before": {
+        "cases": 500,
+        "top1": 109,
+        "top5": 199,
+        "top20": 256,
+        "mrr": 0.29593273874388426
+      },
+      "after": {
+        "cases": 500,
+        "top1": 109,
+        "top5": 198,
+        "top20": 256,
+        "mrr": 0.2956667999441219
+      },
+      "no_count_loss": false
+    },
+    "retrieval:validation": {
+      "before": {
+        "cases": 100,
+        "top1": 21,
+        "top5": 37,
+        "top20": 51,
+        "mrr": 0.2726020733652313
+      },
+      "after": {
+        "cases": 100,
+        "top1": 21,
+        "top5": 37,
+        "top20": 51,
+        "mrr": 0.2726903086593489
+      },
+      "no_count_loss": true
+    },
+    "joint:heldout": {
+      "before": {
+        "cases": 500,
+        "top1": 107,
+        "top5": 180,
+        "top20": 236,
+        "mrr": 0.27849866677010643
+      },
+      "after": {
+        "cases": 500,
+        "top1": 107,
+        "top5": 180,
+        "top20": 237,
+        "mrr": 0.27863829185090794
+      },
+      "no_count_loss": true
+    }
+  },
+  "no_per_set_count_loss": false,
+  "rank_changes": [
+    {
+      "source": "context-search:validation",
+      "code": "himnmkiirulbbshumgrrokgiht",
+      "target": "得到政府嘅補助先至唔使執笠",
+      "before": 15,
+      "after": 14
+    },
+    {
+      "source": "joint:validation",
+      "code": "kbbuvioqtmriyprrmnof",
+      "target": "冇見幾年差啲認唔到你",
+      "before": 19,
+      "after": 20
+    },
+    {
+      "source": "joint:validation",
+      "code": "oswkkbodhdmoqomofodhwhdha",
+      "target": "佢因病休學一年但係保留學籍",
+      "before": 8,
+      "after": 10
+    },
+    {
+      "source": "joint:validation",
+      "code": "hiqwmnrrohithhrrrrhibqmfvrbrofykqkrl",
+      "target": "我抽到嗰份禮物唔啱我用不如同你交換吖",
+      "before": 0,
+      "after": 2
+    },
+    {
+      "source": "recovery:validation",
+      "code": "ofqbmnodlrmqqqqrrrynurs",
+      "target": "你搞到條裙一撻撻咖啡色嘞",
+      "before": 3,
+      "after": 1
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "ofgbcisrokoelkbrrdcuvekbchrn",
+      "target": "你幫公司做假數同踩鋼線冇分別",
+      "before": 4,
+      "after": 0
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "orrmrmmiorhrjdjlrdiocouurn",
+      "target": "估咗咁耐個答案都呼之欲出喇",
+      "before": 10,
+      "after": 9
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "offwhimmqnycrh",
+      "target": "你當我二打六呀",
+      "before": 17,
+      "after": 18
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "mkiirijrrcmormmorjlofrmhaibru",
+      "target": "政府啲官員一個二個都係咁昏庸嘅",
+      "before": 18,
+      "after": 17
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "hifqohfgmvqgreocdv",
+      "target": "我半份糧要攞嚟供樓",
+      "before": 12,
+      "after": 11
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "kgpmrunufgkbbhnurusmhu",
+      "target": "雄性嘅孔雀有彩色嘅羽毛",
+      "before": 10,
+      "after": 11
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "hioebwrukbjvdburh",
+      "target": "我隻貓嘅大髀好肥呀",
+      "before": 16,
+      "after": 17
+    },
+    {
+      "source": "recovery:heldout",
+      "code": "gsybnpoonesvkbrehmmkmegdruvkop",
+      "target": "城市急促發展帶嚟翻天覆地嘅變化",
+      "before": 0,
+      "after": 9
+    },
+    {
+      "source": "retrieval:validation",
+      "code": "osymghppjcruqvmuvdtmhlvoonghmvogiidenn",
+      "target": "佢上場比賽嘅表現好差所以今場要坐冷板凳",
+      "before": 20,
+      "after": 17
+    },
+    {
+      "source": "joint:heldout",
+      "code": "rodvrbmcbrfuufjloffbburuhukeysim",
+      "target": "跳樓吊頸同燒炭都係常見嘅自殺方式",
+      "before": 19,
+      "after": 17
+    },
+    {
+      "source": "joint:heldout",
+      "code": "nrvloswcrmodvdquruvmnumclb",
+      "target": "阿娜佢買咗條好靚嘅紅色頭巾",
+      "before": 14,
+      "after": 13
+    },
+    {
+      "source": "joint:heldout",
+      "code": "oskbygrfmmjyhiotnwmtd",
+      "target": "佢希望喺三十歲之前置業",
+      "before": 14,
+      "after": 13
+    },
+    {
+      "source": "joint:heldout",
+      "code": "hirdrpaaewiroaoiofkbjcmgvrhbruiphu",
+      "target": "我哋呢間酒店會令你有賓至如歸嘅感覺",
+      "before": 0,
+      "after": 19
+    }
+  ],
+  "exact_codes_and_display_bounds": true,
+  "gate": {
+    "new_counts_nondecreasing": true,
+    "new_first_or_top5_gain": false,
+    "old_counts_nondecreasing": true,
+    "old_per_set_loss_within_one_pp": true
+  },
+  "qualified": false,
+  "new150": {
+    "before": {
+      "cases": 150,
+      "top1": 22,
+      "top5": 53,
+      "top20": 77,
+      "mrr": 0.23972046947433942
+    },
+    "after": {
+      "cases": 150,
+      "top1": 22,
+      "top5": 53,
+      "top20": 77,
+      "mrr": 0.23975221550608547
+    }
+  },
+  "old1300": {
+    "before": {
+      "cases": 1300,
+      "top1": 279,
+      "top5": 505,
+      "top20": 659,
+      "mrr": 0.28995230430441193
+    },
+    "after": {
+      "cases": 1300,
+      "top1": 280,
+      "top5": 505,
+      "top20": 661,
+      "mrr": 0.29078669027183557
+    }
+  },
+  "selection_key": [
+    0.2031111111111111,
+    0.39655555555555555,
+    0.5298888888888889,
+    0.28712647030997135
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "pair_source": "tools/data/clean_ranking/model015/pairs.tsv",
+  "pair_source_sha256": "7561030be058c20ecd389542eb17185cf865f2929ed1048e83a83099ae52459f",
+  "licensed_training_sha256": "c4a39e42520a267d9b666ad40c21fd864fa93d62881c846988a21d73719fb87c",
+  "pairs_sha256": "bbadec06bb47bf639e7bba1f4167b53aea0340abdc88ef4d4592fc605ff37b95",
+  "pairs": 19827,
+  "splits": {
+    "train": 17791,
+    "validation": 2036
+  },
+  "domains": {
+    "HK": 11131,
+    "Tatoeba": 5927,
+    "authored": 2102,
+    "UD": 667
+  },
+  "scope": "Only original clean TRAIN final comparisons. Family-disjoint internal neural validation by SHA256; no evaluation corpus or dictionary usage examples fit the model. Internal validation is not keyboard accuracy.",
+  "offsets": "Frozen historical baseline margins clipped to[-4,4]; near the current parent model but not recomputed. This approximation is reported; actual current Java inference determines adoption.",
+  "license": "Retain clean_ranking and original HKCanCor CC BY4/Tatoeba CC BY2FR/UD CC BY-SA4/project credits. NCDOL examples remain evaluation-only."
+}

@@ -1,0 +1,19 @@
+{
+  "baseline_revision": "e209474",
+  "cases": 264,
+  "categories": {
+    "prefix_search_lost": 166,
+    "outside_display20": 67,
+    "completed_pool_cut": 28,
+    "outside_static_option_bounds": 1,
+    "ordinary_options_uncovered": 2
+  },
+  "all_ordinary_lists_match": true,
+  "source_sha256": "a1a88fc67693d0a06846a671ded6e4db68a48ea15a90e924d4ff001be61a7504",
+  "outputs": {
+    "audit": "185785ca89c49aad8b7cc1830fc1cca4dbc46c5125d5cf291fae1cd443b24fed",
+    "visible": "1fdacd97c19c769e70fc7ce0fb7ccaa45ee394be7464e2c6808025e07477be29"
+  },
+  "columns": "source/context/code/gold/stage/legal/static_bound/ordinary_selected_bound/generated/complete/eligible/first_observed_prefix_loss/teacher_segments",
+  "limits": "Observed old500 only, not independent accuracy. Gold is read only by archive diagnostic instrumentation/after-search DP, not ordinary search decisions; no training comparisons or app hooks. Selected-options DP is an upper bound aggregated from actual visits, not an exhaustive causal account. A missing option can follow prior prefix loss. Static bounds are vocabulary24/64 and character64/HK particles. No reconstructed path is inserted into inference."
+}

@@ -1,0 +1,130 @@
+{
+  "selected": null,
+  "protocol_sha256": "6af3096ea81359d988a63fda86b752fc1ab33e268a7c8cfe226bdeb1fc2c90c9",
+  "fresh500_decoded": false,
+  "trials": {
+    "half": {
+      "before": {
+        "cases": 1450,
+        "top1": 301,
+        "top5": 558,
+        "top20": 736,
+        "mrr": 0.28475590759785274
+      },
+      "after": {
+        "cases": 1450,
+        "top1": 299,
+        "top5": 559,
+        "top20": 736,
+        "mrr": 0.28552704746056407
+      },
+      "new150": {
+        "before": {
+          "cases": 150,
+          "top1": 22,
+          "top5": 53,
+          "top20": 77,
+          "mrr": 0.23972046947433942
+        },
+        "after": {
+          "cases": 150,
+          "top1": 25,
+          "top5": 57,
+          "top20": 74,
+          "mrr": 0.2550779306406241
+        }
+      },
+      "old1300": {
+        "before": {
+          "cases": 1300,
+          "top1": 279,
+          "top5": 505,
+          "top20": 659,
+          "mrr": 0.28995230430441193
+        },
+        "after": {
+          "cases": 1300,
+          "top1": 274,
+          "top5": 502,
+          "top20": 662,
+          "mrr": 0.28904040709363404
+        }
+      },
+      "gate": {
+        "new_counts_nondecreasing": false,
+        "new_first_or_top5_gain": true,
+        "old_counts_nondecreasing": false,
+        "old_per_set_loss_within_one_pp": false
+      },
+      "qualified": false,
+      "selection_key": [
+        0.2031111111111111,
+        0.39866666666666667,
+        0.5255555555555556,
+        0.2882521985076423
+      ]
+    },
+    "full": {
+      "before": {
+        "cases": 1450,
+        "top1": 301,
+        "top5": 558,
+        "top20": 736,
+        "mrr": 0.28475590759785274
+      },
+      "after": {
+        "cases": 1450,
+        "top1": 289,
+        "top5": 546,
+        "top20": 735,
+        "mrr": 0.27800809517813363
+      },
+      "new150": {
+        "before": {
+          "cases": 150,
+          "top1": 22,
+          "top5": 53,
+          "top20": 77,
+          "mrr": 0.23972046947433942
+        },
+        "after": {
+          "cases": 150,
+          "top1": 23,
+          "top5": 58,
+          "top20": 73,
+          "mrr": 0.24643205487323133
+        }
+      },
+      "old1300": {
+        "before": {
+          "cases": 1300,
+          "top1": 279,
+          "top5": 505,
+          "top20": 659,
+          "mrr": 0.28995230430441193
+        },
+        "after": {
+          "cases": 1300,
+          "top1": 266,
+          "top5": 488,
+          "top20": 662,
+          "mrr": 0.2816514844440839
+        }
+      },
+      "gate": {
+        "new_counts_nondecreasing": false,
+        "new_first_or_top5_gain": true,
+        "old_counts_nondecreasing": false,
+        "old_per_set_loss_within_one_pp": false
+      },
+      "qualified": false,
+      "selection_key": [
+        0.1928888888888889,
+        0.39511111111111114,
+        0.5231111111111111,
+        0.27838805502346525
+      ]
+    }
+  },
+  "decision": "Reject both recurrent residual strengths; retain original app and leave fresh500 untested"
+}

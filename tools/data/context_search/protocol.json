@@ -1,0 +1,61 @@
+{
+  "baseline_revision": "e209474",
+  "freeze": "Before any new150 or candidate trial outcome; exactly four fixed policies. Old500/800/3893 are observed diagnosis/guards. No post-reserve selection or grid expansion.",
+  "diagnosis": {
+    "cases": 264,
+    "prefix_search_lost": 166,
+    "outside_display20": 67,
+    "completed_pool_cut": 28,
+    "static_outside": 1,
+    "ordinary_options_uncovered": 2,
+    "ordinary_parity": 264,
+    "changed_label_parity": 12
+  },
+  "trial_grid": {
+    "prefix40": {
+      "protected_prefix_heads": 40,
+      "history": 4,
+      "completed_existing_scorer": false
+    },
+    "prefix32": {
+      "protected_prefix_heads": 32,
+      "history": 4,
+      "completed_existing_scorer": false
+    },
+    "completed": {
+      "protected_prefix_heads": 0,
+      "history": null,
+      "completed_existing_scorer": true
+    },
+    "combined": {
+      "protected_prefix_heads": 40,
+      "history": 4,
+      "completed_existing_scorer": true
+    }
+  },
+  "model": "No trained weight/asset/dictionary/code changes. Prefix:keep first40 or32 ranked paths, fill remaining48 with distinct trailing4 Han histories within original48th raw-score minus4, then fill/back-sort to original ranking. Model-free fallback unchanged. Complete:retain raw first(finalPool-32), choose remaining32 using existing raw+SentenceRanker over at most2*finalPool raw-unique complete paths, restore raw order. Scores influence survival only, no double charge. Same original48 beam and96/128 completed bounds,8/4 existing reserves and20 display.",
+  "calibration": "New150 first/top5/top20 nondecreasing plus first or top5 net gain; old1300 aggregate first/top5/top20 nondecreasing and per-set first/top5 loss<=1pp. Select equal-set mean first,top5,top20,MRR then arm priority prefix40,prefix32,completed,combined. Report magnitude without promising significant improvement.",
+  "guards": "Selected arm:observed3893 aggregate first/top5/top20 nondecreasing and per-set first/top5 loss<=1pp; exact-code/unique20; Single32/32 after three confirmations; Android tests/Lint; paired warmed wall/CPU medians<=1.2 on six codes,warm30,samples11. Freeze exact source/evidence before fresh500.",
+  "independent": "One baseline and selected-candidate fresh500 pass only after guards. Adopt only if aggregate first/top5/top20 nondecreasing and first or top5 net gain; no source/parameter/code/label changes after outcomes. The1.0 significant-gain/device gates remain separate.",
+  "delivery": "No APK,keep0.6.39/code46,signing,learning storage,Fold7. If no qualifying arm,retain production and research artifacts. No gold-conditioned inference or evaluation training.",
+  "source_sha256": {
+    "tools/context_search_policy.py": "5c91002a2d596120274945aa31d0841c6078497c9fda4c7a27546418f837dba9",
+    "tools/run_context_search.py": "3660ff6a398a5ffff635c891fa84cfd507dae08bb1e6a9671dc313f4500dab47",
+    "tools/prepare_context_search.py": "dc8e1cc3666e67a20255496dc78f6bc988bd2c4d56103da2dde71f5b161ca425",
+    "tools/diagnose_context_search.py": "a1a88fc67693d0a06846a671ded6e4db68a48ea15a90e924d4ff001be61a7504",
+    "tools/native_phrase_relations.py": "f5765a9a47a4b88c622fa1237bebf5f0c9803e3196d2fd2f1df7b762be0fec63",
+    "tools/report_prefix_retrieval.py": "5482a5527b216760f860a8748708690acf124b885cd98ffe84d737ac4564b181",
+    "tools/report_search_recovery.py": "8a935e0d5f3cc4db20b482abf923ba042dc9dea5ecc5a0bc0f486c065a0b1dfb",
+    "tools/ContextSearchPolicyCheck.java": "8a6fd7565ee16a55b6a1bd0b01cc02f8ce0b98da38f8fb54a768872742c4a901",
+    "tools/test_context_search.py": "8796076c7455a7dd9f6d4d9e4d785f065131b800b8dcf794c1c0653a081ef11a"
+  },
+  "input_sha256": {
+    "tools/data/context_search/calibration1450.tsv": "fd874eeed989500d1cbbc483e70342d865af9e086360edc7978387a0a1e95743",
+    "tools/data/context_search/heldout-source.jsonl": "307f1256e80b351affe23a213375fd90d7901405bd978872e1cbea3288d4bb5b",
+    "tools/data/context_search/heldout.tsv": "be242e6ab4a2b41d8e505d4891d09d5087c8ee3e8355569c02d4d976c05207e6",
+    "tools/data/context_search/manifest.json": "92b1ab5d51eb68d0ab1880d7537aa5f897f91a4a8b72543ef967b3588e3388b4",
+    "tools/data/context_search/validation.tsv": "05a2c359d40e3bc7d53f1880cef29b48862431c87c64e020d718bc500ed86be9",
+    "tools/data/context_search/validation-source.jsonl": "4aa88d4294d1f74ca1a8f24344f9d9c52b6ab2a3db315db2b1e1f40cc5ec61f0",
+    "tools/reports/context-search-2026-10-16/known-baseline1300.tsv": "7e2996b23f301df212dfb40486cd4a59879347ad418b4f54507d378551dffd58"
+  }
+}

@@ -1,0 +1,1 @@
+score_rows=60 rejected_models=8 array_bytes=102816

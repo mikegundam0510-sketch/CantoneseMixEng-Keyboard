@@ -1,0 +1,252 @@
+{
+  "protocol_sha256": "5a5d987b97d09f37d45528e301ab921554d6955400e2a2efa3fd7bb571c04ade",
+  "selected": null,
+  "fresh500_decoded": false,
+  "trials": {
+    "prefix40": {
+      "before": {
+        "cases": 1450,
+        "top1": 301,
+        "top5": 558,
+        "top20": 736,
+        "mrr": 0.28475590759785274
+      },
+      "after": {
+        "cases": 1450,
+        "top1": 302,
+        "top5": 558,
+        "top20": 738,
+        "mrr": 0.2855072618477924
+      },
+      "new150": {
+        "before": {
+          "cases": 150,
+          "top1": 22,
+          "top5": 53,
+          "top20": 77,
+          "mrr": 0.23972046947433942
+        },
+        "after": {
+          "cases": 150,
+          "top1": 22,
+          "top5": 53,
+          "top20": 77,
+          "mrr": 0.23975221550608547
+        }
+      },
+      "old1300": {
+        "before": {
+          "cases": 1300,
+          "top1": 279,
+          "top5": 505,
+          "top20": 659,
+          "mrr": 0.28995230430441193
+        },
+        "after": {
+          "cases": 1300,
+          "top1": 280,
+          "top5": 505,
+          "top20": 661,
+          "mrr": 0.29078669027183557
+        }
+      },
+      "gate": {
+        "new_counts_nondecreasing": true,
+        "new_first_or_top5_gain": false,
+        "old_counts_nondecreasing": true,
+        "old_per_set_loss_within_one_pp": true
+      },
+      "qualified": false,
+      "selection_key": [
+        0.2031111111111111,
+        0.39655555555555555,
+        0.5298888888888889,
+        0.28712647030997135
+      ]
+    },
+    "prefix32": {
+      "before": {
+        "cases": 1450,
+        "top1": 301,
+        "top5": 558,
+        "top20": 736,
+        "mrr": 0.28475590759785274
+      },
+      "after": {
+        "cases": 1450,
+        "top1": 301,
+        "top5": 555,
+        "top20": 731,
+        "mrr": 0.2840097989889545
+      },
+      "new150": {
+        "before": {
+          "cases": 150,
+          "top1": 22,
+          "top5": 53,
+          "top20": 77,
+          "mrr": 0.23972046947433942
+        },
+        "after": {
+          "cases": 150,
+          "top1": 22,
+          "top5": 52,
+          "top20": 76,
+          "mrr": 0.2381623462250397
+        }
+      },
+      "old1300": {
+        "before": {
+          "cases": 1300,
+          "top1": 279,
+          "top5": 505,
+          "top20": 659,
+          "mrr": 0.28995230430441193
+        },
+        "after": {
+          "cases": 1300,
+          "top1": 279,
+          "top5": 503,
+          "top20": 655,
+          "mrr": 0.28929988969248316
+        }
+      },
+      "gate": {
+        "new_counts_nondecreasing": false,
+        "new_first_or_top5_gain": false,
+        "old_counts_nondecreasing": false,
+        "old_per_set_loss_within_one_pp": true
+      },
+      "qualified": false,
+      "selection_key": [
+        0.20277777777777775,
+        0.3934444444444445,
+        0.5227777777777778,
+        0.2853029303179716
+      ]
+    },
+    "completed": {
+      "before": {
+        "cases": 1450,
+        "top1": 301,
+        "top5": 558,
+        "top20": 736,
+        "mrr": 0.28475590759785274
+      },
+      "after": {
+        "cases": 1450,
+        "top1": 301,
+        "top5": 558,
+        "top20": 736,
+        "mrr": 0.28475590759785274
+      },
+      "new150": {
+        "before": {
+          "cases": 150,
+          "top1": 22,
+          "top5": 53,
+          "top20": 77,
+          "mrr": 0.23972046947433942
+        },
+        "after": {
+          "cases": 150,
+          "top1": 22,
+          "top5": 53,
+          "top20": 77,
+          "mrr": 0.23972046947433942
+        }
+      },
+      "old1300": {
+        "before": {
+          "cases": 1300,
+          "top1": 279,
+          "top5": 505,
+          "top20": 659,
+          "mrr": 0.28995230430441193
+        },
+        "after": {
+          "cases": 1300,
+          "top1": 279,
+          "top5": 505,
+          "top20": 659,
+          "mrr": 0.28995230430441193
+        }
+      },
+      "gate": {
+        "new_counts_nondecreasing": true,
+        "new_first_or_top5_gain": false,
+        "old_counts_nondecreasing": true,
+        "old_per_set_loss_within_one_pp": true
+      },
+      "qualified": false,
+      "selection_key": [
+        0.20144444444444445,
+        0.3952222222222222,
+        0.527888888888889,
+        0.28522913389595533
+      ]
+    },
+    "combined": {
+      "before": {
+        "cases": 1450,
+        "top1": 301,
+        "top5": 558,
+        "top20": 736,
+        "mrr": 0.28475590759785274
+      },
+      "after": {
+        "cases": 1450,
+        "top1": 302,
+        "top5": 558,
+        "top20": 738,
+        "mrr": 0.2855072618477924
+      },
+      "new150": {
+        "before": {
+          "cases": 150,
+          "top1": 22,
+          "top5": 53,
+          "top20": 77,
+          "mrr": 0.23972046947433942
+        },
+        "after": {
+          "cases": 150,
+          "top1": 22,
+          "top5": 53,
+          "top20": 77,
+          "mrr": 0.23975221550608547
+        }
+      },
+      "old1300": {
+        "before": {
+          "cases": 1300,
+          "top1": 279,
+          "top5": 505,
+          "top20": 659,
+          "mrr": 0.28995230430441193
+        },
+        "after": {
+          "cases": 1300,
+          "top1": 280,
+          "top5": 505,
+          "top20": 661,
+          "mrr": 0.29078669027183557
+        }
+      },
+      "gate": {
+        "new_counts_nondecreasing": true,
+        "new_first_or_top5_gain": false,
+        "old_counts_nondecreasing": true,
+        "old_per_set_loss_within_one_pp": true
+      },
+      "qualified": false,
+      "selection_key": [
+        0.2031111111111111,
+        0.39655555555555555,
+        0.5298888888888889,
+        0.28712647030997135
+      ]
+    }
+  },
+  "decision": "Reject all four; retain parent-main production and leave fresh500 untested"
+}

@@ -1,0 +1,71 @@
+{
+  "parent_app_revision": "e209474",
+  "preceding_search": "Four frozen search ablations rejected for no new150 gain; grid remains closed. This is a separate model-capacity experiment, using unchanged original search and the still-unobserved context_search reserve500.",
+  "manifest_sha256": "e66db1baa5a61174a4069d2da005e8ac99ec8092559910392d4ed9ef2085b391",
+  "architecture": {
+    "kind": "single reset-after character GRU whole-candidate residual",
+    "embedding": 16,
+    "hidden": 16,
+    "context": 12,
+    "max_candidate": 48,
+    "max_vocabulary": 4096,
+    "positive_min_count": 3,
+    "positive_min_training_families": 2,
+    "cap": 2,
+    "unknown_and_separator": true
+  },
+  "training": {
+    "seed": 20261016,
+    "epochs": 40,
+    "batch": 128,
+    "optimizer": "Adam",
+    "rate": 0.003,
+    "l2": 0.0001,
+    "gradient_norm_clip": 5,
+    "source_mix": {
+      "HK": 0.65,
+      "Tatoeba": 0.2,
+      "UD": 0.05,
+      "authored": 0.1
+    },
+    "family_split": "SHA256(context-gru-internal-v1:+family)%10==0 internal validation; family/case/rival normalized mass",
+    "checkpoint": "Minimum TRAIN-internal validation pair loss only; best must improve over initial internal loss before keyboard comparisons",
+    "offset": "Historical final TRAIN margins clipped[-4,4],reported approximation"
+  },
+  "trial_grid": [
+    {
+      "arm": "half",
+      "strength": 0.5
+    },
+    {
+      "arm": "full",
+      "strength": 1
+    }
+  ],
+  "inference": "Add bounded residual once alongside existing whole-candidate SentenceRanker before legacy relation/ranking/personal gates. No search widening or frozen rejected search policies, no direct phrase lookup, no token-score accumulation, no decoder labels. Null model must reproduce parent lists. Model is immutable and keeps no editor text.",
+  "calibration": "Use already observed150+old1300. Same nondecreasing1/5/20 on new150 and old1300, new first/top5 gain, old per-set first/top5 loss<=1pp. Select equal-set mean first,top5,top20,MRR then smaller strength. No extra capacity/strength grid after outcomes.",
+  "guards": "Selected:observed3893 aggregate1/5/20 nondecreasing, per-set first/top5 loss<=1pp; actual neural-enabled Single32/32; neural-enabled Android/JVM/Lint; warmed neural-enabled paired timing30warmup,11samples,6codes all wall/CPU ratios<=1.2. Freeze exact model/source/evidence before fresh500.",
+  "independent": "Fresh500 context_search examples remain un-decoded. One parent/candidate pass after qualification; require nondecreasing1/5/20 and first/top5 net gain. No further model/source/case/code changes or second arm selection after fresh outcomes.",
+  "delivery": "No APK,maintain0.6.39/code46/signing/storage/Fold7. No1.0 claim without original major-gain and physical-device gates. Reject unqualified models without replacing app assets or source. Public dictionary examples remain evaluation-only.",
+  "source_sha256": {
+    "tools/context_gru.py": "6a676dd78995b0d1089a0417c57f3c830f5446d252744f303e49fd889122b0b2",
+    "tools/train_context_gru.py": "16de4f0d4f8f3927be59c5fe8f0b12c3252ef558b70f161bebc9df994b6aeea0",
+    "tools/test_context_gru.py": "b213c47fae786a34f14c228fef5686e9735da94c190b76b63fd17dbff10d7617",
+    "tools/ContextSentenceRanker.java": "2c1acd1298c8c6968f8922e7b6904f90e32f368f0955a4a642044fd16b58e814",
+    "tools/run_context_gru.py": "29058662b2c0d6c065870cf99cacd12edd63cbedcfd91fd6a02db1557d234cbf",
+    "tools/verify_context_gru.py": "bcfc57b7ea1c6ad00298e231ad289385b83da4507caeb3ba32ba9b364d3ae5e6",
+    "tools/context-neural-requirements.txt": "7bd6b8946940b79948c548c8048e545684b91c8edc9444d8dfc0c8f76a97c0a7",
+    "tools/run_context_search.py": "3660ff6a398a5ffff635c891fa84cfd507dae08bb1e6a9671dc313f4500dab47",
+    "tools/report_prefix_retrieval.py": "5482a5527b216760f860a8748708690acf124b885cd98ffe84d737ac4564b181",
+    "tools/native_phrase_relations.py": "f5765a9a47a4b88c622fa1237bebf5f0c9803e3196d2fd2f1df7b762be0fec63"
+  },
+  "input_sha256": {
+    "tools/data/context_neural/manifest.json": "e66db1baa5a61174a4069d2da005e8ac99ec8092559910392d4ed9ef2085b391",
+    "tools/data/context_neural/pairs.jsonl.gz": "bbadec06bb47bf639e7bba1f4167b53aea0340abdc88ef4d4592fc605ff37b95",
+    "tools/data/context_search/validation.tsv": "05a2c359d40e3bc7d53f1880cef29b48862431c87c64e020d718bc500ed86be9",
+    "tools/data/context_search/heldout.tsv": "be242e6ab4a2b41d8e505d4891d09d5087c8ee3e8355569c02d4d976c05207e6",
+    "tools/data/context_search/calibration1450.tsv": "fd874eeed989500d1cbbc483e70342d865af9e086360edc7978387a0a1e95743",
+    "tools/reports/context-search-2026-10-16/baseline1450.tsv": "e421d07e647a34fc2d377513b7733f8e7ed9c17029055957cc4b4590a60db5a1",
+    "tools/data/context_search/selection.json": "adf08086bd3a0b0dee03070fd1c69687b167c7a7400513b0db2e53d898986d9a"
+  }
+}

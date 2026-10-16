@@ -1,0 +1,221 @@
+{
+  "protocol_sha256": "6af3096ea81359d988a63fda86b752fc1ab33e268a7c8cfe226bdeb1fc2c90c9",
+  "manifest_sha256": "e66db1baa5a61174a4069d2da005e8ac99ec8092559910392d4ed9ef2085b391",
+  "numpy": "2.3.5",
+  "vocabulary": 1418,
+  "embedding_dimension": 16,
+  "hidden": 16,
+  "cap": 2,
+  "context": 12,
+  "maximum_candidate": 48,
+  "initial_internal_validation_loss": 0.24764093575168453,
+  "best_internal_validation_loss": 0.21834235762800355,
+  "best_epoch": 1,
+  "epochs": [
+    {
+      "epoch": 1,
+      "training_objective": 0.28094865917006995,
+      "internal_validation_loss": 0.21834235762800355
+    },
+    {
+      "epoch": 2,
+      "training_objective": 0.21102993361738587,
+      "internal_validation_loss": 0.24006574514572654
+    },
+    {
+      "epoch": 3,
+      "training_objective": 0.19598365358773376,
+      "internal_validation_loss": 0.2513774467123515
+    },
+    {
+      "epoch": 4,
+      "training_objective": 0.18840743225924475,
+      "internal_validation_loss": 0.2537036963202396
+    },
+    {
+      "epoch": 5,
+      "training_objective": 0.18397571843930544,
+      "internal_validation_loss": 0.238552196555147
+    },
+    {
+      "epoch": 6,
+      "training_objective": 0.18187113576712358,
+      "internal_validation_loss": 0.26836022506294177
+    },
+    {
+      "epoch": 7,
+      "training_objective": 0.17806243886517323,
+      "internal_validation_loss": 0.24153438860400486
+    },
+    {
+      "epoch": 8,
+      "training_objective": 0.1774030662790384,
+      "internal_validation_loss": 0.24265379708970225
+    },
+    {
+      "epoch": 9,
+      "training_objective": 0.17355262448132913,
+      "internal_validation_loss": 0.2451754815451991
+    },
+    {
+      "epoch": 10,
+      "training_objective": 0.1734263310594721,
+      "internal_validation_loss": 0.23513985710668658
+    },
+    {
+      "epoch": 11,
+      "training_objective": 0.16975527331312593,
+      "internal_validation_loss": 0.25386543030354736
+    },
+    {
+      "epoch": 12,
+      "training_objective": 0.1689191648048639,
+      "internal_validation_loss": 0.23869682716714374
+    },
+    {
+      "epoch": 13,
+      "training_objective": 0.1678907784415728,
+      "internal_validation_loss": 0.24815065781119297
+    },
+    {
+      "epoch": 14,
+      "training_objective": 0.16706973200878655,
+      "internal_validation_loss": 0.24848693761469573
+    },
+    {
+      "epoch": 15,
+      "training_objective": 0.16481201512925736,
+      "internal_validation_loss": 0.24014900897012947
+    },
+    {
+      "epoch": 16,
+      "training_objective": 0.16167185393120037,
+      "internal_validation_loss": 0.23861854718101516
+    },
+    {
+      "epoch": 17,
+      "training_objective": 0.16294239029572227,
+      "internal_validation_loss": 0.2486675577219905
+    },
+    {
+      "epoch": 18,
+      "training_objective": 0.16449657548287017,
+      "internal_validation_loss": 0.23871103016941392
+    },
+    {
+      "epoch": 19,
+      "training_objective": 0.1621427573140104,
+      "internal_validation_loss": 0.25045992489648006
+    },
+    {
+      "epoch": 20,
+      "training_objective": 0.15950786558758662,
+      "internal_validation_loss": 0.28848924243379903
+    },
+    {
+      "epoch": 21,
+      "training_objective": 0.15694400129881553,
+      "internal_validation_loss": 0.29918730797608384
+    },
+    {
+      "epoch": 22,
+      "training_objective": 0.15707075321133612,
+      "internal_validation_loss": 0.28690893195701256
+    },
+    {
+      "epoch": 23,
+      "training_objective": 0.15487096574550924,
+      "internal_validation_loss": 0.2821820152297704
+    },
+    {
+      "epoch": 24,
+      "training_objective": 0.15584513352982116,
+      "internal_validation_loss": 0.28329254742455623
+    },
+    {
+      "epoch": 25,
+      "training_objective": 0.1549952364145125,
+      "internal_validation_loss": 0.27658748814071327
+    },
+    {
+      "epoch": 26,
+      "training_objective": 0.1548239897582082,
+      "internal_validation_loss": 0.27939246164557974
+    },
+    {
+      "epoch": 27,
+      "training_objective": 0.15357605922075396,
+      "internal_validation_loss": 0.27200047393678917
+    },
+    {
+      "epoch": 28,
+      "training_objective": 0.15228701323198768,
+      "internal_validation_loss": 0.2810358841901678
+    },
+    {
+      "epoch": 29,
+      "training_objective": 0.148288766323907,
+      "internal_validation_loss": 0.2719849931233524
+    },
+    {
+      "epoch": 30,
+      "training_objective": 0.1470515309188011,
+      "internal_validation_loss": 0.27703426301128037
+    },
+    {
+      "epoch": 31,
+      "training_objective": 0.14629820582034594,
+      "internal_validation_loss": 0.2766324335559178
+    },
+    {
+      "epoch": 32,
+      "training_objective": 0.1478536850804992,
+      "internal_validation_loss": 0.26258286792777613
+    },
+    {
+      "epoch": 33,
+      "training_objective": 0.1494295894915375,
+      "internal_validation_loss": 0.2745386331629425
+    },
+    {
+      "epoch": 34,
+      "training_objective": 0.14679114159767626,
+      "internal_validation_loss": 0.2844171374157979
+    },
+    {
+      "epoch": 35,
+      "training_objective": 0.14786705074449807,
+      "internal_validation_loss": 0.27997827248863716
+    },
+    {
+      "epoch": 36,
+      "training_objective": 0.14629665001884265,
+      "internal_validation_loss": 0.2709706349550858
+    },
+    {
+      "epoch": 37,
+      "training_objective": 0.14816849475560961,
+      "internal_validation_loss": 0.27831498766226476
+    },
+    {
+      "epoch": 38,
+      "training_objective": 0.14528255644130583,
+      "internal_validation_loss": 0.2813709854845448
+    },
+    {
+      "epoch": 39,
+      "training_objective": 0.1440335749946633,
+      "internal_validation_loss": 0.27467596694856355
+    },
+    {
+      "epoch": 40,
+      "training_objective": 0.1443087075599349,
+      "internal_validation_loss": 0.2645088207042522
+    }
+  ],
+  "models": {
+    "context-gru-0.5.b64": "e7e76eeb6aefd72dfef97aa5e0ca935e447ebfb8be39ed114f24794da6eb7b70",
+    "context-gru-1.b64": "c930af86bbf966eea6c13d5001f8f169b4eb44e42396f98bef7b78037d689aa4"
+  },
+  "note": "One seeded fixed-capacity model; checkpoint selected only on family-disjoint TRAIN internal validation, not keyboard evaluation. Two predeclared residual strengths. No full sentence lookup, private text, online calls or dictionary example fitting."
+}

@@ -1,0 +1,11 @@
+test_binary_roundtrip_is_exact (test_context_gru.RecurrentReference.test_binary_roundtrip_is_exact) ... ok
+test_context_boundaries_and_supplementary_encoding (test_context_gru.RecurrentReference.test_context_boundaries_and_supplementary_encoding) ... ok
+test_gradient_matches_finite_differences (test_context_gru.RecurrentReference.test_gradient_matches_finite_differences) ... ok
+test_only_licensed_final_train_pairs_and_family_disjoint_internal_split (test_context_gru.RecurrentReference.test_only_licensed_final_train_pairs_and_family_disjoint_internal_split) ... ok
+test_order_and_longer_history_are_represented (test_context_gru.RecurrentReference.test_order_and_longer_history_are_represented) ... ok
+test_padding_does_not_change_scores (test_context_gru.RecurrentReference.test_padding_does_not_change_scores) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.665s
+
+OK
