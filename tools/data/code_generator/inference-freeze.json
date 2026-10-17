@@ -1,0 +1,14 @@
+{
+  "sha256": {
+    "tools/data/code_generator/models/teacher.npz": "704eb0e81108f5a038621ba42bea8b9e925b64d30848235858b90f73709c3feb",
+    "tools/data/code_generator/models/contrast.npz": "d01706544aa4f1064a7d393aad2668a838f7c463f72b9dc99221623b9faae622",
+    "tools/data/code_generator/models/report.json": "047cfebe7401c145b96ee8da1ce754b5445b303576861f1df05324ebbf6b7464",
+    "tools/data/code_generator/codes.json": "9a4ded56f067c23caecedb34f4fe1f110152a6d428449dde9c40eb052c9ac272",
+    "tools/code_generator/model.py": "613da21555ae4b79402452923e0db49c06fb9a413f6187f5ba91ee418a4f4c4d",
+    "tools/code_generator/evaluate.py": "a9634aec1740f3df3ae8f12dad42dfd38728a567dbd3f80db088b93d3e509c17",
+    "tools/code_generator/common.py": "a3bb5c257beab967f8914a2f8224747799588b397bcf288af5c73f590238ca7e",
+    "tools/data/code_generator/protocol.json": "461fae10df1dd44aa99930dfb2fae8b82e050a4249345e76faab5757d5f52675",
+    "tools/data/code_generator/seal.json": "8a2bb44231ad4ecb9c98d1ba14a0501a186e1f8ba8165360cad828dc85162a0a"
+  },
+  "stage": "Both checkpoints and exact generation/fusion source fixed before ordinary calibration outcomes."
+}

@@ -1,0 +1,12 @@
+{
+  "teacher": {
+    "unambiguous_generated_paths": 80,
+    "max_absolute_score_error": 2.0861572624930602e-07,
+    "immutable_weights": true
+  },
+  "contrast": {
+    "unambiguous_generated_paths": 80,
+    "max_absolute_score_error": 3.1044085813114464e-07,
+    "immutable_weights": true
+  }
+}

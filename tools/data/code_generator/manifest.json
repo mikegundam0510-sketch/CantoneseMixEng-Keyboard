@@ -1,0 +1,58 @@
+{
+  "parent_revision": "22d26b571aa5c766a7ed4e606dd193632eaab1bd",
+  "cache_sha256": {
+    "corpus": "2e9893fb0236d7b01bb8ab9715d49ff2d4e25ce3a564d5b1e0dc235764160c05",
+    "pairs": "676e631db1b2cb1f0b103ab9776c827d1b96cb5091827a5791a678c971194081"
+  },
+  "input_sha256": {
+    ".native/sentence-pretrain-20261017/data/corpus.jsonl.gz": "81d1cf2400a88b71872b164662db10b73589d9f96d627dc7ccab56be8f0f817c",
+    ".native/sentence-pretrain-20261017/data/pairs.jsonl.gz": "35d759121842a246accef1a2a860626dbb07d4be94f072e1c32536331974e053",
+    "app/src/main/assets/cangjie5.base.dict.yaml": "98e3291003110e3a6f4ae10ce0c061a475793e44c006d3acc3b075a9fecd2b26",
+    "app/src/main/assets/sentence_language.b64": "57c8997ac0ff6076a5bf9101f2ee007865618c638a110eca4b76b85e76383746",
+    "tools/data/context_search/calibration1450.tsv": "fd874eeed989500d1cbbc483e70342d865af9e086360edc7978387a0a1e95743",
+    "tools/data/context_search/heldout.tsv": "be242e6ab4a2b41d8e505d4891d09d5087c8ee3e8355569c02d4d976c05207e6",
+    "tools/data/prefix_language/reserve.tsv": "04cfcc1666d517314aa5f37d476fc93af32f4c6b51ad45e48a3cd58ddbb37cd8",
+    ".native/joint-ranking-20261015/guard-cases3893.tsv": "8e4b74c8174dee73da8dda89d4c0cf1716c7d6fb69acc69c6fc12d08518b515d",
+    ".native/prefix-language-20261017/observed-0/visible.tsv": "98a42e81320ee9320b5256dec13a5728a34c1baba489d039cf4928cd037c6a7e",
+    ".native/prefix-language-20261017/observed-1/visible.tsv": "4306448b64f8b40e914128c0546c6d9e0e473292d84db8e2b26819c80bf02e02",
+    ".native/prefix-language-20261017/observed-2/visible.tsv": "17f167a204dc41aca2ae0b8a77803315b3cb6925549c49a02800ebe3e5b26acd",
+    ".native/prefix-language-20261017/observed-3/visible.tsv": "3d902e9aef11e5f5bd446064794b52734bd88659f6fc467334b97b8aee1fbbb3"
+  },
+  "codes_sha256": "9a4ded56f067c23caecedb34f4fe1f110152a6d428449dde9c40eb052c9ac272",
+  "vocabulary": 2248,
+  "corpus": {
+    "train:HK": 5325,
+    "train:CV": 1638,
+    "train:Tatoeba": 819,
+    "train:UD": 205,
+    "train:authored": 205,
+    "validation:HK": 998,
+    "validation:Tatoeba": 154,
+    "validation:authored": 38
+  },
+  "pairs": {
+    "train:wrong_first": 517,
+    "train:protected_first": 1629,
+    "validation:protected_first": 391,
+    "validation:wrong_first": 114,
+    "train:missing": 108,
+    "validation:missing": 2
+  },
+  "families": {
+    "corpus": {
+      "train": 2401,
+      "validation": 149
+    },
+    "pairs": {
+      "train": 443,
+      "validation": 99
+    }
+  },
+  "rejected": {
+    "text_length_or_neural_vocabulary": 1323,
+    "positive_unscorable": 98,
+    "corpus_internal_overlap": 0,
+    "pair_internal_overlap": 1
+  },
+  "policy": "Native dictionary exact first/last code facts, all learned-vocabulary choices without frequency cutoff. Canonical/mapped aliases and original context-prefix views fixed by hashes. Original family-disjoint validation remains unfitted; external6+ overlaps excluded, including unused prefix_language reserve500. Full-generation positives can be absent from parent display. CommonVoice-containing caches ignored; no raw/derived prompt text mirrored."
+}

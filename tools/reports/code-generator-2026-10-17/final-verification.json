@@ -1,0 +1,38 @@
+{
+  "frozen_sources_inputs_models_verified": true,
+  "published_public_pair_archive_exact_cache": true,
+  "common_voice_text_not_mirrored": true,
+  "original_first_asserted_each_ordinary_case": true,
+  "no_pending_outputs": true,
+  "app_tree": "8f31d86ad532f57278669629b642dbafa16c4acc",
+  "all_tracked_app_files_identical": 165,
+  "reserve500_sha256": "04cfcc1666d517314aa5f37d476fc93af32f4c6b51ad45e48a3cd58ddbb37cd8",
+  "reserve500_unconsumed": true,
+  "source_sha256": {
+    "tools/code_generator/NativeCodeCheck.java": "b8b504ca7f30c75239b3965e9392886c4962c5080074d7d26ab2d01dba130847",
+    "tools/code_generator/common.py": "a3bb5c257beab967f8914a2f8224747799588b397bcf288af5c73f590238ca7e",
+    "tools/code_generator/diagnose.py": "bd2326cca5bb9d9e85afd42ce696efa853ef0b7b5396da6b26ff01eb08203814",
+    "tools/code_generator/evaluate.py": "a9634aec1740f3df3ae8f12dad42dfd38728a567dbd3f80db088b93d3e509c17",
+    "tools/code_generator/model.py": "613da21555ae4b79402452923e0db49c06fb9a413f6187f5ba91ee418a4f4c4d",
+    "tools/code_generator/prepare.py": "785eb35be6188c1189a31f60e61173a8acdb41d40af47a9799289d2f1396ac53",
+    "tools/code_generator/test_model.py": "3dd4b5783e5fb7e837f9e1e4a12aa10fbc53be84dad4be6b9936ef992a1e2ab7",
+    "tools/code_generator/train.py": "3790359b45d10b61220ef0f86c74a665af32c7d40e454efe6ebd0261ebf8e79d"
+  },
+  "evidence_sha256": {
+    "tools/reports/code-generator-2026-10-17/all-generated-native-code.txt": "bd41426993b0f35b8a68cd466345ed63c8c148ea87d5d9b4295f1be0e5c1ff8f",
+    "tools/reports/code-generator-2026-10-17/beam-score-parity.json": "567842988700c73ff7cc694de4a9594d3ac9b02b3bddec033ee925389e0c8889",
+    "tools/reports/code-generator-2026-10-17/contrast-generated.json": "a6ff914f63f1363c1a54cf5e9d344a8eb6a92bfb2229f7f3e04ef60149db10ad",
+    "tools/reports/code-generator-2026-10-17/contrast-generated.tsv": "1ce585e556f65b3b8bef3e215aa3cb29e1193f982c92ccda16e69c0daaf2bfdc",
+    "tools/reports/code-generator-2026-10-17/contrast-hybrid.json": "1f87f2d944a3b4f88c35aabe0a7b2d82c3ef2efc1c4c9952542479316baa147b",
+    "tools/reports/code-generator-2026-10-17/contrast-hybrid.tsv": "844839ab05cdacd6981f8b13e27238f112c9fd95aa58c733ee4b2cdc257b5d7b",
+    "tools/reports/code-generator-2026-10-17/diagnostic-coverage.json": "9c11ba332be1b6bc74e4d4c93907203ace25796e630fb55b342a9216cff8caf9",
+    "tools/reports/code-generator-2026-10-17/math-checks.txt": "e8829fd056892abfe4b0d9bfda509c603c1517388f49090593dfa78b01b496f4",
+    "tools/reports/code-generator-2026-10-17/model-only-timing.json": "d4679e85848e2eaa2a990e1a8d86990ac52a5f852369f233b18d6264092e5df2",
+    "tools/reports/code-generator-2026-10-17/native-code-check.txt": "8aa11d6046d271092523b32ed75ecf6b201f8243feadf3ffe469e866ccfc1fcb",
+    "tools/reports/code-generator-2026-10-17/teacher-generated.json": "eb66ec66abb3d78184c198a059d904b340d125cb322a18a08ee7fc97eb457ba0",
+    "tools/reports/code-generator-2026-10-17/teacher-generated.tsv": "af77d1ae7bf0001f01e83aed8db3b9b8b2745f69b860233c404e850fcb9e27ce",
+    "tools/reports/code-generator-2026-10-17/teacher-hybrid.json": "baedbf56cacb8540e7f4a8c028b8468a0179e30e8458af3e2fe0c3f6231fd8b8",
+    "tools/reports/code-generator-2026-10-17/teacher-hybrid.tsv": "18ec6a97ddbe32fecddfaa55f2c30f4e84b995a60a7024eb5a4cea766ef09d79",
+    "tools/reports/code-generator-2026-10-17/work.json": "5d702faa6181cb9edfba08ac27ded81c6d381a0372220d1bb1f097f72d819f5c"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "teacher": {
+    "generator_recovers_parent_missing": 20,
+    "union_oracle_top20": 756,
+    "union_is_not_a_20_candidate_list_or_app_accuracy": true,
+    "targets_outside_model_charset_or_codebook": 317,
+    "generated_candidates": 29000
+  },
+  "contrast": {
+    "generator_recovers_parent_missing": 17,
+    "union_oracle_top20": 753,
+    "union_is_not_a_20_candidate_list_or_app_accuracy": true,
+    "targets_outside_model_charset_or_codebook": 317,
+    "generated_candidates": 29000
+  }
+}

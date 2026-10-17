@@ -1,0 +1,51 @@
+{
+  "warmup": 3,
+  "samples": 7,
+  "cases": [
+    {
+      "code": "ofonaovrmrq",
+      "letters": 11,
+      "wall_median_ms": 4.15405,
+      "cpu_median_ms": 4.151915,
+      "candidates": 20
+    },
+    {
+      "code": "hmerrrysmlrp",
+      "letters": 12,
+      "wall_median_ms": 5.000561,
+      "cpu_median_ms": 4.998229,
+      "candidates": 20
+    },
+    {
+      "code": "dpofvivcjutrmyyjvcqnjd",
+      "letters": 22,
+      "wall_median_ms": 9.18478,
+      "cpu_median_ms": 9.182618,
+      "candidates": 20
+    },
+    {
+      "code": "ofykrmmsydwljpvwjd",
+      "letters": 18,
+      "wall_median_ms": 6.716783,
+      "cpu_median_ms": 6.714526,
+      "candidates": 20
+    },
+    {
+      "code": "vkmmnkmrvordrjjj",
+      "letters": 16,
+      "wall_median_ms": 6.728922,
+      "cpu_median_ms": 6.726918,
+      "candidates": 20
+    },
+    {
+      "code": "hihihihihihihihihihihihihihihihihihihihihihihihi",
+      "letters": 48,
+      "wall_median_ms": 21.049236,
+      "cpu_median_ms": 21.048059,
+      "candidates": 20
+    }
+  ],
+  "standalone_numpy_only": true,
+  "excludes_native_parent_fusion_loader_and_android": true,
+  "not_app_latency_or_an_adoption_gate": true
+}

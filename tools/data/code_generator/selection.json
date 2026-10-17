@@ -1,0 +1,53 @@
+{
+  "selected": null,
+  "reserve500_decoded": false,
+  "trials": {
+    "teacher": {
+      "before": {
+        "cases": 1450,
+        "top1": 301,
+        "top5": 568,
+        "top20": 736,
+        "mrr": 0.2894391213598804
+      },
+      "after": {
+        "cases": 1450,
+        "top1": 301,
+        "top5": 369,
+        "top20": 443,
+        "mrr": 0.22974279168810502
+      },
+      "gates": {
+        "aggregate_coverage_gain": false,
+        "new_and_old_counts_nondecreasing": false,
+        "per_set_first_top5_loss_within_one_pp": false,
+        "old1300_counts_nondecreasing": false
+      },
+      "qualified": false
+    },
+    "contrast": {
+      "before": {
+        "cases": 1450,
+        "top1": 301,
+        "top5": 568,
+        "top20": 736,
+        "mrr": 0.2894391213598804
+      },
+      "after": {
+        "cases": 1450,
+        "top1": 301,
+        "top5": 371,
+        "top20": 443,
+        "mrr": 0.22991955432857003
+      },
+      "gates": {
+        "aggregate_coverage_gain": false,
+        "new_and_old_counts_nondecreasing": false,
+        "per_set_first_top5_loss_within_one_pp": false,
+        "old1300_counts_nondecreasing": false
+      },
+      "qualified": false
+    }
+  },
+  "decision": "Reject both hybrid arms; retain production; preserve independent500"
+}

@@ -1,0 +1,100 @@
+{
+  "parent_revision": "22d26b571aa5c766a7ed4e606dd193632eaab1bd",
+  "adopted": false,
+  "completed_steps": [
+    "Direct code+history conditioned legal-edge generation",
+    "Actual current-parent wrong/missing/protection comparison adaptation"
+  ],
+  "training_manifest_sha256": "4ba8993f178d51397e9874409c51da686be68b18dcf2827dcea7f7b26f7576fa",
+  "protocol_sha256": "461fae10df1dd44aa99930dfb2fae8b82e050a4249345e76faab5757d5f52675",
+  "trials": {
+    "teacher": {
+      "before": {
+        "cases": 1450,
+        "top1": 301,
+        "top5": 568,
+        "top20": 736,
+        "mrr": 0.2894391213598804
+      },
+      "after": {
+        "cases": 1450,
+        "top1": 301,
+        "top5": 369,
+        "top20": 443,
+        "mrr": 0.22974279168810502
+      },
+      "gates": {
+        "aggregate_coverage_gain": false,
+        "new_and_old_counts_nondecreasing": false,
+        "per_set_first_top5_loss_within_one_pp": false,
+        "old1300_counts_nondecreasing": false
+      },
+      "qualified": false
+    },
+    "contrast": {
+      "before": {
+        "cases": 1450,
+        "top1": 301,
+        "top5": 568,
+        "top20": 736,
+        "mrr": 0.2894391213598804
+      },
+      "after": {
+        "cases": 1450,
+        "top1": 301,
+        "top5": 371,
+        "top20": 443,
+        "mrr": 0.22991955432857003
+      },
+      "gates": {
+        "aggregate_coverage_gain": false,
+        "new_and_old_counts_nondecreasing": false,
+        "per_set_first_top5_loss_within_one_pp": false,
+        "old1300_counts_nondecreasing": false
+      },
+      "qualified": false
+    }
+  },
+  "decision": "Reject both hybrid arms; retain production; preserve independent500",
+  "diagnostic_coverage": {
+    "teacher": {
+      "generator_recovers_parent_missing": 20,
+      "union_oracle_top20": 756,
+      "union_is_not_a_20_candidate_list_or_app_accuracy": true,
+      "targets_outside_model_charset_or_codebook": 317,
+      "generated_candidates": 29000
+    },
+    "contrast": {
+      "generator_recovers_parent_missing": 17,
+      "union_oracle_top20": 753,
+      "union_is_not_a_20_candidate_list_or_app_accuracy": true,
+      "targets_outside_model_charset_or_codebook": 317,
+      "generated_candidates": 29000
+    }
+  },
+  "checks": {
+    "finite_difference_and_legal_tests": 6,
+    "actual_dictionary_vocabulary_facts": 2248,
+    "actual_dictionary_choices": 2479,
+    "native_generated_alignments": 58000,
+    "real_sequence_probability_checks_each_model": 80
+  },
+  "model_only_timing": "tools/reports/code-generator-2026-10-17/model-only-timing.json",
+  "not_app_latency": true,
+  "unrun": [
+    "Java neural generator port",
+    "3893 regression guard",
+    "Single32 candidate gate",
+    "wired candidate Android unit/Lint",
+    "native paired latency gate",
+    "unused prefix_language reserve500"
+  ],
+  "new_reserve500_decoded": false,
+  "previous_context_search500_decoded_again": false,
+  "all_tracked_app_files_identical": 165,
+  "unchanged_app_tree": "8f31d86ad532f57278669629b642dbafa16c4acc",
+  "version": "0.6.39",
+  "version_code": 46,
+  "apk_produced": false,
+  "limit": "Hybrid ordinary lists regress despite some missing-target generator recovery. A40-item union is an oracle diagnostic only. No post-outcome predictive changes or tuning."
+}

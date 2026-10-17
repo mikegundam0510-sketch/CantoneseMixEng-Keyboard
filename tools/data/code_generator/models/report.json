@@ -1,0 +1,172 @@
+{
+  "protocol_sha256": "461fae10df1dd44aa99930dfb2fae8b82e050a4249345e76faab5757d5f52675",
+  "manifest_sha256": "4ba8993f178d51397e9874409c51da686be68b18dcf2827dcea7f7b26f7576fa",
+  "vocabulary": 2248,
+  "array_bytes": 757428,
+  "stages": {
+    "teacher": {
+      "train": 8192,
+      "validation": 1190,
+      "initial_internal_validation": 1.0543066734182993,
+      "best_internal_validation": 0.6263188800385516,
+      "best_epoch": 12,
+      "epochs": [
+        {
+          "stage": "teacher",
+          "epoch": 1,
+          "train_loss": 0.7532307772456804,
+          "internal_validation": 0.785416073222111,
+          "seconds": 4.210753621009644
+        },
+        {
+          "stage": "teacher",
+          "epoch": 2,
+          "train_loss": 0.567807788389018,
+          "internal_validation": 0.7089104948729127,
+          "seconds": 4.3074399970064405
+        },
+        {
+          "stage": "teacher",
+          "epoch": 3,
+          "train_loss": 0.5064853815166589,
+          "internal_validation": 0.6850397762724562,
+          "seconds": 3.913433705980424
+        },
+        {
+          "stage": "teacher",
+          "epoch": 4,
+          "train_loss": 0.47140432538364885,
+          "internal_validation": 0.6714722465095194,
+          "seconds": 3.8199373880052008
+        },
+        {
+          "stage": "teacher",
+          "epoch": 5,
+          "train_loss": 0.445515291206006,
+          "internal_validation": 0.6610805846036789,
+          "seconds": 3.69546327702119
+        },
+        {
+          "stage": "teacher",
+          "epoch": 6,
+          "train_loss": 0.4253788905762782,
+          "internal_validation": 0.6527858768797848,
+          "seconds": 3.757075313013047
+        },
+        {
+          "stage": "teacher",
+          "epoch": 7,
+          "train_loss": 0.4079688547557686,
+          "internal_validation": 0.6476112047688892,
+          "seconds": 3.8485566320014186
+        },
+        {
+          "stage": "teacher",
+          "epoch": 8,
+          "train_loss": 0.392416189862742,
+          "internal_validation": 0.6422572451219586,
+          "seconds": 3.5728566279867664
+        },
+        {
+          "stage": "teacher",
+          "epoch": 9,
+          "train_loss": 0.3780921520410856,
+          "internal_validation": 0.6362231782576993,
+          "seconds": 3.5291425460018218
+        },
+        {
+          "stage": "teacher",
+          "epoch": 10,
+          "train_loss": 0.36494030224085194,
+          "internal_validation": 0.6319329865386584,
+          "seconds": 3.5457887520024087
+        },
+        {
+          "stage": "teacher",
+          "epoch": 11,
+          "train_loss": 0.3535054583795141,
+          "internal_validation": 0.6274864462747909,
+          "seconds": 3.6646502829971723
+        },
+        {
+          "stage": "teacher",
+          "epoch": 12,
+          "train_loss": 0.34323168569696344,
+          "internal_validation": 0.6263188800385516,
+          "seconds": 3.636860931990668
+        }
+      ]
+    },
+    "contrast": {
+      "train": 2254,
+      "validation": 507,
+      "initial_internal_validation": 0.7882393595037268,
+      "best_internal_validation": 0.7531567352169364,
+      "best_epoch": 8,
+      "epochs": [
+        {
+          "stage": "contrast",
+          "epoch": 1,
+          "train_loss": 0.6112545285817608,
+          "internal_validation": 0.7833837370166847,
+          "seconds": 2.064348366984632
+        },
+        {
+          "stage": "contrast",
+          "epoch": 2,
+          "train_loss": 0.5990939600363496,
+          "internal_validation": 0.7777127675327111,
+          "seconds": 2.0702516040182672
+        },
+        {
+          "stage": "contrast",
+          "epoch": 3,
+          "train_loss": 0.5884062541529843,
+          "internal_validation": 0.7733859049561246,
+          "seconds": 2.0544689259841107
+        },
+        {
+          "stage": "contrast",
+          "epoch": 4,
+          "train_loss": 0.5785271137187615,
+          "internal_validation": 0.7688979517243787,
+          "seconds": 2.0556125279981643
+        },
+        {
+          "stage": "contrast",
+          "epoch": 5,
+          "train_loss": 0.5694891073165912,
+          "internal_validation": 0.7646770257811721,
+          "seconds": 2.0767718749993946
+        },
+        {
+          "stage": "contrast",
+          "epoch": 6,
+          "train_loss": 0.5608013621885373,
+          "internal_validation": 0.7607880222126089,
+          "seconds": 2.0850406700046733
+        },
+        {
+          "stage": "contrast",
+          "epoch": 7,
+          "train_loss": 0.5522595550734094,
+          "internal_validation": 0.756903828749265,
+          "seconds": 2.06849846401019
+        },
+        {
+          "stage": "contrast",
+          "epoch": 8,
+          "train_loss": 0.5443921601816029,
+          "internal_validation": 0.7531567352169364,
+          "seconds": 2.2656656189938076
+        }
+      ]
+    }
+  },
+  "model_sha256": {
+    "contrast.npz": "d01706544aa4f1064a7d393aad2668a838f7c463f72b9dc99221623b9faae622",
+    "teacher.npz": "704eb0e81108f5a038621ba42bea8b9e925b64d30848235858b90f73709c3feb"
+  },
+  "numpy": "2.3.5",
+  "scope": "Code+history conditioned normalized legal-edge generation, then same-code actual display-error comparisons. Internal losses, not keyboard accuracy. No CV raw/derived prompt cache mirrored."
+}

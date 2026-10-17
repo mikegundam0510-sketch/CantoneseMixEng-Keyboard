@@ -1,0 +1,76 @@
+{
+  "parent_revision": "22d26b571aa5c766a7ed4e606dd193632eaab1bd",
+  "parent_app_tree": "8f31d86ad532f57278669629b642dbafa16c4acc",
+  "seed": 20261017,
+  "architecture": "Pretrained32-embedding32-hidden character GRU; new16-hidden reverse full-code tanh RNN. Flat lexical head initialized by first-order hierarchical-softmax log-probability at zero state, not claimed equivalent. Character history and remaining-code state jointly predict legal (character,length1/2) edges; teacher CE normalizes over all legal learned-vocabulary edges, no cold-rank cap. Candidate score is sum edge logprob / input-key count. No EOS, complete key consumption mandatory. Inference beam24 per code position, final20; Viterbi duplicate alignments. Vocab2248 characters, unsupported native candidates retained at original display slots.",
+  "teacher": {
+    "epochs": 12,
+    "batch": 64,
+    "rate": 0.001,
+    "source_mix": {
+      "HK": 0.65,
+      "CV": 0.2,
+      "Tatoeba": 0.1,
+      "UD": 0.025,
+      "authored": 0.025
+    },
+    "selection": "Minimum original-family-disjoint internal conditional CE; initialized checkpoint allowed"
+  },
+  "contrast": {
+    "epochs": 8,
+    "batch": 64,
+    "rate": 0.0003,
+    "source_mix": {
+      "HK": 0.7,
+      "Tatoeba": 0.2,
+      "UD": 0.05,
+      "authored": 0.05
+    },
+    "selection": "Minimum internal softplus(-2*(positive-negative code-normalized logprob)) +0.1 positive character CE. Fit mass75% actual wrong/missing,25% protected-first within source, renormalize available classes. Teacher checkpoint allowed"
+  },
+  "optimization": "Seeded Adam0.9/0.999 eps1e-8, clip5, old character embedding/GRU rate0.25x, new lexical/code/length weights fullrate; family/case/rival normalization. No external fitting, threshold, architecture or arm grid.",
+  "trials": [
+    "teacher: direct conditional generation plus fixed hybrid",
+    "contrast: teacher followed by actual wrong/missing/protection comparisons, same decoder/fusion"
+  ],
+  "hybrid": "Union parent20 and generator20; original first remains slot0, all native sentences outside learned vocab keep original index. Rank all other unique legal candidates by same conditioned code-normalized likelihood; fill free slots to20; stable original-first ties. Exact original first per case. Generator-alone outputs diagnostic only, not app hit rates or selection arms.",
+  "calibration": "Observed1450 against deployed28dfb69 app unchanged22d26b5: new150+old1300 separately first/top5/top20 nondecrease, aggregate top20 gain, each set first/top5 loss<=1pp. Select hybrid aggregate top20,top5,MRR; tie teacher. Generator-alone and union oracle cannot select/adopt.",
+  "guards": "Only selected: numerically faithful Java port and ordinary first/legal-code checks;3893 aggregate first/top5/top20 nondecrease and per-set first/top5 loss<=1pp; enabled Single32 contextual32/32, exact optional Android unit/Lint; quiet same-JVM30warm11samples sixcodes each wall+CPU ratio<=1.2. No production change before all gates.",
+  "independent": "Existing unused prefix_language/reserve500 remains sealed; excluded from fit now. Only fully qualified exact implementation/model may run once per parent/candidate; first/top5/top20 nondecrease and top20 net gain required. No post-outcome tuning. Previous context_search500 is not decoded again.",
+  "delivery": "No APK,0.6.39/code46/signing/local learning/Fold7 unchanged. If earlier rejection, research/code/checkpoints only and preserve unused500. No large/1.0 claim without fresh evidence and separate physical-device gates.",
+  "source_sha256": {
+    "tools/code_generator/common.py": "a3bb5c257beab967f8914a2f8224747799588b397bcf288af5c73f590238ca7e",
+    "tools/code_generator/evaluate.py": "a9634aec1740f3df3ae8f12dad42dfd38728a567dbd3f80db088b93d3e509c17",
+    "tools/code_generator/model.py": "613da21555ae4b79402452923e0db49c06fb9a413f6187f5ba91ee418a4f4c4d",
+    "tools/code_generator/prepare.py": "785eb35be6188c1189a31f60e61173a8acdb41d40af47a9799289d2f1396ac53",
+    "tools/code_generator/test_model.py": "3dd4b5783e5fb7e837f9e1e4a12aa10fbc53be84dad4be6b9936ef992a1e2ab7",
+    "tools/code_generator/train.py": "3790359b45d10b61220ef0f86c74a665af32c7d40e454efe6ebd0261ebf8e79d",
+    "tools/sentence_language_model.py": "b6a463ea2f440abb901f5e4e44744c4ada1dd672e8889fb6877bd10315ab252a",
+    "tools/context_gru.py": "6a676dd78995b0d1089a0417c57f3c830f5446d252744f303e49fd889122b0b2",
+    "tools/train_sentence_pretrain.py": "fc23261f6b2ad5320eac02c4a79784e0bb555d1c6d3b8688277dd2d0a8b4dfa6",
+    "tools/prepare_sentence_pretrain.py": "bd4ce841f16b15327843103054186e69e2795cccb7764f131009fc8bd067ff68",
+    "tools/prepare_phrase_relations.py": "cd2b5e2b6ad480ad6e49fe682ad754db1bab5e7d4fc733b854b4d842bb827e15",
+    "tools/prepare_clean_ranking.py": "edaf8ba038253a27dd71620e9423b6c5af34ec44fc3c07a844c03629cb0561e7",
+    "tools/train_aligned_relations.py": "489d912e8194349f438f17630ee641b1dd5abbf8651de8fecc240136c079c85e",
+    "tools/report_prefix_retrieval.py": "5482a5527b216760f860a8748708690acf124b885cd98ffe84d737ac4564b181",
+    "tools/report_search_recovery.py": "8a935e0d5f3cc4db20b482abf923ba042dc9dea5ecc5a0bc0f486c065a0b1dfb"
+  },
+  "input_sha256": {
+    ".native/sentence-pretrain-20261017/data/corpus.jsonl.gz": "81d1cf2400a88b71872b164662db10b73589d9f96d627dc7ccab56be8f0f817c",
+    ".native/sentence-pretrain-20261017/data/pairs.jsonl.gz": "35d759121842a246accef1a2a860626dbb07d4be94f072e1c32536331974e053",
+    "app/src/main/assets/cangjie5.base.dict.yaml": "98e3291003110e3a6f4ae10ce0c061a475793e44c006d3acc3b075a9fecd2b26",
+    "app/src/main/assets/sentence_language.b64": "57c8997ac0ff6076a5bf9101f2ee007865618c638a110eca4b76b85e76383746",
+    "tools/data/context_search/calibration1450.tsv": "fd874eeed989500d1cbbc483e70342d865af9e086360edc7978387a0a1e95743",
+    "tools/data/context_search/heldout.tsv": "be242e6ab4a2b41d8e505d4891d09d5087c8ee3e8355569c02d4d976c05207e6",
+    "tools/data/prefix_language/reserve.tsv": "04cfcc1666d517314aa5f37d476fc93af32f4c6b51ad45e48a3cd58ddbb37cd8",
+    ".native/joint-ranking-20261015/guard-cases3893.tsv": "8e4b74c8174dee73da8dda89d4c0cf1716c7d6fb69acc69c6fc12d08518b515d",
+    ".native/prefix-language-20261017/observed-0/visible.tsv": "98a42e81320ee9320b5256dec13a5728a34c1baba489d039cf4928cd037c6a7e",
+    ".native/prefix-language-20261017/observed-1/visible.tsv": "4306448b64f8b40e914128c0546c6d9e0e473292d84db8e2b26819c80bf02e02",
+    ".native/prefix-language-20261017/observed-2/visible.tsv": "17f167a204dc41aca2ae0b8a77803315b3cb6925549c49a02800ebe3e5b26acd",
+    ".native/prefix-language-20261017/observed-3/visible.tsv": "3d902e9aef11e5f5bd446064794b52734bd88659f6fc467334b97b8aee1fbbb3",
+    "tools/data/code_generator/manifest.json": "4ba8993f178d51397e9874409c51da686be68b18dcf2827dcea7f7b26f7576fa",
+    "tools/data/code_generator/codes.json": "9a4ded56f067c23caecedb34f4fe1f110152a6d428449dde9c40eb052c9ac272",
+    "tools/reports/pinned-head-2026-10-17/calibration1450.tsv": "552e4ca007837200a46c4a6cbab22855b535d81397c4472142ce9744297efa21",
+    "tools/reports/pinned-head-2026-10-17/guard3893.tsv": "db163fe5da03929c2c392de65d343a5eee11661858ab9db7308f9475904395bf"
+  }
+}
