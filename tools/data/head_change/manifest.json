@@ -1,0 +1,31 @@
+{
+  "cases": 7553,
+  "counts": {
+    "train:HK": 4258,
+    "validation:HK": 636,
+    "excluded_by_pretrain_admission": 142,
+    "train:Tatoeba": 1799,
+    "validation:Tatoeba": 222,
+    "unavailable_or_no_rival": 196,
+    "train:authored": 565,
+    "validation:authored": 73
+  },
+  "families": {
+    "train": 1736,
+    "validation": 214
+  },
+  "input_sha256": {
+    ".native/current-search-20261016/pools/pools.tsv": "0943a3dcf768138372d2fc4c3673acc15cc990f5eb2e4ee140ae4b168a8fca29",
+    ".native/current-search-20261016/pools/visible.tsv": "f9abb2b19febd023872966acccbdf2477ed75a1ebc02408aad2a24224314768c",
+    ".native/current-search-20261016/pools/observation.json": "6393d3061d09b605b25c0b90e092cac8ff666c18a963419332dca88e822a1c27",
+    ".native/sentence-pretrain-20261017/data/pairs.jsonl.gz": "35d759121842a246accef1a2a860626dbb07d4be94f072e1c32536331974e053"
+  },
+  "output_sha256": {
+    "displays-0.tsv": "04ea3bc69402efd4090766ae0fe7e5a7c4d6ccb0ad9a9597bc6f2e9c621e832a",
+    "displays-1.tsv": "0e990a8b69f629e87328e77c5a56cc72bf1049a7427a4312ce2a28720fb1ce6d",
+    "displays-2.tsv": "30b93f28f25b1544cfefdfd0a0f0b88bae542f417e25b4426aabeda6e33b5ff4",
+    "displays-3.tsv": "80fc6332b1f98a530f8f0444c8a3b211e17e1547382f24873e9c4333615966f0",
+    "metadata.json": "7e5b7d09c8f3e5607fbd1abc49a7aae0cd20af610ead74458539c6016211acbb"
+  },
+  "scope": "Original admitted TRAIN sources only. Split and exclusions are inherited from both stages of the fixed neural model; no sentence identities are model features."
+}

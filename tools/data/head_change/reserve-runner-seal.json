@@ -1,0 +1,5 @@
+{
+  "stage": "Before3893 guard outcome and before any reserve decode.",
+  "sha256": "e0d63cfb3be67abba75386e6da38b88cc20f7e989d95cb15a2693fd6d354b058",
+  "runner": "tools/evaluate_head_change_reserve.py"
+}

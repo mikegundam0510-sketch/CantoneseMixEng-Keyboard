@@ -1,0 +1,1 @@
+cold_head=甲乙 original_set_preserved=true positive_and_negative_context=true familiar_characters_active=true mixed_and_translation_unchanged=true

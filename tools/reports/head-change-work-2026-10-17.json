@@ -1,0 +1,182 @@
+{
+  "task": "Train when to replace the established first choice, retaining original displayed candidates",
+  "parent_revision": "f7cd44c",
+  "adopted": false,
+  "training": {
+    "displays": 7553,
+    "train": 6622,
+    "internal_validation": 931,
+    "labeled_pairs": {
+      "train": 84384,
+      "validation": 11609
+    },
+    "train_labels": {
+      "repair": 935,
+      "protection": 83449
+    },
+    "threshold": 0.99,
+    "internal_validation_first_before": 807,
+    "internal_validation_first_after": 818,
+    "family_disjoint": true,
+    "lexical_identity_features": false,
+    "neural_model_retrained": false,
+    "model_sha256": "bdb53df0d2f5958094287b66c0c6228b3d512442db7dca04bcf68c0bf775de2d",
+    "identical_fit_retry": true
+  },
+  "calibration1450": {
+    "before": {
+      "cases": 1450,
+      "top1": 301,
+      "top5": 558,
+      "top20": 736,
+      "mrr": 0.28475590759785274
+    },
+    "after": {
+      "cases": 1450,
+      "top1": 313,
+      "top5": 568,
+      "top20": 736,
+      "mrr": 0.29392187998057007
+    },
+    "paired": {
+      "first": {
+        "gained": 12,
+        "lost": 0,
+        "net": 12,
+        "paired_exact_two_sided_p": 0.00048828125
+      },
+      "top5": {
+        "gained": 17,
+        "lost": 7,
+        "net": 10,
+        "paired_exact_two_sided_p": 0.06391465663909912
+      },
+      "top20": {
+        "gained": 0,
+        "lost": 0,
+        "net": 0,
+        "paired_exact_two_sided_p": 1
+      }
+    },
+    "coverage": {
+      "cases": 1450,
+      "all_visible_sets_identical": true,
+      "ranked_lists_changed": 1429
+    },
+    "gate": {
+      "new_counts_nondecreasing": true,
+      "new_first_or_top5_gain": true,
+      "old_counts_nondecreasing": true,
+      "old_per_set_loss_within_one_pp": true
+    },
+    "qualified": true
+  },
+  "guard3893": {
+    "before": {
+      "cases": 3893,
+      "top1": 1358,
+      "top5": 2215,
+      "top20": 2625,
+      "mrr": 0.4453086115079659
+    },
+    "after": {
+      "cases": 3893,
+      "top1": 1377,
+      "top5": 2263,
+      "top20": 2625,
+      "mrr": 0.45328243175597
+    },
+    "paired": {
+      "first": {
+        "gained": 26,
+        "lost": 7,
+        "net": 19,
+        "paired_exact_two_sided_p": 0.0013187271542847157
+      },
+      "top5": {
+        "gained": 69,
+        "lost": 21,
+        "net": 48,
+        "paired_exact_two_sided_p": 3.881817444056319e-07
+      },
+      "top20": {
+        "gained": 0,
+        "lost": 0,
+        "net": 0,
+        "paired_exact_two_sided_p": 1
+      }
+    },
+    "coverage": {
+      "cases": 3893,
+      "all_visible_sets_identical": true,
+      "ranked_lists_changed": 3724
+    },
+    "guard_gate": {
+      "aggregate_counts_nondecreasing": true,
+      "per_set_first_top5_loss_within_one_pp": false
+    },
+    "qualified": false
+  },
+  "comparison_with_unrestricted_neural": {
+    "first_gains_before": 124,
+    "first_losses_before": 39,
+    "first_gains_after": 26,
+    "first_losses_after": 7
+  },
+  "failed_sets": [
+    "guard:authored70"
+  ],
+  "verification": {
+    "probability_parity": 80,
+    "probability_tolerance": 1e-11,
+    "controlled_repair_and_protection": true,
+    "tail_order_preserved": true,
+    "missing_gate_parent_fallback": true,
+    "nonfinite_features_rejected": true,
+    "malformed_models_rejected": 8,
+    "personal_and_mixed_checks": true,
+    "enabled_single32": "32/32 after3 confirmations;489 records",
+    "android": "222 tests passed;25 Lint warnings;0 errors",
+    "source_native_freeze_valid": true
+  },
+  "delivery": {
+    "production_unchanged": true,
+    "version": "0.6.39",
+    "version_code": 46,
+    "apk": false,
+    "independent500_decoded": false,
+    "unrun_after_rejection": [
+      "quiet paired timing",
+      "context-search independent500",
+      "physical Fold7/update-persistence checks",
+      "APK packaging"
+    ]
+  },
+  "limitations": "Known calibration/overlapping guards, not independent or real-user accuracy; authored variants correlated. Internal separation covers gate/neural training stages, not every parent model. Threshold.99 is not99% confidence. No speed or physical-device claim.",
+  "evidence_sha256": {
+    "/workspace/CantoneseMixEng-Keyboard/tools/data/head_change/NOTICE.md": "695f942236618b88f16c8984c4a775b6d13aa5b214d271e6f895e9021de75f72",
+    "/workspace/CantoneseMixEng-Keyboard/tools/data/head_change/decision.json": "377ffcb447c813f8601821460bba2d704e7e5ba27093028dfb60f301dcc40569",
+    "/workspace/CantoneseMixEng-Keyboard/tools/data/head_change/execution-note.json": "0c94a7bc52ff37d7e2dfebc964f0c4df02a70dc7d470708b3c27557a2f3753f5",
+    "/workspace/CantoneseMixEng-Keyboard/tools/data/head_change/inference-freeze.json": "b2189abeae13ca774a181ca93f3f64333bb4e055df7e7765c1f66019e2b7b2e6",
+    "/workspace/CantoneseMixEng-Keyboard/tools/data/head_change/manifest.json": "628104ec4975fdb05d9e0ec696e411c7b36a165cc5ea3f6f6ef9d57c49b12dbb",
+    "/workspace/CantoneseMixEng-Keyboard/tools/data/head_change/model/head_change.b64": "bdb53df0d2f5958094287b66c0c6228b3d512442db7dca04bcf68c0bf775de2d",
+    "/workspace/CantoneseMixEng-Keyboard/tools/data/head_change/model/report.json": "3138de5539109994f51c129e674c7c0c4df2916a7df70a0fa29c069f158f5e59",
+    "/workspace/CantoneseMixEng-Keyboard/tools/data/head_change/protocol.json": "3073f5f1b916e8e9a7af4ab6fefda9f505bb2c45750d361b88e2dbd26f83d934",
+    "/workspace/CantoneseMixEng-Keyboard/tools/data/head_change/reserve-runner-seal.json": "3d04aaefee581b0a2aca803028c18bab6ee695b79c1c6fd1523bd49d86afde95",
+    "/workspace/CantoneseMixEng-Keyboard/tools/data/head_change/seal.json": "81af0157f6f4d559f74ad63bc33fb51b6189722c2af9e729089b9444de77db78",
+    "/workspace/CantoneseMixEng-Keyboard/tools/data/head_change/selection.json": "b613a6f95519835d858cadbf736dcf7f041a059295649859b3246d1d8e9a8733",
+    "/workspace/CantoneseMixEng-Keyboard/tools/reports/head-change-2026-10-17/android-checks.log": "757b7387f833455663397a6dd6c969e05a12177d9c6054d1ff07d13cfe91a7a5",
+    "/workspace/CantoneseMixEng-Keyboard/tools/reports/head-change-2026-10-17/android.json": "11e72ab2e1033e02327884ea2072016e40d0b1154d71f48d7b0872b8c309f81c",
+    "/workspace/CantoneseMixEng-Keyboard/tools/reports/head-change-2026-10-17/calibration1450.json": "eaf765675803e5bdccd492280bc19ad20dd07a7586f1d2fd3a12fec884003b2e",
+    "/workspace/CantoneseMixEng-Keyboard/tools/reports/head-change-2026-10-17/calibration1450.tsv": "2d0e4c7976bed0fa0ea9c9f9f6079487ee95d16f7a0d7f1b6907e22526eef960",
+    "/workspace/CantoneseMixEng-Keyboard/tools/reports/head-change-2026-10-17/guard3893.json": "94eb9fa3df559a804eb2025330287bbc5f3ab3b59fadda26ead003b79cf47c09",
+    "/workspace/CantoneseMixEng-Keyboard/tools/reports/head-change-2026-10-17/guard3893.tsv": "ad83b5033fe37a0f0bf944b1253c3fee9816044418d96bfd8773a7aa397ef163",
+    "/workspace/CantoneseMixEng-Keyboard/tools/reports/head-change-2026-10-17/integration-check.txt": "88eef5a562cf0411ae50723330ce5dedff92ee1d4053cabd7fd6968015db4c7e",
+    "/workspace/CantoneseMixEng-Keyboard/tools/reports/head-change-2026-10-17/numeric-check.txt": "227d5daa716f1a9121ae10cc62c89d019cdfc2a0f492467d6f05d77ebd29f7d3",
+    "/workspace/CantoneseMixEng-Keyboard/tools/reports/head-change-2026-10-17/preflight.json": "593ddb5a8ed6a0e1f21557023ccf8af3abab1fd76d68a8702ad521bf4075ae9f",
+    "/workspace/CantoneseMixEng-Keyboard/tools/reports/head-change-2026-10-17/probability-parity.tsv": "3b1244c826d24f4ac25b629450cbb1de9691604e88b17bb1f7fd2659c812ba45",
+    "/workspace/CantoneseMixEng-Keyboard/tools/reports/head-change-2026-10-17/single32.json": "0a7187f91233670316eeee8ecf8443b348ec3bca92b55282d109452f543d70b7",
+    "/workspace/CantoneseMixEng-Keyboard/tools/reports/head-change-2026-10-17/single32.tsv": "35f78f8e717ebc6f3b6239a6e8546bcca086c9aacdc94f6d0fb89ee8c1c87b1d",
+    "/workspace/CantoneseMixEng-Keyboard/tools/reports/head-change-2026-10-17/single32.txt": "10da3b325f622be98ed1ecef414750d26673ed50093ea96ab678289e24e86793"
+  }
+}

@@ -1,0 +1,350 @@
+{
+  "protocol_sha256": "3073f5f1b916e8e9a7af4ab6fefda9f505bb2c45750d361b88e2dbd26f83d934",
+  "cases": 7553,
+  "labeled_pairs": {
+    "train": 84384,
+    "validation": 11609
+  },
+  "train_labels": {
+    "repair": 935,
+    "protection": 83449
+  },
+  "train_objective": 0.09132426164196843,
+  "iterations": 24,
+  "validation_pair_nll": 0.1569597977836853,
+  "thresholds": [
+    {
+      "threshold": 0.5,
+      "per_domain": {
+        "HK": {
+          "cases": 636,
+          "before": 594,
+          "after": 595,
+          "gained": 3,
+          "lost": 2,
+          "swaps": 7
+        },
+        "Tatoeba": {
+          "cases": 222,
+          "before": 181,
+          "after": 182,
+          "gained": 7,
+          "lost": 6,
+          "swaps": 16
+        },
+        "authored": {
+          "cases": 73,
+          "before": 32,
+          "after": 37,
+          "gained": 5,
+          "lost": 0,
+          "swaps": 5
+        }
+      },
+      "qualified": true,
+      "selection_key": 0.024856660744487055
+    },
+    {
+      "threshold": 0.6,
+      "per_domain": {
+        "HK": {
+          "cases": 636,
+          "before": 594,
+          "after": 595,
+          "gained": 3,
+          "lost": 2,
+          "swaps": 7
+        },
+        "Tatoeba": {
+          "cases": 222,
+          "before": 181,
+          "after": 182,
+          "gained": 7,
+          "lost": 6,
+          "swaps": 16
+        },
+        "authored": {
+          "cases": 73,
+          "before": 32,
+          "after": 37,
+          "gained": 5,
+          "lost": 0,
+          "swaps": 5
+        }
+      },
+      "qualified": true,
+      "selection_key": 0.024856660744487055
+    },
+    {
+      "threshold": 0.7,
+      "per_domain": {
+        "HK": {
+          "cases": 636,
+          "before": 594,
+          "after": 595,
+          "gained": 3,
+          "lost": 2,
+          "swaps": 7
+        },
+        "Tatoeba": {
+          "cases": 222,
+          "before": 181,
+          "after": 182,
+          "gained": 7,
+          "lost": 6,
+          "swaps": 16
+        },
+        "authored": {
+          "cases": 73,
+          "before": 32,
+          "after": 37,
+          "gained": 5,
+          "lost": 0,
+          "swaps": 5
+        }
+      },
+      "qualified": true,
+      "selection_key": 0.024856660744487055
+    },
+    {
+      "threshold": 0.8,
+      "per_domain": {
+        "HK": {
+          "cases": 636,
+          "before": 594,
+          "after": 595,
+          "gained": 3,
+          "lost": 2,
+          "swaps": 7
+        },
+        "Tatoeba": {
+          "cases": 222,
+          "before": 181,
+          "after": 182,
+          "gained": 7,
+          "lost": 6,
+          "swaps": 16
+        },
+        "authored": {
+          "cases": 73,
+          "before": 32,
+          "after": 37,
+          "gained": 5,
+          "lost": 0,
+          "swaps": 5
+        }
+      },
+      "qualified": true,
+      "selection_key": 0.024856660744487055
+    },
+    {
+      "threshold": 0.9,
+      "per_domain": {
+        "HK": {
+          "cases": 636,
+          "before": 594,
+          "after": 595,
+          "gained": 3,
+          "lost": 2,
+          "swaps": 7
+        },
+        "Tatoeba": {
+          "cases": 222,
+          "before": 181,
+          "after": 182,
+          "gained": 7,
+          "lost": 6,
+          "swaps": 16
+        },
+        "authored": {
+          "cases": 73,
+          "before": 32,
+          "after": 37,
+          "gained": 5,
+          "lost": 0,
+          "swaps": 5
+        }
+      },
+      "qualified": true,
+      "selection_key": 0.024856660744487055
+    },
+    {
+      "threshold": 0.95,
+      "per_domain": {
+        "HK": {
+          "cases": 636,
+          "before": 594,
+          "after": 595,
+          "gained": 2,
+          "lost": 1,
+          "swaps": 4
+        },
+        "Tatoeba": {
+          "cases": 222,
+          "before": 181,
+          "after": 185,
+          "gained": 7,
+          "lost": 3,
+          "swaps": 13
+        },
+        "authored": {
+          "cases": 73,
+          "before": 32,
+          "after": 37,
+          "gained": 5,
+          "lost": 0,
+          "swaps": 5
+        }
+      },
+      "qualified": true,
+      "selection_key": 0.029361165248991558
+    },
+    {
+      "threshold": 0.99,
+      "per_domain": {
+        "HK": {
+          "cases": 636,
+          "before": 594,
+          "after": 594,
+          "gained": 1,
+          "lost": 1,
+          "swaps": 3
+        },
+        "Tatoeba": {
+          "cases": 222,
+          "before": 181,
+          "after": 187,
+          "gained": 6,
+          "lost": 0,
+          "swaps": 6
+        },
+        "authored": {
+          "cases": 73,
+          "before": 32,
+          "after": 37,
+          "gained": 5,
+          "lost": 0,
+          "swaps": 5
+        }
+      },
+      "qualified": true,
+      "selection_key": 0.03184005923731951
+    }
+  ],
+  "selected": {
+    "threshold": 0.99,
+    "per_domain": {
+      "HK": {
+        "cases": 636,
+        "before": 594,
+        "after": 594,
+        "gained": 1,
+        "lost": 1,
+        "swaps": 3
+      },
+      "Tatoeba": {
+        "cases": 222,
+        "before": 181,
+        "after": 187,
+        "gained": 6,
+        "lost": 0,
+        "swaps": 6
+      },
+      "authored": {
+        "cases": 73,
+        "before": 32,
+        "after": 37,
+        "gained": 5,
+        "lost": 0,
+        "swaps": 5
+      }
+    },
+    "qualified": true,
+    "selection_key": 0.03184005923731951
+  },
+  "qualified": true,
+  "mean": [
+    0.0,
+    -0.8295880866367525,
+    -3.392047803275256,
+    -0.14274203778026098,
+    -3.5347898410555336,
+    0.7419364326228453,
+    0.4564523570623293,
+    0.06290792073344417,
+    0.04483574002085114,
+    -0.020650254109811448,
+    0.3653678087014067,
+    0.39913258761666537,
+    0.46829295179406827,
+    0.355950557947455,
+    0.15638612107594646,
+    0.1586660398409222,
+    -0.0038334669216694953,
+    0.0031749324942703045,
+    -3.5420640995028383,
+    1.9052142302811421
+  ],
+  "scale": [
+    1.0,
+    0.27218328529414876,
+    1.5354906222203746,
+    0.34502401249964587,
+    1.692489283981826,
+    0.43214532287168,
+    0.5774714253322865,
+    0.19200893341745393,
+    0.15612499615902856,
+    0.11557518429415899,
+    0.2893672482027118,
+    0.12930425237249302,
+    0.3616194428626305,
+    0.3580509356642574,
+    0.10609635258419753,
+    0.2634657611442392,
+    0.07391383704358764,
+    0.03512119997117488,
+    1.67712006734489,
+    1.2763757233030404
+  ],
+  "weights": [
+    -4.551331498991525,
+    0.5978297882826763,
+    0.49968074404893026,
+    0.728597187679694,
+    0.6018582400616111,
+    -0.43383204712608675,
+    0.5459812320923138,
+    -0.03816939908622043,
+    -0.012408411103517989,
+    0.09336228949661009,
+    -0.2753706719383453,
+    -0.0267229505537409,
+    -0.1197362114205532,
+    0.07266483692702237,
+    -0.03787695522225757,
+    -0.5472859091912284,
+    0.18960594232455882,
+    -0.07986238368927633,
+    0.604918930203679,
+    -0.2271037686083299
+  ],
+  "cache_sha256": {
+    ".native/head-change-20261017/data/displays-0.tsv": "04ea3bc69402efd4090766ae0fe7e5a7c4d6ccb0ad9a9597bc6f2e9c621e832a",
+    ".native/head-change-20261017/data/displays-1.tsv": "0e990a8b69f629e87328e77c5a56cc72bf1049a7427a4312ce2a28720fb1ce6d",
+    ".native/head-change-20261017/data/displays-2.tsv": "30b93f28f25b1544cfefdfd0a0f0b88bae542f417e25b4426aabeda6e33b5ff4",
+    ".native/head-change-20261017/data/displays-3.tsv": "80fc6332b1f98a530f8f0444c8a3b211e17e1547382f24873e9c4333615966f0",
+    ".native/head-change-20261017/data/features-0.log": "401a27a1a4c13f142ed241bd4bf9252cbd955f755fbd0ea8db9f80ede2dc2e95",
+    ".native/head-change-20261017/data/features-0.tsv": "55d877092c429e3c84bb7d4f209d36864efa97e875e2f4fa6865283f7c454976",
+    ".native/head-change-20261017/data/features-1.log": "401a27a1a4c13f142ed241bd4bf9252cbd955f755fbd0ea8db9f80ede2dc2e95",
+    ".native/head-change-20261017/data/features-1.tsv": "7d21c32ee9bdd80eabe19fb67fc1b8e3406d0a25d022f6701075b895cd9baa31",
+    ".native/head-change-20261017/data/features-2.log": "401a27a1a4c13f142ed241bd4bf9252cbd955f755fbd0ea8db9f80ede2dc2e95",
+    ".native/head-change-20261017/data/features-2.tsv": "82c4eb161986546c0891de9ab67d54002de9ca0f7baaaf06a10d995261c4a9e8",
+    ".native/head-change-20261017/data/features-3.log": "401a27a1a4c13f142ed241bd4bf9252cbd955f755fbd0ea8db9f80ede2dc2e95",
+    ".native/head-change-20261017/data/features-3.tsv": "35a44a309bb33209763f8b5142401c7b0340ada7c412af66a2dd710b385d4124",
+    ".native/head-change-20261017/data/manifest.json": "628104ec4975fdb05d9e0ec696e411c7b36a165cc5ea3f6f6ef9d57c49b12dbb",
+    ".native/head-change-20261017/data/metadata.json": "7e5b7d09c8f3e5607fbd1abc49a7aae0cd20af610ead74458539c6016211acbb"
+  },
+  "model_sha256": "bdb53df0d2f5958094287b66c0c6228b3d512442db7dca04bcf68c0bf775de2d",
+  "scope": "One fixed regularized logistic fit. Threshold selected only on original-family-disjoint internal validation, never external guards or reserve. Balanced per-case/family/source mass; no lexical identity features."
+}

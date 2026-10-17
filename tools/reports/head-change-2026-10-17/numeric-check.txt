@@ -1,0 +1,2 @@
+fitted_probability_parity=80
+repair=true protection=true stable_tail=true null_fallback=true nonfinite_rejection=true malformed_rejected=8

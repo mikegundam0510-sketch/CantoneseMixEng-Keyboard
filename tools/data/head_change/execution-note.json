@@ -1,0 +1,7 @@
+{
+  "fit_retry": "First numerical fit completed but provenance could not relativize a relative cache path. Retry used the identical sealed source/parameters with an absolute cache path.",
+  "first_model_equals_completed_model": true,
+  "model_sha256": "bdb53df0d2f5958094287b66c0c6228b3d512442db7dca04bcf68c0bf775de2d",
+  "policy_change": false,
+  "external_outcomes_used": false
+}

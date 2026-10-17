@@ -1,0 +1,218 @@
+{
+  "parent_revision": "f7cd44c",
+  "adopted": false,
+  "internally_selected_threshold": 0.99,
+  "qualified": false,
+  "reason": "Learned gate reduces displaced correct heads but authored70 first15->14 exceeds frozen1pp per-set loss allowance. No threshold change, exception, fallback arm, speed claim or reserve decode after rejection.",
+  "calibration1450": {
+    "before": {
+      "cases": 1450,
+      "top1": 301,
+      "top5": 558,
+      "top20": 736,
+      "mrr": 0.28475590759785274
+    },
+    "after": {
+      "cases": 1450,
+      "top1": 313,
+      "top5": 568,
+      "top20": 736,
+      "mrr": 0.29392187998057007
+    },
+    "paired": {
+      "first": {
+        "gained": 12,
+        "lost": 0,
+        "net": 12,
+        "paired_exact_two_sided_p": 0.00048828125
+      },
+      "top5": {
+        "gained": 17,
+        "lost": 7,
+        "net": 10,
+        "paired_exact_two_sided_p": 0.06391465663909912
+      },
+      "top20": {
+        "gained": 0,
+        "lost": 0,
+        "net": 0,
+        "paired_exact_two_sided_p": 1
+      }
+    },
+    "coverage": {
+      "cases": 1450,
+      "all_visible_sets_identical": true,
+      "ranked_lists_changed": 1429
+    },
+    "gate": {
+      "new_counts_nondecreasing": true,
+      "new_first_or_top5_gain": true,
+      "old_counts_nondecreasing": true,
+      "old_per_set_loss_within_one_pp": true
+    },
+    "qualified": true
+  },
+  "guard3893": {
+    "before": {
+      "cases": 3893,
+      "top1": 1358,
+      "top5": 2215,
+      "top20": 2625,
+      "mrr": 0.4453086115079659
+    },
+    "after": {
+      "cases": 3893,
+      "top1": 1377,
+      "top5": 2263,
+      "top20": 2625,
+      "mrr": 0.45328243175597
+    },
+    "paired": {
+      "first": {
+        "gained": 26,
+        "lost": 7,
+        "net": 19,
+        "paired_exact_two_sided_p": 0.0013187271542847157
+      },
+      "top5": {
+        "gained": 69,
+        "lost": 21,
+        "net": 48,
+        "paired_exact_two_sided_p": 3.881817444056319e-07
+      },
+      "top20": {
+        "gained": 0,
+        "lost": 0,
+        "net": 0,
+        "paired_exact_two_sided_p": 1
+      }
+    },
+    "coverage": {
+      "cases": 3893,
+      "all_visible_sets_identical": true,
+      "ranked_lists_changed": 3724
+    },
+    "guard_gate": {
+      "aggregate_counts_nondecreasing": true,
+      "per_set_first_top5_loss_within_one_pp": false
+    },
+    "qualified": false
+  },
+  "comparison_with_unrestricted_neural": {
+    "first_gains_before": 124,
+    "first_losses_before": 39,
+    "first_gains_after": 26,
+    "first_losses_after": 7
+  },
+  "previous_failed_sets": {
+    "validation:fresh-ud": {
+      "before": {
+        "cases": 43,
+        "top1": 20,
+        "top5": 29,
+        "top20": 35,
+        "mrr": 0.5549380851706434
+      },
+      "after": {
+        "cases": 43,
+        "top1": 20,
+        "top5": 30,
+        "top20": 35,
+        "mrr": 0.5595577871740662
+      },
+      "no_count_loss": true
+    },
+    "guard:authored120": {
+      "before": {
+        "cases": 120,
+        "top1": 79,
+        "top5": 86,
+        "top20": 98,
+        "mrr": 0.6979166666666666
+      },
+      "after": {
+        "cases": 120,
+        "top1": 79,
+        "top5": 92,
+        "top20": 98,
+        "mrr": 0.70625
+      },
+      "no_count_loss": true
+    },
+    "guard:handover": {
+      "before": {
+        "cases": 30,
+        "top1": 29,
+        "top5": 30,
+        "top20": 30,
+        "mrr": 0.9833333333333333
+      },
+      "after": {
+        "cases": 30,
+        "top1": 29,
+        "top5": 30,
+        "top20": 30,
+        "mrr": 0.9833333333333333
+      },
+      "no_count_loss": true
+    }
+  },
+  "failed_sets": {
+    "guard:authored70": {
+      "before": {
+        "cases": 70,
+        "top1": 15,
+        "top5": 41,
+        "top20": 48,
+        "mrr": 0.3871768707482993
+      },
+      "after": {
+        "cases": 70,
+        "top1": 14,
+        "top5": 41,
+        "top20": 48,
+        "mrr": 0.3744662480376766
+      }
+    }
+  },
+  "single32": {
+    "cases": 32,
+    "confirmations": 3,
+    "sequence_records": 489,
+    "legacy": [
+      31,
+      32,
+      32
+    ],
+    "contextual": [
+      32,
+      32,
+      32
+    ],
+    "actual_neural_and_head_gate_enabled": true,
+    "all_learned_sets_equal_baseline": true,
+    "qualified": true,
+    "limits": "Simulated known choices, not physical-device persistence or unseen user accuracy."
+  },
+  "android": {
+    "unit_tests": {
+      "tests": 222,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "lint": {
+      "Warning": 25
+    },
+    "qualified": true
+  },
+  "independent500_decoded": false,
+  "unrun_after_rejection": [
+    "quiet paired timing",
+    "context-search independent500",
+    "physical Fold7/update-persistence checks",
+    "APK packaging"
+  ],
+  "production": "Unchanged app source/assets;0.6.39/code46, signing, local learning and Fold7 preserved.",
+  "decision": "Reject production adoption; retain research and unused independent500."
+}

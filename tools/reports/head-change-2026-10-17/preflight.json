@@ -1,0 +1,14 @@
+{
+  "fitted_probability_parity": 80,
+  "tolerance": 1e-11,
+  "controlled_repair": true,
+  "controlled_protection": true,
+  "tail_order_preserved": true,
+  "null_gate_full_parent_order": true,
+  "nonfinite_rejection": true,
+  "malformed_rejected": 8,
+  "original_sets": true,
+  "positive_negative_personal_context": true,
+  "familiar_characters_active": true,
+  "mixed_translation_unchanged": true
+}
