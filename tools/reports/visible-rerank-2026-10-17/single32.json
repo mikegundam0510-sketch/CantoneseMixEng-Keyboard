@@ -1,0 +1,19 @@
+{
+  "cases": 32,
+  "confirmations": 3,
+  "sequence_records": 489,
+  "legacy": [
+    31,
+    32,
+    32
+  ],
+  "contextual": [
+    32,
+    32,
+    32
+  ],
+  "actual_model_enabled": true,
+  "all_learned_candidate_sets_equal_baseline": true,
+  "qualified": true,
+  "limits": "Simulated in-memory Single choices; not a physical-device persistence test."
+}

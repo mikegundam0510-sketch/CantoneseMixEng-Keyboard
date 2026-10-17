@@ -1,0 +1,210 @@
+{
+  "parent_revision": "523d133",
+  "adopted": false,
+  "selected": "adapted",
+  "qualified": false,
+  "protocol_sha256": "bff0a76e8ffc08618d3df49ccb89da9beaadcc5504ce730f4ac0292a178fc4f2",
+  "reason": "Selected adapted reranker preserves all original candidates and improves aggregate counts, but three guard sets exceed the frozen first/top5 regression allowance. No fallback arm, policy change, reserve decode or production adoption after these results.",
+  "calibration1450": {
+    "before": {
+      "cases": 1450,
+      "top1": 301,
+      "top5": 558,
+      "top20": 736,
+      "mrr": 0.28475590759785274
+    },
+    "after": {
+      "cases": 1450,
+      "top1": 322,
+      "top5": 568,
+      "top20": 736,
+      "mrr": 0.29823222480815625
+    },
+    "new150": {
+      "before": {
+        "cases": 150,
+        "top1": 22,
+        "top5": 53,
+        "top20": 77,
+        "mrr": 0.23972046947433942
+      },
+      "after": {
+        "cases": 150,
+        "top1": 26,
+        "top5": 57,
+        "top20": 77,
+        "mrr": 0.2673294349842338
+      }
+    },
+    "old1300": {
+      "before": {
+        "cases": 1300,
+        "top1": 279,
+        "top5": 505,
+        "top20": 659,
+        "mrr": 0.28995230430441193
+      },
+      "after": {
+        "cases": 1300,
+        "top1": 296,
+        "top5": 511,
+        "top20": 659,
+        "mrr": 0.30179793132630117
+      }
+    },
+    "gate": {
+      "new_counts_nondecreasing": true,
+      "new_first_or_top5_gain": true,
+      "old_counts_nondecreasing": true,
+      "old_per_set_loss_within_one_pp": true
+    },
+    "coverage": {
+      "cases": 1450,
+      "all_visible_sets_identical": true,
+      "ranked_lists_changed": 1432
+    },
+    "qualified": true,
+    "selection_key": [
+      0.2195555555555556,
+      0.40700000000000003,
+      0.527888888888889,
+      0.30290851863660173
+    ]
+  },
+  "guard3893": {
+    "before": {
+      "cases": 3893,
+      "top1": 1358,
+      "top5": 2215,
+      "top20": 2625,
+      "mrr": 0.4453086115079659
+    },
+    "after": {
+      "cases": 3893,
+      "top1": 1443,
+      "top5": 2263,
+      "top20": 2625,
+      "mrr": 0.4620802740369872
+    },
+    "paired": {
+      "first": {
+        "gained": 124,
+        "lost": 39,
+        "net": 85,
+        "paired_exact_two_sided_p": 1.611585935005712e-11
+      },
+      "top5": {
+        "gained": 69,
+        "lost": 21,
+        "net": 48,
+        "paired_exact_two_sided_p": 3.881817444056319e-07
+      },
+      "top20": {
+        "gained": 0,
+        "lost": 0,
+        "net": 0,
+        "paired_exact_two_sided_p": 1
+      }
+    },
+    "coverage": {
+      "cases": 3893,
+      "all_visible_sets_identical": true,
+      "ranked_lists_changed": 3733
+    },
+    "guard_gate": {
+      "aggregate_counts_nondecreasing": true,
+      "per_set_first_top5_loss_within_one_pp": false
+    },
+    "qualified": false
+  },
+  "failed_guard_sets": {
+    "validation:fresh-ud": {
+      "before": {
+        "cases": 43,
+        "top1": 20,
+        "top5": 29,
+        "top20": 35,
+        "mrr": 0.5549380851706434
+      },
+      "after": {
+        "cases": 43,
+        "top1": 19,
+        "top5": 30,
+        "top20": 35,
+        "mrr": 0.544053911205074
+      }
+    },
+    "guard:authored120": {
+      "before": {
+        "cases": 120,
+        "top1": 79,
+        "top5": 86,
+        "top20": 98,
+        "mrr": 0.6979166666666666
+      },
+      "after": {
+        "cases": 120,
+        "top1": 75,
+        "top5": 92,
+        "top20": 98,
+        "mrr": 0.6895833333333333
+      }
+    },
+    "guard:handover": {
+      "before": {
+        "cases": 30,
+        "top1": 29,
+        "top5": 30,
+        "top20": 30,
+        "mrr": 0.9833333333333333
+      },
+      "after": {
+        "cases": 30,
+        "top1": 28,
+        "top5": 30,
+        "top20": 30,
+        "mrr": 0.9666666666666667
+      }
+    }
+  },
+  "single32": {
+    "cases": 32,
+    "confirmations": 3,
+    "sequence_records": 489,
+    "legacy": [
+      31,
+      32,
+      32
+    ],
+    "contextual": [
+      32,
+      32,
+      32
+    ],
+    "actual_model_enabled": true,
+    "all_learned_candidate_sets_equal_baseline": true,
+    "qualified": true,
+    "limits": "Simulated in-memory Single choices; not a physical-device persistence test."
+  },
+  "android": {
+    "unit_tests": {
+      "tests": 222,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "lint": {
+      "Warning": 25
+    },
+    "qualified": true
+  },
+  "independent500_decoded": false,
+  "unrun_after_rejection": [
+    "quiet paired timing",
+    "context-search independent500",
+    "physical Fold7/update-persistence checks",
+    "APK packaging"
+  ],
+  "production": "Tracked app source/assets,0.6.39/code46, signing, local learning and Fold7 layout unchanged.",
+  "decision": "Reject production adoption; preserve complete research and still-unused independent500."
+}

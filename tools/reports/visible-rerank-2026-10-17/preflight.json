@@ -1,0 +1,13 @@
+{
+  "randomized_displays": 200,
+  "projection_known_answer": true,
+  "neutral_and_constant_order": true,
+  "original_set_invariance": true,
+  "input_immutability": true,
+  "nonfinite_fallback": true,
+  "controlled_decode": "Original丙乙 -> model甲乙; same displayed set.",
+  "personal_context_checks": "Positive and negative context orders agree with parent.",
+  "familiar_characters": "Partial/global character familiarity alone keeps model active.",
+  "mixed_and_translation": "Identical lists and ordering in controlled fixtures.",
+  "learning_timing_harnesses": "Compiled with actual optional model; no corpus results yet."
+}

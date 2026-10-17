@@ -1,0 +1,5 @@
+{
+  "stage": "Before guard results and before any reserve decode; runner only, no model/policy change.",
+  "runner": "tools/evaluate_visible_rerank_reserve.py",
+  "sha256": "f5dbcc2d1081131b57ca28942cb8875adf2f01ee31c962750b92487ee08f0df4"
+}

@@ -1,0 +1,141 @@
+{
+  "parent_revision": "523d133",
+  "protocol_sha256": "bff0a76e8ffc08618d3df49ccb89da9beaadcc5504ce730f4ac0292a178fc4f2",
+  "selected": "adapted",
+  "trials": {
+    "language": {
+      "before": {
+        "cases": 1450,
+        "top1": 301,
+        "top5": 558,
+        "top20": 736,
+        "mrr": 0.28475590759785274
+      },
+      "after": {
+        "cases": 1450,
+        "top1": 316,
+        "top5": 570,
+        "top20": 736,
+        "mrr": 0.29373449562667026
+      },
+      "new150": {
+        "before": {
+          "cases": 150,
+          "top1": 22,
+          "top5": 53,
+          "top20": 77,
+          "mrr": 0.23972046947433942
+        },
+        "after": {
+          "cases": 150,
+          "top1": 28,
+          "top5": 56,
+          "top20": 77,
+          "mrr": 0.2662351187684005
+        }
+      },
+      "old1300": {
+        "before": {
+          "cases": 1300,
+          "top1": 279,
+          "top5": 505,
+          "top20": 659,
+          "mrr": 0.28995230430441193
+        },
+        "after": {
+          "cases": 1300,
+          "top1": 288,
+          "top5": 514,
+          "top20": 659,
+          "mrr": 0.2969075006487783
+        }
+      },
+      "gate": {
+        "new_counts_nondecreasing": true,
+        "new_first_or_top5_gain": true,
+        "old_counts_nondecreasing": true,
+        "old_per_set_loss_within_one_pp": true
+      },
+      "coverage": {
+        "cases": 1450,
+        "all_visible_sets_identical": true,
+        "ranked_lists_changed": 1431
+      },
+      "qualified": true,
+      "selection_key": [
+        0.21511111111111111,
+        0.40422222222222226,
+        0.527888888888889,
+        0.29621447191869016
+      ]
+    },
+    "adapted": {
+      "before": {
+        "cases": 1450,
+        "top1": 301,
+        "top5": 558,
+        "top20": 736,
+        "mrr": 0.28475590759785274
+      },
+      "after": {
+        "cases": 1450,
+        "top1": 322,
+        "top5": 568,
+        "top20": 736,
+        "mrr": 0.29823222480815625
+      },
+      "new150": {
+        "before": {
+          "cases": 150,
+          "top1": 22,
+          "top5": 53,
+          "top20": 77,
+          "mrr": 0.23972046947433942
+        },
+        "after": {
+          "cases": 150,
+          "top1": 26,
+          "top5": 57,
+          "top20": 77,
+          "mrr": 0.2673294349842338
+        }
+      },
+      "old1300": {
+        "before": {
+          "cases": 1300,
+          "top1": 279,
+          "top5": 505,
+          "top20": 659,
+          "mrr": 0.28995230430441193
+        },
+        "after": {
+          "cases": 1300,
+          "top1": 296,
+          "top5": 511,
+          "top20": 659,
+          "mrr": 0.30179793132630117
+        }
+      },
+      "gate": {
+        "new_counts_nondecreasing": true,
+        "new_first_or_top5_gain": true,
+        "old_counts_nondecreasing": true,
+        "old_per_set_loss_within_one_pp": true
+      },
+      "coverage": {
+        "cases": 1450,
+        "all_visible_sets_identical": true,
+        "ranked_lists_changed": 1432
+      },
+      "qualified": true,
+      "selection_key": [
+        0.2195555555555556,
+        0.40700000000000003,
+        0.527888888888889,
+        0.30290851863660173
+      ]
+    }
+  },
+  "independent500_decoded": false,
+  "decision": "Proceed to3893/learning/Android/timing guards"
+}

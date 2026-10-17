@@ -1,0 +1,76 @@
+{
+  "task": "Original visible candidates, then fixed pretrained reranking",
+  "parent_revision": "523d133",
+  "delivery": "Research-only; no APK or1.0 claim",
+  "adopted": false,
+  "selected": "adapted",
+  "stages": {
+    "projection_and_integration": "passed",
+    "calibration": "passed; adapted selected",
+    "guard3893": "failed per-set gate",
+    "enabled_single32": "passed32/32",
+    "android": "222 passed;25 Lint warnings;0 errors",
+    "paired_timing": "not run after guard rejection",
+    "independent500": "not decoded"
+  },
+  "baseline_reference": "App tree504ee9ea95fb6b3cf0a2230288943eaba0578d6c; cached1450 and3893 match production app in523d133.",
+  "counts": {
+    "calibration_before": {
+      "cases": 1450,
+      "top1": 301,
+      "top5": 558,
+      "top20": 736,
+      "mrr": 0.28475590759785274
+    },
+    "calibration_after": {
+      "cases": 1450,
+      "top1": 322,
+      "top5": 568,
+      "top20": 736,
+      "mrr": 0.29823222480815625
+    },
+    "guard_before": {
+      "cases": 3893,
+      "top1": 1358,
+      "top5": 2215,
+      "top20": 2625,
+      "mrr": 0.4453086115079659
+    },
+    "guard_after": {
+      "cases": 3893,
+      "top1": 1443,
+      "top5": 2263,
+      "top20": 2625,
+      "mrr": 0.4620802740369872
+    }
+  },
+  "failed_sets": [
+    "validation:fresh-ud",
+    "guard:authored120",
+    "guard:handover"
+  ],
+  "production_unchanged": true,
+  "evidence_sha256": {
+    "/workspace/CantoneseMixEng-Keyboard/tools/data/visible_rerank/protocol.json": "bff0a76e8ffc08618d3df49ccb89da9beaadcc5504ce730f4ac0292a178fc4f2",
+    "/workspace/CantoneseMixEng-Keyboard/tools/data/visible_rerank/seal.json": "3f41e7a4e6becf546616a57f269fc159159ee98f56fffba8380a50969b2635db",
+    "/workspace/CantoneseMixEng-Keyboard/tools/data/visible_rerank/inference-freeze.json": "e132f60377468f31a9a37ddbb2d97154b1fcb138b5c25c0205e04f2d22b55fe7",
+    "/workspace/CantoneseMixEng-Keyboard/tools/data/visible_rerank/reserve-runner-seal.json": "fd6fa412fcf8add37cdcd446b5b0a659f5545c583a1f91042be1664ab96cf529",
+    "/workspace/CantoneseMixEng-Keyboard/tools/data/visible_rerank/selection.json": "eb37840f8d414ae6e553f971e625ae2cf605ced9a159298efd5ec20485bf619c",
+    "/workspace/CantoneseMixEng-Keyboard/tools/data/visible_rerank/decision.json": "c33a4b3d8f02497f33b893e75514518cb475d6c7027739569bfd7cf4175c0b4a",
+    "tools/reports/visible-rerank-2026-10-17/adapted.json": "8e6d83c2f2d5bba0b35b679c2a218b752dc60378dc4faa90c6eb72b9da923b30",
+    "tools/reports/visible-rerank-2026-10-17/adapted.tsv": "88494e08c9a46aa3dfc701e2d001e323b5d87938ad5696105afefbfbe6687594",
+    "tools/reports/visible-rerank-2026-10-17/android-checks.log": "2592ac3b64d59d95bd09ce2235403c585c1426d47d14c05b1284031420bccbdd",
+    "tools/reports/visible-rerank-2026-10-17/android-sandbox-startup.log": "e0abfa2f7bb9497e77b71c32b4466c9f5d808bbee829a0a31ed529437674a2f2",
+    "tools/reports/visible-rerank-2026-10-17/android.json": "d9dc9a2dacc24319bf112ddd17df7131b4de66a540df1858a960e69ceee059ef",
+    "tools/reports/visible-rerank-2026-10-17/guard3893.json": "0438ff19e0b5eef15d7c17b94c8f24d4ddfa78ed5fe350947ead62d3073a8b84",
+    "tools/reports/visible-rerank-2026-10-17/guard3893.tsv": "58f7522de4cdb30c8ba623b32c6343bc29000bdb59b7e663998f8ece337e26b2",
+    "tools/reports/visible-rerank-2026-10-17/language.json": "dc69729bddd0d63b7603bf1f6957349571e7941457a858c2bf9f81a5338b9131",
+    "tools/reports/visible-rerank-2026-10-17/language.tsv": "e3e6fdc56cb32f393412d1d033d8b0a07ff09ac65dd415cdd30f4e734f9d249e",
+    "tools/reports/visible-rerank-2026-10-17/null-parity.tsv": "d967000e0524d6978dadf2e66d6507fae3c3c117049fd1a2cb9af40168c2e123",
+    "tools/reports/visible-rerank-2026-10-17/preflight.json": "b8a4cc8ba000afa743163bc30a01c79def372ad980ed654ff095bd9d7d08867d",
+    "tools/reports/visible-rerank-2026-10-17/single32.json": "26cf8ec7aedb08c34569ec6340fa8d2f5031cc85ad8317aecd18189db64c42d0",
+    "tools/reports/visible-rerank-2026-10-17/single32.tsv": "35f78f8e717ebc6f3b6239a6e8546bcca086c9aacdc94f6d0fb89ee8c1c87b1d",
+    "tools/reports/visible-rerank-2026-10-17/single32.txt": "825d7ea69bfc5f16fe1f80e70956a7830d59c149b816d5d562388d40af3c5ebf"
+  },
+  "limitations": "1450 and3893 are previously observed calibration/guards, not independent or real-user accuracy; authored families are correlated. No speed, on-device persistence or1.0 claim."
+}
