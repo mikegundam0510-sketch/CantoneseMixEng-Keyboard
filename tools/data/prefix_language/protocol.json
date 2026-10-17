@@ -1,0 +1,58 @@
+{
+  "parent_revision": "28dfb69012ee0e3a94870f0df7d6e11312841ec2",
+  "parent_app_tree": "8f31d86ad532f57278669629b642dbafa16c4acc",
+  "policy": "Original beam/lookahead/prefix reserves and raw scores retained; at most4 neural reserve histories per prune, within raw floor4. Inspect at most8 unseen candidates, compare fixed neural mean score with original48th gap>.25. Session query budget128/state cap2048 per decode. Mixed/baseline internal paths disable search model. No beam-width, confidence, vocabulary or final-tail-model changes.",
+  "trials": [
+    "language: adopted checkpoint reused as prefix scorer",
+    "trained: same checkpoint adapted on current-parent actual lost/survived prefix pairs; same runtime policy"
+  ],
+  "training": {
+    "seed": 20261017,
+    "epochs": 8,
+    "batch": 128,
+    "rate": 0.0002,
+    "source_mix": {
+      "HK": 0.7,
+      "Tatoeba": 0.2,
+      "UD": 0.05,
+      "authored": 0.05
+    },
+    "selection": "Minimum original-family-disjoint internal pair softplus plus0.05 positive LM; fixed32dim architecture/vocab/unigram. Pair raw offset0; runtime uses neural gap, raw score only for floor/proposal order. No external outcome tuning."
+  },
+  "calibration": "Known1450 versus adopted28dfb69: first/top5/top20 nondecrease separately on new150 and old1300; aggregate top20 strictly improves; each set first/top5 loss<=1pp. Select equal-set mean top20,first,top5,MRR; tie language. No further arms/grid.",
+  "guards": "Selected only: known3893 aggregate first/top5/top20 nondecrease and per-set first/top5 loss<=1pp; enabled Single32 contextual first32/32; exact enabled score/cache parity and null/mixed/observer-answer isolation; wired Android tests/Lint; quiet same-JVM paired30warm11samples sixcodes wall+CPU each<=1.2.",
+  "independent": "Only after all gates and exact qualification: new reserve500 one parent/candidate pass; first/top5/top20 counts nondecrease and top20 gain. No post-outcome source/model/policy edits. Preserve unused500 if earlier failure. Previous context_search500 never decoded/reselected this round.",
+  "delivery": "Adopt only if all gates pass; otherwise research only. No APK,0.6.39/code46/signing/local learning/layout unchanged. Source capacity543 audited before fitting:500 held independent, existing1450 calibration.",
+  "source_sha256": {
+    "tools/prefix_language/PrefixSessionCheck.java": "985d34867dc9a4885aecb1cd207125931f3fc7425df2762512858377d69ef88e",
+    "tools/prefix_language/SearchLanguageRanker.java": "ce29ab2f0e11398f27482477f8ad3d511c1d4cf658f89d662a0091aa3c3ed5ac",
+    "tools/prefix_language/experiment.py": "c3e024eba0939620d8d961631a2bc92be91616b15dccaf227a7af44770c4c889",
+    "tools/prefix_language/policy.py": "5589d2aa04dc193b12e07c921426153596b90efe49a799a91c36cb032e19f29c",
+    "tools/prefix_language/prepare_data.py": "c9fcd762d39bd0e2b4f9cefd94e64bd8a424cc3fca1f838f7a7c1e03cd34e1ee",
+    "tools/prefix_language/report.py": "793cc9aed23e8aa85f035fb7e8579d196280811907cbd3f103b722c9e1405cd1",
+    "tools/prefix_language/train.py": "1002103147188da0873a1082b956f360286e4290d863d4f52ea653f6695028f7",
+    "tools/sentence_language_model.py": "b6a463ea2f440abb901f5e4e44744c4ada1dd672e8889fb6877bd10315ab252a",
+    "tools/train_sentence_pretrain.py": "fc23261f6b2ad5320eac02c4a79784e0bb555d1c6d3b8688277dd2d0a8b4dfa6",
+    "tools/prepare_sentence_pretrain.py": "bd4ce841f16b15327843103054186e69e2795cccb7764f131009fc8bd067ff68",
+    "tools/observe_current_search.py": "99f14f1b8377cf863435fda5b8662f775dc945aa479c40664ae273eea08e8e8b",
+    "tools/native_phrase_relations.py": "f5765a9a47a4b88c622fa1237bebf5f0c9803e3196d2fd2f1df7b762be0fec63",
+    "tools/train_aligned_relations.py": "489d912e8194349f438f17630ee641b1dd5abbf8651de8fecc240136c079c85e",
+    "tools/report_prefix_retrieval.py": "5482a5527b216760f860a8748708690acf124b885cd98ffe84d737ac4564b181",
+    "tools/report_search_recovery.py": "8a935e0d5f3cc4db20b482abf923ba042dc9dea5ecc5a0bc0f486c065a0b1dfb",
+    "tools/prepare_phrase_relations.py": "cd2b5e2b6ad480ad6e49fe682ad754db1bab5e7d4fc733b854b4d842bb827e15",
+    "tools/train_candidate_ranker.py": "86e9de3ea6b34fee8e7020f34671ca9100f4382489fbd74def2206d5754fe981",
+    "tools/context_gru.py": "6a676dd78995b0d1089a0417c57f3c830f5446d252744f303e49fd889122b0b2"
+  },
+  "input_sha256": {
+    "tools/data/prefix_language/inputs.json": "0747c59c763f5890056e1845208f520429e681628d31fdaa3b74a44876a2c6b1",
+    "tools/data/prefix_language/observation-cases.tsv": "64344fb66fa5cab40a525108357b97c73ff7e2b381a944a76683859fbc5bf945",
+    "tools/data/prefix_language/reserve.tsv": "04cfcc1666d517314aa5f37d476fc93af32f4c6b51ad45e48a3cd58ddbb37cd8",
+    "tools/data/prefix_language/reserve-source.jsonl": "1a615c601f86651a937c79745c54f81cf56c3edbf25e8758897691671bd54e41",
+    "app/src/main/assets/sentence_language.b64": "57c8997ac0ff6076a5bf9101f2ee007865618c638a110eca4b76b85e76383746",
+    "tools/data/context_search/calibration1450.tsv": "fd874eeed989500d1cbbc483e70342d865af9e086360edc7978387a0a1e95743",
+    "tools/reports/pinned-head-2026-10-17/calibration1450.tsv": "552e4ca007837200a46c4a6cbab22855b535d81397c4472142ce9744297efa21",
+    "tools/reports/pinned-head-2026-10-17/guard3893.tsv": "db163fe5da03929c2c392de65d343a5eee11661858ab9db7308f9475904395bf",
+    ".native/joint-ranking-20261015/guard-cases3893.tsv": "8e4b74c8174dee73da8dda89d4c0cf1716c7d6fb69acc69c6fc12d08518b515d",
+    "tools/hk_daily_context_cases.tsv": "d29faa28d581c87e6b480ce3924c778e4794fa830d6067249a3369daad6528af"
+  }
+}

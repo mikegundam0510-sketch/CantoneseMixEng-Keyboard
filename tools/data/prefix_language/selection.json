@@ -1,0 +1,115 @@
+{
+  "selected": null,
+  "reserve_decoded": false,
+  "trials": {
+    "language": {
+      "before": {
+        "cases": 1450,
+        "top1": 301,
+        "top5": 568,
+        "top20": 736,
+        "mrr": 0.2894391213598804
+      },
+      "after": {
+        "cases": 1450,
+        "top1": 301,
+        "top5": 568,
+        "top20": 736,
+        "mrr": 0.2894347004933906
+      },
+      "new150": {
+        "before": {
+          "cases": 150,
+          "top1": 22,
+          "top5": 57,
+          "top20": 77,
+          "mrr": 0.25121832387312265
+        },
+        "after": {
+          "cases": 150,
+          "top1": 22,
+          "top5": 57,
+          "top20": 77,
+          "mrr": 0.25121832387312265
+        }
+      },
+      "old1300": {
+        "before": {
+          "cases": 1300,
+          "top1": 279,
+          "top5": 511,
+          "top20": 659,
+          "mrr": 0.29384921337758324
+        },
+        "after": {
+          "cases": 1300,
+          "top1": 279,
+          "top5": 511,
+          "top20": 659,
+          "mrr": 0.2938442824111138
+        }
+      },
+      "gates": {
+        "new_and_old_counts_nondecreasing": true,
+        "aggregate_coverage_gain": false,
+        "per_set_first_top5_loss_within_one_pp": true
+      },
+      "qualified": false
+    },
+    "trained": {
+      "before": {
+        "cases": 1450,
+        "top1": 301,
+        "top5": 568,
+        "top20": 736,
+        "mrr": 0.2894391213598804
+      },
+      "after": {
+        "cases": 1450,
+        "top1": 301,
+        "top5": 568,
+        "top20": 736,
+        "mrr": 0.2894391213598804
+      },
+      "new150": {
+        "before": {
+          "cases": 150,
+          "top1": 22,
+          "top5": 57,
+          "top20": 77,
+          "mrr": 0.25121832387312265
+        },
+        "after": {
+          "cases": 150,
+          "top1": 22,
+          "top5": 57,
+          "top20": 77,
+          "mrr": 0.25121832387312265
+        }
+      },
+      "old1300": {
+        "before": {
+          "cases": 1300,
+          "top1": 279,
+          "top5": 511,
+          "top20": 659,
+          "mrr": 0.29384921337758324
+        },
+        "after": {
+          "cases": 1300,
+          "top1": 279,
+          "top5": 511,
+          "top20": 659,
+          "mrr": 0.29384921337758324
+        }
+      },
+      "gates": {
+        "new_and_old_counts_nondecreasing": true,
+        "aggregate_coverage_gain": false,
+        "per_set_first_top5_loss_within_one_pp": true
+      },
+      "qualified": false
+    }
+  },
+  "decision": "Reject both; retain adopted28dfb69; preserve unused new500"
+}

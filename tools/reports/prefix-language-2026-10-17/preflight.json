@@ -1,0 +1,11 @@
+{
+  "score_prefix_reference_cases": 340,
+  "live_prune_rescue": true,
+  "original48_preserved_at_each_rescue": true,
+  "query_budget": 128,
+  "state_budget": 2048,
+  "neutral_and_disabled_bypass": true,
+  "ordinary_parent_null_and_observer_parity_cases": 5,
+  "changing_observer_answers_changes_no_candidates": true,
+  "not_accuracy_evidence": true
+}

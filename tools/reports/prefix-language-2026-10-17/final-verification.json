@@ -1,0 +1,43 @@
+{
+  "protocol_sources_inputs_unchanged": true,
+  "inference_freezes_verified": [
+    "language",
+    "trained"
+  ],
+  "no_pending_calibration": true,
+  "new_reserve_sha256": "04cfcc1666d517314aa5f37d476fc93af32f4c6b51ad45e48a3cd58ddbb37cd8",
+  "new_reserve_unconsumed": true,
+  "previous500_not_decoded_again": true,
+  "parent_app_tree": "8f31d86ad532f57278669629b642dbafa16c4acc",
+  "all_tracked_app_files_identical": 165,
+  "research_source_sha256": {
+    "tools/prefix_language/PrefixBudgetCheck.java": "39d2a7f3f4272c508f7761626bc5f68048d5b87dffc52b0f5c18dc73259f884a",
+    "tools/prefix_language/PrefixReserveCheck.java": "fecebf7c69faee3c6118b1c7a67598dffd1af4a5d80bf8797e9d30ff4e9d1b67",
+    "tools/prefix_language/PrefixSessionCheck.java": "985d34867dc9a4885aecb1cd207125931f3fc7425df2762512858377d69ef88e",
+    "tools/prefix_language/SearchLanguageRanker.java": "ce29ab2f0e11398f27482477f8ad3d511c1d4cf658f89d662a0091aa3c3ed5ac",
+    "tools/prefix_language/check.py": "effab44396482f251651927997f9519bbcc8db44ebc34e50f7897814439f824a",
+    "tools/prefix_language/evaluate.py": "aa1668d107f2ce58d909b68ce2f7ff15a6bbb9cdae267ac5bb364b4b401b820e",
+    "tools/prefix_language/experiment.py": "c3e024eba0939620d8d961631a2bc92be91616b15dccaf227a7af44770c4c889",
+    "tools/prefix_language/performance.py": "b8653509d943406928c6c57ce4bed0bf6ec3872a4c7d78e96ffd1227b7d00815",
+    "tools/prefix_language/policy.py": "5589d2aa04dc193b12e07c921426153596b90efe49a799a91c36cb032e19f29c",
+    "tools/prefix_language/prepare_data.py": "c9fcd762d39bd0e2b4f9cefd94e64bd8a424cc3fca1f838f7a7c1e03cd34e1ee",
+    "tools/prefix_language/report.py": "793cc9aed23e8aa85f035fb7e8579d196280811907cbd3f103b722c9e1405cd1",
+    "tools/prefix_language/train.py": "1002103147188da0873a1082b956f360286e4290d863d4f52ea653f6695028f7"
+  },
+  "evidence_sha256": {
+    "tools/reports/prefix-language-2026-10-17/candidate-changes.json": "29719c66ea8b30e74936b695ebb7d8b25b56075bf11c79c2a790980ffaf5530d",
+    "tools/reports/prefix-language-2026-10-17/language-1450.json": "c45f5b96e72ff2135c689528d3080792bb527b045b566332104a21de68b1c7cc",
+    "tools/reports/prefix-language-2026-10-17/language-1450.tsv": "e1f09d7dd4ce114cfbb85eda7de78375d2bdc3aced8acc13fd5613a5a235b66a",
+    "tools/reports/prefix-language-2026-10-17/preflight.json": "0ca5cbe25b4d32e566ada6cd92a1198856c2d1a7221157bfc9951d04cb4a82af",
+    "tools/reports/prefix-language-2026-10-17/reserve-check.txt": "1fdb35d47dfdaf800406c67452e60cbe7aaaa82826e6909de2a2a9aefb675116",
+    "tools/reports/prefix-language-2026-10-17/session-check.txt": "893d689f2ac8fa9c6f521b7b420251fcc880757cea21666caae2aa8e516418ab",
+    "tools/reports/prefix-language-2026-10-17/state-budget.txt": "fde14bd2adc2fe0314069748414740739d6a8aa134b7815c7a7dc7ff18b7abd6",
+    "tools/reports/prefix-language-2026-10-17/timing-trained.json": "8c69d4ecd91069488caba59cf7cfdef12a44b2bb5d91f6d55343fd60e36842fb",
+    "tools/reports/prefix-language-2026-10-17/timing-trained.tsv": "4f3031cd8cb7ee963d8af817c4c614f1ae919a5d5612e6a743c40a0ddd742b9e",
+    "tools/reports/prefix-language-2026-10-17/trained-1450.json": "aa7f320733360f22618d00d531dc0a760fa461f6ba1263549203e6634b786403",
+    "tools/reports/prefix-language-2026-10-17/trained-1450.tsv": "721c50edb7d49375e2e4e9206e4e33c96772b5a77be3383583bbf59d3df26c65",
+    "tools/reports/prefix-language-2026-10-17/trained-python-java.txt": "d6f6f81030992ce6c6ca0f65f3b9e0a52b590a138737e17ec9a16798fd10d125",
+    "tools/reports/prefix-language-2026-10-17/trained-session-check.txt": "893d689f2ac8fa9c6f521b7b420251fcc880757cea21666caae2aa8e516418ab",
+    "tools/reports/prefix-language-2026-10-17/work.json": "b20301c2e51e8921ef4521fee16e68487a177cb93a6775946a8e1f98abcf08a2"
+  }
+}

@@ -1,0 +1,225 @@
+{
+  "parent_revision": "28dfb69012ee0e3a94870f0df7d6e11312841ec2",
+  "adopted": false,
+  "implemented_steps": [
+    "Bounded causal prefix-language reserve with per-decode state reuse",
+    "Actual current-parent lost/survived TRAIN prefix comparison adaptation"
+  ],
+  "training": {
+    "observed": 2534,
+    "pairs": 6514,
+    "fit": 5293,
+    "internal_validation": 1221,
+    "lost_pairs": 129,
+    "initial_loss": 0.6377950538678994,
+    "best_loss": 0.5882793992001145,
+    "internal_loss_is_not_accuracy": true
+  },
+  "trials": {
+    "language": {
+      "before": {
+        "cases": 1450,
+        "top1": 301,
+        "top5": 568,
+        "top20": 736,
+        "mrr": 0.2894391213598804
+      },
+      "after": {
+        "cases": 1450,
+        "top1": 301,
+        "top5": 568,
+        "top20": 736,
+        "mrr": 0.2894347004933906
+      },
+      "new150": {
+        "before": {
+          "cases": 150,
+          "top1": 22,
+          "top5": 57,
+          "top20": 77,
+          "mrr": 0.25121832387312265
+        },
+        "after": {
+          "cases": 150,
+          "top1": 22,
+          "top5": 57,
+          "top20": 77,
+          "mrr": 0.25121832387312265
+        }
+      },
+      "old1300": {
+        "before": {
+          "cases": 1300,
+          "top1": 279,
+          "top5": 511,
+          "top20": 659,
+          "mrr": 0.29384921337758324
+        },
+        "after": {
+          "cases": 1300,
+          "top1": 279,
+          "top5": 511,
+          "top20": 659,
+          "mrr": 0.2938442824111138
+        }
+      },
+      "gates": {
+        "new_and_old_counts_nondecreasing": true,
+        "aggregate_coverage_gain": false,
+        "per_set_first_top5_loss_within_one_pp": true
+      },
+      "qualified": false
+    },
+    "trained": {
+      "before": {
+        "cases": 1450,
+        "top1": 301,
+        "top5": 568,
+        "top20": 736,
+        "mrr": 0.2894391213598804
+      },
+      "after": {
+        "cases": 1450,
+        "top1": 301,
+        "top5": 568,
+        "top20": 736,
+        "mrr": 0.2894391213598804
+      },
+      "new150": {
+        "before": {
+          "cases": 150,
+          "top1": 22,
+          "top5": 57,
+          "top20": 77,
+          "mrr": 0.25121832387312265
+        },
+        "after": {
+          "cases": 150,
+          "top1": 22,
+          "top5": 57,
+          "top20": 77,
+          "mrr": 0.25121832387312265
+        }
+      },
+      "old1300": {
+        "before": {
+          "cases": 1300,
+          "top1": 279,
+          "top5": 511,
+          "top20": 659,
+          "mrr": 0.29384921337758324
+        },
+        "after": {
+          "cases": 1300,
+          "top1": 279,
+          "top5": 511,
+          "top20": 659,
+          "mrr": 0.29384921337758324
+        }
+      },
+      "gates": {
+        "new_and_old_counts_nondecreasing": true,
+        "aggregate_coverage_gain": false,
+        "per_set_first_top5_loss_within_one_pp": true
+      },
+      "qualified": false
+    }
+  },
+  "decision": "Reject both; retain adopted28dfb69; preserve unused new500",
+  "new_reserve500_decoded": false,
+  "previous_context_search500_decoded_again": false,
+  "validation": {
+    "prefix_reference_each_checkpoint": 340,
+    "live_prune_rescue": true,
+    "null_and_observer_parity_cases": 5,
+    "observer_answer_isolation": true,
+    "trained_java_python": 80,
+    "malformed_models_rejected": 15,
+    "forced_state_ceiling": 2048
+  },
+  "timing_trained": {
+    "arm": "trained",
+    "warmup": 30,
+    "samples": 11,
+    "cases": [
+      {
+        "code": "ofonaovrmrq",
+        "letters": 11,
+        "before_wall_ms": 81.963,
+        "after_wall_ms": 83.927,
+        "before_cpu_ms": 81.963,
+        "after_cpu_ms": 83.189,
+        "wall_ratio": 1.0239620316484268,
+        "cpu_ratio": 1.0149579688395984
+      },
+      {
+        "code": "hmerrrysmlrp",
+        "letters": 12,
+        "before_wall_ms": 105.917,
+        "after_wall_ms": 105.956,
+        "before_cpu_ms": 104.243,
+        "after_cpu_ms": 105.902,
+        "wall_ratio": 1.0003682128459077,
+        "cpu_ratio": 1.015914737680228
+      },
+      {
+        "code": "dpofvivcjutrmyyjvcqnjd",
+        "letters": 22,
+        "before_wall_ms": 151.818,
+        "after_wall_ms": 153.571,
+        "before_cpu_ms": 151.816,
+        "after_cpu_ms": 153.575,
+        "wall_ratio": 1.011546720415234,
+        "cpu_ratio": 1.0115863940559624
+      },
+      {
+        "code": "ofykrmmsydwljpvwjd",
+        "letters": 18,
+        "before_wall_ms": 133.224,
+        "after_wall_ms": 136.66,
+        "before_cpu_ms": 133.203,
+        "after_cpu_ms": 136.006,
+        "wall_ratio": 1.0257911487419684,
+        "cpu_ratio": 1.0210430696005346
+      },
+      {
+        "code": "vkmmnkmrvordrjjj",
+        "letters": 16,
+        "before_wall_ms": 147.315,
+        "after_wall_ms": 155.322,
+        "before_cpu_ms": 146.302,
+        "after_cpu_ms": 155.326,
+        "wall_ratio": 1.054352917218206,
+        "cpu_ratio": 1.0616806332107558
+      },
+      {
+        "code": "hihihihihihihihihihihihihihihihihihihihihihihihi",
+        "letters": 48,
+        "before_wall_ms": 524.175,
+        "after_wall_ms": 526.675,
+        "before_cpu_ms": 520.135,
+        "after_cpu_ms": 524.696,
+        "wall_ratio": 1.0047693995325988,
+        "cpu_ratio": 1.0087688773106982
+      }
+    ],
+    "max_ratio": 1.0616806332107558,
+    "qualified": true,
+    "raw_sha256": "4f3031cd8cb7ee963d8af817c4c614f1ae919a5d5612e6a743c40a0ddd742b9e",
+    "wired_harness_sha256": "aa0c7e4deb4bf3f3fe02453bc8d88ff53ff3c21daf147aca321b58a4ca20c314",
+    "actual_both_models_enabled": true,
+    "physical_device": false
+  },
+  "unrun": [
+    "3893 regression guard",
+    "Single32 candidate learning gate",
+    "wired candidate Android unit/Lint",
+    "new reserve500 ordinary decode"
+  ],
+  "app_tree_unchanged": "8f31d86ad532f57278669629b642dbafa16c4acc",
+  "all_parent_tracked_app_files_identical": 165,
+  "version": "0.6.39",
+  "version_code": 46,
+  "apk_produced": false,
+  "limits": "Zero coverage/hit-count gain on observed calibration. Most prefix comparisons protect survivors; no lost HK fit positive. Native timing only. Rejected before independent/Android adoption gates."
+}

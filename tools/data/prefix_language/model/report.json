@@ -1,0 +1,55 @@
+{
+  "initial_checkpoint_sha256": "57c8997ac0ff6076a5bf9101f2ee007865618c638a110eca4b76b85e76383746",
+  "protocol_sha256": "bef341adc9ccf878d918e5d2398225fd49ab9ab9805bca237613815a22585122",
+  "pairs_sha256": "4c6c4ec0e4878ac8ebf0cb2720f105208c9d9c5529bb62113ef481e2249ab7ce",
+  "model_sha256": "f90e2a3a03d582c6ad2f85893519903b3d9f9c8b9208630e11247f5e047fd0f7",
+  "train": 5293,
+  "validation": 1221,
+  "initial_internal_validation": 0.6377950538678994,
+  "best_internal_validation": 0.5882793992001145,
+  "best_epoch": 8,
+  "epochs": [
+    {
+      "epoch": 1,
+      "train_loss": 0.5659059613250547,
+      "internal_validation_loss": 0.6246393720797102
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.5524409152644806,
+      "internal_validation_loss": 0.6147154012144247
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.5415518838900284,
+      "internal_validation_loss": 0.6072680749041833
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.5323129117308685,
+      "internal_validation_loss": 0.6015763841233812
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.5245012126323881,
+      "internal_validation_loss": 0.5973076972680245
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.5177777966411583,
+      "internal_validation_loss": 0.5936806199982164
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.5116972609490139,
+      "internal_validation_loss": 0.590733730431759
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.5062912149868952,
+      "internal_validation_loss": 0.5882793992001145
+    }
+  ],
+  "improved_internal_loss": true,
+  "scope": "Internal prefix-comparison loss only; not keyboard accuracy. No external evaluation fitted."
+}

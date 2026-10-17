@@ -1,0 +1,40 @@
+{
+  "parent_revision": "28dfb69012ee0e3a94870f0df7d6e11312841ec2",
+  "cases_sha256": "64344fb66fa5cab40a525108357b97c73ff7e2b381a944a76683859fbc5bf945",
+  "pairs_sha256": "4c6c4ec0e4878ac8ebf0cb2720f105208c9d9c5529bb62113ef481e2249ab7ce",
+  "observed_cases": 2534,
+  "comparisons": 6514,
+  "counts": {
+    "train:authored:survived": 280,
+    "train:HK:survived": 3451,
+    "validation:HK:survived": 848,
+    "train:Tatoeba:survived": 1168,
+    "validation:authored:survived": 76,
+    "train:UD:survived": 277,
+    "train:UD:lost": 52,
+    "validation:Tatoeba:survived": 285,
+    "train:authored:lost": 55,
+    "train:Tatoeba:lost": 10,
+    "validation:authored:lost": 8,
+    "validation:HK:lost": 4
+  },
+  "families": {
+    "train": 460,
+    "validation": 107
+  },
+  "rejected": {
+    "new_evaluation_overlap": 4,
+    "internal_validation_overlap": 2
+  },
+  "observation_sha256": {
+    ".native/prefix-language-20261017/observed-0/visible.tsv": "98a42e81320ee9320b5256dec13a5728a34c1baba489d039cf4928cd037c6a7e",
+    ".native/prefix-language-20261017/observed-0/prefix.tsv": "faa251f6857efcc5ead6a867ba822f1985b9be8643a185544f4ee10ef86100aa",
+    ".native/prefix-language-20261017/observed-1/visible.tsv": "4306448b64f8b40e914128c0546c6d9e0e473292d84db8e2b26819c80bf02e02",
+    ".native/prefix-language-20261017/observed-1/prefix.tsv": "4bf269bda9dae0c09dbe5d843438c02a1c363880a87c911d63a6781377328188",
+    ".native/prefix-language-20261017/observed-2/visible.tsv": "17f167a204dc41aca2ae0b8a77803315b3cb6925549c49a02800ebe3e5b26acd",
+    ".native/prefix-language-20261017/observed-2/prefix.tsv": "3626d1687d72a32e5ad1eb6956c0dfc2e449d77922d824695cadadca675b0339",
+    ".native/prefix-language-20261017/observed-3/visible.tsv": "3d902e9aef11e5f5bd446064794b52734bd88659f6fc467334b97b8aee1fbbb3",
+    ".native/prefix-language-20261017/observed-3/prefix.tsv": "a5c814ccf9e10c6288e754b58265abdedd2d2c0b94ed832b2941c8c8fa1bdaea"
+  },
+  "objective": "Same causal prefix score as runtime, no EOS. Pair offset zero: survival uses neural gap>.25, raw score only floor/proposal order. Family/case/rival-balanced domain mass; positive LM auxiliary0.05. Lost and survived origins retained. Actual traces only, no forced reconstruction."
+}

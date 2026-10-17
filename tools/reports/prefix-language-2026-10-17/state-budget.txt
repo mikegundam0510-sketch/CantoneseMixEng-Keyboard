@@ -1,0 +1,1 @@
+state_exhaustion2048=true finite_fallback=true no_post_limit_growth=true fresh_session=true

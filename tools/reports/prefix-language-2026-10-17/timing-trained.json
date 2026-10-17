@@ -1,0 +1,73 @@
+{
+  "arm": "trained",
+  "warmup": 30,
+  "samples": 11,
+  "cases": [
+    {
+      "code": "ofonaovrmrq",
+      "letters": 11,
+      "before_wall_ms": 81.963,
+      "after_wall_ms": 83.927,
+      "before_cpu_ms": 81.963,
+      "after_cpu_ms": 83.189,
+      "wall_ratio": 1.0239620316484268,
+      "cpu_ratio": 1.0149579688395984
+    },
+    {
+      "code": "hmerrrysmlrp",
+      "letters": 12,
+      "before_wall_ms": 105.917,
+      "after_wall_ms": 105.956,
+      "before_cpu_ms": 104.243,
+      "after_cpu_ms": 105.902,
+      "wall_ratio": 1.0003682128459077,
+      "cpu_ratio": 1.015914737680228
+    },
+    {
+      "code": "dpofvivcjutrmyyjvcqnjd",
+      "letters": 22,
+      "before_wall_ms": 151.818,
+      "after_wall_ms": 153.571,
+      "before_cpu_ms": 151.816,
+      "after_cpu_ms": 153.575,
+      "wall_ratio": 1.011546720415234,
+      "cpu_ratio": 1.0115863940559624
+    },
+    {
+      "code": "ofykrmmsydwljpvwjd",
+      "letters": 18,
+      "before_wall_ms": 133.224,
+      "after_wall_ms": 136.66,
+      "before_cpu_ms": 133.203,
+      "after_cpu_ms": 136.006,
+      "wall_ratio": 1.0257911487419684,
+      "cpu_ratio": 1.0210430696005346
+    },
+    {
+      "code": "vkmmnkmrvordrjjj",
+      "letters": 16,
+      "before_wall_ms": 147.315,
+      "after_wall_ms": 155.322,
+      "before_cpu_ms": 146.302,
+      "after_cpu_ms": 155.326,
+      "wall_ratio": 1.054352917218206,
+      "cpu_ratio": 1.0616806332107558
+    },
+    {
+      "code": "hihihihihihihihihihihihihihihihihihihihihihihihi",
+      "letters": 48,
+      "before_wall_ms": 524.175,
+      "after_wall_ms": 526.675,
+      "before_cpu_ms": 520.135,
+      "after_cpu_ms": 524.696,
+      "wall_ratio": 1.0047693995325988,
+      "cpu_ratio": 1.0087688773106982
+    }
+  ],
+  "max_ratio": 1.0616806332107558,
+  "qualified": true,
+  "raw_sha256": "4f3031cd8cb7ee963d8af817c4c614f1ae919a5d5612e6a743c40a0ddd742b9e",
+  "wired_harness_sha256": "aa0c7e4deb4bf3f3fe02453bc8d88ff53ff3c21daf147aca321b58a4ca20c314",
+  "actual_both_models_enabled": true,
+  "physical_device": false
+}
