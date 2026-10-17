@@ -1,0 +1,549 @@
+{
+  "baseline_revision": "61e62e5",
+  "cases_sha256": "be242e6ab4a2b41d8e505d4891d09d5087c8ee3e8355569c02d4d976c05207e6",
+  "output_sha256": {
+    "before": "f7cdb43a3c8ed93a09cff90fe2b8515d35633c37a3b3bad2773f99fd632aaa05",
+    "after": "31a0ec490dc75d7c840d2aae1c85bd5ec6cf7d9351f9331f50177ebb623c0197"
+  },
+  "before": {
+    "cases": 500,
+    "top1": 107,
+    "top5": 195,
+    "top20": 253,
+    "mrr": 0.29354172452934063
+  },
+  "after": {
+    "cases": 500,
+    "top1": 107,
+    "top5": 202,
+    "top20": 253,
+    "mrr": 0.3000583283073995
+  },
+  "paired": {
+    "first": {
+      "gained": 0,
+      "lost": 0,
+      "net": 0,
+      "paired_exact_two_sided_p": 1
+    },
+    "top5": {
+      "gained": 9,
+      "lost": 2,
+      "net": 7,
+      "paired_exact_two_sided_p": 0.0654296875
+    },
+    "top20": {
+      "gained": 0,
+      "lost": 0,
+      "net": 0,
+      "paired_exact_two_sided_p": 1
+    }
+  },
+  "per_set": {
+    "context-search:heldout": {
+      "before": {
+        "cases": 500,
+        "top1": 107,
+        "top5": 195,
+        "top20": 253,
+        "mrr": 0.29354172452934063
+      },
+      "after": {
+        "cases": 500,
+        "top1": 107,
+        "top5": 202,
+        "top20": 253,
+        "mrr": 0.3000583283073995
+      },
+      "no_count_loss": true
+    }
+  },
+  "no_per_set_count_loss": true,
+  "rank_changes": [
+    {
+      "source": "context-search:heldout",
+      "code": "kdjjrporocciqiwcrt",
+      "target": "架車呢個價錢抵買啦",
+      "before": 4,
+      "after": 3
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "kborupbeujkbfmpop",
+      "target": "病人嘅情況突然惡化",
+      "before": 10,
+      "after": 9
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "hihnajvichcgkbrqjnqnhiqqo",
+      "target": "我行開幾分鐘有咩事打我手提",
+      "before": 13,
+      "after": 10
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "osaavprmorvodvdnioq",
+      "target": "佢暗戀咗個女仔好多年",
+      "before": 3,
+      "after": 4
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "osrkdeoklyfbmfoa",
+      "target": "佢噉樣做非常不智",
+      "before": 3,
+      "after": 2
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "osvooqieiflwybbj",
+      "target": "佢以健康為由請辭",
+      "before": 8,
+      "after": 11
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "osrfuymmlykgjyrra",
+      "target": "佢喺山上面放聲高唱",
+      "before": 6,
+      "after": 8
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "ostuajkmflh",
+      "target": "佢着開大碼衫",
+      "before": 17,
+      "after": 19
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "hivddpjsvdorymobobyuokrrmn",
+      "target": "我好想考好個試偏偏就做唔到",
+      "before": 3,
+      "after": 2
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "vphinonvjhajmfvrofnqhjmmy",
+      "target": "恕我孤陋寡聞不如你解釋一下",
+      "before": 7,
+      "after": 8
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "ofokpnrmmprr",
+      "target": "你做乜咁惡喎",
+      "before": 20,
+      "after": 12
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "cirrrujjylppjkyr",
+      "target": "公路嘅車速比較高",
+      "before": 5,
+      "after": 4
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "rrvdrmpkajor",
+      "target": "唔好咁快開估",
+      "before": 6,
+      "after": 9
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "hidpwcyroedf",
+      "target": "我想買過隻杯",
+      "before": 9,
+      "after": 7
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "osrdqblrrjnedrd",
+      "target": "佢哋手腳唔乾淨㗎",
+      "before": 7,
+      "after": 5
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "oeroakbrekijvruarac",
+      "target": "人治會帶嚟獨裁嘅問題",
+      "before": 12,
+      "after": 11
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "yryaykoqmrvorfmkiivvmcmyjj",
+      "target": "諮詢文件可以喺政府網頁下載",
+      "before": 6,
+      "after": 4
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "rmofdphiwrrh",
+      "target": "咁你想我點呀",
+      "before": 20,
+      "after": 19
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "rpviaiwmnhiriqqajlicdaw",
+      "target": "呢幾日凍到我啲手指都麻木晒",
+      "before": 4,
+      "after": 2
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "ajvrrmceahjdrh",
+      "target": "開始咗錄影未呀",
+      "before": 3,
+      "after": 2
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "rporsaotkbmmmaoroiphk",
+      "target": "呢個職位有五百個人應徵",
+      "before": 3,
+      "after": 2
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "osoroyhnovjuhioemaiohenormhi",
+      "target": "佢個仆街食完我隻豬之後飛咗我",
+      "before": 11,
+      "after": 6
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "osrdvdpkyungohbeer",
+      "target": "佢哋好快就墮入愛河",
+      "before": 2,
+      "after": 3
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "mkiiylanhrhuifmkokhoebybevlcrmvdniicef",
+      "target": "政府部門各自為政缺乏溝通浪費咗好多資源",
+      "before": 9,
+      "after": 8
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "oshuhmrrrryrrmhhosmbumnoshuhmrirnyubahhwpo",
+      "target": "佢先生啱啱過咗身佢一見到佢先生啲嘢就睹物思人",
+      "before": 3,
+      "after": 2
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "spybvotnmrvorfwfybwcmnooo",
+      "target": "聽講以前可以喺黑市買到人肉",
+      "before": 11,
+      "after": 9
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "osybrnhbbndvhirrofrmsphiabosybpn",
+      "target": "佢講嘢黐脷根我唔係咁聽得明佢講乜",
+      "before": 7,
+      "after": 8
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "ofnkrrofosvdodrrvdpnjlgbosokawrt",
+      "target": "你又唔係佢妹仔唔好乜都幫佢做晒啦",
+      "before": 9,
+      "after": 7
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "ybkjoyryereqynohihiwryxolkyumrvouune",
+      "target": "請大家過返嚟排隊等我點齊人數就可以出發",
+      "before": 11,
+      "after": 6
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "mmkisrrubeybonaorrnnesv",
+      "target": "亞太區嘅股市今日個別發展",
+      "before": 19,
+      "after": 20
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "opkgyuifohymyugbosmiort",
+      "target": "念在親戚份上就幫佢一次啦",
+      "before": 8,
+      "after": 5
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "hirdyeyjrmmnvhmarrykojos",
+      "target": "我哋設計咗一張生日咭送俾佢",
+      "before": 8,
+      "after": 6
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "yckhdrrnjhiauaujlnorj",
+      "target": "讀大學嗰陣我晚晚都隊啤",
+      "before": 9,
+      "after": 10
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "oskbyghirdvoksrifhg",
+      "target": "佢希望我哋以大局為重",
+      "before": 8,
+      "after": 5
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "cjdgrruonmlofmmngmh",
+      "target": "金字塔嘅側面係三角形",
+      "before": 7,
+      "after": 6
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "beymmorkbvbioqoofhirumfgj",
+      "target": "愛上一個有婦之夫係我嘅不幸",
+      "before": 10,
+      "after": 9
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "hirdmvvimmororuksagormlifm",
+      "target": "我哋要將三個人嘅力量合而為一",
+      "before": 9,
+      "after": 8
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "suvmhowrfqrnhimvalynuuanrhurroayqmn",
+      "target": "已經八點半喇我要即刻出門口先唔會遲到",
+      "before": 5,
+      "after": 4
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "hihurrtfaenirdwlofhnkrrokmpru",
+      "target": "我先唔驚最多咪畀人炒又唔使死嘅",
+      "before": 13,
+      "after": 9
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "rpmkbisajloakbjmtg",
+      "target": "呢一帶成日都會有空難",
+      "before": 6,
+      "after": 5
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "rpothcjrdpyvocofmrrrmrvogbmyos",
+      "target": "呢位顧客想退貨你可唔可以幫下佢",
+      "before": 6,
+      "after": 4
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "hiolvoifofjcpcgypomfdoofrcofdpruleod",
+      "target": "我仲以為你真心鍾意人原來你只係想呃蝦條",
+      "before": 11,
+      "after": 8
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "jjirioheosmvogjbdropyh",
+      "target": "車禍之後佢要坐輪椅代步",
+      "before": 3,
+      "after": 2
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "hiiotnokjuqhnkbmnhnrrmnokjuhhmgerkfvdrmvdni",
+      "target": "我之前做完手術痛到行唔到做完物理治療好咗好多",
+      "before": 16,
+      "after": 18
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "riorfieovfgqumnrpiehffgkjod",
+      "target": "啲人喺度食煙攪到呢度烏煙瘴氣",
+      "before": 3,
+      "after": 2
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "ofrrskqhawvdobwrkjphvoetplprn",
+      "target": "你唔駛扮晒好人貓哭老鼠假慈悲喇",
+      "before": 12,
+      "after": 11
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "osaacisrwkifkbrmmoryubdtiqmlhict",
+      "target": "佢間公司因為冇咗一個競爭對手而得益",
+      "before": 4,
+      "after": 5
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "rmdebdtrgircoamobkocohmfvropmjiifmihbrt",
+      "target": "咁樣爭落去只會兩敗俱傷不如化干戈為玉帛啦",
+      "before": 5,
+      "after": 2
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "okmsydyujiprirtqeqemynkmnfqykjljdokju",
+      "target": "做功課就專心啲啦揼揼下又到半夜都未做完",
+      "before": 12,
+      "after": 11
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "wmjoruhcyvfqqgrfofqym",
+      "target": "國家嘅興亡掌握喺你手上",
+      "before": 6,
+      "after": 4
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "rporoflyfbdijurumtjnyjln",
+      "target": "呢個係非常機密嘅研究計劃",
+      "before": 3,
+      "after": 2
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "hiqukermmorkvddioa",
+      "target": "我扼殺咗一個大好機會",
+      "before": 3,
+      "after": 2
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "yluuyurumoqhivdnijlrrya",
+      "target": "新出道嘅歌手我好多都唔識",
+      "before": 11,
+      "after": 9
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "hibrosmforhirmvdoc",
+      "target": "我同佢不知鬼咁好傾",
+      "before": 6,
+      "after": 5
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "rpdmyrmnisafevdniobtb",
+      "target": "呢本週刊成日爆好多內幕",
+      "before": 3,
+      "after": 2
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "kbobumnosrdmoorrfyvipiejutj",
+      "target": "有人見到佢哋兩個喺餐廳度密斟",
+      "before": 6,
+      "after": 8
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "vdmikbyjlkorbwhmawcx",
+      "target": "好耐冇計數個腦生晒鏽",
+      "before": 13,
+      "after": 9
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "oflapuvdjmrr",
+      "target": "你書包好輕喎",
+      "before": 5,
+      "after": 7
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "ytghmmeruofwbfoammdujeqirt",
+      "target": "立場一致嘅人當然會互相支持啦",
+      "before": 3,
+      "after": 2
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "vfrdmuugiosyughdimumubw",
+      "target": "媽咪一出去佢就趁機玩電腦",
+      "before": 4,
+      "after": 3
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "yrawosjlofcisrrujpslndrmnioqrekbmsjlkbfsrl",
+      "target": "話晒佢都係公司嘅老臣子咁多年嚟冇功都有勞吖",
+      "before": 16,
+      "after": 14
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "ofdpdmrporjdrh",
+      "target": "你想查呢個字呀",
+      "before": 4,
+      "after": 3
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "giadmyuogwcqorojhirdrr",
+      "target": "去日本記住買手信俾我哋啊",
+      "before": 8,
+      "after": 7
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "rportkwmrugdmglpwdmvjlkmor",
+      "target": "呢個美國嘅地厘蛇果要十蚊一個",
+      "before": 9,
+      "after": 5
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "hhifhaeurucirpmvtihaeukbnoqr",
+      "target": "身為香港嘅公民要對香港有承擔",
+      "before": 5,
+      "after": 6
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "ebhlruybtpofmitw",
+      "target": "潮州嘅市花係玉蘭",
+      "before": 13,
+      "after": 6
+    },
+    {
+      "source": "context-search:heldout",
+      "code": "oskikimprmioheosyumjmkbmbva",
+      "target": "佢太太死咗之後佢就一直冇再婚",
+      "before": 3,
+      "after": 5
+    }
+  ],
+  "exact_codes_and_display_bounds": true,
+  "selected": "candidate",
+  "coverage": {
+    "cases": 500,
+    "all_visible_sets_identical": true,
+    "ranked_lists_changed": 496,
+    "all_original_first_choices_identical": true
+  },
+  "independent_gate": {
+    "counts_nondecreasing": true,
+    "first_or_top5_net_gain": true
+  },
+  "qualified": true,
+  "substantial_gain": false,
+  "qualification_sha256": "226ebd805f637794bfe4b53df3e5309227b5b2540500352eed3ca146b7569ca2",
+  "decision": "Adopt exact validated reranker; no APK or1.0 claim"
+}

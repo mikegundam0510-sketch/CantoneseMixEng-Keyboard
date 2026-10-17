@@ -1,0 +1,32 @@
+{
+  "baseline_revision": "61e62e5",
+  "selected": "candidate",
+  "before": {
+    "cases": 500,
+    "top1": 107,
+    "top5": 195,
+    "top20": 253,
+    "mrr": 0.29354172452934063
+  },
+  "after": {
+    "cases": 500,
+    "top1": 107,
+    "top5": 202,
+    "top20": 253,
+    "mrr": 0.3000583283073995
+  },
+  "coverage": {
+    "cases": 500,
+    "all_visible_sets_identical": true,
+    "ranked_lists_changed": 496,
+    "all_original_first_choices_identical": true
+  },
+  "independent_gate": {
+    "counts_nondecreasing": true,
+    "first_or_top5_net_gain": true
+  },
+  "qualified": true,
+  "substantial_gain": false,
+  "qualification_sha256": "226ebd805f637794bfe4b53df3e5309227b5b2540500352eed3ca146b7569ca2",
+  "decision": "Adopt exact validated reranker; no APK or1.0 claim"
+}

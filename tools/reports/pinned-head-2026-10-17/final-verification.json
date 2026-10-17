@@ -1,0 +1,24 @@
+{
+  "frozen_protocol_sources_inputs": true,
+  "qualified_evidence_unchanged": true,
+  "exact_tested_adoption_hashes": true,
+  "independent_single_pass_markers": true,
+  "no_pending_outputs": true,
+  "original_first_and_candidate_sets": {
+    "cases": 500,
+    "all_visible_sets_identical": true,
+    "ranked_lists_changed": 496,
+    "all_original_first_choices_identical": true
+  },
+  "unchanged_parent_sha256": {
+    ".github/signing-cert.sha256": "4a4bdb1917f15818d032977a744118472d21b573107a7ec81546e6b7fc3ea047",
+    "app/build.gradle": "1a7f28ba892f557d1bdbc7685f90455000f1566a8354a425651a109cb400ceec",
+    "app/src/main/AndroidManifest.xml": "39d78fef39ef42159019a0bee89a82ca954ecfcb395294d3a69ff913d72cdfa3",
+    "app/src/main/assets/language_model.b64": "c8527713a152427cc1f90b428bfad1a14e92e9e3d8e6338b45a812e423c9e5f5",
+    "app/src/main/assets/phrase_model.b64": "6e2d2dcebc9d76f002100bde8d2d1f904332478cda9e46e4cd7a807a13cc2ea3",
+    "app/src/main/java/hk/cantonesemixeng/keyboard/ContextLearning.java": "4dfb9aef4c6be30b5eb6ed55aa1ac8a67a8ea64e0da2c8c97106e932979df42e"
+  },
+  "reused_independent_set_for_tuning": false,
+  "no_apk": true,
+  "version_preserved": true
+}

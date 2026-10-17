@@ -33,6 +33,7 @@ public final class QuickDecoder {
     private final CandidateRanker candidateRanker;
     private final CandidateRanker wordRanker;
     private final SentenceRanker sentenceRanker;
+    private final SentenceLanguageRanker contextSentenceRanker;
     private final PhraseRelationRanker relationRanker;
     private final PrefixRanker prefixRanker;
     private final double clauseStartStrength;
@@ -149,12 +150,27 @@ public final class QuickDecoder {
                         OfflineLanguageModel model, PhraseLanguageModel phraseModel, Reader chatInput,
                         CandidateRanker candidateRanker, CandidateRanker wordRanker, double clauseStartStrength,
                         SentenceRanker sentenceRanker, PrefixRanker prefixRanker, PhraseRelationRanker relationRanker) throws IOException {
+        this(dictionary,input,hkInput,cantoneseInput,model,phraseModel,chatInput,candidateRanker,wordRanker,
+            clauseStartStrength,sentenceRanker,prefixRanker,relationRanker,null);
+    }
+    public QuickDecoder(DictionaryEngine dictionary, Reader input, Reader hkInput, Reader cantoneseInput,
+                        OfflineLanguageModel model, PhraseLanguageModel phraseModel, Reader chatInput,
+                        CandidateRanker candidateRanker, CandidateRanker wordRanker, SentenceRanker sentenceRanker,
+                        PrefixRanker prefixRanker, PhraseRelationRanker relationRanker, SentenceLanguageRanker contextSentenceRanker) throws IOException {
+        this(dictionary,input,hkInput,cantoneseInput,model,phraseModel,chatInput,candidateRanker,wordRanker,
+            CLAUSE_START_STRENGTH,sentenceRanker,prefixRanker,relationRanker,contextSentenceRanker);
+    }
+    public QuickDecoder(DictionaryEngine dictionary, Reader input, Reader hkInput, Reader cantoneseInput,
+                        OfflineLanguageModel model, PhraseLanguageModel phraseModel, Reader chatInput,
+                        CandidateRanker candidateRanker, CandidateRanker wordRanker, double clauseStartStrength,
+                        SentenceRanker sentenceRanker, PrefixRanker prefixRanker, PhraseRelationRanker relationRanker,
+                        SentenceLanguageRanker contextSentenceRanker) throws IOException {
         if (!Double.isFinite(clauseStartStrength) || clauseStartStrength < 0 || clauseStartStrength > 2)
             throw new IllegalArgumentException("Invalid clause-start strength");
         this.dictionary = dictionary; this.model = model; this.phraseModel = phraseModel;
         this.candidateRanker = candidateRanker;
         this.wordRanker = wordRanker;
-        this.sentenceRanker = sentenceRanker;
+        this.sentenceRanker = sentenceRanker;this.contextSentenceRanker=contextSentenceRanker;
         this.relationRanker = relationRanker;
         this.finalPool=relationRanker!=null&&relationRanker.expandedPool()?128:96;
         this.prefixRanker = prefixRanker;
@@ -297,6 +313,16 @@ public final class QuickDecoder {
 
     public List<String> decode(String input, ToIntBiFunction<String, String> learned, String context,
             ContextLearning.Preferences contextual) {
+        return decode(input,learned,context,contextual,true);
+    }
+
+    List<String> decodeBaseline(String input, ToIntBiFunction<String,String> learned, String context,
+            ContextLearning.Preferences contextual) {
+        return decode(input,learned,context,contextual,false);
+    }
+
+    private List<String> decode(String input, ToIntBiFunction<String,String> learned, String context,
+            ContextLearning.Preferences contextual, boolean rerankVisible) {
         String code = input.toLowerCase(Locale.ROOT);
         if (code.length() < 3 || code.length() > 48 || !code.matches("[a-z]+")) return Collections.emptyList();
         List<List<Path>> lattice = new ArrayList<>();
@@ -474,8 +500,28 @@ public final class QuickDecoder {
                 ||contextual!=null&&ContextLearning.supports(context,InputCandidate.chinese(dictionary,code,head),contextual);
             if(!explicit)relationRanker.promoteHead(context,result,finalScores,headFeatures);
         }
-        if (result.size() > 20) return new ArrayList<>(result.subList(0, 20));
-        return result;
+        if (result.size() > 20) result=new ArrayList<>(result.subList(0,20));
+        if(!rerankVisible || contextSentenceRanker==null || finalScores==null
+                || visiblePersonalPreference(code,context,result,learned,contextual)) return result;
+        return PinnedHeadReranker.rerank(result,finalScores,
+            text -> contextSentenceRanker.score(context,text));
+    }
+
+    /** Whole-word decisions and confirmed/corrected context chains precede statistics. */
+    private boolean visiblePersonalPreference(String code,String context,List<String> visible,
+            ToIntBiFunction<String,String> learned,ContextLearning.Preferences contextual) {
+        for(String text:visible) {
+            if(knownWord(text) && learned.applyAsInt(code,text)!=0) return true;
+            if(contextual==null) continue;
+            InputCandidate candidate=InputCandidate.chinese(dictionary,code,text);
+            if(ContextLearning.supports(context,candidate,contextual)) return true;
+            String history=ContextLearning.tail(context);
+            for(InputCandidate.Segment segment:candidate.segments) {
+                if(!history.isEmpty() && contextual.weight(history,segment.code,segment.text)<0) return true;
+                history=ContextLearning.tail(history+segment.text);
+            }
+        }
+        return false;
     }
 
     /** Existing positive sentence relations outrank a less-supported statistical replacement. */

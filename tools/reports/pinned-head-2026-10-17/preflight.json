@@ -1,0 +1,11 @@
+{
+  "randomized_displays": 400,
+  "first_and_set_invariance": true,
+  "relative_tail_exact": true,
+  "neutral_constant_and_invalid_fallback": true,
+  "immutable_inputs": true,
+  "controlled_tail_movement": true,
+  "personal_positive_negative": true,
+  "familiar_characters_active": true,
+  "mixed_translation_unchanged": true
+}

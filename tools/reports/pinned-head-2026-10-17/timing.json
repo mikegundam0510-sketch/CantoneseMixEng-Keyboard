@@ -1,0 +1,70 @@
+{
+  "warmup": 30,
+  "samples": 11,
+  "cases": [
+    {
+      "code": "ofonaovrmrq",
+      "letters": 11,
+      "before_wall_median_ms": 78.156,
+      "after_wall_median_ms": 78.038,
+      "before_cpu_median_ms": 77.254,
+      "after_cpu_median_ms": 78.029,
+      "wall_ratio": 0.9984901990890014,
+      "cpu_ratio": 1.010031843011365
+    },
+    {
+      "code": "hmerrrysmlrp",
+      "letters": 12,
+      "before_wall_median_ms": 95.095,
+      "after_wall_median_ms": 94.838,
+      "before_cpu_median_ms": 93.552,
+      "after_cpu_median_ms": 94.84,
+      "wall_ratio": 0.9972974394027025,
+      "cpu_ratio": 1.0137677441422952
+    },
+    {
+      "code": "dpofvivcjutrmyyjvcqnjd",
+      "letters": 22,
+      "before_wall_median_ms": 144.273,
+      "after_wall_median_ms": 147.032,
+      "before_cpu_median_ms": 143.712,
+      "after_cpu_median_ms": 145.321,
+      "wall_ratio": 1.0191234673154368,
+      "cpu_ratio": 1.011196003117346
+    },
+    {
+      "code": "ofykrmmsydwljpvwjd",
+      "letters": 18,
+      "before_wall_median_ms": 127.867,
+      "after_wall_median_ms": 128.213,
+      "before_cpu_median_ms": 126.951,
+      "after_cpu_median_ms": 128.198,
+      "wall_ratio": 1.002705936637287,
+      "cpu_ratio": 1.0098226874936
+    },
+    {
+      "code": "vkmmnkmrvordrjjj",
+      "letters": 16,
+      "before_wall_median_ms": 139.513,
+      "after_wall_median_ms": 139.754,
+      "before_cpu_median_ms": 138.496,
+      "after_cpu_median_ms": 139.372,
+      "wall_ratio": 1.0017274375864613,
+      "cpu_ratio": 1.0063250924214417
+    },
+    {
+      "code": "hihihihihihihihihihihihihihihihihihihihihihihihi",
+      "letters": 48,
+      "before_wall_median_ms": 505.357,
+      "after_wall_median_ms": 512.082,
+      "before_cpu_median_ms": 504.012,
+      "after_cpu_median_ms": 510.414,
+      "wall_ratio": 1.0133074242565157,
+      "cpu_ratio": 1.0127020785219398
+    }
+  ],
+  "max_ratio": 1.0191234673154368,
+  "qualified": true,
+  "raw_sha256": "f6cb34bc1b74373c6880f792a8592e019c72881705427e056295e71aa0de1517",
+  "method": "Quiet same-JVM paired medians; alternating parent/candidate order; native host, not physical Fold7."
+}

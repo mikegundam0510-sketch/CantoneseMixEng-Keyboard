@@ -1,0 +1,6 @@
+{
+  "qualification_sha256": "226ebd805f637794bfe4b53df3e5309227b5b2540500352eed3ca146b7569ca2",
+  "cases_sha256": "be242e6ab4a2b41d8e505d4891d09d5087c8ee3e8355569c02d4d976c05207e6",
+  "arm": "baseline",
+  "policy": "One pass only; no unrecorded repeats or post-test tuning."
+}

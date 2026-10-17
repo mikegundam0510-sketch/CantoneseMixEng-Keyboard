@@ -1,0 +1,26 @@
+{
+  "adopted": true,
+  "baseline_revision": "61e62e5a3eafb7427face054bcb46fd64cdd3cd0",
+  "qualification_sha256": "226ebd805f637794bfe4b53df3e5309227b5b2540500352eed3ca146b7569ca2",
+  "copied_sha256": {
+    "app/src/main/java/hk/cantonesemixeng/keyboard/QuickDecoder.java": "d248a48de08d5253c1edd8376aff0acb7a1640c5dba1051a64b7fd097b50041a",
+    "app/src/main/java/hk/cantonesemixeng/keyboard/SentenceLanguageRanker.java": "874a296fc7f6ec66e012a949355d11fb96873d3b37caa35f9a80513f3de4d1c6",
+    "app/src/main/java/hk/cantonesemixeng/keyboard/VisibleCandidateReranker.java": "2048a90d0c43561defe234261cb40e4e61fa0c09c34cc52f91c2b2a035744534",
+    "app/src/main/java/hk/cantonesemixeng/keyboard/PinnedHeadReranker.java": "00ddcb2f0192f4757b7167243fe8b12f58b55d7f8523fe8d5a6a5ca53dcd1628",
+    "app/src/main/java/hk/cantonesemixeng/keyboard/CandidateEngine.java": "997dd209ea2eeb7ae32192c2f218280c88fa3a3bb5d8a7ab56ad3c97addcb6fb",
+    "app/src/main/java/hk/cantonesemixeng/keyboard/EnglishChineseEngine.java": "8af7f3105561740636c9af50bb25ea7e3b5f34576cd2fe8824d38d5cbcfcb94e",
+    "app/src/main/java/hk/cantonesemixeng/keyboard/CantoneseMixEngKeyboardService.java": "d24cbd789362d2fed0df05bddecb59f8612c09e20e47de3800f0b94d32a5b288",
+    "app/src/main/assets/sentence_language.b64": "57c8997ac0ff6076a5bf9101f2ee007865618c638a110eca4b76b85e76383746",
+    "app/src/main/assets/licenses/sentence-language/CC-BY-SA-4.0.txt": "23ee78c8bae49cf08ea2f0c84945c66b987ebe4520881fb51b3dad4fb43d07c2",
+    "app/src/main/assets/licenses/sentence-language/README.md": "f94d8b9c06822c56b4ea7235b0105232b7c30a72df5621c882b8bf1a69957525",
+    "app/src/main/assets/licenses/sentence-language/source-audit.json": "dfd31f35797b9f875131654e70ae1b66277b86933533ab7eeaff68bbc8892d58",
+    "app/src/main/assets/licenses/sentence-language/training-report.json": "2c645a26aaa4fc923b3a1adcf95cbf443dcb8a1f8052a2f7598ffcff67a4b098"
+  },
+  "exact_tested_java_and_checkpoint": true,
+  "metadata_assets_added_before_qualification": true,
+  "primary_language_model_unchanged": true,
+  "version_name": "0.6.39",
+  "version_code": 46,
+  "apk_produced": false,
+  "limit": "Top5 alternatives only; first choices and membership retained. Independent top5 gain7/500, below substantial threshold25/500."
+}

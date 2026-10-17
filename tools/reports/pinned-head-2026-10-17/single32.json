@@ -1,0 +1,19 @@
+{
+  "cases": 32,
+  "confirmations": 3,
+  "sequence_records": 489,
+  "legacy": [
+    30,
+    32,
+    32
+  ],
+  "contextual": [
+    32,
+    32,
+    32
+  ],
+  "actual_model_enabled": true,
+  "all_learned_sets_and_first_choices_equal_parent": true,
+  "qualified": true,
+  "limits": "Simulated known confirmations; no physical-device persistence or unseen user claim."
+}

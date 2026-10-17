@@ -1,0 +1,1 @@
+cases=32 sequence_records=489 legacy=[30, 32, 32] contextual=[32, 32, 32] mrr=0.968750/1.000000 elapsed_ms=80512

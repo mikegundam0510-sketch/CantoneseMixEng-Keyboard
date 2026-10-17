@@ -52,7 +52,7 @@ public final class EnglishChineseEngine {
    String prefix=input.substring(0,at),suffix=input.substring(at);
    if(!prefix.matches("[A-Za-z]+")||suffix.length()>24)continue;
    List<String> meanings=lookup(suffix);if(meanings.isEmpty())continue;
-   List<InputCandidate> preceding=chinese.chinese(prefix,context,true,true,false,learned);
+   List<InputCandidate> preceding=chinese.chineseBaseline(prefix,context,true,true,false,learned,null);
    if(preceding.isEmpty()||!QuickDecoder.hanText(preceding.get(0).text))continue;
    meanings=lookup(suffix,context+preceding.get(0).text,chinese::languageScore);
    List<InputCandidate> result=new ArrayList<>();List<InputCandidate.Segment> original=new ArrayList<>(preceding.get(0).segments);

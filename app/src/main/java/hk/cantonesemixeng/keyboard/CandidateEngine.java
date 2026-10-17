@@ -17,9 +17,19 @@ public final class CandidateEngine {
     }
     public List<InputCandidate> chinese(String code, String context, boolean continuous, boolean useQuick,
             boolean useCangjie, ToIntBiFunction<String,String> learned,ContextLearning.Preferences contextual) {
+        return chineseInternal(code,context,continuous,useQuick,useCangjie,learned,contextual,true);
+    }
+    List<InputCandidate> chineseBaseline(String code,String context,boolean continuous,boolean useQuick,
+            boolean useCangjie,ToIntBiFunction<String,String> learned,ContextLearning.Preferences contextual) {
+        return chineseInternal(code,context,continuous,useQuick,useCangjie,learned,contextual,false);
+    }
+    private List<InputCandidate> chineseInternal(String code,String context,boolean continuous,boolean useQuick,
+            boolean useCangjie,ToIntBiFunction<String,String> learned,ContextLearning.Preferences contextual,
+            boolean rerankVisible) {
         LinkedHashMap<String,InputCandidate> result=new LinkedHashMap<>();
         if (useQuick && continuous && code.length()>2)
-            for(String text:quick.decode(code,learned,context,contextual)) result.put(text,InputCandidate.chinese(dictionary,code,text));
+            for(String text:rerankVisible ? quick.decode(code,learned,context,contextual)
+                    : quick.decodeBaseline(code,learned,context,contextual)) result.put(text,InputCandidate.chinese(dictionary,code,text));
         List<String> singles=dictionary.lookup(code,useQuick,useCangjie,false);
         singles.remove(code);
         if (!context.isEmpty()) singles.sort(Comparator.comparingDouble((String text)->
@@ -59,7 +69,7 @@ public final class CandidateEngine {
         for(List<InputCandidate.Segment> path:paths) {
             String preceding=context;
             for (InputCandidate.Segment segment : path) preceding+=segment.text;
-            List<InputCandidate> options=chinese(code,preceding,true,true,false,learned,contextual);
+            List<InputCandidate> options=chineseBaseline(code,preceding,true,true,false,learned,contextual);
             for(int i=0;i<Math.min(3,options.size());i++) {
                 List<InputCandidate.Segment> combined=new ArrayList<>(path);combined.addAll(options.get(i).segments);
                 result.add(combined);if(result.size()==12)return result;

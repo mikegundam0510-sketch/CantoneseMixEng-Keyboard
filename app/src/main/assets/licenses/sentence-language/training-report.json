@@ -1,0 +1,225 @@
+{
+  "protocol_sha256": "6b5952f33ba5df09f1fd7a79133689c7fdedf055c3c7c5fe53ed23174f1a1871",
+  "numpy": "2.3.5",
+  "vocabulary": 2251,
+  "tree_nodes": 2248,
+  "tree_max_depth": 16,
+  "array_bytes": 645804,
+  "stages": {
+    "pretraining": {
+      "initial_internal_validation": 5.718494960239956,
+      "best_internal_validation": 4.50160386827257,
+      "best_epoch": 9,
+      "train": 33678,
+      "validation": 3024,
+      "epochs": [
+        {
+          "stage": "pretraining",
+          "epoch": 1,
+          "training_objective": 5.465642550501463,
+          "internal_validation_objective": 4.874606642142806
+        },
+        {
+          "stage": "pretraining",
+          "epoch": 2,
+          "training_objective": 4.998818653284976,
+          "internal_validation_objective": 4.687405258259445
+        },
+        {
+          "stage": "pretraining",
+          "epoch": 3,
+          "training_objective": 4.816656707648363,
+          "internal_validation_objective": 4.613608567172258
+        },
+        {
+          "stage": "pretraining",
+          "epoch": 4,
+          "training_objective": 4.705712798967151,
+          "internal_validation_objective": 4.561967012112733
+        },
+        {
+          "stage": "pretraining",
+          "epoch": 5,
+          "training_objective": 4.6260156866787545,
+          "internal_validation_objective": 4.532354102563605
+        },
+        {
+          "stage": "pretraining",
+          "epoch": 6,
+          "training_objective": 4.565937574603962,
+          "internal_validation_objective": 4.5198851691351996
+        },
+        {
+          "stage": "pretraining",
+          "epoch": 7,
+          "training_objective": 4.518812446060738,
+          "internal_validation_objective": 4.507355906975963
+        },
+        {
+          "stage": "pretraining",
+          "epoch": 8,
+          "training_objective": 4.480430309205718,
+          "internal_validation_objective": 4.502658238486638
+        },
+        {
+          "stage": "pretraining",
+          "epoch": 9,
+          "training_objective": 4.447929450186933,
+          "internal_validation_objective": 4.50160386827257
+        },
+        {
+          "stage": "pretraining",
+          "epoch": 10,
+          "training_objective": 4.420314204205073,
+          "internal_validation_objective": 4.502168625120133
+        },
+        {
+          "stage": "pretraining",
+          "epoch": 11,
+          "training_objective": 4.3963646786223824,
+          "internal_validation_objective": 4.509142820166533
+        },
+        {
+          "stage": "pretraining",
+          "epoch": 12,
+          "training_objective": 4.3754842921457,
+          "internal_validation_objective": 4.504974244132875
+        },
+        {
+          "stage": "pretraining",
+          "epoch": 13,
+          "training_objective": 4.356746945006525,
+          "internal_validation_objective": 4.511106198426908
+        },
+        {
+          "stage": "pretraining",
+          "epoch": 14,
+          "training_objective": 4.339255722509624,
+          "internal_validation_objective": 4.509899280689381
+        },
+        {
+          "stage": "pretraining",
+          "epoch": 15,
+          "training_objective": 4.324640832410883,
+          "internal_validation_objective": 4.513663236426298
+        },
+        {
+          "stage": "pretraining",
+          "epoch": 16,
+          "training_objective": 4.311390961155952,
+          "internal_validation_objective": 4.520521739172557
+        },
+        {
+          "stage": "pretraining",
+          "epoch": 17,
+          "training_objective": 4.298313238111186,
+          "internal_validation_objective": 4.520763659603381
+        },
+        {
+          "stage": "pretraining",
+          "epoch": 18,
+          "training_objective": 4.286562406419964,
+          "internal_validation_objective": 4.5275591895693825
+        },
+        {
+          "stage": "pretraining",
+          "epoch": 19,
+          "training_objective": 4.277125510504541,
+          "internal_validation_objective": 4.5300367648008635
+        },
+        {
+          "stage": "pretraining",
+          "epoch": 20,
+          "training_objective": 4.266878354520383,
+          "internal_validation_objective": 4.532265698468244
+        }
+      ]
+    },
+    "adaptation": {
+      "initial_internal_validation": 0.45341183223332826,
+      "best_internal_validation": 0.4468004528728049,
+      "best_epoch": 11,
+      "train": 20004,
+      "validation": 2728,
+      "epochs": [
+        {
+          "stage": "adaptation",
+          "epoch": 1,
+          "training_objective": 0.5095314714961519,
+          "internal_validation_objective": 0.45016732593435693
+        },
+        {
+          "stage": "adaptation",
+          "epoch": 2,
+          "training_objective": 0.4975600022479215,
+          "internal_validation_objective": 0.4487182807363024
+        },
+        {
+          "stage": "adaptation",
+          "epoch": 3,
+          "training_objective": 0.48653400458590645,
+          "internal_validation_objective": 0.4477308530611726
+        },
+        {
+          "stage": "adaptation",
+          "epoch": 4,
+          "training_objective": 0.4759654224073856,
+          "internal_validation_objective": 0.4472554506094924
+        },
+        {
+          "stage": "adaptation",
+          "epoch": 5,
+          "training_objective": 0.466583697659043,
+          "internal_validation_objective": 0.4472411818518317
+        },
+        {
+          "stage": "adaptation",
+          "epoch": 6,
+          "training_objective": 0.45893056255963965,
+          "internal_validation_objective": 0.4469972118254631
+        },
+        {
+          "stage": "adaptation",
+          "epoch": 7,
+          "training_objective": 0.45260333081670484,
+          "internal_validation_objective": 0.44693639201502644
+        },
+        {
+          "stage": "adaptation",
+          "epoch": 8,
+          "training_objective": 0.4471411107063675,
+          "internal_validation_objective": 0.4469831500235191
+        },
+        {
+          "stage": "adaptation",
+          "epoch": 9,
+          "training_objective": 0.44235734702634516,
+          "internal_validation_objective": 0.44685633650972695
+        },
+        {
+          "stage": "adaptation",
+          "epoch": 10,
+          "training_objective": 0.43800245278765026,
+          "internal_validation_objective": 0.4469327199494035
+        },
+        {
+          "stage": "adaptation",
+          "epoch": 11,
+          "training_objective": 0.43401947018028,
+          "internal_validation_objective": 0.4468004528728049
+        },
+        {
+          "stage": "adaptation",
+          "epoch": 12,
+          "training_objective": 0.4304302105413058,
+          "internal_validation_objective": 0.44705462525666984
+        }
+      ]
+    }
+  },
+  "models": {
+    "language.b64": "b7782011a6b2c92041b2629b5a4ced1e52bb142ab2407c7fb27f76dd2321f403",
+    "adapted.b64": "57c8997ac0ff6076a5bf9101f2ee007865618c638a110eca4b76b85e76383746"
+  },
+  "scope": "Next-character pretraining followed by same-code pair adaptation. Checkpoints use original-family-disjoint internal TRAIN validation only. These losses are not keyboard hit rates. No raw Common Voice text mirrored in Git."
+}
