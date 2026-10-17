@@ -1,0 +1,47 @@
+{
+  "parent_revision": "1a6a67e",
+  "adopted": false,
+  "selected": null,
+  "reason": "Both frozen arms lose new150 top20 coverage and fail predeclared calibration preservation. Do not replace fixed gates after outcomes.",
+  "counts1450": {
+    "before": {
+      "cases": 1450,
+      "top1": 301,
+      "top5": 558,
+      "top20": 736,
+      "mrr": 0.28475590759785274
+    },
+    "language": {
+      "cases": 1450,
+      "top1": 317,
+      "top5": 570,
+      "top20": 741,
+      "mrr": 0.2941624248644373
+    },
+    "adapted": {
+      "cases": 1450,
+      "top1": 319,
+      "top5": 568,
+      "top20": 745,
+      "mrr": 0.29718188318863564
+    }
+  },
+  "new150_top20": {
+    "before": 77,
+    "language": 75,
+    "adapted": 74
+  },
+  "raw_data_distribution": "Common Voice raw/derived text cache not mirrored; research code/provenance/weights only.",
+  "independent500_decoded": false,
+  "unrun_after_rejection": [
+    "guard3893",
+    "enabled Single32",
+    "Android unit/Lint",
+    "paired quiet timing",
+    "independent context-search500",
+    "physical Fold7/update-persistence tests",
+    "APK packaging"
+  ],
+  "production": "Parent app unchanged;0.6.39/code46; no APK.",
+  "decision": "Reject both checkpoints for production; preserve research and unused independent500."
+}

@@ -1,0 +1,8 @@
+{
+  "identical": [
+    "corpus.jsonl.gz",
+    "pairs.jsonl.gz",
+    "manifest.json"
+  ],
+  "raw_text_scope": "Common Voice text stays in ignored .native cache; hashes and code are committed."
+}

@@ -1,0 +1,432 @@
+{
+  "parent_revision": "1a6a67e",
+  "experiment": "Next-character Cantonese GRU pretraining then same-code pair adaptation",
+  "decision": {
+    "parent_revision": "1a6a67e",
+    "adopted": false,
+    "selected": null,
+    "reason": "Both frozen arms lose new150 top20 coverage and fail predeclared calibration preservation. Do not replace fixed gates after outcomes.",
+    "counts1450": {
+      "before": {
+        "cases": 1450,
+        "top1": 301,
+        "top5": 558,
+        "top20": 736,
+        "mrr": 0.28475590759785274
+      },
+      "language": {
+        "cases": 1450,
+        "top1": 317,
+        "top5": 570,
+        "top20": 741,
+        "mrr": 0.2941624248644373
+      },
+      "adapted": {
+        "cases": 1450,
+        "top1": 319,
+        "top5": 568,
+        "top20": 745,
+        "mrr": 0.29718188318863564
+      }
+    },
+    "new150_top20": {
+      "before": 77,
+      "language": 75,
+      "adapted": 74
+    },
+    "raw_data_distribution": "Common Voice raw/derived text cache not mirrored; research code/provenance/weights only.",
+    "independent500_decoded": false,
+    "unrun_after_rejection": [
+      "guard3893",
+      "enabled Single32",
+      "Android unit/Lint",
+      "paired quiet timing",
+      "independent context-search500",
+      "physical Fold7/update-persistence tests",
+      "APK packaging"
+    ],
+    "production": "Parent app unchanged;0.6.39/code46; no APK.",
+    "decision": "Reject both checkpoints for production; preserve research and unused independent500."
+  },
+  "calibration": {
+    "parent_revision": "1a6a67e",
+    "selected": null,
+    "protocol_sha256": "6b5952f33ba5df09f1fd7a79133689c7fdedf055c3c7c5fe53ed23174f1a1871",
+    "trials": {
+      "language": {
+        "before": {
+          "cases": 1450,
+          "top1": 301,
+          "top5": 558,
+          "top20": 736,
+          "mrr": 0.28475590759785274
+        },
+        "after": {
+          "cases": 1450,
+          "top1": 317,
+          "top5": 570,
+          "top20": 741,
+          "mrr": 0.2941624248644373
+        },
+        "new150": {
+          "before": {
+            "cases": 150,
+            "top1": 22,
+            "top5": 53,
+            "top20": 77,
+            "mrr": 0.23972046947433942
+          },
+          "after": {
+            "cases": 150,
+            "top1": 28,
+            "top5": 56,
+            "top20": 75,
+            "mrr": 0.265584436805025
+          }
+        },
+        "old1300": {
+          "before": {
+            "cases": 1300,
+            "top1": 279,
+            "top5": 505,
+            "top20": 659,
+            "mrr": 0.28995230430441193
+          },
+          "after": {
+            "cases": 1300,
+            "top1": 289,
+            "top5": 514,
+            "top20": 666,
+            "mrr": 0.29745988502513865
+          }
+        },
+        "gate": {
+          "new_counts_nondecreasing": false,
+          "new_first_or_top5_gain": true,
+          "old_counts_nondecreasing": true,
+          "old_per_set_loss_within_one_pp": true
+        },
+        "qualified": false,
+        "selection_key": [
+          0.2101111111111111,
+          0.40422222222222226,
+          0.532,
+          0.29343380533295393
+        ]
+      },
+      "adapted": {
+        "before": {
+          "cases": 1450,
+          "top1": 301,
+          "top5": 558,
+          "top20": 736,
+          "mrr": 0.28475590759785274
+        },
+        "after": {
+          "cases": 1450,
+          "top1": 319,
+          "top5": 568,
+          "top20": 745,
+          "mrr": 0.29718188318863564
+        },
+        "new150": {
+          "before": {
+            "cases": 150,
+            "top1": 22,
+            "top5": 53,
+            "top20": 77,
+            "mrr": 0.23972046947433942
+          },
+          "after": {
+            "cases": 150,
+            "top1": 26,
+            "top5": 58,
+            "top20": 74,
+            "mrr": 0.26350363525363524
+          }
+        },
+        "old1300": {
+          "before": {
+            "cases": 1300,
+            "top1": 279,
+            "top5": 505,
+            "top20": 659,
+            "mrr": 0.28995230430441193
+          },
+          "after": {
+            "cases": 1300,
+            "top1": 293,
+            "top5": 510,
+            "top20": 671,
+            "mrr": 0.30106783487344335
+          }
+        },
+        "gate": {
+          "new_counts_nondecreasing": false,
+          "new_first_or_top5_gain": true,
+          "old_counts_nondecreasing": true,
+          "old_per_set_loss_within_one_pp": true
+        },
+        "qualified": false,
+        "selection_key": [
+          0.21322222222222223,
+          0.4077777777777778,
+          0.5325555555555556,
+          0.2992302276613422
+        ]
+      }
+    },
+    "independent500_decoded": false,
+    "decision": "Reject both pretrained arms; retain production and preserve unused context-search500"
+  },
+  "manifest": {
+    "parent_revision": "1a6a67e",
+    "cv_revision": "46407be8d4c5de28b62baf2b18a363ea461b3c4f",
+    "cv_sha256": "645d6a544634db879cef9d38e13ce58b7cef91772ba4d2ae6f6f674dbeb02a8b",
+    "cv_source_rows": 9444,
+    "input_sha256": {
+      "tools/continuous_clause_cases.tsv": "8389c751a4206863cda675a3a8afb16eadcdb35e037607893395426fe38a6565",
+      "tools/data/candidate_ranking/heldout.tsv": "93472678449749e468d2d060c8df03dc176dcc1475384cc0494883d958c5329b",
+      "tools/data/candidate_ranking/validation.tsv": "d9854e8cf4c6117caef79cdc5153da754149aa3d063e9e368d96f3367ce6d53a",
+      "tools/data/clause_start/heldout.tsv": "4d7fc5f30b0b879f85704cb4faf178d050b1bf9f27b359f07c518c2009cf4577",
+      "tools/data/clause_start/prospective_public.tsv": "1df0a8520c7563550f5028b77e288d92ab11727048543f625801d5191ded54fc",
+      "tools/data/clause_start/validation.tsv": "1039511a9a28a5b70fcb27ffd11d712a4a5b3ce6f9470b1e55c75525e0d0a234",
+      "tools/data/daily_prefix/heldout.tsv": "8e5f578671a64f4dbe685cb28024e2dd132e4b6f1e1987f9faf016e5521ce2de",
+      "tools/data/daily_prefix/latency.tsv": "d0f0d66210ffcdda2fa4c919e31c48edf6f2f28d79f6cb0a0c8842c844cfa7bb",
+      "tools/data/daily_prefix/validation.tsv": "e30d99deb826b916ef24186e0abc5d51aa479655dfb0c84fcdda03c13c3970f1",
+      "tools/data/hk_chat_cases/heldout.tsv": "2d7655049c219ac338d7fec8e44fc508427c3a9896b077cadad2ea70d7a7bc48",
+      "tools/data/hk_chat_cases/natural_heldout.tsv": "11080bcc6eb9e722e40d9fa4780addf4f2bfc694557f0208f5a1cf1a36d68fe2",
+      "tools/data/hk_chat_cases/validation.tsv": "0f6dea55335cfc574d2f52f667af0b32a6ab7ed8a55f53515202149f92294ee1",
+      "tools/data/joint_ranking/heldout.tsv": "5cc40483e09a87e877167bc622114b1b249d46a253916ad272ab72866a776ddd",
+      "tools/data/joint_ranking/validation.tsv": "bfd78eb3ef6be7b3aea03e8efa8caaba064f4a79ed2dd3d19c03c48ee34450ae",
+      "tools/data/phrase_relations/heldout.tsv": "b7980fc5013c6a1f01d742a3c786bcf194b7086198005498fd9e00c096898d13",
+      "tools/data/phrase_relations/validation.tsv": "3c9e85e0df49e2bdb133e75484a437ede45e46e2bf1f8816a6e845f0c126ef5c",
+      "tools/data/prefix_retrieval/heldout.tsv": "98d69db9d1bf83cc173b506d161090d854b196c724b25569c325e9ef02b2b32e",
+      "tools/data/prefix_retrieval/validation.tsv": "c6b4248748f1f3e94232992e438329be792e5d7cf06a28a2d71df97605569924",
+      "tools/data/search_alignment/heldout.tsv": "945cce2bd62249619d627dccb0ef5723d24c2cde9d0ddaceaa9f84ad8df03fe0",
+      "tools/data/search_alignment/validation.tsv": "1fac5e85c5f0e963c3651e7ce52745f6dbd516794d2b0ae3344cb37f98d0d3f9",
+      "tools/data/search_recovery/heldout.tsv": "22a9e9bd48f663852f0a823a532ff2fb1f30bce1ce337f3bdcef703ba77e1486",
+      "tools/data/search_recovery/validation.tsv": "5c61c67caf2f395e39c006f3298834a22152874ab779bc91c16bdffe34e0966b",
+      "tools/data/sentence_ranking/fresh_followup.tsv": "a7290c69d5f59fad33a6af37c27e6da3804a3180367637408396a1ac98756b85",
+      "tools/data/sentence_ranking/fresh_natural.tsv": "7a4357725face8c04af2386bc9e820a130c552131fbd6e196c56ccc9cb0ce6b3",
+      "tools/data/sentence_search/heldout.tsv": "e46c53c831d9380305580debc78cc235fbbbe1be82ab5defd6dbb3595121c11e",
+      "tools/data/sentence_search/reserve.tsv": "ff812bae7088abe20a89c2a7c4c04ca49c8b5b6fe0e2486406648fdb0355dcd7",
+      "tools/data/sentence_search/validation.tsv": "149eb8097b21670b6254b60962927df78615488b7299c884e58169728f722157",
+      "tools/data/tatoeba_corpus/heldout.tsv": "cc2d9497107b63d90e34a8230b1686694665e141147c4660b7e2b69cd08d75bc",
+      "tools/data/tatoeba_corpus/validation.tsv": "5115fa384dc3189de2d3bc386adcd2a97c71bde20f21f4e73cbeb403534f16c7",
+      "tools/data/word_ranking/old600.tsv": "2c48f84b8ecc5b057b472569d5ebffe1c82818a6770193ad74644ebe78c32d61",
+      "tools/hk_completion_cases.tsv": "2762c747d770efaf45c2541bd30473f7b227473953c26ed311c017902107c192",
+      "tools/hk_daily_context_cases.tsv": "d29faa28d581c87e6b480ce3924c778e4794fa830d6067249a3369daad6528af",
+      "tools/hk_handover_cases.tsv": "a40c8ef85a205164c03fbf3db5749565382ab9d862e05f2c407497a3b215f387",
+      "tools/hk_plural_assistance_cases.tsv": "aad06feb12df01de8cdb400e6fb5de89e0613f42950be15fe38537744ed6adf9",
+      "tools/lm_heldout_cases.tsv": "bae16312e7f843fa503a61b54b7a734086aab3ff3d0b7d3576f095107bb8d392",
+      "tools/reports/completion-scoring-2026-10-15/independent-base.tsv": "8cad7b6d9f357f14ff90f5073e62322391ceb73445411d00a6bcc5542156a6ef",
+      "tools/reports/completion-scoring-2026-10-15/independent-selected.tsv": "3df09d0f187c568ecd363b2289c082821472a3a5a7a8aaf1b1eb6a1b8ffe3244",
+      "tools/reports/completion-scoring-2026-10-15/latency.tsv": "d61d07d4a22ad53985b76529035d3a819cdee7f81fba754d2326cc452512e309",
+      "tools/reports/completion-scoring-2026-10-15/reproduction5-cases.tsv": "2a18a0dc67db4b92a19d03d1468674ff402460d6a35e501715cd53f8661c5682",
+      "tools/reports/completion-scoring-2026-10-15/reproduction5.tsv": "4f0044b444a3f52b5b06a2c48b73a9c6f721b09fc1566f131f957572948e2361",
+      "tools/reports/completion-scoring-2026-10-15/selected700.tsv": "8de8724f22eee22db36720d33ea10d73d21ada0c17fce34159f68c11b84ca372",
+      "tools/reports/completion-scoring-2026-10-15/single32.tsv": "f3e0cd8ca2ade6f12729a8fa5f01eacea5c350c8aff434e14edb632e4cab4525",
+      "tools/reports/personal-ranking-0.6.27.tsv": "d6cbb88c6e79e57afadd473fe0adcff168b0af0b546fc61f047106496d4c07ad",
+      "tools/reports/phrase-relations-2026-10-14/calibration-cases.tsv": "754f3b6c6f54673cbc06ca1cca7768deb4e7f943aa3d29c3b4e0daebad05b9ad",
+      "tools/reports/phrase-relations-2026-10-14/heldout-paired.tsv": "3a9969e4a8c73b614b04e6349b2e58b56c7400bb2778b490ea8755d8f685cc47",
+      "tools/reports/phrase-relations-2026-10-14/latency.tsv": "d9f8156d0c05fc1af152b8d25b2e19e5d72c1f1e91c979ac39b05d813468402b",
+      "tools/reports/prefix-retrieval-2026-10-15/baseline700-diagnostics.tsv": "616ef4da4928dc61dba1fb35c55ce6771b558b8f39e2ddb87398d681119dd1b2",
+      "tools/reports/prefix-retrieval-2026-10-15/baseline700.tsv": "0f2b7ae844df8bde9a99f13c890f5e0196cf5cb6b776ffff313e53c3aa1aa87f",
+      "tools/reports/prefix-retrieval-2026-10-15/broad700.tsv": "c47552159b896cd2eabfdbd452fb8581f0f4768721c65f0c631c23b509bd0088",
+      "tools/reports/prefix-retrieval-2026-10-15/calibration700.tsv": "d2f1b5c74941283b4e6d4252906b99c0f631f2a5da449d7373fab2eb4aaca2e5",
+      "tools/reports/prefix-retrieval-2026-10-15/lexical700.tsv": "dd81597809f419a579322aaaaab55c4f96ecb6ab0fa8444bfad35cee0a893324",
+      "tools/reports/prefix-retrieval-2026-10-15/oracle700-diagnostics.tsv": "57e095b0f0eee5d2485fcdd462396638ac952910eb57bba578cd77f146db7c2d",
+      "tools/reports/prefix-retrieval-2026-10-15/oracle700.tsv": "515a9c77c01294daa6c7462d137bcfac20e33353eff07be77b3dd7f58e3e6255",
+      "tools/reports/search-alignment-2026-10-14/calibration-cases.tsv": "d27a64dd81076b43ab592499fb442eea5500377f0183c8375a28e786c8f51013",
+      "tools/reports/search-alignment-2026-10-14/final-latency.tsv": "bb68e0dc4bfd214ceff89300785cecd4b652ef17d88b345c7b266a11f3d8baf8",
+      "tools/reports/search-alignment-2026-10-14/heldout-baseline.tsv": "711c8a5cad714667c89803c841e8848e9d029ba2321ef2a2f89705713e0e0493",
+      "tools/reports/search-alignment-2026-10-14/heldout-current.tsv": "8fc19b60d3ab22a0060a788771678c7db4f81b2db0342c52f507ef18afd7cbd3",
+      "tools/reports/search-alignment-2026-10-14/identical-latency.tsv": "cfd9f53061979db03c1029e4bfc63a75685068d1365cac4f79e70ab74625b237",
+      "tools/reports/search-alignment-2026-10-14/search-latency.tsv": "b0d3ad162f0234563a3454c2706a7380ac236ca4254dd160d05cb2ad029b7913",
+      "tools/reports/search-recovery-2026-10-15/final-latency-cached.tsv": "0af4760522a189f31cc82581430f66ad160781b34a557cdc4a68cf880fd591e5",
+      "tools/reports/search-recovery-2026-10-15/final-latency-steady.tsv": "0600f253ed4c31c373a01651ee61fcf81af0488bc3ae2432ef5c174e9e45258c",
+      "tools/reports/search-recovery-2026-10-15/identical-latency.tsv": "b7d154803919b10e3a0ed605438b83b65f389539f2946d68cc337aecc9a7d8df",
+      "tools/reports/search-recovery-2026-10-15/independent-baseline.tsv": "39627aecf617b6175c4490459b6539feac13145b48a20a1315b3120097eeb393",
+      "tools/reports/search-recovery-2026-10-15/independent-combined.tsv": "b0445b30ed73479fa1477a7cb2d1e6a4176dc272d57ac5a81122c0c2154b2c4d",
+      "tools/reports/search-recovery-2026-10-15/independent-paired.tsv": "e0c050a3abaa55e1466de06dfad46602e8c16b70568051b8f7bfaf6ed2409a71",
+      "tools/reports/search-recovery-2026-10-15/independent-search.tsv": "63036c516371e90ebaf05a9016c98a891ae351d67d860bbda9beaa12e491afaf",
+      "tools/reports/search-recovery-2026-10-15/rejected-latency-before-cache.tsv": "cacb980f61d9cbcdfb0a5b2178cd0a835d9dc9e0fd4e68cb74b4653f5e51273c",
+      "tools/reports/search-recovery-2026-10-15/search-latency.tsv": "68800692a16bad626fc50127d4591e1f36d1685ee8c35d401f8e5e61126d9652",
+      "tools/reports/search-recovery-2026-10-15/single32-final.tsv": "f3e0cd8ca2ade6f12729a8fa5f01eacea5c350c8aff434e14edb632e4cab4525",
+      "tools/semantic_cases.tsv": "8c49a7d503f924cdd7c0c1ebaffc96c92855a36fdfb9f83a7edc7b0ca6be7186",
+      "tools/windows_cangjie_compat.tsv": "e4d870fbd967e022a098d1615a12e40a0d3235c6e18a93532af10d8dfe682359",
+      "tools/data/context_search/validation.tsv": "05a2c359d40e3bc7d53f1880cef29b48862431c87c64e020d718bc500ed86be9",
+      "tools/data/context_search/heldout.tsv": "be242e6ab4a2b41d8e505d4891d09d5087c8ee3e8355569c02d4d976c05207e6",
+      "tools/data/clean_language_models/corpus.jsonl.gz": "703266bceae98b79a6aae31ff3e85db2dcdf2e5b3da4fc53e2f26176e1c2611a",
+      "tools/data/current_search/pairs.jsonl.gz": "1d641c924bb8a371086734fb11762501396dfc7b97bf8495fc17d8b0b7273000"
+    },
+    "corpus_sha256": "81d1cf2400a88b71872b164662db10b73589d9f96d627dc7ccab56be8f0f817c",
+    "pairs_sha256": "35d759121842a246accef1a2a860626dbb07d4be94f072e1c32536331974e053",
+    "corpus": {
+      "train": {
+        "HK": 16302,
+        "Tatoeba": 4313,
+        "authored": 702,
+        "UD": 226,
+        "CV": 12135
+      },
+      "validation": {
+        "HK": 2484,
+        "Tatoeba": 462,
+        "authored": 78
+      }
+    },
+    "pairs": {
+      "train": {
+        "HK": 11864,
+        "Tatoeba": 5457,
+        "authored": 2011,
+        "UD": 672
+      },
+      "validation": {
+        "HK": 1842,
+        "Tatoeba": 669,
+        "authored": 217
+      }
+    },
+    "characters": {
+      "train": 252442,
+      "validation": 22048
+    },
+    "families": {
+      "train": 12636,
+      "validation": 357
+    },
+    "rejected": {
+      "text_length_or_boundary": 4257,
+      "text_family_duplicate": 24459,
+      "pair_external_overlap": 2,
+      "CV_external_overlap_rows": 6,
+      "text_internal_overlap": 7,
+      "pair_internal_overlap": 6
+    },
+    "policy": "NFC/six reviewed glyph pairs; split all non-Han boundaries. Fixed original TRAIN conversations/translations only. Internal split by conversation/translation/scenario family shared across both stages. Common Voice prompts have no author IDs: near-duplicate clusters, TRAIN only, no independence or dialogue claim. Exclude external evaluation6+ and internal validation6+ from TRAIN. No Common Voice raw/derived text cache mirrored in Git.",
+    "pairs_note": "Current-parent actual full TRAIN rivals from3aa8870; app tree equals1a6a67e. Historical raw/final min offset clipped[-4,4]. Same-code adaptation, not new independent examples."
+  },
+  "source_audit": {
+    "accepted": {
+      "CommonVoice": {
+        "kind": "Public-domain/CC0 donated read prompts; not conversations, no author IDs, TRAIN only",
+        "source_url": "https://github.com/common-voice/common-voice/blob/46407be8d4c5de28b62baf2b18a363ea461b3c4f/server/data/yue/sentence-collector.txt",
+        "sha256": "645d6a544634db879cef9d38e13ce58b7cef91772ba4d2ae6f6f674dbeb02a8b",
+        "source_rows": 9444,
+        "terms_url": "https://github.com/mozilla/legal-docs/blob/06f3e927a181bd17a1e861bce4cde8836ede6f9f/en/common_voice_terms.md",
+        "terms_sha256": "2a4151f532a0b7d9bdbf4a8ce4ab686bc7f82e561e3f3a8f33a598211951ad35",
+        "collector_url": "https://github.com/common-voice/sentence-collector/blob/ea325e9fe3441371387c8ae985288590b94682ed/README.md",
+        "collector_sha256": "01d18e93f06087e49ed4978a75eabff89f59942e2080f3be72c1aba146c2a9a6",
+        "distribution": "No raw or derived text cache committed; published download URL plus checksum, preparation code and trained weights only."
+      },
+      "existing": {
+        "source": "clean_language_models corpus and current_search TRAIN rivals",
+        "scope": "Original HKCanCor46 TRAIN conversations; frozen Tatoeba translation families; original UD custom TRAIN subset; authored/daily scenarios. Original split, attributions and restrictions retained."
+      }
+    },
+    "not_admitted": {
+      "SpiCE": {
+        "license": "CC BY4.0 per official pinned docs",
+        "documentation_url": "https://github.com/khiajohnson/SpiCE-Corpus/blob/2110caac817e021d62dc4005c72f690217933544/docs/download.md",
+        "documentation_sha256": "5fe0e6e5d166dbfbc98c8909f4ad64c63a92c51d1b1c1063aaa0b783e04386a4",
+        "reason": "Original corpus served by DOI/Scholars Portal Dataverse, outside current allowed destinations. No original data request attempted; no transcript bytes admitted. Bilingual Canadian interviews would require separate domain/provenance audit."
+      },
+      "CantoMap": {
+        "reason": "Official README limits original audio/transcript access to academic researchers on request; no automatic admission or contact."
+      },
+      "miscellaneous scraped corpora": {
+        "reason": "No sufficiently established content license/provenance for this experiment."
+      }
+    }
+  },
+  "verification": {
+    "preflight": {
+      "tests": 7,
+      "finite_difference_coordinates": 26,
+      "gradient_tolerance": 3e-07,
+      "fixture_java_score_rows": 80,
+      "fixture_malformed_rejections": 15,
+      "controlled_decode": "null:丙乙 -> enabled:甲乙; exact-code check passed",
+      "scope": "Observed completed reference and fixture checks before frozen fitting; not corpus hit rate. Full fitted models require separate verification.",
+      "test_source_sha256": "ee6c568fea02b756bd00136a96613729940071f506c59a7d710d8120d7d1ef6d"
+    },
+    "language_full": "80 score rows,15 malformed rejections,650315 primitive bytes",
+    "adapted_full": "80 score rows,15 malformed rejections,650315 primitive bytes",
+    "null_ordinary_parity": 20,
+    "data_and_model_replay": {
+      "byte_identical_model_replay": [
+        "language.b64",
+        "adapted.b64",
+        "report.json"
+      ],
+      "byte_identical_data_replay": [
+        "corpus.jsonl.gz",
+        "pairs.jsonl.gz",
+        "manifest.json"
+      ],
+      "seed": 20261017,
+      "thread_count": 1,
+      "model_sha256": {
+        "language.b64": "b7782011a6b2c92041b2629b5a4ced1e52bb142ab2407c7fb27f76dd2321f403",
+        "adapted.b64": "57c8997ac0ff6076a5bf9101f2ee007865618c638a110eca4b76b85e76383746",
+        "report.json": "2c645a26aaa4fc923b3a1adcf95cbf443dcb8a1f8052a2f7598ffcff67a4b098"
+      }
+    },
+    "sealed_source_inputs_verified": 120,
+    "native_inference_freeze_verified": true
+  },
+  "baseline_provenance": {
+    "parent_revision": "1a6a67e",
+    "reference_revision": "e209474",
+    "identical_app_tree": true,
+    "reference": "tools/reports/context-search-2026-10-16/baseline1450.tsv",
+    "null_lists_exact": 20,
+    "primary_asset_sha256": "c8527713a152427cc1f90b428bfad1a14e92e9e3d8e6338b45a812e423c9e5f5"
+  },
+  "source_notice": "Common Voice read prompts are TRAIN only and not conversations; raw and derived text cache not mirrored. Internal family split does not establish unseen-prompt-author validation. No private texts or network inference.",
+  "production_app_unchanged": true,
+  "version": "0.6.39",
+  "version_code": 46,
+  "apk_created": false,
+  "evidence_sha256": {
+    "docs/SENTENCE_PRETRAINING.md": "6e39f2efa0ea7ba003447562bbab09175faa36058062f9b62344e668e93efcab",
+    "tools/SentenceLanguageIntegrationCheck.java": "b69df4b3dbbc169eee40c99b582f35e87ff6b48ed42eb86058f82b59ec3769a4",
+    "tools/SentenceLanguageRanker.java": "874a296fc7f6ec66e012a949355d11fb96873d3b37caa35f9a80513f3de4d1c6",
+    "tools/data/sentence_pretrain/NOTICE.md": "6720d494d1b57b040fa72075cb485cc4b4bf2a141dc153e2dfe642b80c80452c",
+    "tools/data/sentence_pretrain/decision.json": "e2a5edbcd507a8bc6c64281888365d00a1e123a99a51c7237777d09c5c3e003d",
+    "tools/data/sentence_pretrain/inference-freeze.json": "26e1ebaefba86ad8b206b86ed4df38392a8c07f05d147b437f112f5548057807",
+    "tools/data/sentence_pretrain/manifest.json": "bcd4bcf604da862af7cc1e2aa89adb9209785a4b89905aab9dd44146a2235b75",
+    "tools/data/sentence_pretrain/models/adapted.b64": "57c8997ac0ff6076a5bf9101f2ee007865618c638a110eca4b76b85e76383746",
+    "tools/data/sentence_pretrain/models/language.b64": "b7782011a6b2c92041b2629b5a4ced1e52bb142ab2407c7fb27f76dd2321f403",
+    "tools/data/sentence_pretrain/models/report.json": "2c645a26aaa4fc923b3a1adcf95cbf443dcb8a1f8052a2f7598ffcff67a4b098",
+    "tools/data/sentence_pretrain/protocol.json": "6b5952f33ba5df09f1fd7a79133689c7fdedf055c3c7c5fe53ed23174f1a1871",
+    "tools/data/sentence_pretrain/seal.json": "2a843805fbfd7e7139c978127d771e9252bdcbe482c6b32f034a82dafaf19125",
+    "tools/data/sentence_pretrain/selection.json": "2add455549732523f697bc6402a079ed806a49235d9ec0b65d1c4dded6d47364",
+    "tools/data/sentence_pretrain/source-audit.json": "dfd31f35797b9f875131654e70ae1b66277b86933533ab7eeaff68bbc8892d58",
+    "tools/prepare_sentence_pretrain.py": "bd4ce841f16b15327843103054186e69e2795cccb7764f131009fc8bd067ff68",
+    "tools/reports/sentence-pretrain-2026-10-17/adapted-score.txt": "d6f6f81030992ce6c6ca0f65f3b9e0a52b590a138737e17ec9a16798fd10d125",
+    "tools/reports/sentence-pretrain-2026-10-17/adapted.json": "f65d1771dc019724d4b14517be8f73c6a7e5c7b782ac87d6ef2c95d98b1f887d",
+    "tools/reports/sentence-pretrain-2026-10-17/adapted.tsv": "74747f1000660795af9c23221f036c210bb0333bfe5fa14ae9bc4ee4574bdd94",
+    "tools/reports/sentence-pretrain-2026-10-17/baseline-provenance.json": "74fa568e7422fe113a8bf3859eb510b77cf6c0b78f72dc6757b24fa1e1a88e52",
+    "tools/reports/sentence-pretrain-2026-10-17/coverage-losses.json": "793fd0fc8c4d968bd6a3c1d0259b7b6939bd0bf19ef0027e4fb46468b517327e",
+    "tools/reports/sentence-pretrain-2026-10-17/data-replay.json": "d0b44a862f4196c811502e0b6f404cdd609c513b737532b9f8cc44589d4c2cfb",
+    "tools/reports/sentence-pretrain-2026-10-17/fixture-score.txt": "cc4623677dd9bede30c4bc153fac3f2e5914fe03d52b4188fd9088271c8381c0",
+    "tools/reports/sentence-pretrain-2026-10-17/language-score.txt": "d6f6f81030992ce6c6ca0f65f3b9e0a52b590a138737e17ec9a16798fd10d125",
+    "tools/reports/sentence-pretrain-2026-10-17/language-versus-adapted.json": "786f1fe5a857a7a992df4acdee3552453349188a8f7bba820b9d023f1a21142f",
+    "tools/reports/sentence-pretrain-2026-10-17/language.json": "f8fbca87f6164e0b51496147117472e09e14a7f2eff6f4a6ff09c88ef35cf573",
+    "tools/reports/sentence-pretrain-2026-10-17/language.tsv": "477be7f96570d2b8c53001c4c2a9dccead106325761ec5ad3909c8b6e4f533be",
+    "tools/reports/sentence-pretrain-2026-10-17/null-parity.tsv": "d967000e0524d6978dadf2e66d6507fae3c3c117049fd1a2cb9af40168c2e123",
+    "tools/reports/sentence-pretrain-2026-10-17/preflight.json": "79a1b1d026caa70df8a509c09d770b9c5f76366f071ff4e0a9af2d74f7459ce8",
+    "tools/reports/sentence-pretrain-2026-10-17/reproducibility.json": "7709e5d9b79d5c32afcd54a63aa0a488f21af63ec1e47dfbc083e037cfd3d19f",
+    "tools/run_sentence_pretrain.py": "c534b6f9d93e634fad3db41221bcd2a612ae98ddc8bf46cf02fe49bb2e65ee08",
+    "tools/sentence-pretrain-requirements.txt": "7bd6b8946940b79948c548c8048e545684b91c8edc9444d8dfc0c8f76a97c0a7",
+    "tools/sentence_language_model.py": "b6a463ea2f440abb901f5e4e44744c4ada1dd672e8889fb6877bd10315ab252a",
+    "tools/sentence_pretrain_guards.py": "3687806f04cbf1085b8bb9a1a367120a64863659a3ad2776a4a5c7fdf0f42077",
+    "tools/test_sentence_pretrain.py": "ee6c568fea02b756bd00136a96613729940071f506c59a7d710d8120d7d1ef6d",
+    "tools/train_sentence_pretrain.py": "fc23261f6b2ad5320eac02c4a79784e0bb555d1c6d3b8688277dd2d0a8b4dfa6",
+    "tools/verify_sentence_pretrain.py": "ebb1280791d09c0ca69026e0fe27359d3497c638c8607948ba572940f1615c2e"
+  }
+}

@@ -1,0 +1,131 @@
+{
+  "parent_revision": "1a6a67e",
+  "selected": null,
+  "protocol_sha256": "6b5952f33ba5df09f1fd7a79133689c7fdedf055c3c7c5fe53ed23174f1a1871",
+  "trials": {
+    "language": {
+      "before": {
+        "cases": 1450,
+        "top1": 301,
+        "top5": 558,
+        "top20": 736,
+        "mrr": 0.28475590759785274
+      },
+      "after": {
+        "cases": 1450,
+        "top1": 317,
+        "top5": 570,
+        "top20": 741,
+        "mrr": 0.2941624248644373
+      },
+      "new150": {
+        "before": {
+          "cases": 150,
+          "top1": 22,
+          "top5": 53,
+          "top20": 77,
+          "mrr": 0.23972046947433942
+        },
+        "after": {
+          "cases": 150,
+          "top1": 28,
+          "top5": 56,
+          "top20": 75,
+          "mrr": 0.265584436805025
+        }
+      },
+      "old1300": {
+        "before": {
+          "cases": 1300,
+          "top1": 279,
+          "top5": 505,
+          "top20": 659,
+          "mrr": 0.28995230430441193
+        },
+        "after": {
+          "cases": 1300,
+          "top1": 289,
+          "top5": 514,
+          "top20": 666,
+          "mrr": 0.29745988502513865
+        }
+      },
+      "gate": {
+        "new_counts_nondecreasing": false,
+        "new_first_or_top5_gain": true,
+        "old_counts_nondecreasing": true,
+        "old_per_set_loss_within_one_pp": true
+      },
+      "qualified": false,
+      "selection_key": [
+        0.2101111111111111,
+        0.40422222222222226,
+        0.532,
+        0.29343380533295393
+      ]
+    },
+    "adapted": {
+      "before": {
+        "cases": 1450,
+        "top1": 301,
+        "top5": 558,
+        "top20": 736,
+        "mrr": 0.28475590759785274
+      },
+      "after": {
+        "cases": 1450,
+        "top1": 319,
+        "top5": 568,
+        "top20": 745,
+        "mrr": 0.29718188318863564
+      },
+      "new150": {
+        "before": {
+          "cases": 150,
+          "top1": 22,
+          "top5": 53,
+          "top20": 77,
+          "mrr": 0.23972046947433942
+        },
+        "after": {
+          "cases": 150,
+          "top1": 26,
+          "top5": 58,
+          "top20": 74,
+          "mrr": 0.26350363525363524
+        }
+      },
+      "old1300": {
+        "before": {
+          "cases": 1300,
+          "top1": 279,
+          "top5": 505,
+          "top20": 659,
+          "mrr": 0.28995230430441193
+        },
+        "after": {
+          "cases": 1300,
+          "top1": 293,
+          "top5": 510,
+          "top20": 671,
+          "mrr": 0.30106783487344335
+        }
+      },
+      "gate": {
+        "new_counts_nondecreasing": false,
+        "new_first_or_top5_gain": true,
+        "old_counts_nondecreasing": true,
+        "old_per_set_loss_within_one_pp": true
+      },
+      "qualified": false,
+      "selection_key": [
+        0.21322222222222223,
+        0.4077777777777778,
+        0.5325555555555556,
+        0.2992302276613422
+      ]
+    }
+  },
+  "independent500_decoded": false,
+  "decision": "Reject both pretrained arms; retain production and preserve unused context-search500"
+}

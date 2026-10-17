@@ -1,0 +1,45 @@
+{
+  "new150_lost_targets": {
+    "language": [
+      {
+        "source": "context-search:validation",
+        "code": "hicgypogrfyblpykybysokgiysjlahri",
+        "target": "我鍾意住喺市中心交通方便去邊都易啲",
+        "before": 14,
+        "after": 0
+      },
+      {
+        "source": "context-search:validation",
+        "code": "ossgomyjgrjnrr",
+        "target": "佢屋企辦喜事啊",
+        "before": 15,
+        "after": 0
+      }
+    ],
+    "adapted": [
+      {
+        "source": "context-search:validation",
+        "code": "hicgypogrfyblpykybysokgiysjlahri",
+        "target": "我鍾意住喺市中心交通方便去邊都易啲",
+        "before": 14,
+        "after": 0
+      },
+      {
+        "source": "context-search:validation",
+        "code": "ossgomyjgrjnrr",
+        "target": "佢屋企辦喜事啊",
+        "before": 15,
+        "after": 0
+      },
+      {
+        "source": "context-search:validation",
+        "code": "rpordighoiammjorhnmg",
+        "target": "呢個機場每日二十個航班",
+        "before": 17,
+        "after": 0
+      }
+    ]
+  },
+  "source_fact": "Only whole-candidate scoring changes. Prefix generation/search and vocabulary are unchanged; these baseline-visible targets remain generated before the added final evidence. This report does not distinguish display20 from downstream confidence/head filters.",
+  "prohibition": "No score, threshold, case or source change in response to these outcomes."
+}

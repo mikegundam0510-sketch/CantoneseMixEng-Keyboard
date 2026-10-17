@@ -1,0 +1,19 @@
+{
+  "byte_identical_model_replay": [
+    "language.b64",
+    "adapted.b64",
+    "report.json"
+  ],
+  "byte_identical_data_replay": [
+    "corpus.jsonl.gz",
+    "pairs.jsonl.gz",
+    "manifest.json"
+  ],
+  "seed": 20261017,
+  "thread_count": 1,
+  "model_sha256": {
+    "language.b64": "b7782011a6b2c92041b2629b5a4ced1e52bb142ab2407c7fb27f76dd2321f403",
+    "adapted.b64": "57c8997ac0ff6076a5bf9101f2ee007865618c638a110eca4b76b85e76383746",
+    "report.json": "2c645a26aaa4fc923b3a1adcf95cbf443dcb8a1f8052a2f7598ffcff67a4b098"
+  }
+}

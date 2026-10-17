@@ -1,0 +1,10 @@
+{
+  "tests": 7,
+  "finite_difference_coordinates": 26,
+  "gradient_tolerance": 3e-07,
+  "fixture_java_score_rows": 80,
+  "fixture_malformed_rejections": 15,
+  "controlled_decode": "null:丙乙 -> enabled:甲乙; exact-code check passed",
+  "scope": "Observed completed reference and fixture checks before frozen fitting; not corpus hit rate. Full fitted models require separate verification.",
+  "test_source_sha256": "ee6c568fea02b756bd00136a96613729940071f506c59a7d710d8120d7d1ef6d"
+}

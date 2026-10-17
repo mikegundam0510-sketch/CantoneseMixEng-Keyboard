@@ -1,0 +1,33 @@
+{
+  "accepted": {
+    "CommonVoice": {
+      "kind": "Public-domain/CC0 donated read prompts; not conversations, no author IDs, TRAIN only",
+      "source_url": "https://github.com/common-voice/common-voice/blob/46407be8d4c5de28b62baf2b18a363ea461b3c4f/server/data/yue/sentence-collector.txt",
+      "sha256": "645d6a544634db879cef9d38e13ce58b7cef91772ba4d2ae6f6f674dbeb02a8b",
+      "source_rows": 9444,
+      "terms_url": "https://github.com/mozilla/legal-docs/blob/06f3e927a181bd17a1e861bce4cde8836ede6f9f/en/common_voice_terms.md",
+      "terms_sha256": "2a4151f532a0b7d9bdbf4a8ce4ab686bc7f82e561e3f3a8f33a598211951ad35",
+      "collector_url": "https://github.com/common-voice/sentence-collector/blob/ea325e9fe3441371387c8ae985288590b94682ed/README.md",
+      "collector_sha256": "01d18e93f06087e49ed4978a75eabff89f59942e2080f3be72c1aba146c2a9a6",
+      "distribution": "No raw or derived text cache committed; published download URL plus checksum, preparation code and trained weights only."
+    },
+    "existing": {
+      "source": "clean_language_models corpus and current_search TRAIN rivals",
+      "scope": "Original HKCanCor46 TRAIN conversations; frozen Tatoeba translation families; original UD custom TRAIN subset; authored/daily scenarios. Original split, attributions and restrictions retained."
+    }
+  },
+  "not_admitted": {
+    "SpiCE": {
+      "license": "CC BY4.0 per official pinned docs",
+      "documentation_url": "https://github.com/khiajohnson/SpiCE-Corpus/blob/2110caac817e021d62dc4005c72f690217933544/docs/download.md",
+      "documentation_sha256": "5fe0e6e5d166dbfbc98c8909f4ad64c63a92c51d1b1c1063aaa0b783e04386a4",
+      "reason": "Original corpus served by DOI/Scholars Portal Dataverse, outside current allowed destinations. No original data request attempted; no transcript bytes admitted. Bilingual Canadian interviews would require separate domain/provenance audit."
+    },
+    "CantoMap": {
+      "reason": "Official README limits original audio/transcript access to academic researchers on request; no automatic admission or contact."
+    },
+    "miscellaneous scraped corpora": {
+      "reason": "No sufficiently established content license/provenance for this experiment."
+    }
+  }
+}
