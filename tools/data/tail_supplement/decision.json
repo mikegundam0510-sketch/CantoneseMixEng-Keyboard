@@ -1,0 +1,46 @@
+{
+  "baseline_revision": "aedb58c3600870aca00c44fc26c864a5b1eaef78",
+  "before": {
+    "cases": 500,
+    "top1": 97,
+    "top5": 200,
+    "top20": 254,
+    "mrr": 0.2827141199443831
+  },
+  "after": {
+    "cases": 500,
+    "top1": 97,
+    "top5": 200,
+    "top20": 255,
+    "mrr": 0.2828141199443831
+  },
+  "paired": {
+    "first": {
+      "gained": 0,
+      "lost": 0,
+      "net": 0,
+      "paired_exact_two_sided_p": 1
+    },
+    "top5": {
+      "gained": 0,
+      "lost": 0,
+      "net": 0,
+      "paired_exact_two_sided_p": 1
+    },
+    "top20": {
+      "gained": 1,
+      "lost": 0,
+      "net": 1,
+      "paired_exact_two_sided_p": 1
+    }
+  },
+  "gates": {
+    "first18_retained": true,
+    "counts_nondecreasing": true,
+    "positive_top20_gain": true
+  },
+  "qualified": true,
+  "substantial_gain": false,
+  "qualification_sha256": "3dbf7754b5aaeb0444e843d016111616df38978649bbd9f6b9baf1260259d54c",
+  "decision": "Adopt exact validated tail supplement; no APK or1.0 claim"
+}

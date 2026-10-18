@@ -1,0 +1,47 @@
+{
+  "selected": "teacher-native-tail-only",
+  "gates": {
+    "all_original_first18_identical": true,
+    "first_top5_counts_unchanged": true,
+    "new150_top20_nondecreasing": true,
+    "old1300_top20_nondecreasing": true,
+    "aggregate_top20_gain": true,
+    "every_set_top20_nondecreasing": true
+  },
+  "before": {
+    "cases": 1450,
+    "top1": 301,
+    "top5": 568,
+    "top20": 736,
+    "mrr": 0.2894391213598804
+  },
+  "after": {
+    "cases": 1450,
+    "top1": 301,
+    "top5": 568,
+    "top20": 738,
+    "mrr": 0.28950808687712176
+  },
+  "paired": {
+    "first": {
+      "gained": 0,
+      "lost": 0,
+      "net": 0,
+      "paired_exact_two_sided_p": 1
+    },
+    "top5": {
+      "gained": 0,
+      "lost": 0,
+      "net": 0,
+      "paired_exact_two_sided_p": 1
+    },
+    "top20": {
+      "gained": 3,
+      "lost": 1,
+      "net": 2,
+      "paired_exact_two_sided_p": 0.625
+    }
+  },
+  "reserve500_decoded": false,
+  "decision": "Proceed to exact Java generator and fixed guards"
+}

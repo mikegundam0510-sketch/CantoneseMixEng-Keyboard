@@ -1,0 +1,18 @@
+{
+  "adopted": true,
+  "exact_tested_android_bytes": {
+    "app/src/main/java/hk/cantonesemixeng/keyboard/QuickDecoder.java": "cdad496ce4f851740b6112a8e6eb9dbfe728eb968a3ba05f99168cb2c28e9342",
+    "app/src/main/java/hk/cantonesemixeng/keyboard/CantoneseMixEngKeyboardService.java": "4fc4009f02e1e3f23eef67a5e5e42a3aaa774b8aaa883deada257b64175d918b",
+    "app/src/main/java/hk/cantonesemixeng/keyboard/TailSupplement.java": "d15529a2028efe59e128e20351c1085811ce7f8de49604d9553682d6dd3c9206",
+    "app/src/main/java/hk/cantonesemixeng/keyboard/DirectCodeGenerator.java": "8ffe1c9fa9c3b0d82d242232512d763e42dbaf669634541221d02d67a1761906",
+    "app/src/main/assets/code_generator.b64": "c1e552eafdb126acc28618e4fcb4e4e9debd4c7497ffb2a67c6a01c7a76c6914"
+  },
+  "bundled_notice_sha256": "923c0ff56a561b95be549b0e8f9320f463f3c9228bd3274cc4f9990bcb2b7fe5",
+  "all_other_original_app_files_unchanged": 163,
+  "decision_sha256": "e5b849fd78fd4fb32465009b481ce4101e29e718561b68b1223d5c79086a4d38",
+  "qualification_sha256": "3dbf7754b5aaeb0444e843d016111616df38978649bbd9f6b9baf1260259d54c",
+  "version": "0.6.39",
+  "version_code": 46,
+  "apk_produced": false,
+  "limits": "Tail coverage only; first18 preserved. Cloud timing is not Fold7 timing. No large/1.0 claim."
+}

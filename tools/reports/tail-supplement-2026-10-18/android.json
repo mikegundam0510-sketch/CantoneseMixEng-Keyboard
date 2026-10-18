@@ -1,0 +1,15 @@
+{
+  "qualified": true,
+  "unit_tests": {
+    "tests": 222,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "lint": {
+    "Warning": 25
+  },
+  "apk_produced": false,
+  "wiring": "Exact optional model/service constructor and same Java inference sources as native candidate",
+  "initial_attempt": "Sandbox local wildcard-address denial before build startup; retry with normal local networking succeeded."
+}

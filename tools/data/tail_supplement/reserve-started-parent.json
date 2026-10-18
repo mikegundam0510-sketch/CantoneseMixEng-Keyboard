@@ -1,0 +1,5 @@
+{
+  "qualification_sha256": "3dbf7754b5aaeb0444e843d016111616df38978649bbd9f6b9baf1260259d54c",
+  "cases_sha256": "04cfcc1666d517314aa5f37d476fc93af32f4c6b51ad45e48a3cd58ddbb37cd8",
+  "policy": "One pass, actual unmodified parent classes. No retry or outcome tuning."
+}

@@ -1,0 +1,1205 @@
+{
+  "baseline_revision": "aedb58c3600870aca00c44fc26c864a5b1eaef78",
+  "cases_sha256": "8e4b74c8174dee73da8dda89d4c0cf1716c7d6fb69acc69c6fc12d08518b515d",
+  "output_sha256": {
+    "before": "db163fe5da03929c2c392de65d343a5eee11661858ab9db7308f9475904395bf",
+    "after": "211cbac583ebb998eef9519208635a4f6041d904c7eebbf0d6a204f159c141d7"
+  },
+  "before": {
+    "cases": 3893,
+    "top1": 1358,
+    "top5": 2263,
+    "top20": 2625,
+    "mrr": 0.450435441431456
+  },
+  "after": {
+    "cases": 3893,
+    "top1": 1358,
+    "top5": 2263,
+    "top20": 2729,
+    "mrr": 0.4518683616687078
+  },
+  "paired": {
+    "first": {
+      "gained": 0,
+      "lost": 0,
+      "net": 0,
+      "paired_exact_two_sided_p": 1
+    },
+    "top5": {
+      "gained": 0,
+      "lost": 0,
+      "net": 0,
+      "paired_exact_two_sided_p": 1
+    },
+    "top20": {
+      "gained": 105,
+      "lost": 1,
+      "net": 104,
+      "paired_exact_two_sided_p": 2.6377536518327582e-30
+    }
+  },
+  "per_set": {
+    "alignment:heldout": {
+      "before": {
+        "cases": 500,
+        "top1": 91,
+        "top5": 197,
+        "top20": 262,
+        "mrr": 0.2781929503503033
+      },
+      "after": {
+        "cases": 500,
+        "top1": 91,
+        "top5": 197,
+        "top20": 264,
+        "mrr": 0.2783929503503033
+      },
+      "no_count_loss": true
+    },
+    "recovery:validation": {
+      "before": {
+        "cases": 100,
+        "top1": 23,
+        "top5": 47,
+        "top20": 56,
+        "mrr": 0.3344319291819292
+      },
+      "after": {
+        "cases": 100,
+        "top1": 23,
+        "top5": 47,
+        "top20": 56,
+        "mrr": 0.3344319291819292
+      },
+      "no_count_loss": true
+    },
+    "validation:written200": {
+      "before": {
+        "cases": 200,
+        "top1": 46,
+        "top5": 86,
+        "top20": 106,
+        "mrr": 0.3119206873492864
+      },
+      "after": {
+        "cases": 200,
+        "top1": 46,
+        "top5": 86,
+        "top20": 106,
+        "mrr": 0.3119206873492864
+      },
+      "no_count_loss": true
+    },
+    "validation:authored60": {
+      "before": {
+        "cases": 60,
+        "top1": 27,
+        "top5": 48,
+        "top20": 60,
+        "mrr": 0.6053113553113554
+      },
+      "after": {
+        "cases": 60,
+        "top1": 27,
+        "top5": 48,
+        "top20": 60,
+        "mrr": 0.6053113553113554
+      },
+      "no_count_loss": true
+    },
+    "validation:natural200": {
+      "before": {
+        "cases": 200,
+        "top1": 80,
+        "top5": 122,
+        "top20": 140,
+        "mrr": 0.4920909645909646
+      },
+      "after": {
+        "cases": 200,
+        "top1": 80,
+        "top5": 122,
+        "top20": 160,
+        "mrr": 0.49784535055587686
+      },
+      "no_count_loss": true
+    },
+    "validation:public200": {
+      "before": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 135,
+        "top20": 154,
+        "mrr": 0.5190134587634588
+      },
+      "after": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 135,
+        "top20": 155,
+        "mrr": 0.5192634587634588
+      },
+      "no_count_loss": true
+    },
+    "validation:fresh-written100": {
+      "before": {
+        "cases": 100,
+        "top1": 20,
+        "top5": 39,
+        "top20": 52,
+        "mrr": 0.29537576312576314
+      },
+      "after": {
+        "cases": 100,
+        "top1": 20,
+        "top5": 39,
+        "top20": 52,
+        "mrr": 0.29537576312576314
+      },
+      "no_count_loss": true
+    },
+    "validation:fresh-ud": {
+      "before": {
+        "cases": 43,
+        "top1": 20,
+        "top5": 30,
+        "top20": 35,
+        "mrr": 0.5556818181818182
+      },
+      "after": {
+        "cases": 43,
+        "top1": 20,
+        "top5": 30,
+        "top20": 36,
+        "mrr": 0.5569058083898966
+      },
+      "no_count_loss": true
+    },
+    "alignment:validation": {
+      "before": {
+        "cases": 100,
+        "top1": 26,
+        "top5": 42,
+        "top20": 52,
+        "mrr": 0.33075992063492066
+      },
+      "after": {
+        "cases": 100,
+        "top1": 26,
+        "top5": 42,
+        "top20": 52,
+        "mrr": 0.33075992063492066
+      },
+      "no_count_loss": true
+    },
+    "heldout:fresh-written500": {
+      "before": {
+        "cases": 500,
+        "top1": 96,
+        "top5": 191,
+        "top20": 253,
+        "mrr": 0.27696308136308134
+      },
+      "after": {
+        "cases": 500,
+        "top1": 96,
+        "top5": 191,
+        "top20": 258,
+        "mrr": 0.27746308136308134
+      },
+      "no_count_loss": true
+    },
+    "heldout:fresh-ud-legco": {
+      "before": {
+        "cases": 296,
+        "top1": 89,
+        "top5": 167,
+        "top20": 194,
+        "mrr": 0.4120087823212823
+      },
+      "after": {
+        "cases": 296,
+        "top1": 89,
+        "top5": 167,
+        "top20": 195,
+        "mrr": 0.4122903138528139
+      },
+      "no_count_loss": true
+    },
+    "guard:fresh100": {
+      "before": {
+        "cases": 100,
+        "top1": 37,
+        "top5": 64,
+        "top20": 72,
+        "mrr": 0.4875440115440115
+      },
+      "after": {
+        "cases": 100,
+        "top1": 37,
+        "top5": 64,
+        "top20": 76,
+        "mrr": 0.4895703273334852
+      },
+      "no_count_loss": true
+    },
+    "guard:natural200": {
+      "before": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 123,
+        "top20": 138,
+        "mrr": 0.4781190476190476
+      },
+      "after": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 123,
+        "top20": 148,
+        "mrr": 0.48071115288220556
+      },
+      "no_count_loss": true
+    },
+    "guard:authored120": {
+      "before": {
+        "cases": 120,
+        "top1": 79,
+        "top5": 92,
+        "top20": 98,
+        "mrr": 0.70625
+      },
+      "after": {
+        "cases": 120,
+        "top1": 79,
+        "top5": 92,
+        "top20": 99,
+        "mrr": 0.7066666666666667
+      },
+      "no_count_loss": true
+    },
+    "guard:old600": {
+      "before": {
+        "cases": 600,
+        "top1": 291,
+        "top5": 441,
+        "top20": 483,
+        "mrr": 0.5975853898280369
+      },
+      "after": {
+        "cases": 600,
+        "top1": 291,
+        "top5": 441,
+        "top20": 533,
+        "mrr": 0.6020230048445993
+      },
+      "no_count_loss": true
+    },
+    "guard:daily32": {
+      "before": {
+        "cases": 32,
+        "top1": 23,
+        "top5": 32,
+        "top20": 32,
+        "mrr": 0.84375
+      },
+      "after": {
+        "cases": 32,
+        "top1": 23,
+        "top5": 32,
+        "top20": 32,
+        "mrr": 0.84375
+      },
+      "no_count_loss": true
+    },
+    "guard:completion16": {
+      "before": {
+        "cases": 16,
+        "top1": 16,
+        "top5": 16,
+        "top20": 16,
+        "mrr": 1.0
+      },
+      "after": {
+        "cases": 16,
+        "top1": 16,
+        "top5": 16,
+        "top20": 16,
+        "mrr": 1.0
+      },
+      "no_count_loss": true
+    },
+    "guard:tatoeba200": {
+      "before": {
+        "cases": 200,
+        "top1": 86,
+        "top5": 152,
+        "top20": 162,
+        "mrr": 0.5636159465534465
+      },
+      "after": {
+        "cases": 200,
+        "top1": 86,
+        "top5": 152,
+        "top20": 164,
+        "mrr": 0.5641159465534465
+      },
+      "no_count_loss": true
+    },
+    "guard:public100": {
+      "before": {
+        "cases": 100,
+        "top1": 46,
+        "top5": 79,
+        "top20": 84,
+        "mrr": 0.5879848484848484
+      },
+      "after": {
+        "cases": 100,
+        "top1": 46,
+        "top5": 79,
+        "top20": 85,
+        "mrr": 0.5884848484848485
+      },
+      "no_count_loss": true
+    },
+    "guard:authored70": {
+      "before": {
+        "cases": 70,
+        "top1": 15,
+        "top5": 41,
+        "top20": 48,
+        "mrr": 0.38399005756148613
+      },
+      "after": {
+        "cases": 70,
+        "top1": 15,
+        "top5": 41,
+        "top20": 49,
+        "mrr": 0.3847043432757718
+      },
+      "no_count_loss": true
+    },
+    "guard:plural": {
+      "before": {
+        "cases": 18,
+        "top1": 15,
+        "top5": 18,
+        "top20": 18,
+        "mrr": 0.9166666666666666
+      },
+      "after": {
+        "cases": 18,
+        "top1": 15,
+        "top5": 18,
+        "top20": 18,
+        "mrr": 0.9166666666666666
+      },
+      "no_count_loss": true
+    },
+    "guard:handover": {
+      "before": {
+        "cases": 30,
+        "top1": 29,
+        "top5": 30,
+        "top20": 30,
+        "mrr": 0.9833333333333333
+      },
+      "after": {
+        "cases": 30,
+        "top1": 29,
+        "top5": 30,
+        "top20": 30,
+        "mrr": 0.9833333333333333
+      },
+      "no_count_loss": true
+    },
+    "guard:continuous": {
+      "before": {
+        "cases": 8,
+        "top1": 8,
+        "top5": 8,
+        "top20": 8,
+        "mrr": 1.0
+      },
+      "after": {
+        "cases": 8,
+        "top1": 8,
+        "top5": 8,
+        "top20": 8,
+        "mrr": 1.0
+      },
+      "no_count_loss": true
+    },
+    "guard:followup100": {
+      "before": {
+        "cases": 100,
+        "top1": 41,
+        "top5": 63,
+        "top20": 72,
+        "mrr": 0.5005735236985237
+      },
+      "after": {
+        "cases": 100,
+        "top1": 41,
+        "top5": 63,
+        "top20": 77,
+        "mrr": 0.5031524710669448
+      },
+      "no_count_loss": true
+    }
+  },
+  "no_per_set_count_loss": true,
+  "rank_changes": [
+    {
+      "source": "alignment:heldout",
+      "code": "rmavnbaiamrmanrn",
+      "target": "咁晏隨時閂咗門喇",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "alignment:heldout",
+      "code": "onoqmbrrkrommhiyushfurrqs",
+      "target": "今年再唔加人工我就劈炮唔撈",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "validation:natural200",
+      "code": "ycchcgybawrfrn",
+      "target": "六分鐘講晒𡃉喇",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "validation:natural200",
+      "code": "osofokhvosrfrs",
+      "target": "佢係做製作𡃉咋",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "validation:natural200",
+      "code": "wkifhihusuycmuahrf",
+      "target": "因為我自己讀電影𡃉",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "validation:natural200",
+      "code": "wcpnrndijlofrf",
+      "target": "買乜嘢機都係𡃉",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "validation:natural200",
+      "code": "hlvorrordrrfrl",
+      "target": "所以唔合格𡃉唧",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "validation:natural200",
+      "code": "rrofrkrfipyo",
+      "target": "唔係噉𡃉應該",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "validation:natural200",
+      "code": "yekngqghimiri",
+      "target": "返大陸捱得耐啲",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "validation:natural200",
+      "code": "rratofjndorf",
+      "target": "唔關你事來𡃉",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "validation:natural200",
+      "code": "tcjcvihpjorf",
+      "target": "其實幾穩定𡃉",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "validation:natural200",
+      "code": "hihuhihivdebromljorf",
+      "target": "我覺得我好滿足而家𡃉",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "validation:natural200",
+      "code": "ofrrokllybnkrrokuugjrfrd",
+      "target": "你唔使申請又唔使出聲𡃉嚹",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "validation:natural200",
+      "code": "husugimndmrfrd",
+      "target": "自己去到極𡃉嚹",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "validation:natural200",
+      "code": "hihuhiiphuvdrirf",
+      "target": "我覺得感覺好啲𡃉",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "validation:natural200",
+      "code": "mljoofofybrfrnrs",
+      "target": "而家係你講𡁵嘢嘞",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "validation:natural200",
+      "code": "tcodrrrijlofrf",
+      "target": "其他嗰啲都係𡃉",
+      "before": 0,
+      "after": 6
+    },
+    {
+      "source": "validation:natural200",
+      "code": "rkrroroylohhnrn",
+      "target": "噉嗰個人新入行喇",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "validation:natural200",
+      "code": "ofvdjitdrudidorfjl",
+      "target": "係好專業嘅機來𡃉都",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "validation:natural200",
+      "code": "hiybfbjlrroarr",
+      "target": "我通常都唔會𠸏",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "validation:natural200",
+      "code": "rrokatofjnrfrr",
+      "target": "唔使關你事𡃉喎",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "validation:natural200",
+      "code": "ybpnrnjlhirfrr",
+      "target": "講乜嘢都得𡃉喎",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "validation:public200",
+      "code": "rryojrdmbuceojhi",
+      "target": "唔該寄本目錄俾我",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "validation:fresh-ud",
+      "code": "rrofhirrokqtofrt",
+      "target": "唔係我唔使搵你啦",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "heldout:fresh-written500",
+      "code": "onoqcisrrcofsecermmonrkhdwjtdhm",
+      "target": "今年公司只係取錄咗兩名大學畢業生",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "heldout:fresh-written500",
+      "code": "osyskbwloqpymdrrr",
+      "target": "佢邊有畀人擺上枱啊",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "heldout:fresh-written500",
+      "code": "kbkboqvofdirr",
+      "target": "有冇人接你機啊",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "heldout:fresh-written500",
+      "code": "himvgiwcdmylruhi",
+      "target": "我要去買本新嘅簿",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "heldout:fresh-written500",
+      "code": "himljogiqvhiorodykhd",
+      "target": "我而家去接我個仔放學",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "heldout:fresh-ud-legco",
+      "code": "jlvdatprpoqjn",
+      "target": "都好關心呢件事",
+      "before": 0,
+      "after": 12
+    },
+    {
+      "source": "guard:fresh100",
+      "code": "yusprrmnrfrd",
+      "target": "就聽唔到𡃉嚹",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:fresh100",
+      "code": "kbquodrfrrohys",
+      "target": "冇靚仔𡃉喎入邊",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "guard:fresh100",
+      "code": "mfyrkiiwnkrrvdrr",
+      "target": "不過太凍又唔好喎",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "guard:fresh100",
+      "code": "rkrmypogrrbqrf",
+      "target": "噉𠻺諗住唔用𡃉",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "guard:natural200",
+      "code": "rrofkiiwrfrs",
+      "target": "唔係太凍𡃉咋",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:natural200",
+      "code": "hijlofspoyborrfrarr",
+      "target": "我都係聽人講個𡃉啫喎",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:natural200",
+      "code": "hirfdgyurfofierl",
+      "target": "我𡃉權就喺你度吖",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "guard:natural200",
+      "code": "omofvdoovdaprfrr",
+      "target": "但係好似好悶𡃉喎",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:natural200",
+      "code": "kbkboorrfrp",
+      "target": "有冇人知𡃉呢",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:natural200",
+      "code": "ymioyrkbkeodrfrr",
+      "target": "上次話有殺氣𡃉喎",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "guard:natural200",
+      "code": "yuycrrmnlarfrkderg",
+      "target": "就讀唔到書𡃉噉樣囖",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "guard:natural200",
+      "code": "rroambbqrfrd",
+      "target": "唔會再用𡃉嚹",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:natural200",
+      "code": "rkgiqynotcjcjlrrofqyvdsvrfrarf",
+      "target": "噉去排隊其實都唔係排好長𡃉啫嗎",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:natural200",
+      "code": "rrribbkerpvdmurirfrr",
+      "target": "嗰啲朋友呢好玩啲𡃉喎",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:authored120",
+      "code": "hionaykjuohgehryuykmm",
+      "target": "我今日交完份報告就放工",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "guard:old600",
+      "code": "jlrrokrkokpn",
+      "target": "都唔做噉做乜",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "guard:old600",
+      "code": "slndofjcofor",
+      "target": "耶穌係真係個",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "guard:old600",
+      "code": "orpoflwysie",
+      "target": "信心係由邊度",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "guard:old600",
+      "code": "hdhmkbpnrnrr",
+      "target": "學生冇乜嘢𠸏",
+      "before": 0,
+      "after": 13
+    },
+    {
+      "source": "guard:old600",
+      "code": "higcrfrn",
+      "target": "得賣𡃉喇",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:old600",
+      "code": "riatofvdvdrf",
+      "target": "啲關係好好𡃉",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:old600",
+      "code": "ofrkdederf",
+      "target": "係噉樣樣𡃉",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:old600",
+      "code": "yuoahusumurf",
+      "target": "就會自己玩𡃉",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:old600",
+      "code": "ylrkderf",
+      "target": "近噉樣𡃉",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:old600",
+      "code": "niyrrgdernrf",
+      "target": "多過哩樣嘢𡃉",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:old600",
+      "code": "rprmaecgypbh",
+      "target": "呢𠻺最鍾意睇",
+      "before": 0,
+      "after": 11
+    },
+    {
+      "source": "guard:old600",
+      "code": "mbuujlkrfrn",
+      "target": "再出十蚊𡃉喇",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:old600",
+      "code": "hivinicirfrs",
+      "target": "得幾多錢𡃉咋",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:old600",
+      "code": "orilyrdorf",
+      "target": "個神話來𡃉",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "guard:old600",
+      "code": "qlrfrrof",
+      "target": "折𡃉喎你",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:old600",
+      "code": "jurnrfrr",
+      "target": "七號𡃉喎",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "guard:old600",
+      "code": "rfrdtcjcypog",
+      "target": "𡃉嚹其實諗住",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:old600",
+      "code": "rmbrofskrfrd",
+      "target": "𠻺同你改𡃉嚹",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:old600",
+      "code": "lkrfmljo",
+      "target": "蚊𡃉而家",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:old600",
+      "code": "rihlmfqurfrp",
+      "target": "啲郵票靚𡃉呢",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:old600",
+      "code": "rrorrfrn",
+      "target": "唔知𡃉喇",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:old600",
+      "code": "ylofofrf",
+      "target": "部係你𡃉",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "guard:old600",
+      "code": "yusuvmwcmnrf",
+      "target": "就已經買到𡃉",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "guard:old600",
+      "code": "osybrfpn",
+      "target": "佢講𡁵乜",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:old600",
+      "code": "giysrfrn",
+      "target": "去邊𡃉喇",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:old600",
+      "code": "laarfos",
+      "target": "中間𡃉佢",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:old600",
+      "code": "rfrrtxoq",
+      "target": "𡃉喎舊年",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:old600",
+      "code": "njaijlofrkrf",
+      "target": "陣時都係噉𡃉",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:old600",
+      "code": "uugiokyjhsrf",
+      "target": "出去做運動𡃉",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "guard:old600",
+      "code": "isleviqurf",
+      "target": "成版幾靚𡃉",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:old600",
+      "code": "jlkbrfjcof",
+      "target": "都有𡃉真係",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:old600",
+      "code": "jlrrbrrfrr",
+      "target": "都唔同𡃉喎",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:old600",
+      "code": "jitddirfrd",
+      "target": "專業機𡃉嚹",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:old600",
+      "code": "rfrfrdomof",
+      "target": "𡁵𡃉嚹但係",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:old600",
+      "code": "rftiymbrhd",
+      "target": "𡃉對於同學",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:old600",
+      "code": "okymdirfrnrf",
+      "target": "做試機𡃉喇嗎",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "guard:old600",
+      "code": "yuoavkorithh",
+      "target": "就會獎個禮物",
+      "before": 20,
+      "after": 0
+    },
+    {
+      "source": "guard:old600",
+      "code": "rrofybrf",
+      "target": "唔係講𡁵",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:old600",
+      "code": "mrvoqigorfrr",
+      "target": "可以拎走𡃉喎",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:old600",
+      "code": "kbcarfrd",
+      "target": "有錯𡃉嚹",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "guard:old600",
+      "code": "rpoavdrirf",
+      "target": "呢會好啲𡃉",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:old600",
+      "code": "bhrrofrfrr",
+      "target": "睇唔係𡃉喎",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:old600",
+      "code": "mmosdorr",
+      "target": "工作來𠸏",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "guard:old600",
+      "code": "okrfrgrirn",
+      "target": "做𡁵哩啲嘢",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:old600",
+      "code": "rnajprirfti",
+      "target": "別開心啲𡃉對",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:old600",
+      "code": "rnajprirfrd",
+      "target": "別開心啲𡃉嚹",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:old600",
+      "code": "mnosymfgrf",
+      "target": "到佢上堂𡃉",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:old600",
+      "code": "vmvdvdrfrd",
+      "target": "經好好𡃉嚹",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:old600",
+      "code": "stfmmqriogo",
+      "target": "監粗㧬啲人走",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "guard:old600",
+      "code": "vdgorftcjc",
+      "target": "好走𡃉其實",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:old600",
+      "code": "orhdhmyvrmhd",
+      "target": "個學生退咗學",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "guard:old600",
+      "code": "rfrgdern",
+      "target": "𡃉哩樣嘢",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:tatoeba200",
+      "code": "hiebrmnvyyrfsgom",
+      "target": "我漏咗張卡喺屋企",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "guard:tatoeba200",
+      "code": "osrdofbqrqreqnofrd",
+      "target": "佢哋係用咩嚟打你㗎",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "guard:public100",
+      "code": "wkifkbhiojmiftam",
+      "target": "因為冇得俾零粒星",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "guard:authored70",
+      "code": "yvrmjjjd",
+      "target": "還咗車未",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "guard:followup100",
+      "code": "rkrmjcofmvncp",
+      "target": "噉𠻺真係要小心",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:followup100",
+      "code": "mriposnermrrosrm",
+      "target": "可能佢發咗啊佢𠻺",
+      "before": 0,
+      "after": 20
+    },
+    {
+      "source": "guard:followup100",
+      "code": "ofrrofmorilyrdorf",
+      "target": "係唔係一個神話來𡃉",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:followup100",
+      "code": "rgoddbofofrfra",
+      "target": "哩條橋係你𡃉啫",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:followup100",
+      "code": "oiorgdysykoprrbrrr",
+      "target": "每個地方文化唔同𠸏",
+      "before": 0,
+      "after": 20
+    }
+  ],
+  "exact_codes_and_display_bounds": true,
+  "gates": {
+    "aggregate_first_top5_top20_nondecreasing": true,
+    "each_set_first_top5_top20_nondecreasing": true,
+    "exact_first18_retained": true
+  },
+  "qualified": true,
+  "known_regression_not_independent": true
+}

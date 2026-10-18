@@ -34,6 +34,7 @@ public final class QuickDecoder {
     private final CandidateRanker wordRanker;
     private final SentenceRanker sentenceRanker;
     private final SentenceLanguageRanker contextSentenceRanker;
+    private final DirectCodeGenerator codeGenerator;
     private final PhraseRelationRanker relationRanker;
     private final PrefixRanker prefixRanker;
     private final double clauseStartStrength;
@@ -165,6 +166,23 @@ public final class QuickDecoder {
                         CandidateRanker candidateRanker, CandidateRanker wordRanker, double clauseStartStrength,
                         SentenceRanker sentenceRanker, PrefixRanker prefixRanker, PhraseRelationRanker relationRanker,
                         SentenceLanguageRanker contextSentenceRanker) throws IOException {
+        this(dictionary,input,hkInput,cantoneseInput,model,phraseModel,chatInput,candidateRanker,wordRanker,
+            clauseStartStrength,sentenceRanker,prefixRanker,relationRanker,contextSentenceRanker,null);
+    }
+    public QuickDecoder(DictionaryEngine dictionary, Reader input, Reader hkInput, Reader cantoneseInput,
+                        OfflineLanguageModel model, PhraseLanguageModel phraseModel, Reader chatInput,
+                        CandidateRanker candidateRanker, CandidateRanker wordRanker, SentenceRanker sentenceRanker,
+                        PrefixRanker prefixRanker, PhraseRelationRanker relationRanker,
+                        SentenceLanguageRanker contextSentenceRanker, DirectCodeGenerator codeGenerator) throws IOException {
+        this(dictionary,input,hkInput,cantoneseInput,model,phraseModel,chatInput,candidateRanker,wordRanker,
+            CLAUSE_START_STRENGTH,sentenceRanker,prefixRanker,relationRanker,contextSentenceRanker,codeGenerator);
+    }
+    public QuickDecoder(DictionaryEngine dictionary, Reader input, Reader hkInput, Reader cantoneseInput,
+                        OfflineLanguageModel model, PhraseLanguageModel phraseModel, Reader chatInput,
+                        CandidateRanker candidateRanker, CandidateRanker wordRanker, double clauseStartStrength,
+                        SentenceRanker sentenceRanker, PrefixRanker prefixRanker, PhraseRelationRanker relationRanker,
+                        SentenceLanguageRanker contextSentenceRanker, DirectCodeGenerator codeGenerator) throws IOException {
+        this.codeGenerator=codeGenerator;
         if (!Double.isFinite(clauseStartStrength) || clauseStartStrength < 0 || clauseStartStrength > 2)
             throw new IllegalArgumentException("Invalid clause-start strength");
         this.dictionary = dictionary; this.model = model; this.phraseModel = phraseModel;
@@ -503,8 +521,18 @@ public final class QuickDecoder {
         if (result.size() > 20) result=new ArrayList<>(result.subList(0,20));
         if(!rerankVisible || contextSentenceRanker==null || finalScores==null
                 || visiblePersonalPreference(code,context,result,learned,contextual)) return result;
-        return PinnedHeadReranker.rerank(result,finalScores,
+        List<String> visible=PinnedHeadReranker.rerank(result,finalScores,
             text -> contextSentenceRanker.score(context,text));
+        if(codeGenerator==null || relationRanker==null || !relationRanker.aligned() || visible.size()<5) return visible;
+        for(String text:visible) if(learnedSequence(code,text,learned)) return visible;
+        List<String> proposed=codeGenerator.generate(code,context);
+        if(visiblePersonalPreference(code,context,proposed,learned,contextual)) return visible;
+        for(String text:proposed) if(learnedSequence(code,text,learned)) return visible;
+        double reference=relationRanker.rawScore(context,visible.get(0));
+        return TailSupplement.apply(visible,proposed,
+            text -> !dictionary.matchQuickCodes(code,text).isEmpty(),
+            text -> languageScore(context,text)+sentenceRanker.score(context,text)
+                +relationRanker.alignedCorrection(relationRanker.rawScore(context,text),reference),false);
     }
 
     /** Whole-word decisions and confirmed/corrected context chains precede statistics. */

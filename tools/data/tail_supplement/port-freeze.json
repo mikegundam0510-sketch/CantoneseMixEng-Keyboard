@@ -1,0 +1,13 @@
+{
+  "checkpoint_sha256": "704eb0e81108f5a038621ba42bea8b9e925b64d30848235858b90f73709c3feb",
+  "model_sha256": "c1e552eafdb126acc28618e4fcb4e4e9debd4c7497ffb2a67c6a01c7a76c6914",
+  "primitive_weight_bytes": 757428,
+  "sha256": {
+    "tools/tail_supplement/port.py": "965516c735bf445b214486cc5c4028a4e9d5c21174e478f6d8afbea3f105b88a",
+    "tools/tail_supplement/DirectCodeGenerator.java": "8ffe1c9fa9c3b0d82d242232512d763e42dbaf669634541221d02d67a1761906",
+    ".native/tail-supplement-20261018/candidate/app/src/main/java/hk/cantonesemixeng/keyboard/QuickDecoder.java": "cdad496ce4f851740b6112a8e6eb9dbfe728eb968a3ba05f99168cb2c28e9342",
+    ".native/tail-supplement-20261018/candidate/app/src/main/java/hk/cantonesemixeng/keyboard/TailSupplement.java": "d15529a2028efe59e128e20351c1085811ce7f8de49604d9553682d6dd3c9206",
+    ".native/tail-supplement-20261018/candidate/app/src/main/java/hk/cantonesemixeng/keyboard/DirectCodeGenerator.java": "8ffe1c9fa9c3b0d82d242232512d763e42dbaf669634541221d02d67a1761906",
+    "tools/data/tail_supplement/code_generator.b64": "c1e552eafdb126acc28618e4fcb4e4e9debd4c7497ffb2a67c6a01c7a76c6914"
+  }
+}

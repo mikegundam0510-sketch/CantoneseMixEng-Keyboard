@@ -1,0 +1,18 @@
+{
+  "selected": "candidate",
+  "gates": {
+    "calibration1450": {
+      "first18_identical": true,
+      "aggregate_counts_nondecreasing": true,
+      "every_set_counts_nondecreasing": true,
+      "aggregate_top20_gain": true
+    },
+    "guard3893": {
+      "first18_identical": true,
+      "aggregate_counts_nondecreasing": true,
+      "every_set_counts_nondecreasing": true
+    }
+  },
+  "independent500_decoded": false,
+  "decision": "Proceed to remaining learning/Android/timing guards"
+}

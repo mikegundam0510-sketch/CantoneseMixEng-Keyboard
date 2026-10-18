@@ -1,0 +1,18 @@
+{
+  "qualified": true,
+  "cases": 32,
+  "legacy": [
+    30,
+    32,
+    32
+  ],
+  "contextual": [
+    32,
+    32,
+    32
+  ],
+  "sequence_records": 489,
+  "all_learned_displays_identical_to_parent": true,
+  "enabled_protection_cases": 4,
+  "model_active_in_cold_fixture": true
+}

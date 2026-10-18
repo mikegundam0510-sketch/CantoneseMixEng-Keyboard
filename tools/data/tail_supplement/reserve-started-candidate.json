@@ -1,0 +1,6 @@
+{
+  "qualification_sha256": "3dbf7754b5aaeb0444e843d016111616df38978649bbd9f6b9baf1260259d54c",
+  "parent_predictions_sha256": "b77de49d049f4f157057e29cb6f343c31f6a8082a2642cf2b460a300b49f5e10",
+  "cases_sha256": "04cfcc1666d517314aa5f37d476fc93af32f4c6b51ad45e48a3cd58ddbb37cd8",
+  "policy": "One candidate pass, frozen full Java decoder."
+}

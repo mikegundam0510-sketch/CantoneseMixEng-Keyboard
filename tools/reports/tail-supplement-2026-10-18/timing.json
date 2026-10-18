@@ -1,0 +1,70 @@
+{
+  "warmup": 30,
+  "samples": 11,
+  "cases": [
+    {
+      "code": "ofonaovrmrq",
+      "letters": 11,
+      "before_wall_median_ms": 87.14,
+      "after_wall_median_ms": 84.293,
+      "before_cpu_median_ms": 87.131,
+      "after_cpu_median_ms": 84.29,
+      "wall_ratio": 0.9673284369979345,
+      "cpu_ratio": 0.9673939240913109
+    },
+    {
+      "code": "hmerrrysmlrp",
+      "letters": 12,
+      "before_wall_median_ms": 102.583,
+      "after_wall_median_ms": 104.758,
+      "before_cpu_median_ms": 102.579,
+      "after_cpu_median_ms": 104.756,
+      "wall_ratio": 1.021202343468216,
+      "cpu_ratio": 1.021222667407559
+    },
+    {
+      "code": "dpofvivcjutrmyyjvcqnjd",
+      "letters": 22,
+      "before_wall_median_ms": 155.826,
+      "after_wall_median_ms": 158.201,
+      "before_cpu_median_ms": 155.584,
+      "after_cpu_median_ms": 158.141,
+      "wall_ratio": 1.0152413589516511,
+      "cpu_ratio": 1.016434851912793
+    },
+    {
+      "code": "ofykrmmsydwljpvwjd",
+      "letters": 18,
+      "before_wall_median_ms": 136.966,
+      "after_wall_median_ms": 138.274,
+      "before_cpu_median_ms": 136.851,
+      "after_cpu_median_ms": 138.272,
+      "wall_ratio": 1.0095498152826248,
+      "cpu_ratio": 1.0103835558381011
+    },
+    {
+      "code": "vkmmnkmrvordrjjj",
+      "letters": 16,
+      "before_wall_median_ms": 152.94,
+      "after_wall_median_ms": 152.196,
+      "before_cpu_median_ms": 152.002,
+      "after_cpu_median_ms": 151.89,
+      "wall_ratio": 0.9951353471949784,
+      "cpu_ratio": 0.9992631675899
+    },
+    {
+      "code": "hihihihihihihihihihihihihihihihihihihihihihihihi",
+      "letters": 48,
+      "before_wall_median_ms": 544.208,
+      "after_wall_median_ms": 544.138,
+      "before_cpu_median_ms": 542.792,
+      "after_cpu_median_ms": 542.514,
+      "wall_ratio": 0.9998713727104344,
+      "cpu_ratio": 0.9994878332768353
+    }
+  ],
+  "max_ratio": 1.021222667407559,
+  "qualified": true,
+  "raw_sha256": "8e3a6d73c9a3ecb32fe920f63f00ae816ba89947abcedae9ed53d4912f23c098",
+  "method": "Quiet same-JVM alternating parent/candidate medians, wall and thread CPU. Native cloud host, not Fold7 device latency."
+}

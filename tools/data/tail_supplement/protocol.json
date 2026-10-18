@@ -1,0 +1,29 @@
+{
+  "parent_revision": "aedb58c3600870aca00c44fc26c864a5b1eaef78",
+  "parent_app_tree": "8f31d86ad532f57278669629b642dbafa16c4acc",
+  "arms": [
+    "teacher-native-tail-only"
+  ],
+  "source_choice": "Fixed teacher checkpoint: the already observed generator recovers20 parent-missing targets versus contrast17. This is informed by known calibration, not a fresh independent result. No refitting or model/source grid.",
+  "policy": "Native prefix min(18,parent-size) stays byte/order identical. Fewer than5 native candidates, interruption, unavailable proposals or explicit personal preference bypass. Compare original slots19/20 and at most20 unique new exact-code teacher proposals, on the same whole-text native score. Select at most2 final slots; native-before-proposal ties. Preserve surviving native relative order. Shorter lists may append at most2. Total display<=20. No post-outcome threshold or slot change.",
+  "score": "QuickDecoder.languageScore(context,text) + SentenceRanker.score(context,text) + PhraseRelationRanker.alignedCorrection(raw(context,text),raw(context,original-head)). All existing bundled models and public whole-text scores. No new neural ranking, no lattice token priors, no personal bonuses. Not claimed identical to the internal lattice path score.",
+  "calibration": "Known1450, target-free predictions before labels joined: exact first18 retention, first/top5 counts unchanged, new150 and old1300 separately top20 nondecreasing, aggregate top20 gain, each named set top20 nondecreasing. Count gains AND losses. No 40-item union counted as display accuracy.",
+  "later_gates": "Only if calibration qualifies: exact Java generator port/parity and optional fallback/personal/mixed protection,3893 aggregate+each-set nondecrease at first/top5/top20, Single32, exact wired Android unit/Lint, same-JVM30warm11 sixcodes wall/CPU ratio<=1.2. Source/model/class freeze then one independent parent/candidate500 evaluation with no first/top5/top20 loss and a top20 gain. No adoption before all gates; stop on an earlier failed gate.",
+  "reserve": "prefix_language/reserve500 remains unused unless every preceding gate passes. The earlier context_search500 is already observed and will not be decoded again.",
+  "delivery": "No APK. Preserve0.6.39/code46, signing, local learning and Fold7. Failed candidate remains research-only; push auditable results to main.",
+  "sha256": {
+    "tools/tail_supplement/study.py": "451e910328aae2d40338e0733d7f6565cb4bf1e5f64cdeb33a62260c22c2b54a",
+    "tools/tail_supplement/TailSupplement.java": "d15529a2028efe59e128e20351c1085811ce7f8de49604d9553682d6dd3c9206",
+    "tools/tail_supplement/NativeEvaluation.java": "9c3ccc9d025f74636e198bdec6d02cb70235db92a1c534aa715eb9621fba7e89",
+    "tools/tail_supplement/PolicyTest.java": "d7aa1b342da57c82ae813086305aa579a8fe882ab73b74fa61447da758262154",
+    "tools/data/context_search/calibration1450.tsv": "fd874eeed989500d1cbbc483e70342d865af9e086360edc7978387a0a1e95743",
+    "tools/reports/pinned-head-2026-10-17/calibration1450.tsv": "552e4ca007837200a46c4a6cbab22855b535d81397c4472142ce9744297efa21",
+    "tools/reports/code-generator-2026-10-17/teacher-generated.tsv": "af77d1ae7bf0001f01e83aed8db3b9b8b2745f69b860233c404e850fcb9e27ce",
+    "tools/data/code_generator/models/teacher.npz": "704eb0e81108f5a038621ba42bea8b9e925b64d30848235858b90f73709c3feb",
+    "tools/data/code_generator/codes.json": "9a4ded56f067c23caecedb34f4fe1f110152a6d428449dde9c40eb052c9ac272",
+    "tools/data/code_generator/inference-freeze.json": "6d02cf24b4145a16c2b8da68fd9d0047ff8fe62297f398d254647bf630c07e03",
+    "tools/data/prefix_language/reserve.tsv": "04cfcc1666d517314aa5f37d476fc93af32f4c6b51ad45e48a3cd58ddbb37cd8",
+    "tools/reports/pinned-head-2026-10-17/guard3893.tsv": "db163fe5da03929c2c392de65d343a5eee11661858ab9db7308f9475904395bf",
+    ".native/joint-ranking-20261015/guard-cases3893.tsv": "8e4b74c8174dee73da8dda89d4c0cf1716c7d6fb69acc69c6fc12d08518b515d"
+  }
+}
