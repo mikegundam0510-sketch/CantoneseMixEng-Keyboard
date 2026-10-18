@@ -1,0 +1,5 @@
+{
+  "qualified": false,
+  "reserve_decoded": false,
+  "decision": "Reject compatibility experiment; preserve deployed d7dec75 and unused new500."
+}

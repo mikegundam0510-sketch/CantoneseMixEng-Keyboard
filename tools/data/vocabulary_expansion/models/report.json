@@ -1,0 +1,90 @@
+{
+  "protocol_sha256": "45c2477c5db0fe46ba6474fb32bbbaa7ce49fa1c491d40613d66866c402a5257",
+  "manifest_sha256": "32500401605ba6bb67b0356260b9d4af15554820ec0b6dfd2547e7dbda8d86db",
+  "initial_internal_validation": 1.2392377866055615,
+  "best_internal_validation": 0.9886467361899249,
+  "best_epoch": 12,
+  "epochs": [
+    {
+      "epoch": 1,
+      "train_loss": 0.8724863207086455,
+      "internal_validation": 1.2348285341437555,
+      "seconds": 4.026865890000408
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.8318748601324374,
+      "internal_validation": 1.2038903273747852,
+      "seconds": 3.885020796999015
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.7915094521727095,
+      "internal_validation": 1.176781624490956,
+      "seconds": 4.053240763001668
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.7539012294475961,
+      "internal_validation": 1.1508781236727583,
+      "seconds": 4.145988222000597
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.7187678924994716,
+      "internal_validation": 1.126741049278284,
+      "seconds": 3.929944344001342
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.6862985089047884,
+      "internal_validation": 1.1014323249059654,
+      "seconds": 4.0920953290005855
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.6562860601625229,
+      "internal_validation": 1.078981134624646,
+      "seconds": 5.159850751000704
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.6281386030585306,
+      "internal_validation": 1.0566681695668154,
+      "seconds": 3.959583220999775
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.602873415555518,
+      "internal_validation": 1.0366855144008953,
+      "seconds": 4.148797847999958
+    },
+    {
+      "epoch": 10,
+      "train_loss": 0.5801912571340144,
+      "internal_validation": 1.0188289379451094,
+      "seconds": 3.9790412160000415
+    },
+    {
+      "epoch": 11,
+      "train_loss": 0.5595867748413841,
+      "internal_validation": 1.0033452934667024,
+      "seconds": 3.838714321000225
+    },
+    {
+      "epoch": 12,
+      "train_loss": 0.5413952346950727,
+      "internal_validation": 0.9886467361899249,
+      "seconds": 3.9012813760000427
+    }
+  ],
+  "old_characters": 2248,
+  "added_characters": 245,
+  "vocabulary": 2493,
+  "all_old_rows_and_shared_parameters_bit_identical": true,
+  "trainable_parameters": 19845,
+  "array_bytes": 836808,
+  "model_sha256": "25f0623caf5b22aa6fa66b1850741d1674c1439acf02cc245198a25ef6ed246b",
+  "numpy": "2.3.5",
+  "scope": "Fixed12-epoch new-row-only conditional CE; no new pair/rerank objective. Validation original families never fitted; objective decrease is not keyboard hit gain."
+}

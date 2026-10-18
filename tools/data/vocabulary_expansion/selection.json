@@ -1,0 +1,46 @@
+{
+  "selected": null,
+  "before": {
+    "cases": 1450,
+    "top1": 301,
+    "top5": 568,
+    "top20": 738,
+    "mrr": 0.28950808687712176
+  },
+  "after": {
+    "cases": 1450,
+    "top1": 301,
+    "top5": 568,
+    "top20": 739,
+    "mrr": 0.2895425696357425
+  },
+  "paired": {
+    "first": {
+      "gained": 0,
+      "lost": 0,
+      "net": 0,
+      "paired_exact_two_sided_p": 1
+    },
+    "top5": {
+      "gained": 0,
+      "lost": 0,
+      "net": 0,
+      "paired_exact_two_sided_p": 1
+    },
+    "top20": {
+      "gained": 1,
+      "lost": 0,
+      "net": 1,
+      "paired_exact_two_sided_p": 1
+    }
+  },
+  "gates": {
+    "first18_identical": false,
+    "first_top5_unchanged": true,
+    "aggregate_top20_gain": true,
+    "every_set_nondecreasing": true
+  },
+  "original_fixed_trial_rejected": true,
+  "reserve_decoded": false,
+  "decision": "Original vocabulary-only replacement rejected because one deployed first18 prefix differs. No original protocol, checkpoint or predictions changed."
+}

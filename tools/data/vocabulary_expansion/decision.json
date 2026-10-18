@@ -1,0 +1,42 @@
+{
+  "parent_revision": "d7dec75d3f74525f2fc9a3070c65fff8bd43c9d4",
+  "adopted": false,
+  "old_characters": 2248,
+  "added": 245,
+  "research_characters": 2493,
+  "original_trial": "Rejected: one deployed first18 contract violation; original source/protocol/model/predictions retained",
+  "compatibility_trial": "Separately declared legacy fallback below native18, same checkpoint; rejected on known3893 regression",
+  "known1450": {
+    "before": 738,
+    "after": 739,
+    "gained": 1,
+    "lost": 0
+  },
+  "known3893": {
+    "before": 2729,
+    "after": 2726,
+    "gained": 1,
+    "lost": 4
+  },
+  "static_model_unsupported1450": {
+    "before": 317,
+    "after": 251,
+    "not_hit_rate": true
+  },
+  "new_reserve500_decoded": false,
+  "old500_not_independent": true,
+  "no_post_outcome_fitting_or_checkpoint_change": true,
+  "unchanged_tracked_app_files": 169,
+  "version": "0.6.39",
+  "version_code": 46,
+  "apk_produced": false,
+  "unrun": [
+    "Java dynamic-size/legacy-subset model port",
+    "full Java candidate qualification",
+    "Single32 candidate check",
+    "candidate Android unit/Lint",
+    "candidate paired latency",
+    "new independent500"
+  ],
+  "decision": "Retain deployed d7dec75. Publish auditable rejected research and preserve new500; no APK or1.0 claim."
+}

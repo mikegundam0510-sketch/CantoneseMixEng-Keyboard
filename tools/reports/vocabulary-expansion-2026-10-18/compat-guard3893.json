@@ -1,0 +1,499 @@
+{
+  "baseline_revision": "d7dec75d3f74525f2fc9a3070c65fff8bd43c9d4",
+  "cases_sha256": "8e4b74c8174dee73da8dda89d4c0cf1716c7d6fb69acc69c6fc12d08518b515d",
+  "output_sha256": {
+    "before": "211cbac583ebb998eef9519208635a4f6041d904c7eebbf0d6a204f159c141d7",
+    "after": "f15c7d3a95cb090409ff98238042c32db3b9e024a05d67fce1739e72c1cbaa98"
+  },
+  "before": {
+    "cases": 3893,
+    "top1": 1358,
+    "top5": 2263,
+    "top20": 2729,
+    "mrr": 0.4518683616687078
+  },
+  "after": {
+    "cases": 3893,
+    "top1": 1358,
+    "top5": 2263,
+    "top20": 2726,
+    "mrr": 0.4518298309725866
+  },
+  "paired": {
+    "first": {
+      "gained": 0,
+      "lost": 0,
+      "net": 0,
+      "paired_exact_two_sided_p": 1
+    },
+    "top5": {
+      "gained": 0,
+      "lost": 0,
+      "net": 0,
+      "paired_exact_two_sided_p": 1
+    },
+    "top20": {
+      "gained": 1,
+      "lost": 4,
+      "net": -3,
+      "paired_exact_two_sided_p": 0.375
+    }
+  },
+  "per_set": {
+    "alignment:heldout": {
+      "before": {
+        "cases": 500,
+        "top1": 91,
+        "top5": 197,
+        "top20": 264,
+        "mrr": 0.2783929503503033
+      },
+      "after": {
+        "cases": 500,
+        "top1": 91,
+        "top5": 197,
+        "top20": 264,
+        "mrr": 0.2783929503503033
+      },
+      "no_count_loss": true
+    },
+    "recovery:validation": {
+      "before": {
+        "cases": 100,
+        "top1": 23,
+        "top5": 47,
+        "top20": 56,
+        "mrr": 0.3344319291819292
+      },
+      "after": {
+        "cases": 100,
+        "top1": 23,
+        "top5": 47,
+        "top20": 56,
+        "mrr": 0.3344319291819292
+      },
+      "no_count_loss": true
+    },
+    "validation:written200": {
+      "before": {
+        "cases": 200,
+        "top1": 46,
+        "top5": 86,
+        "top20": 106,
+        "mrr": 0.3119206873492864
+      },
+      "after": {
+        "cases": 200,
+        "top1": 46,
+        "top5": 86,
+        "top20": 106,
+        "mrr": 0.3119206873492864
+      },
+      "no_count_loss": true
+    },
+    "validation:authored60": {
+      "before": {
+        "cases": 60,
+        "top1": 27,
+        "top5": 48,
+        "top20": 60,
+        "mrr": 0.6053113553113554
+      },
+      "after": {
+        "cases": 60,
+        "top1": 27,
+        "top5": 48,
+        "top20": 60,
+        "mrr": 0.6053113553113554
+      },
+      "no_count_loss": true
+    },
+    "validation:natural200": {
+      "before": {
+        "cases": 200,
+        "top1": 80,
+        "top5": 122,
+        "top20": 160,
+        "mrr": 0.49784535055587686
+      },
+      "after": {
+        "cases": 200,
+        "top1": 80,
+        "top5": 122,
+        "top20": 160,
+        "mrr": 0.49784535055587686
+      },
+      "no_count_loss": true
+    },
+    "validation:public200": {
+      "before": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 135,
+        "top20": 155,
+        "mrr": 0.5192634587634588
+      },
+      "after": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 135,
+        "top20": 155,
+        "mrr": 0.5192634587634588
+      },
+      "no_count_loss": true
+    },
+    "validation:fresh-written100": {
+      "before": {
+        "cases": 100,
+        "top1": 20,
+        "top5": 39,
+        "top20": 52,
+        "mrr": 0.29537576312576314
+      },
+      "after": {
+        "cases": 100,
+        "top1": 20,
+        "top5": 39,
+        "top20": 52,
+        "mrr": 0.29537576312576314
+      },
+      "no_count_loss": true
+    },
+    "validation:fresh-ud": {
+      "before": {
+        "cases": 43,
+        "top1": 20,
+        "top5": 30,
+        "top20": 36,
+        "mrr": 0.5569058083898966
+      },
+      "after": {
+        "cases": 43,
+        "top1": 20,
+        "top5": 30,
+        "top20": 36,
+        "mrr": 0.5569058083898966
+      },
+      "no_count_loss": true
+    },
+    "alignment:validation": {
+      "before": {
+        "cases": 100,
+        "top1": 26,
+        "top5": 42,
+        "top20": 52,
+        "mrr": 0.33075992063492066
+      },
+      "after": {
+        "cases": 100,
+        "top1": 26,
+        "top5": 42,
+        "top20": 52,
+        "mrr": 0.33075992063492066
+      },
+      "no_count_loss": true
+    },
+    "heldout:fresh-written500": {
+      "before": {
+        "cases": 500,
+        "top1": 96,
+        "top5": 191,
+        "top20": 258,
+        "mrr": 0.27746308136308134
+      },
+      "after": {
+        "cases": 500,
+        "top1": 96,
+        "top5": 191,
+        "top20": 258,
+        "mrr": 0.27746308136308134
+      },
+      "no_count_loss": true
+    },
+    "heldout:fresh-ud-legco": {
+      "before": {
+        "cases": 296,
+        "top1": 89,
+        "top5": 167,
+        "top20": 195,
+        "mrr": 0.4122903138528139
+      },
+      "after": {
+        "cases": 296,
+        "top1": 89,
+        "top5": 167,
+        "top20": 195,
+        "mrr": 0.4122903138528139
+      },
+      "no_count_loss": true
+    },
+    "guard:fresh100": {
+      "before": {
+        "cases": 100,
+        "top1": 37,
+        "top5": 64,
+        "top20": 76,
+        "mrr": 0.4895703273334852
+      },
+      "after": {
+        "cases": 100,
+        "top1": 37,
+        "top5": 64,
+        "top20": 76,
+        "mrr": 0.4895703273334852
+      },
+      "no_count_loss": true
+    },
+    "guard:natural200": {
+      "before": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 123,
+        "top20": 148,
+        "mrr": 0.48071115288220556
+      },
+      "after": {
+        "cases": 200,
+        "top1": 77,
+        "top5": 123,
+        "top20": 148,
+        "mrr": 0.48071115288220556
+      },
+      "no_count_loss": true
+    },
+    "guard:authored120": {
+      "before": {
+        "cases": 120,
+        "top1": 79,
+        "top5": 92,
+        "top20": 99,
+        "mrr": 0.7066666666666667
+      },
+      "after": {
+        "cases": 120,
+        "top1": 79,
+        "top5": 92,
+        "top20": 99,
+        "mrr": 0.7066666666666667
+      },
+      "no_count_loss": true
+    },
+    "guard:old600": {
+      "before": {
+        "cases": 600,
+        "top1": 291,
+        "top5": 441,
+        "top20": 533,
+        "mrr": 0.6020230048445993
+      },
+      "after": {
+        "cases": 600,
+        "top1": 291,
+        "top5": 441,
+        "top20": 530,
+        "mrr": 0.6017730048445993
+      },
+      "no_count_loss": false
+    },
+    "guard:daily32": {
+      "before": {
+        "cases": 32,
+        "top1": 23,
+        "top5": 32,
+        "top20": 32,
+        "mrr": 0.84375
+      },
+      "after": {
+        "cases": 32,
+        "top1": 23,
+        "top5": 32,
+        "top20": 32,
+        "mrr": 0.84375
+      },
+      "no_count_loss": true
+    },
+    "guard:completion16": {
+      "before": {
+        "cases": 16,
+        "top1": 16,
+        "top5": 16,
+        "top20": 16,
+        "mrr": 1.0
+      },
+      "after": {
+        "cases": 16,
+        "top1": 16,
+        "top5": 16,
+        "top20": 16,
+        "mrr": 1.0
+      },
+      "no_count_loss": true
+    },
+    "guard:tatoeba200": {
+      "before": {
+        "cases": 200,
+        "top1": 86,
+        "top5": 152,
+        "top20": 164,
+        "mrr": 0.5641159465534465
+      },
+      "after": {
+        "cases": 200,
+        "top1": 86,
+        "top5": 152,
+        "top20": 164,
+        "mrr": 0.5641159465534465
+      },
+      "no_count_loss": true
+    },
+    "guard:public100": {
+      "before": {
+        "cases": 100,
+        "top1": 46,
+        "top5": 79,
+        "top20": 85,
+        "mrr": 0.5884848484848485
+      },
+      "after": {
+        "cases": 100,
+        "top1": 46,
+        "top5": 79,
+        "top20": 85,
+        "mrr": 0.5884848484848485
+      },
+      "no_count_loss": true
+    },
+    "guard:authored70": {
+      "before": {
+        "cases": 70,
+        "top1": 15,
+        "top5": 41,
+        "top20": 49,
+        "mrr": 0.3847043432757718
+      },
+      "after": {
+        "cases": 70,
+        "top1": 15,
+        "top5": 41,
+        "top20": 49,
+        "mrr": 0.3847043432757718
+      },
+      "no_count_loss": true
+    },
+    "guard:plural": {
+      "before": {
+        "cases": 18,
+        "top1": 15,
+        "top5": 18,
+        "top20": 18,
+        "mrr": 0.9166666666666666
+      },
+      "after": {
+        "cases": 18,
+        "top1": 15,
+        "top5": 18,
+        "top20": 18,
+        "mrr": 0.9166666666666666
+      },
+      "no_count_loss": true
+    },
+    "guard:handover": {
+      "before": {
+        "cases": 30,
+        "top1": 29,
+        "top5": 30,
+        "top20": 30,
+        "mrr": 0.9833333333333333
+      },
+      "after": {
+        "cases": 30,
+        "top1": 29,
+        "top5": 30,
+        "top20": 30,
+        "mrr": 0.9833333333333333
+      },
+      "no_count_loss": true
+    },
+    "guard:continuous": {
+      "before": {
+        "cases": 8,
+        "top1": 8,
+        "top5": 8,
+        "top20": 8,
+        "mrr": 1.0
+      },
+      "after": {
+        "cases": 8,
+        "top1": 8,
+        "top5": 8,
+        "top20": 8,
+        "mrr": 1.0
+      },
+      "no_count_loss": true
+    },
+    "guard:followup100": {
+      "before": {
+        "cases": 100,
+        "top1": 41,
+        "top5": 63,
+        "top20": 77,
+        "mrr": 0.5031524710669448
+      },
+      "after": {
+        "cases": 100,
+        "top1": 41,
+        "top5": 63,
+        "top20": 77,
+        "mrr": 0.5031524710669448
+      },
+      "no_count_loss": true
+    }
+  },
+  "no_per_set_count_loss": false,
+  "rank_changes": [
+    {
+      "source": "validation:natural200",
+      "code": "hlvorrordrrfrl",
+      "target": "所以唔合格𡃉唧",
+      "before": 19,
+      "after": 0
+    },
+    {
+      "source": "validation:natural200",
+      "code": "rkofwrbhrgorkgugsrf",
+      "target": "噉你點睇哩個大趨勢𡃉",
+      "before": 0,
+      "after": 19
+    },
+    {
+      "source": "guard:old600",
+      "code": "slndofjcofor",
+      "target": "耶穌係真係個",
+      "before": 20,
+      "after": 0
+    },
+    {
+      "source": "guard:old600",
+      "code": "jurnrfrr",
+      "target": "七號𡃉喎",
+      "before": 20,
+      "after": 0
+    },
+    {
+      "source": "guard:old600",
+      "code": "stfmmqriogo",
+      "target": "監粗㧬啲人走",
+      "before": 20,
+      "after": 0
+    }
+  ],
+  "exact_codes_and_display_bounds": true,
+  "gates": {
+    "deployed_first18_identical": true,
+    "aggregate_counts_nondecreasing": false,
+    "each_set_counts_nondecreasing": false
+  },
+  "qualified": false,
+  "legacy_fallback_cases": 269,
+  "known_not_independent": true
+}

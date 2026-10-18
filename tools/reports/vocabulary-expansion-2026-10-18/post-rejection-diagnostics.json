@@ -1,0 +1,41 @@
+{
+  "losses": [
+    {
+      "source": "validation:natural200",
+      "code": "hlvorrordrrfrl",
+      "target": "所以唔合格𡃉唧",
+      "before": 19,
+      "after": 0,
+      "fully_in_old_alphabet": true,
+      "in_expanded_provider20": false
+    },
+    {
+      "source": "guard:old600",
+      "code": "slndofjcofor",
+      "target": "耶穌係真係個",
+      "before": 20,
+      "after": 0,
+      "fully_in_old_alphabet": true,
+      "in_expanded_provider20": false
+    },
+    {
+      "source": "guard:old600",
+      "code": "jurnrfrr",
+      "target": "七號𡃉喎",
+      "before": 20,
+      "after": 0,
+      "fully_in_old_alphabet": true,
+      "in_expanded_provider20": false
+    },
+    {
+      "source": "guard:old600",
+      "code": "stfmmqriogo",
+      "target": "監粗㧬啲人走",
+      "before": 20,
+      "after": 0,
+      "fully_in_old_alphabet": true,
+      "in_expanded_provider20": false
+    }
+  ],
+  "scope": "Labels consulted only after rejection to describe losses; no fitting, inference or decision changes."
+}

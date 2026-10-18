@@ -1,0 +1,1 @@
+vocabulary_code_facts=2493 legal_choices=2745 actual_dictionary_alignments=29000 exact=true

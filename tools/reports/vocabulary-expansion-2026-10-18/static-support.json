@@ -1,0 +1,6 @@
+{
+  "cases": 1450,
+  "old_unsupported": 317,
+  "expanded_unsupported": 251,
+  "scope": "Static support only, not hit rate or selection. Alphabet fixed from TRAIN before these labels were assessed."
+}
