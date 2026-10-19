@@ -1,0 +1,70 @@
+{
+  "qualified": true,
+  "cases": [
+    {
+      "code": "ofonaovrmrq",
+      "letters": 11,
+      "before_wall_ms": 88.923,
+      "after_wall_ms": 87.093,
+      "before_cpu_ms": 88.921,
+      "after_cpu_ms": 87.091,
+      "wall_ratio": 0.9794203974224891,
+      "cpu_ratio": 0.9794199345486442
+    },
+    {
+      "code": "hmerrrysmlrp",
+      "letters": 12,
+      "before_wall_ms": 150.173,
+      "after_wall_ms": 139.069,
+      "before_cpu_ms": 150.128,
+      "after_cpu_ms": 139.066,
+      "wall_ratio": 0.9260586124003648,
+      "cpu_ratio": 0.926316210167324
+    },
+    {
+      "code": "dpofvivcjutrmyyjvcqnjd",
+      "letters": 22,
+      "before_wall_ms": 173.406,
+      "after_wall_ms": 183.917,
+      "before_cpu_ms": 173.402,
+      "after_cpu_ms": 183.79,
+      "wall_ratio": 1.0606149729536463,
+      "cpu_ratio": 1.0599070368277184
+    },
+    {
+      "code": "ofykrmmsydwljpvwjd",
+      "letters": 18,
+      "before_wall_ms": 173.276,
+      "after_wall_ms": 166.979,
+      "before_cpu_ms": 173.176,
+      "after_cpu_ms": 166.96,
+      "wall_ratio": 0.963659133405665,
+      "cpu_ratio": 0.964105880722502
+    },
+    {
+      "code": "vkmmnkmrvordrjjj",
+      "letters": 16,
+      "before_wall_ms": 160.961,
+      "after_wall_ms": 164.546,
+      "before_cpu_ms": 160.958,
+      "after_cpu_ms": 161.844,
+      "wall_ratio": 1.022272475941377,
+      "cpu_ratio": 1.0055045415574249
+    },
+    {
+      "code": "hihihihihihihihihihihihihihihihihihihihihihihihi",
+      "letters": 48,
+      "before_wall_ms": 557.699,
+      "after_wall_ms": 569.665,
+      "before_cpu_ms": 555.231,
+      "after_cpu_ms": 567.551,
+      "wall_ratio": 1.0214560183898482,
+      "cpu_ratio": 1.0221889627920633
+    }
+  ],
+  "max_ratio": 1.0606149729536463,
+  "warmup": 30,
+  "samples": 11,
+  "method": "Quiet same-JVM alternating actual deployed/candidate; cloud wall and thread CPU, not Fold7/startup latency",
+  "raw_sha256": "24dc6c7092a4b27ca2cd67226932e0f8ec2b8570c5de362f98ba15bf5c934e82"
+}

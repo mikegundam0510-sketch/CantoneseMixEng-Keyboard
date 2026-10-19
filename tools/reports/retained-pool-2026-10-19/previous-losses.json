@@ -1,0 +1,38 @@
+{
+  "scope": "Post-known comparison diagnostic only; not training or independent selection",
+  "all_four_retained": true,
+  "cases": [
+    {
+      "source": "validation:natural200",
+      "code": "hlvorrordrrfrl",
+      "target": "所以唔合格𡃉唧",
+      "deployed_rank": 19,
+      "rejected_replacement_rank": 0,
+      "retained_pool_rank": 19
+    },
+    {
+      "source": "guard:old600",
+      "code": "slndofjcofor",
+      "target": "耶穌係真係個",
+      "deployed_rank": 20,
+      "rejected_replacement_rank": 0,
+      "retained_pool_rank": 20
+    },
+    {
+      "source": "guard:old600",
+      "code": "jurnrfrr",
+      "target": "七號𡃉喎",
+      "deployed_rank": 20,
+      "rejected_replacement_rank": 0,
+      "retained_pool_rank": 20
+    },
+    {
+      "source": "guard:old600",
+      "code": "stfmmqriogo",
+      "target": "監粗㧬啲人走",
+      "deployed_rank": 20,
+      "rejected_replacement_rank": 0,
+      "retained_pool_rank": 20
+    }
+  ]
+}

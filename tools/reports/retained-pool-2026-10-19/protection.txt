@@ -1,0 +1,1 @@
+protection_cases=4 active=true deployed_fallback=true no_additions=true no_legacy=true legacy_confirmed=true positive_negative_context=true mixed_translation=true

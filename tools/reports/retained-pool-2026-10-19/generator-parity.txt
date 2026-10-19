@@ -1,0 +1,2 @@
+expanded python_java_cases=85 max_absolute_score_error=3.6104447644902393E-6 corrupt_rejected=20 invalid_and_cancellation=true
+legacy python_java_cases=85 max_absolute_score_error=3.6102119338465855E-6 corrupt_rejected=20 invalid_and_cancellation=true

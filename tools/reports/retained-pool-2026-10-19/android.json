@@ -1,0 +1,14 @@
+{
+  "qualified": true,
+  "unit_tests": {
+    "tests": 222,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "lint": {
+    "Warning": 25
+  },
+  "apk_produced": false,
+  "wiring": "Actual optional expansion loader and constructor, exact native inference sources and assets"
+}

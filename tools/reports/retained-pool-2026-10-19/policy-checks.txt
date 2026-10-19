@@ -1,0 +1,2 @@
+policy_checks=11 passed=true
+fusion-policy checks=8 passed; nonBMP=true deployed-generated-prefix=true old-tail-eligible=true

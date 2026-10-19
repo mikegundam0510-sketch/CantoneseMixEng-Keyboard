@@ -1,0 +1,12 @@
+{
+  "qualified": true,
+  "ordinary_full_cases": 5343,
+  "all_ordered_displays_identical_to_screening": true,
+  "targets_absent_from_inputs": true,
+  "actual_legacy_provider_active": true,
+  "deployed_first18_identical": true,
+  "exact_codes": true,
+  "max20_unique": true,
+  "maximum_new2": true,
+  "new_characters_only": true
+}

@@ -1,0 +1,19 @@
+{
+  "qualified": true,
+  "single_cases": 32,
+  "sequence_records": 489,
+  "repetitions": 3,
+  "legacy": [
+    30,
+    32,
+    32
+  ],
+  "contextual": [
+    32,
+    32,
+    32
+  ],
+  "all_learned_displays_identical_to_deployed": true,
+  "active_protection_cases": 4,
+  "optional_no_additions_no_legacy_personal_mixed_translation": true
+}

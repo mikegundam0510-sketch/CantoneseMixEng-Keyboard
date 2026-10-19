@@ -1,0 +1,5 @@
+{
+  "adopt": false,
+  "independent_consumed": true,
+  "reason": "Independent gain/nonregression gate failed; keep deployed app. Preserve consumed500 and rejected frozen candidate, no outcome tuning."
+}

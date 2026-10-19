@@ -1,0 +1,47 @@
+{
+  "parent_revision": "1b13d0173ef0d8d95ea2d4871e528d9c82824e65",
+  "adopted": false,
+  "independent_display_changes": {
+    "cases": 4,
+    "added": 6,
+    "removed": 3
+  },
+  "every_independent_gold_rank_unchanged": true,
+  "source_sha256": {
+    "tools/retained_pool/DeployedEvaluation.java": "36f23b2290d069f60edf41375b0a0d044213d716c271d43a93797d488280413a",
+    "tools/retained_pool/FusionIntegratedEvaluation.java": "68802885be116649748f8d47253fe1e2a8dbe5629cf8b4a5384d8ca5874c6f96",
+    "tools/retained_pool/FusionPolicyTest.java": "7bb173af57233465d18433d23b227b7ca6aceaeaeb924107ceef35f5512e7bce",
+    "tools/retained_pool/FusionProtectionCheck.java": "5ad0135837bf3f484eaffb5ddd4484c95b2a1f2cf1d95e4a163b88c26304a8c3",
+    "tools/retained_pool/NewCharacterSupplement.java": "d2c4b00c509e5cb89e233e51db6a94dbc16f6efd3bcac8888acfe8d7e502e5c6",
+    "tools/retained_pool/adopt.py": "2588c8e5deea04ff8311ddef01ffbb49ca7e0d1b68d972ce0d27917755ef3f9b",
+    "tools/retained_pool/guards.py": "30102d8a147255250ce3d9642719272c615a7820778c3492d83a7fdf014b3d4e",
+    "tools/retained_pool/independent.py": "fb3d3b2da2fa037d51d9c504f711295d175afa7826aeb948e2fecc23bb100fd2",
+    "tools/retained_pool/port.py": "e3880a818042e15eac4584ded46eef72ab17d00373107005449a5e4ab07d848f",
+    "tools/retained_pool/study.py": "77cd79c6569a9e4379a37dce3d100332a71b1c68b3dfa082317abbb68e75fa98"
+  },
+  "native_build_run_sha256": {
+    ".native/retained-pool-20261019/full-0.log": "a4106b5535760f216fced108a5bdf007909839c1c9b873d2d0ead89b9bc7d0a2",
+    ".native/retained-pool-20261019/full-1.log": "a4106b5535760f216fced108a5bdf007909839c1c9b873d2d0ead89b9bc7d0a2",
+    ".native/retained-pool-20261019/full-2.log": "a4106b5535760f216fced108a5bdf007909839c1c9b873d2d0ead89b9bc7d0a2",
+    ".native/retained-pool-20261019/full-3.log": "dff844346355f8923078612665b5740b2c36ea204f3988f659c1ed0c019aa465",
+    ".native/retained-pool-20261019/full-inputs-0.tsv": "d4e6590511cd340a4fe9d7b53409d4a932aabecea0a8d2ea71ab1e794fe86311",
+    ".native/retained-pool-20261019/full-inputs-1.tsv": "5b8b6a956cb3b70d6ce16c6eaf3ab7b450905fc175907c9a5a46447680569d78",
+    ".native/retained-pool-20261019/full-inputs-2.tsv": "5e0380b95996131fc9c86b1ab004f9f2a3a7765567caec7ce9fe1636ac1ddb95",
+    ".native/retained-pool-20261019/full-inputs-3.tsv": "a3f3cc1faad258ccd5d0b06d78d6b713c51813c3709fc4458ca0fd48e632e034",
+    ".native/retained-pool-20261019/full-output-0.tsv": "084a4b447e6ed79a569334489af685447f5776731d308f8f8ddadbfe33c749d5",
+    ".native/retained-pool-20261019/full-output-1.tsv": "14617f6c16f9fae29ccd9f5021aa70fd892e37f2c7be559ed819ad482b84bbf2",
+    ".native/retained-pool-20261019/full-output-2.tsv": "b0b1e24881226970a85433678293320b3d3823dbe5105cc34af891ec1f24a90a",
+    ".native/retained-pool-20261019/full-output-3.tsv": "02d21b2aa1754da99a9c9c5bc3212142451d3db5ad9ce95aa16aaa337ca18544",
+    ".native/retained-pool-20261019/android-checks.log": "c7ead236d26f87e2b2ee713d75d1584b70caa73a9d131bc1d681c90b730b3bf8",
+    ".native/retained-pool-20261019/learning.log": "251baab83cc542c7291ef91a6dc1c02d21b68e55cc2b537e3aee35c57831736b",
+    ".native/retained-pool-20261019/timing.log": "8857f2ba9eba7db7c5eaaf609f5ce3e04f661ea0ead3808637c12d10e9677221",
+    ".native/retained-pool-20261019/independent-parent.log": "ca290a5266a6305344f01125eaede50bab5462f360d76ce90750b49f36e00217",
+    ".native/retained-pool-20261019/independent-candidate.log": "ce3ca79e05f249fd2a8406d9fb4b019fd23d7e5431cc90630e4525fc9a93d079",
+    ".native/retained-pool-20261019/independent-parent.tsv": "5b9f082403eeed7fd2bdf4c025de0a84fe62018e9ccf93981ca8d02766d24e52",
+    ".native/retained-pool-20261019/independent-candidate.tsv": "79fe863be8a17f9682a8d80af02b3d006f45c07532ce56e9440d1bed4b473921"
+  },
+  "production_model_sha256": "c1e552eafdb126acc28618e4fcb4e4e9debd4c7497ffb2a67c6a01c7a76c6914",
+  "production_sentence_language_sha256": "57c8997ac0ff6076a5bf9101f2ee007865618c638a110eca4b76b85e76383746",
+  "no_apk": true,
+  "no_post_independent_tuning": true
+}

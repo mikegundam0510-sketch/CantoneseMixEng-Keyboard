@@ -1,0 +1,11 @@
+{
+  "adopted": false,
+  "parent_revision": "1b13d0173ef0d8d95ea2d4871e528d9c82824e65",
+  "unchanged_preexisting_tracked_app_files": 169,
+  "copied_exact_qualified_inference_files": [],
+  "independent500_consumed": true,
+  "version": "0.6.39",
+  "version_code": 46,
+  "apk_produced": false,
+  "limitation": "Cloud JVM/Android checks; no Fold7 device verification or1.0 claim"
+}

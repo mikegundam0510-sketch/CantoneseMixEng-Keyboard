@@ -1,0 +1,72 @@
+{
+  "baseline_revision": "d8575595b689916d8649e71e1a365224392683a9",
+  "cases_sha256": "52f0af86a6476b2691521bd138011f7261e5c8774ceea7d76874fb9d49be47ec",
+  "output_sha256": {
+    "before": "5cc8440a6b74ca998693505b035c831e4953f6567b8c48b4b0c932401934ab68",
+    "after": "d435d416592be80cd56b5ed7a879153bf50352333f3c9bfe14a90f8ff6f51717"
+  },
+  "before": {
+    "cases": 500,
+    "top1": 90,
+    "top5": 206,
+    "top20": 261,
+    "mrr": 0.2828416877240406
+  },
+  "after": {
+    "cases": 500,
+    "top1": 90,
+    "top5": 206,
+    "top20": 261,
+    "mrr": 0.2828416877240406
+  },
+  "paired": {
+    "first": {
+      "gained": 0,
+      "lost": 0,
+      "net": 0,
+      "paired_exact_two_sided_p": 1
+    },
+    "top5": {
+      "gained": 0,
+      "lost": 0,
+      "net": 0,
+      "paired_exact_two_sided_p": 1
+    },
+    "top20": {
+      "gained": 0,
+      "lost": 0,
+      "net": 0,
+      "paired_exact_two_sided_p": 1
+    }
+  },
+  "per_set": {
+    "vocabulary:reserve": {
+      "before": {
+        "cases": 500,
+        "top1": 90,
+        "top5": 206,
+        "top20": 261,
+        "mrr": 0.2828416877240406
+      },
+      "after": {
+        "cases": 500,
+        "top1": 90,
+        "top5": 206,
+        "top20": 261,
+        "mrr": 0.2828416877240406
+      },
+      "no_count_loss": true
+    }
+  },
+  "no_per_set_count_loss": true,
+  "rank_changes": [],
+  "exact_codes_and_display_bounds": true,
+  "parent_revision": "1b13d0173ef0d8d95ea2d4871e528d9c82824e65",
+  "independent_once_after_qualification": true,
+  "gates": {
+    "deployed_first18_identical": true,
+    "no_first_top5_top20_count_loss": true,
+    "aggregate_top20_gain": false
+  },
+  "qualified": false
+}
