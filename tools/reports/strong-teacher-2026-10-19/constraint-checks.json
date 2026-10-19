@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "tests": 6,
+  "actual_llama_grammar_parser": true,
+  "actual_native_dictionary": true,
+  "model_loaded": false,
+  "teacher_accuracy_evaluation_run": false
+}

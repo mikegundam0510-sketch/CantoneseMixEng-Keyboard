@@ -1,0 +1,11 @@
+test_actual_complete_codes (__main__.NativeGrammarChecks.test_actual_complete_codes) ... ok
+test_gold_absent_from_inference_fields (__main__.NativeGrammarChecks.test_gold_absent_from_inference_fields) ... ok
+test_incomplete_and_extra_text_rejected (__main__.NativeGrammarChecks.test_incomplete_and_extra_text_rejected) ... ok
+test_invalid_code_limits (__main__.NativeGrammarChecks.test_invalid_code_limits) ... ok
+test_non_bmp (__main__.NativeGrammarChecks.test_non_bmp) ... ok
+test_one_and_two_key_ambiguity (__main__.NativeGrammarChecks.test_one_and_two_key_ambiguity) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.315s
+
+OK

@@ -1,0 +1,76 @@
+{
+  "parent_revision": "9c183b7baaa0c3cccb5d513c3d5abb07903e4fe5",
+  "scope": "Known stratified diagnostic only, not fresh independent or population-weighted accuracy. The preceding500 is already consumed. No app adoption or distillation in this phase.",
+  "data": "Twenty each observed cold-top5/cold-late/cold-missing, fixed hash order. The old context32 source actually contains no initial context. Make32 controlled supplied-context cases by taking the first4 already-typed characters from each authored whole sentence and removing their exact native alignment from the remaining code and target. No invented conversation or new independent claim. Gold/ranks only select cold diagnostic strata and calculate results, never enter teacher inference. No fitting.",
+  "reranking": "All92 ordinary native pools, maximum20 each; primary sum of teacher continuation token log probabilities divided by Han character count. Stable native order on ties; entire20 set retained, first may change in this offline diagnostic. Report gains AND losses at first/top5/top20 separately per stratum. Raw sums secondary descriptive only; no score/prompt search.",
+  "generation": {
+    "case_ids": [
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67
+    ],
+    "samples": 4,
+    "seeds": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "temperature": [
+      0,
+      0.7,
+      0.7,
+      0.7
+    ],
+    "top_k": 40,
+    "top_p": 0.9,
+    "max_tokens": 192,
+    "policy": "Full native single-Han dictionary, all1/2-key aliases, finite GBNF exactly consumes input, no vocabulary frequency cut. Grammar compiled without reference text. Validate outputs again through actual Java dictionary. Report exact generation hits, timeouts, incomplete/invalid results and union oracle separately. Four samples are not a displayed20 accuracy claim."
+  },
+  "model": "Proposed Qwen3-4B-Instruct-2507 Q4_K_M, CPU only. Model identity/license/source commit/LFS SHA remain UNVERIFIED until Hugging Face access is enabled. Do not run this protocol on an unpinned substitute. Freeze actual model and inference bytes before outcomes.",
+  "runtime": {
+    "llama_commit": "d7a695ef679138c13d86359b84c1731d36213d32",
+    "threads": 4,
+    "ctx": 2048,
+    "model_file_currently_available": false
+  },
+  "network": "Hugging Face returned proxy CONNECT403. Draft revision4 adds huggingface.co and cas-bridge.xethub.hf.co, requires review/save/publish. No proxy/TLS bypass.",
+  "preparation_audit": "Earlier no-context preparation and its protocol/source are preserved under .native/strong-teacher-preflight-no-context-20261019 before any model inference. This is a data-preparation correction, not outcome-based tuning.",
+  "sha256": {
+    "tools/reports/retained-pool-2026-10-19/independent500-parent.tsv": "5cc8440a6b74ca998693505b035c831e4953f6567b8c48b4b0c932401934ab68",
+    "tools/hk_daily_context_cases.tsv": "d29faa28d581c87e6b480ce3924c778e4794fa830d6067249a3369daad6528af",
+    "tools/data/strong_teacher/cases.tsv": "d5c7bd0aaa6c7bdb6ec3065ceef26a2a9b9f955ec4128077f9c4d1707bb79ee9",
+    ".native/strong-teacher-20261019/native-facts.tsv": "391acac899cb8751cd1475ea85f716a51fe44f3f09557f2e9c59be83320f1ca3",
+    "/workspace/cantonese-teacher-environment/requirements.lock": "44377b8a54083ac2036ed628d98eb73185a00eaeb1fe8b3fd0ce43a2dc6badb1",
+    "tools/strong_teacher/constraints.py": "96254ea7d48181262c04c6df27e6812007c11710ca541cc11d2aff406e4429b7",
+    "tools/strong_teacher/prepare.py": "1c9bc31818fba227f110c1b9701243009d21e92067364c083d444a66dfebf663",
+    "tools/strong_teacher/test_constraints.py": "54d0739a9b5d084affb7bd25f186c7124d14b4af50e7c9941a9c300ac7917c93",
+    "tools/strong_teacher/teacher_likelihood.cpp": "7a0d4e3f9e098d6a85d241dd250c25a60f521e8b54f94fbd585bcb09e290b7a5",
+    "tools/strong_teacher/NativeFacts.java": "c7baada313f9f8802d4521822e94832e1e7547b5d3f6a94afccd7eb4b98a8771"
+  }
+}

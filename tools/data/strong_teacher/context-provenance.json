@@ -1,0 +1,468 @@
+[
+  {
+    "case": "context32-0",
+    "original_source_line": 0,
+    "prefix_characters": 4,
+    "consumed_code_keys": 8,
+    "alignment": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "case": "context32-1",
+    "original_source_line": 1,
+    "prefix_characters": 4,
+    "consumed_code_keys": 8,
+    "alignment": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "case": "context32-2",
+    "original_source_line": 2,
+    "prefix_characters": 4,
+    "consumed_code_keys": 8,
+    "alignment": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "case": "context32-3",
+    "original_source_line": 3,
+    "prefix_characters": 4,
+    "consumed_code_keys": 8,
+    "alignment": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "case": "context32-4",
+    "original_source_line": 4,
+    "prefix_characters": 4,
+    "consumed_code_keys": 7,
+    "alignment": [
+      2,
+      2,
+      1,
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "case": "context32-5",
+    "original_source_line": 5,
+    "prefix_characters": 4,
+    "consumed_code_keys": 7,
+    "alignment": [
+      2,
+      2,
+      1,
+      2,
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "case": "context32-6",
+    "original_source_line": 6,
+    "prefix_characters": 4,
+    "consumed_code_keys": 8,
+    "alignment": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "case": "context32-7",
+    "original_source_line": 7,
+    "prefix_characters": 4,
+    "consumed_code_keys": 8,
+    "alignment": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "case": "context32-8",
+    "original_source_line": 8,
+    "prefix_characters": 4,
+    "consumed_code_keys": 8,
+    "alignment": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "case": "context32-9",
+    "original_source_line": 9,
+    "prefix_characters": 4,
+    "consumed_code_keys": 8,
+    "alignment": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "case": "context32-10",
+    "original_source_line": 10,
+    "prefix_characters": 4,
+    "consumed_code_keys": 8,
+    "alignment": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "case": "context32-11",
+    "original_source_line": 11,
+    "prefix_characters": 4,
+    "consumed_code_keys": 8,
+    "alignment": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "case": "context32-12",
+    "original_source_line": 12,
+    "prefix_characters": 4,
+    "consumed_code_keys": 8,
+    "alignment": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "case": "context32-13",
+    "original_source_line": 13,
+    "prefix_characters": 4,
+    "consumed_code_keys": 8,
+    "alignment": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "case": "context32-14",
+    "original_source_line": 14,
+    "prefix_characters": 4,
+    "consumed_code_keys": 7,
+    "alignment": [
+      2,
+      2,
+      1,
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "case": "context32-15",
+    "original_source_line": 15,
+    "prefix_characters": 4,
+    "consumed_code_keys": 8,
+    "alignment": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "case": "context32-16",
+    "original_source_line": 16,
+    "prefix_characters": 4,
+    "consumed_code_keys": 8,
+    "alignment": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "case": "context32-17",
+    "original_source_line": 17,
+    "prefix_characters": 4,
+    "consumed_code_keys": 8,
+    "alignment": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "case": "context32-18",
+    "original_source_line": 18,
+    "prefix_characters": 4,
+    "consumed_code_keys": 8,
+    "alignment": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "case": "context32-19",
+    "original_source_line": 19,
+    "prefix_characters": 4,
+    "consumed_code_keys": 8,
+    "alignment": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "case": "context32-20",
+    "original_source_line": 20,
+    "prefix_characters": 4,
+    "consumed_code_keys": 8,
+    "alignment": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "case": "context32-21",
+    "original_source_line": 21,
+    "prefix_characters": 4,
+    "consumed_code_keys": 8,
+    "alignment": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "case": "context32-22",
+    "original_source_line": 22,
+    "prefix_characters": 4,
+    "consumed_code_keys": 8,
+    "alignment": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "case": "context32-23",
+    "original_source_line": 23,
+    "prefix_characters": 4,
+    "consumed_code_keys": 8,
+    "alignment": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "case": "context32-24",
+    "original_source_line": 24,
+    "prefix_characters": 4,
+    "consumed_code_keys": 7,
+    "alignment": [
+      2,
+      2,
+      1,
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "case": "context32-25",
+    "original_source_line": 25,
+    "prefix_characters": 4,
+    "consumed_code_keys": 8,
+    "alignment": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "case": "context32-26",
+    "original_source_line": 26,
+    "prefix_characters": 4,
+    "consumed_code_keys": 8,
+    "alignment": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "case": "context32-27",
+    "original_source_line": 27,
+    "prefix_characters": 4,
+    "consumed_code_keys": 8,
+    "alignment": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "case": "context32-28",
+    "original_source_line": 28,
+    "prefix_characters": 4,
+    "consumed_code_keys": 8,
+    "alignment": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "case": "context32-29",
+    "original_source_line": 29,
+    "prefix_characters": 4,
+    "consumed_code_keys": 7,
+    "alignment": [
+      2,
+      2,
+      1,
+      2,
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "case": "context32-30",
+    "original_source_line": 30,
+    "prefix_characters": 4,
+    "consumed_code_keys": 8,
+    "alignment": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "case": "context32-31",
+    "original_source_line": 31,
+    "prefix_characters": 4,
+    "consumed_code_keys": 8,
+    "alignment": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ]
+  }
+]

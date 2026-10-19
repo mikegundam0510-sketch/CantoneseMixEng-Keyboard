@@ -1,0 +1,6 @@
+{
+  "scope": "No model inference, data/grammar/policy change. Only read upstream coloured rejection output as bytes.",
+  "preserved_original_test_sha256": "54d0739a9b5d084affb7bd25f186c7124d14b4af50e7c9941a9c300ac7917c93",
+  "preserved_failure_log_sha256": "b9c7f2515403fdb25b6e438a42ba4478668ede7e8467dd32368ae761f08fc63c",
+  "validation_driver_sha256": "89f976860f7a4aed4212a486698d48536e91db810ebfeb50d315f16b1857bb8c"
+}

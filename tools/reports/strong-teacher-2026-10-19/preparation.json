@@ -1,0 +1,33 @@
+{
+  "status": "Tooling prepared; model provenance/download/inference blocked pending network publication",
+  "native_dictionary_characters": 103335,
+  "native_quick_aliases": 129624,
+  "known_cases": 92,
+  "cold_cases": 60,
+  "supplied_context_cases": 32,
+  "grammar_cases": 28,
+  "grammar_tests": 6,
+  "teacher_model_loaded": false,
+  "teacher_rerank_run": false,
+  "teacher_generation_run": false,
+  "model_licence_and_lfs_hash_resolved": false,
+  "app_modified": false,
+  "apk_produced": false,
+  "network_observed": "Hugging Face proxy CONNECT403; running spec3 while draft4 has new allowed domains",
+  "platform_publish": "Screenshot says environment setup must complete before publish; runtime reports running/connected with no failure. Tool only saves drafts; no publish control is available.",
+  "sha256": {
+    "tools/strong_teacher/test_constraints.py": "54d0739a9b5d084affb7bd25f186c7124d14b4af50e7c9941a9c300ac7917c93",
+    "tools/strong_teacher/setup_runtime.sh": "b7811aa46d258127904bca2233557a5988b3cae2ba904a69af0baed1c25ddcfe",
+    "tools/strong_teacher/constraints.py": "96254ea7d48181262c04c6df27e6812007c11710ca541cc11d2aff406e4429b7",
+    "tools/strong_teacher/requirements.lock": "44377b8a54083ac2036ed628d98eb73185a00eaeb1fe8b3fd0ce43a2dc6badb1",
+    "tools/strong_teacher/CMakeLists.txt": "ab6d9ba2e9b5873077d2e325fa26f8ea8d07807abb10d8bfaf371f34926f8988",
+    "tools/strong_teacher/teacher_likelihood.cpp": "7a0d4e3f9e098d6a85d241dd250c25a60f521e8b54f94fbd585bcb09e290b7a5",
+    "tools/strong_teacher/validate_constraints.py": "89f976860f7a4aed4212a486698d48536e91db810ebfeb50d315f16b1857bb8c",
+    "tools/strong_teacher/fetch_model.py": "34755b20c5adb89ea77917a029ee159c0dff21b4f5df189a58e292a4856ad12a",
+    "tools/strong_teacher/prepare.py": "1c9bc31818fba227f110c1b9701243009d21e92067364c083d444a66dfebf663",
+    "tools/strong_teacher/NativeFacts.java": "c7baada313f9f8802d4521822e94832e1e7547b5d3f6a94afccd7eb4b98a8771",
+    "/workspace/cantonese-teacher-environment/build/teacher-likelihood": "f5911ec875f6945089e8eb193187f04b5f0567bdff21897e9367daebd000b65f",
+    "/workspace/cantonese-teacher-environment/build/bin/llama-server": "968d447f0b34fde2a7693bbfbf747454064bf4485db81216575953b9e6c93446",
+    "/workspace/cantonese-teacher-environment/build/bin/test-gbnf-validator": "2e592426bb770fd3ab630144febe1fef7a31448ca318592f1f91e87eed34a2ec"
+  }
+}

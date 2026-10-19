@@ -1,0 +1,5 @@
+{
+  "protocol_sha256": "5fc27ec436b5e98515716f2c3c625ae627ab3e0d5c03e574eb4381095f8266cf",
+  "before_any_teacher_outputs": true,
+  "model_inference_freeze_pending": true
+}
