@@ -1,4 +1,13 @@
-# Stronger offline teacher: tools prepared, model evaluation blocked
+# Stronger offline teacher: provenance verified, weight download blocked
+
+Update after the requested retry: runtime spec4 now reaches Hugging Face. The
+base/quantized public repositories, Apache2.0 cards/licence, fixed commits and
+the publisher's expected LFS SHA256 have been verified. The2,497,281,120-byte
+Q4_K_M download redirects to us.aws.cdn.hf.co, which the current proxy rejects
+with CONNECT403. That actual CDN hostname is now added to a new saved network
+draft, preserving all prior hosts. Weight download, actual file checksum,
+model inference and accuracy comparisons remain unrun. No partial model exists.
+The earlier network/setup account below is retained as historical context.
 
 The requested next step is to test a substantially larger language model on
 existing same-code candidates, then code-constrained generation. No teacher
@@ -73,18 +82,20 @@ this phase.
 
 ## Remaining work after network publication
 
-The proposed teacher is multilingual Qwen3-4B-Instruct-2507, with an external
-Q4_K_M export. Its Cantonese ability, exact availability, licence and model
-hash remain unverified. The resolver checks fixed public source identities,
-Apache2.0 cards/text, exact revisions and authoritative LFS SHA/size before
-allowing a download. It does not guess a different model on failure.
+The teacher is multilingual Qwen3-4B-Instruct-2507, with an external Unsloth
+Q4_K_M export. Base revision is cdbee75f17c01a7cc42f958dc650907174af0554;
+quantized revision a06e946bb6b655725eafa393f4a9745d460374c9. The expected SHA256
+is3605803b982cb64aead44f6c1b2ae36e3acdb41d8e46c8a94c6533bc4c67e597.
+The public cards/licence and base config/tokenizer config are preserved in
+tools/data/strong_teacher/. The export card names the expected base. This does
+not verify downloaded weight bytes, inference correctness or Cantonese ability.
 
 ```sh
 source /workspace/android-environment/activate.sh
 bash tools/strong_teacher/setup_runtime.sh
 cat tools/reports/strong-teacher-2026-10-19/constraint-checks.json
-# After the new network policy is actually applied:
-PYTHONDONTWRITEBYTECODE=1 python tools/strong_teacher/fetch_model.py resolve
+# Provenance has already been resolved; preserve model-source.json.
+# After the new CDN network policy is actually applied:
 PYTHONDONTWRITEBYTECODE=1 python tools/strong_teacher/fetch_model.py download
 ```
 

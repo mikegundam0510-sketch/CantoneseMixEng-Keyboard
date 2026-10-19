@@ -18,8 +18,11 @@ controlled contexts derive from existing project-authored test sentences;
 their exact alignment cuts are recorded in context-provenance.json.
 No phone history or private chat data is collected.
 
-No external teacher weights have been downloaded, licensed or validated yet.
-The proposed multilingual Qwen3-4B-Instruct-2507 Q4_K_M teacher requires public
-source/card/licence/revision/LFS SHA verification before use. fetch_model.py
-rejects unverified substitutes. This preparation claims neither Cantonese
-accuracy improvement nor a model ready for app distribution.
+No external teacher weights have been downloaded or run yet. The multilingual
+Qwen3-4B-Instruct-2507 base and Unsloth Q4_K_M export are offered under Apache2.0;
+the public cards, exact source revisions, expected LFS SHA and source licence
+have now been resolved and preserved in this directory. Full terms are in
+MODEL-APACHE-2.0.txt. Original model/source contributors do not endorse this
+diagnostic. Weight-byte checksum and actual inference remain unverified while
+the CDN is blocked. This preparation claims neither Cantonese accuracy
+improvement nor a model ready for app distribution.

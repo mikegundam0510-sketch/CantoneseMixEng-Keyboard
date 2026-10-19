@@ -1,0 +1,20 @@
+{
+  "status": "Model provenance resolved; actual CDN download blocked",
+  "runtime_spec": 4,
+  "base_id": "Qwen/Qwen3-4B-Instruct-2507",
+  "base_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "quant_id": "unsloth/Qwen3-4B-Instruct-2507-GGUF",
+  "quant_revision": "a06e946bb6b655725eafa393f4a9745d460374c9",
+  "expected_bytes": 2497281120,
+  "expected_lfs_sha256": "3605803b982cb64aead44f6c1b2ae36e3acdb41d8e46c8a94c6533bc4c67e597",
+  "licence": "Apache-2.0",
+  "actual_weight_checksum_verified": false,
+  "weight_downloaded": false,
+  "teacher_inference_run": false,
+  "actual_redirect_hostname": "us.aws.cdn.hf.co",
+  "download_error": "Proxy CONNECT403",
+  "new_network_draft_saved": true,
+  "requires_publish": true,
+  "app_unchanged": true,
+  "apk_produced": false
+}
