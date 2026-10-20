@@ -1,0 +1,19 @@
+{
+  "status": "Published configuration includes CDN; bound runtime still uses old enforced policy",
+  "latest_configuration_has_pending_draft": false,
+  "latest_published_configuration_includes_us_aws_cdn_hf_co": true,
+  "running_source_configuration_matches_latest_published": false,
+  "running_spec_revision": "4",
+  "running_policy_state": "enforced",
+  "running_policy_includes_us_aws_cdn_hf_co": false,
+  "observations_current": true,
+  "runtime_running_connected_no_failure": true,
+  "download_retry_result": "Proxy CONNECT403",
+  "teacher_weights_or_partial_present": false,
+  "teacher_model_inference_run": false,
+  "available_tool_can_migrate_bound_runtime": false,
+  "next_step": "Use a new cloud task on the latest published environment; verify its actual policy, then resume the fixed download without replacing source manifest",
+  "repeat_domain_or_publication_request_needed": false,
+  "app_changed": false,
+  "apk_produced": false
+}

@@ -1,5 +1,25 @@
 # Stronger offline teacher: provenance verified, weight download blocked
 
+## Latest status: 2026-10-20
+
+The user has successfully published the added CDN permission. Reading the
+latest configuration returns no draft and includes us.aws.cdn.hf.co. However,
+this chat is still attached to the earlier source configuration version:
+environment_status reports running spec4 with an enforced policy that excludes
+that CDN. A fresh download retry therefore still fails with proxy CONNECT403;
+no weight/partial file is present. This is a published-versus-running mismatch,
+not missing user authorization or another missing draft entry.
+
+Do not ask the user to add the hostname or publish the same change again.
+Available tools cannot switch/restart this bound runtime. Continue in a new
+cloud task selected against the latest published environment, preserving this
+old workspace. The verified source manifest is already on main. In that new
+task first check that the actual active policy contains us.aws.cdn.hf.co, then
+resume fetch_model.py download; do not overwrite or re-resolve its manifest.
+All stronger-model inference and accuracy comparisons remain pending.
+
+## Previous retry: source verification
+
 Update after the requested retry: runtime spec4 now reaches Hugging Face. The
 base/quantized public repositories, Apache2.0 cards/licence, fixed commits and
 the publisher's expected LFS SHA256 have been verified. The2,497,281,120-byte
@@ -16,12 +36,11 @@ network draft adds huggingface.co and cas-bridge.xethub.hf.co, preserving all
 previous custom domains and presets. Saving a draft does not apply or publish
 it. Observed runtime uses spec3; the new domains are in draft revision4.
 
-The supplied screenshot says publication is disabled until environment setup
-completes. Runtime status reports running/connected, current observations and
-no failure. Available tools can save configuration but cannot publish or toggle
-that UI control. After this setup turn completes, retry Review/Save/Publish in
-environment settings. If publication remains disabled, that platform gate is
-still unresolved; do not treat the network as enabled or bypass its proxy.
+The earlier screenshot showed publication disabled until environment setup
+completed. Publication has since succeeded, as confirmed above. Runtime status
+remains running/connected with current observations and no failure, but its
+old enforced policy has not switched to that published version. Do not bypass
+the proxy or keep re-saving the already published network entry.
 
 ## Prepared and verified
 
