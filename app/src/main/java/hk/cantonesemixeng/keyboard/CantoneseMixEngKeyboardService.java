@@ -1684,7 +1684,7 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
                         if (!moved && Math.abs(event.getX() - startX) > dp(18)) { moved = true; prepareCursorSwipe(); }
                         if (moved) {
                             float delta = event.getX() - lastX;
-                            if (Math.abs(delta) >= dp(16)) { sendKey(delta > 0 ? KeyEvent.KEYCODE_DPAD_RIGHT : KeyEvent.KEYCODE_DPAD_LEFT); lastX = event.getX(); }
+                            if (Math.abs(delta) >= dp(16)) { moveCursor(delta > 0 ? 1 : -1); lastX = event.getX(); }
                         }
                         return true;
                     case MotionEvent.ACTION_UP: v.setPressed(false); if (!moved) v.performClick(); return true;
@@ -1938,10 +1938,11 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
             Toast.makeText(this, "此輸入欄未支援掃動選字，請使用文字編輯", Toast.LENGTH_SHORT).show();
     }
 
+    private final SpaceCursorController spaceCursor = new SpaceCursorController();
+
     private void moveCursor(int steps) {
         swipeSelection.reset();
-        int direction = steps < 0 ? KeyEvent.KEYCODE_DPAD_LEFT : KeyEvent.KEYCODE_DPAD_RIGHT;
-        for (int i = 0; i < Math.abs(steps); i++) sendKey(direction);
+        spaceCursor.move(getCurrentInputConnection(), steps);
     }
 
     private void dismissSelectionPopup() {
