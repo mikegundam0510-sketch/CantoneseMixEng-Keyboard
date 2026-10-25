@@ -73,6 +73,8 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
     private final Map<String, InputCandidate> candidateDetails = new HashMap<>();
     private List<InputCandidate> corrections = Collections.emptyList();
     private InputCandidate autoUndo;
+    private TopOutUndo topOutUndo;
+    private String pausedTopOutPrefix = "";
     private int autoUndoCursor = -1;
     private String autoUndoBefore = "", rejectedAutoCode = "";
     private boolean forceEnglish, forceChinese, reselectionLearned;
@@ -308,6 +310,7 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
     @Override public void onUpdateSelection(int oldStart, int oldEnd, int start, int end, int composingStart, int composingEnd) {
         super.onUpdateSelection(oldStart, oldEnd, start, end, composingStart, composingEnd);
         selectionStart = start; selectionEnd = end;
+        if (topOutUndo != null && !canUndoTopOut()) topOutUndo = null;
         if (reselection != null && (start != reselection.cursor || end != reselection.cursor) && !canReselect()) invalidateReselection();
         if (composing.length() > 0 && (start != composingEnd || end != composingEnd)) {
             InputConnection ic = getCurrentInputConnection();
@@ -1121,6 +1124,10 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
         if (secure || ascii || forceEnglish || chooseFirst || !quick || wordLexicon == null
                 || !prefs.getBoolean("continuous", true) || !prefs.getBoolean("quick_top_out", true)
                 || prefs.getBoolean("sentence_candidates", false)) return;
+        if (!pausedTopOutPrefix.isEmpty()) {
+            if (composing.toString().startsWith(pausedTopOutPrefix)) return;
+            pausedTopOutPrefix = "";
+        }
         List<String> englishWords = personalEnglish();
         java.util.function.Predicate<String> hold = extended -> {
             if (!forceChinese && prefs.getBoolean("english", true) && englishEngine != null
@@ -1142,12 +1149,39 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
         List<InputCandidate> choices = WordTopOut.choices(dictionary, wordLexicon, composing.toString(), next,
             (code, text) -> candidateGlyphs.canDisplay(text) ? learnedCount(code, text)
                 + (!noLearning && personal.contains(pinPrefix(code) + text) ? 1000000 : 0) : Integer.MIN_VALUE, hold);
+        StringBuilder source = new StringBuilder(), text = new StringBuilder();
         for (InputCandidate choice : choices) {
-            if (!candidateGlyphs.canDisplay(choice.text)) return;
+            if (!candidateGlyphs.canDisplay(choice.text)) break;
             int before = composing.length();
             commitDetail(choice, false);
             if (composing.length() >= before) break;
+            source.append(choice.source); text.append(choice.text);
         }
+        if (source.length() > 0) topOutUndo = TopOutUndo.capture(getCurrentInputConnection(),
+            source.toString(), text.toString(), composing.toString());
+    }
+
+    private boolean canUndoTopOut() {
+        return !secure && topOutUndo != null && topOutUndo.valid(getCurrentInputConnection(), composing.toString());
+    }
+
+    /** True also consumes a refused restore, so Backspace cannot delete text as a fallback. */
+    private boolean restoreTopOut() {
+        if (!canUndoTopOut()) { topOutUndo = null; return false; }
+        TopOutUndo record = topOutUndo;
+        String following = composing.toString();
+        boolean restored = record.restore(getCurrentInputConnection(), following);
+        topOutUndo = null;
+        if (restored) {
+            composing.setLength(0); composing.append(record.source).append(following);
+            pausedTopOutPrefix = record.source;
+            autoUndo = null; rejectedAutoCode = "";
+            invalidateReselection(); restoredCandidate = null;
+            forceEnglish = false; forceChinese = true; expanded = false;
+            nextSuggestionsDismissed = false;
+            render();
+        } else if (root != null) Toast.makeText(this, "此輸入欄未能還原頂字；文字已保留", Toast.LENGTH_SHORT).show();
+        return true;
     }
 
     private void addPrefixChoices(CandidateRequest request, LinkedHashSet<String> result, int limit) {
@@ -1347,6 +1381,7 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
     }
 
     private void dismissCandidates() {
+        topOutUndo = null; pausedTopOutPrefix = "";
         // Keep committed text and its reselection record intact. No candidate is accepted here.
         candidateGeneration.incrementAndGet();
         if (pendingCandidates != null) { pendingCandidates.cancel(true); pendingCandidates = null; }
@@ -1539,6 +1574,7 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
             if (recordCorrection) learnCorrection(correctedFrom, detail, correctedContext);
         }
         if (accepted) {
+            topOutUndo = null; pausedTopOutPrefix = "";
             nextSuggestionsDismissed = false;
             composing.setLength(0); composing.append(remaining); forceEnglish = forceChinese = false; restoredCandidate = null;
             if (remaining.isEmpty()) ic.finishComposingText(); else ic.setComposingText(remaining, 1);
@@ -1665,6 +1701,7 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
     private void delete() {
         swipeSelection.reset();
         if (voiceListening) { cancelVoice(); render(); }
+        if (restoreTopOut()) return;
         ReselectionRecord deletedChoice = canReselect() && reselectionLearned ? reselection : null;
         Set<String> deletedUsage = reselectionUsageKeys;
         List<String> deletedPhrases = reselectionPhrases;
@@ -1708,6 +1745,7 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
     }
 
     private void enter() {
+        topOutUndo = null; pausedTopOutPrefix = "";
         invalidateReselection();
         if (emojiSearch) { emojiSearch = false; render(); return; }
         if (composing.length() > 0) { finishLiteral(); return; }
@@ -1716,7 +1754,7 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
     }
 
     private void picker() { cancelVoice(); invalidateReselection(); finishLiteral(); ((InputMethodManager)getSystemService(INPUT_METHOD_SERVICE)).showInputMethodPicker(); }
-    private void resetComposition() { pendingCorrection = null; pendingCorrectionLearned = false; pendingCorrectionContext = ""; autoUndo = null; rejectedAutoCode = ""; candidateGeneration.incrementAndGet(); forceEnglish = forceChinese = false; restoredCandidate = null; expanded = false; emojiSearch = false; emojiQuery = ""; composing.setLength(0); candidates = Collections.emptyList(); consumedCodes.clear(); candidatePage = 0; chooseFirst = false; }
+    private void resetComposition() { topOutUndo = null; pausedTopOutPrefix = ""; pendingCorrection = null; pendingCorrectionLearned = false; pendingCorrectionContext = ""; autoUndo = null; rejectedAutoCode = ""; candidateGeneration.incrementAndGet(); forceEnglish = forceChinese = false; restoredCandidate = null; expanded = false; emojiSearch = false; emojiQuery = ""; composing.setLength(0); candidates = Collections.emptyList(); consumedCodes.clear(); candidatePage = 0; chooseFirst = false; }
     private void sendKey(int keyCode) { InputConnection ic = getCurrentInputConnection(); if (ic != null) {
         ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, keyCode)); ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, keyCode));
     } }
@@ -1934,6 +1972,7 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
     }
 
     private boolean canReselect() {
+        if (canUndoTopOut()) return true;
         if (reselection == null || secure || composing.length() > 0) return false;
         InputConnection ic = getCurrentInputConnection(); if (ic == null) return false;
         ExtractedText text = ic.getExtractedText(new ExtractedTextRequest(), 0);
@@ -1942,6 +1981,7 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
     }
 
     private void reselect() {
+        if (restoreTopOut()) return;
         if (!canReselect()) { invalidateReselection(); return; }
         ReselectionRecord record = reselection;
         boolean undoLearning = reselectionLearned;

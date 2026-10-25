@@ -118,6 +118,64 @@ public class WordSelectionServiceTest {
         compose("of");commit("of","你",true);editor.accept=false;call("delete",new Class<?>[]{});
         assertEquals(1,counts.get("QC:of:你"));assertEquals("你",editor.text);
     }
+    private void topOutWithFollowingKey() throws Exception {
+        counts.put("QC:of:係",7);compose("of");call("typeLetter",new Class<?>[]{char.class},'z');
+        assertEquals("係z",editor.text);
+    }
+    @Test public void backspaceRestoresTopOutAndRetainsTheNextKeyWithoutLearning() throws Exception {
+        topOutWithFollowingKey();call("delete",new Class<?>[]{});
+        assertEquals("ofz",editor.text);assertEquals("ofz",get("composing").toString());
+        assertEquals(Collections.singletonMap("QC:of:係",7),counts);assertTrue(recent.isEmpty());assertTrue(rejected.isEmpty());
+        call("typeLetter",new Class<?>[]{char.class},'x');assertEquals("ofzx",editor.text);
+        call("delete",new Class<?>[]{});assertEquals("ofz",editor.text);
+    }
+    @Test public void reselectAlsoRestoresTheAutomaticCommitWhileRawKeysRemain() throws Exception {
+        topOutWithFollowingKey();call("reselect",new Class<?>[]{});assertEquals("ofz",editor.text);
+        assertFalse((Boolean)get("chooseFirst"));
+    }
+    @Test public void multipleAutomaticPairsAndOddTrailingKeysAreRestoredTogether() throws Exception {
+        put("wordLexicon",new WordLexicon(dictionary,new StringReader("")));
+        compose("ofvdv");call("typeLetter",new Class<?>[]{char.class},'z');
+        assertTrue(editor.text.endsWith("vz"));assertEquals("vz",get("composing").toString());
+        call("delete",new Class<?>[]{});assertEquals("ofvdvz",editor.text);assertTrue(counts.isEmpty());
+    }
+    @Test public void supplementaryCharacterUsesUtf16EditorOffsetsWhenRestored() throws Exception {
+        put("wordLexicon",new WordLexicon(dictionary,new StringReader("")));
+        counts.put("QC:rn:𠮩",8);compose("rn");call("typeLetter",new Class<?>[]{char.class},'z');
+        assertEquals("𠮩z",editor.text);call("delete",new Class<?>[]{});assertEquals("rnz",editor.text);
+        assertEquals(Collections.singletonMap("QC:rn:𠮩",8),counts);
+    }
+    @Test public void movedCursorOrEditedSuffixCannotRestoreUnrelatedText() throws Exception {
+        topOutWithFollowingKey();editor.connection.setSelection(0,0);call("reselect",new Class<?>[]{});assertEquals("係z",editor.text);
+        compose("of");call("typeLetter",new Class<?>[]{char.class},'z');
+        editor.text=editor.text.replace("係","你");String unchanged=editor.text;
+        call("reselect",new Class<?>[]{});assertEquals(unchanged,editor.text);
+    }
+    @Test public void refusingComposingRegionDoesNotFallThroughToDestructiveDelete() throws Exception {
+        topOutWithFollowingKey();editor.acceptRegion=false;call("delete",new Class<?>[]{});
+        assertEquals("係z",editor.text);assertEquals("z",get("composing").toString());
+        editor.acceptRegion=true;call("delete",new Class<?>[]{});assertEquals("係",editor.text);
+    }
+    @Test public void refusingReplacementRestoresOriginalCompositionAndLeavesTextUntouched() throws Exception {
+        topOutWithFollowingKey();editor.accept=false;call("delete",new Class<?>[]{});
+        assertEquals("係z",editor.text);assertEquals(1,editor.start);assertEquals(2,editor.end);
+        editor.accept=true;call("delete",new Class<?>[]{});assertEquals("係",editor.text);
+    }
+    @Test public void explicitSelectionEndsAutomaticUndoAndNewTextLearnsNormally() throws Exception {
+        topOutWithFollowingKey();commit("z","重",true);
+        assertEquals("係重",editor.text);assertEquals(1,counts.get("QC:z:重"));
+        call("delete",new Class<?>[]{});assertEquals("係",editor.text);assertFalse(counts.containsKey("QC:z:重"));
+    }
+    @Test public void restoreWorksWithLearningOffAndLongEditorContext() throws Exception {
+        settings.put("learning",false);editor.connection.commitText("香港".repeat(180),1);
+        compose("of");call("typeLetter",new Class<?>[]{char.class},'z');call("delete",new Class<?>[]{});
+        assertEquals("香港".repeat(180)+"ofz",editor.text);assertTrue(counts.isEmpty());assertTrue(recent.isEmpty());
+    }
+    @Test public void latestAutomaticChunkIsRestoredWithoutUndoingAnEarlierChunk() throws Exception {
+        put("wordLexicon",new WordLexicon(dictionary,new StringReader("")));
+        topOutWithFollowingKey();compose("vd");call("typeLetter",new Class<?>[]{char.class},'z');
+        call("delete",new Class<?>[]{});assertEquals("係vdz",editor.text);
+    }
     private static SharedPreferences preferences(Map<String,Object> values) {
         SharedPreferences.Editor edit=(SharedPreferences.Editor)Proxy.newProxyInstance(SharedPreferences.Editor.class.getClassLoader(),new Class<?>[]{SharedPreferences.Editor.class},(p,m,a)->{
             switch(m.getName()) {
@@ -134,7 +192,7 @@ public class WordSelectionServiceTest {
         });
     }
     private static class Editor {
-        String text="";int cursor=0,selected=0,start=-1,end=-1;boolean accept=true;
+        String text="";int cursor=0,selected=0,start=-1,end=-1;boolean accept=true,acceptRegion=true;
         final InputConnection connection=(InputConnection)Proxy.newProxyInstance(InputConnection.class.getClassLoader(),new Class<?>[]{InputConnection.class},(p,m,a)->{
             switch(m.getName()) {
                 case "beginBatchEdit":case "endBatchEdit":return true;
@@ -143,6 +201,7 @@ public class WordSelectionServiceTest {
                 case "getExtractedText":ExtractedText e=new ExtractedText();e.text=text;e.selectionStart=selected;e.selectionEnd=cursor;return e;
                 case "setSelection":selected=(int)a[0];cursor=(int)a[1];return true;
                 case "finishComposingText":start=end=-1;return true;
+                case "setComposingRegion":if(!acceptRegion)return false;start=(int)a[0];end=(int)a[1];return true;
                 case "setComposingText":case "commitText":
                     if(!accept)return false;
                     int from=start>=0?start:Math.min(selected,cursor),to=end>=0?end:Math.max(selected,cursor);
