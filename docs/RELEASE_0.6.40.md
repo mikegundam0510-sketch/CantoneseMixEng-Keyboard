@@ -30,7 +30,10 @@ VersionCode 47；Android 8.0+；沿用 applicationId `hk.kaiboard.android`、舊
 - Lint 0 錯誤／25 警告，debug、Android 測試包及 release 建置通過。
 - Android 12 軟件模擬器：21 項原生文字欄還原、空白鍵游標、升級識別及私隱測試通過。
   最終還原測試使用原生 EditText／EditableInputConnection，避免依賴視窗啟動與動畫，
-  可再對真正 release 包驗證；服務操作另由 JVM 的編輯器協定測試覆蓋。
+  已對真正 release 包再驗證；服務操作另由 JVM 的編輯器協定測試覆蓋。
+- 最終下載用 release APK 成功覆蓋安裝，18 項 Android 還原、識別、私隱及實際資料保留測試全部通過。
+  五個實際設定／學習檔案再次核對一致。輸入法選擇在安裝後、啟動 instrumentation 前核對；
+  instrumentation 會停止目標 App，之後的系統暫時切換不當作安裝資料流失。
 - 同一模擬器先以 `adb install -r` 從固定簽名 0.6.39／46 更新至 0.6.40／47 debug，
   五個實際設定／學習 XML 檔案的 SHA256 全部一致，系統選用輸入法保持不變。
 - APK、內部 debug／測試包及 0.6.39 基線皆通過固定簽名驗證，並核對 package／版本碼。
@@ -39,6 +42,10 @@ VersionCode 47；Android 8.0+；沿用 applicationId `hk.kaiboard.android`、舊
 GitHub Release API 在本雲端回覆 Forbidden；本次提供已簽名 APK 檔案，不宣稱已建立 GitHub Release。
 
 本機產物：`dist/0.6.40/CantoneseMixEng-Keyboard-0.6.40.apk`，校驗檔 `SHA256SUMS.txt`。
+大小 12,525,150 bytes，SHA256：
+`1a1938a638c9c24f5992d7ec09726996dde7c34fb553080743f496c5ecacb3fd`。
+APK 內版本控制資料記錄來源提交 `6b88690f9e242dac60209167c4d5fb4e9bcd72b5`。
+完整摘要見 [驗證報告](../tools/reports/release-0.6.40.json)。
 重現建置需沿用保留的持久金鑰設定，再執行：
 
 ```sh

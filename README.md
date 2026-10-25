@@ -368,7 +368,7 @@
 
 ## 安裝與試打
 
-1. 解壓 GitHub Actions 的最新 APK ZIP，安裝當中的 `app-debug.apk`。
+1. 下載 0.6.40 已簽名 APK，直接開啟並選「更新」，不用先移除同簽名舊版。
 2. 開啟 App，按「啟用鍵盤」，在系統啟用。
 3. 返回 App，按「選擇預設鍵盤」，選擇「CantoneseMixEng Keyboard」。
 

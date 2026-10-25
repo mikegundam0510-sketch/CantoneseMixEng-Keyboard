@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-25",
+  "source_commit": "6b88690f9e242dac60209167c4d5fb4e9bcd72b5",
+  "version_name": "0.6.40",
+  "version_code": 47,
+  "application_id": "hk.kaiboard.android",
+  "apk": {
+    "variant": "release",
+    "bytes": 12525150,
+    "sha256": "1a1938a638c9c24f5992d7ec09726996dde7c34fb553080743f496c5ecacb3fd",
+    "signer_sha256": "78c3bd69b5625c63b3dff5357681154f063020a49c5b862fdfa9fed575fccb63",
+    "persistent_signer_verified": true
+  },
+  "jvm_tests": {
+    "passed": 267,
+    "failed": 0,
+    "skipped": 0
+  },
+  "lint": {
+    "errors": 0,
+    "warnings": 25
+  },
+  "android_12_software_emulator": {
+    "debug_suite_passed": 21,
+    "final_release_suite_passed": 18,
+    "suite_cases_overlap": true,
+    "new_restore_editor_cases": 10,
+    "installed_data_retention_case_passed": true
+  },
+  "in_place_update": {
+    "baseline": "0.6.39 / 46 debug",
+    "intermediate": "0.6.40 / 47 debug",
+    "final": "0.6.40 / 47 release",
+    "mode": "adb install -r; no uninstall or clear-data",
+    "unchanged_preference_files": [
+      "keyboard.xml",
+      "learned.xml",
+      "english_learned.xml",
+      "recent_learned.xml",
+      "rejected_learned.xml"
+    ],
+    "checksums_equal": true,
+    "selected_ime_preserved": true,
+    "ime_check_stage": "After install and before instrumentation (instrumentation stops the target process)"
+  },
+  "limits": [
+    "No Fold7 or third-party-app hardware testing",
+    "No claim of sentence hit-rate improvement",
+    "GitHub Release API returned Forbidden; generated APK is provided as a workspace file"
+  ]
+}
