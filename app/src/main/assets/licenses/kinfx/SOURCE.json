@@ -1,0 +1,28 @@
+{
+  "source": "https://github.com/Kinfxhk/kinfx-ime",
+  "revision": "438d89283cab793148b04ebbe756e228153213c8",
+  "upstream_rows": 175994,
+  "imported_new_words": 504,
+  "minimum_source_frequency": 3000,
+  "word_lengths": [
+    2,
+    3,
+    4,
+    5
+  ],
+  "native_dictionary_characters": 103335,
+  "native_dictionary_sha256": "98e3291003110e3a6f4ae10ce0c061a475793e44c006d3acc3b075a9fecd2b26",
+  "changes": "New word surfaces/frequencies only; deduplicate current assets; every character must exist in native dictionary. No upstream code column, Windows order or Lua top-out behavior imported.",
+  "source_frequency_limitation": "Source corpus counts are not measured Hong Kong phone typing frequency.",
+  "source_sha256": {
+    "lexicon/hk/kinfx_hk_words.dict.yaml": "bf3d7458808f27836302184a2ff5c0fdb158cb38ea0982893ee921a86aec43c8",
+    "lexicon/hk/kinfx_hk_idioms.dict.yaml": "c1ea0b1dc4a3959d23eb8d4ed044fe315cdc8d81113e7a52b28f185d9bdd27bb"
+  },
+  "preexisting_vocabulary_sha256": {
+    "quick_phrases.tsv": "c11c72bd00c398af04ffea7a9eedac18dd2987d041294d5a9502b8e1bd1d12dd",
+    "hk_phrases.tsv": "51030ebf85c7d744ed7c54980e1c3ba11c04d0a4eb22f8e6d617dfd396311b4b",
+    "cantonese_phrases.tsv": "3c018645954709abdee7ca8e451bc40a74c06f5e2611c26ed39ee632fff2c837",
+    "hk_chat_phrases.tsv": "b501611d15c4f8f12a6ff410f479d6ca735bf2c596af880e4c367fcb2dd55bde"
+  },
+  "output_sha256": "0b1e996525889a983a975a16056e905fb97bbe9fd397ffe5d401dd00fbd2cde7"
+}

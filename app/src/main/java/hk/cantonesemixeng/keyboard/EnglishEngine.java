@@ -64,6 +64,12 @@ public final class EnglishEngine {
         }
         lastLikelyInput = input; lastLikely = result; return result;
     }
+    /** Exact prefix evidence for delaying optional Quick top-out, without typo guesses. */
+    synchronized boolean hasWordPrefix(String input, Collection<String> personal) {
+        if (!validWord(input) || input.length()<3) return false;
+        index(combined(personal));String lower=input.toLowerCase(Locale.ROOT);
+        String first=prefixIndex.ceilingKey(lower);return first!=null && first.startsWith(lower);
+    }
     public synchronized List<String> suggest(String input, Collection<String> personal, boolean repair) {
         if (!validWord(input)) return Collections.emptyList();
         String lower = input.toLowerCase(Locale.ROOT);

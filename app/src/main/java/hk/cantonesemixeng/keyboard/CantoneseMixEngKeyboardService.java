@@ -67,6 +67,7 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
     private EnglishEngine englishEngine;
     private EnglishChineseEngine englishChineseEngine;
     private CandidateEngine candidateEngine;
+    private WordLexicon wordLexicon;
     private QuickTypos quickTypos;
     private SharedPreferences personal, englishLearned;
     private final Map<String, InputCandidate> candidateDetails = new HashMap<>();
@@ -76,7 +77,7 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
     private String autoUndoBefore = "", rejectedAutoCode = "";
     private boolean forceEnglish, forceChinese, reselectionLearned;
     private List<String> reselectionPhrases = Collections.emptyList();
-    private Set<String> reselectionContexts = Collections.emptySet();
+    private Set<String> reselectionUsageKeys = Collections.emptySet();
     private String reselectionContext="";
     private String pendingCorrectionContext = "";
         private TextView undoKey;
@@ -94,7 +95,6 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
     private SharedPreferences prefs;
     private SharedPreferences learned, recentLearned, rejectedLearned;
     private InputCandidate pendingCorrection;
-    private final SingleSelectionHistory singleHistory = new SingleSelectionHistory();
     private boolean pendingCorrectionLearned, pendingCorrectionQuick, pendingCorrectionCangjie;
     private boolean noLearning;
     private LinearLayout root, panel, candidateRow;
@@ -197,10 +197,16 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
                     new InputStreamReader(getAssets().open("hk_chat_phrases.tsv"), StandardCharsets.UTF_8),
                     candidateRanker, wordRanker, sentenceRanker, prefixRanker, relationRanker, sentenceLanguageRanker, codeGenerator);
                 EmojiCatalog emojis = new EmojiCatalog(new InputStreamReader(getAssets().open("emoji.tsv"), StandardCharsets.UTF_8));
+                WordLexicon attestedWords = new WordLexicon(loaded,
+                    new InputStreamReader(getAssets().open("quick_phrases.tsv"), StandardCharsets.UTF_8),
+                    new InputStreamReader(getAssets().open("hk_phrases.tsv"), StandardCharsets.UTF_8),
+                    new InputStreamReader(getAssets().open("cantonese_phrases.tsv"), StandardCharsets.UTF_8),
+                    new InputStreamReader(getAssets().open("hk_chat_phrases.tsv"), StandardCharsets.UTF_8),
+                    new InputStreamReader(getAssets().open("kinfx_words.tsv"), StandardCharsets.UTF_8));
                 CandidateEngine mixed = new CandidateEngine(loaded, phrases, englishWords);
                 QuickTypos repairs = new QuickTypos(loaded, phrases);
                 handler.post(() -> { if (!destroyed) { dictionary = loaded; decoder = phrases; emojiCatalog = emojis;
-                    englishEngine = englishWords; candidateEngine = mixed; quickTypos = repairs;
+                    englishEngine = englishWords; candidateEngine = mixed; wordLexicon = attestedWords; quickTypos = repairs;
                     if (emoji) render(); else updateCandidates(); } });
             } catch (IOException e) {
                 handler.post(() -> { if (!destroyed) { loadFailed = true; updateCandidates(); } });
@@ -363,9 +369,7 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
         // Release the previous Emoji view tree when returning to the keyboard/editor.
         emojiList = null; emojiAdapter = null; emojiModel = null; emojiSearchLabel = null; emojiCategories = null; emojiTabs.clear();
         stopRepeat(); colors(); expandedScroll = null; candidateRow = null; codeLabel = null; expandedMode = null; nextPage = null; selectKey = null; toolbar = null; candidateBar = null; undoKey = null; editorSelect = null; customTool = null;
-        boolean oldQuick = quick, oldCangjie = cangjie;
         quick = prefs.getBoolean("quick", true); cangjie = prefs.getBoolean("cangjie", true); english = prefs.getBoolean("english", true);
-        if (oldQuick != quick || oldCangjie != cangjie) singleHistory.clear();
         root.removeAllViews(); root.setBackgroundColor(bg); updateKeyboardPadding();
         LinearLayout dock = row(root);
         String hand = prefs.getString("hand", "full");
@@ -874,6 +878,7 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
         String value = String.valueOf(shift || caps ? Character.toUpperCase(lower) : lower);
         if (secure || ascii && !prefs.getBoolean("english_chinese", true)) insert(value);
         else {
+            maybeTopOut(value.charAt(0));
             maybeAutocorrect(lower);
             if (composing.length() >= 48) selectCandidate();
             composing.append(value); InputConnection ic = getCurrentInputConnection();
@@ -933,6 +938,7 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
     /** All mutable editor/personal state is copied on the UI thread before searching. */
     private final class CandidateRequest {
         final String input, preceding;
+        final boolean wordMode;
         final boolean quick, cangjie, continuous, chooseFirst, forceEnglish, forceChinese, noLearning, secure, isEnglish, nextSuggestionsDismissed;
         final InputCandidate restoredCandidate;
         final Map<String, ?> personal, counts, englishCounts, recentCounts, rejectionCounts, settings;
@@ -945,15 +951,14 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
         List<String> values = Collections.emptyList();
         List<InputCandidate> corrections = Collections.emptyList();
         CandidateRequest() {
-            input = composing.toString(); preceding = CantoneseMixEngKeyboardService.this.chooseFirst
-                && !CantoneseMixEngKeyboardService.this.noLearning && prefs.getBoolean("learning",false)
-                ? singleHistory.contextFor(input,context()) : context();
+            input = composing.toString(); preceding = context();
             nextSuggestionsDismissed = CantoneseMixEngKeyboardService.this.nextSuggestionsDismissed;
             quick = CantoneseMixEngKeyboardService.this.quick; cangjie = CantoneseMixEngKeyboardService.this.cangjie;
             chooseFirst = CantoneseMixEngKeyboardService.this.chooseFirst; forceEnglish = CantoneseMixEngKeyboardService.this.forceEnglish || ascii;
             forceChinese = CantoneseMixEngKeyboardService.this.forceChinese; noLearning = CantoneseMixEngKeyboardService.this.noLearning;
             secure = CantoneseMixEngKeyboardService.this.secure; restoredCandidate = CantoneseMixEngKeyboardService.this.restoredCandidate;
             settings = new HashMap<>(prefs.getAll());
+            wordMode = !enabled("sentence_candidates", false);
             personal = noLearning ? Collections.emptyMap() : new HashMap<>(CantoneseMixEngKeyboardService.this.personal.getAll());
             counts = noLearning || !enabled("learning", false) ? Collections.emptyMap() : new HashMap<>(learned.getAll());
             englishCounts = noLearning || !enabled("learning", false) ? Collections.emptyMap() : new HashMap<>(englishLearned.getAll());
@@ -961,7 +966,7 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
             rejectionCounts = noLearning || !enabled("learning", false) ? Collections.emptyMap() : new HashMap<>(rejectedLearned.getAll());
             Set<String> contextKeys=new HashSet<>(counts.keySet());contextKeys.addAll(rejectionCounts.keySet());
             contextKeys.removeIf(k->!k.startsWith("S:"));
-            contextual = contextKeys.isEmpty() ? null : new ContextLearning.Preferences(contextKeys,this::contextCount);
+            contextual = wordMode || contextKeys.isEmpty() ? null : new ContextLearning.Preferences(contextKeys,this::contextCount);
             englishWords = new ArrayList<>(personalEnglish());
             continuous = quick && enabled("continuous", true) && input.length() > 2 && !secure;
             isEnglish = forceEnglish || !forceChinese && enabled("english", true) && englishEngine != null
@@ -971,14 +976,18 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
         boolean enabled(String name, boolean fallback) { Object value = settings.get(name); return value instanceof Boolean ? (Boolean)value : fallback; }
         int learnedCount(String code, String word) {
             if (noLearning || !enabled("learning", false)) return 0;
-            String key = LearningRanker.isLearnable(word)
-                ? LearningRanker.key(code, quick, cangjie, word) : PhraseLearning.key(word);
-            return CorrectionLearning.adjust(RecentLearning.weight(counts.get(key), recentCounts.get(key), learningTime), rejectionCounts.get(key), learningTime);
+            String key = wordMode ? WordUsageLearning.key(code,quick,cangjie,word)
+                : LearningRanker.isLearnable(word) ? LearningRanker.key(code,quick,cangjie,word) : PhraseLearning.key(word);
+            return key==null?0:usageWeight(key);
         }
-        int phraseCount(String word) { return learnedCount("", word); }
+        int phraseCount(String word) { return usageWeight(PhraseLearning.key(word)); }
+        int usageWeight(String key) {
+            if(noLearning || !enabled("learning",false))return 0;
+            return CorrectionLearning.adjust(RecentLearning.weight(counts.get(key),recentCounts.get(key),learningTime),rejectionCounts.get(key),learningTime);
+        }
         int contextCount(String key) {
             if(noLearning || !enabled("learning",false)) return 0;
-            return CorrectionLearning.adjust(RecentLearning.weight(counts.get(key),recentCounts.get(key),learningTime),rejectionCounts.get(key),learningTime);
+            return usageWeight(key);
         }
         String pinPrefix(String code) { return "p:" + (quick ? "Q" : "-") + (cangjie ? "C" : "-") + ":" + code.toLowerCase(Locale.ROOT) + ":"; }
         List<String> englishSuggestions() {
@@ -1042,7 +1051,7 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
         semanticFrozenGeneration = candidateGeneration.get(); cancelSemantic();
     }
     private void scheduleSemantic(CandidateRequest request, int generation) {
-        if (destroyed || !BuildConfig.SEMANTIC_MODEL || request.secure || request.noLearning || request.isEnglish
+        if (request.wordMode || destroyed || !BuildConfig.SEMANTIC_MODEL || request.secure || request.noLearning || request.isEnglish
                 || request.chooseFirst || request.restoredCandidate != null || request.input.isEmpty()
                 || !request.enabled("context_candidates", true) || !request.enabled("semantic_candidates", true)
                 || semanticFrozenGeneration == generation) return;
@@ -1080,12 +1089,73 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
         for (String text:meanings.subList(0,Math.min(3,meanings.size())))request.add(result,InputCandidate.translation(request.input,text));
     }
 
+    private void addWordModeEnglish(CandidateRequest request, LinkedHashSet<String> result) {
+        if (englishEngine == null || !request.enabled("english", true) || request.chooseFirst) return;
+        if (request.isEnglish) {
+            LinkedHashSet<String> english = new LinkedHashSet<>();
+            request.add(english, InputCandidate.english(request.input, request.input));
+            addTranslations(request, english);
+            for (String word : request.englishSuggestions()) request.add(english, InputCandidate.english(request.input, word));
+            english.addAll(result); result.clear(); result.addAll(english);
+        } else for (String word : request.englishSuggestions()) request.add(result, InputCandidate.english(request.input, word));
+    }
+
+    private List<String> rankWordGroups(CandidateRequest request, List<String> values) {
+        List<String> ranked = new ArrayList<>(values);
+        Map<String, List<Integer>> groups = new LinkedHashMap<>();
+        for (int i = 0; i < ranked.size(); i++) {
+            InputCandidate candidate = request.details.get(ranked.get(i));
+            if (candidate != null && !candidate.englishOnly() && !candidate.source.isEmpty())
+                groups.computeIfAbsent(candidate.effectiveCode(), k -> new ArrayList<>()).add(i);
+        }
+        for (Map.Entry<String, List<Integer>> group : groups.entrySet()) {
+            List<String> sameCode = new ArrayList<>();
+            for (int index : group.getValue()) sameCode.add(ranked.get(index));
+            sameCode.sort(Comparator.comparingInt((String word) -> request.learnedCount(group.getKey(), word)).reversed());
+            for (int i = 0; i < sameCode.size(); i++) ranked.set(group.getValue().get(i), sameCode.get(i));
+        }
+        return ranked;
+    }
+
+    private void maybeTopOut(char next) {
+        if (secure || ascii || forceEnglish || chooseFirst || !quick || wordLexicon == null
+                || !prefs.getBoolean("continuous", true) || !prefs.getBoolean("quick_top_out", true)
+                || prefs.getBoolean("sentence_candidates", false)) return;
+        List<String> englishWords = personalEnglish();
+        java.util.function.Predicate<String> hold = extended -> {
+            if (!forceChinese && prefs.getBoolean("english", true) && englishEngine != null
+                    && (englishEngine.hasWordPrefix(extended, englishWords)
+                        || englishEngine.likelyEnglish(composing.toString(), englishWords))) return true;
+            if (noLearning) return false;
+            for (String key : personal.getAll().keySet()) {
+                String[] parts = key.split(":", 3);
+                if (parts.length == 3 && parts[0].equals("c") && parts[1].startsWith(extended)) return true;
+            }
+            if (prefs.getBoolean("learning", false)) for (String key : learned.getAll().keySet()) {
+                String[] parts = key.split(":", 4);
+                if (parts.length == 4 && parts[0].equals("U") && parts[1].equals((quick ? "Q" : "-") + (cangjie ? "C" : "-"))
+                        && parts[2].startsWith(extended) && knownSelectedWord(parts[3]) && learnedCount(parts[2], parts[3]) > 0
+                        && !dictionary.matchQuickCodes(parts[2], parts[3]).isEmpty()) return true;
+            }
+            return false;
+        };
+        List<InputCandidate> choices = WordTopOut.choices(dictionary, wordLexicon, composing.toString(), next,
+            (code, text) -> candidateGlyphs.canDisplay(text) ? learnedCount(code, text)
+                + (!noLearning && personal.contains(pinPrefix(code) + text) ? 1000000 : 0) : Integer.MIN_VALUE, hold);
+        for (InputCandidate choice : choices) {
+            if (!candidateGlyphs.canDisplay(choice.text)) return;
+            int before = composing.length();
+            commitDetail(choice, false);
+            if (composing.length() >= before) break;
+        }
+    }
+
     private void addPrefixChoices(CandidateRequest request, LinkedHashSet<String> result, int limit) {
         if (dictionary == null || !request.quick || request.forceEnglish) return;
         for (int size = Math.min(2, request.input.length()); size >= 1; size--) {
             String part = request.input.substring(0, size);
             List<String> words = new ArrayList<>(dictionary.quickCandidates(part));
-            if (decoder != null && !request.preceding.isEmpty()) words.sort(Comparator.comparingDouble(
+            if (!request.wordMode && decoder != null && !request.preceding.isEmpty()) words.sort(Comparator.comparingDouble(
                 (String word) -> decoder.languageScore(request.preceding, word)).reversed());
             words = LearningRanker.rank(words, word -> request.learnedCount(part, word));
             int visible = 0;
@@ -1121,12 +1191,18 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
             InputConnection ic = getCurrentInputConnection();
             CharSequence selected = ic == null ? null : ic.getSelectedText(0);
             if (selected == null || selected.length() == 0)
-                for (String tail : decoder.nextSuggestions(preceding, 12, request::phraseCount))
+                for (String tail : request.wordMode && wordLexicon!=null ? wordLexicon.nextSuggestions(preceding,12,request::phraseCount) : decoder.nextSuggestions(preceding, 12, request::phraseCount))
                     request.add(results, new InputCandidate("", Collections.singletonList(
                         new InputCandidate.Segment("", tail, false)), false));
         }
         if (!secure && !input.isEmpty()) {
-            if (continuous && chooseFirst && dictionary != null) {
+            if (request.wordMode && dictionary != null && !forceEnglish) {
+                if(wordLexicon!=null)for(InputCandidate candidate:wordLexicon.candidates(input,quick,cangjie,continuous,chooseFirst,request::learnedCount))request.add(results,candidate);
+                else if(quick && continuous)addPrefixChoices(request,results,1000);
+                else for(String text:LearningRanker.rank(dictionary.lookup(input,quick,cangjie,false),w->request.learnedCount(input,w)))
+                    if(!text.equals(input))request.add(results,InputCandidate.chinese(dictionary,input,text));
+                addWordModeEnglish(request,results);
+            } else if (continuous && chooseFirst && dictionary != null) {
                 for (int size = 2; size >= 1; size--) {
                     String part = input.substring(0, size);
                     for (String word : LearningRanker.rank(dictionary.quickCandidates(part), w -> request.learnedCount(part, w)
@@ -1162,6 +1238,13 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
                     for (String word : request.englishSuggestions())
                         request.add(results, InputCandidate.english(input, word));
             }
+            if(request.wordMode && !noLearning && !forceEnglish && dictionary!=null) {
+                for(Map.Entry<String,?> entry:request.personal.entrySet())if(entry.getKey().startsWith("c:") && entry.getValue() instanceof String) {
+                    String[] parts=entry.getKey().split(":",3);
+                    if(parts.length==3 && !parts[1].isEmpty() && input.toLowerCase(Locale.ROOT).startsWith(parts[1]))
+                        request.add(results,InputCandidate.chinese(dictionary,input.substring(0,parts[1].length()),(String)entry.getValue()));
+                }
+            }
             if (!request.isEnglish) addTranslations(request,results);
             if (!noLearning) {
                 String prefix = request.pinPrefix(input);
@@ -1175,7 +1258,7 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
             if (restoredCandidate != null && restoredCandidate.source.equals(input)) {
                 request.add(results, restoredCandidate);
             }
-            if (quick && !chooseFirst && !request.isEnglish && quickTypos != null && request.enabled("quick_repair", true)) {
+            if (quick && (!request.wordMode || input.length()<=2) && !chooseFirst && !request.isEnglish && quickTypos != null && request.enabled("quick_repair", true)) {
                 List<InputCandidate> baselines = new ArrayList<>();
                 for (String word : results) {
                     InputCandidate detail = request.details.get(word);
@@ -1195,7 +1278,7 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
             }
             if (results.isEmpty()) request.add(results, InputCandidate.english(input, input));
         }
-        if (continuous && !chooseFirst && !request.isEnglish && !forceEnglish) {
+        if (!request.wordMode && continuous && !chooseFirst && !request.isEnglish && !forceEnglish) {
             LinkedHashSet<String> ordered = new LinkedHashSet<>();
             int count = 0;
             for (String value : results) { ordered.add(value); if (++count == 3) break; }
@@ -1203,6 +1286,7 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
             ordered.addAll(results); results = ordered;
         }
         request.values = new ArrayList<>(results);
+        if(request.wordMode)request.values=rankWordGroups(request,request.values);
         if (!noLearning) request.values.sort(Comparator.comparingInt((String value) ->
             request.personal.containsKey(request.pinPrefix(request.details.get(value).effectiveCode()) + value) ? 2 :
             request.personal.containsKey("c:" + input.toLowerCase(Locale.ROOT) + ":" + value) ? 1 : 0).reversed());
@@ -1243,13 +1327,14 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
 
     private int learnedCount(String code, String word) {
         if (noLearning || !prefs.getBoolean("learning", false)) return 0;
-        String key = LearningRanker.isLearnable(word) ? LearningRanker.key(code, quick, cangjie, word) : PhraseLearning.key(word);
+        String key = !prefs.getBoolean("sentence_candidates",false) ? WordUsageLearning.key(code,quick,cangjie,word)
+            : LearningRanker.isLearnable(word) ? LearningRanker.key(code,quick,cangjie,word) : PhraseLearning.key(word);
+        if(key==null)return 0;
         long now = System.currentTimeMillis();
         return CorrectionLearning.adjust(RecentLearning.weight(learned.getInt(key, 0), recentLearned.getString(key, null), now), rejectedLearned.getString(key, null), now);
     }
 
     private void toggleLanguage() {
-        singleHistory.clear();
         if (secure || numeric) return;
         pendingCorrection = null; pendingCorrectionLearned = false;
         chooseFirst = false;
@@ -1343,7 +1428,7 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
 
     private boolean maybeAutocorrect(Character next) {
         String code = composing.toString();
-        if (!prefs.getBoolean("chinese_autocorrect", true) || secure || numeric || ascii || strokeMode
+        if (!prefs.getBoolean("sentence_candidates",false) || !prefs.getBoolean("chinese_autocorrect", true) || secure || numeric || ascii || strokeMode
                 || forceEnglish || chooseFirst || dictionary == null || decoder == null || englishIntent()
                 || code.equals(rejectedAutoCode) || code.length() < 2 || code.length() > 16) return false;
         if (!ChineseAutocorrect.allowTrigger(next != null, forceChinese, prefs.getBoolean("english", true))) return false;
@@ -1435,39 +1520,25 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
         InputCandidate correctedFrom = pendingCorrection;
         String correctedContext = pendingCorrectionContext;
         boolean recordCorrection = pendingCorrectionLearned && pendingCorrectionQuick == quick && pendingCorrectionCangjie == cangjie;
-        String inputBefore = composing.toString();
         boolean learningAllowed = learn && !noLearning && prefs.getBoolean("learning", false);
         String phraseContext = context();
-        if (chooseFirst && learningAllowed) phraseContext = singleHistory.contextFor(inputBefore, phraseContext);
         int consumed = Math.min(detail.source.length(), composing.length());
         String remaining = composing.substring(consumed);
-        List<String> selectedPhrases = decoder == null || !learn ? Collections.emptyList()
-            : PhraseLearning.selectedWords(phraseContext, detail, decoder::knownWord,
-                prefs.getBoolean("learning", false), noLearning);
-        Set<String> selectedContexts=ContextLearning.selectedKeys(phraseContext,detail,learningAllowed,noLearning);
+        Set<String> selectedUsage = WordUsageLearning.selectedKeys(detail, this::knownSelectedWord,
+            quick, cangjie, learningAllowed, noLearning);
+        List<String> selectedPhrases = WordUsageLearning.selectedWords(phraseContext, detail,
+            this::knownSelectedWord, learningAllowed, noLearning);
         invalidateReselection();
         ic.beginBatchEdit();
         boolean accepted = ic.commitText(detail.text, 1);
-        if (accepted && learn && !noLearning && prefs.getBoolean("learning", false)) {
-            for (InputCandidate.Segment segment : detail.segments) {
-                if (segment.translated || segment.code.isEmpty()) continue;
-                if (segment.english) learnEnglish(segment.text);
-                else if (LearningRanker.isLearnable(segment.text)) learnCharacter(segment.code, segment.text);
-            }
+        if (accepted && learningAllowed) {
+            for (InputCandidate.Segment segment : detail.segments)
+                if (segment.english && !segment.translated && !segment.code.isEmpty()) learnEnglish(segment.text);
+            for (String key : selectedUsage) incrementUsage(key);
             for (String word : selectedPhrases) incrementPhrase(word);
-            for (String key : selectedContexts) incrementContext(key);
-            if (chooseFirst) {
-                String originalContext=singleHistory.correctionContext(recordCorrection ? correctedContext : phraseContext);
-                InputCandidate[] completed = singleHistory.confirm(inputBefore, detail, remaining, phraseContext,
-                    recordCorrection ? correctedFrom : null,correctedContext);
-                if (completed != null) learnCorrection(completed[0], completed[1],originalContext);
-            } else {
-                singleHistory.clear();
-                if (recordCorrection) learnCorrection(correctedFrom, detail,correctedContext);
-            }
+            if (recordCorrection) learnCorrection(correctedFrom, detail, correctedContext);
         }
         if (accepted) {
-            if (!learningAllowed) singleHistory.clear();
             nextSuggestionsDismissed = false;
             composing.setLength(0); composing.append(remaining); forceEnglish = forceChinese = false; restoredCandidate = null;
             if (remaining.isEmpty()) ic.finishComposingText(); else ic.setComposingText(remaining, 1);
@@ -1482,7 +1553,7 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
                 reselection = new ReselectionRecord(detail, cursor, before.toString());
                 reselectionLearned = !noLearning && prefs.getBoolean("learning", false);
                 reselectionPhrases = selectedPhrases;
-                reselectionContexts = selectedContexts;
+                reselectionUsageKeys = selectedUsage;
                 reselectionContext=ContextLearning.tail(phraseContext);
                 selectionStart = selectionEnd = cursor;
             }
@@ -1493,16 +1564,20 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
         render();
     }
 
-    private void learnCorrection(InputCandidate previous, InputCandidate selected,String context) {
-        if (decoder == null || noLearning || !prefs.getBoolean("learning", false)) return;
-        Set<String> rejected = CorrectionLearning.rejectedKeys(previous, selected, decoder::knownWord,
-            quick, cangjie, true, false);
-        rejected.addAll(ContextLearning.rejectedKeys(context,previous,selected));
-        for (String key : rejected) updateRejection(key, 1);
-        // An explicit reversal back to a previously rejected word restores its confidence.
-        for (String key : CorrectionLearning.rejectedKeys(selected, previous, decoder::knownWord,
-                quick, cangjie, true, false)) rejectedLearned.edit().remove(key).apply();
-        for(String key:ContextLearning.rejectedKeys(context,selected,previous)) rejectedLearned.edit().remove(key).apply();
+    private boolean knownSelectedWord(String text) {
+        if (wordLexicon != null && wordLexicon.knownWord(text) || decoder != null && decoder.knownWord(text)) return true;
+        if (noLearning) return false;
+        for (Map.Entry<String, ?> entry : personal.getAll().entrySet())
+            if ((entry.getKey().startsWith("c:") || entry.getKey().startsWith("p:")) && text.equals(entry.getValue())) return true;
+        return false;
+    }
+
+    private void learnCorrection(InputCandidate previous, InputCandidate selected, String context) {
+        if (noLearning || !prefs.getBoolean("learning", false)) return;
+        for (String key : WordUsageLearning.rejectedKeys(previous, selected, this::knownSelectedWord, quick, cangjie))
+            updateRejection(key, 1);
+        for (String key : WordUsageLearning.rejectedKeys(selected, previous, this::knownSelectedWord, quick, cangjie))
+            rejectedLearned.edit().remove(key).apply();
     }
 
     private void updateRejection(String key, double delta) {
@@ -1537,14 +1612,14 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
         updateRecent("E:" + word, 1);
     }
 
-    private void learnCharacter(String code, String character) {
-        if (noLearning || !prefs.getBoolean("learning", false) || !LearningRanker.isLearnable(character)) return;
-        String key = LearningRanker.key(code, quick, cangjie, character);
+    private void incrementUsage(String key) {
+        if (noLearning || !prefs.getBoolean("learning", false) || key == null) return;
         SharedPreferences.Editor edit = learned.edit();
         Map<String, ?> all = learned.getAll();
         List<String> characterKeys = new ArrayList<>();
-        for (String existing : all.keySet()) if (!existing.startsWith("W:") && !existing.startsWith("S:")) characterKeys.add(existing);
-        if (!all.containsKey(key) && characterKeys.size() >= 2000) {
+        for (String existing : all.keySet()) if (key.startsWith("U:") ? existing.startsWith("U:")
+                : !existing.startsWith("U:") && !existing.startsWith("W:") && !existing.startsWith("S:")) characterKeys.add(existing);
+        if (!all.containsKey(key) && characterKeys.size() >= (key.startsWith("U:") ? 1000 : 2000)) {
             String leastUsed = Collections.min(characterKeys, Comparator.comparingInt(k -> learned.getInt(k, 0)));
             edit.remove(leastUsed); recentLearned.edit().remove(leastUsed).apply();
         }
@@ -1554,7 +1629,7 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
     }
 
     private void incrementPhrase(String word) {
-        if (decoder == null || !decoder.knownWord(word)) return;
+        if (noLearning || !prefs.getBoolean("learning", false) || !knownSelectedWord(word)) return;
         String key = PhraseLearning.key(word);
         Map<String, ?> all = learned.getAll();
         List<String> phraseKeys = new ArrayList<>();
@@ -1567,17 +1642,6 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
         edit.putInt(key, Math.min(100000, learned.getInt(key, 0) + 1)).apply();
         updateRecent(key, 1);
         if (rejectedLearned.contains(key)) updateRejection(key, -.25);
-    }
-
-    private void incrementContext(String key) {
-        if(noLearning || !prefs.getBoolean("learning",false) || !key.startsWith("S:")) return;
-        Map<String,?> all=learned.getAll();String evicted=ContextLearning.evictionKey(all,key);
-        SharedPreferences.Editor edit=learned.edit();
-        if(evicted!=null) {
-            edit.remove(evicted);recentLearned.edit().remove(evicted).apply();rejectedLearned.edit().remove(evicted).apply();
-        }
-        edit.putInt(key,Math.min(100000,learned.getInt(key,0)+1)).apply();updateRecent(key,1);
-        if(rejectedLearned.contains(key)) updateRejection(key,-.25);
     }
 
     private void finishLiteral() {
@@ -1601,6 +1665,9 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
     private void delete() {
         swipeSelection.reset();
         if (voiceListening) { cancelVoice(); render(); }
+        ReselectionRecord deletedChoice = canReselect() && reselectionLearned ? reselection : null;
+        Set<String> deletedUsage = reselectionUsageKeys;
+        List<String> deletedPhrases = reselectionPhrases;
         invalidateReselection(); restoredCandidate = null;
         if (emojiSearch) { if (!emojiQuery.isEmpty()) emojiQuery = emojiQuery.substring(0, emojiQuery.length()-1); refreshEmoji(); return; }
         InputConnection ic = getCurrentInputConnection(); if (ic == null) return;
@@ -1620,8 +1687,9 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
             else {
                 CharSequence before = ic.getTextBeforeCursor(128, 0);
                 int units = emojiCatalog == null ? 0 : emojiCatalog.deletionUnits(before);
-                if (units > 0) ic.deleteSurroundingText(units, 0);
-                else if (!ic.deleteSurroundingTextInCodePoints(1, 0)) sendKey(KeyEvent.KEYCODE_DEL);
+                boolean deleted = units > 0 ? ic.deleteSurroundingText(units, 0) : ic.deleteSurroundingTextInCodePoints(1, 0);
+                if (!deleted) sendKey(KeyEvent.KEYCODE_DEL);
+                else if (deletedChoice != null) rollbackSelectionLearning(deletedChoice, deletedUsage, deletedPhrases);
             }
         }
     }
@@ -1648,7 +1716,7 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
     }
 
     private void picker() { cancelVoice(); invalidateReselection(); finishLiteral(); ((InputMethodManager)getSystemService(INPUT_METHOD_SERVICE)).showInputMethodPicker(); }
-    private void resetComposition() { singleHistory.clear(); pendingCorrection = null; pendingCorrectionLearned = false; pendingCorrectionContext = ""; autoUndo = null; rejectedAutoCode = ""; candidateGeneration.incrementAndGet(); forceEnglish = forceChinese = false; restoredCandidate = null; expanded = false; emojiSearch = false; emojiQuery = ""; composing.setLength(0); candidates = Collections.emptyList(); consumedCodes.clear(); candidatePage = 0; chooseFirst = false; }
+    private void resetComposition() { pendingCorrection = null; pendingCorrectionLearned = false; pendingCorrectionContext = ""; autoUndo = null; rejectedAutoCode = ""; candidateGeneration.incrementAndGet(); forceEnglish = forceChinese = false; restoredCandidate = null; expanded = false; emojiSearch = false; emojiQuery = ""; composing.setLength(0); candidates = Collections.emptyList(); consumedCodes.clear(); candidatePage = 0; chooseFirst = false; }
     private void sendKey(int keyCode) { InputConnection ic = getCurrentInputConnection(); if (ic != null) {
         ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, keyCode)); ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, keyCode));
     } }
@@ -1861,7 +1929,7 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
         reselection = null; reselectionLearned = false;
         pendingCorrection = null; pendingCorrectionLearned = false;
         reselectionPhrases = Collections.emptyList();
-        reselectionContexts=Collections.emptySet();reselectionContext="";pendingCorrectionContext="";
+        reselectionUsageKeys=Collections.emptySet();reselectionContext="";pendingCorrectionContext="";
         if (undoKey != null) { undoKey.setEnabled(false); undoKey.setAlpha(.35f); }
     }
 
@@ -1878,7 +1946,7 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
         ReselectionRecord record = reselection;
         boolean undoLearning = reselectionLearned;
         List<String> undoPhrases = reselectionPhrases;
-        Set<String> undoContexts = reselectionContexts;
+        Set<String> undoUsage = reselectionUsageKeys;
         String undoContext=reselectionContext;
         InputConnection ic = getCurrentInputConnection();
         invalidateReselection(); cancelVoice();
@@ -1895,33 +1963,26 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
         }
         ic.endBatchEdit();
         if (accepted) {
-            if(undoLearning) for(String key:undoContexts) {
-                int count=learned.getInt(key,0);
-                if(count<=1) learned.edit().remove(key).apply();else learned.edit().putInt(key,count-1).apply();
-                updateRecent(key,-1);
-            }
-            if (undoLearning) for (String word : undoPhrases) {
-                String key = PhraseLearning.key(word);
-                int count = learned.getInt(key, 0);
-                if (count <= 1) learned.edit().remove(key).apply();
-                else learned.edit().putInt(key, count - 1).apply();
-                updateRecent(key, -1);
-            }
-            if (undoLearning) for (InputCandidate.Segment segment : record.candidate.segments) {
-                if (segment.translated || segment.code.isEmpty()) continue;
-                if (segment.english) {
-                    int count = englishLearned.getInt(segment.text,0);
-                    if (count <= 1) englishLearned.edit().remove(segment.text).apply();
-                    else englishLearned.edit().putInt(segment.text,count-1).apply();
-                    updateRecent("E:" + segment.text, -1);
-                } else if (LearningRanker.isLearnable(segment.text)) {
-                    String key = LearningRanker.key(segment.code,quick,cangjie,segment.text);
-                    int count = learned.getInt(key,0);
-                    if (count <= 1) learned.edit().remove(key).apply(); else learned.edit().putInt(key,count-1).apply();
-                    updateRecent(key, -1);
-                }
-            }
+            if (undoLearning) rollbackSelectionLearning(record, undoUsage, undoPhrases);
             expanded = false; render();
+        }
+    }
+
+    private void rollbackSelectionLearning(ReselectionRecord record, Set<String> usage, List<String> phrases) {
+        if (noLearning || !prefs.getBoolean("learning", false)) return;
+        Set<String> keys = new HashSet<>(usage);
+        for (String word : phrases) keys.add(PhraseLearning.key(word));
+        for (String key : keys) {
+            int count = learned.getInt(key, 0);
+            if (count <= 1) learned.edit().remove(key).apply(); else learned.edit().putInt(key, count - 1).apply();
+            updateRecent(key, -1);
+        }
+        for (InputCandidate.Segment segment : record.candidate.segments) {
+            if (!segment.english || segment.translated || segment.code.isEmpty()) continue;
+            int count = englishLearned.getInt(segment.text, 0);
+            if (count <= 1) englishLearned.edit().remove(segment.text).apply();
+            else englishLearned.edit().putInt(segment.text, count - 1).apply();
+            updateRecent("E:" + segment.text, -1);
         }
     }
 
@@ -2053,7 +2114,7 @@ public class CantoneseMixEngKeyboardService extends InputMethodService {
         expandedMode.setContentDescription("指定英文段或返回自動判斷");
         if (quick && prefs.getBoolean("continuous", true) && (chooseFirst || composing.length() > 2)) {
             expandedAction(actions, chooseFirst ? "返回整句候選" : "單字",
-                () -> { singleHistory.clear(); chooseFirst = !chooseFirst; updateCandidates(); });
+                () -> { chooseFirst = !chooseFirst; updateCandidates(); });
         }
         content.addView(actions);
         android.widget.GridLayout grid = new android.widget.GridLayout(this); grid.setColumnCount(5);

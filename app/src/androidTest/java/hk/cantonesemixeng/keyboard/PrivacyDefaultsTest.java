@@ -57,6 +57,19 @@ public final class PrivacyDefaultsTest {
         assertTrue(Prefs.get(context).getBoolean("learning", false));
         assertEquals(1, data("english_learned").getInt("AQHI", 0));
     }
+    @Test public void wordModeUpdatePreservesOldLearningAndExplicitSettings() {
+        Prefs.get(context).edit().putBoolean("learning", true).putBoolean("quick_top_out", false).commit();
+        data("learned").edit().putInt("QC:of:你", 12).putInt("W:你好", 4)
+            .putInt(ContextLearning.key("of", "我", "你"), 3).putInt("U:QC:ofvd:你好", 2).commit();
+        for (int i=0; i<3; i++) {
+            SharedPreferences prefs=Prefs.get(context);
+            assertTrue(prefs.getBoolean("learning", false));
+            assertFalse(prefs.getBoolean("quick_top_out", true));
+            assertFalse(prefs.getBoolean("sentence_candidates", false));
+            assertEquals(4, data("learned").getAll().size());
+            assertEquals(2, data("learned").getInt("U:QC:ofvd:你好", 0));
+        }
+    }
     @Test public void updateFrom0618KeepsChinesePhraseAndEnglishLearning() {
         Prefs.get(context).edit().putBoolean("learning", true).putString("theme", "dark").commit();
         data("learned").edit().putInt("QC:of:你", 12).putInt("W:唔該晒", 7).commit();

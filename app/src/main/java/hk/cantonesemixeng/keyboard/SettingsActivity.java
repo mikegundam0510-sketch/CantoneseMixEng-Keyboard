@@ -46,19 +46,21 @@ public final class SettingsActivity extends Activity {
 
         LinearLayout methods = card("混合輸入");
         toggle(methods, "速成（首尾碼）", "quick", true);
-        toggle(methods, "連續速成組詞", "continuous", true);
+        toggle(methods, "連續速成字詞候選", "continuous", true);
+        toggle(methods, "第三碼頂字（速成兩碼優先）", "quick_top_out", true);
+        toggle(methods, "實驗整句候選（預設關閉）", "sentence_candidates", false);
         toggle(methods, "倉頡五代（完整字碼）", "cangjie", true);
         toggle(methods, "英文補全", "english", true);
         toggle(methods, "中英混合分段候選", "mixed", true);
         toggle(methods, "參考上文排序候選", "context_candidates", true);
-        toggle(methods, "離線語境選字", "semantic_candidates", true);
+        toggle(methods, "實驗整句候選：離線語境選字", "semantic_candidates", true);
         toggle(methods, "輸入完成後顯示聯想字", "next_suggestions", true);
         toggle(methods, "英文拼字修正候選", "english_repair", true);
         toggle(methods, "英文詞顯示中文候選", "english_chinese", true);
         toggle(methods, "速成相鄰按鍵修正候選", "quick_repair", true);
         toggle(methods, "倉頡相鄰按鍵修正候選", "cangjie_repair", true);
         toggle(methods, "倉頡／速成自動修正", "chinese_autocorrect", true);
-        toggle(methods, "學習常選字、短字序、詞組及聯想字（預設關閉）", "learning", false);
+        toggle(methods, "學習已確認字詞及聯想字（預設關閉）", "learning", false);
         button(methods, "清除學習記錄", () -> new AlertDialog.Builder(this).setTitle("清除學習記錄？")
             .setMessage("將恢復預設選字次序。鍵盤設定不受影響。")
             .setNegativeButton("取消", null).setPositiveButton("清除", (d, which) -> {
@@ -71,7 +73,7 @@ public final class SettingsActivity extends Activity {
         button(methods, "管理英文學習記錄", this::manageEnglishLearning);
         button(methods, "新增自訂詞", this::addCustomWord);
         button(methods, "管理自訂詞及置頂候選", this::managePersonal);
-        text(methods, "倉頡按空白鍵確認目前突出顯示的候選字。輸入完成後可點選聯想字繼續輸入。英文段按空白鍵確認詞語及加入空格。有歧義時點「英文」指定。長按候選可置頂或分段改選；↶ 重選最近一次已完成的選字。自動修正會於空白鍵或下一段輸入時採用明確較合理的修正字；信心不足時保留候選。修正後按刪除可還原原碼（若已開始下一段，先刪除下一段）。", 13, Color.DKGRAY, false);
+        text(methods, "預設只顯示字庫詞語及單字，不自動砌整句。第三碼頂字會保留常用詞／英文前綴；接不到詞時，按同碼常用次序自動上屏。自動頂字不計作學習。使用完整倉頡時，請關閉頂字或速成。開啟學習後，只記住確認選過的字詞，不會將單字選擇串成整句；立即刪除或重選會撤回該次學習。倉頡按空白鍵確認突出顯示的候選字；速成按空白鍵翻頁。點「單字」可逐個選，保留剩餘輸入碼；再次切換才退出。英文按空白鍵確認詞語及加入空格，有歧義時點「英文」指定。長按候選可置頂；↶ 重選最近一次已完成的選字。", 13, Color.DKGRAY, false);
 
         LinearLayout tools = card("功能列");
         choice(tools, "自訂功能鍵", "toolbar_action", new String[]{"剪貼簿", "候選展開", "快捷文字", "Undo"},
@@ -252,7 +254,7 @@ public final class SettingsActivity extends Activity {
     private void showLicenses() {
         StringBuilder content = new StringBuilder("Rime Cangjie dictionary\nhttps://github.com/rime/rime-cangjie\nCommit: 52d90a1b1312e74042b38c1cbc8142defbc53171\n\n");
         content.append("HKCanCor: Luke, Kang Kwong & Wong, May L. Y. (2015), The Hong Kong Cantonese Corpus\nhttps://github.com/fcbond/hkcancor\nRime Cantonese: CanCLID contributors\nhttps://github.com/rime/rime-cantonese\nThese derived vocabulary/model contributions: CC BY 4.0.\nTatoeba model contribution: CC BY 2.0 France; notice below.\n\n");
-        for (String name : new String[]{"AUTHORS", "GPL-3.0.txt", "LGPL-3.0.txt", "ESSAY-AUTHORS.txt", "UNICODE-LICENSE.txt", "HKCANCOR-CC-BY-4.0.txt", "RIME-CANTONESE-CC-BY-4.0.txt", "tatoeba/NOTICE.txt", "prefix/README.md", "relations/README.md", "relations/CC-BY-SA-4.0.txt", "cangjie-completion/LICENSE.txt", "cangjie-completion/LICENSE-CJ3.txt"}) {
+        for (String name : new String[]{"AUTHORS", "GPL-3.0.txt", "LGPL-3.0.txt", "ESSAY-AUTHORS.txt", "UNICODE-LICENSE.txt", "HKCANCOR-CC-BY-4.0.txt", "RIME-CANTONESE-CC-BY-4.0.txt", "tatoeba/NOTICE.txt", "prefix/README.md", "relations/README.md", "relations/CC-BY-SA-4.0.txt", "cangjie-completion/LICENSE.txt", "cangjie-completion/LICENSE-CJ3.txt", "kinfx/README.md", "kinfx/UPSTREAM-LEXICON-NOTICE.txt", "kinfx/CC-BY-4.0.txt"}) {
             try (InputStream stream = getAssets().open("licenses/" + name)) {
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream(); byte[] buf = new byte[4096]; int n;
                 while ((n = stream.read(buf)) != -1) bytes.write(buf, 0, n);
